@@ -38,10 +38,7 @@
       border: 2px solid #fff; box-shadow: 0 1px 5px rgba(0,0,0,0.45);
       transition: transform 0.15s; cursor: pointer;
     }
-    .event-icon svg {
-      width: 16px; height: 16px; fill: #fff;
-      display: block; pointer-events: none;
-    }
+    .event-icon svg { width: 16px; height: 16px; fill: #fff; display: block; pointer-events: none; }
     .event-icon:hover { transform: scale(1.18); z-index: 1000; }
     body.dark .event-icon { border-color: #1e1e2e; }
 
@@ -119,6 +116,7 @@
     #eventsPanel .event-item .evt-country { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 3px; margin-left: auto; font-weight: 600; }
     #eventsPanel .event-item .evt-country.ua { background: #e3f2fd; color: #1565c0; }
     #eventsPanel .event-item .evt-country.ru { background: #ffebee; color: #c62828; }
+    #eventsPanel .event-item .evt-country.osint { background: #f0f0f0; color: #333; }
     #eventsPanel .summary-box { padding: 10px 14px; background: var(--bg-summary); border-bottom: 1px solid var(--border-light); font-size: 12px; }
     #eventsPanel .summary-box .summary-title { font-weight: 600; margin-bottom: 4px; }
     #eventsPanel .summary-box .summary-line { display: flex; justify-content: space-between; padding: 2px 0; color: var(--text-secondary); align-items: center; }
@@ -203,7 +201,7 @@
 
   <div id="eventsPanel">
     <div class="panel-header">
-      <span id="eventsPanelTitle">События за 24 часа</span>
+      <span id="eventsPanelTitle">События из Telegram</span>
       <button class="toggle-btn" id="toggleEventsPanel">◀</button>
     </div>
     <div class="panel-body" id="eventsListBody">
@@ -222,9 +220,8 @@
     });
   </script>
 
-  <!-- Сначала данные (как JS), потом библиотеки, потом код -->
-  <script src="./data/war-tracker-ua.js"></script>
-  <script src="./data/war-tracker-ru.js"></script>
+  <!-- Данные Telegram, потом библиотеки, потом код -->
+  <script src="./data/telegram-events.js"></script>
   <script src="./lib/leaflet.js"></script>
   <script src="./lib/leaflet-draw.js"></script>
   <script src="./lib/leaflet.polylineDecorator.js"></script>
@@ -233,71 +230,68 @@
     // ============================================================
     // 1. НАСТРОЙКИ
     // ============================================================
-    var GITHUB_USER = 'freeosintmaper';
-    var GITHUB_REPO = 'osint-map';
-
     var i18n = {
       ru: {
-        eventsPanelTitle: 'События за 24 часа',
+        eventsPanelTitle: 'События из Telegram',
         controlZones: 'Зоны контроля',
         territoryRF: 'Территория, занимаемая РФ (DeepStateMap)',
         counteroffensive: 'Контрнаступления ВСУ (ISW)',
-        warTrackerEvents: 'События War-Tracker',
+        telegramEvents: 'События из Telegram',
         raidAlert: 'Воздушная тревога', strike: 'Удар', operation: 'Операция',
         offensive: 'Наступление', incident: 'Инцидент', politics: 'Политика',
-        summaryTitle: 'Сводка за 24 часа', eventsCount: 'событий',
-        noEvents: 'Нет событий за 24 часа', source: 'Источник',
+        summaryTitle: 'Сводка', eventsCount: 'событий',
+        noEvents: 'Нет событий', source: 'Источник',
         toolMarker: 'Метка', toolLine: 'Линия', toolArrow: 'Стрелка',
         toolPolygon: 'Зона', toolRectangle: 'Прямоугольник', toolCircle: 'Круг',
         toolMeasure: 'Измерить расстояние', toolClear: 'Очистить всё',
         toolTheme: 'Тёмная тема', toolInfo: 'О проекте',
         clearConfirm: 'Удалить все ваши рисунки?',
-        total: 'Всего', countryUA: 'Украина', countryRU: 'РФ',
+        total: 'Всего', countryUA: 'Украина', countryRU: 'РФ', countryOSINT: 'OSINT',
         opacityLabel: 'Прозрачность', modeFill: 'Заливка', modeOutline: 'Только контуры',
-        aboutText: 'Карта агрегирует открытые данные из разных источников.\n\n' +
-                   '· События — War-Tracker (у каждого есть ссылка на источник)\n' +
-                   '· Территория РФ — DeepStateMap (украинский OSINT-проект)\n' +
-                   '· Контрнаступления — ISW (американский аналитический центр)\n\n' +
-                   'Мы не проводим собственный анализ. Линия фронта — приблизительная.\n' +
-                   'Мы не ручаемся за точность и полноту данных.'
+        aboutText: 'Карта агрегирует открытые данные.\n\n' +
+                   '· События — публичные Telegram-каналы\n' +
+                   '· Территория РФ — DeepStateMap\n' +
+                   '· Контрнаступления — ISW\n\n' +
+                   'Мы не проводим собственный анализ. ' +
+                   'Линия фронта — приблизительная.'
       },
       uk: {
-        eventsPanelTitle: 'Події за 24 години',
+        eventsPanelTitle: 'Події з Telegram',
         controlZones: 'Зони контролю',
         territoryRF: 'Територія, яку займає РФ (DeepStateMap)',
         counteroffensive: 'Контрнаступи ЗСУ (ISW)',
-        warTrackerEvents: 'Події War-Tracker',
+        telegramEvents: 'Події з Telegram',
         raidAlert: 'Повітряна тривога', strike: 'Удар', operation: 'Операція',
         offensive: 'Наступ', incident: 'Інцидент', politics: 'Політика',
-        summaryTitle: 'Зведення за 24 години', eventsCount: 'подій',
-        noEvents: 'Немає подій за 24 години', source: 'Джерело',
+        summaryTitle: 'Зведення', eventsCount: 'подій',
+        noEvents: 'Немає подій', source: 'Джерело',
         toolMarker: 'Мітка', toolLine: 'Лінія', toolArrow: 'Стрілка',
         toolPolygon: 'Зона', toolRectangle: 'Прямокутник', toolCircle: 'Коло',
         toolMeasure: 'Виміряти відстань', toolClear: 'Очистити все',
         toolTheme: 'Темна тема', toolInfo: 'Про проект',
         clearConfirm: 'Видалити всі ваші малюнки?',
-        total: 'Всього', countryUA: 'Україна', countryRU: 'РФ',
+        total: 'Всього', countryUA: 'Україна', countryRU: 'РФ', countryOSINT: 'OSINT',
         opacityLabel: 'Прозорість', modeFill: 'Заливка', modeOutline: 'Лише контури',
-        aboutText: 'Карта агрегує відкриті дані з різних джерел.'
+        aboutText: 'Карта агрегує відкриті дані.'
       },
       en: {
-        eventsPanelTitle: 'Events (last 24h)',
+        eventsPanelTitle: 'Telegram Events',
         controlZones: 'Control Zones',
         territoryRF: 'Territory held by RF (DeepStateMap)',
         counteroffensive: 'Ukrainian counteroffensives (ISW)',
-        warTrackerEvents: 'War-Tracker Events',
+        telegramEvents: 'Telegram Events',
         raidAlert: 'Air Raid Alert', strike: 'Strike', operation: 'Operation',
         offensive: 'Offensive', incident: 'Incident', politics: 'Politics',
-        summaryTitle: 'Last 24h Summary', eventsCount: 'events',
-        noEvents: 'No events in last 24h', source: 'Source',
+        summaryTitle: 'Summary', eventsCount: 'events',
+        noEvents: 'No events', source: 'Source',
         toolMarker: 'Marker', toolLine: 'Line', toolArrow: 'Arrow',
         toolPolygon: 'Polygon', toolRectangle: 'Rectangle', toolCircle: 'Circle',
         toolMeasure: 'Measure distance', toolClear: 'Clear all',
         toolTheme: 'Dark theme', toolInfo: 'About',
         clearConfirm: 'Delete all your drawings?',
-        total: 'Total', countryUA: 'Ukraine', countryRU: 'RF',
+        total: 'Total', countryUA: 'Ukraine', countryRU: 'RF', countryOSINT: 'OSINT',
         opacityLabel: 'Opacity', modeFill: 'Fill', modeOutline: 'Outline only',
-        aboutText: 'This map aggregates open data from different sources.'
+        aboutText: 'This map aggregates open data.'
       }
     };
 
@@ -469,12 +463,12 @@
     };
 
     var WT_SVG = {
-      'Air Raid Alert': '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>',
-      'Military Strike': '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1l-2 7H3l6 4-2 9 5-4 5 4-2-9 6-4h-7z"/></svg>',
-      'Military Operation': '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.9 5L5 6.9l5.5 5.5L12 11 6.9 5zM17.1 5L12 11l1.5 1.4L19 6.9 17.1 5zM4 18l6-6 1.5 1.5L5.5 19.5 4 18zM20 18l-1.5 1.5-6-6L14 12l6 6z"/></svg>',
-      'Military Offensive': '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2s-3 4-3 8c0 2 1 4 3 5 2-1 3-3 3-5 0-4-3-8-3-8zm0 12c-1.5 0-3 1-3 3v3l3-2 3 2v-3c0-2-1.5-3-3-3z"/></svg>',
-      'Security Incident': '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L1 21h22L12 2zm0 4l7 13H5l7-13zm-1 4v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>',
-      'Political Development': '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>'
+      'Air Raid Alert': '<svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>',
+      'Military Strike': '<svg viewBox="0 0 24 24"><path d="M12 1l-2 7H3l6 4-2 9 5-4 5 4-2-9 6-4h-7z"/></svg>',
+      'Military Operation': '<svg viewBox="0 0 24 24"><path d="M6.9 5L5 6.9l5.5 5.5L12 11 6.9 5zM17.1 5L12 11l1.5 1.4L19 6.9 17.1 5zM4 18l6-6 1.5 1.5L5.5 19.5 4 18zM20 18l-1.5 1.5-6-6L14 12l6 6z"/></svg>',
+      'Military Offensive': '<svg viewBox="0 0 24 24"><path d="M12 2s-3 4-3 8c0 2 1 4 3 5 2-1 3-3 3-5 0-4-3-8-3-8zm0 12c-1.5 0-3 1-3 3v3l3-2 3 2v-3c0-2-1.5-3-3-3z"/></svg>',
+      'Security Incident': '<svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 4l7 13H5l7-13zm-1 4v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>',
+      'Political Development': '<svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>'
     };
 
     function wtColor(type) { return WT_COLORS[type] || '#9933cc'; }
@@ -496,97 +490,73 @@
     };
 
     // ============================================================
-    // 5. WAR-TRACKER (данные приходят через <script> как window.WT_DATA_UA / WT_DATA_RU)
+    // 5. TELEGRAM-СОБЫТИЯ
     // ============================================================
-    var wtLayerUA = new L.FeatureGroup();
-    var wtLayerRU = new L.FeatureGroup();
-    map.addLayer(wtLayerUA); map.addLayer(wtLayerRU);
+    var tgLayer = new L.FeatureGroup();
+    map.addLayer(tgLayer);
 
-    function buildMarker(ev, country) {
-      var marker = L.marker([ev.lat, ev.lng], { icon: createEventIcon(ev.event_type), riseOnHover: true });
-      var label = t(WT_LABELS[ev.event_type] || ev.event_type);
-      var dateStr = '';
-      try { dateStr = new Date(ev.date).toLocaleString('ru-RU'); } catch(e) {}
-      var badge = country === 'UA'
-        ? '<span style="background:#e3f2fd;color:#1565c0;padding:1px 6px;border-radius:3px;font-size:10px;">' + t('countryUA') + '</span>'
-        : '<span style="background:#ffebee;color:#c62828;padding:1px 6px;border-radius:3px;font-size:10px;">' + t('countryRU') + '</span>';
-      marker.bindPopup(
-        '<b>' + label + '</b> ' + badge + '<br>' +
-        '<i>' + (ev.location || '') + '</i><br>' +
-        (ev.description || '') + '<br>' +
-        '<small>' + dateStr + '</small><br>' +
-        '<a href="' + ev.url + '" target="_blank">' + t('source') + ' →</a>'
-      );
-      return marker;
-    }
-
-    function loadWarTrackerUA() {
-      if (!window.WT_DATA_UA) {
-        console.warn('War-Tracker UA: данные не загружены (window.WT_DATA_UA пусто)');
+    function loadTelegramEvents() {
+      if (!window.TG_DATA) {
+        console.warn('Telegram: данные не загружены');
         document.getElementById('eventsListBody').innerHTML =
-          '<div style="padding:20px;text-align:center;color:var(--text-muted);font-size:12px;">' +
-          'Данные не подгрузились. Обновите страницу.</div>';
+          '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' +
+          'Данные не подгрузились. Подождите следующего обновления.</div>';
         return;
       }
-      wtLayerUA.clearLayers();
-      var list = (window.WT_DATA_UA && window.WT_DATA_UA.events) || [];
-      var added = 0; var todayEvents = [];
-      list.forEach(function(ev) {
-        if (!ev.lat || !ev.lng) return;
-        if (!activeEventTypes[ev.event_type]) return;
-        wtLayerUA.addLayer(buildMarker(ev, 'UA'));
-        added++;
-        try {
-          if (new Date(ev.date).getTime() >= Date.now() - 24 * 60 * 60 * 1000) {
-            todayEvents.push(Object.assign({}, ev, { _country: 'UA' }));
-          }
-        } catch(e) {}
-      });
-      window._todayEvents_ua = todayEvents;
-      renderEventsPanel();
-      console.log('War-Tracker UA: ' + added + ' из ' + list.length);
-    }
+      tgLayer.clearLayers();
+      var list = (window.TG_DATA && window.TG_DATA.events) || [];
+      var added = 0;
+      var panelEvents = [];
 
-    function loadWarTrackerRU() {
-      if (!window.WT_DATA_RU) {
-        console.warn('War-Tracker RU: данные не загружены (window.WT_DATA_RU пусто)');
-        return;
-      }
-      wtLayerRU.clearLayers();
-      var list = (window.WT_DATA_RU && window.WT_DATA_RU.events) || [];
-      var added = 0; var todayEvents = [];
       list.forEach(function(ev) {
         if (!ev.lat || !ev.lng) return;
         if (!activeEventTypes[ev.event_type]) return;
-        wtLayerRU.addLayer(buildMarker(ev, 'RU'));
+
+        var marker = L.marker([ev.lat, ev.lng], { icon: createEventIcon(ev.event_type), riseOnHover: true });
+        var label = t(WT_LABELS[ev.event_type] || ev.event_type);
+        var dateStr = ev.date || '';
+        try { dateStr = new Date(ev.date).toLocaleString('ru-RU'); } catch(e) {}
+
+        var countryLabel = ev.country === 'UA' ? t('countryUA') : (ev.country === 'RU' ? t('countryRU') : t('countryOSINT'));
+        var countryClass = ev.country === 'UA' ? 'ua' : (ev.country === 'RU' ? 'ru' : 'osint');
+        var badge = '<span class="evt-country ' + countryClass + '" style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;">' + countryLabel + '</span>';
+
+        marker.bindPopup(
+          '<b>' + label + '</b> ' + badge + '<br>' +
+          '<i>' + (ev.location || '') + '</i><br>' +
+          (ev.description || '') + '<br>' +
+          '<small>' + dateStr + '</small><br>' +
+          '<small style="color:#888;">@' + (ev.channel || '') + '</small><br>' +
+          '<a href="' + ev.url + '" target="_blank">' + t('source') + ' →</a>'
+        );
+        tgLayer.addLayer(marker);
         added++;
-        try {
-          if (new Date(ev.date).getTime() >= Date.now() - 24 * 60 * 60 * 1000) {
-            todayEvents.push(Object.assign({}, ev, { _country: 'RU' }));
-          }
-        } catch(e) {}
+        panelEvents.push(ev);
       });
-      window._todayEvents_ru = todayEvents;
-      renderEventsPanel();
-      console.log('War-Tracker RU: ' + added + ' из ' + list.length);
+
+      console.log('Telegram: ' + added + ' событий');
+      renderEventsPanel(panelEvents);
     }
 
     // ============================================================
     // 6. ПАНЕЛЬ СОБЫТИЙ
     // ============================================================
-    function renderEventsPanel() {
-      var ua = window._todayEvents_ua || [];
-      var ru = window._todayEvents_ru || [];
-      var events = ua.concat(ru);
+    function renderEventsPanel(events) {
       var body = document.getElementById('eventsListBody');
       document.getElementById('eventsPanelTitle').textContent = t('eventsPanelTitle');
 
-      if (events.length === 0) {
+      if (!events || events.length === 0) {
         body.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' +
                          t('noEvents') + '</div>';
         return;
       }
-      events.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
+
+      events.sort(function(a, b) {
+        var da = a.date ? new Date(a.date).getTime() : 0;
+        var db = b.date ? new Date(b.date).getTime() : 0;
+        return db - da;
+      });
+
       var counts = {};
       events.forEach(function(ev) { counts[ev.event_type] = (counts[ev.event_type] || 0) + 1; });
 
@@ -603,21 +573,23 @@
               '<span>' + t('total') + '</span><span>' + events.length + ' ' + t('eventsCount') + '</span></div>';
       html += '</div>';
 
-      events.slice(0, 50).forEach(function(ev) {
+      events.slice(0, 60).forEach(function(ev) {
         var label = t(WT_LABELS[ev.event_type] || ev.event_type);
         var color = wtColor(ev.event_type);
         var svg = wtSvg(ev.event_type);
         var time = '';
         try { time = new Date(ev.date).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); } catch(e) {}
-        var countryLabel = ev._country === 'RU' ? t('countryRU') : t('countryUA');
-        var countryClass = ev._country === 'RU' ? 'ru' : 'ua';
+        var countryLabel = ev.country === 'UA' ? t('countryUA') : (ev.country === 'RU' ? t('countryRU') : t('countryOSINT'));
+        var countryClass = ev.country === 'UA' ? 'ua' : (ev.country === 'RU' ? 'ru' : 'osint');
+
         html += '<div class="event-item" data-lat="' + ev.lat + '" data-lng="' + ev.lng + '">' +
                 '<div class="evt-type" style="color:' + color + ';">' +
                 '<span style="color:' + color + ';display:flex;align-items:center;">' + svg + '</span>' + label +
                 '<span class="evt-country ' + countryClass + '">' + countryLabel + '</span></div>' +
-                '<div class="evt-loc">' + (ev.location || '') + '</div>' +
+                '<div class="evt-loc">' + (ev.location || '') + ' <span style="color:#aaa;">@' + (ev.channel || '') + '</span></div>' +
                 '<div class="evt-time">' + time + '</div></div>';
       });
+
       body.innerHTML = html;
       body.querySelectorAll('.event-item').forEach(function(item) {
         item.addEventListener('click', function() {
@@ -788,15 +760,8 @@
         html += '<h4>' + t('controlZones') + '</h4>';
         html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
         html += '<label><input type="checkbox" id="chkCounter" checked> ' + t('counteroffensive') + '</label>';
-        html += '<hr>';
-        html += '<div class="opacity-row"><label>' + t('opacityLabel') + '</label>' +
-                '<input type="range" id="opacitySlider" min="0" max="50" step="1" value="' + Math.round(fillOpacity * 100) + '">' +
-                '<span class="opacity-value" id="opacityValue">' + Math.round(fillOpacity * 100) + '%</span></div>';
-        html += '<div class="mode-toggle">' +
-                '<button data-mode="fill" class="' + (layerMode === 'fill' ? 'active' : '') + '">' + t('modeFill') + '</button>' +
-                '<button data-mode="outline" class="' + (layerMode === 'outline' ? 'active' : '') + '">' + t('modeOutline') + '</button>' +
-                '</div>';
-        html += '<hr><h4>' + t('warTrackerEvents') + '</h4>';
+        html += '<hr><h4>' + t('telegramEvents') + '</h4>';
+        html += '<label><input type="checkbox" id="chkTg" checked> Показывать события</label>';
         [
           { key: 'Air Raid Alert', label: t('raidAlert') },
           { key: 'Military Strike', label: t('strike') },
@@ -811,6 +776,14 @@
                   '<span style="color:' + wtColor(item.key) + ';display:inline-flex;align-items:center;width:16px;height:16px;">' + svg + '</span> ' +
                   item.label + '</label>';
         });
+        html += '<hr>';
+        html += '<div class="opacity-row"><label>' + t('opacityLabel') + '</label>' +
+                '<input type="range" id="opacitySlider" min="0" max="50" step="1" value="' + Math.round(fillOpacity * 100) + '">' +
+                '<span class="opacity-value" id="opacityValue">' + Math.round(fillOpacity * 100) + '%</span></div>';
+        html += '<div class="mode-toggle">' +
+                '<button data-mode="fill" class="' + (layerMode === 'fill' ? 'active' : '') + '">' + t('modeFill') + '</button>' +
+                '<button data-mode="outline" class="' + (layerMode === 'outline' ? 'active' : '') + '">' + t('modeOutline') + '</button>' +
+                '</div>';
         div.innerHTML = html;
         attach();
       }
@@ -820,7 +793,7 @@
           btn.addEventListener('click', function() {
             currentLang = this.getAttribute('data-lang');
             render(); updateLegend(); renderToolbar();
-            loadWarTrackerUA(); loadWarTrackerRU();
+            loadTelegramEvents();
           });
         });
         var chkZone = div.querySelector('#chkZone');
@@ -830,6 +803,10 @@
         var chkCounter = div.querySelector('#chkCounter');
         if (chkCounter) chkCounter.addEventListener('change', function() {
           if (this.checked) counterLayer.addTo(map); else map.removeLayer(counterLayer);
+        });
+        var chkTg = div.querySelector('#chkTg');
+        if (chkTg) chkTg.addEventListener('change', function() {
+          if (this.checked) tgLayer.addTo(map); else map.removeLayer(tgLayer);
         });
         var slider = div.querySelector('#opacitySlider');
         var sliderValue = div.querySelector('#opacityValue');
@@ -849,7 +826,7 @@
         div.querySelectorAll('.wt-filter').forEach(function(chk) {
           chk.addEventListener('change', function() {
             activeEventTypes[this.getAttribute('data-type')] = this.checked;
-            loadWarTrackerUA(); loadWarTrackerRU();
+            loadTelegramEvents();
           });
         });
       }
@@ -880,20 +857,19 @@
       var html = '<h4>' + t('controlZones') + '</h4>';
       html += '<div><i style="background:#cc0000;"></i> ' + t('territoryRF') + '</div>';
       html += '<div><span class="legend-line" style="background:#0088cc;"></span> ' + t('counteroffensive') + '</div>';
-      html += '<hr><h4>' + t('warTrackerEvents') + '</h4>';
+      html += '<hr><h4>' + t('telegramEvents') + '</h4>';
       ['Air Raid Alert','Military Strike','Military Operation','Military Offensive','Security Incident','Political Development'].forEach(function(type) {
         html += '<div><span class="legend-svg" style="color:' + wtColor(type) + ';">' + wtSvg(type) + '</span> ' +
                 t(WT_LABELS[type]) + '</div>';
       });
-      html += '<hr><div style="font-size:11px;color:var(--text-muted);">War-Tracker · DeepStateMap · ISW</div>';
+      html += '<hr><div style="font-size:11px;color:var(--text-muted);">Telegram · DeepStateMap · ISW</div>';
       div.innerHTML = html;
     }
 
     // ============================================================
     // 10. ЗАПУСК
     // ============================================================
-    loadWarTrackerUA();
-    loadWarTrackerRU();
+    loadTelegramEvents();
   </script>
 </body>
 </html>
