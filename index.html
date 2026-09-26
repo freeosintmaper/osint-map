@@ -246,7 +246,7 @@
 
       // Формируем целевой URL и оборачиваем его в CORS-прокси
       var targetUrl = 'https://war-tracker.com/api/v1/events?country=UA&limit=100';
-      var proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(targetUrl);
+      var proxyUrl = 'https://thingproxy.freeboard.io/fetch/' + targetUrl;
 
       fetch(proxyUrl)
         .then(function(r) {
