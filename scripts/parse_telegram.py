@@ -61,7 +61,6 @@ CHANNEL_COUNTRY = {
 }
 
 CITY_COORDS = {
-    # Украина
     "Киев": [50.4501, 30.5234], "Kyiv": [50.4501, 30.5234], "Києві": [50.4501, 30.5234], "Києва": [50.4501, 30.5234],
     "Харьков": [49.9935, 36.2304], "Kharkiv": [49.9935, 36.2304], "Харкові": [49.9935, 36.2304], "Харкова": [49.9935, 36.2304],
     "Одесса": [46.4775, 30.7326], "Odesa": [46.4775, 30.7326], "Одесі": [46.4775, 30.7326], "Одессы": [46.4775, 30.7326],
@@ -114,7 +113,6 @@ CITY_COORDS = {
     "Вышгород": [50.5841, 30.4901],
     "Фастов": [50.0747, 29.9181],
 
-    # Россия
     "Курск": [51.7304, 36.1926], "Kursk": [51.7304, 36.1926],
     "Белгород": [50.5952, 36.5873], "Belgorod": [50.5952, 36.5873],
     "Брянск": [53.2435, 34.3639], "Bryansk": [53.2435, 34.3639],
@@ -213,6 +211,17 @@ RU_CITIES = {
     "Кострома","Владимир","Рязань","Ryazan"
 }
 
+# Слова, указывающие что город — реальное место события
+EVENT_CONTEXT = ["удар", "обстр", "тревог", "взрыв", "прилёт", "приліт", "атак",
+                 "бой", "наступлен", "наступ", "штурм", "бпла", "дрон", "ракет",
+                 "пво", "по ", "в ", "на ", "оборон"]
+
+# Шумовые слова — если рядом с городом, это НЕ место события
+NOISE_CONTEXT = ["заяв", "сообщ", "минобороны", "минобороны",
+                 "по данным", "по словам", "отметил", "подчеркн",
+                 "написал", "передаёт", "передает", "цитирует",
+                 "комментар", "пресс-служб", "пресс-служб"]
+
 
 def fetch_channel(channel):
     url = f"https://t.me/s/{channel}"
@@ -256,16 +265,51 @@ def extract_posts(html):
 
 
 def find_best_city(text):
+    """Ищет город с учётом контекста: событийные слова дают бонус, шумовые — штраф."""
     tl = text.lower()
-    found = []
+    candidates = []
+
     for city, coords in CITY_COORDS.items():
-        idx = tl.find(city.lower())
-        if idx >= 0:
-            found.append((idx, city, coords))
-    if not found:
+        city_low = city.lower()
+        idx = tl.find(city_low)
+        while idx >= 0:
+            # Контекст до и после города
+            before = tl[max(0, idx-50):idx]
+            after = tl[idx+len(city_low):idx+len(city_low)+50]
+            full_ctx = before + " " + after
+
+            score = 0
+
+            # Штраф, если город в шумовом контексте
+            for w in NOISE_CONTEXT:
+                if w in before:
+                    score -= 15
+                    break
+
+            # Бонус, если рядом событийное слово
+            event_hits = 0
+            for w in EVENT_CONTEXT:
+                if w in before or w in after:
+                    event_hits += 1
+            score += event_hits * 8
+
+            # Мягкий бонус за позицию: чем раньше в тексте, тем лучше
+            score -= idx * 0.05
+
+            # Штраф для Киева и Москвы — их часто упоминают в общем контексте
+            if city in ("Киев", "Kyiv", "Києві", "Києва", "Москва", "Moscow"):
+                if event_hits == 0:
+                    score -= 5
+
+            candidates.append((score, city, coords))
+            idx = tl.find(city_low, idx + 1)
+
+    if not candidates:
         return None, None
-    found.sort(key=lambda x: x[0])
-    return found[0][2], found[0][1]
+
+    candidates.sort(key=lambda x: -x[0])
+    best_score, best_city, best_coords = candidates[0]
+    return best_coords, best_city
 
 
 def country_by_city(city):
@@ -296,7 +340,6 @@ def make_dedup_key(ev):
 
 
 def jitter_coords(lat, lng, radius_km):
-    """Случайное смещение координат в пределах radius_km."""
     deg_lat_per_km = 1.0 / 111.0
     deg_lng_per_km = 1.0 / (111.0 * math.cos(math.radians(lat)) + 0.0001)
     dlat = random.uniform(-radius_km, radius_km) * deg_lat_per_km
@@ -304,8 +347,18 @@ def jitter_coords(lat, lng, radius_km):
     return lat + dlat, lng + dlng
 
 
+def radius_for_count(count):
+    if count <= 3:
+        return 1.5
+    elif count <= 10:
+        return 3.0
+    elif count <= 20:
+        return 5.0
+    else:
+        return 8.0
+
+
 def main():
-    # Шаг 1: собираем все события с одинаковыми координатами
     raw_events = []
     seen_texts = set()
     seen_dedup = set()
@@ -360,32 +413,18 @@ def main():
         print(f"  Совпало с городами: {matched}")
         time.sleep(1)
 
-    # Шаг 2: считаем, сколько событий на каждую пару координат
     coord_counter = Counter()
     for ev in raw_events:
         coord_key = (round(ev["lat"], 3), round(ev["lng"], 3))
         coord_counter[coord_key] += 1
 
-    # Шаг 3: применяем адаптивный jitter
-    # Если в городе 1-3 события — 1.5 км, 4-10 — 3 км, 11-20 — 5 км, >20 — 8 км
-    def radius_for_count(count):
-        if count <= 3:
-            return 1.5
-        elif count <= 10:
-            return 3.0
-        elif count <= 20:
-            return 5.0
-        else:
-            return 8.0
-
-    print("\n🔀 Применяю jitter к координатам...")
+    print("\n🔀 Применяю jitter...")
     for ev in raw_events:
         coord_key = (round(ev["lat"], 3), round(ev["lng"], 3))
         count = coord_counter[coord_key]
         radius = radius_for_count(count)
         ev["lat"], ev["lng"] = jitter_coords(ev["lat"], ev["lng"], radius)
 
-    # Шаг 4: сохраняем
     output = "window.TG_DATA = " + json.dumps({"events": raw_events}, ensure_ascii=False) + ";"
     with open("data/telegram-events.js", "w", encoding="utf-8") as f:
         f.write(output)
@@ -397,7 +436,7 @@ def main():
         if count > 0:
             print(f"  @{ch}: {count}")
 
-    print("\n📍 Топ-10 городов по количеству событий:")
+    print("\n📍 Топ-10 городов:")
     city_counter = Counter(ev["location"] for ev in raw_events)
     for city, count in city_counter.most_common(10):
         print(f"  {city}: {count} → разброс {radius_for_count(count)} км")
