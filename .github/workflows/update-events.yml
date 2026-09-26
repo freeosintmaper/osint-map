@@ -31,10 +31,27 @@ jobs:
           echo "RU file size:"
           wc -c data/war-tracker-ru.json
 
+      - name: Download Leaflet libraries
+        run: |
+          mkdir -p lib/images lib/leaflet-draw/images
+          curl -sL "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" -o lib/leaflet.css
+          curl -sL "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" -o lib/leaflet.js
+          curl -sL "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png" -o lib/images/marker-icon.png
+          curl -sL "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png" -o lib/images/marker-icon-2x.png
+          curl -sL "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png" -o lib/images/marker-shadow.png
+          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" -o lib/leaflet-draw.css
+          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js" -o lib/leaflet-draw.js
+          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet.png" -o lib/leaflet-draw/images/spritesheet.png
+          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet-2x.png" -o lib/leaflet-draw/images/spritesheet-2x.png
+          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet.svg" -o lib/leaflet-draw/images/spritesheet.svg
+          curl -sL "https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js" -o lib/leaflet.polylineDecorator.js
+          echo "Downloaded files:"
+          ls -la lib/
+
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/war-tracker.json data/war-tracker-ru.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "Обновление событий War-Tracker (UA + RU)"
+          git add data/ lib/
+          git diff --quiet && git diff --staged --quiet || git commit -m "Обновление данных и библиотек"
           git push
