@@ -3,7 +3,10 @@ import json
 import sys
 import urllib.request
 import time
+import random
+import math
 from html import unescape
+from collections import Counter
 
 CHANNELS = [
     # Украинские официальные
@@ -45,17 +48,13 @@ CHANNELS = [
 ]
 
 CHANNEL_COUNTRY = {
-    # Украинские
     "kpszsu": "UA", "GeneralStaffZSU": "UA", "operativnoZSU": "UA",
     "ukrpravda_news": "UA", "uniannet": "UA", "DeepStateUA": "UA",
     "amk_mapping": "UA", "OsintFlow": "UA", "ukraine_observer": "UA",
-    # Российские
     "rybar": "RU", "voenkorKotenok": "RU", "wargonzo": "RU",
     "dva_majors": "RU", "readovkanews": "RU", "tass_agency": "RU",
     "militarysummary": "RU", "lost_armour": "RU",
-    # Независимые / OSINT
     "UAWeapons": "OSINT", "Osinttechnical": "OSINT", "informnapalm": "OSINT",
-    # Каналы тревог
     "AerisRimor": "UA", "monitoringwar": "UA",
     "sputnikrussia_radar": "RU", "radar_rf": "RU", "locatorru": "RU",
     "ruporruss": "RU", "grohot_pgr": "RU", "russiamonitoring_radar_bpla": "RU",
@@ -115,7 +114,7 @@ CITY_COORDS = {
     "Вышгород": [50.5841, 30.4901],
     "Фастов": [50.0747, 29.9181],
 
-    # Россия — крупные города
+    # Россия
     "Курск": [51.7304, 36.1926], "Kursk": [51.7304, 36.1926],
     "Белгород": [50.5952, 36.5873], "Belgorod": [50.5952, 36.5873],
     "Брянск": [53.2435, 34.3639], "Bryansk": [53.2435, 34.3639],
@@ -140,7 +139,6 @@ CITY_COORDS = {
     "Анапа": [44.8909, 37.3198], "Anapa": [44.8909, 37.3198],
     "Новороссийск": [44.7239, 37.7686], "Novorossiysk": [44.7239, 37.7686],
     "Таганрог": [47.2097, 38.9353], "Taganrog": [47.2097, 38.9353],
-    # Россия — областные центры и приграничные
     "Валуйки": [50.2086, 38.1016], "Valuyki": [50.2086, 38.1016],
     "Шебекино": [50.4067, 36.8925], "Shebekino": [50.4067, 36.8925],
     "Грайворон": [50.4828, 35.6628],
@@ -180,7 +178,6 @@ CITY_COORDS = {
     "Кострома": [57.7665, 40.9269],
     "Владимир": [56.1290, 40.4070],
     "Рязань": [54.6269, 39.6916], "Ryazan": [54.6269, 39.6916],
-    "Краснодарский": [45.0355, 38.9753],
 }
 
 UA_CITIES = {
@@ -298,8 +295,18 @@ def make_dedup_key(ev):
     return ev["channel"] + "|" + ev.get("description", "")[:80]
 
 
+def jitter_coords(lat, lng, radius_km):
+    """Случайное смещение координат в пределах radius_km."""
+    deg_lat_per_km = 1.0 / 111.0
+    deg_lng_per_km = 1.0 / (111.0 * math.cos(math.radians(lat)) + 0.0001)
+    dlat = random.uniform(-radius_km, radius_km) * deg_lat_per_km
+    dlng = random.uniform(-radius_km, radius_km) * deg_lng_per_km
+    return lat + dlat, lng + dlng
+
+
 def main():
-    all_events = []
+    # Шаг 1: собираем все события с одинаковыми координатами
+    raw_events = []
     seen_texts = set()
     seen_dedup = set()
     duplicates = 0
@@ -328,7 +335,7 @@ def main():
             matched += 1
 
             ev = {
-                "id": len(all_events) + 1,
+                "id": len(raw_events) + 1,
                 "url": post["url"] or f"https://t.me/s/{channel}",
                 "date": post["date"],
                 "event_type": classify_event(text),
@@ -347,22 +354,53 @@ def main():
                 continue
             seen_dedup.add(dedup)
 
-            all_events.append(ev)
+            raw_events.append(ev)
 
         stats[channel] = matched
         print(f"  Совпало с городами: {matched}")
         time.sleep(1)
 
-    output = "window.TG_DATA = " + json.dumps({"events": all_events}, ensure_ascii=False) + ";"
+    # Шаг 2: считаем, сколько событий на каждую пару координат
+    coord_counter = Counter()
+    for ev in raw_events:
+        coord_key = (round(ev["lat"], 3), round(ev["lng"], 3))
+        coord_counter[coord_key] += 1
+
+    # Шаг 3: применяем адаптивный jitter
+    # Если в городе 1-3 события — 1.5 км, 4-10 — 3 км, 11-20 — 5 км, >20 — 8 км
+    def radius_for_count(count):
+        if count <= 3:
+            return 1.5
+        elif count <= 10:
+            return 3.0
+        elif count <= 20:
+            return 5.0
+        else:
+            return 8.0
+
+    print("\n🔀 Применяю jitter к координатам...")
+    for ev in raw_events:
+        coord_key = (round(ev["lat"], 3), round(ev["lng"], 3))
+        count = coord_counter[coord_key]
+        radius = radius_for_count(count)
+        ev["lat"], ev["lng"] = jitter_coords(ev["lat"], ev["lng"], radius)
+
+    # Шаг 4: сохраняем
+    output = "window.TG_DATA = " + json.dumps({"events": raw_events}, ensure_ascii=False) + ";"
     with open("data/telegram-events.js", "w", encoding="utf-8") as f:
         f.write(output)
 
-    print(f"\n✅ Итого: {len(all_events)} событий (отброшено дубликатов: {duplicates})")
+    print(f"\n✅ Итого: {len(raw_events)} событий (отброшено дубликатов: {duplicates})")
 
     print("\n📊 Статистика по каналам:")
     for ch, count in sorted(stats.items(), key=lambda x: -x[1]):
         if count > 0:
             print(f"  @{ch}: {count}")
+
+    print("\n📍 Топ-10 городов по количеству событий:")
+    city_counter = Counter(ev["location"] for ev in raw_events)
+    for city, count in city_counter.most_common(10):
+        print(f"  {city}: {count} → разброс {radius_for_count(count)} км")
 
 
 if __name__ == "__main__":
