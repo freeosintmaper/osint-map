@@ -14,29 +14,40 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Fetch War-Tracker data for Ukraine
+           - name: Fetch War-Tracker data for Ukraine
         run: |
           mkdir -p data
-          curl -s -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+          curl -s -m 30 -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
                "https://war-tracker.com/api/v1/events?country=UA&limit=100" \
                -o /tmp/ua.json
-          echo "window.WT_DATA_UA = " > data/war-tracker-ua.js
-          cat /tmp/ua.json >> data/war-tracker-ua.js
-          echo ";" >> data/war-tracker-ua.js
-          echo "UA JS file size:"
-          wc -c data/war-tracker-ua.js
+          # Проверяем, что ответ — валидный JSON с полем events
+          if jq -e '.events' /tmp/ua.json > /dev/null 2>&1; then
+            echo "window.WT_DATA_UA = " > data/war-tracker-ua.js
+            cat /tmp/ua.json >> data/war-tracker-ua.js
+            echo ";" >> data/war-tracker-ua.js
+            echo "✅ UA обновлён"
+          else
+            echo "⚠️ UA ответ не валидный — оставляем старый файл"
+            head -c 200 /tmp/ua.json
+          fi
+          wc -c data/war-tracker-ua.js 2>/dev/null || echo "файл отсутствует"
 
       - name: Fetch War-Tracker data for Russia
         run: |
           mkdir -p data
-          curl -s -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+          curl -s -m 30 -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
                "https://war-tracker.com/api/v1/events?country=RU&limit=100" \
                -o /tmp/ru.json
-          echo "window.WT_DATA_RU = " > data/war-tracker-ru.js
-          cat /tmp/ru.json >> data/war-tracker-ru.js
-          echo ";" >> data/war-tracker-ru.js
-          echo "RU JS file size:"
-          wc -c data/war-tracker-ru.js
+          if jq -e '.events' /tmp/ru.json > /dev/null 2>&1; then
+            echo "window.WT_DATA_RU = " > data/war-tracker-ru.js
+            cat /tmp/ru.json >> data/war-tracker-ru.js
+            echo ";" >> data/war-tracker-ru.js
+            echo "✅ RU обновлён"
+          else
+            echo "⚠️ RU ответ не валидный — оставляем старый файл"
+            head -c 200 /tmp/ru.json
+          fi
+          wc -c data/war-tracker-ru.js 2>/dev/null || echo "файл отсутствует"
 
       - name: Download Leaflet libraries
         run: |
