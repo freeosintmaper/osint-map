@@ -41,6 +41,20 @@ ABBREVIATIONS = {
     "азия", "африка", "европа",
 }
 
+# Сводки — если слово в первых 200 символах, пост пропускаем
+SUMMARY_WORDS = [
+    "сводка", "сводку", "сводке", "зведення", "зведенню",
+    "оперативная информация", "оперативна інформація", "оперативную информацию",
+    "оперативка",
+    "брифинг", "брифінг",
+    "за минувшие сутки", "за добу", "за прошедшие сутки", "протягом доби",
+    "бойових зіткнень", "боевых столкновений",
+    "итоги", "підсумки",
+    "обстановка на фронте", "ситуация на фронте", "ситуація на фронті",
+    "фронтовая сводка", "фронтове зведення",
+    "збито/подавлено", "сбито/подавлено", "збито / подавлено",
+]
+
 TRANSLIT_ALIASES = {
     # Украинские написания российских городов
     "ульяновськ": [54.3142, 48.4031, "Ульяновск", "RU"],
@@ -84,6 +98,8 @@ TRANSLIT_ALIASES = {
     "приморськ": [43.1155, 131.8855, "Владивосток", "RU"],
 
     # Российские написания украинских городов
+    "сіверськодонецьк": [48.9487, 38.4924, "Северодонецк", "UA"],
+    "северодонецк": [48.9487, 38.4924, "Северодонецк", "UA"],
     "київськ": [50.4501, 30.5234, "Киев", "UA"],
     "киевск": [50.4501, 30.5234, "Киев", "UA"],
     "львівськ": [49.8397, 24.0297, "Львов", "UA"],
@@ -150,20 +166,18 @@ EVENT_PATTERNS = [
     r'дрон\w*\s+(?:над|на|в|курс)',
     r'курс\w*\s+(?:на|в)\s+',
 
-    # РЕВЕРСИВНЫЕ: "в X уражено", "в X удар"
-    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}уражен\w*',
-    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}поражен\w*',
-    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}удар\w*',
-    r'\bу\s+[а-яёa-z\-]+\s+\w{0,15}уражен\w*',
-    r'\bу\s+[а-яёa-z\-]+\s+\w{0,15}влучан\w*',
-    r'\bна\s+[а-яёa-z\-]+\s+\w{0,15}удар\w*',
-    r'\bу\s+[а-яёa-z\-]+\s+\w{0,15}атак\w*',
-    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}атак\w*',
-    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}вибух\w*',
-    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}взрыв\w*',
-    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}прил[её]т\w*',
-    r'\bу\s+[а-яёa-z\-]+\s+\w{0,15}приліт\w*',
-    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}попал\w*',
+    # РЕВЕРСИВНЫЕ: "в X ... уражено" (до 4 слов между)
+    r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}уражен\w*',
+    r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}поражен\w*',
+    r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}удар\w*',
+    r'\bу\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}уражен\w*',
+    r'\bу\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}влучан\w*',
+    r'\bу\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}удар\w*',
+    r'\bна\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}удар\w*',
+    r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}вибух\w*',
+    r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}взрыв\w*',
+    r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}прил[её]т\w*',
+    r'\bу\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}приліт\w*',
 
     # ФРОНТОВЫЕ: бои в районе X, штурм X, под X
     r'в\s+районе\s+',
@@ -200,6 +214,13 @@ SOURCE_VERBS = [
     r'прилетели\s+с', r'курс\s+с', r'курсом\s+с',
     r'с\s+территории', r'з\s+території',
     r'с\s+направления', r'з\s+напрямку',
+    # "X-ском направлении" — фронт, не место события
+    r'\w+ском\s+направлени',
+    r'\w+скому\s+направлени',
+    r'\w+ском\s+напрямку',
+    r'\w+скому\s+напрямку',
+    r'\w+ском\s+направлении',
+    r'\w+скому\s+направлении',
 ]
 
 CANCEL_WORDS = ["отбой", "отменена", "отменён", "отменен",
@@ -241,6 +262,15 @@ STOP_SETTLEMENTS = {
 }
 
 SETTLEMENTS_BY_NAME = {}
+
+
+def is_summary(text):
+    """Пост — сводка? Если да, пропускаем."""
+    tl = text[:250].lower()
+    for w in SUMMARY_WORDS:
+        if w in tl:
+            return True
+    return False
 
 
 def load_settlements():
@@ -345,15 +375,18 @@ def is_military_term_context(text, phrase):
 
 
 def find_alias(text, channel_country):
+    """Возвращает (coords, name, country, had_alias)."""
     tl = text.lower()
+    had_alias = False
     for key in sorted(TRANSLIT_ALIASES.keys(), key=lambda k: -len(k)):
         if key not in tl:
             continue
+        had_alias = True
         coords = TRANSLIT_ALIASES[key]
         alias_country = coords[3]
 
         if channel_country not in ("UA", "RU") or alias_country == channel_country:
-            return (coords[0], coords[1]), coords[2], coords[3]
+            return (coords[0], coords[1]), coords[2], coords[3], True
 
         if has_source_verb_near(text, key, window=60):
             continue
@@ -361,8 +394,8 @@ def find_alias(text, channel_country):
             continue
         if is_military_term_context(text, key):
             continue
-        return (coords[0], coords[1]), coords[2], coords[3]
-    return None, None, None
+        return (coords[0], coords[1]), coords[2], coords[3], True
+    return None, None, None, had_alias
 
 
 def find_best_city(text, channel_country):
@@ -515,6 +548,7 @@ def main():
     duplicates = 0
     stats = {}
     no_match = 0
+    skipped_summary = 0
 
     for channel in CHANNELS:
         print(f"Парсим @{channel}...")
@@ -535,12 +569,24 @@ def main():
                 continue
             seen_texts.add(key)
 
+            # ФИЛЬТР СВОДОК
+            if is_summary(text):
+                skipped_summary += 1
+                continue
+
             event_type = classify_event(text)
             if not event_type:
                 continue
 
-            coords, city, country = find_alias(text, channel_country)
+            # 1. Алиасы (с флагом had_alias)
+            coords, city, country, had_alias = find_alias(text, channel_country)
 
+            # 2. Если алиас был, но не подошёл — НЕ идём в fallback
+            if not coords and had_alias:
+                no_match += 1
+                continue
+
+            # 3. Обычный поиск
             if not coords:
                 coords, city, country = find_best_city(text, channel_country)
 
@@ -585,7 +631,8 @@ def main():
         print(f"  Совпало: {matched}")
         time.sleep(1)
 
-    print(f"\n🚫 Отмен тревог найдено: {len(cancellations)}")
+    print(f"\n🚫 Пропущено сводок: {skipped_summary}")
+    print(f"🚫 Отмен тревог найдено: {len(cancellations)}")
     print("🧹 Убираю устаревшие тревоги...")
     raw_events = apply_cancellations(raw_events, cancellations)
 
