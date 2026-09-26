@@ -32,7 +32,7 @@
     }
     #errorBox.info { background: #e3f2fd; color: #1565c0; }
 
-    /* === SVG-иконки событий (как liveuamap) === */
+    /* === SVG-иконки событий === */
     .event-icon {
       display: flex; align-items: center; justify-content: center;
       width: 30px; height: 30px; border-radius: 50%;
@@ -231,8 +231,8 @@
       ru: {
         eventsPanelTitle: 'События за 24 часа',
         controlZones: 'Зоны контроля',
-        territoryRF: 'Территория, занимаемая РФ',
-        counteroffensive: 'Контрнаступления ВСУ',
+        territoryRF: 'Территория, занимаемая РФ (DeepStateMap)',
+        counteroffensive: 'Контрнаступления ВСУ (ISW)',
         warTrackerEvents: 'События War-Tracker',
         raidAlert: 'Воздушная тревога', strike: 'Удар', operation: 'Операция',
         offensive: 'Наступление', incident: 'Инцидент', politics: 'Политика',
@@ -240,16 +240,23 @@
         noEvents: 'Нет событий за 24 часа', source: 'Источник',
         toolMarker: 'Метка', toolLine: 'Линия', toolArrow: 'Стрелка',
         toolPolygon: 'Зона', toolRectangle: 'Прямоугольник', toolCircle: 'Круг',
-        toolMeasure: 'Измерить расстояние', toolClear: 'Очистить всё', toolTheme: 'Тёмная тема',
+        toolMeasure: 'Измерить расстояние', toolClear: 'Очистить всё',
+        toolTheme: 'Тёмная тема', toolInfo: 'О проекте',
         clearConfirm: 'Удалить все ваши рисунки?',
         total: 'Всего', countryUA: 'Украина', countryRU: 'РФ',
-        opacityLabel: 'Прозрачность', modeFill: 'Заливка', modeOutline: 'Только контуры'
+        opacityLabel: 'Прозрачность', modeFill: 'Заливка', modeOutline: 'Только контуры',
+        aboutText: 'Карта агрегирует открытые данные из разных источников.\n\n' +
+                   '· События — War-Tracker (у каждого есть ссылка на источник)\n' +
+                   '· Территория РФ — DeepStateMap (украинский OSINT-проект)\n' +
+                   '· Контрнаступления — ISW (американский аналитический центр)\n\n' +
+                   'Мы не проводим собственный анализ. Линия фронта — приблизительная.\n' +
+                   'Мы не ручаемся за точность и полноту данных. Каждое событие имеет ссылку на первоисточник.'
       },
       uk: {
         eventsPanelTitle: 'Події за 24 години',
         controlZones: 'Зони контролю',
-        territoryRF: 'Територія, яку займає РФ',
-        counteroffensive: 'Контрнаступи ЗСУ',
+        territoryRF: 'Територія, яку займає РФ (DeepStateMap)',
+        counteroffensive: 'Контрнаступи ЗСУ (ISW)',
         warTrackerEvents: 'Події War-Tracker',
         raidAlert: 'Повітряна тривога', strike: 'Удар', operation: 'Операція',
         offensive: 'Наступ', incident: 'Інцидент', politics: 'Політика',
@@ -257,16 +264,23 @@
         noEvents: 'Немає подій за 24 години', source: 'Джерело',
         toolMarker: 'Мітка', toolLine: 'Лінія', toolArrow: 'Стрілка',
         toolPolygon: 'Зона', toolRectangle: 'Прямокутник', toolCircle: 'Коло',
-        toolMeasure: 'Виміряти відстань', toolClear: 'Очистити все', toolTheme: 'Темна тема',
+        toolMeasure: 'Виміряти відстань', toolClear: 'Очистити все',
+        toolTheme: 'Темна тема', toolInfo: 'Про проект',
         clearConfirm: 'Видалити всі ваші малюнки?',
         total: 'Всього', countryUA: 'Україна', countryRU: 'РФ',
-        opacityLabel: 'Прозорість', modeFill: 'Заливка', modeOutline: 'Лише контури'
+        opacityLabel: 'Прозорість', modeFill: 'Заливка', modeOutline: 'Лише контури',
+        aboutText: 'Карта агрегує відкриті дані з різних джерел.\n\n' +
+                   '· Події — War-Tracker (кожна має посилання на джерело)\n' +
+                   '· Територія РФ — DeepStateMap (український OSINT-проект)\n' +
+                   '· Контрнаступи — ISW (американський аналітичний центр)\n\n' +
+                   'Ми не проводимо власний аналіз. Лінія фронту — приблизна.\n' +
+                   'Ми не ручаємося за точність та повноту даних.'
       },
       en: {
         eventsPanelTitle: 'Events (last 24h)',
         controlZones: 'Control Zones',
-        territoryRF: 'Territory held by RF',
-        counteroffensive: 'Ukrainian counteroffensives',
+        territoryRF: 'Territory held by RF (DeepStateMap)',
+        counteroffensive: 'Ukrainian counteroffensives (ISW)',
         warTrackerEvents: 'War-Tracker Events',
         raidAlert: 'Air Raid Alert', strike: 'Strike', operation: 'Operation',
         offensive: 'Offensive', incident: 'Incident', politics: 'Politics',
@@ -274,10 +288,17 @@
         noEvents: 'No events in last 24h', source: 'Source',
         toolMarker: 'Marker', toolLine: 'Line', toolArrow: 'Arrow',
         toolPolygon: 'Polygon', toolRectangle: 'Rectangle', toolCircle: 'Circle',
-        toolMeasure: 'Measure distance', toolClear: 'Clear all', toolTheme: 'Dark theme',
+        toolMeasure: 'Measure distance', toolClear: 'Clear all',
+        toolTheme: 'Dark theme', toolInfo: 'About',
         clearConfirm: 'Delete all your drawings?',
         total: 'Total', countryUA: 'Ukraine', countryRU: 'RF',
-        opacityLabel: 'Opacity', modeFill: 'Fill', modeOutline: 'Outline only'
+        opacityLabel: 'Opacity', modeFill: 'Fill', modeOutline: 'Outline only',
+        aboutText: 'This map aggregates open data from different sources.\n\n' +
+                   '· Events — War-Tracker (each has a source link)\n' +
+                   '· Territory held by RF — DeepStateMap (Ukrainian OSINT)\n' +
+                   '· Counteroffensives — ISW (US analytical center)\n\n' +
+                   'We do not perform our own analysis. Front line is approximate.\n' +
+                   'We cannot guarantee accuracy or completeness.'
       }
     };
 
@@ -299,7 +320,6 @@
       localStorage.setItem(MODE_KEY, layerMode);
     }
 
-    // Явно задаём fill, чтобы Leaflet корректно переключался между режимами
     function styleFor(baseColor) {
       if (layerMode === 'outline') {
         return {
@@ -313,7 +333,6 @@
       };
     }
 
-    // Принудительно обновляем и стиль, и внутренние опции слоя
     function applyStyleToLayer(layer, baseColor, styleObj) {
       if (!layer) return;
       if (layer.setStyle) layer.setStyle(styleObj);
@@ -425,7 +444,7 @@
     counterLayer.addTo(map);
 
     // ============================================================
-    // 4. SVG-ИКОНКИ СОБЫТИЙ (как liveuamap)
+    // 4. SVG-ИКОНКИ СОБЫТИЙ
     // ============================================================
     var WT_COLORS = {
       'Air Raid Alert': '#e6a800',
@@ -441,7 +460,6 @@
       'Security Incident': 'incident', 'Political Development': 'politics'
     };
 
-    // SVG-пиктограммы (белые, 24x24 viewBox)
     var WT_SVG = {
       'Air Raid Alert':
         '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>',
@@ -714,7 +732,8 @@
         { key: 'rectangle', icon: '▭' }, { key: 'circle', icon: '⭕' },
         { sep: true }, { key: 'measure', icon: '📐' },
         { sep: true }, { key: 'clear', icon: '🗑️', danger: true },
-        { sep: true }, { key: 'theme', icon: currentTheme === 'dark' ? '☀️' : '🌙' }
+        { sep: true }, { key: 'theme', icon: currentTheme === 'dark' ? '☀️' : '🌙' },
+        { sep: true }, { key: 'info', icon: 'ℹ️' }
       ];
       var html = '';
       tools.forEach(function(item) {
@@ -735,6 +754,7 @@
             return;
           }
           if (tool === 'theme') { applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); return; }
+          if (tool === 'info') { alert(t('aboutText')); return; }
           activateTool(tool);
         });
       });
@@ -856,7 +876,7 @@
         html += '<div><span class="legend-svg" style="color:' + wtColor(type) + ';">' + wtSvg(type) + '</span> ' +
                 t(WT_LABELS[type]) + '</div>';
       });
-      html += '<hr><div style="font-size:11px;color:var(--text-muted);">War-Tracker · DeepStateMap</div>';
+      html += '<hr><div style="font-size:11px;color:var(--text-muted);">War-Tracker · DeepStateMap · ISW</div>';
       div.innerHTML = html;
     }
 
