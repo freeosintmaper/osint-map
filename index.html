@@ -8,8 +8,12 @@
   <style>
     body { margin: 0; font-family: system-ui, sans-serif; }
     #map { height: 100vh; width: 100%; }
-
-    /* Панель управления */
+    #errorBox {
+      position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
+      background: #ffebee; color: #c62828; padding: 12px 20px;
+      border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      font-size: 13px; z-index: 99999; max-width: 90%; display: none;
+    }
     .control-panel {
       background: #fff; padding: 10px 12px; border-radius: 6px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.25); font-size: 13px;
@@ -28,8 +32,6 @@
       width: 100%; padding: 5px; margin: 3px 0; box-sizing: border-box;
       border: 1px solid #ccc; border-radius: 4px; font-size: 12px;
     }
-
-    /* Категории */
     .category-item {
       display: flex; align-items: center; padding: 5px 6px; margin: 2px 0;
       border-radius: 4px; cursor: pointer; border: 2px solid transparent;
@@ -39,37 +41,47 @@
       width: 16px; height: 16px; border-radius: 3px; margin-right: 8px;
       border: 1px solid rgba(0,0,0,0.2);
     }
-
-    /* Сообщение о статусе */
-    .status-msg {
-      padding: 6px 8px; margin-top: 6px; border-radius: 4px;
-      font-size: 11px; text-align: center;
-    }
+    .status-msg { padding: 6px 8px; margin-top: 6px; border-radius: 4px; font-size: 11px; text-align: center; }
     .status-ok { background: #e8f5e9; color: #2e7d32; }
     .status-err { background: #ffebee; color: #c62828; }
   </style>
 </head>
 <body>
   <div id="map"></div>
+  <div id="errorBox"></div>
 
-  <!-- Подключаем Leaflet, Leaflet.draw и Supabase -->
+  <script>
+    window.addEventListener('error', function(e) {
+      var box = document.getElementById('errorBox');
+      if (box) { box.style.display = 'block'; box.textContent = 'Ошибка: ' + e.message; }
+    });
+  </script>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
   <script>
     // ============================================================
-    // 1. НАСТРОЙКИ SUPABASE (ВАШИ КЛЮЧИ)
+    // 1. НАСТРОЙКИ
     // ============================================================
-    const SUPABASE_URL = 'https://zojqbhnwsycqhaiqpgxh.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvanFiaG53c3ljcWhhaXFwZ3hoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MjY2NzMsImV4cCI6MjEwNjAwMjY3M30.OwU-cwkvk0Z1a28xgKpwMl9p-h-gFObYJ6_PHhFeIHE';
+    var SB_URL = 'https://zojqbhnwsycqhaiqpgxh.supabase.co';
+    var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvanFiaG53c3ljcWhhaXFwZ3hoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MjY2NzMsImV4cCI6MjEwNjAwMjY3M30.OwU-cwkvk0Z1a28xgKpwMl9p-h-gFObYJ6_PHhFeIHE';
 
-    // Инициализация клиента Supabase
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    var sb = null;
+    try {
+      var sbFactory = window.supabase && window.supabase.createClient;
+      if (!sbFactory) throw new Error('Библиотека Supabase не загрузилась');
+      sb = sbFactory(SB_URL, SB_KEY);
+    } catch (err) {
+      document.getElementById('errorBox').style.display = 'block';
+      document.getElementById('errorBox').textContent = 'Ошибка базы: ' + err.message;
+    }
 
     // ============================================================
-    // 2. КАТЕГОРИИ СОБЫТИЙ
+    // 2. КАТЕГОРИИ
     // ============================================================
-    const CATEGORIES = {
+    var CATEGORIES = {
       'battle':    { label: 'Бой',          color: '#ff6600' },
       'shelling':  { label: 'Обстрел',      color: '#cc0000' },
       'airdefense':{ label: 'ППО',          color: '#0066ff' },
@@ -77,12 +89,12 @@
       'civilian':  { label: 'Гражданские',  color: '#e6b800' },
       'other':     { label: 'Другое',       color: '#9933cc' }
     };
-    let currentCategory = 'battle';
+    var currentCategory = 'battle';
 
     // ============================================================
-    // 3. КАРТА И ПОДЛОЖКА (Esri)
+    // 3. КАРТА
     // ============================================================
-    const map = L.map('map').setView([48.5, 37.5], 7);
+    var map = L.map('map').setView([48.5, 37.5], 7);
 
     L.tileLayer(
       'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
@@ -90,145 +102,122 @@
     ).addTo(map);
 
     // ============================================================
-    // 4. СЛОИ OSINT (ОККУПИРОВАННЫЕ ТЕРРИТОРИИ + КОНТРНАСТУПЛЕНИЕ ВСУ)
+    // 4. СЛОИ OSINT
     // ============================================================
-    const occupiedLayer = L.geoJSON(null, {
-      style: () => ({ color: '#cc0000', weight: 1.5, opacity: 0.9,
-                      fillColor: '#cc0000', fillOpacity: 0.15 }),
-      onEachFeature: (f, layer) => layer.bindPopup('<b>Оккупированные территории (DeepStateMap)</b>')
+    var occupiedLayer = L.geoJSON(null, {
+      style: function() { return { color: '#cc0000', weight: 1.5, opacity: 0.9, fillColor: '#cc0000', fillOpacity: 0.15 }; },
+      onEachFeature: function(f, layer) { layer.bindPopup('<b>Оккупированные территории</b>'); }
+    });
+    var counterLayer = L.geoJSON(null, {
+      style: function() { return { color: '#0088cc', weight: 1.5, opacity: 0.9, fillColor: '#0088cc', fillOpacity: 0.12, dashArray: '5,5' }; },
+      onEachFeature: function(f, layer) { layer.bindPopup('<b>Контрнаступления ВСУ</b>'); }
     });
 
-    const counterLayer = L.geoJSON(null, {
-      style: () => ({ color: '#0088cc', weight: 1.5, opacity: 0.9,
-                      fillColor: '#0088cc', fillOpacity: 0.12, dashArray: '5,5' }),
-      onEachFeature: (f, layer) => layer.bindPopup('<b>Контрнаступления ВСУ (ISW)</b>')
-    });
-
-    // DeepStateMap (оккупированные территории)
-    const DEEPSTATE_URL = 'https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz';
-    fetch(DEEPSTATE_URL)
-      .then(r => r.arrayBuffer())
-      .then(buffer => {
-        const ds = new DecompressionStream('gzip');
-        const stream = new Blob([buffer]).stream().pipeThrough(ds);
+    fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
+      .then(function(r) { return r.arrayBuffer(); })
+      .then(function(buffer) {
+        var ds = new DecompressionStream('gzip');
+        var stream = new Blob([buffer]).stream().pipeThrough(ds);
         return new Response(stream).json();
       })
-      .then(data => {
-        const features = data.features || [];
+      .then(function(data) {
+        var features = data.features || [];
         if (features.length > 0) {
-          features.sort((a, b) => (b.properties.date || '').localeCompare(a.properties.date || ''));
+          features.sort(function(a, b) { return (b.properties.date || '').localeCompare(a.properties.date || ''); });
           occupiedLayer.addData(features[0]);
         }
       })
-      .catch(err => console.warn('DeepStateMap:', err.message));
+      .catch(function(err) { console.warn('DeepStateMap:', err.message); });
 
-    // ISW (контрнаступления ВСУ)
-    const ISW_COUNTER_URL = 'https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/' +
-      'Claimed_Ukrainian_Counteroffensive_March_to_July/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson';
-    fetch(ISW_COUNTER_URL)
-      .then(r => r.json())
-      .then(d => counterLayer.addData(d))
-      .catch(err => console.warn('ISW ВСУ:', err.message));
+    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/Claimed_Ukrainian_Counteroffensive_March_to_July/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson')
+      .then(function(r) { return r.json(); })
+      .then(function(d) { counterLayer.addData(d); })
+      .catch(function(err) { console.warn('ISW:', err.message); });
 
     occupiedLayer.addTo(map);
     counterLayer.addTo(map);
 
     // ============================================================
-    // 5. СЛОЙ СОБЫТИЙ ИЗ SUPABASE
+    // 5. СОБЫТИЯ
     // ============================================================
-    const eventsLayer = new L.FeatureGroup();
+    var eventsLayer = new L.FeatureGroup();
     map.addLayer(eventsLayer);
 
-    // Загрузка событий из Supabase
-    async function loadEvents() {
-      eventsLayer.clearLayers();
-      const { data, error } = await supabase.from('events').select('*');
-      if (error) { console.error('Ошибка загрузки событий:', error.message); return; }
-      if (!data) return;
-      data.forEach(ev => {
-        const cat = CATEGORIES[ev.category] || CATEGORIES.other;
-        const marker = L.circleMarker([ev.lat, ev.lng], {
-          radius: 7, color: cat.color, fillColor: cat.color, fillOpacity: 0.8, weight: 2
-        });
-        marker.bindPopup(`<b>${cat.label}</b><br>${ev.description || ''}<br><small>${new Date(ev.created_at).toLocaleString('ru-RU')}</small>`);
-        eventsLayer.addLayer(marker);
+    function drawEventMarker(ev) {
+      var cat = CATEGORIES[ev.category] || CATEGORIES.other;
+      var marker = L.circleMarker([ev.lat, ev.lng], {
+        radius: 7, color: cat.color, fillColor: cat.color, fillOpacity: 0.8, weight: 2
       });
-      console.log(`✅ Загружено событий: ${data.length}`);
+      marker.bindPopup('<b>' + cat.label + '</b><br>' + (ev.description || ''));
+      eventsLayer.addLayer(marker);
+    }
+
+    function loadEvents() {
+      if (!sb) return;
+      sb.from('events').select('*').then(function(res) {
+        if (res.error) { console.error('Ошибка загрузки:', res.error.message); return; }
+        eventsLayer.clearLayers();
+        (res.data || []).forEach(drawEventMarker);
+        console.log('Загружено: ' + (res.data || []).length);
+      });
     }
     loadEvents();
 
     // ============================================================
-    // 6. ИНСТРУМЕНТЫ РИСОВАНИЯ (только для админа)
+    // 6. РИСОВАНИЕ
     // ============================================================
-    const drawControl = new L.Control.Draw({
+    var drawControl = new L.Control.Draw({
       edit: { featureGroup: eventsLayer, remove: true },
-      draw: {
-        marker: true,
-        polyline: false, polygon: false, rectangle: false, circle: false
-      }
+      draw: { marker: true, polyline: false, polygon: false, rectangle: false, circle: false }
     });
-    // Изначально рисование выключено
-    // Включается после успешного входа
 
-    // Обработка создания метки
-    map.on(L.Draw.Event.CREATED, async (e) => {
-      const layer = e.layer;
-      const { lat, lng } = layer.getLatLng();
-      const cat = CATEGORIES[currentCategory];
+    map.on(L.Draw.Event.CREATED, function(e) {
+      var layer = e.layer;
+      var latlng = layer.getLatLng();
+      var cat = CATEGORIES[currentCategory];
+      if (!sb) { alert('Нет подключения к базе'); return; }
+      sb.from('events').insert({
+        category: currentCategory, description: '', lat: latlng.lat, lng: latlng.lng
+      }).then(function(res) {
+        if (res.error) { alert('Ошибка: ' + res.error.message); return; }
+        layer.setStyle({ color: cat.color, fillColor: cat.color, fillOpacity: 0.8 });
+        layer.bindPopup('<b>' + cat.label + '</b><br><small>только что</small>');
+        eventsLayer.addLayer(layer);
+      });
+    });
 
-      // Сохраняем в Supabase
-      const { error } = await supabase.from('events').insert({
-        category: currentCategory,
-        description: '',
-        lat: lat,
-        lng: lng
+    // ============================================================
+    // 7. ПАНЕЛЬ
+    // ============================================================
+    var panel = L.control({ position: 'topright' });
+    panel.onAdd = function() {
+      var div = L.DomUtil.create('div', 'control-panel');
+      var catHtml = '';
+      Object.keys(CATEGORIES).forEach(function(k) {
+        var c = CATEGORIES[k];
+        var active = k === currentCategory ? ' active' : '';
+        catHtml += '<div class="category-item' + active + '" data-cat="' + k + '">' +
+                   '<div class="swatch" style="background:' + c.color + ';"></div>' +
+                   '<div>' + c.label + '</div></div>';
       });
 
-      if (error) {
-        alert('Ошибка сохранения: ' + error.message);
-        return;
-      }
-
-      // Добавляем на карту
-      layer.setStyle({ color: cat.color, fillColor: cat.color, fillOpacity: 0.8 });
-      layer.bindPopup(`<b>${cat.label}</b><br><small>только что</small>`);
-      eventsLayer.addLayer(layer);
-    });
-
-    // ============================================================
-    // 7. ПАНЕЛЬ УПРАВЛЕНИЯ
-    // ============================================================
-    const panel = L.control({ position: 'topright' });
-    panel.onAdd = () => {
-      const div = L.DomUtil.create('div', 'control-panel');
-
-      const catHtml = Object.keys(CATEGORIES).map(k => {
-        const c = CATEGORIES[k];
-        const active = k === currentCategory ? ' active' : '';
-        return `<div class="category-item${active}" data-cat="${k}">
-                  <div class="swatch" style="background:${c.color};"></div>
-                  <div>${c.label}</div>
-                </div>`;
-      }).join('');
-
-      div.innerHTML = `
-        <h4>Слои OSINT</h4>
-        <label><input type="checkbox" id="chkOccupied" checked> Оккупированные территории</label>
-        <label><input type="checkbox" id="chkCounter" checked> Контрнаступления ВСУ</label>
-        <hr>
-        <div id="authBlock">
-          <h4>Вход для админа</h4>
-          <input type="email" id="authEmail" placeholder="Email">
-          <input type="password" id="authPassword" placeholder="Пароль">
-          <button id="btnLogin">Войти</button>
-          <div id="authStatus" class="status-msg" style="display:none;"></div>
-        </div>
-        <div id="adminBlock" style="display:none;">
-          <h4>Тип события</h4>
-          <div id="categoryList">${catHtml}</div>
-          <button id="btnLogout" style="color:#c00;">Выйти</button>
-        </div>
-      `;
+      div.innerHTML =
+        '<h4>Слои OSINT</h4>' +
+        '<label><input type="checkbox" id="chkOccupied" checked> Оккупированные территории</label>' +
+        '<label><input type="checkbox" id="chkCounter" checked> Контрнаступления ВСУ</label>' +
+        '<hr>' +
+        '<div id="authBlock">' +
+          '<h4>Вход для админа</h4>' +
+          '<input type="email" id="authEmail" placeholder="Email">' +
+          '<input type="password" id="authPassword" placeholder="Пароль">' +
+          '<button id="btnLogin">Войти</button>' +
+          '<div id="authStatus" class="status-msg" style="display:none;"></div>' +
+        '</div>' +
+        '<div id="adminBlock" style="display:none;">' +
+          '<h4>Тип события</h4>' +
+          '<div id="categoryList">' + catHtml + '</div>' +
+          '<button id="btnLogout" style="color:#c00;">Выйти</button>' +
+        '</div>';
 
       L.DomEvent.disableClickPropagation(div);
       L.DomEvent.disableScrollPropagation(div);
@@ -237,90 +226,73 @@
     panel.addTo(map);
 
     // ============================================================
-    // 8. ЛОГИКА АВТОРИЗАЦИИ И УПРАВЛЕНИЯ
+    // 8. ЛОГИКА
     // ============================================================
-    setTimeout(() => {
-      // Переключатели слоёв
+    setTimeout(function() {
       document.getElementById('chkOccupied').addEventListener('change', function() {
-        this.checked ? occupiedLayer.addTo(map) : map.removeLayer(occupiedLayer);
+        if (this.checked) occupiedLayer.addTo(map); else map.removeLayer(occupiedLayer);
       });
       document.getElementById('chkCounter').addEventListener('change', function() {
-        this.checked ? counterLayer.addTo(map) : map.removeLayer(counterLayer);
+        if (this.checked) counterLayer.addTo(map); else map.removeLayer(counterLayer);
       });
 
-      // Вход
-      document.getElementById('btnLogin').addEventListener('click', async () => {
-        const email = document.getElementById('authEmail').value.trim();
-        const password = document.getElementById('authPassword').value;
-        const status = document.getElementById('authStatus');
-
+      document.getElementById('btnLogin').addEventListener('click', function() {
+        var email = document.getElementById('authEmail').value.trim();
+        var password = document.getElementById('authPassword').value;
+        var status = document.getElementById('authStatus');
         if (!email || !password) {
-          status.style.display = 'block';
-          status.className = 'status-msg status-err';
-          status.textContent = 'Введите email и пароль';
-          return;
+          status.style.display = 'block'; status.className = 'status-msg status-err';
+          status.textContent = 'Введите email и пароль'; return;
         }
-
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-        if (error) {
-          status.style.display = 'block';
-          status.className = 'status-msg status-err';
-          status.textContent = 'Ошибка: ' + error.message;
-          return;
+        if (!sb) {
+          status.style.display = 'block'; status.className = 'status-msg status-err';
+          status.textContent = 'Нет подключения к базе'; return;
         }
-
-        // Успешный вход
-        status.style.display = 'block';
-        status.className = 'status-msg status-ok';
-        status.textContent = 'Вы вошли как админ';
-
-        document.getElementById('authBlock').style.display = 'none';
-        document.getElementById('adminBlock').style.display = 'block';
-        map.addControl(drawControl); // Включаем рисование
+        sb.auth.signInWithPassword({ email: email, password: password }).then(function(res) {
+          if (res.error) {
+            status.style.display = 'block'; status.className = 'status-msg status-err';
+            status.textContent = 'Ошибка: ' + res.error.message; return;
+          }
+          status.style.display = 'block'; status.className = 'status-msg status-ok';
+          status.textContent = 'Вы вошли как админ';
+          document.getElementById('authBlock').style.display = 'none';
+          document.getElementById('adminBlock').style.display = 'block';
+          map.addControl(drawControl);
+        });
       });
 
-      // Выход
-      document.getElementById('btnLogout').addEventListener('click', async () => {
-        await supabase.auth.signOut();
-        document.getElementById('authBlock').style.display = 'block';
-        document.getElementById('adminBlock').style.display = 'none';
-        document.getElementById('authStatus').style.display = 'none';
-        map.removeControl(drawControl);
+      document.getElementById('btnLogout').addEventListener('click', function() {
+        sb.auth.signOut().then(function() {
+          document.getElementById('authBlock').style.display = 'block';
+          document.getElementById('adminBlock').style.display = 'none';
+          document.getElementById('authStatus').style.display = 'none';
+          map.removeControl(drawControl);
+        });
       });
 
-      // Выбор категории
-      document.querySelectorAll('.category-item').forEach(item => {
+      document.querySelectorAll('.category-item').forEach(function(item) {
         item.addEventListener('click', function() {
-          document.querySelectorAll('.category-item').forEach(el => el.classList.remove('active'));
+          document.querySelectorAll('.category-item').forEach(function(el) { el.classList.remove('active'); });
           this.classList.add('active');
           currentCategory = this.getAttribute('data-cat');
         });
       });
 
-      // Автовход, если сессия уже есть
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) {
-          document.getElementById('authBlock').style.display = 'none';
-          document.getElementById('adminBlock').style.display = 'block';
-          map.addControl(drawControl);
-        }
-      });
-    }, 0);
-
-    // Подписка на изменения (чтобы новые события появлялись у всех)
-    supabase
-      .channel('events-channel')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'events' }, (payload) => {
-        const ev = payload.new;
-        const cat = CATEGORIES[ev.category] || CATEGORIES.other;
-        const marker = L.circleMarker([ev.lat, ev.lng], {
-          radius: 7, color: cat.color, fillColor: cat.color, fillOpacity: 0.8, weight: 2
+      if (sb) {
+        sb.auth.getSession().then(function(res) {
+          if (res.data && res.data.session) {
+            document.getElementById('authBlock').style.display = 'none';
+            document.getElementById('adminBlock').style.display = 'block';
+            map.addControl(drawControl);
+          }
         });
-        marker.bindPopup(`<b>${cat.label}</b><br>${ev.description || ''}`);
-        eventsLayer.addLayer(marker);
-      })
-      .subscribe();
+        sb.channel('events-channel')
+          .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'events' }, function(payload) {
+            drawEventMarker(payload.new);
+          })
+          .subscribe();
+      }
+    }, 100);
   </script>
 </body>
 </html>
