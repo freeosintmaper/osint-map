@@ -43,6 +43,18 @@ NOISE_CONTEXT = ["заяв", "сообщ", "минобороны",
                  "написал", "передаёт", "передает", "цитирует",
                  "комментар", "пресс-служб"]
 
+# Слова-маркеры ОТМЕНЫ тревоги
+CANCEL_WORDS = ["отбой", "отменена", "отменён", "отменен",
+                "завершена", "завершён", "завершен",
+                "прекращена", "прекращён", "прекращен",
+                "окончена", "угроза миновала", "опасность миновала"]
+
+# Слова-маркеры ТРЕВОГИ
+ALERT_WORDS = ["тревог", "опасност", "угроз", "alert", "бпла", "ракет"]
+
+# Слова-маркеры обстрела/удара
+STRIKE_WORDS = ["удар", "обстр", "взрыв", "прилёт", "приліт", "попал", "попадание"]
+
 SETTLEMENTS_BY_NAME = {}
 
 
@@ -50,7 +62,7 @@ def load_settlements():
     global SETTLEMENTS_BY_NAME
     path = 'data/settlements.js'
     if not os.path.exists(path):
-        print("  ⚠️ data/settlements.js не найден — работаю только по крупным городам", file=sys.stderr)
+        print("  ⚠️ data/settlements.js не найден", file=sys.stderr)
         return
     print("Загружаю базу населённых пунктов...")
     with open(path, 'r', encoding='utf-8') as f:
@@ -161,8 +173,22 @@ def find_best_city(text):
     return (best_lat, best_lng), best_name
 
 
+def is_cancellation(text):
+    """Возвращает True, если это сообщение про отбой/отмену тревоги."""
+    tl = text.lower()
+    has_cancel = any(c in tl for c in CANCEL_WORDS)
+    if not has_cancel:
+        return False
+    # Отбой обычно про тревогу/опасность/угрозу
+    has_alert = any(a in tl for a in ALERT_WORDS)
+    return has_alert
+
+
 def classify_event(text):
     tl = text.lower()
+    # Отбой — не событие
+    if is_cancellation(text):
+        return None
     if any(w in tl for w in ["тревога", "alert", "сирена", "тривога", "воздушная", "повітряна", "опасность", "угроза", "бпла"]):
         return "Air Raid Alert"
     if any(w in tl for w in ["удар", "strike", "взрыв", "explosion", "прилёт", "приліт", "обстр", "дрон", "ракет", "пво"]):
@@ -207,10 +233,55 @@ def radius_for_count(count):
         return 8.0
 
 
+def parse_iso(dt_str):
+    """Простой парсер ISO-даты. Возвращает timestamp или None."""
+    if not dt_str:
+        return None
+    try:
+        # 2026-09-26T14:50:12Z -> сравнение как строки работает корректно
+        return dt_str
+    except:
+        return None
+
+
+def apply_cancellations(raw_events, cancellations):
+    """Удаляет события типа Air Raid Alert, если для этого города позже была отмена."""
+    if not cancellations:
+        return raw_events
+
+    # Группируем отмены по городу
+    cancels_by_city = {}
+    for c in cancellations:
+        cancels_by_city.setdefault(c['city'].lower(), []).append(c['date'])
+
+    filtered = []
+    removed = 0
+    for ev in raw_events:
+        # Отмены влияют только на тревоги
+        if ev['event_type'] == 'Air Raid Alert':
+            city_low = ev['location'].lower()
+            ev_date = ev.get('date') or ''
+            if city_low in cancels_by_city:
+                # Ищем отмену ПОСЛЕ события
+                cancelled = False
+                for cancel_date in cancels_by_city[city_low]:
+                    if cancel_date and ev_date and cancel_date > ev_date:
+                        cancelled = True
+                        break
+                if cancelled:
+                    removed += 1
+                    continue
+        filtered.append(ev)
+
+    print(f"   Убрано устаревших тревог (отбой): {removed}")
+    return filtered
+
+
 def main():
     load_settlements()
 
     raw_events = []
+    cancellations = []  # список отмен для удаления устаревших тревог
     seen_texts = set()
     seen_dedup = set()
     duplicates = 0
@@ -238,13 +309,28 @@ def main():
             if not coords:
                 no_match += 1
                 continue
+
+            # Проверяем отмену
+            if is_cancellation(text):
+                cancellations.append({
+                    'city': city,
+                    'date': post['date'],
+                    'lat': coords[0],
+                    'lng': coords[1],
+                })
+                continue  # не добавляем как событие
+
+            event_type = classify_event(text)
+            if not event_type:
+                continue
+
             matched += 1
 
             ev = {
                 "id": len(raw_events) + 1,
                 "url": post["url"] or f"https://t.me/s/{channel}",
                 "date": post["date"],
-                "event_type": classify_event(text),
+                "event_type": event_type,
                 "location": city,
                 "country": country_by_coords_or_context(coords[0], coords[1], channel),
                 "lat": coords[0],
@@ -263,9 +349,16 @@ def main():
             raw_events.append(ev)
 
         stats[channel] = matched
-        print(f"  Совпало с населёнными пунктами: {matched}")
+        print(f"  Совпало: {matched}")
         time.sleep(1)
 
+    print(f"\n🚫 Отмен тревог найдено: {len(cancellations)}")
+
+    # Применяем отмены — удаляем старые тревоги
+    print("🧹 Убираю устаревшие тревоги...")
+    raw_events = apply_cancellations(raw_events, cancellations)
+
+    # Jitter
     coord_counter = Counter()
     for ev in raw_events:
         coord_key = (round(ev["lat"], 3), round(ev["lng"], 3))
