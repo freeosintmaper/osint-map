@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OSINT-карта — рабочий вариант</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; }
+    #map { height: 100vh; width: 100%; }
+    .control-panel {
+      background: #fff; padding: 10px 12px; border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25); font-size: 13px;
+      max-width: 260px;
+    }
+    .control-panel h4 { margin: 0 0 6px; font-size: 12px; text-transform: uppercase; color: #555; }
+    .control-panel label { display: block; padding: 3px 0; cursor: pointer; }
+    .control-panel hr { border: none; border-top: 1px solid #eee; margin: 8px 0; }
+    .control-panel button {
+      display: block; width: 100%; margin: 4px 0; padding: 6px 8px;
+      border: 1px solid #ccc; background: #f8f8f8; border-radius: 4px;
+      cursor: pointer; font-size: 12px;
+    }
+    .category-item {
+      display: flex; align-items: center; padding: 5px 6px; margin: 2px 0;
+      border-radius: 4px; cursor: pointer; border: 2px solid transparent;
+    }
+    .category-item.active { border-color: #0066ff; background: #eef5ff; }
+    .category-item .swatch {
+      width: 16px; height: 16px; border-radius: 3px; margin-right: 8px;
+      border: 1px solid rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+  <script>
+    // ============================================================
+    // 1. КАТЕГОРИИ СОБЫТИЙ
+    // ============================================================
+    var CATEGORIES = {
+      'battle':    { label: 'Бой',          color: '#ff6600' },
+      'shelling':  { label: 'Обстрел',      color: '#cc0000' },
+      'airdefense':{ label: 'ППО',          color: '#0066ff' },
+      'equipment': { label: 'Техника',      color: '#666666' },
+      'civilian':  { label: 'Гражданские',  color: '#e6b800' },
+      'other':     { label: 'Другое',       color: '#9933cc' }
+    };
+    var currentCategory = 'battle';
+
+    // ============================================================
+    // 2. КАРТА И ПОДЛОЖКА (Esri — без ключей, не блокируется)
+    // ============================================================
+    var map = L.map('map').setView([48.5, 37.5], 7);
+
+    L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+      { attribution: 'Tiles © Esri', maxZoom: 19 }
+    ).addTo(map);
+
+    // ============================================================
+    // 3. СЛОИ OSINT (ОБНОВЛЕННЫЕ ИСТОЧНИКИ)
+    // ============================================================
+    var occupiedLayer = L.geoJSON(null, {
+      style: function() {
+        return { color: '#cc0000', weight: 1.5, opacity: 0.9,
+                 fillColor: '#cc0000', fillOpacity: 0.15 };
+      },
+      onEachFeature: function(f, layer) {
+        layer.bindPopup('<b>Оккупированные территории (DeepStateMap)</b>');
+      }
+    });
+
+    var counterLayer = L.geoJSON(null, {
+      style: function() {
+        return { color: '#0088cc', weight: 1.5, opacity: 0.9,
+                 fillColor: '#0088cc', fillOpacity: 0.12, dashArray: '5,5' };
+      },
+      onEachFeature: function(f, layer) {
+        layer.bindPopup('<b>Контрнаступления ВСУ (ISW)</b>');
+      }
+    });
+
+    // ИСТОЧНИК 1: DeepStateMap (контроль РФ)
+    // Данные на GitHub, обновляются ежедневно, доступны без блокировок
+    var DEEPSTATE_URL = 'https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz';
+
+    // ИСТОЧНИК 2: ISW (контрнаступления ВСУ)
+    // Проверенный рабочий эндпоинт из сервиса VIEW_ClaimedUkrainianCounteroffensives_V2
+    var ISW_COUNTER_URL = 'https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/' +
+      'VIEW_ClaimedUkrainianCounteroffensives_V2/FeatureServer/51/query?where=1%3D1&outFields=*&f=geojson';
+
+    // Загрузка данных DeepStateMap (с распаковкой gzip)
+    fetch(DEEPSTATE_URL)
+      .then(function(response) {
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        return response.arrayBuffer();
+      })
+      .then(function(buffer) {
+        // Распаковываем gzip прямо в браузере
+        var ds = new DecompressionStream('gzip');
+        var stream = new Blob([buffer]).stream().pipeThrough(ds);
+        return new Response(stream).json();
+      })
+      .then(function(data) {
+        // Фильтруем только самую свежую запись (последнюю по дате)
+        var features = data.features || [];
+        if (features.length > 0) {
+          features.sort(function(a, b) {
+            return (b.properties.date || '').localeCompare(a.properties.date || '');
+          });
+          var latest = features[0];
+          occupiedLayer.addData(latest);
+          console.log('✅ DeepStateMap загружен, дата: ' + (latest.properties.date || 'н/д'));
+        }
+      })
+      .catch(function(err) {
+        console.warn('⚠️ Ошибка загрузки DeepStateMap:', err.message);
+      });
+
+    // Загрузка данных ISW (контрнаступления ВСУ)
+    fetch(ISW_COUNTER_URL)
+      .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function(d) {
+        counterLayer.addData(d);
+        console.log('✅ ISW (контрнаступления ВСУ) загружен');
+      })
+      .catch(function(e) { console.warn('⚠️ Ошибка загрузки ISW:', e.message); });
+
+    occupiedLayer.addTo(map);
+    counterLayer.addTo(map);
+
+    // ============================================================
+    // 4. АВТОРСКИЙ СЛОЙ СОБЫТИЙ
+    // ============================================================
+    var eventsLayer = new L.FeatureGroup();
+    map.addLayer(eventsLayer);
+
+    var STORAGE_KEY = 'osint_events_map';
+
+    function saveEvents() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(eventsLayer.toGeoJSON()));
+      } catch (e) { console.error('Ошибка сохранения:', e); }
+    }
+
+    function loadEvents() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        var geojson = JSON.parse(raw);
+        eventsLayer.clearLayers();
+        eventsLayer.addData(geojson);
+        eventsLayer.eachLayer(function(layer) {
+          var cat = (layer.feature && layer.feature.properties && layer.feature.properties.category) || 'other';
+          if (layer.setStyle) layer.setStyle({ color: CATEGORIES[cat]?.color || '#9933cc', weight: 3 });
+          if (layer.bindPopup) layer.bindPopup('<b>' + (CATEGORIES[cat]?.label || 'Событие') + '</b>');
+        });
+      } catch (e) { console.error('Ошибка загрузки:', e); }
+    }
+
+    eventsLayer.on('layeradd layerremove', saveEvents);
+    loadEvents();
+
+    // ============================================================
+    // 5. ИНСТРУМЕНТЫ РИСОВАНИЯ
+    // ============================================================
+    var drawControl = new L.Control.Draw({
+      edit: { featureGroup: eventsLayer, remove: true },
+      draw: {
+        marker: true,
+        polyline: { shapeOptions: { color: '#ff6600', weight: 3 } },
+        polygon: { allowIntersection: false },
+        rectangle: { shapeOptions: { color: '#ff6600', weight: 3 } },
+        circle: false
+      }
+    });
+    map.addControl(drawControl);
+
+    map.on(L.Draw.Event.CREATED, function(e) {
+      var layer = e.layer;
+      layer.feature = layer.feature || { type: 'Feature', properties: {} };
+      layer.feature.properties = layer.feature.properties || {};
+      layer.feature.properties.category = currentCategory;
+      layer.feature.properties.timestamp = new Date().toISOString();
+
+      if (layer.setStyle) layer.setStyle({
+        color: CATEGORIES[currentCategory].color,
+        weight: 3, opacity: 0.9
+      });
+      layer.bindPopup('<b>' + CATEGORIES[currentCategory].label + '</b>');
+      eventsLayer.addLayer(layer);
+    });
+
+    // ============================================================
+    // 6. ПАНЕЛЬ УПРАВЛЕНИЯ
+    // ============================================================
+    var panel = L.control({ position: 'topright' });
+    panel.onAdd = function() {
+      var div = L.DomUtil.create('div', 'control-panel');
+
+      var catHtml = Object.keys(CATEGORIES).map(function(k) {
+        var c = CATEGORIES[k];
+        var active = k === currentCategory ? ' active' : '';
+        return '<div class="category-item' + active + '" data-cat="' + k + '">' +
+               '<div class="swatch" style="background:' + c.color + ';"></div>' +
+               '<div>' + c.label + '</div></div>';
+      }).join('');
+
+      div.innerHTML =
+        '<h4>Слои OSINT</h4>' +
+        '<label><input type="checkbox" id="chkOccupied" checked> Оккупированные территории</label>' +
+        '<label><input type="checkbox" id="chkCounter" checked> Контрнаступления ВСУ</label>' +
+        '<hr>' +
+        '<h4>Тип события</h4>' +
+        '<div id="categoryList">' + catHtml + '</div>' +
+        '<hr>' +
+        '<h4>События</h4>' +
+        '<button id="btnExport">⬇️ Экспорт GeoJSON</button>' +
+        '<button id="btnImport">⬆️ Импорт GeoJSON</button>' +
+        '<button id="btnClear" style="color:#c00;">🗑️ Очистить</button>' +
+        '<input type="file" id="fileInput" accept=".geojson,.json" style="display:none">';
+
+      L.DomEvent.disableClickPropagation(div);
+      L.DomEvent.disableScrollPropagation(div);
+      return div;
+    };
+    panel.addTo(map);
+
+    setTimeout(function() {
+      document.querySelectorAll('.category-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+          document.querySelectorAll('.category-item').forEach(function(el) {
+            el.classList.remove('active');
+          });
+          this.classList.add('active');
+          currentCategory = this.getAttribute('data-cat');
+        });
+      });
+
+      document.getElementById('chkOccupied').addEventListener('change', function() {
+        if (this.checked) occupiedLayer.addTo(map);
+        else map.removeLayer(occupiedLayer);
+      });
+      document.getElementById('chkCounter').addEventListener('change', function() {
+        if (this.checked) counterLayer.addTo(map);
+        else map.removeLayer(counterLayer);
+      });
+
+      document.getElementById('btnExport').addEventListener('click', function() {
+        var blob = new Blob([JSON.stringify(eventsLayer.toGeoJSON(), null, 2)],
+                            { type: 'application/geo+json' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'osint-events-' + new Date().toISOString().slice(0,10) + '.geojson';
+        a.click();
+      });
+
+      document.getElementById('btnImport').addEventListener('click', function() {
+        document.getElementById('fileInput').click();
+      });
+      document.getElementById('fileInput').addEventListener('change', function(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+          try {
+            var geojson = JSON.parse(ev.target.result);
+            eventsLayer.clearLayers();
+            eventsLayer.addData(geojson);
+            saveEvents();
+            alert('Загружено объектов: ' + (geojson.features || []).length);
+          } catch (err) { alert('Ошибка: ' + err.message); }
+        };
+        reader.readAsText(file);
+        e.target.value = '';
+      });
+
+      document.getElementById('btnClear').addEventListener('click', function() {
+        if (!confirm('Удалить все события?')) return;
+        eventsLayer.clearLayers();
+        localStorage.removeItem(STORAGE_KEY);
+      });
+    }, 0);
+  </script>
+</body>
+</html>
