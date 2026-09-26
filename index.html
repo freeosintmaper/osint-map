@@ -137,7 +137,7 @@
     #toolbar button {
       width: 42px; height: 42px; flex: 0 0 auto; border: 1px solid var(--border-mid);
       background: var(--bg-input); color: var(--text-main);
-      border-radius: 6px; cursor: pointer; font-size: 18px;
+      border-radius: 6px; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       padding: 0; transition: all 0.15s; position: relative;
     }
@@ -176,7 +176,7 @@
       #eventsPanel .panel-header { padding: 8px 10px; font-size: 12px; }
       #eventsPanel .event-item { padding: 6px 10px; }
       #toolbar { padding: 4px; bottom: 10px; gap: 3px; }
-      #toolbar button { width: 36px; height: 36px; font-size: 15px; }
+      #toolbar button { width: 36px; height: 36px; }
       #toolbar .sep { margin: 2px 1px; }
       #toolbar button .tooltip { display: none; }
       #toolbar button svg { width: 17px; height: 17px; }
@@ -190,7 +190,7 @@
       .control-panel { max-width: 180px; }
       .info.legend { max-width: 140px; font-size: 10px; }
       .info.legend i, .info.legend .legend-line { width: 10px; height: 10px; margin-top: 1px; }
-      #toolbar button { width: 32px; height: 32px; font-size: 13px; }
+      #toolbar button { width: 32px; height: 32px; }
       #toolbar button svg { width: 15px; height: 15px; }
       .event-icon { width: 24px; height: 24px; }
       .event-icon svg { width: 12px; height: 12px; }
@@ -222,6 +222,9 @@
     });
   </script>
 
+  <!-- Сначала данные (как JS), потом библиотеки, потом код -->
+  <script src="./data/war-tracker-ua.js"></script>
+  <script src="./data/war-tracker-ru.js"></script>
   <script src="./lib/leaflet.js"></script>
   <script src="./lib/leaflet-draw.js"></script>
   <script src="./lib/leaflet.polylineDecorator.js"></script>
@@ -232,8 +235,6 @@
     // ============================================================
     var GITHUB_USER = 'freeosintmaper';
     var GITHUB_REPO = 'osint-map';
-    var EVENTS_FILE_URL_UA = 'https://cdn.jsdelivr.net/gh/' + GITHUB_USER + '/' + GITHUB_REPO + '@main/data/war-tracker.json';
-    var EVENTS_FILE_URL_RU = 'https://cdn.jsdelivr.net/gh/' + GITHUB_USER + '/' + GITHUB_REPO + '@main/data/war-tracker-ru.json';
 
     var i18n = {
       ru: {
@@ -258,7 +259,7 @@
                    '· Территория РФ — DeepStateMap (украинский OSINT-проект)\n' +
                    '· Контрнаступления — ISW (американский аналитический центр)\n\n' +
                    'Мы не проводим собственный анализ. Линия фронта — приблизительная.\n' +
-                   'Мы не ручаемся за точность и полноту данных. Каждое событие имеет ссылку на первоисточник.'
+                   'Мы не ручаемся за точность и полноту данных.'
       },
       uk: {
         eventsPanelTitle: 'Події за 24 години',
@@ -277,11 +278,7 @@
         clearConfirm: 'Видалити всі ваші малюнки?',
         total: 'Всього', countryUA: 'Україна', countryRU: 'РФ',
         opacityLabel: 'Прозорість', modeFill: 'Заливка', modeOutline: 'Лише контури',
-        aboutText: 'Карта агрегує відкриті дані з різних джерел.\n\n' +
-                   '· Події — War-Tracker (кожна має посилання на джерело)\n' +
-                   '· Територія РФ — DeepStateMap (український OSINT-проект)\n' +
-                   '· Контрнаступи — ISW (американський аналітичний центр)\n\n' +
-                   'Ми не проводимо власний аналіз. Лінія фронту — приблизна.'
+        aboutText: 'Карта агрегує відкриті дані з різних джерел.'
       },
       en: {
         eventsPanelTitle: 'Events (last 24h)',
@@ -300,11 +297,7 @@
         clearConfirm: 'Delete all your drawings?',
         total: 'Total', countryUA: 'Ukraine', countryRU: 'RF',
         opacityLabel: 'Opacity', modeFill: 'Fill', modeOutline: 'Outline only',
-        aboutText: 'This map aggregates open data from different sources.\n\n' +
-                   '· Events — War-Tracker (each has a source link)\n' +
-                   '· Territory held by RF — DeepStateMap (Ukrainian OSINT)\n' +
-                   '· Counteroffensives — ISW (US analytical center)\n\n' +
-                   'We do not perform our own analysis. Front line is approximate.'
+        aboutText: 'This map aggregates open data from different sources.'
       }
     };
 
@@ -328,15 +321,9 @@
 
     function styleFor(baseColor) {
       if (layerMode === 'outline') {
-        return {
-          color: baseColor, weight: 1.8, opacity: 0.9,
-          fill: false, fillColor: baseColor, fillOpacity: 0
-        };
+        return { color: baseColor, weight: 1.8, opacity: 0.9, fill: false, fillColor: baseColor, fillOpacity: 0 };
       }
-      return {
-        color: baseColor, weight: 1.2, opacity: 0.9,
-        fill: true, fillColor: baseColor, fillOpacity: fillOpacity
-      };
+      return { color: baseColor, weight: 1.2, opacity: 0.9, fill: true, fillColor: baseColor, fillOpacity: fillOpacity };
     }
 
     function applyStyleToLayer(layer, baseColor, styleObj) {
@@ -363,16 +350,12 @@
         counterLayer.eachLayer(function(sub) {
           applyStyleToLayer(sub, '#0088cc', {
             color: '#0088cc', weight: 2, opacity: 0.85,
-            fill: false, fillColor: '#0088cc', fillOpacity: 0,
-            dashArray: '5,5'
+            fill: false, fillColor: '#0088cc', fillOpacity: 0, dashArray: '5,5'
           });
         });
       }
     }
 
-    // ============================================================
-    // SVG-ИКОНКИ ДЛЯ ТУЛБАРА
-    // ============================================================
     var TOOLBAR_SVG = {
       marker: '<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>',
       line: '<svg viewBox="0 0 24 24"><path d="M4 19L20 5"/></svg>',
@@ -438,8 +421,7 @@
     });
     var counterLayer = L.geoJSON(null, {
       style: function() {
-        return { color: '#0088cc', weight: 2, opacity: 0.85,
-                 fill: false, fillOpacity: 0, dashArray: '5,5' };
+        return { color: '#0088cc', weight: 2, opacity: 0.85, fill: false, fillOpacity: 0, dashArray: '5,5' };
       },
       onEachFeature: polygonPopup(t('counteroffensive'))
     });
@@ -487,18 +469,12 @@
     };
 
     var WT_SVG = {
-      'Air Raid Alert':
-        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>',
-      'Military Strike':
-        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1l-2 7H3l6 4-2 9 5-4 5 4-2-9 6-4h-7z"/></svg>',
-      'Military Operation':
-        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.9 5L5 6.9l5.5 5.5L12 11 6.9 5zM17.1 5L12 11l1.5 1.4L19 6.9 17.1 5zM4 18l6-6 1.5 1.5L5.5 19.5 4 18zM20 18l-1.5 1.5-6-6L14 12l6 6z"/></svg>',
-      'Military Offensive':
-        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2s-3 4-3 8c0 2 1 4 3 5 2-1 3-3 3-5 0-4-3-8-3-8zm0 12c-1.5 0-3 1-3 3v3l3-2 3 2v-3c0-2-1.5-3-3-3z"/></svg>',
-      'Security Incident':
-        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L1 21h22L12 2zm0 4l7 13H5l7-13zm-1 4v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>',
-      'Political Development':
-        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>'
+      'Air Raid Alert': '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>',
+      'Military Strike': '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1l-2 7H3l6 4-2 9 5-4 5 4-2-9 6-4h-7z"/></svg>',
+      'Military Operation': '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.9 5L5 6.9l5.5 5.5L12 11 6.9 5zM17.1 5L12 11l1.5 1.4L19 6.9 17.1 5zM4 18l6-6 1.5 1.5L5.5 19.5 4 18zM20 18l-1.5 1.5-6-6L14 12l6 6z"/></svg>',
+      'Military Offensive': '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2s-3 4-3 8c0 2 1 4 3 5 2-1 3-3 3-5 0-4-3-8-3-8zm0 12c-1.5 0-3 1-3 3v3l3-2 3 2v-3c0-2-1.5-3-3-3z"/></svg>',
+      'Security Incident': '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L1 21h22L12 2zm0 4l7 13H5l7-13zm-1 4v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>',
+      'Political Development': '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>'
     };
 
     function wtColor(type) { return WT_COLORS[type] || '#9933cc'; }
@@ -510,9 +486,7 @@
       return L.divIcon({
         html: '<div class="event-icon" style="background:' + color + ';">' + svg + '</div>',
         className: '',
-        iconSize: [30, 30],
-        iconAnchor: [15, 15],
-        popupAnchor: [0, -15]
+        iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -15]
       });
     }
 
@@ -522,7 +496,7 @@
     };
 
     // ============================================================
-    // 5. WAR-TRACKER
+    // 5. WAR-TRACKER (данные приходят через <script> как window.WT_DATA_UA / WT_DATA_RU)
     // ============================================================
     var wtLayerUA = new L.FeatureGroup();
     var wtLayerRU = new L.FeatureGroup();
@@ -546,91 +520,55 @@
       return marker;
     }
 
-        // Универсальная функция fetch с повторами
-    function fetchWithRetry(url, maxAttempts) {
-      maxAttempts = maxAttempts || 3;
-      var attempt = 0;
-      function tryFetch() {
-        attempt++;
-        return fetch(url).then(function(r) {
-          if (!r.ok) throw new Error('HTTP ' + r.status);
-          return r;
-        }).catch(function(err) {
-          if (attempt < maxAttempts) {
-            console.warn('Попытка ' + attempt + ' не удалась (' + err.message + '), повтор через ' + (attempt * 2) + ' сек...');
-            return new Promise(function(resolve) {
-              setTimeout(resolve, attempt * 2000);
-            }).then(tryFetch);
-          }
-          throw err;
-        });
+    function loadWarTrackerUA() {
+      if (!window.WT_DATA_UA) {
+        console.warn('War-Tracker UA: данные не загружены (window.WT_DATA_UA пусто)');
+        document.getElementById('eventsListBody').innerHTML =
+          '<div style="padding:20px;text-align:center;color:var(--text-muted);font-size:12px;">' +
+          'Данные не подгрузились. Обновите страницу.</div>';
+        return;
       }
-      return tryFetch();
+      wtLayerUA.clearLayers();
+      var list = (window.WT_DATA_UA && window.WT_DATA_UA.events) || [];
+      var added = 0; var todayEvents = [];
+      list.forEach(function(ev) {
+        if (!ev.lat || !ev.lng) return;
+        if (!activeEventTypes[ev.event_type]) return;
+        wtLayerUA.addLayer(buildMarker(ev, 'UA'));
+        added++;
+        try {
+          if (new Date(ev.date).getTime() >= Date.now() - 24 * 60 * 60 * 1000) {
+            todayEvents.push(Object.assign({}, ev, { _country: 'UA' }));
+          }
+        } catch(e) {}
+      });
+      window._todayEvents_ua = todayEvents;
+      renderEventsPanel();
+      console.log('War-Tracker UA: ' + added + ' из ' + list.length);
     }
 
-    function loadWarTrackerUA() {
-      fetchWithRetry(EVENTS_FILE_URL_UA + '?t=' + Date.now(), 3)
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          wtLayerUA.clearLayers();
-          var list = (data && data.events) || [];
-          var added = 0; var todayEvents = [];
-          list.forEach(function(ev) {
-            if (!ev.lat || !ev.lng) return;
-            if (!activeEventTypes[ev.event_type]) return;
-            wtLayerUA.addLayer(buildMarker(ev, 'UA'));
-            added++;
-            try {
-              if (new Date(ev.date).getTime() >= Date.now() - 24 * 60 * 60 * 1000) {
-                todayEvents.push(Object.assign({}, ev, { _country: 'UA' }));
-              }
-            } catch(e) {}
-          });
-          window._todayEvents_ua = todayEvents;
-          renderEventsPanel();
-          console.log('War-Tracker UA: ' + added + ' из ' + list.length);
-        })
-        .catch(function(err) {
-          console.warn('War-Tracker UA: не удалось после 3 попыток — ' + err.message);
-          // Не обнуляем панель, если уже что-то было
-          if (!window._todayEvents_ua) {
-            document.getElementById('eventsListBody').innerHTML =
-              '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' +
-              'Временная ошибка загрузки. Попробуйте обновить страницу.</div>';
+    function loadWarTrackerRU() {
+      if (!window.WT_DATA_RU) {
+        console.warn('War-Tracker RU: данные не загружены (window.WT_DATA_RU пусто)');
+        return;
+      }
+      wtLayerRU.clearLayers();
+      var list = (window.WT_DATA_RU && window.WT_DATA_RU.events) || [];
+      var added = 0; var todayEvents = [];
+      list.forEach(function(ev) {
+        if (!ev.lat || !ev.lng) return;
+        if (!activeEventTypes[ev.event_type]) return;
+        wtLayerRU.addLayer(buildMarker(ev, 'RU'));
+        added++;
+        try {
+          if (new Date(ev.date).getTime() >= Date.now() - 24 * 60 * 60 * 1000) {
+            todayEvents.push(Object.assign({}, ev, { _country: 'RU' }));
           }
-        });
-    }
-    
-        function loadWarTrackerRU() {
-      fetchWithRetry(EVENTS_FILE_URL_RU + '?t=' + Date.now(), 3)
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          wtLayerRU.clearLayers();
-          var list = (data && data.events) || [];
-          var added = 0; var todayEvents = [];
-          list.forEach(function(ev) {
-            if (!ev.lat || !ev.lng) return;
-            if (!activeEventTypes[ev.event_type]) return;
-            wtLayerRU.addLayer(buildMarker(ev, 'RU'));
-            added++;
-            try {
-              if (new Date(ev.date).getTime() >= Date.now() - 24 * 60 * 60 * 1000) {
-                todayEvents.push(Object.assign({}, ev, { _country: 'RU' }));
-              }
-            } catch(e) {}
-          });
-          window._todayEvents_ru = todayEvents;
-          renderEventsPanel();
-          console.log('War-Tracker RU: ' + added + ' из ' + list.length);
-        })
-        .catch(function(err) {
-          console.warn('War-Tracker RU: не удалось после 3 попыток — ' + err.message);
-          if (!window._todayEvents_ru) {
-            document.getElementById('eventsListBody').innerHTML =
-              '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' +
-              'Временная ошибка загрузки. Попробуйте обновить страницу.</div>';
-          }
-        });
+        } catch(e) {}
+      });
+      window._todayEvents_ru = todayEvents;
+      renderEventsPanel();
+      console.log('War-Tracker RU: ' + added + ' из ' + list.length);
     }
 
     // ============================================================
@@ -791,20 +729,20 @@
       var toolbar = document.getElementById('toolbar');
       var themeIcon = currentTheme === 'dark' ? TOOLBAR_SVG.sun : TOOLBAR_SVG.moon;
       var tools = [
-        { key: 'marker',    svg: TOOLBAR_SVG.marker },
-        { key: 'line',      svg: TOOLBAR_SVG.line },
-        { key: 'arrow',     svg: TOOLBAR_SVG.arrow },
-        { key: 'polygon',   svg: TOOLBAR_SVG.polygon },
+        { key: 'marker', svg: TOOLBAR_SVG.marker },
+        { key: 'line', svg: TOOLBAR_SVG.line },
+        { key: 'arrow', svg: TOOLBAR_SVG.arrow },
+        { key: 'polygon', svg: TOOLBAR_SVG.polygon },
         { key: 'rectangle', svg: TOOLBAR_SVG.rectangle },
-        { key: 'circle',    svg: TOOLBAR_SVG.circle },
+        { key: 'circle', svg: TOOLBAR_SVG.circle },
         { sep: true },
-        { key: 'measure',   svg: TOOLBAR_SVG.measure },
+        { key: 'measure', svg: TOOLBAR_SVG.measure },
         { sep: true },
-        { key: 'clear',     svg: TOOLBAR_SVG.clear, danger: true },
+        { key: 'clear', svg: TOOLBAR_SVG.clear, danger: true },
         { sep: true },
-        { key: 'theme',     svg: themeIcon },
+        { key: 'theme', svg: themeIcon },
         { sep: true },
-        { key: 'info',      svg: TOOLBAR_SVG.info }
+        { key: 'info', svg: TOOLBAR_SVG.info }
       ];
       var html = '';
       tools.forEach(function(item) {
@@ -956,10 +894,6 @@
     // ============================================================
     loadWarTrackerUA();
     loadWarTrackerRU();
-    setInterval(function() {
-      loadWarTrackerUA();
-      loadWarTrackerRU();
-    }, 600000);
   </script>
 </body>
 </html>
