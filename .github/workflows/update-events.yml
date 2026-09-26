@@ -17,32 +17,42 @@ jobs:
       - name: Fetch War-Tracker data for Ukraine
         run: |
           mkdir -p data
-          curl -s -m 30 -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" "https://war-tracker.com/api/v1/events?country=UA&limit=100" -o /tmp/ua.json
-          SIZE=$(wc -c < /tmp/ua.json)
-          echo "UA response size: $SIZE bytes"
-          if [ "$SIZE" -gt 100 ]; then
-            echo "window.WT_DATA_UA = " > data/war-tracker-ua.js
-            cat /tmp/ua.json >> data/war-tracker-ua.js
-            echo ";" >> data/war-tracker-ua.js
-            echo "UA file updated"
-          else
-            echo "UA response too small, keeping old file"
-          fi
+          for i in 1 2 3 4 5; do
+            echo "=== UA попытка $i ==="
+            curl -s -m 60 --retry 2 --retry-delay 5 -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" "https://war-tracker.com/api/v1/events?country=UA&limit=100" -o /tmp/ua.json
+            SIZE=$(wc -c < /tmp/ua.json 2>/dev/null || echo 0)
+            echo "Размер ответа: $SIZE байт"
+            if [ "$SIZE" -gt 5000 ]; then
+              echo "window.WT_DATA_UA = " > data/war-tracker-ua.js
+              cat /tmp/ua.json >> data/war-tracker-ua.js
+              echo ";" >> data/war-tracker-ua.js
+              echo "✅ UA обновлён"
+              exit 0
+            fi
+            echo "Не получилось, ждём 15 секунд..."
+            sleep 15
+          done
+          echo "⚠️ UA не удалось после 5 попыток — оставляем старый файл"
 
       - name: Fetch War-Tracker data for Russia
         run: |
           mkdir -p data
-          curl -s -m 30 -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" "https://war-tracker.com/api/v1/events?country=RU&limit=100" -o /tmp/ru.json
-          SIZE=$(wc -c < /tmp/ru.json)
-          echo "RU response size: $SIZE bytes"
-          if [ "$SIZE" -gt 100 ]; then
-            echo "window.WT_DATA_RU = " > data/war-tracker-ru.js
-            cat /tmp/ru.json >> data/war-tracker-ru.js
-            echo ";" >> data/war-tracker-ru.js
-            echo "RU file updated"
-          else
-            echo "RU response too small, keeping old file"
-          fi
+          for i in 1 2 3 4 5; do
+            echo "=== RU попытка $i ==="
+            curl -s -m 60 --retry 2 --retry-delay 5 -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" "https://war-tracker.com/api/v1/events?country=RU&limit=100" -o /tmp/ru.json
+            SIZE=$(wc -c < /tmp/ru.json 2>/dev/null || echo 0)
+            echo "Размер ответа: $SIZE байт"
+            if [ "$SIZE" -gt 5000 ]; then
+              echo "window.WT_DATA_RU = " > data/war-tracker-ru.js
+              cat /tmp/ru.json >> data/war-tracker-ru.js
+              echo ";" >> data/war-tracker-ru.js
+              echo "✅ RU обновлён"
+              exit 0
+            fi
+            echo "Не получилось, ждём 15 секунд..."
+            sleep 15
+          done
+          echo "⚠️ RU не удалось после 5 попыток — оставляем старый файл"
 
       - name: Download Leaflet libraries
         run: |
