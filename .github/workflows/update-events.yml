@@ -25,7 +25,7 @@ jobs:
             echo "Создаю базу населённых пунктов (один раз)..."
             python3 scripts/build_settlements.py
           else
-            echo "База населённых пунктов уже есть, пропускаю"
+            echo "База уже есть, пропускаю"
             wc -c data/settlements.js
           fi
 
