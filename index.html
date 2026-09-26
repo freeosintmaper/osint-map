@@ -126,33 +126,21 @@
     // 4. СЛОИ OSINT
     // ============================================================
 
-    // 4.1. Оккупированные территории (красный)
+    // 4.1. Территория, занимаемая РФ (красный)
     var occupiedLayer = L.geoJSON(null, {
-      style: function() { return { color: '#cc0000', weight: 1.5, opacity: 0.9, fillColor: '#cc0000', fillOpacity: 0.15 }; },
-      onEachFeature: function(f, layer) { layer.bindPopup('<b>Оккупированные территории (РФ)</b>'); }
+      style: function() { return { color: '#cc0000', weight: 1.5, opacity: 0.9, fillColor: '#cc0000', fillOpacity: 0.10 }; },
+      onEachFeature: function(f, layer) { layer.bindPopup('<b>Территория, занимаемая РФ</b>'); }
     });
 
     // 4.2. Контрнаступления ВСУ (голубой пунктир)
     var counterLayer = L.geoJSON(null, {
-      style: function() { return { color: '#0088cc', weight: 1.5, opacity: 0.9, fillColor: '#0088cc', fillOpacity: 0.12, dashArray: '5,5' }; },
+      style: function() { return { color: '#0088cc', weight: 1.5, opacity: 0.9, fillColor: '#0088cc', fillOpacity: 0.08, dashArray: '5,5' }; },
       onEachFeature: function(f, layer) { layer.bindPopup('<b>Контрнаступления ВСУ (ISW)</b>'); }
-    });
-
-    // 4.3. НОВЫЙ: Зона контроля Украины (синий)
-    var ukraineControlLayer = L.geoJSON(null, {
-      style: function() { return { color: '#003d99', weight: 1.5, opacity: 0.9, fillColor: '#0055cc', fillOpacity: 0.15 }; },
-      onEachFeature: function(f, layer) { layer.bindPopup('<b>Территория под контролем Украины</b>'); }
-    });
-
-    // 4.4. НОВЫЙ: Серая зона (серая штриховка)
-    var greyZoneLayer = L.geoJSON(null, {
-      style: function() { return { color: '#666666', weight: 1, opacity: 0.7, fillColor: '#999999', fillOpacity: 0.3, dashArray: '3,3' }; },
-      onEachFeature: function(f, layer) { layer.bindPopup('<b>Серая зона (нет чёткого контроля)</b>'); }
     });
 
     // ---- ЗАГРУЗКА ДАННЫХ ----
 
-    // DeepStateMap — оккупированные территории
+    // DeepStateMap
     fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
       .then(function(r) { return r.arrayBuffer(); })
       .then(function(buffer) {
@@ -175,25 +163,9 @@
       .then(function(d) { counterLayer.addData(d); })
       .catch(function(err) { console.warn('ISW (контрнаступления):', err.message); });
 
-    // ISW — зона контроля Украины
-    // Пробуем несколько источников; сработает тот, что доступен
-    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/March_PreppedTimelapse/FeatureServer/35/query?where=1%3D1&outFields=*&f=geojson')
-      .then(function(r) { return r.json(); })
-      .then(function(d) { ukraineControlLayer.addData(d); })
-      .catch(function(err) { console.warn('ISW (контроль Украины):', err.message); });
-
-    // Серая зона
-    // Используем отдельный слой из того же сервиса ISW (обычно это "unclaimed" / "contested")
-    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/March_PreppedTimelapse/FeatureServer/36/query?where=1%3D1&outFields=*&f=geojson')
-      .then(function(r) { return r.json(); })
-      .then(function(d) { greyZoneLayer.addData(d); })
-      .catch(function(err) { console.warn('ISW (серая зона):', err.message); });
-
-    // Добавляем все слои на карту
+    // Добавляем слои на карту
     occupiedLayer.addTo(map);
     counterLayer.addTo(map);
-    ukraineControlLayer.addTo(map);
-    greyZoneLayer.addTo(map);
 
     // ============================================================
     // 5. СОБЫТИЯ
@@ -275,10 +247,8 @@
 
       div.innerHTML =
         '<h4>Слои OSINT</h4>' +
-        '<label><input type="checkbox" id="chkOccupied" checked> Оккупированные территории</label>' +
+        '<label><input type="checkbox" id="chkOccupied" checked> Территория, занимаемая РФ</label>' +
         '<label><input type="checkbox" id="chkCounter" checked> Контрнаступления ВСУ</label>' +
-        '<label><input type="checkbox" id="chkUkraine" checked> Контроль Украины</label>' +
-        '<label><input type="checkbox" id="chkGrey" checked> Серая зона</label>' +
         '<hr>' +
         '<div id="authBlock">' +
           '<h4>Вход для админа</h4>' +
@@ -308,12 +278,6 @@
       });
       document.getElementById('chkCounter').addEventListener('change', function() {
         if (this.checked) counterLayer.addTo(map); else map.removeLayer(counterLayer);
-      });
-      document.getElementById('chkUkraine').addEventListener('change', function() {
-        if (this.checked) ukraineControlLayer.addTo(map); else map.removeLayer(ukraineControlLayer);
-      });
-      document.getElementById('chkGrey').addEventListener('change', function() {
-        if (this.checked) greyZoneLayer.addTo(map); else map.removeLayer(greyZoneLayer);
       });
 
       document.getElementById('btnLogin').addEventListener('click', function() {
@@ -375,16 +339,14 @@
     }, 100);
 
     // ============================================================
-    // 9. ЛЕГЕНДА (для всех пользователей)
+    // 9. ЛЕГЕНДА
     // ============================================================
     var legend = L.control({ position: 'bottomright' });
     legend.onAdd = function() {
       var div = L.DomUtil.create('div', 'info legend');
 
       var html = '<h4>Зоны контроля</h4>';
-      html += '<div><i style="background:#cc0000;"></i> Оккупировано (РФ)</div>';
-      html += '<div><i style="background:#0055cc;"></i> Контроль Украины</div>';
-      html += '<div><i style="background:#999999;"></i> Серая зона</div>';
+      html += '<div><i style="background:#cc0000;"></i> Территория, занимаемая РФ</div>';
       html += '<div><span class="legend-line" style="background:#0088cc;"></span> Контрнаступления ВСУ</div>';
 
       html += '<hr>';
