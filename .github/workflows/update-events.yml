@@ -38,12 +38,18 @@ jobs:
           curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet-2x.png" -o lib/images/spritesheet-2x.png
           curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet.svg" -o lib/images/spritesheet.svg
           curl -sL "https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js" -o lib/leaflet.polylineDecorator.js
+          curl -sL "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" -o lib/markercluster.css
+          curl -sL "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" -o lib/markercluster.default.css
+          curl -sL "https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" -o lib/markercluster.js
+          echo "Downloaded:"
+          ls -la lib/
+          ls -la lib/images/
 
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/ lib/ scripts/
-          git diff --quiet && git diff --staged --quiet || git commit -m "Обновление Telegram-событий"
+          git diff --quiet && git diff --staged --quiet || git commit -m "Обновление Telegram-событий и библиотек"
           git pull --rebase origin main
           git push
