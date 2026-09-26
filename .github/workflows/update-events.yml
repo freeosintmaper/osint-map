@@ -2,7 +2,7 @@ name: Update War-Tracker Events
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '5,20,35,50 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -19,17 +19,24 @@ jobs:
           mkdir -p data
           curl -s -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
                "https://war-tracker.com/api/v1/events?country=UA&limit=100" \
-               -o data/war-tracker.json
-          echo "UA file size:"
-          wc -c data/war-tracker.json
+               -o /tmp/ua.json
+          echo "window.WT_DATA_UA = " > data/war-tracker-ua.js
+          cat /tmp/ua.json >> data/war-tracker-ua.js
+          echo ";" >> data/war-tracker-ua.js
+          echo "UA JS file size:"
+          wc -c data/war-tracker-ua.js
 
       - name: Fetch War-Tracker data for Russia
         run: |
+          mkdir -p data
           curl -s -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
                "https://war-tracker.com/api/v1/events?country=RU&limit=100" \
-               -o data/war-tracker-ru.json
-          echo "RU file size:"
-          wc -c data/war-tracker-ru.json
+               -o /tmp/ru.json
+          echo "window.WT_DATA_RU = " > data/war-tracker-ru.js
+          cat /tmp/ru.json >> data/war-tracker-ru.js
+          echo ";" >> data/war-tracker-ru.js
+          echo "RU JS file size:"
+          wc -c data/war-tracker-ru.js
 
       - name: Download Leaflet libraries
         run: |
