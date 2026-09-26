@@ -236,16 +236,19 @@
     loadEvents();
 
     // ============================================================
-    // 5.1. АВТОМАТИЧЕСКИЕ СОБЫТИЯ С WAR-TRACKER (прямой запрос)
+    // 5.1. АВТОМАТИЧЕСКИЕ СОБЫТИЯ С WAR-TRACKER (через прокси)
     // ============================================================
     var wtLayer = new L.FeatureGroup();
     map.addLayer(wtLayer);
 
     function loadWarTrackerEvents() {
-      console.log('Загружаем события с War-Tracker...');
-      var apiUrl = 'https://war-tracker.com/api/v1/events?country=UA&limit=100';
+      console.log('Загружаем события с War-Tracker через прокси...');
 
-      fetch(apiUrl)
+      // Формируем целевой URL и оборачиваем его в CORS-прокси
+      var targetUrl = 'https://war-tracker.com/api/v1/events?country=UA&limit=100';
+      var proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl);
+
+      fetch(proxyUrl)
         .then(function(r) {
           if (!r.ok) throw new Error('HTTP ' + r.status);
           return r.json();
@@ -283,11 +286,10 @@
             added++;
           });
 
-          console.log('✅ War-Tracker: загружено событий ' + added + ' из ' + list.length);
+          console.log('✅ War-Tracker (через прокси): загружено событий ' + added + ' из ' + list.length);
         })
         .catch(function(err) {
-          console.warn('⚠️ War-Tracker не загрузился:', err.message);
-          console.warn('Возможная причина: CORS. Проверьте консоль.');
+          console.warn('⚠️ War-Tracker через прокси не загрузился:', err.message);
         });
     }
 
