@@ -33,7 +33,7 @@ jobs:
 
       - name: Download Leaflet libraries
         run: |
-          mkdir -p lib/images lib/leaflet-draw/images
+          mkdir -p lib/images
           curl -sL "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" -o lib/leaflet.css
           curl -sL "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" -o lib/leaflet.js
           curl -sL "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png" -o lib/images/marker-icon.png
@@ -41,12 +41,13 @@ jobs:
           curl -sL "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png" -o lib/images/marker-shadow.png
           curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" -o lib/leaflet-draw.css
           curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js" -o lib/leaflet-draw.js
-          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet.png" -o lib/leaflet-draw/images/spritesheet.png
-          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet-2x.png" -o lib/leaflet-draw/images/spritesheet-2x.png
-          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet.svg" -o lib/leaflet-draw/images/spritesheet.svg
+          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet.png" -o lib/images/spritesheet.png
+          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet-2x.png" -o lib/images/spritesheet-2x.png
+          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet.svg" -o lib/images/spritesheet.svg
           curl -sL "https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js" -o lib/leaflet.polylineDecorator.js
           echo "Downloaded files:"
           ls -la lib/
+          ls -la lib/images/
 
       - name: Commit and push
         run: |
