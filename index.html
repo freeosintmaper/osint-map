@@ -546,9 +546,31 @@
       return marker;
     }
 
+        // Универсальная функция fetch с повторами
+    function fetchWithRetry(url, maxAttempts) {
+      maxAttempts = maxAttempts || 3;
+      var attempt = 0;
+      function tryFetch() {
+        attempt++;
+        return fetch(url).then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r;
+        }).catch(function(err) {
+          if (attempt < maxAttempts) {
+            console.warn('Попытка ' + attempt + ' не удалась (' + err.message + '), повтор через ' + (attempt * 2) + ' сек...');
+            return new Promise(function(resolve) {
+              setTimeout(resolve, attempt * 2000);
+            }).then(tryFetch);
+          }
+          throw err;
+        });
+      }
+      return tryFetch();
+    }
+
     function loadWarTrackerUA() {
-      fetch(EVENTS_FILE_URL_UA + '?t=' + Date.now())
-        .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      fetchWithRetry(EVENTS_FILE_URL_UA + '?t=' + Date.now(), 3)
+        .then(function(r) { return r.json(); })
         .then(function(data) {
           wtLayerUA.clearLayers();
           var list = (data && data.events) || [];
@@ -568,12 +590,20 @@
           renderEventsPanel();
           console.log('War-Tracker UA: ' + added + ' из ' + list.length);
         })
-        .catch(function(err) { console.warn('War-Tracker UA:', err.message); });
+        .catch(function(err) {
+          console.warn('War-Tracker UA: не удалось после 3 попыток — ' + err.message);
+          // Не обнуляем панель, если уже что-то было
+          if (!window._todayEvents_ua) {
+            document.getElementById('eventsListBody').innerHTML =
+              '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' +
+              'Временная ошибка загрузки. Попробуйте обновить страницу.</div>';
+          }
+        });
     }
-
-    function loadWarTrackerRU() {
-      fetch(EVENTS_FILE_URL_RU + '?t=' + Date.now())
-        .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    
+        function loadWarTrackerRU() {
+      fetchWithRetry(EVENTS_FILE_URL_RU + '?t=' + Date.now(), 3)
+        .then(function(r) { return r.json(); })
         .then(function(data) {
           wtLayerRU.clearLayers();
           var list = (data && data.events) || [];
@@ -593,7 +623,14 @@
           renderEventsPanel();
           console.log('War-Tracker RU: ' + added + ' из ' + list.length);
         })
-        .catch(function(err) { console.warn('War-Tracker RU:', err.message); });
+        .catch(function(err) {
+          console.warn('War-Tracker RU: не удалось после 3 попыток — ' + err.message);
+          if (!window._todayEvents_ru) {
+            document.getElementById('eventsListBody').innerHTML =
+              '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' +
+              'Временная ошибка загрузки. Попробуйте обновить страницу.</div>';
+          }
+        });
     }
 
     // ============================================================
