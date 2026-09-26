@@ -87,6 +87,12 @@
     #eventsPanel .event-item .evt-type { font-weight: 600; font-size: 12px; margin-bottom: 2px; }
     #eventsPanel .event-item .evt-loc { font-size: 11px; color: #666; margin-bottom: 2px; }
     #eventsPanel .event-item .evt-time { font-size: 10px; color: #999; }
+    #eventsPanel .event-item .evt-country {
+      display: inline-block; font-size: 10px; padding: 1px 6px;
+      border-radius: 3px; margin-left: 6px; font-weight: 600;
+    }
+    #eventsPanel .event-item .evt-country.ua { background: #e3f2fd; color: #1565c0; }
+    #eventsPanel .event-item .evt-country.ru { background: #ffebee; color: #c62828; }
     #eventsPanel .summary-box {
       padding: 10px 14px; background: #f0f7ff; border-bottom: 1px solid #e0e8f0; font-size: 12px;
     }
@@ -97,7 +103,6 @@
     #eventsPanel.collapsed .panel-header span { display: none; }
     #eventsPanel.collapsed .panel-header .toggle-btn { display: block; }
 
-    /* ==================== ПАНЕЛЬ ИНСТРУМЕНТОВ ==================== */
     #toolbar {
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
       background: #fff; border-radius: 8px; padding: 6px;
@@ -112,12 +117,8 @@
       justify-content: center; padding: 0; transition: all 0.15s;
       position: relative;
     }
-    #toolbar button:hover {
-      background: #e8f0ff; border-color: #0066ff;
-    }
-    #toolbar button.active {
-      background: #0066ff; color: #fff; border-color: #0066ff;
-    }
+    #toolbar button:hover { background: #e8f0ff; border-color: #0066ff; }
+    #toolbar button.active { background: #0066ff; color: #fff; border-color: #0066ff; }
     #toolbar button.danger { color: #c00; border-color: #f0c0c0; }
     #toolbar button.danger:hover { background: #fee; }
     #toolbar button .tooltip {
@@ -127,9 +128,7 @@
       transition: opacity 0.15s; margin-bottom: 6px;
     }
     #toolbar button:hover .tooltip { opacity: 1; }
-    #toolbar .sep {
-      width: 1px; background: #ddd; margin: 4px 2px;
-    }
+    #toolbar .sep { width: 1px; background: #ddd; margin: 4px 2px; }
     @media (max-width: 768px) {
       #eventsPanel { width: 220px; bottom: 130px; }
       .control-panel { max-width: 200px; font-size: 12px; }
@@ -173,7 +172,8 @@
     // ============================================================
     var GITHUB_USER = 'freeosintmaper';
     var GITHUB_REPO = 'osint-map';
-    var EVENTS_FILE_URL = 'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO + '/main/data/war-tracker.json';
+    var EVENTS_FILE_URL_UA = 'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO + '/main/data/war-tracker.json';
+    var EVENTS_FILE_URL_RU = 'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO + '/main/data/war-tracker-ru.json';
 
     var i18n = {
       ru: {
@@ -206,7 +206,9 @@
         toolMeasure: 'Измерить расстояние',
         toolClear: 'Очистить всё',
         clearConfirm: 'Удалить все ваши рисунки?',
-        total: 'Всего'
+        total: 'Всего',
+        countryUA: 'Украина',
+        countryRU: 'РФ'
       },
       uk: {
         panelTitle: 'Шари та фільтри',
@@ -238,7 +240,9 @@
         toolMeasure: 'Виміряти відстань',
         toolClear: 'Очистити все',
         clearConfirm: 'Видалити всі ваші малюнки?',
-        total: 'Всього'
+        total: 'Всього',
+        countryUA: 'Україна',
+        countryRU: 'РФ'
       },
       en: {
         panelTitle: 'Layers & Filters',
@@ -270,7 +274,9 @@
         toolMeasure: 'Measure distance',
         toolClear: 'Clear all',
         clearConfirm: 'Delete all your drawings?',
-        total: 'Total'
+        total: 'Total',
+        countryUA: 'Ukraine',
+        countryRU: 'RF'
       }
     };
 
@@ -291,29 +297,45 @@
     ).addTo(map);
 
     // ============================================================
-    // 3. СЛОИ КОНТРОЛЯ
+    // 3. СЛОИ КОНТРОЛЯ (ИСПРАВЛЕННЫЕ URL)
     // ============================================================
+
+    // 3.1. Территория, занимаемая РФ (DeepStateMap, ежедневное обновление)
     var occupiedLayer = L.geoJSON(null, {
       style: function() { return { color: '#cc0000', weight: 1.5, opacity: 0.9, fillColor: '#cc0000', fillOpacity: 0.15 }; },
       onEachFeature: function(f, layer) { layer.bindPopup('<b>' + t('territoryRF') + '</b>'); }
     });
+
+    // 3.2. Территория под контролем Украины (ISW June_2025_Timelapse, слой 3)
     var ukraineControlLayer = L.geoJSON(null, {
       style: function() { return { color: '#0055cc', weight: 1.5, opacity: 0.9, fillColor: '#0055cc', fillOpacity: 0.12 }; },
       onEachFeature: function(f, layer) { layer.bindPopup('<b>' + t('territoryUA') + '</b>'); }
     });
+
+    // 3.3. Контрнаступления ВСУ (ISW Claimed Ukrainian Counteroffensive)
     var counterLayer = L.geoJSON(null, {
       style: function() { return { color: '#0088cc', weight: 1.5, opacity: 0.7, fillColor: '#0088cc', fillOpacity: 0.06, dashArray: '5,5' }; },
       onEachFeature: function(f, layer) { layer.bindPopup('<b>' + t('counteroffensive') + '</b>'); }
     });
+
+    // 3.4. Новые территории РФ (сегодня) — зелёный (ISW VIEW_RussiaCoTinUkraine_V3, слой 49, фильтр по EditDate)
     var newRussianLayer = L.geoJSON(null, {
       style: function() { return { color: '#228B22', weight: 2, opacity: 0.9, fillColor: '#228B22', fillOpacity: 0.35, dashArray: '3,3' }; },
       onEachFeature: function(f, layer) { layer.bindPopup('<b>' + t('newRussian') + '</b>'); }
     });
+
+    // 3.5. Возвращённые территории Украины (сегодня) — оранжевый (ISW June_2025_Timelapse, слой 3, фильтр по EditDate)
     var newUkrainianLayer = L.geoJSON(null, {
       style: function() { return { color: '#FF8C00', weight: 2, opacity: 0.9, fillColor: '#FF8C00', fillOpacity: 0.35, dashArray: '3,3' }; },
       onEachFeature: function(f, layer) { layer.bindPopup('<b>' + t('newUkrainian') + '</b>'); }
     });
 
+    // --- ЗАГРУЗКА ДАННЫХ ---
+
+    var today = new Date().toISOString().slice(0, 10);
+    var todayStart = today + 'T00:00:00Z';
+
+    // DeepStateMap (территория РФ) — ежедневное обновление
     fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
       .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
       .then(function(buffer) {
@@ -326,37 +348,51 @@
         if (features.length > 0) {
           features.sort(function(a, b) { return (b.properties.date || '').localeCompare(a.properties.date || ''); });
           occupiedLayer.addData(features[0]);
-          console.log('DeepStateMap загружен');
+          console.log('✅ DeepStateMap: загружено');
         }
       })
       .catch(function(err) { console.warn('DeepStateMap:', err.message); });
 
-    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/SEP2025UACO/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson')
+    // ISW: Территория под контролем Украины (исправленный URL — June_2025_Timelapse, слой 3)
+    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/June_2025_Timelapse/FeatureServer/3/query?where=1%3D1&outFields=*&f=geojson')
       .then(function(r) { return r.json(); })
-      .then(function(d) { ukraineControlLayer.addData(d); })
-      .catch(function(err) { console.warn('ISW UA:', err.message); });
+      .then(function(d) { 
+        ukraineControlLayer.addData(d); 
+        console.log('✅ ISW UA Control: загружено ' + (d.features ? d.features.length : 0));
+      })
+      .catch(function(err) { console.warn('ISW UA Control:', err.message); });
 
+    // ISW: Контрнаступления ВСУ
     fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/Claimed_Ukrainian_Counteroffensive_March_to_July/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson')
       .then(function(r) { return r.json(); })
       .then(function(d) { counterLayer.addData(d); })
       .catch(function(err) { console.warn('ISW counter:', err.message); });
 
-    var today = new Date().toISOString().slice(0, 10);
-    var todayStart = today + 'T00:00:00Z';
-
+    // ISW: Новые территории РФ (сегодня) — VIEW_RussiaCoTinUkraine_V3, слой 49, фильтр по EditDate
     fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/VIEW_RussiaCoTinUkraine_V3/FeatureServer/49/query' +
           '?where=EditDate%20%3E%3D%20TIMESTAMP%20%27' + todayStart + '%27&outFields=*&f=geojson')
       .then(function(r) { return r.json(); })
       .then(function(d) {
-        if (d.features && d.features.length > 0) newRussianLayer.addData(d);
+        if (d.features && d.features.length > 0) {
+          newRussianLayer.addData(d);
+          console.log('✅ New RF territories: ' + d.features.length);
+        } else {
+          console.log('New RF territories: нет новых записей за сегодня');
+        }
       })
       .catch(function(err) { console.warn('New RF:', err.message); });
 
-    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/SEP2025UACO/FeatureServer/0/query' +
+    // ISW: Возвращённые территории Украины (сегодня) — June_2025_Timelapse, слой 3, фильтр по EditDate
+    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/June_2025_Timelapse/FeatureServer/3/query' +
           '?where=EditDate%20%3E%3D%20TIMESTAMP%20%27' + todayStart + '%27&outFields=*&f=geojson')
       .then(function(r) { return r.json(); })
       .then(function(d) {
-        if (d.features && d.features.length > 0) newUkrainianLayer.addData(d);
+        if (d.features && d.features.length > 0) {
+          newUkrainianLayer.addData(d);
+          console.log('✅ New UA territories: ' + d.features.length);
+        } else {
+          console.log('New UA territories: нет новых записей за сегодня');
+        }
       })
       .catch(function(err) { console.warn('New UA:', err.message); });
 
@@ -367,10 +403,12 @@
     newUkrainianLayer.addTo(map);
 
     // ============================================================
-    // 4. СОБЫТИЯ WAR-TRACKER
+    // 4. СОБЫТИЯ WAR-TRACKER (UA + RU)
     // ============================================================
-    var wtLayer = new L.FeatureGroup();
-    map.addLayer(wtLayer);
+    var wtLayerUA = new L.FeatureGroup();
+    var wtLayerRU = new L.FeatureGroup();
+    map.addLayer(wtLayerUA);
+    map.addLayer(wtLayerRU);
 
     var WT_COLORS = {
       'Air Raid Alert':         '#ffcc00',
@@ -399,11 +437,12 @@
       'Political Development': true
     };
 
-    function loadWarTrackerEvents() {
-      fetch(EVENTS_FILE_URL + '?t=' + Date.now())
+    // --- События на территории Украины ---
+    function loadWarTrackerUA() {
+      fetch(EVENTS_FILE_URL_UA + '?t=' + Date.now())
         .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
         .then(function(data) {
-          wtLayer.clearLayers();
+          wtLayerUA.clearLayers();
           var list = (data && data.events) || [];
           var added = 0;
           var todayEvents = [];
@@ -422,33 +461,82 @@
             try { dateStr = new Date(ev.date).toLocaleString('ru-RU'); } catch(e) {}
 
             marker.bindPopup(
-              '<b>' + label + '</b><br>' +
+              '<b>' + label + '</b> <span style="background:#e3f2fd;color:#1565c0;padding:1px 6px;border-radius:3px;font-size:10px;">' + t('countryUA') + '</span><br>' +
               '<i>' + (ev.location || '') + '</i><br>' +
               (ev.description || '') + '<br>' +
               '<small>' + dateStr + '</small><br>' +
               '<a href="' + ev.url + '" target="_blank">' + t('source') + ' →</a>'
             );
-            wtLayer.addLayer(marker);
+            wtLayerUA.addLayer(marker);
             added++;
 
             try {
               var evDate = new Date(ev.date).toISOString().slice(0, 10);
-              if (evDate === today) todayEvents.push(ev);
+              if (evDate === today) todayEvents.push({ ...ev, _country: 'UA' });
             } catch(e) {}
           });
 
-          console.log('War-Tracker: загружено ' + added + ' из ' + list.length);
+          console.log('War-Tracker UA: ' + added + ' из ' + list.length);
           renderEventsPanel(todayEvents);
         })
-        .catch(function(err) {
-          console.warn('War-Tracker:', err.message);
-          document.getElementById('eventsListBody').innerHTML =
-            '<div style="padding: 20px; text-align: center; color: #c00; font-size: 12px;">' +
-            t('noEvents') + '</div>';
-        });
+        .catch(function(err) { console.warn('War-Tracker UA:', err.message); });
     }
 
+    // --- События на территории РФ (удары Украины по РФ) ---
+    function loadWarTrackerRU() {
+      fetch(EVENTS_FILE_URL_RU + '?t=' + Date.now())
+        .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(function(data) {
+          wtLayerRU.clearLayers();
+          var list = (data && data.events) || [];
+          var added = 0;
+
+          list.forEach(function(ev) {
+            if (!ev.lat || !ev.lng) return;
+            if (!activeEventTypes[ev.event_type]) return;
+
+            var color = wtColor(ev.event_type);
+            var marker = L.circleMarker([ev.lat, ev.lng], {
+              radius: 6, color: color, fillColor: color, fillOpacity: 0.7, weight: 2
+            });
+
+            var label = t(WT_LABELS[ev.event_type] || ev.event_type);
+            var dateStr = '';
+            try { dateStr = new Date(ev.date).toLocaleString('ru-RU'); } catch(e) {}
+
+            marker.bindPopup(
+              '<b>' + label + '</b> <span style="background:#ffebee;color:#c62828;padding:1px 6px;border-radius:3px;font-size:10px;">' + t('countryRU') + '</span><br>' +
+              '<i>' + (ev.location || '') + '</i><br>' +
+              (ev.description || '') + '<br>' +
+              '<small>' + dateStr + '</small><br>' +
+              '<a href="' + ev.url + '" target="_blank">' + t('source') + ' →</a>'
+            );
+            wtLayerRU.addLayer(marker);
+            added++;
+
+            // Добавляем в панель событий
+            try {
+              var evDate = new Date(ev.date).toISOString().slice(0, 10);
+              if (evDate === today) {
+                // Обновляем панель (добавляем к существующим)
+                var currentList = window._todayEvents || [];
+                currentList.push({ ...ev, _country: 'RU' });
+                window._todayEvents = currentList;
+                renderEventsPanel(currentList);
+              }
+            } catch(e) {}
+          });
+
+          console.log('War-Tracker RU: ' + added + ' из ' + list.length);
+        })
+        .catch(function(err) { console.warn('War-Tracker RU:', err.message); });
+    }
+
+    // ============================================================
+    // 5. ПАНЕЛЬ СОБЫТИЙ ЗА СЕГОДНЯ
+    // ============================================================
     function renderEventsPanel(events) {
+      window._todayEvents = events;
       var body = document.getElementById('eventsListBody');
       document.getElementById('eventsPanelTitle').textContent = t('eventsPanelTitle');
 
@@ -478,8 +566,12 @@
         var color = wtColor(ev.event_type);
         var time = '';
         try { time = new Date(ev.date).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); } catch(e) {}
+        var countryLabel = ev._country === 'RU' ? t('countryRU') : t('countryUA');
+        var countryClass = ev._country === 'RU' ? 'ru' : 'ua';
+
         html += '<div class="event-item" data-lat="' + ev.lat + '" data-lng="' + ev.lng + '">' +
-                '<div class="evt-type" style="color:' + color + ';">' + label + '</div>' +
+                '<div class="evt-type" style="color:' + color + ';">' + label +
+                '<span class="evt-country ' + countryClass + '">' + countryLabel + '</span></div>' +
                 '<div class="evt-loc">' + (ev.location || '') + '</div>' +
                 '<div class="evt-time">' + time + '</div>' +
                 '</div>';
@@ -502,7 +594,7 @@
     });
 
     // ============================================================
-    // 5. ИНСТРУМЕНТЫ РИСОВАНИЯ
+    // 6. ИНСТРУМЕНТЫ РИСОВАНИЯ
     // ============================================================
     var drawingsLayer = new L.FeatureGroup();
     map.addLayer(drawingsLayer);
@@ -528,15 +620,10 @@
     }
 
     function activateTool(tool) {
-      if (currentTool === tool) {
-        deactivateDrawer();
-        return;
-      }
+      if (currentTool === tool) { deactivateDrawer(); return; }
       deactivateDrawer();
       setActiveTool(tool);
-
       var opts = { metric: true };
-
       if (tool === 'marker') currentDrawer = new L.Draw.Marker(map);
       else if (tool === 'line') currentDrawer = new L.Draw.Polyline(map, opts);
       else if (tool === 'arrow') currentDrawer = new L.Draw.Polyline(map, opts);
@@ -544,7 +631,6 @@
       else if (tool === 'rectangle') currentDrawer = new L.Draw.Rectangle(map);
       else if (tool === 'circle') currentDrawer = new L.Draw.Circle(map, { metric: true });
       else if (tool === 'measure') currentDrawer = new L.Draw.Polyline(map, opts);
-
       if (currentDrawer) currentDrawer.enable();
     }
 
@@ -553,32 +639,23 @@
       var type = e.layerType;
       var tool = currentTool;
 
-      // Для измерения — удаляем предыдущее измерение
       if (tool === 'measure') {
         if (lastMeasureLayer) drawingsLayer.removeLayer(lastMeasureLayer);
-        // Красим в другой цвет, чтобы отличать от обычной линии
         if (layer.setStyle) layer.setStyle({ color: '#ff00aa', weight: 3, dashArray: '8,4' });
         lastMeasureLayer = layer;
       }
 
-      // Для стрелки — добавляем наконечник
       if (tool === 'arrow' && type === 'polyline') {
         var latlngs = layer.getLatLngs();
-        // Если в polyline есть вложенные массивы (мульти-линия) — берём первый
         if (latlngs.length > 0 && Array.isArray(latlngs[0])) latlngs = latlngs[0];
-
         if (latlngs.length >= 2) {
-          // Основная линия
           if (layer.setStyle) layer.setStyle({ color: '#ff3366', weight: 3 });
           drawingsLayer.addLayer(layer);
-          // Декоратор со стрелками по всей длине
           var decorator = L.polylineDecorator(layer, {
             patterns: [{
-              offset: '100%',
-              repeat: 0,
+              offset: '100%', repeat: 0,
               symbol: L.Symbol.arrowHead({
-                pixelSize: 15,
-                polygon: false,
+                pixelSize: 15, polygon: false,
                 pathOptions: { stroke: true, color: '#ff3366', weight: 3, fillOpacity: 1 }
               })
             }]
@@ -601,25 +678,20 @@
         }
       }
 
-      if (type === 'marker') {
-        layer.bindPopup('Ваша метка');
-      }
+      if (type === 'marker') layer.bindPopup('Ваша метка');
 
       drawingsLayer.addLayer(layer);
       saveDrawings();
       deactivateDrawer();
     });
 
-    // Сохранение/загрузка
     var DRAWINGS_KEY = 'osint_user_drawings';
-
     function saveDrawings() {
       try {
         var geojson = drawingsLayer.toGeoJSON();
         localStorage.setItem(DRAWINGS_KEY, JSON.stringify(geojson));
       } catch(e) { console.warn('saveDrawings:', e); }
     }
-
     function loadDrawings() {
       try {
         var raw = localStorage.getItem(DRAWINGS_KEY);
@@ -628,13 +700,9 @@
         drawingsLayer.clearLayers();
         L.geoJSON(geojson, {
           onEachFeature: function(feature, layer) {
-            if (feature.geometry.type === 'Point') {
-              layer.setStyle && layer.setStyle({ color: '#ff3366', weight: 2 });
-            } else if (feature.geometry.type === 'Polygon') {
-              layer.setStyle && layer.setStyle({ color: '#9933ff', weight: 2, fillColor: '#9933ff', fillOpacity: 0.2 });
-            } else if (feature.geometry.type === 'LineString') {
-              layer.setStyle && layer.setStyle({ color: '#ff3366', weight: 3 });
-            }
+            if (feature.geometry.type === 'Point') layer.setStyle && layer.setStyle({ color: '#ff3366', weight: 2 });
+            else if (feature.geometry.type === 'Polygon') layer.setStyle && layer.setStyle({ color: '#9933ff', weight: 2, fillColor: '#9933ff', fillOpacity: 0.2 });
+            else if (feature.geometry.type === 'LineString') layer.setStyle && layer.setStyle({ color: '#ff3366', weight: 3 });
             drawingsLayer.addLayer(layer);
           }
         });
@@ -642,7 +710,7 @@
     }
 
     // ============================================================
-    // 6. ПАНЕЛЬ ИНСТРУМЕНТОВ
+    // 7. ПАНЕЛЬ ИНСТРУМЕНТОВ
     // ============================================================
     function renderToolbar() {
       var toolbar = document.getElementById('toolbar');
@@ -691,7 +759,7 @@
     loadDrawings();
 
     // ============================================================
-    // 7. ПАНЕЛЬ СЛОЁВ И ФИЛЬТРОВ
+    // 8. ПАНЕЛЬ СЛОЁВ И ФИЛЬТРОВ
     // ============================================================
     var panel = L.control({ position: 'topright' });
     panel.onAdd = function() {
@@ -736,28 +804,30 @@
             render();
             updateLegend();
             renderToolbar();
-            loadWarTrackerEvents();
+            loadWarTrackerUA();
+            loadWarTrackerRU();
           });
         });
 
-        var map1 = {
+        var layerMap = {
           chkOccupied: occupiedLayer,
           chkUkraine: ukraineControlLayer,
           chkCounter: counterLayer,
           chkNewRF: newRussianLayer,
           chkNewUA: newUkrainianLayer
         };
-        Object.keys(map1).forEach(function(id) {
+        Object.keys(layerMap).forEach(function(id) {
           var chk = div.querySelector('#' + id);
           if (chk) chk.addEventListener('change', function() {
-            if (this.checked) map1[id].addTo(map); else map.removeLayer(map1[id]);
+            if (this.checked) layerMap[id].addTo(map); else map.removeLayer(layerMap[id]);
           });
         });
 
         div.querySelectorAll('.wt-filter').forEach(function(chk) {
           chk.addEventListener('change', function() {
             activeEventTypes[this.getAttribute('data-type')] = this.checked;
-            loadWarTrackerEvents();
+            loadWarTrackerUA();
+            loadWarTrackerRU();
           });
         });
       }
@@ -770,7 +840,7 @@
     panel.addTo(map);
 
     // ============================================================
-    // 8. ЛЕГЕНДА
+    // 9. ЛЕГЕНДА
     // ============================================================
     var legend = L.control({ position: 'bottomright' });
     legend.onAdd = function() {
@@ -803,10 +873,14 @@
     }
 
     // ============================================================
-    // 9. ЗАПУСК
+    // 10. ЗАПУСК
     // ============================================================
-    loadWarTrackerEvents();
-    setInterval(loadWarTrackerEvents, 600000);
+    loadWarTrackerUA();
+    loadWarTrackerRU();
+    setInterval(function() {
+      loadWarTrackerUA();
+      loadWarTrackerRU();
+    }, 600000);
   </script>
 </body>
 </html>
