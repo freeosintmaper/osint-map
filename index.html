@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>OSINT-карта</title>
   <link rel="stylesheet" href="./lib/leaflet.css" />
   <link rel="stylesheet" href="./lib/leaflet-draw.css" />
@@ -31,6 +31,17 @@
       font-size: 13px; z-index: 99999; max-width: 90%; display: none;
     }
     #errorBox.info { background: #e3f2fd; color: #1565c0; }
+
+    /* Иконки событий (эмодзи в кружке) */
+    .event-icon {
+      display: flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      font-size: 14px; line-height: 1; user-select: none;
+      transition: transform 0.15s;
+    }
+    .event-icon:hover { transform: scale(1.15); }
+    body.dark .event-icon { border-color: #1e1e2e; }
 
     .control-panel {
       background: var(--bg-panel); color: var(--text-main);
@@ -79,6 +90,7 @@
     .info.legend hr { border: none; border-top: 1px solid var(--border-light); margin: 8px 0; }
     .info.legend i { width: 14px; height: 14px; float: left; margin-right: 8px; margin-top: 2px; opacity: 0.85; border-radius: 3px; display: inline-block; }
     .info.legend .legend-line { width: 18px; height: 3px; float: left; margin-right: 8px; margin-top: 7px; border-radius: 2px; display: inline-block; }
+    .info.legend .legend-emoji { float: left; margin-right: 6px; font-size: 14px; }
 
     #eventsPanel {
       position: fixed; left: 10px; top: 10px; bottom: 100px;
@@ -97,10 +109,10 @@
     #eventsPanel .panel-body { flex: 1; overflow-y: auto; padding: 6px 0; }
     #eventsPanel .event-item { padding: 8px 14px; border-bottom: 1px solid var(--border-soft); cursor: pointer; transition: background 0.15s; }
     #eventsPanel .event-item:hover { background: var(--bg-hover); }
-    #eventsPanel .event-item .evt-type { font-weight: 600; font-size: 12px; margin-bottom: 2px; }
+    #eventsPanel .event-item .evt-type { font-weight: 600; font-size: 12px; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
     #eventsPanel .event-item .evt-loc { font-size: 11px; color: var(--text-secondary); margin-bottom: 2px; }
     #eventsPanel .event-item .evt-time { font-size: 10px; color: var(--text-muted); }
-    #eventsPanel .event-item .evt-country { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 3px; margin-left: 6px; font-weight: 600; }
+    #eventsPanel .event-item .evt-country { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 3px; margin-left: auto; font-weight: 600; }
     #eventsPanel .event-item .evt-country.ua { background: #e3f2fd; color: #1565c0; }
     #eventsPanel .event-item .evt-country.ru { background: #ffebee; color: #c62828; }
     #eventsPanel .summary-box { padding: 10px 14px; background: var(--bg-summary); border-bottom: 1px solid var(--border-light); font-size: 12px; }
@@ -115,9 +127,10 @@
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
       background: var(--bg-panel); border-radius: 8px; padding: 6px;
       box-shadow: 0 2px 8px var(--shadow); display: flex; gap: 4px; z-index: 1000;
+      max-width: calc(100vw - 20px); overflow-x: auto;
     }
     #toolbar button {
-      width: 42px; height: 42px; border: 1px solid var(--border-mid);
+      width: 42px; height: 42px; flex: 0 0 auto; border: 1px solid var(--border-mid);
       background: var(--bg-input); color: var(--text-main);
       border-radius: 6px; cursor: pointer; font-size: 18px;
       display: flex; align-items: center; justify-content: center;
@@ -134,7 +147,7 @@
       opacity: 0; pointer-events: none; transition: opacity 0.15s; margin-bottom: 6px;
     }
     #toolbar button:hover .tooltip { opacity: 1; }
-    #toolbar .sep { width: 1px; background: var(--border-mid); margin: 4px 2px; }
+    #toolbar .sep { width: 1px; background: var(--border-mid); margin: 4px 2px; flex: 0 0 auto; }
 
     body.dark .leaflet-control-zoom a { background: var(--bg-panel); color: var(--text-main); border-color: var(--border-mid); }
     body.dark .leaflet-control-zoom a:hover { background: var(--bg-hover); }
@@ -142,11 +155,49 @@
     body.dark .leaflet-popup-tip { background: var(--bg-panel); color: var(--text-main); }
     body.dark .leaflet-popup-content a { color: #6ba6ff; }
 
+    /* ============ МОБИЛЬНАЯ АДАПТАЦИЯ ============ */
     @media (max-width: 768px) {
-      #eventsPanel { width: 220px; bottom: 130px; }
-      .control-panel { max-width: 200px; font-size: 12px; }
-      .info.legend { max-width: 160px; font-size: 11px; }
-      #toolbar button { width: 36px; height: 36px; font-size: 15px; }
+      .control-panel {
+        max-width: 220px; font-size: 12px;
+        padding: 8px 10px; max-height: 70vh;
+      }
+      .control-panel h4 { font-size: 11px; }
+      .control-panel label { font-size: 12px; padding: 3px 0; }
+      .info.legend {
+        max-width: 180px; font-size: 11px;
+        padding: 8px 10px; max-height: 50vh;
+      }
+      #eventsPanel {
+        width: 220px; bottom: 90px; top: 8px; left: 8px;
+        font-size: 12px;
+      }
+      #eventsPanel .panel-header { padding: 8px 10px; font-size: 12px; }
+      #eventsPanel .event-item { padding: 6px 10px; }
+      #toolbar {
+        padding: 4px; bottom: 10px; gap: 3px;
+      }
+      #toolbar button {
+        width: 36px; height: 36px; font-size: 15px;
+      }
+      #toolbar .sep { margin: 2px 1px; }
+      /* Скрываем тултипы на тач-устройствах */
+      #toolbar button .tooltip { display: none; }
+    }
+
+    /* Очень маленькие экраны */
+    @media (max-width: 480px) {
+      #eventsPanel { width: 180px; }
+      #eventsPanel.collapsed { width: 36px; }
+      .control-panel { max-width: 180px; }
+      .info.legend { max-width: 140px; font-size: 10px; }
+      .info.legend i, .info.legend .legend-line { width: 10px; height: 10px; margin-top: 1px; }
+      #toolbar button { width: 32px; height: 32px; font-size: 13px; }
+      .event-icon { width: 24px; height: 24px; font-size: 12px; border-width: 1.5px; }
+    }
+
+    /* Когда колонка событий свёрнута, легенда не должна мешать */
+    @media (max-width: 768px) {
+      body.panel-collapsed .info.legend { right: 6px; bottom: 6px; }
     }
   </style>
 </head>
@@ -260,24 +311,48 @@
       localStorage.setItem(MODE_KEY, layerMode);
     }
 
+    // Явно задаём fill, чтобы Leaflet корректно переключался между режимами
     function styleFor(baseColor) {
       if (layerMode === 'outline') {
-        return { color: baseColor, weight: 1.8, opacity: 0.9, fill: false };
+        return {
+          color: baseColor, weight: 1.8, opacity: 0.9,
+          fill: false, fillColor: baseColor, fillOpacity: 0
+        };
       }
-      return { color: baseColor, weight: 1.2, opacity: 0.9, fillColor: baseColor, fillOpacity: fillOpacity };
+      return {
+        color: baseColor, weight: 1.2, opacity: 0.9,
+        fill: true, fillColor: baseColor, fillOpacity: fillOpacity
+      };
+    }
+
+    // Принудительно обновляем и стиль, и внутренние опции слоя
+    function applyStyleToLayer(layer, baseColor, styleObj) {
+      if (!layer) return;
+      if (layer.setStyle) layer.setStyle(styleObj);
+      // Дополнительно перезаписываем опции — это лечит баг «залипшей» заливки
+      if (layer.options) {
+        layer.options.fill = styleObj.fill;
+        layer.options.fillColor = styleObj.fillColor;
+        layer.options.fillOpacity = styleObj.fillOpacity;
+        layer.options.color = styleObj.color;
+        layer.options.weight = styleObj.weight;
+        layer.options.opacity = styleObj.opacity;
+      }
+      if (layer.redraw) layer.redraw();
     }
 
     function refreshAllStyles() {
       if (deepStateLayer) {
         deepStateLayer.eachLayer(function(sub) {
-          if (sub.setStyle) sub.setStyle(styleFor('#cc0000'));
+          applyStyleToLayer(sub, '#cc0000', styleFor('#cc0000'));
         });
       }
       if (counterLayer) {
         counterLayer.eachLayer(function(sub) {
-          if (sub.setStyle) {
-            sub.setStyle({ color: '#0088cc', weight: 2, opacity: 0.85, fill: false, dashArray: '5,5' });
-          }
+          var style = { color: '#0088cc', weight: 2, opacity: 0.85,
+                        fill: false, fillColor: '#0088cc', fillOpacity: 0,
+                        dashArray: '5,5' };
+          applyStyleToLayer(sub, '#0088cc', style);
         });
       }
     }
@@ -330,12 +405,12 @@
     });
     var counterLayer = L.geoJSON(null, {
       style: function() {
-        return { color: '#0088cc', weight: 2, opacity: 0.85, fill: false, dashArray: '5,5' };
+        return { color: '#0088cc', weight: 2, opacity: 0.85,
+                 fill: false, fillOpacity: 0, dashArray: '5,5' };
       },
       onEachFeature: polygonPopup(t('counteroffensive'))
     });
 
-    // DeepStateMap
     fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
       .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
       .then(function(buffer) {
@@ -353,7 +428,6 @@
       })
       .catch(function(err) { console.warn('DeepStateMap:', err.message); });
 
-    // Контрнаступления ВСУ (ISW)
     fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/Claimed_Ukrainian_Counteroffensive_March_to_July/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson')
       .then(function(r) { return r.json(); })
       .then(function(d) { counterLayer.addData(d); })
@@ -363,12 +437,8 @@
     counterLayer.addTo(map);
 
     // ============================================================
-    // 4. WAR-TRACKER
+    // 4. ИКОНКИ СОБЫТИЙ (как у liveuamap)
     // ============================================================
-    var wtLayerUA = new L.FeatureGroup();
-    var wtLayerRU = new L.FeatureGroup();
-    map.addLayer(wtLayerUA); map.addLayer(wtLayerRU);
-
     var WT_COLORS = {
       'Air Raid Alert': '#ffcc00', 'Military Strike': '#cc0000',
       'Military Operation': '#ff6600', 'Military Offensive': '#990000',
@@ -379,12 +449,63 @@
       'Military Operation': 'operation', 'Military Offensive': 'offensive',
       'Security Incident': 'incident', 'Political Development': 'politics'
     };
+    // Эмодзи для каждого типа события
+    var WT_EMOJI = {
+      'Air Raid Alert': '🛩️',
+      'Military Strike': '💥',
+      'Military Operation': '⚔️',
+      'Military Offensive': '🚀',
+      'Security Incident': '⚠️',
+      'Political Development': '📢'
+    };
+
     function wtColor(type) { return WT_COLORS[type] || '#9933cc'; }
+    function wtEmoji(type) { return WT_EMOJI[type] || '📍'; }
+
+    // Создаём divIcon для события
+    function createEventIcon(eventType) {
+      var color = wtColor(eventType);
+      var emoji = wtEmoji(eventType);
+      var html = '<div class="event-icon" style="background:' + color + ';">' + emoji + '</div>';
+      return L.divIcon({
+        html: html,
+        className: '',
+        iconSize: [28, 28],
+        iconAnchor: [14, 14],
+        popupAnchor: [0, -14]
+      });
+    }
 
     var activeEventTypes = {
       'Air Raid Alert': true, 'Military Strike': true, 'Military Operation': true,
       'Military Offensive': true, 'Security Incident': true, 'Political Development': true
     };
+
+    // ============================================================
+    // 5. WAR-TRACKER
+    // ============================================================
+    var wtLayerUA = new L.FeatureGroup();
+    var wtLayerRU = new L.FeatureGroup();
+    map.addLayer(wtLayerUA); map.addLayer(wtLayerRU);
+
+    function buildMarker(ev, country) {
+      var icon = createEventIcon(ev.event_type);
+      var marker = L.marker([ev.lat, ev.lng], { icon: icon, riseOnHover: true });
+      var label = t(WT_LABELS[ev.event_type] || ev.event_type);
+      var dateStr = '';
+      try { dateStr = new Date(ev.date).toLocaleString('ru-RU'); } catch(e) {}
+      var badge = country === 'UA'
+        ? '<span style="background:#e3f2fd;color:#1565c0;padding:1px 6px;border-radius:3px;font-size:10px;">' + t('countryUA') + '</span>'
+        : '<span style="background:#ffebee;color:#c62828;padding:1px 6px;border-radius:3px;font-size:10px;">' + t('countryRU') + '</span>';
+      marker.bindPopup(
+        '<b>' + wtEmoji(ev.event_type) + ' ' + label + '</b> ' + badge + '<br>' +
+        '<i>' + (ev.location || '') + '</i><br>' +
+        (ev.description || '') + '<br>' +
+        '<small>' + dateStr + '</small><br>' +
+        '<a href="' + ev.url + '" target="_blank">' + t('source') + ' →</a>'
+      );
+      return marker;
+    }
 
     function loadWarTrackerUA() {
       fetch(EVENTS_FILE_URL_UA + '?t=' + Date.now())
@@ -396,20 +517,8 @@
           list.forEach(function(ev) {
             if (!ev.lat || !ev.lng) return;
             if (!activeEventTypes[ev.event_type]) return;
-            var color = wtColor(ev.event_type);
-            var marker = L.circleMarker([ev.lat, ev.lng], {
-              radius: 6, color: color, fillColor: color, fillOpacity: 0.8, weight: 2
-            });
-            var label = t(WT_LABELS[ev.event_type] || ev.event_type);
-            var dateStr = '';
-            try { dateStr = new Date(ev.date).toLocaleString('ru-RU'); } catch(e) {}
-            marker.bindPopup(
-              '<b>' + label + '</b> <span style="background:#e3f2fd;color:#1565c0;padding:1px 6px;border-radius:3px;font-size:10px;">' + t('countryUA') + '</span><br>' +
-              '<i>' + (ev.location || '') + '</i><br>' + (ev.description || '') + '<br>' +
-              '<small>' + dateStr + '</small><br>' +
-              '<a href="' + ev.url + '" target="_blank">' + t('source') + ' →</a>'
-            );
-            wtLayerUA.addLayer(marker); added++;
+            wtLayerUA.addLayer(buildMarker(ev, 'UA'));
+            added++;
             try {
               if (new Date(ev.date).getTime() >= Date.now() - 24 * 60 * 60 * 1000) {
                 todayEvents.push(Object.assign({}, ev, { _country: 'UA' }));
@@ -433,20 +542,8 @@
           list.forEach(function(ev) {
             if (!ev.lat || !ev.lng) return;
             if (!activeEventTypes[ev.event_type]) return;
-            var color = wtColor(ev.event_type);
-            var marker = L.circleMarker([ev.lat, ev.lng], {
-              radius: 6, color: color, fillColor: color, fillOpacity: 0.8, weight: 2
-            });
-            var label = t(WT_LABELS[ev.event_type] || ev.event_type);
-            var dateStr = '';
-            try { dateStr = new Date(ev.date).toLocaleString('ru-RU'); } catch(e) {}
-            marker.bindPopup(
-              '<b>' + label + '</b> <span style="background:#ffebee;color:#c62828;padding:1px 6px;border-radius:3px;font-size:10px;">' + t('countryRU') + '</span><br>' +
-              '<i>' + (ev.location || '') + '</i><br>' + (ev.description || '') + '<br>' +
-              '<small>' + dateStr + '</small><br>' +
-              '<a href="' + ev.url + '" target="_blank">' + t('source') + ' →</a>'
-            );
-            wtLayerRU.addLayer(marker); added++;
+            wtLayerRU.addLayer(buildMarker(ev, 'RU'));
+            added++;
             try {
               if (new Date(ev.date).getTime() >= Date.now() - 24 * 60 * 60 * 1000) {
                 todayEvents.push(Object.assign({}, ev, { _country: 'RU' }));
@@ -461,7 +558,7 @@
     }
 
     // ============================================================
-    // 5. ПАНЕЛЬ СОБЫТИЙ
+    // 6. ПАНЕЛЬ СОБЫТИЙ
     // ============================================================
     function renderEventsPanel() {
       var ua = window._todayEvents_ua || [];
@@ -482,7 +579,7 @@
       var html = '<div class="summary-box">';
       html += '<div class="summary-title">' + t('summaryTitle') + '</div>';
       Object.keys(counts).forEach(function(type) {
-        html += '<div class="summary-line"><span>' + t(WT_LABELS[type] || type) +
+        html += '<div class="summary-line"><span>' + wtEmoji(type) + ' ' + t(WT_LABELS[type] || type) +
                 '</span><span>' + counts[type] + '</span></div>';
       });
       html += '<div class="summary-line" style="margin-top:4px;font-weight:600;">' +
@@ -492,12 +589,13 @@
       events.slice(0, 50).forEach(function(ev) {
         var label = t(WT_LABELS[ev.event_type] || ev.event_type);
         var color = wtColor(ev.event_type);
+        var emoji = wtEmoji(ev.event_type);
         var time = '';
         try { time = new Date(ev.date).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); } catch(e) {}
         var countryLabel = ev._country === 'RU' ? t('countryRU') : t('countryUA');
         var countryClass = ev._country === 'RU' ? 'ru' : 'ua';
         html += '<div class="event-item" data-lat="' + ev.lat + '" data-lng="' + ev.lng + '">' +
-                '<div class="evt-type" style="color:' + color + ';">' + label +
+                '<div class="evt-type" style="color:' + color + ';">' + emoji + ' ' + label +
                 '<span class="evt-country ' + countryClass + '">' + countryLabel + '</span></div>' +
                 '<div class="evt-loc">' + (ev.location || '') + '</div>' +
                 '<div class="evt-time">' + time + '</div></div>';
@@ -515,11 +613,12 @@
     document.getElementById('toggleEventsPanel').addEventListener('click', function() {
       var panel = document.getElementById('eventsPanel');
       panel.classList.toggle('collapsed');
+      document.body.classList.toggle('panel-collapsed', panel.classList.contains('collapsed'));
       this.textContent = panel.classList.contains('collapsed') ? '▶' : '◀';
     });
 
     // ============================================================
-    // 6. ИНСТРУМЕНТЫ РИСОВАНИЯ
+    // 7. ИНСТРУМЕНТЫ РИСОВАНИЯ
     // ============================================================
     var drawingsLayer = new L.FeatureGroup();
     map.addLayer(drawingsLayer);
@@ -577,7 +676,7 @@
       }
       if (layer.setStyle) {
         if (type === 'polygon' || type === 'rectangle' || type === 'circle') {
-          layer.setStyle({ color: '#9933ff', weight: 2, fillColor: '#9933ff', fillOpacity: 0.2 });
+          layer.setStyle({ color: '#9933ff', weight: 2, fill: true, fillColor: '#9933ff', fillOpacity: 0.2 });
         } else if (type === 'polyline' && tool !== 'measure') {
           layer.setStyle({ color: '#ff6600', weight: 3 });
         }
@@ -601,7 +700,7 @@
         L.geoJSON(geojson, {
           onEachFeature: function(feature, layer) {
             if (feature.geometry.type === 'Point') layer.setStyle && layer.setStyle({ color: '#ff3366', weight: 2 });
-            else if (feature.geometry.type === 'Polygon') layer.setStyle && layer.setStyle({ color: '#9933ff', weight: 2, fillColor: '#9933ff', fillOpacity: 0.2 });
+            else if (feature.geometry.type === 'Polygon') layer.setStyle && layer.setStyle({ color: '#9933ff', weight: 2, fill: true, fillColor: '#9933ff', fillOpacity: 0.2 });
             else if (feature.geometry.type === 'LineString') layer.setStyle && layer.setStyle({ color: '#ff3366', weight: 3 });
             drawingsLayer.addLayer(layer);
           }
@@ -646,7 +745,7 @@
     loadDrawings();
 
     // ============================================================
-    // 7. ПАНЕЛЬ
+    // 8. ПАНЕЛЬ
     // ============================================================
     var panel = L.control({ position: 'topright' });
     panel.onAdd = function() {
@@ -680,7 +779,8 @@
           { key: 'Political Development', label: t('politics') }
         ].forEach(function(item) {
           html += '<label><input type="checkbox" class="wt-filter" data-type="' + item.key + '"' +
-                  (activeEventTypes[item.key] ? ' checked' : '') + '> ' + item.label + '</label>';
+                  (activeEventTypes[item.key] ? ' checked' : '') + '> ' +
+                  wtEmoji(item.key) + ' ' + item.label + '</label>';
         });
         div.innerHTML = html;
         attach();
@@ -733,7 +833,7 @@
     panel.addTo(map);
 
     // ============================================================
-    // 8. ЛЕГЕНДА
+    // 9. ЛЕГЕНДА
     // ============================================================
     var legend = L.control({ position: 'bottomright' });
     legend.onAdd = function() {
@@ -752,18 +852,18 @@
       html += '<div><i style="background:#cc0000;"></i> ' + t('territoryRF') + '</div>';
       html += '<div><span class="legend-line" style="background:#0088cc;"></span> ' + t('counteroffensive') + '</div>';
       html += '<hr><h4>' + t('warTrackerEvents') + '</h4>';
-      html += '<div><i style="background:#ffcc00;"></i> ' + t('raidAlert') + '</div>';
-      html += '<div><i style="background:#cc0000;"></i> ' + t('strike') + '</div>';
-      html += '<div><i style="background:#ff6600;"></i> ' + t('operation') + '</div>';
-      html += '<div><i style="background:#990000;"></i> ' + t('offensive') + '</div>';
-      html += '<div><i style="background:#888888;"></i> ' + t('incident') + '</div>';
-      html += '<div><i style="background:#0088cc;"></i> ' + t('politics') + '</div>';
+      html += '<div><span class="legend-emoji">🛩️</span> ' + t('raidAlert') + '</div>';
+      html += '<div><span class="legend-emoji">💥</span> ' + t('strike') + '</div>';
+      html += '<div><span class="legend-emoji">⚔️</span> ' + t('operation') + '</div>';
+      html += '<div><span class="legend-emoji">🚀</span> ' + t('offensive') + '</div>';
+      html += '<div><span class="legend-emoji">⚠️</span> ' + t('incident') + '</div>';
+      html += '<div><span class="legend-emoji">📢</span> ' + t('politics') + '</div>';
       html += '<hr><div style="font-size:11px;color:var(--text-muted);">War-Tracker · DeepStateMap</div>';
       div.innerHTML = html;
     }
 
     // ============================================================
-    // 9. ЗАПУСК
+    // 10. ЗАПУСК
     // ============================================================
     loadWarTrackerUA();
     loadWarTrackerRU();
