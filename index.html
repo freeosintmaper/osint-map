@@ -32,7 +32,6 @@
     }
     #errorBox.info { background: #e3f2fd; color: #1565c0; }
 
-    /* === SVG-иконки событий === */
     .event-icon {
       display: flex; align-items: center; justify-content: center;
       width: 30px; height: 30px; border-radius: 50%;
@@ -154,6 +153,13 @@
     }
     #toolbar button:hover .tooltip { opacity: 1; }
     #toolbar .sep { width: 1px; background: var(--border-mid); margin: 4px 2px; flex: 0 0 auto; }
+    #toolbar button svg {
+      width: 20px; height: 20px;
+      stroke: currentColor; stroke-width: 2;
+      fill: none; stroke-linecap: round; stroke-linejoin: round;
+      display: block; pointer-events: none;
+    }
+    #toolbar button.active svg { stroke: #fff; }
 
     body.dark .leaflet-control-zoom a { background: var(--bg-panel); color: var(--text-main); border-color: var(--border-mid); }
     body.dark .leaflet-control-zoom a:hover { background: var(--bg-hover); }
@@ -173,6 +179,7 @@
       #toolbar button { width: 36px; height: 36px; font-size: 15px; }
       #toolbar .sep { margin: 2px 1px; }
       #toolbar button .tooltip { display: none; }
+      #toolbar button svg { width: 17px; height: 17px; }
       .event-icon { width: 26px; height: 26px; border-width: 1.5px; }
       .event-icon svg { width: 14px; height: 14px; }
     }
@@ -184,6 +191,7 @@
       .info.legend { max-width: 140px; font-size: 10px; }
       .info.legend i, .info.legend .legend-line { width: 10px; height: 10px; margin-top: 1px; }
       #toolbar button { width: 32px; height: 32px; font-size: 13px; }
+      #toolbar button svg { width: 15px; height: 15px; }
       .event-icon { width: 24px; height: 24px; }
       .event-icon svg { width: 12px; height: 12px; }
     }
@@ -273,8 +281,7 @@
                    '· Події — War-Tracker (кожна має посилання на джерело)\n' +
                    '· Територія РФ — DeepStateMap (український OSINT-проект)\n' +
                    '· Контрнаступи — ISW (американський аналітичний центр)\n\n' +
-                   'Ми не проводимо власний аналіз. Лінія фронту — приблизна.\n' +
-                   'Ми не ручаємося за точність та повноту даних.'
+                   'Ми не проводимо власний аналіз. Лінія фронту — приблизна.'
       },
       en: {
         eventsPanelTitle: 'Events (last 24h)',
@@ -297,8 +304,7 @@
                    '· Events — War-Tracker (each has a source link)\n' +
                    '· Territory held by RF — DeepStateMap (Ukrainian OSINT)\n' +
                    '· Counteroffensives — ISW (US analytical center)\n\n' +
-                   'We do not perform our own analysis. Front line is approximate.\n' +
-                   'We cannot guarantee accuracy or completeness.'
+                   'We do not perform our own analysis. Front line is approximate.'
       }
     };
 
@@ -364,6 +370,23 @@
       }
     }
 
+    // ============================================================
+    // SVG-ИКОНКИ ДЛЯ ТУЛБАРА
+    // ============================================================
+    var TOOLBAR_SVG = {
+      marker: '<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>',
+      line: '<svg viewBox="0 0 24 24"><path d="M4 19L20 5"/></svg>',
+      arrow: '<svg viewBox="0 0 24 24"><path d="M4 12h13M12 6l6 6-6 6"/></svg>',
+      polygon: '<svg viewBox="0 0 24 24"><path d="M12 2l9 7-3.5 11h-11L3 9z"/></svg>',
+      rectangle: '<svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1"/></svg>',
+      circle: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>',
+      measure: '<svg viewBox="0 0 24 24"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg>',
+      clear: '<svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>',
+      moon: '<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>',
+      sun: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>',
+      info: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>'
+    };
+
     function applyTheme(theme) {
       currentTheme = theme;
       localStorage.setItem(THEME_KEY, theme);
@@ -375,7 +398,10 @@
         map.removeLayer(darkTile); lightTile.addTo(map);
       }
       var btn = document.querySelector('#toolbar button[data-tool="theme"]');
-      if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+      if (btn) {
+        var themeSvg = theme === 'dark' ? TOOLBAR_SVG.sun : TOOLBAR_SVG.moon;
+        btn.innerHTML = themeSvg + '<span class="tooltip">' + t('toolTheme') + '</span>';
+      }
     }
 
     // ============================================================
@@ -726,21 +752,29 @@
 
     function renderToolbar() {
       var toolbar = document.getElementById('toolbar');
+      var themeIcon = currentTheme === 'dark' ? TOOLBAR_SVG.sun : TOOLBAR_SVG.moon;
       var tools = [
-        { key: 'marker', icon: '📍' }, { key: 'line', icon: '〰️' },
-        { key: 'arrow', icon: '➡️' }, { key: 'polygon', icon: '⬡' },
-        { key: 'rectangle', icon: '▭' }, { key: 'circle', icon: '⭕' },
-        { sep: true }, { key: 'measure', icon: '📐' },
-        { sep: true }, { key: 'clear', icon: '🗑️', danger: true },
-        { sep: true }, { key: 'theme', icon: currentTheme === 'dark' ? '☀️' : '🌙' },
-        { sep: true }, { key: 'info', icon: 'ℹ️' }
+        { key: 'marker',    svg: TOOLBAR_SVG.marker },
+        { key: 'line',      svg: TOOLBAR_SVG.line },
+        { key: 'arrow',     svg: TOOLBAR_SVG.arrow },
+        { key: 'polygon',   svg: TOOLBAR_SVG.polygon },
+        { key: 'rectangle', svg: TOOLBAR_SVG.rectangle },
+        { key: 'circle',    svg: TOOLBAR_SVG.circle },
+        { sep: true },
+        { key: 'measure',   svg: TOOLBAR_SVG.measure },
+        { sep: true },
+        { key: 'clear',     svg: TOOLBAR_SVG.clear, danger: true },
+        { sep: true },
+        { key: 'theme',     svg: themeIcon },
+        { sep: true },
+        { key: 'info',      svg: TOOLBAR_SVG.info }
       ];
       var html = '';
       tools.forEach(function(item) {
         if (item.sep) { html += '<div class="sep"></div>'; return; }
         var tooltip = t('tool' + item.key.charAt(0).toUpperCase() + item.key.slice(1));
         html += '<button data-tool="' + item.key + '"' + (item.danger ? ' class="danger"' : '') + '>' +
-                item.icon + '<span class="tooltip">' + tooltip + '</span></button>';
+                item.svg + '<span class="tooltip">' + tooltip + '</span></button>';
       });
       toolbar.innerHTML = html;
       toolbar.querySelectorAll('button[data-tool]').forEach(function(btn) {
