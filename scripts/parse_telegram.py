@@ -41,7 +41,6 @@ ABBREVIATIONS = {
     "азия", "африка", "европа",
 }
 
-# Сводки — если слово в первых 200 символах, пост пропускаем
 SUMMARY_WORDS = [
     "сводка", "сводку", "сводке", "зведення", "зведенню",
     "оперативная информация", "оперативна інформація", "оперативную информацию",
@@ -53,10 +52,11 @@ SUMMARY_WORDS = [
     "обстановка на фронте", "ситуация на фронте", "ситуація на фронті",
     "фронтовая сводка", "фронтове зведення",
     "збито/подавлено", "сбито/подавлено", "збито / подавлено",
+    "хроника", "хроніка", "дронопорт", "дронопорти",
+    "специальной военной операции", "спеціальної воєнної операції",
 ]
 
 TRANSLIT_ALIASES = {
-    # Украинские написания российских городов
     "ульяновськ": [54.3142, 48.4031, "Ульяновск", "RU"],
     "воронезьк": [51.6720, 39.1843, "Воронеж", "RU"],
     "воронез": [51.6720, 39.1843, "Воронеж", "RU"],
@@ -97,7 +97,6 @@ TRANSLIT_ALIASES = {
     "ставропольськ": [45.0428, 41.9734, "Ставрополь", "RU"],
     "приморськ": [43.1155, 131.8855, "Владивосток", "RU"],
 
-    # Российские написания украинских городов
     "сіверськодонецьк": [48.9487, 38.4924, "Северодонецк", "UA"],
     "северодонецк": [48.9487, 38.4924, "Северодонецк", "UA"],
     "київськ": [50.4501, 30.5234, "Киев", "UA"],
@@ -132,8 +131,21 @@ TRANSLIT_ALIASES = {
     "чернівецьк": [48.2917, 25.9354, "Черновцы", "UA"],
 }
 
+# СИЛЬНЫЕ слова для "своей" страны — достаточно любого рядом
+STRONG_EVENT_WORDS = [
+    "удар", "обстр", "взрыв", "вибух", "прилёт", "приліт",
+    "бпла", "дрон", "ракет", "пво", "штурм",
+    "уразили", "уражено", "поразили", "поражено",
+    "бои", "бої", "бой", "бій", "боях",
+    "наступлен", "наступ", "прорыв", "прорив",
+    "атака", "атакувал", "атакуют", "атакували",
+    "продвижен", "просуванн", "заняли", "зайняли",
+    "освободил", "звільнили", "контроль над",
+    "тревога", "тривога", "опасность", "небезпека",
+]
+
+# Паттерны для ЧУЖОЙ страны — требуют явной конструкции
 EVENT_PATTERNS = [
-    # Прямые: "удар по X", "взрыв в X"
     r'удар\w*\s+(?:по|на|в)\s+',
     r'ударил\w*\s+(?:по|на|в)\s+',
     r'ударили\s+по\s+',
@@ -165,21 +177,16 @@ EVENT_PATTERNS = [
     r'бпла\s+(?:над|на|в|курс)',
     r'дрон\w*\s+(?:над|на|в|курс)',
     r'курс\w*\s+(?:на|в)\s+',
-
-    # РЕВЕРСИВНЫЕ: "в X ... уражено" (до 4 слов между)
     r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}уражен\w*',
     r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}поражен\w*',
     r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}удар\w*',
     r'\bу\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}уражен\w*',
     r'\bу\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}влучан\w*',
-    r'\bу\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}удар\w*',
     r'\bна\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}удар\w*',
     r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}вибух\w*',
     r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}взрыв\w*',
     r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}прил[её]т\w*',
     r'\bу\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}приліт\w*',
-
-    # ФРОНТОВЫЕ: бои в районе X, штурм X, под X
     r'в\s+районе\s+',
     r'у\s+районі\s+',
     r'на\s+подступах\s+к\s+',
@@ -214,7 +221,6 @@ SOURCE_VERBS = [
     r'прилетели\s+с', r'курс\s+с', r'курсом\s+с',
     r'с\s+территории', r'з\s+території',
     r'с\s+направления', r'з\s+напрямку',
-    # "X-ском направлении" — фронт, не место события
     r'\w+ском\s+направлени',
     r'\w+скому\s+направлени',
     r'\w+ском\s+напрямку',
@@ -258,14 +264,13 @@ STOP_SETTLEMENTS = {
     "калибр", "шахед", "герань", "ланцет", "панцирь", "тюльпан",
     "град", "ураган", "смерч", "тунгуска", "шилка", "с-300", "с-400",
     "точка", "печора", "акация", "гиацинт", "пион", "мена",
-    "азов", "азовсталь", "азовск",
+    "азов", "азовсталь", "азовск", "русский", "руський", "дронопорт",
 }
 
 SETTLEMENTS_BY_NAME = {}
 
 
 def is_summary(text):
-    """Пост — сводка? Если да, пропускаем."""
     tl = text[:250].lower()
     for w in SUMMARY_WORDS:
         if w in tl:
@@ -333,6 +338,19 @@ def extract_posts(html):
     return posts
 
 
+def has_strong_word_near(text, phrase, window=120):
+    """Есть ли рядом СИЛЬНОЕ событийное слово."""
+    tl = text.lower()
+    idx = tl.find(phrase.lower())
+    if idx < 0:
+        return False
+    full = tl[max(0, idx-window):idx+len(phrase)+window]
+    for w in STRONG_EVENT_WORDS:
+        if w in full:
+            return True
+    return False
+
+
 def has_event_pattern_near(text, phrase, window=120):
     tl = text.lower()
     idx = tl.find(phrase.lower())
@@ -385,9 +403,17 @@ def find_alias(text, channel_country):
         coords = TRANSLIT_ALIASES[key]
         alias_country = coords[3]
 
-        if channel_country not in ("UA", "RU") or alias_country == channel_country:
+        # Своя страна — достаточно сильного слова
+        if channel_country == alias_country:
+            if has_source_verb_near(text, key, window=60):
+                continue
+            if not has_strong_word_near(text, key, window=120):
+                continue
+            if is_military_term_context(text, key):
+                continue
             return (coords[0], coords[1]), coords[2], coords[3], True
 
+        # Чужая страна — требует явного паттерна
         if has_source_verb_near(text, key, window=60):
             continue
         if not has_event_pattern_near(text, key, window=120):
@@ -419,21 +445,34 @@ def find_best_city(text, channel_country):
                 continue
             if is_military_term_context(text, phrase):
                 continue
-            if not has_event_pattern_near(text, phrase, window=120):
-                continue
-            if has_source_verb_near(text, phrase, window=60):
-                continue
 
             coords_list = SETTLEMENTS_BY_NAME[phrase]
+
+            # Выбираем вариант по стране канала
             if channel_country in ("UA", "RU"):
                 filtered = [c for c in coords_list if c[2] == channel_country]
                 if not filtered:
                     continue
                 best = max(filtered, key=lambda x: x[4])
+                is_own_country = True
             else:
                 best = max(coords_list, key=lambda x: x[4])
+                is_own_country = False
 
             lat, lng, country, orig, population = best
+
+            # СВОЯ СТРАНА: достаточно сильного слова
+            # ЧУЖАЯ: требует явного паттерна
+            if is_own_country:
+                if has_source_verb_near(text, phrase, window=60):
+                    continue
+                if not has_strong_word_near(text, phrase, window=120):
+                    continue
+            else:
+                if has_source_verb_near(text, phrase, window=60):
+                    continue
+                if not has_event_pattern_near(text, phrase, window=120):
+                    continue
 
             pos_in_text = tl.find(phrase)
             if pos_in_text < 0:
@@ -569,7 +608,6 @@ def main():
                 continue
             seen_texts.add(key)
 
-            # ФИЛЬТР СВОДОК
             if is_summary(text):
                 skipped_summary += 1
                 continue
@@ -578,15 +616,12 @@ def main():
             if not event_type:
                 continue
 
-            # 1. Алиасы (с флагом had_alias)
             coords, city, country, had_alias = find_alias(text, channel_country)
 
-            # 2. Если алиас был, но не подошёл — НЕ идём в fallback
             if not coords and had_alias:
                 no_match += 1
                 continue
 
-            # 3. Обычный поиск
             if not coords:
                 coords, city, country = find_best_city(text, channel_country)
 
