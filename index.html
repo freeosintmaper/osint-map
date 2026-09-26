@@ -17,7 +17,7 @@
     .control-panel {
       background: #fff; padding: 10px 12px; border-radius: 6px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.25); font-size: 13px;
-      max-width: 260px;
+      max-width: 280px; max-height: 90vh; overflow-y: auto;
     }
     .control-panel h4 { margin: 0 0 6px; font-size: 12px; text-transform: uppercase; color: #555; }
     .control-panel label { display: block; padding: 3px 0; cursor: pointer; }
@@ -47,7 +47,7 @@
     .info.legend {
       background: white; padding: 8px 12px; border-radius: 5px;
       box-shadow: 0 0 15px rgba(0,0,0,0.2); font-size: 13px;
-      line-height: 1.5; max-width: 220px;
+      line-height: 1.5; max-width: 240px; max-height: 80vh; overflow-y: auto;
     }
     .info.legend h4 { margin: 0 0 6px; font-size: 13px; color: #333; }
     .info.legend hr { border: none; border-top: 1px solid #eee; margin: 6px 0; }
@@ -94,7 +94,7 @@
     }
 
     // ============================================================
-    // 2. КАТЕГОРИИ
+    // 2. КАТЕГОРИИ (для ваших меток)
     // ============================================================
     var CATEGORIES = {
       'battle':    { label: 'Бой',          color: '#ff6600' },
@@ -105,6 +105,19 @@
       'other':     { label: 'Другое',       color: '#9933cc' }
     };
     var currentCategory = 'battle';
+
+    // Цвета для событий War-Tracker
+    var WT_COLORS = {
+      'Air Raid Alert':         '#ffcc00',
+      'Military Strike':        '#cc0000',
+      'Military Operation':     '#ff6600',
+      'Military Offensive':     '#990000',
+      'Security Incident':      '#888888',
+      'Political Development':  '#0088cc'
+    };
+    function wtColor(type) {
+      return WT_COLORS[type] || '#9933cc';
+    }
 
     // ============================================================
     // 3. КАРТА
@@ -132,17 +145,13 @@
       onEachFeature: function(f, layer) { layer.bindPopup('<b>Контрнаступления ВСУ (ISW)</b>'); }
     });
 
-    // 4.3. НОВЫЙ: Зона контроля Украины (синий)
+    // 4.3. Зона контроля Украины (синий)
     var ukraineControlLayer = L.geoJSON(null, {
       style: function() { return { color: '#003d99', weight: 1.5, opacity: 0.9, fillColor: '#0055cc', fillOpacity: 0.15 }; },
       onEachFeature: function(f, layer) { layer.bindPopup('<b>Территория под контролем Украины</b>'); }
     });
 
     // --- ЗАГРУЗКА ДАННЫХ ---
-
-    // Источник для территории, занимаемой РФ.
-    // Сначала пробуем DeepStateMap (может быть заблокирован из РФ),
-    // если не получается — грузим с ISW (доступен из РФ).
 
     function loadFromISW() {
       console.log('Загружаем данные с ISW (ArcGIS)...');
@@ -213,7 +222,7 @@
     ukraineControlLayer.addTo(map);
 
     // ============================================================
-    // 5. СОБЫТИЯ ИЗ БАЗЫ
+    // 5. СОБЫТИЯ ИЗ SUPABASE (ваши метки)
     // ============================================================
     var eventsLayer = new L.FeatureGroup();
     map.addLayer(eventsLayer);
@@ -234,7 +243,7 @@
         if (res.error) { console.error('Ошибка загрузки:', res.error.message); return; }
         eventsLayer.clearLayers();
         (res.data || []).forEach(drawEventMarker);
-        console.log('Загружено: ' + (res.data || []).length);
+        console.log('Загружено ваших меток: ' + (res.data || []).length);
       });
     }
     loadEvents();
@@ -242,12 +251,13 @@
     // ============================================================
     // 5.1. АВТОМАТИЧЕСКИЕ СОБЫТИЯ С WAR-TRACKER
     // ============================================================
-    var warTrackerLayer = new L.FeatureGroup();
-    map.addLayer(warTrackerLayer);
+    var wtLayer = new L.FeatureGroup();
+    map.addLayer(wtLayer);
+    var wtEnabled = true;
 
     function loadWarTrackerEvents() {
       console.log('Загружаем события с War-Tracker...');
-      var apiUrl = 'https://war-tracker.com/api/v1/events?country=UA&limit=50';
+      var apiUrl = 'https://war-tracker.com/api/v1/events?country=UA&limit=100';
 
       fetch(apiUrl)
         .then(function(r) {
@@ -255,29 +265,43 @@
           return r.json();
         })
         .then(function(data) {
-          warTrackerLayer.clearLayers();
-          if (data && data.events) {
-            data.events.forEach(function(event) {
-              if (event.latitude && event.longitude) {
-                var marker = L.circleMarker([event.latitude, event.longitude], {
-                  radius: 6,
-                  color: '#ffcc00',
-                  fillColor: '#ffcc00',
-                  fillOpacity: 0.9,
-                  weight: 2
-                });
-                var popupContent = '<b>' + (event.event_type || 'Событие') + '</b><br>';
-                popupContent += (event.description || 'Нет описания') + '<br>';
-                popupContent += '<small>' + new Date(event.timestamp).toLocaleString('ru-RU') + '</small>';
-                marker.bindPopup(popupContent);
-                warTrackerLayer.addLayer(marker);
-              }
+          wtLayer.clearLayers();
+          var list = (data && data.events) || [];
+          var added = 0;
+
+          list.forEach(function(ev) {
+            // Пропускаем события без координат
+            if (!ev.lat || !ev.lng) return;
+
+            var color = wtColor(ev.event_type);
+            var marker = L.circleMarker([ev.lat, ev.lng], {
+              radius: 6,
+              color: color,
+              fillColor: color,
+              fillOpacity: 0.7,
+              weight: 2
             });
-            console.log('✅ События с War-Tracker загружены: ' + data.events.length);
-          }
+
+            var dateStr = '';
+            try { dateStr = new Date(ev.date).toLocaleString('ru-RU'); } catch(e) {}
+            var conf = ev.confidence ? ('<br><small>Достоверность: ' + ev.confidence + '</small>') : '';
+
+            var popup =
+              '<b>' + (ev.event_type || 'Событие') + '</b><br>' +
+              '<i>' + (ev.location || '') + '</i><br>' +
+              (ev.description || '') + '<br>' +
+              '<small>' + dateStr + '</small>' + conf +
+              '<br><a href="' + ev.url + '" target="_blank">Подробнее →</a>';
+
+            marker.bindPopup(popup);
+            wtLayer.addLayer(marker);
+            added++;
+          });
+
+          console.log('✅ War-Tracker: загружено событий ' + added + ' из ' + list.length);
         })
         .catch(function(err) {
-          console.warn('⚠️ Не удалось загрузить события с War-Tracker:', err.message);
+          console.warn('⚠️ War-Tracker не загрузился:', err.message);
         });
     }
 
@@ -285,7 +309,7 @@
     setInterval(loadWarTrackerEvents, 300000); // Каждые 5 минут
 
     // ============================================================
-    // 6. РИСОВАНИЕ
+    // 6. РИСОВАНИЕ (ваши метки)
     // ============================================================
     var drawControl = new L.Control.Draw({
       edit: { featureGroup: eventsLayer, remove: true },
@@ -340,6 +364,7 @@
         '<label><input type="checkbox" id="chkOccupied" checked> Территория, занимаемая РФ</label>' +
         '<label><input type="checkbox" id="chkCounter" checked> Контрнаступления ВСУ</label>' +
         '<label><input type="checkbox" id="chkUkraine" checked> Контроль Украины</label>' +
+        '<label><input type="checkbox" id="chkWt" checked> События War-Tracker (авто)</label>' +
         '<hr>' +
         '<div id="authBlock">' +
           '<h4>Вход для админа</h4>' +
@@ -349,7 +374,7 @@
           '<div id="authStatus" class="status-msg" style="display:none;"></div>' +
         '</div>' +
         '<div id="adminBlock" style="display:none;">' +
-          '<h4>Тип события</h4>' +
+          '<h4>Тип моей метки</h4>' +
           '<div id="categoryList">' + catHtml + '</div>' +
           '<button id="btnLogout" style="color:#c00;">Выйти</button>' +
         '</div>';
@@ -372,6 +397,9 @@
       });
       document.getElementById('chkUkraine').addEventListener('change', function() {
         if (this.checked) ukraineControlLayer.addTo(map); else map.removeLayer(ukraineControlLayer);
+      });
+      document.getElementById('chkWt').addEventListener('change', function() {
+        if (this.checked) wtLayer.addTo(map); else map.removeLayer(wtLayer);
       });
 
       document.getElementById('btnLogin').addEventListener('click', function() {
@@ -445,7 +473,16 @@
       html += '<div><span class="legend-line" style="background:#0088cc;"></span> Контрнаступления ВСУ</div>';
 
       html += '<hr>';
-      html += '<h4>Типы событий</h4>';
+      html += '<h4>События War-Tracker</h4>';
+      html += '<div><i style="background:#ffcc00; border-radius:50%;"></i> Воздушная тревога</div>';
+      html += '<div><i style="background:#cc0000; border-radius:50%;"></i> Удар</div>';
+      html += '<div><i style="background:#ff6600; border-radius:50%;"></i> Операция</div>';
+      html += '<div><i style="background:#990000; border-radius:50%;"></i> Наступление</div>';
+      html += '<div><i style="background:#888888; border-radius:50%;"></i> Инцидент</div>';
+      html += '<div><i style="background:#0088cc; border-radius:50%;"></i> Политика</div>';
+
+      html += '<hr>';
+      html += '<h4>Мои метки</h4>';
       for (var key in CATEGORIES) {
         if (CATEGORIES.hasOwnProperty(key)) {
           var c = CATEGORIES[key];
