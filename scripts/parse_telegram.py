@@ -43,8 +43,7 @@ NOISE_CONTEXT = ["заяв", "сообщ", "минобороны",
                  "написал", "передаёт", "передает", "цитирует",
                  "комментар", "пресс-служб"]
 
-# База населённых пунктов (загрузится из settlements.js)
-SETTLEMENTS_BY_NAME = {}  # lowercase name -> list of (lat, lng, country, original_name)
+SETTLEMENTS_BY_NAME = {}
 
 
 def load_settlements():
@@ -56,13 +55,14 @@ def load_settlements():
     print("Загружаю базу населённых пунктов...")
     with open(path, 'r', encoding='utf-8') as f:
         content = f.read()
-    # Отрезаем "window.SETTLEMENTS = " и последнюю ";"
     json_str = content.replace('window.SETTLEMENTS = ', '').rstrip(';').rstrip()
     data = json.loads(json_str)
     for s in data:
         name_low = s['name'].lower()
-        SETTLEMENTS_BY_NAME.setdefault(name_low, []).append((s['lat'], s['lng'], s['country'], s['name']))
-    print(f"  Загружено {len(data)} записей, {len(SETTLEMENTS_BY_NAME)} уникальных названий")
+        SETTLEMENTS_BY_NAME.setdefault(name_low, []).append(
+            (s['lat'], s['lng'], s['country'], s['name'], s.get('population', 0))
+        )
+    print(f"  Загружено {len(data)} записей")
 
 
 def fetch_channel(channel):
@@ -103,13 +103,10 @@ def extract_posts(html):
 
 
 def find_best_city(text):
-    """Ищет населённый пункт по базе GeoNames с учётом контекста."""
     if not SETTLEMENTS_BY_NAME:
         return None, None
 
     tl = text.lower()
-    # Оставляем только буквы, пробелы, дефисы — для границ слов
-    # Разбиваем на слова
     words = re.findall(r'[а-яёa-z0-9\-]+', tl)
     if not words:
         return None, None
@@ -117,48 +114,50 @@ def find_best_city(text):
     candidates = []
     N = len(words)
 
-    # Проверяем 1-, 2- и 3-словные комбинации
     for size in (3, 2, 1):
         for i in range(N - size + 1):
             phrase = ' '.join(words[i:i+size])
-            if phrase in SETTLEMENTS_BY_NAME:
-                coords_list = SETTLEMENTS_BY_NAME[phrase]
-                # Если несколько совпадений с одинаковым названием — берём первое (обычно самый крупный)
-                lat, lng, country, orig = coords_list[0]
+            if phrase not in SETTLEMENTS_BY_NAME:
+                continue
+            coords_list = SETTLEMENTS_BY_NAME[phrase]
+            best = max(coords_list, key=lambda x: x[4])
+            lat, lng, country, orig, population = best
 
-                # Контекст
-                pos_in_text = tl.find(phrase)
-                if pos_in_text < 0:
-                    pos_in_text = 0
-                before = tl[max(0, pos_in_text-60):pos_in_text]
-                after = tl[pos_in_text+len(phrase):pos_in_text+len(phrase)+60]
+            pos_in_text = tl.find(phrase)
+            if pos_in_text < 0:
+                pos_in_text = 0
+            before = tl[max(0, pos_in_text-60):pos_in_text]
+            after = tl[pos_in_text+len(phrase):pos_in_text+len(phrase)+60]
 
-                score = 0
-                # Штраф за шумовой контекст
-                for w in NOISE_CONTEXT:
-                    if w in before:
-                        score -= 15
-                        break
-                # Бонус за событийные слова
-                event_hits = 0
-                for w in EVENT_CONTEXT:
-                    if w in before or w in after:
-                        event_hits += 1
-                score += event_hits * 8
-                # Штраф для Киева/Москвы без событийного контекста
-                if orig.lower() in ("киев", "kyiv", "москва", "moscow"):
-                    if event_hits == 0:
-                        score -= 5
-                # Мягкий штраф за позицию в тексте
-                score -= pos_in_text * 0.05
+            score = 0
+            for w in NOISE_CONTEXT:
+                if w in before:
+                    score -= 15
+                    break
 
-                candidates.append((score, orig, lat, lng))
+            event_hits = 0
+            for w in EVENT_CONTEXT:
+                if w in before or w in after:
+                    event_hits += 1
+            score += event_hits * 8
+
+            if population > 0:
+                pop_bonus = math.log10(population) - 3
+                score += max(0, pop_bonus) * 3
+
+            if orig.lower() in ("киев", "kyiv", "москва", "moscow"):
+                if event_hits == 0:
+                    score -= 5
+
+            score -= pos_in_text * 0.05
+
+            candidates.append((score, orig, lat, lng, population))
 
     if not candidates:
         return None, None
 
     candidates.sort(key=lambda x: -x[0])
-    best_score, best_name, best_lat, best_lng = candidates[0]
+    best_score, best_name, best_lat, best_lng, pop = candidates[0]
     return (best_lat, best_lng), best_name
 
 
@@ -176,11 +175,10 @@ def classify_event(text):
 
 
 def country_by_coords_or_context(lat, lng, channel):
-    """Определяем страну по координатам или каналу."""
     if 44 <= lat <= 53 and 22 <= lng <= 41:
-        return "UA"  # территория Украины
+        return "UA"
     if 41 <= lat <= 82 and 19 <= lng <= 180:
-        return "RU"  # территория РФ
+        return "RU"
     return CHANNEL_COUNTRY.get(channel, "OSINT")
 
 
@@ -268,7 +266,6 @@ def main():
         print(f"  Совпало с населёнными пунктами: {matched}")
         time.sleep(1)
 
-    # Jitter
     coord_counter = Counter()
     for ev in raw_events:
         coord_key = (round(ev["lat"], 3), round(ev["lng"], 3))
@@ -287,7 +284,7 @@ def main():
 
     print(f"\n✅ Итого: {len(raw_events)} событий")
     print(f"   Отброшено дубликатов: {duplicates}")
-    print(f"   Постов без совпадений по населённым пунктам: {no_match}")
+    print(f"   Постов без совпадений: {no_match}")
 
     print("\n📊 Статистика по каналам:")
     for ch, count in sorted(stats.items(), key=lambda x: -x[1]):
