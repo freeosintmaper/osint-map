@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OSINT-карта</title>
-    <link rel="stylesheet" href="./lib/leaflet.css" />
+  <link rel="stylesheet" href="./lib/leaflet.css" />
   <link rel="stylesheet" href="./lib/leaflet-draw.css" />
   <style>
     :root {
@@ -36,7 +36,7 @@
       background: var(--bg-panel); color: var(--text-main);
       padding: 12px 14px; border-radius: 8px;
       box-shadow: 0 2px 8px var(--shadow); font-size: 13px;
-      max-width: 300px; max-height: 90vh; overflow-y: auto;
+      max-width: 280px; max-height: 90vh; overflow-y: auto;
     }
     .control-panel h4 {
       margin: 0 0 8px; font-size: 12px; text-transform: uppercase;
@@ -56,19 +56,6 @@
       border-radius: 4px; cursor: pointer; font-size: 12px; text-align: center; transition: all 0.2s;
     }
     .lang-btn.active { background: #0066ff; color: #fff; border-color: #0066ff; }
-
-    .source-selector { display: flex; gap: 4px; margin-bottom: 6px; }
-    .source-btn {
-      flex: 1; padding: 8px 6px; border: 2px solid var(--border-mid);
-      background: var(--bg-input); color: var(--text-main);
-      border-radius: 6px; cursor: pointer; font-size: 12px; text-align: center;
-      transition: all 0.2s; display: flex; flex-direction: column; gap: 2px;
-    }
-    .source-btn .source-name { font-weight: 600; }
-    .source-btn .source-desc { font-size: 10px; opacity: 0.7; }
-    .source-btn.active { border-color: #0066ff; background: #e8f0ff; color: #0055cc; }
-    .source-btn.disabled { opacity: 0.4; cursor: not-allowed; }
-    body.dark .source-btn.active { background: #1a2a4a; color: #6ba6ff; }
 
     .opacity-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
     .opacity-row label { flex: 0 0 auto; font-size: 12px; color: var(--text-secondary); }
@@ -169,12 +156,12 @@
 
   <div id="eventsPanel">
     <div class="panel-header">
-      <span id="eventsPanelTitle">События за сегодня</span>
+      <span id="eventsPanelTitle">События за 24 часа</span>
       <button class="toggle-btn" id="toggleEventsPanel">◀</button>
     </div>
     <div class="panel-body" id="eventsListBody">
       <div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">
-        <span id="loadingEventsText">Загрузка событий...</span>
+        Загрузка событий...
       </div>
     </div>
   </div>
@@ -186,20 +173,15 @@
       var box = document.getElementById('errorBox');
       if (box) { box.style.display = 'block'; box.textContent = 'Ошибка: ' + e.message; }
     });
-    function showNotice(msg) {
-      var box = document.getElementById('errorBox');
-      box.className = 'info'; box.style.display = 'block'; box.textContent = msg;
-      setTimeout(function() { box.style.display = 'none'; box.className = ''; }, 6000);
-    }
   </script>
 
-   <script src="./lib/leaflet.js"></script>
+  <script src="./lib/leaflet.js"></script>
   <script src="./lib/leaflet-draw.js"></script>
   <script src="./lib/leaflet.polylineDecorator.js"></script>
 
   <script>
     // ============================================================
-    // 1. НАСТРОЙКИ И МУЛЬТИЯЗЫЧНОСТЬ
+    // 1. НАСТРОЙКИ
     // ============================================================
     var GITHUB_USER = 'freeosintmaper';
     var GITHUB_REPO = 'osint-map';
@@ -208,64 +190,55 @@
 
     var i18n = {
       ru: {
-        eventsPanelTitle: 'События за сегодня', dataSource: 'Источник данных',
-        sourceISW: 'ISW', sourceISWDesc: 'нейтральный',
-        sourceDS: 'DeepStateMap', sourceDSDesc: 'украинский',
+        eventsPanelTitle: 'События за 24 часа',
         controlZones: 'Зоны контроля',
         territoryRF: 'Территория, занимаемая РФ',
         counteroffensive: 'Контрнаступления ВСУ',
         warTrackerEvents: 'События War-Tracker',
         raidAlert: 'Воздушная тревога', strike: 'Удар', operation: 'Операция',
         offensive: 'Наступление', incident: 'Инцидент', politics: 'Политика',
-        summaryTitle: 'Сводка за сегодня', eventsCount: 'событий',
-        noEvents: 'Нет событий за сегодня', source: 'Источник',
+        summaryTitle: 'Сводка за 24 часа', eventsCount: 'событий',
+        noEvents: 'Нет событий за 24 часа', source: 'Источник',
         toolMarker: 'Метка', toolLine: 'Линия', toolArrow: 'Стрелка',
         toolPolygon: 'Зона', toolRectangle: 'Прямоугольник', toolCircle: 'Круг',
         toolMeasure: 'Измерить расстояние', toolClear: 'Очистить всё', toolTheme: 'Тёмная тема',
         clearConfirm: 'Удалить все ваши рисунки?',
         total: 'Всего', countryUA: 'Украина', countryRU: 'РФ',
-        opacityLabel: 'Прозрачность', modeFill: 'Заливка', modeOutline: 'Только контуры',
-        deepStateFailed: 'DeepStateMap недоступен. Переключаю на ISW.'
+        opacityLabel: 'Прозрачность', modeFill: 'Заливка', modeOutline: 'Только контуры'
       },
       uk: {
-        eventsPanelTitle: 'Події за сьогодні', dataSource: 'Джерело даних',
-        sourceISW: 'ISW', sourceISWDesc: 'нейтральне',
-        sourceDS: 'DeepStateMap', sourceDSDesc: 'українське',
+        eventsPanelTitle: 'Події за 24 години',
         controlZones: 'Зони контролю',
         territoryRF: 'Територія, яку займає РФ',
         counteroffensive: 'Контрнаступи ЗСУ',
         warTrackerEvents: 'Події War-Tracker',
         raidAlert: 'Повітряна тривога', strike: 'Удар', operation: 'Операція',
         offensive: 'Наступ', incident: 'Інцидент', politics: 'Політика',
-        summaryTitle: 'Зведення за сьогодні', eventsCount: 'подій',
-        noEvents: 'Немає подій за сьогодні', source: 'Джерело',
+        summaryTitle: 'Зведення за 24 години', eventsCount: 'подій',
+        noEvents: 'Немає подій за 24 години', source: 'Джерело',
         toolMarker: 'Мітка', toolLine: 'Лінія', toolArrow: 'Стрілка',
         toolPolygon: 'Зона', toolRectangle: 'Прямокутник', toolCircle: 'Коло',
         toolMeasure: 'Виміряти відстань', toolClear: 'Очистити все', toolTheme: 'Темна тема',
         clearConfirm: 'Видалити всі ваші малюнки?',
         total: 'Всього', countryUA: 'Україна', countryRU: 'РФ',
-        opacityLabel: 'Прозорість', modeFill: 'Заливка', modeOutline: 'Лише контури',
-        deepStateFailed: 'DeepStateMap недоступний. Перемикаю на ISW.'
+        opacityLabel: 'Прозорість', modeFill: 'Заливка', modeOutline: 'Лише контури'
       },
       en: {
-        eventsPanelTitle: "Today's Events", dataSource: 'Data source',
-        sourceISW: 'ISW', sourceISWDesc: 'neutral',
-        sourceDS: 'DeepStateMap', sourceDSDesc: 'Ukrainian',
+        eventsPanelTitle: 'Events (last 24h)',
         controlZones: 'Control Zones',
         territoryRF: 'Territory held by RF',
         counteroffensive: 'Ukrainian counteroffensives',
         warTrackerEvents: 'War-Tracker Events',
         raidAlert: 'Air Raid Alert', strike: 'Strike', operation: 'Operation',
         offensive: 'Offensive', incident: 'Incident', politics: 'Politics',
-        summaryTitle: "Today's Summary", eventsCount: 'events',
-        noEvents: 'No events today', source: 'Source',
+        summaryTitle: 'Last 24h Summary', eventsCount: 'events',
+        noEvents: 'No events in last 24h', source: 'Source',
         toolMarker: 'Marker', toolLine: 'Line', toolArrow: 'Arrow',
         toolPolygon: 'Polygon', toolRectangle: 'Rectangle', toolCircle: 'Circle',
         toolMeasure: 'Measure distance', toolClear: 'Clear all', toolTheme: 'Dark theme',
         clearConfirm: 'Delete all your drawings?',
         total: 'Total', countryUA: 'Ukraine', countryRU: 'RF',
-        opacityLabel: 'Opacity', modeFill: 'Fill', modeOutline: 'Outline only',
-        deepStateFailed: 'DeepStateMap unavailable. Switching to ISW.'
+        opacityLabel: 'Opacity', modeFill: 'Fill', modeOutline: 'Outline only'
       }
     };
 
@@ -276,34 +249,37 @@
 
     var OPACITY_KEY = 'osint_opacity';
     var MODE_KEY = 'osint_mode';
-    var SOURCE_KEY = 'osint_source';
     var THEME_KEY = 'osint_theme';
 
     var fillOpacity = parseFloat(localStorage.getItem(OPACITY_KEY) || '0.15');
     var layerMode = localStorage.getItem(MODE_KEY) || 'fill';
-    var currentSource = localStorage.getItem(SOURCE_KEY) || 'isw';
     var currentTheme = localStorage.getItem(THEME_KEY) || 'light';
-    var deepStateLoaded = false;
-    var deepStateFailed = false;
 
     function saveSettings() {
       localStorage.setItem(OPACITY_KEY, fillOpacity.toString());
       localStorage.setItem(MODE_KEY, layerMode);
-      localStorage.setItem(SOURCE_KEY, currentSource);
     }
 
     function styleFor(baseColor) {
       if (layerMode === 'outline') {
-        return { color: baseColor, weight: 1.5, opacity: 0.9, fill: false };
+        return { color: baseColor, weight: 1.8, opacity: 0.9, fill: false };
       }
       return { color: baseColor, weight: 1.2, opacity: 0.9, fillColor: baseColor, fillOpacity: fillOpacity };
     }
 
     function refreshAllStyles() {
-      [deepStateLayer, iswRussianLayer, counterLayer].forEach(function(layer) {
-        if (!layer || !layer.options || !layer.options._baseColor) return;
-        layer.setStyle(function() { return styleFor(layer.options._baseColor); });
-      });
+      if (deepStateLayer) {
+        deepStateLayer.eachLayer(function(sub) {
+          if (sub.setStyle) sub.setStyle(styleFor('#cc0000'));
+        });
+      }
+      if (counterLayer) {
+        counterLayer.eachLayer(function(sub) {
+          if (sub.setStyle) {
+            sub.setStyle({ color: '#0088cc', weight: 2, opacity: 0.85, fill: false, dashArray: '5,5' });
+          }
+        });
+      }
     }
 
     function applyTheme(theme) {
@@ -321,7 +297,7 @@
     }
 
     // ============================================================
-    // КАРТА
+    // 2. КАРТА
     // ============================================================
     var map = L.map('map', { zoomControl: false }).setView([48.5, 37.5], 7);
     L.control.zoom({ position: 'bottomleft' }).addTo(map);
@@ -342,30 +318,24 @@
     }
 
     // ============================================================
-    // СЛОИ КОНТРОЛЯ
+    // 3. СЛОИ КОНТРОЛЯ
     // ============================================================
     function polygonPopup(text) {
       return function(f, layer) { layer.bindPopup('<b>' + text + '</b>'); };
     }
 
     var deepStateLayer = L.geoJSON(null, {
-      _baseColor: '#cc0000',
-      style: function() { return styleFor('#cc0000'); },
-      onEachFeature: polygonPopup(t('territoryRF'))
-    });
-    var iswRussianLayer = L.geoJSON(null, {
-      _baseColor: '#cc0000',
       style: function() { return styleFor('#cc0000'); },
       onEachFeature: polygonPopup(t('territoryRF'))
     });
     var counterLayer = L.geoJSON(null, {
-      _baseColor: '#0088cc',
       style: function() {
         return { color: '#0088cc', weight: 2, opacity: 0.85, fill: false, dashArray: '5,5' };
       },
       onEachFeature: polygonPopup(t('counteroffensive'))
     });
 
+    // DeepStateMap
     fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
       .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
       .then(function(buffer) {
@@ -378,48 +348,22 @@
         if (features.length > 0) {
           features.sort(function(a, b) { return (b.properties.date || '').localeCompare(a.properties.date || ''); });
           deepStateLayer.addData(features[0]);
-          deepStateLoaded = true;
           console.log('✅ DeepStateMap загружен');
-          applySource();
         }
       })
-      .catch(function(err) {
-        deepStateFailed = true;
-        console.warn('DeepStateMap:', err.message);
-        if (currentSource === 'deepstate') {
-          showNotice(t('deepStateFailed'));
-          currentSource = 'isw';
-          saveSettings();
-          applySource();
-          refreshPanel();
-        }
-      });
+      .catch(function(err) { console.warn('DeepStateMap:', err.message); });
 
-    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/Russo_Ukraine_War_October_2025_Timelapse/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson')
-      .then(function(r) { return r.json(); })
-      .then(function(d) {
-        if (d.features && d.features.length > 0) {
-          iswRussianLayer.addData(d);
-          console.log('✅ ISW RF: ' + d.features.length);
-        }
-      })
-      .catch(function(err) { console.warn('ISW RF:', err.message); });
-
+    // Контрнаступления ВСУ (ISW)
     fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/Claimed_Ukrainian_Counteroffensive_March_to_July/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson')
       .then(function(r) { return r.json(); })
       .then(function(d) { counterLayer.addData(d); })
       .catch(function(err) { console.warn('ISW counter:', err.message); });
 
-    function applySource() {
-      [deepStateLayer, iswRussianLayer, counterLayer].forEach(function(l) { map.removeLayer(l); });
-      if (currentSource === 'deepstate') deepStateLayer.addTo(map);
-      else iswRussianLayer.addTo(map);
-      counterLayer.addTo(map);
-      updateLegend();
-    }
+    deepStateLayer.addTo(map);
+    counterLayer.addTo(map);
 
     // ============================================================
-    // WAR-TRACKER
+    // 4. WAR-TRACKER
     // ============================================================
     var wtLayerUA = new L.FeatureGroup();
     var wtLayerRU = new L.FeatureGroup();
@@ -467,7 +411,7 @@
             );
             wtLayerUA.addLayer(marker); added++;
             try {
-              if (new Date(ev.date).toISOString().slice(0, 10) === today) {
+              if (new Date(ev.date).getTime() >= Date.now() - 24 * 60 * 60 * 1000) {
                 todayEvents.push(Object.assign({}, ev, { _country: 'UA' }));
               }
             } catch(e) {}
@@ -504,7 +448,7 @@
             );
             wtLayerRU.addLayer(marker); added++;
             try {
-              if (new Date(ev.date).toISOString().slice(0, 10) === today) {
+              if (new Date(ev.date).getTime() >= Date.now() - 24 * 60 * 60 * 1000) {
                 todayEvents.push(Object.assign({}, ev, { _country: 'RU' }));
               }
             } catch(e) {}
@@ -517,7 +461,7 @@
     }
 
     // ============================================================
-    // ПАНЕЛЬ СОБЫТИЙ
+    // 5. ПАНЕЛЬ СОБЫТИЙ
     // ============================================================
     function renderEventsPanel() {
       var ua = window._todayEvents_ua || [];
@@ -575,7 +519,7 @@
     });
 
     // ============================================================
-    // ИНСТРУМЕНТЫ РИСОВАНИЯ
+    // 6. ИНСТРУМЕНТЫ РИСОВАНИЯ
     // ============================================================
     var drawingsLayer = new L.FeatureGroup();
     map.addLayer(drawingsLayer);
@@ -702,15 +646,9 @@
     loadDrawings();
 
     // ============================================================
-    // ПАНЕЛЬ
+    // 7. ПАНЕЛЬ
     // ============================================================
-    var panel;
-    function refreshPanel() {
-      if (panel._container) panel.remove();
-      panel.addTo(map);
-    }
-
-    panel = L.control({ position: 'topright' });
+    var panel = L.control({ position: 'topright' });
     panel.onAdd = function() {
       var div = L.DomUtil.create('div', 'control-panel');
 
@@ -721,17 +659,7 @@
                 '<button class="lang-btn' + (currentLang === 'uk' ? ' active' : '') + '" data-lang="uk">UA</button>' +
                 '<button class="lang-btn' + (currentLang === 'en' ? ' active' : '') + '" data-lang="en">EN</button>' +
                 '</div>';
-        html += '<h4>' + t('dataSource') + '</h4>';
-        html += '<div class="source-selector">' +
-                '<button class="source-btn' + (currentSource === 'isw' ? ' active' : '') + '" data-source="isw">' +
-                '<span class="source-name">' + t('sourceISW') + '</span>' +
-                '<span class="source-desc">' + t('sourceISWDesc') + '</span></button>' +
-                '<button class="source-btn' + (currentSource === 'deepstate' ? ' active' : '') +
-                (deepStateFailed ? ' disabled' : '') + '" data-source="deepstate">' +
-                '<span class="source-name">' + t('sourceDS') + '</span>' +
-                '<span class="source-desc">' + t('sourceDSDesc') + '</span></button>' +
-                '</div>';
-        html += '<h4 style="margin-top:10px;">' + t('controlZones') + '</h4>';
+        html += '<h4>' + t('controlZones') + '</h4>';
         html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
         html += '<label><input type="checkbox" id="chkCounter" checked> ' + t('counteroffensive') + '</label>';
         html += '<hr>';
@@ -766,17 +694,9 @@
             loadWarTrackerUA(); loadWarTrackerRU();
           });
         });
-        div.querySelectorAll('.source-btn').forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            if (this.classList.contains('disabled')) return;
-            currentSource = this.getAttribute('data-source');
-            saveSettings(); applySource(); render();
-          });
-        });
         var chkZone = div.querySelector('#chkZone');
         if (chkZone) chkZone.addEventListener('change', function() {
-          var activeLayer = (currentSource === 'deepstate') ? deepStateLayer : iswRussianLayer;
-          if (this.checked) activeLayer.addTo(map); else map.removeLayer(activeLayer);
+          if (this.checked) deepStateLayer.addTo(map); else map.removeLayer(deepStateLayer);
         });
         var chkCounter = div.querySelector('#chkCounter');
         if (chkCounter) chkCounter.addEventListener('change', function() {
@@ -813,7 +733,7 @@
     panel.addTo(map);
 
     // ============================================================
-    // ЛЕГЕНДА
+    // 8. ЛЕГЕНДА
     // ============================================================
     var legend = L.control({ position: 'bottomright' });
     legend.onAdd = function() {
@@ -828,8 +748,7 @@
       if (div) updateLegendInDiv(div);
     }
     function updateLegendInDiv(div) {
-      var html = '<h4>' + t('controlZones') + ' <span style="font-weight:400;font-size:10px;color:var(--text-muted);">(' +
-                 (currentSource === 'deepstate' ? 'DeepStateMap' : 'ISW') + ')</span></h4>';
+      var html = '<h4>' + t('controlZones') + '</h4>';
       html += '<div><i style="background:#cc0000;"></i> ' + t('territoryRF') + '</div>';
       html += '<div><span class="legend-line" style="background:#0088cc;"></span> ' + t('counteroffensive') + '</div>';
       html += '<hr><h4>' + t('warTrackerEvents') + '</h4>';
@@ -839,15 +758,13 @@
       html += '<div><i style="background:#990000;"></i> ' + t('offensive') + '</div>';
       html += '<div><i style="background:#888888;"></i> ' + t('incident') + '</div>';
       html += '<div><i style="background:#0088cc;"></i> ' + t('politics') + '</div>';
-      html += '<hr><div style="font-size:11px;color:var(--text-muted);">War-Tracker · ' +
-              (currentSource === 'deepstate' ? 'DeepStateMap' : 'ISW') + '</div>';
+      html += '<hr><div style="font-size:11px;color:var(--text-muted);">War-Tracker · DeepStateMap</div>';
       div.innerHTML = html;
     }
 
     // ============================================================
-    // ЗАПУСК
+    // 9. ЗАПУСК
     // ============================================================
-    applySource();
     loadWarTrackerUA();
     loadWarTrackerRU();
     setInterval(function() {
