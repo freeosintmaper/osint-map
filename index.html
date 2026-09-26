@@ -143,11 +143,12 @@
     var eventsLayer = new L.FeatureGroup();
     map.addLayer(eventsLayer);
 
-    function drawEventMarker(ev) {
+        function drawEventMarker(ev) {
       var cat = CATEGORIES[ev.category] || CATEGORIES.other;
       var marker = L.circleMarker([ev.lat, ev.lng], {
         radius: 7, color: cat.color, fillColor: cat.color, fillOpacity: 0.8, weight: 2
       });
+      marker._eventId = ev.id;   // ← запоминаем ID записи в базе
       marker.bindPopup('<b>' + cat.label + '</b><br>' + (ev.description || ''));
       eventsLayer.addLayer(marker);
     }
@@ -170,7 +171,20 @@
       edit: { featureGroup: eventsLayer, remove: true },
       draw: { marker: true, polyline: false, polygon: false, rectangle: false, circle: false }
     });
-
+    // Когда пользователь удаляет объект через ластик — удаляем его из базы
+    map.on(L.Draw.Event.DELETED, function(e) {
+      e.layers.eachLayer(function(layer) {
+        if (layer._eventId && sb) {
+          sb.from('events').delete().eq('id', layer._eventId).then(function(res) {
+            if (res.error) {
+              alert('Ошибка удаления из базы: ' + res.error.message);
+            } else {
+              console.log('Удалено событие id=' + layer._eventId);
+            }
+          });
+        }
+      });
+    });
         map.on(L.Draw.Event.CREATED, function(e) {
       var latlng = e.layer.getLatLng();
       var cat = CATEGORIES[currentCategory];
