@@ -14,20 +14,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Fetch War-Tracker data
+      - name: Fetch War-Tracker data for Ukraine
         run: |
           mkdir -p data
           curl -s -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
                "https://war-tracker.com/api/v1/events?country=UA&limit=100" \
                -o data/war-tracker.json
-          echo "Размер файла:"
+          echo "UA file size:"
           wc -c data/war-tracker.json
-          head -c 200 data/war-tracker.json
+
+      - name: Fetch War-Tracker data for Russia
+        run: |
+          curl -s -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+               "https://war-tracker.com/api/v1/events?country=RU&limit=100" \
+               -o data/war-tracker-ru.json
+          echo "RU file size:"
+          wc -c data/war-tracker-ru.json
 
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/war-tracker.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "Обновление событий War-Tracker"
+          git add data/war-tracker.json data/war-tracker-ru.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Обновление событий War-Tracker (UA + RU)"
           git push
