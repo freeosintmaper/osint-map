@@ -1,2 +1,120 @@
 window.WT_DATA_UA = 
-{"x402Version":2,"error":"PAYMENT-SIGNATURE header is required","resource":{"url":"https://war-tracker.com/api/v1/events","description":"Paginated event corpus at /api/v1/events (up to 200 rows per call). Each row's description is truncated to 30 characters; full text is on GET /api/v1/events/{id}. Response includes a top-level licensing field.","mimeType":"application/json","serviceName":"War-Tracker Events Corpus","tags":["search","dataset","events","api","feed"],"iconUrl":"https://war-tracker.com/favicon-1024.png"},"accepts":[{"scheme":"exact","network":"eip155:8453","amount":"10000","asset":"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913","payTo":"0x8B7243F652D3641F661619862157686992640b37","maxTimeoutSeconds":60,"extra":{"name":"USD Coin","version":"2"},"outputSchema":{"input":{"type":"http","method":"GET","queryParams":{"type":"object","properties":{"country":{"type":"string"},"region":{"type":"string"},"event_type":{"type":"string"},"from":{"type":"string","format":"date"},"to":{"type":"string","format":"date"},"cursor":{"type":"string"},"limit":{"type":"integer","minimum":1,"maximum":200}}}},"output":{"type":"object","properties":{"events":{"type":"array","items":{"type":"object"}},"next_cursor":{"type":["string","null"]},"count":{"type":"integer"},"has_more":{"type":"boolean"},"licensing":{"type":"string"}},"required":["events","count","has_more","licensing"]}}},{"scheme":"exact","network":"eip155:8453","amount":"11000","asset":"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913","payTo":"0x2633ba64e28A6F6989c343Cb98d43Ea06Bd9bd89","maxTimeoutSeconds":60,"extra":{"name":"USD Coin","version":"2"},"outputSchema":{"input":{"type":"http","method":"GET","queryParams":{"type":"object","properties":{"country":{"type":"string"},"region":{"type":"string"},"event_type":{"type":"string"},"from":{"type":"string","format":"date"},"to":{"type":"string","format":"date"},"cursor":{"type":"string"},"limit":{"type":"integer","minimum":1,"maximum":200}}}},"output":{"type":"object","properties":{"events":{"type":"array","items":{"type":"object"}},"next_cursor":{"type":["string","null"]},"count":{"type":"integer"},"has_more":{"type":"boolean"},"licensing":{"type":"string"}},"required":["events","count","has_more","licensing"]}}},{"scheme":"exact","network":"eip155:137","amount":"11000","asset":"0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359","payTo":"0x2633ba64e28A6F6989c343Cb98d43Ea06Bd9bd89","maxTimeoutSeconds":60,"extra":{"name":"USD Coin","version":"2"},"outputSchema":{"input":{"type":"http","method":"GET","queryParams":{"type":"object","properties":{"country":{"type":"string"},"region":{"type":"string"},"event_type":{"type":"string"},"from":{"type":"string","format":"date"},"to":{"type":"string","format":"date"},"cursor":{"type":"string"},"limit":{"type":"integer","minimum":1,"maximum":200}}}},"output":{"type":"object","properties":{"events":{"type":"array","items":{"type":"object"}},"next_cursor":{"type":["string","null"]},"count":{"type":"integer"},"has_more":{"type":"boolean"},"licensing":{"type":"string"}},"required":["events","count","has_more","licensing"]}}},{"scheme":"exact","network":"eip155:8453","amount":"11000","asset":"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913","payTo":"0xF50C0D73C68EF2d8B3388Ec060ED39edCeb62BAF","maxTimeoutSeconds":60,"extra":{"name":"USD Coin","version":"2"},"outputSchema":{"input":{"type":"http","method":"GET","queryParams":{"type":"object","properties":{"country":{"type":"string"},"region":{"type":"string"},"event_type":{"type":"string"},"from":{"type":"string","format":"date"},"to":{"type":"string","format":"date"},"cursor":{"type":"string"},"limit":{"type":"integer","minimum":1,"maximum":200}}}},"output":{"type":"object","properties":{"events":{"type":"array","items":{"type":"object"}},"next_cursor":{"type":["string","null"]},"count":{"type":"integer"},"has_more":{"type":"boolean"},"licensing":{"type":"string"}},"required":["events","count","has_more","licensing"]}}},{"scheme":"exact","network":"eip155:137","amount":"11000","asset":"0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359","payTo":"0xF50C0D73C68EF2d8B3388Ec060ED39edCeb62BAF","maxTimeoutSeconds":60,"extra":{"name":"USD Coin","version":"2"},"outputSchema":{"input":{"type":"http","method":"GET","queryParams":{"type":"object","properties":{"country":{"type":"string"},"region":{"type":"string"},"event_type":{"type":"string"},"from":{"type":"string","format":"date"},"to":{"type":"string","format":"date"},"cursor":{"type":"string"},"limit":{"type":"integer","minimum":1,"maximum":200}}}},"output":{"type":"object","properties":{"events":{"type":"array","items":{"type":"object"}},"next_cursor":{"type":["string","null"]},"count":{"type":"integer"},"has_more":{"type":"boolean"},"licensing":{"type":"string"}},"required":["events","count","has_more","licensing"]}}},{"scheme":"exact","network":"eip155:43114","amount":"11000","asset":"0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E","payTo":"0xF50C0D73C68EF2d8B3388Ec060ED39edCeb62BAF","maxTimeoutSeconds":60,"extra":{"name":"USD Coin","version":"2"},"outputSchema":{"input":{"type":"http","method":"GET","queryParams":{"type":"object","properties":{"country":{"type":"string"},"region":{"type":"string"},"event_type":{"type":"string"},"from":{"type":"string","format":"date"},"to":{"type":"string","format":"date"},"cursor":{"type":"string"},"limit":{"type":"integer","minimum":1,"maximum":200}}}},"output":{"type":"object","properties":{"events":{"type":"array","items":{"type":"object"}},"next_cursor":{"type":["string","null"]},"count":{"type":"integer"},"has_more":{"type":"boolean"},"licensing":{"type":"string"}},"required":["events","count","has_more","licensing"]}}},{"scheme":"exact","network":"eip155:8453","amount":"10000","asset":"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913","payTo":"0x9FfDCaEAf9ef166b4fA16f8707923CB89F2A09fe","maxTimeoutSeconds":60,"extra":{"name":"USD Coin","version":"2","assetTransferMethod":"permit2"},"outputSchema":{"input":{"type":"http","method":"GET","queryParams":{"type":"object","properties":{"country":{"type":"string"},"region":{"type":"string"},"event_type":{"type":"string"},"from":{"type":"string","format":"date"},"to":{"type":"string","format":"date"},"cursor":{"type":"string"},"limit":{"type":"integer","minimum":1,"maximum":200}}}},"output":{"type":"object","properties":{"events":{"type":"array","items":{"type":"object"}},"next_cursor":{"type":["string","null"]},"count":{"type":"integer"},"has_more":{"type":"boolean"},"licensing":{"type":"string"}},"required":["events","count","has_more","licensing"]}}}],"extensions":{"bazaar":{"info":{"input":{"type":"http","method":"GET","queryParams":{"country":"UA","limit":50}},"output":{"type":"json","example":{"events":[{"id":397003,"url":"https://war-tracker.com/share/397003/strike","date":"2026-05-12T09:30:00Z","modified":"2026-05-12T10:00:00Z","event_type":"Strike","location":"Aleppo","country":"SY","country_name":"Syria","lat":36.2,"lng":37.13,"has_media":true,"is_video":false,"source_url":null,"confidence":"HIGH","description":"Open-source posts described a "}],"next_cursor":"MTAw","count":1,"has_more":true,"licensing":"By purchasing this data you agree not to share it with third parties without express written consent from war-tracker.com. If this data is shared with third parties, you accept a penalty of $1 USDC per infraction."}}},"schema":{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"input":{"type":"object","properties":{"type":{"type":"string","const":"http"},"method":{"type":"string","enum":["GET"]},"queryParams":{"type":"object","properties":{"country":{"type":"string","description":"ISO-3166-1 alpha-2 country code (e.g. 'UA')."},"region":{"type":"string","description":"Region slug. See /api/v1/regions for the full list."},"event_type":{"type":"string","description":"Event-type display string, case-insensitive."},"from":{"type":"string","format":"date","description":"ISO-8601 inclusive lower bound on event date."},"to":{"type":"string","format":"date","description":"ISO-8601 exclusive upper bound on event date."},"cursor":{"type":"string","description":"Opaque pagination cursor from a previous response."},"limit":{"type":"integer","minimum":1,"maximum":200,"description":"Page size (max 200)."}}}},"required":["type","method"],"additionalProperties":false},"output":{"type":"object","properties":{"type":{"type":"string"},"example":{"type":"object","properties":{"events":{"type":"array","items":{"type":"object"}},"next_cursor":{"type":["string","null"]},"count":{"type":"integer"},"has_more":{"type":"boolean"},"licensing":{"type":"string"}},"required":["events","count","has_more","licensing"]}},"required":["type"]}},"required":["input"]},"routeTemplate":"/api/v1/events"}}};
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en-US"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
+<head>
+
+<title>war-tracker.com | 502: Bad gateway</title>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" id="cf_styles-css" href="/cdn-cgi/styles/main.css" />
+</head>
+<body>
+<div id="cf-wrapper">
+    <div id="cf-error-details" class="p-0">
+        <header class="mx-auto pt-10 lg:pt-6 lg:px-8 w-240 lg:w-full mb-8">
+            <h1 class="inline-block sm:block sm:mb-2 font-light text-60 lg:text-4xl text-black-dark leading-tight mr-2">
+                <span class="inline-block">Bad gateway</span>
+                <span class="code-label">Error code 502</span>
+            </h1>
+            <div>
+                Visit <a href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_502&utm_campaign=war-tracker.com" target="_blank" rel="noopener noreferrer">cloudflare.com</a> for more information.
+            </div>
+            <div class="mt-3">2026-09-26 19:31:03 UTC</div>
+        </header>
+        <div class="my-8 bg-gradient-gray">
+            <div class="w-240 lg:w-full mx-auto">
+                <div class="clearfix md:px-8">
+                    <div id="cf-browser-status" class=" relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    
+    <span class="cf-icon-browser block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-ok w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+    
+  </div>
+  <span class="md:block w-full truncate">You</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">
+  
+    Browser
+  
+  </h3>
+  
+  <span class="leading-1.3 text-2xl text-green-success">Working</span>
+  
+</div>
+                    <div id="cf-cloudflare-status" class=" relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    <a href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_502&#38;utm_campaign=war-tracker.com" target="_blank" rel="noopener noreferrer">
+    <span class="cf-icon-cloud block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-ok w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+    </a>
+  </div>
+  <span class="md:block w-full truncate">Ashburn</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">
+  <a href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_502&utm_campaign=war-tracker.com" target="_blank" rel="noopener noreferrer">
+    Cloudflare
+  </a>
+  </h3>
+  
+  <span class="leading-1.3 text-2xl text-green-success">Working</span>
+  
+</div>
+                    <div id="cf-host-status" class="cf-error-source relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    
+    <span class="cf-icon-server block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-error w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+    
+  </div>
+  <span class="md:block w-full truncate">war-tracker.com</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">
+  
+    Host
+  
+  </h3>
+  
+  <span class="leading-1.3 text-2xl text-red-error">Error</span>
+  
+</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-240 lg:w-full mx-auto mb-8 lg:px-8">
+            <div class="clearfix">
+                <div class="w-1/2 md:w-full float-left pr-6 md:pb-10 md:pr-0 leading-relaxed">
+                    <h2 class="text-3xl font-normal leading-1.3 mb-4">What happened?</h2>
+                    <p>The web server reported a bad gateway error.</p>
+                </div>
+                <div class="w-1/2 md:w-full float-left leading-relaxed">
+                    <h2 class="text-3xl font-normal leading-1.3 mb-4">What can I do?</h2>
+                    <p class="mb-6">Please try again in a few minutes.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cf-error-footer cf-wrapper w-240 lg:w-full py-10 sm:py-4 sm:px-8 mx-auto text-center sm:text-left border-solid border-0 border-t border-gray-300">
+    <p class="text-13">
+      <span class="cf-footer-item sm:block sm:mb-1">Cloudflare Ray ID: <strong class="font-semibold">a414af5b4feb7a4d</strong></span>
+      <span class="cf-footer-separator sm:hidden">&bull;</span>
+      <span id="cf-footer-item-ip" class="cf-footer-item hidden sm:block sm:mb-1">
+        Your IP:
+        <button type="button" id="cf-footer-ip-reveal" class="cf-footer-ip-reveal-btn">Click to reveal</button>
+        <span class="hidden" id="cf-footer-ip">172.174.167.25</span>
+        <span class="cf-footer-separator sm:hidden">&bull;</span>
+      </span>
+      <span class="cf-footer-item sm:block sm:mb-1"><span>Performance &amp; security by</span> <a rel="noopener noreferrer" href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_502&#38;utm_campaign=war-tracker.com" id="brand_link" target="_blank">Cloudflare</a></span>
+      
+    </p>
+    <script>(function(){function d(){var b=a.getElementById("cf-footer-item-ip"),c=a.getElementById("cf-footer-ip-reveal");b&&"classList"in b&&(b.classList.remove("hidden"),c.addEventListener("click",function(){c.classList.add("hidden");a.getElementById("cf-footer-ip").classList.remove("hidden")}))}var a=document;document.addEventListener&&a.addEventListener("DOMContentLoaded",d)})();</script>
+  </div><!-- /.error-footer -->
+
+    </div>
+</div>
+</body>
+</html>;
