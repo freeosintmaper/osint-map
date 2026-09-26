@@ -14,40 +14,35 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-           - name: Fetch War-Tracker data for Ukraine
+      - name: Fetch War-Tracker data for Ukraine
         run: |
           mkdir -p data
-          curl -s -m 30 -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
-               "https://war-tracker.com/api/v1/events?country=UA&limit=100" \
-               -o /tmp/ua.json
-          # Проверяем, что ответ — валидный JSON с полем events
-          if jq -e '.events' /tmp/ua.json > /dev/null 2>&1; then
+          curl -s -m 30 -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" "https://war-tracker.com/api/v1/events?country=UA&limit=100" -o /tmp/ua.json
+          SIZE=$(wc -c < /tmp/ua.json)
+          echo "UA response size: $SIZE bytes"
+          if [ "$SIZE" -gt 100 ]; then
             echo "window.WT_DATA_UA = " > data/war-tracker-ua.js
             cat /tmp/ua.json >> data/war-tracker-ua.js
             echo ";" >> data/war-tracker-ua.js
-            echo "✅ UA обновлён"
+            echo "UA file updated"
           else
-            echo "⚠️ UA ответ не валидный — оставляем старый файл"
-            head -c 200 /tmp/ua.json
+            echo "UA response too small, keeping old file"
           fi
-          wc -c data/war-tracker-ua.js 2>/dev/null || echo "файл отсутствует"
 
       - name: Fetch War-Tracker data for Russia
         run: |
           mkdir -p data
-          curl -s -m 30 -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
-               "https://war-tracker.com/api/v1/events?country=RU&limit=100" \
-               -o /tmp/ru.json
-          if jq -e '.events' /tmp/ru.json > /dev/null 2>&1; then
+          curl -s -m 30 -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" "https://war-tracker.com/api/v1/events?country=RU&limit=100" -o /tmp/ru.json
+          SIZE=$(wc -c < /tmp/ru.json)
+          echo "RU response size: $SIZE bytes"
+          if [ "$SIZE" -gt 100 ]; then
             echo "window.WT_DATA_RU = " > data/war-tracker-ru.js
             cat /tmp/ru.json >> data/war-tracker-ru.js
             echo ";" >> data/war-tracker-ru.js
-            echo "✅ RU обновлён"
+            echo "RU file updated"
           else
-            echo "⚠️ RU ответ не валидный — оставляем старый файл"
-            head -c 200 /tmp/ru.json
+            echo "RU response too small, keeping old file"
           fi
-          wc -c data/war-tracker-ru.js 2>/dev/null || echo "файл отсутствует"
 
       - name: Download Leaflet libraries
         run: |
@@ -63,9 +58,6 @@ jobs:
           curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet-2x.png" -o lib/images/spritesheet-2x.png
           curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet.svg" -o lib/images/spritesheet.svg
           curl -sL "https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js" -o lib/leaflet.polylineDecorator.js
-          echo "Downloaded files:"
-          ls -la lib/
-          ls -la lib/images/
 
       - name: Commit and push
         run: |
