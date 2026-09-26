@@ -2,7 +2,7 @@ name: Update War-Tracker Events
 
 on:
   schedule:
-    - cron: '5,20,35,50 * * * *'
+    - cron: '5 */3 * * *'
   workflow_dispatch:
 
 jobs:
@@ -14,114 +14,64 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install curl-impersonate
-        run: |
-          cd /tmp
-          curl -sL https://github.com/lwthiker/curl-impersonate/releases/download/v0.6.1/curl-impersonate-v0.6.1.x86_64-linux-gnu.tar.gz -o ci.tar.gz
-          tar xzf ci.tar.gz
-          ls -la /tmp/curl_*
-          chmod +x /tmp/curl_chrome116 2>/dev/null || chmod +x /tmp/curl_chrome110 2>/dev/null || true
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
-      - name: Fetch War-Tracker UA (Level 1 - plain curl with browser headers)
-        id: fetch_ua_l1
-        continue-on-error: true
+      - name: Install Playwright
+        run: |
+          npm init -y > /dev/null 2>&1
+          npm install playwright > /dev/null 2>&1
+          npx playwright install chromium --with-deps
+
+      - name: Fetch War-Tracker via headless Chrome
         run: |
           mkdir -p data
-          curl -s -m 45 \
-            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" \
-            -H "Accept: application/json, text/plain, */*" \
-            -H "Accept-Language: en-US,en;q=0.9,ru;q=0.8" \
-            -H "Referer: https://war-tracker.com/" \
-            -H "Sec-Fetch-Dest: empty" \
-            -H "Sec-Fetch-Mode: cors" \
-            -H "Sec-Fetch-Site: same-origin" \
-            "https://war-tracker.com/api/v1/events?country=UA&limit=100" -o /tmp/ua_l1.json
-          SIZE=$(wc -c < /tmp/ua_l1.json)
-          echo "L1 UA size: $SIZE bytes"
-          head -c 200 /tmp/ua_l1.json
-          echo ""
-          if [ "$SIZE" -gt 5000 ]; then
-            cp /tmp/ua_l1.json /tmp/ua_final.json
-            echo "SUCCESS=true" >> $GITHUB_OUTPUT
-            echo "✅ Level 1 сработал для UA"
-          else
-            echo "SUCCESS=false" >> $GITHUB_OUTPUT
-            echo "❌ Level 1 не сработал, нужен Level 2"
-          fi
+          cat > fetch.js << 'EOF'
+          const { chromium } = require('playwright');
+          const fs = require('fs');
 
-      - name: Fetch War-Tracker UA (Level 2 - curl-impersonate)
-        if: steps.fetch_ua_l1.outputs.SUCCESS != 'true'
-        continue-on-error: true
-        run: |
-          if [ -f /tmp/curl_chrome116 ]; then
-            CI_BIN=/tmp/curl_chrome116
-          elif [ -f /tmp/curl_chrome110 ]; then
-            CI_BIN=/tmp/curl_chrome110
-          else
-            CI_BIN=$(ls /tmp/curl_chrome* 2>/dev/null | head -n1)
-          fi
-          echo "Using: $CI_BIN"
-          $CI_BIN -s -m 45 \
-            -H "Referer: https://war-tracker.com/" \
-            "https://war-tracker.com/api/v1/events?country=UA&limit=100" -o /tmp/ua_l2.json
-          SIZE=$(wc -c < /tmp/ua_l2.json)
-          echo "L2 UA size: $SIZE bytes"
-          head -c 200 /tmp/ua_l2.json
-          echo ""
-          if [ "$SIZE" -gt 5000 ]; then
-            cp /tmp/ua_l2.json /tmp/ua_final.json
-            echo "✅ Level 2 сработал для UA"
-          fi
+          (async () => {
+            const browser = await chromium.launch({
+              headless: true,
+              args: ['--no-sandbox', '--disable-blink-features=AutomationControlled']
+            });
+            const ctx = await browser.newContext({
+              userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+              viewport: { width: 1366, height: 768 },
+              locale: 'en-US'
+            });
+            const page = await ctx.newPage();
 
-      - name: Fetch War-Tracker RU (Level 1 - plain curl with browser headers)
-        id: fetch_ru_l1
-        continue-on-error: true
-        run: |
-          curl -s -m 45 \
-            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" \
-            -H "Accept: application/json, text/plain, */*" \
-            -H "Accept-Language: en-US,en;q=0.9,ru;q=0.8" \
-            -H "Referer: https://war-tracker.com/" \
-            -H "Sec-Fetch-Dest: empty" \
-            -H "Sec-Fetch-Mode: cors" \
-            -H "Sec-Fetch-Site: same-origin" \
-            "https://war-tracker.com/api/v1/events?country=RU&limit=100" -o /tmp/ru_l1.json
-          SIZE=$(wc -c < /tmp/ru_l1.json)
-          echo "L1 RU size: $SIZE bytes"
-          head -c 200 /tmp/ru_l1.json
-          echo ""
-          if [ "$SIZE" -gt 5000 ]; then
-            cp /tmp/ru_l1.json /tmp/ru_final.json
-            echo "SUCCESS=true" >> $GITHUB_OUTPUT
-            echo "✅ Level 1 сработал для RU"
-          else
-            echo "SUCCESS=false" >> $GITHUB_OUTPUT
-            echo "❌ Level 1 не сработал, нужен Level 2"
-          fi
+            // Заходим на главную — Cloudflare выдаёт cookies
+            console.log('Заходим на главную...');
+            await page.goto('https://war-tracker.com/', { waitUntil: 'networkidle', timeout: 90000 });
+            await page.waitForTimeout(5000);
+            console.log('Главная загружена, cookies получены');
 
-      - name: Fetch War-Tracker RU (Level 2 - curl-impersonate)
-        if: steps.fetch_ru_l1.outputs.SUCCESS != 'true'
-        continue-on-error: true
-        run: |
-          if [ -f /tmp/curl_chrome116 ]; then
-            CI_BIN=/tmp/curl_chrome116
-          elif [ -f /tmp/curl_chrome110 ]; then
-            CI_BIN=/tmp/curl_chrome110
-          else
-            CI_BIN=$(ls /tmp/curl_chrome* 2>/dev/null | head -n1)
-          fi
-          echo "Using: $CI_BIN"
-          $CI_BIN -s -m 45 \
-            -H "Referer: https://war-tracker.com/" \
-            "https://war-tracker.com/api/v1/events?country=RU&limit=100" -o /tmp/ru_l2.json
-          SIZE=$(wc -c < /tmp/ru_l2.json)
-          echo "L2 RU size: $SIZE bytes"
-          head -c 200 /tmp/ru_l2.json
-          echo ""
-          if [ "$SIZE" -gt 5000 ]; then
-            cp /tmp/ru_l2.json /tmp/ru_final.json
-            echo "✅ Level 2 сработал для RU"
-          fi
+            // Запрашиваем UA события через страницу
+            console.log('Запрашиваем UA...');
+            const uaText = await page.evaluate(async () => {
+              const r = await fetch('/api/v1/events?country=UA&limit=100');
+              return await r.text();
+            });
+            fs.writeFileSync('/tmp/ua_final.json', uaText);
+            console.log('UA размер:', uaText.length);
+
+            // Запрашиваем RU события
+            console.log('Запрашиваем RU...');
+            const ruText = await page.evaluate(async () => {
+              const r = await fetch('/api/v1/events?country=RU&limit=100');
+              return await r.text();
+            });
+            fs.writeFileSync('/tmp/ru_final.json', ruText);
+            console.log('RU размер:', ruText.length);
+
+            await browser.close();
+          })();
+          EOF
+          node fetch.js
 
       - name: Write result files
         run: |
@@ -131,8 +81,9 @@ jobs:
             cat /tmp/ua_final.json >> data/war-tracker-ua.js
             echo ";" >> data/war-tracker-ua.js
             echo "✅ UA файл записан"
+            head -c 200 /tmp/ua_final.json
           else
-            echo "⚠️ UA данные не получены — оставляем старый файл"
+            echo "⚠️ UA данные не получены"
           fi
           if [ -f /tmp/ru_final.json ] && [ $(wc -c < /tmp/ru_final.json) -gt 5000 ]; then
             echo "window.WT_DATA_RU = " > data/war-tracker-ru.js
@@ -140,7 +91,7 @@ jobs:
             echo ";" >> data/war-tracker-ru.js
             echo "✅ RU файл записан"
           else
-            echo "⚠️ RU данные не получены — оставляем старый файл"
+            echo "⚠️ RU данные не получены"
           fi
 
       - name: Download Leaflet libraries
