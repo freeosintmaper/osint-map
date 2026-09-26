@@ -46,9 +46,7 @@
       border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
       font-size: 13px; z-index: 99999; max-width: 90%; display: none;
     }
-    #errorBox.info {
-      background: #e3f2fd; color: #1565c0;
-    }
+    #errorBox.info { background: #e3f2fd; color: #1565c0; }
 
     .control-panel {
       background: var(--bg-panel); color: var(--text-main);
@@ -68,10 +66,7 @@
       cursor: pointer; font-size: 13px; gap: 6px;
       color: var(--text-main);
     }
-    .control-panel label input[type="checkbox"],
-    .control-panel label input[type="radio"] {
-      margin: 0; width: 15px; height: 15px; cursor: pointer;
-    }
+    .control-panel label input[type="checkbox"] { margin: 0; width: 15px; height: 15px; cursor: pointer; }
     .control-panel hr { border: none; border-top: 1px solid var(--border-light); margin: 10px 0; }
     .lang-switch { display: flex; gap: 4px; margin-bottom: 8px; }
     .lang-btn {
@@ -82,10 +77,7 @@
     }
     .lang-btn.active { background: #0066ff; color: #fff; border-color: #0066ff; }
 
-    /* Источник данных */
-    .source-selector {
-      display: flex; gap: 4px; margin-bottom: 6px;
-    }
+    .source-selector { display: flex; gap: 4px; margin-bottom: 6px; }
     .source-btn {
       flex: 1; padding: 8px 6px; border: 2px solid var(--border-mid);
       background: var(--bg-input); color: var(--text-main);
@@ -95,35 +87,21 @@
     }
     .source-btn .source-name { font-weight: 600; }
     .source-btn .source-desc { font-size: 10px; opacity: 0.7; }
-    .source-btn.active {
-      border-color: #0066ff; background: #e8f0ff; color: #0055cc;
-    }
-    body.dark .source-btn.active {
-      background: #1a2a4a; color: #6ba6ff;
-    }
+    .source-btn.active { border-color: #0066ff; background: #e8f0ff; color: #0055cc; }
+    .source-btn.disabled { opacity: 0.4; cursor: not-allowed; }
+    body.dark .source-btn.active { background: #1a2a4a; color: #6ba6ff; }
 
-    .opacity-row {
-      display: flex; align-items: center; gap: 8px;
-      padding: 4px 0;
-    }
+    .opacity-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
     .opacity-row label { flex: 0 0 auto; font-size: 12px; color: var(--text-secondary); }
-    .opacity-row input[type="range"] {
-      flex: 1; cursor: pointer; accent-color: #0066ff;
-    }
-    .opacity-row .opacity-value {
-      flex: 0 0 42px; text-align: right; font-size: 12px;
-      color: var(--text-secondary); font-variant-numeric: tabular-nums;
-    }
+    .opacity-row input[type="range"] { flex: 1; cursor: pointer; accent-color: #0066ff; }
+    .opacity-row .opacity-value { flex: 0 0 42px; text-align: right; font-size: 12px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
     .mode-toggle { display: flex; gap: 4px; margin-top: 6px; }
     .mode-toggle button {
       flex: 1; padding: 5px 8px; border: 1px solid var(--border-mid);
       background: var(--bg-input); color: var(--text-main);
-      border-radius: 4px; cursor: pointer; font-size: 12px;
-      transition: all 0.2s;
+      border-radius: 4px; cursor: pointer; font-size: 12px; transition: all 0.2s;
     }
-    .mode-toggle button.active {
-      background: #0066ff; color: #fff; border-color: #0066ff;
-    }
+    .mode-toggle button.active { background: #0066ff; color: #fff; border-color: #0066ff; }
 
     .info.legend {
       background: var(--bg-panel); color: var(--text-main);
@@ -132,19 +110,10 @@
       line-height: 1.6; max-width: 240px; max-height: 80vh;
       overflow-y: auto; font-family: system-ui, sans-serif;
     }
-    .info.legend h4 {
-      margin: 0 0 6px; font-size: 12px; color: var(--text-main);
-      text-transform: uppercase; letter-spacing: 0.3px;
-    }
+    .info.legend h4 { margin: 0 0 6px; font-size: 12px; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.3px; }
     .info.legend hr { border: none; border-top: 1px solid var(--border-light); margin: 8px 0; }
-    .info.legend i {
-      width: 14px; height: 14px; float: left; margin-right: 8px; margin-top: 2px;
-      opacity: 0.85; border-radius: 3px; display: inline-block;
-    }
-    .info.legend .legend-line {
-      width: 18px; height: 3px; float: left; margin-right: 8px; margin-top: 7px;
-      border-radius: 2px; display: inline-block;
-    }
+    .info.legend i { width: 14px; height: 14px; float: left; margin-right: 8px; margin-top: 2px; opacity: 0.85; border-radius: 3px; display: inline-block; }
+    .info.legend .legend-line { width: 18px; height: 3px; float: left; margin-right: 8px; margin-top: 7px; border-radius: 2px; display: inline-block; }
 
     #eventsPanel {
       position: fixed; left: 10px; top: 10px; bottom: 100px;
@@ -157,7 +126,6 @@
       padding: 10px 14px; border-bottom: 1px solid var(--border-light);
       font-weight: 600; font-size: 13px; display: flex;
       justify-content: space-between; align-items: center;
-      color: var(--text-main);
     }
     #eventsPanel .panel-header .toggle-btn {
       cursor: pointer; font-size: 16px; color: var(--text-muted);
@@ -182,13 +150,8 @@
       padding: 10px 14px; background: var(--bg-summary);
       border-bottom: 1px solid var(--border-light); font-size: 12px;
     }
-    #eventsPanel .summary-box .summary-title {
-      font-weight: 600; margin-bottom: 4px; color: var(--text-main);
-    }
-    #eventsPanel .summary-box .summary-line {
-      display: flex; justify-content: space-between; padding: 2px 0;
-      color: var(--text-secondary);
-    }
+    #eventsPanel .summary-box .summary-title { font-weight: 600; margin-bottom: 4px; color: var(--text-main); }
+    #eventsPanel .summary-box .summary-line { display: flex; justify-content: space-between; padding: 2px 0; color: var(--text-secondary); }
     #eventsPanel.collapsed { width: 40px; }
     #eventsPanel.collapsed .panel-body,
     #eventsPanel.collapsed .panel-header span { display: none; }
@@ -199,7 +162,6 @@
       background: var(--bg-panel); border-radius: 8px; padding: 6px;
       box-shadow: 0 2px 8px var(--shadow);
       display: flex; gap: 4px; z-index: 1000;
-      font-family: system-ui, sans-serif;
     }
     #toolbar button {
       width: 42px; height: 42px; border: 1px solid var(--border-mid);
@@ -295,10 +257,7 @@
         sourceDSDesc: 'украинский',
         controlZones: 'Зоны контроля',
         territoryRF: 'Территория, занимаемая РФ',
-        territoryUA: 'Территория под контролем Украины',
         counteroffensive: 'Контрнаступления ВСУ',
-        newRussian: 'Новые территории РФ (сегодня)',
-        newUkrainian: 'Возвращённые территории Украины (сегодня)',
         warTrackerEvents: 'События War-Tracker',
         raidAlert: 'Воздушная тревога',
         strike: 'Удар',
@@ -310,110 +269,55 @@
         eventsCount: 'событий',
         noEvents: 'Нет событий за сегодня',
         source: 'Источник',
-        toolMarker: 'Метка',
-        toolLine: 'Линия',
-        toolArrow: 'Стрелка',
-        toolPolygon: 'Зона',
-        toolRectangle: 'Прямоугольник',
-        toolCircle: 'Круг',
-        toolMeasure: 'Измерить расстояние',
-        toolClear: 'Очистить всё',
-        toolTheme: 'Тёмная тема',
+        toolMarker: 'Метка', toolLine: 'Линия', toolArrow: 'Стрелка',
+        toolPolygon: 'Зона', toolRectangle: 'Прямоугольник', toolCircle: 'Круг',
+        toolMeasure: 'Измерить расстояние', toolClear: 'Очистить всё', toolTheme: 'Тёмная тема',
         clearConfirm: 'Удалить все ваши рисунки?',
-        total: 'Всего',
-        countryUA: 'Украина',
-        countryRU: 'РФ',
-        opacityLabel: 'Прозрачность',
-        modeFill: 'Заливка',
-        modeOutline: 'Только контуры',
-        deepStateFailed: 'DeepStateMap недоступен (блокировка из РФ). Переключаю на ISW.',
-        deepStateLoading: 'Загрузка DeepStateMap...'
+        total: 'Всего', countryUA: 'Украина', countryRU: 'РФ',
+        opacityLabel: 'Прозрачность', modeFill: 'Заливка', modeOutline: 'Только контуры',
+        deepStateFailed: 'DeepStateMap недоступен (блокировка из РФ). Переключаю на ISW.'
       },
       uk: {
         eventsPanelTitle: 'Події за сьогодні',
         dataSource: 'Джерело даних',
-        sourceISW: 'ISW',
-        sourceISWDesc: 'нейтральне',
-        sourceDS: 'DeepStateMap',
-        sourceDSDesc: 'українське',
+        sourceISW: 'ISW', sourceISWDesc: 'нейтральне',
+        sourceDS: 'DeepStateMap', sourceDSDesc: 'українське',
         controlZones: 'Зони контролю',
         territoryRF: 'Територія, яку займає РФ',
-        territoryUA: 'Територія під контролем України',
         counteroffensive: 'Контрнаступи ЗСУ',
-        newRussian: 'Нові території РФ (сьогодні)',
-        newUkrainian: 'Повернені території України (сьогодні)',
         warTrackerEvents: 'Події War-Tracker',
-        raidAlert: 'Повітряна тривога',
-        strike: 'Удар',
-        operation: 'Операція',
-        offensive: 'Наступ',
-        incident: 'Інцидент',
-        politics: 'Політика',
-        summaryTitle: 'Зведення за сьогодні',
-        eventsCount: 'подій',
-        noEvents: 'Немає подій за сьогодні',
-        source: 'Джерело',
-        toolMarker: 'Мітка',
-        toolLine: 'Лінія',
-        toolArrow: 'Стрілка',
-        toolPolygon: 'Зона',
-        toolRectangle: 'Прямокутник',
-        toolCircle: 'Коло',
-        toolMeasure: 'Виміряти відстань',
-        toolClear: 'Очистити все',
-        toolTheme: 'Темна тема',
+        raidAlert: 'Повітряна тривога', strike: 'Удар', operation: 'Операція',
+        offensive: 'Наступ', incident: 'Інцидент', politics: 'Політика',
+        summaryTitle: 'Зведення за сьогодні', eventsCount: 'подій',
+        noEvents: 'Немає подій за сьогодні', source: 'Джерело',
+        toolMarker: 'Мітка', toolLine: 'Лінія', toolArrow: 'Стрілка',
+        toolPolygon: 'Зона', toolRectangle: 'Прямокутник', toolCircle: 'Коло',
+        toolMeasure: 'Виміряти відстань', toolClear: 'Очистити все', toolTheme: 'Темна тема',
         clearConfirm: 'Видалити всі ваші малюнки?',
-        total: 'Всього',
-        countryUA: 'Україна',
-        countryRU: 'РФ',
-        opacityLabel: 'Прозорість',
-        modeFill: 'Заливка',
-        modeOutline: 'Лише контури',
-        deepStateFailed: 'DeepStateMap недоступний (блокування з РФ). Перемикаю на ISW.',
-        deepStateLoading: 'Завантаження DeepStateMap...'
+        total: 'Всього', countryUA: 'Україна', countryRU: 'РФ',
+        opacityLabel: 'Прозорість', modeFill: 'Заливка', modeOutline: 'Лише контури',
+        deepStateFailed: 'DeepStateMap недоступний (блокування з РФ). Перемикаю на ISW.'
       },
       en: {
         eventsPanelTitle: "Today's Events",
         dataSource: 'Data source',
-        sourceISW: 'ISW',
-        sourceISWDesc: 'neutral',
-        sourceDS: 'DeepStateMap',
-        sourceDSDesc: 'Ukrainian',
+        sourceISW: 'ISW', sourceISWDesc: 'neutral',
+        sourceDS: 'DeepStateMap', sourceDSDesc: 'Ukrainian',
         controlZones: 'Control Zones',
         territoryRF: 'Territory held by RF',
-        territoryUA: 'Territory under Ukraine control',
         counteroffensive: 'Ukrainian counteroffensives',
-        newRussian: 'New RF territory (today)',
-        newUkrainian: 'Ukrainian recaptured territory (today)',
         warTrackerEvents: 'War-Tracker Events',
-        raidAlert: 'Air Raid Alert',
-        strike: 'Strike',
-        operation: 'Operation',
-        offensive: 'Offensive',
-        incident: 'Incident',
-        politics: 'Politics',
-        summaryTitle: "Today's Summary",
-        eventsCount: 'events',
-        noEvents: 'No events today',
-        source: 'Source',
-        toolMarker: 'Marker',
-        toolLine: 'Line',
-        toolArrow: 'Arrow',
-        toolPolygon: 'Polygon',
-        toolRectangle: 'Rectangle',
-        toolCircle: 'Circle',
-        toolMeasure: 'Measure distance',
-        toolClear: 'Clear all',
-        toolTheme: 'Dark theme',
+        raidAlert: 'Air Raid Alert', strike: 'Strike', operation: 'Operation',
+        offensive: 'Offensive', incident: 'Incident', politics: 'Politics',
+        summaryTitle: "Today's Summary", eventsCount: 'events',
+        noEvents: 'No events today', source: 'Source',
+        toolMarker: 'Marker', toolLine: 'Line', toolArrow: 'Arrow',
+        toolPolygon: 'Polygon', toolRectangle: 'Rectangle', toolCircle: 'Circle',
+        toolMeasure: 'Measure distance', toolClear: 'Clear all', toolTheme: 'Dark theme',
         clearConfirm: 'Delete all your drawings?',
-        total: 'Total',
-        countryUA: 'Ukraine',
-        countryRU: 'RF',
-        opacityLabel: 'Opacity',
-        modeFill: 'Fill',
-        modeOutline: 'Outline only',
-        deepStateFailed: 'DeepStateMap unavailable (blocked from RF). Switching to ISW.',
-        deepStateLoading: 'Loading DeepStateMap...'
+        total: 'Total', countryUA: 'Ukraine', countryRU: 'RF',
+        opacityLabel: 'Opacity', modeFill: 'Fill', modeOutline: 'Outline only',
+        deepStateFailed: 'DeepStateMap unavailable (blocked from RF). Switching to ISW.'
       }
     };
 
@@ -430,7 +334,7 @@
     var SOURCE_KEY = 'osint_source';
     var THEME_KEY = 'osint_theme';
 
-    var fillOpacity = parseFloat(localStorage.getItem(OPACITY_KEY) || '0.10');
+    var fillOpacity = parseFloat(localStorage.getItem(OPACITY_KEY) || '0.15');
     var layerMode = localStorage.getItem(MODE_KEY) || 'fill';
     var currentSource = localStorage.getItem(SOURCE_KEY) || 'isw';
     var currentTheme = localStorage.getItem(THEME_KEY) || 'light';
@@ -445,20 +349,18 @@
 
     function styleFor(baseColor) {
       if (layerMode === 'outline') {
-        return { color: baseColor, weight: 1.5, opacity: 0.85, fill: false };
+        return { color: baseColor, weight: 1.5, opacity: 0.9, fill: false };
       }
       return {
-        color: baseColor, weight: 1.2, opacity: 0.85,
+        color: baseColor, weight: 1.2, opacity: 0.9,
         fillColor: baseColor, fillOpacity: fillOpacity
       };
     }
 
     function refreshAllStyles() {
-      [deepStateLayer, iswRussianLayer, ukraineControlLayer, newRussianLayer, newUkrainianLayer].forEach(function(layer) {
+      [deepStateLayer, iswRussianLayer, counterLayer].forEach(function(layer) {
         if (!layer || !layer.options || !layer.options._baseColor) return;
-        layer.setStyle(function() {
-          return styleFor(layer.options._baseColor);
-        });
+        layer.setStyle(function() { return styleFor(layer.options._baseColor); });
       });
     }
 
@@ -504,57 +406,34 @@
     }
 
     // ============================================================
-    // 5. СЛОИ КОНТРОЛЯ (DeepState + ISW)
+    // 5. СЛОИ КОНТРОЛЯ
     // ============================================================
     function polygonPopup(text) {
       return function(f, layer) { layer.bindPopup('<b>' + text + '</b>'); };
     }
 
-    // DeepStateMap — территория РФ
+    // DeepStateMap — территория РФ (точная, ежедневная)
     var deepStateLayer = L.geoJSON(null, {
       _baseColor: '#cc0000',
       style: function() { return styleFor('#cc0000'); },
       onEachFeature: polygonPopup(t('territoryRF'))
     });
 
-    // ISW — территория РФ
+    // ISW — территория РФ (fallback)
     var iswRussianLayer = L.geoJSON(null, {
       _baseColor: '#cc0000',
       style: function() { return styleFor('#cc0000'); },
       onEachFeature: polygonPopup(t('territoryRF'))
     });
 
-    // ISW — территория Украины
-    var ukraineControlLayer = L.geoJSON(null, {
-      _baseColor: '#0055cc',
-      style: function() { return styleFor('#0055cc'); },
-      onEachFeature: polygonPopup(t('territoryUA'))
-    });
-
-    // ISW — контрнаступления
+    // ISW — контрнаступления ВСУ (только пунктир, без заливки)
     var counterLayer = L.geoJSON(null, {
+      _baseColor: '#0088cc',
       style: function() {
         return { color: '#0088cc', weight: 2, opacity: 0.85, fill: false, dashArray: '5,5' };
       },
       onEachFeature: polygonPopup(t('counteroffensive'))
     });
-
-    // ISW — новые территории РФ (сегодня)
-    var newRussianLayer = L.geoJSON(null, {
-      _baseColor: '#228B22',
-      style: function() { return styleFor('#228B22'); },
-      onEachFeature: polygonPopup(t('newRussian'))
-    });
-
-    // ISW — возвращённые территории Украины (сегодня)
-    var newUkrainianLayer = L.geoJSON(null, {
-      _baseColor: '#FF8C00',
-      style: function() { return styleFor('#FF8C00'); },
-      onEachFeature: polygonPopup(t('newUkrainian'))
-    });
-
-    var today = new Date().toISOString().slice(0, 10);
-    var todayStart = today + 'T00:00:00Z';
 
     // --- DeepStateMap ---
     fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
@@ -571,7 +450,7 @@
           deepStateLayer.addData(features[0]);
           deepStateLoaded = true;
           console.log('✅ DeepStateMap загружен');
-          applySource(); // обновляем отображение
+          applySource();
         }
       })
       .catch(function(err) {
@@ -586,61 +465,37 @@
         }
       });
 
-    // --- ISW: территория РФ ---
-    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/VIEW_RussiaCoTinUkraine_V3/FeatureServer/49/query?where=1%3D1&outFields=*&f=geojson')
+    // --- ISW: территория РФ (fallback — рабочий эндпоинт) ---
+    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/Russo_Ukraine_War_October_2025_Timelapse/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson')
       .then(function(r) { return r.json(); })
-      .then(function(d) { 
-        iswRussianLayer.addData(d);
-        console.log('✅ ISW RF: ' + (d.features ? d.features.length : 0));
+      .then(function(d) {
+        if (d.features && d.features.length > 0) {
+          iswRussianLayer.addData(d);
+          console.log('✅ ISW RF: ' + d.features.length);
+        }
       })
       .catch(function(err) { console.warn('ISW RF:', err.message); });
 
-    // --- ISW: территория Украины ---
-    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/June_2025_Timelapse/FeatureServer/3/query?where=1%3D1&outFields=*&f=geojson')
-      .then(function(r) { return r.json(); })
-      .then(function(d) { ukraineControlLayer.addData(d); })
-      .catch(function(err) { console.warn('ISW UA:', err.message); });
-
-    // --- ISW: контрнаступления ---
+    // --- ISW: контрнаступления ВСУ ---
     fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/Claimed_Ukrainian_Counteroffensive_March_to_July/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson')
       .then(function(r) { return r.json(); })
       .then(function(d) { counterLayer.addData(d); })
       .catch(function(err) { console.warn('ISW counter:', err.message); });
 
-    // --- ISW: новые территории РФ (сегодня) ---
-    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/VIEW_RussiaCoTinUkraine_V3/FeatureServer/49/query' +
-          '?where=EditDate%20%3E%3D%20TIMESTAMP%20%27' + todayStart + '%27&outFields=*&f=geojson')
-      .then(function(r) { return r.json(); })
-      .then(function(d) { if (d.features && d.features.length > 0) newRussianLayer.addData(d); })
-      .catch(function(err) { console.warn('New RF:', err.message); });
-
-    // --- ISW: новые территории Украины (сегодня) ---
-    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/June_2025_Timelapse/FeatureServer/3/query' +
-          '?where=EditDate%20%3E%3D%20TIMESTAMP%20%27' + todayStart + '%27&outFields=*&f=geojson')
-      .then(function(r) { return r.json(); })
-      .then(function(d) { if (d.features && d.features.length > 0) newUkrainianLayer.addData(d); })
-      .catch(function(err) { console.warn('New UA:', err.message); });
-
     // ============================================================
     // 6. УПРАВЛЕНИЕ ИСТОЧНИКОМ
     // ============================================================
     function applySource() {
-      // Скрываем все слои контроля
-      [deepStateLayer, iswRussianLayer, ukraineControlLayer, counterLayer, newRussianLayer, newUkrainianLayer].forEach(function(l) {
+      [deepStateLayer, iswRussianLayer, counterLayer].forEach(function(l) {
         map.removeLayer(l);
       });
 
       if (currentSource === 'deepstate') {
-        // DeepStateMap: показываем только территорию РФ
         deepStateLayer.addTo(map);
       } else {
-        // ISW: РФ + Украина + контрнаступления + новые территории
         iswRussianLayer.addTo(map);
-        ukraineControlLayer.addTo(map);
-        counterLayer.addTo(map);
-        newRussianLayer.addTo(map);
-        newUkrainianLayer.addTo(map);
       }
+      counterLayer.addTo(map);
       updateLegend();
     }
 
@@ -653,12 +508,9 @@
     map.addLayer(wtLayerRU);
 
     var WT_COLORS = {
-      'Air Raid Alert':         '#ffcc00',
-      'Military Strike':        '#cc0000',
-      'Military Operation':     '#ff6600',
-      'Military Offensive':     '#990000',
-      'Security Incident':      '#888888',
-      'Political Development':  '#0088cc'
+      'Air Raid Alert': '#ffcc00', 'Military Strike': '#cc0000',
+      'Military Operation': '#ff6600', 'Military Offensive': '#990000',
+      'Security Incident': '#888888', 'Political Development': '#0088cc'
     };
     var WT_LABELS = {
       'Air Raid Alert': 'raidAlert', 'Military Strike': 'strike',
@@ -956,9 +808,12 @@
     // ============================================================
     var panel;
     function refreshPanel() {
-      if (panel && panel._container) {
-        panel._container.innerHTML = '';
-        panel._renderInner();
+      var div = document.querySelector('.control-panel');
+      if (div) {
+        div.innerHTML = '';
+        // Пересоздаём содержимое через onAdd
+        panel.remove();
+        panel.addTo(map);
       }
     }
 
@@ -974,32 +829,23 @@
                 '<button class="lang-btn' + (currentLang === 'en' ? ' active' : '') + '" data-lang="en">EN</button>' +
                 '</div>';
 
-        // Источник данных
         html += '<h4>' + t('dataSource') + '</h4>';
         html += '<div class="source-selector">' +
                 '<button class="source-btn' + (currentSource === 'isw' ? ' active' : '') + '" data-source="isw">' +
                 '<span class="source-name">' + t('sourceISW') + '</span>' +
                 '<span class="source-desc">' + t('sourceISWDesc') + '</span>' +
                 '</button>' +
-                '<button class="source-btn' + (currentSource === 'deepstate' ? ' active' : '') + 
+                '<button class="source-btn' + (currentSource === 'deepstate' ? ' active' : '') +
                 (deepStateFailed ? ' disabled' : '') + '" data-source="deepstate">' +
                 '<span class="source-name">' + t('sourceDS') + '</span>' +
                 '<span class="source-desc">' + t('sourceDSDesc') + '</span>' +
                 '</button>' +
                 '</div>';
 
-        // Слои контроля
         html += '<h4 style="margin-top:10px;">' + t('controlZones') + '</h4>';
-        if (currentSource === 'deepstate') {
-          html += '<div style="font-size:11px; color:var(--text-muted); padding:4px 0;">' +
-                  t('territoryRF') + ' (DeepStateMap)</div>';
-        } else {
-          html += '<div style="font-size:11px; color:var(--text-muted); padding:4px 0;">' +
-                  t('territoryRF') + ' · ' + t('territoryUA') + ' · ' + t('counteroffensive') +
-                  '<br>' + t('newRussian') + ' · ' + t('newUkrainian') + '</div>';
-        }
+        html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
+        html += '<label><input type="checkbox" id="chkCounter" checked> ' + t('counteroffensive') + '</label>';
 
-        // Прозрачность
         html += '<hr>';
         html += '<div class="opacity-row">' +
                 '<label>' + t('opacityLabel') + '</label>' +
@@ -1011,7 +857,6 @@
                 '<button data-mode="outline" class="' + (layerMode === 'outline' ? 'active' : '') + '">' + t('modeOutline') + '</button>' +
                 '</div>';
 
-        // События War-Tracker
         html += '<hr><h4>' + t('warTrackerEvents') + '</h4>';
         [
           { key: 'Air Raid Alert',       label: t('raidAlert') },
@@ -1041,7 +886,6 @@
           });
         });
 
-        // Источник данных
         div.querySelectorAll('.source-btn').forEach(function(btn) {
           btn.addEventListener('click', function() {
             if (this.classList.contains('disabled')) return;
@@ -1052,7 +896,17 @@
           });
         });
 
-        // Прозрачность
+        var chkZone = div.querySelector('#chkZone');
+        if (chkZone) chkZone.addEventListener('change', function() {
+          var activeLayer = (currentSource === 'deepstate') ? deepStateLayer : iswRussianLayer;
+          if (this.checked) activeLayer.addTo(map); else map.removeLayer(activeLayer);
+        });
+
+        var chkCounter = div.querySelector('#chkCounter');
+        if (chkCounter) chkCounter.addEventListener('change', function() {
+          if (this.checked) counterLayer.addTo(map); else map.removeLayer(counterLayer);
+        });
+
         var slider = div.querySelector('#opacitySlider');
         var sliderValue = div.querySelector('#opacityValue');
         if (slider) {
@@ -1064,7 +918,6 @@
           });
         }
 
-        // Режим
         div.querySelectorAll('.mode-toggle button').forEach(function(btn) {
           btn.addEventListener('click', function() {
             layerMode = this.getAttribute('data-mode');
@@ -1075,7 +928,6 @@
           });
         });
 
-        // Фильтры событий
         div.querySelectorAll('.wt-filter').forEach(function(chk) {
           chk.addEventListener('change', function() {
             activeEventTypes[this.getAttribute('data-type')] = this.checked;
@@ -1085,7 +937,6 @@
         });
       }
 
-      panel._renderInner = render;
       render();
       L.DomEvent.disableClickPropagation(div);
       L.DomEvent.disableScrollPropagation(div);
@@ -1112,12 +963,7 @@
       var html = '<h4>' + t('controlZones') + ' <span style="font-weight:400;font-size:10px;color:var(--text-muted);">(' +
                  (currentSource === 'deepstate' ? 'DeepStateMap' : 'ISW') + ')</span></h4>';
       html += '<div><i style="background:#cc0000;"></i> ' + t('territoryRF') + '</div>';
-      if (currentSource === 'isw') {
-        html += '<div><i style="background:#0055cc;"></i> ' + t('territoryUA') + '</div>';
-        html += '<div><span class="legend-line" style="background:#0088cc;"></span> ' + t('counteroffensive') + '</div>';
-        html += '<div><i style="background:#228B22;"></i> ' + t('newRussian') + '</div>';
-        html += '<div><i style="background:#FF8C00;"></i> ' + t('newUkrainian') + '</div>';
-      }
+      html += '<div><span class="legend-line" style="background:#0088cc;"></span> ' + t('counteroffensive') + '</div>';
       html += '<hr><h4>' + t('warTrackerEvents') + '</h4>';
       html += '<div><i style="background:#ffcc00;"></i> ' + t('raidAlert') + '</div>';
       html += '<div><i style="background:#cc0000;"></i> ' + t('strike') + '</div>';
