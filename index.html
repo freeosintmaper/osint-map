@@ -44,16 +44,10 @@
     .status-msg { padding: 6px 8px; margin-top: 6px; border-radius: 4px; font-size: 11px; text-align: center; }
     .status-ok { background: #e8f5e9; color: #2e7d32; }
     .status-err { background: #ffebee; color: #c62828; }
-
-    /* ===== Легенда ===== */
     .info.legend {
-      background: white;
-      padding: 8px 12px;
-      border-radius: 5px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      font-size: 13px;
-      line-height: 1.5;
-      max-width: 220px;
+      background: white; padding: 8px 12px; border-radius: 5px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2); font-size: 13px;
+      line-height: 1.5; max-width: 220px;
     }
     .info.legend h4 { margin: 0 0 6px; font-size: 13px; color: #333; }
     .info.legend hr { border: none; border-top: 1px solid #eee; margin: 6px 0; }
@@ -138,24 +132,68 @@
       onEachFeature: function(f, layer) { layer.bindPopup('<b>Контрнаступления ВСУ (ISW)</b>'); }
     });
 
-    // ---- ЗАГРУЗКА ДАННЫХ ----
+    // 4.3. НОВЫЙ: Зона контроля Украины (синий)
+    var ukraineControlLayer = L.geoJSON(null, {
+      style: function() { return { color: '#003d99', weight: 1.5, opacity: 0.9, fillColor: '#0055cc', fillOpacity: 0.15 }; },
+      onEachFeature: function(f, layer) { layer.bindPopup('<b>Территория под контролем Украины</b>'); }
+    });
 
-    // DeepStateMap
-    fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
-      .then(function(r) { return r.arrayBuffer(); })
-      .then(function(buffer) {
-        var ds = new DecompressionStream('gzip');
-        var stream = new Blob([buffer]).stream().pipeThrough(ds);
-        return new Response(stream).json();
-      })
-      .then(function(data) {
-        var features = data.features || [];
-        if (features.length > 0) {
-          features.sort(function(a, b) { return (b.properties.date || '').localeCompare(a.properties.date || ''); });
-          occupiedLayer.addData(features[0]);
-        }
-      })
-      .catch(function(err) { console.warn('DeepStateMap:', err.message); });
+    // --- ЗАГРУЗКА ДАННЫХ ---
+
+    // Источник для территории, занимаемой РФ.
+    // Сначала пробуем DeepStateMap (может быть заблокирован из РФ),
+    // если не получается — грузим с ISW (доступен из РФ).
+
+    function loadFromISW() {
+      console.log('Загружаем данные с ISW (ArcGIS)...');
+      var ISW_RUSSIAN_URL = 'https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/' +
+        'Russo_Ukraine_War_October_2025_Timelapse/FeatureServer/0/query' +
+        '?where=1%3D1&outFields=*&f=geojson';
+
+      fetch(ISW_RUSSIAN_URL)
+        .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(function(d) {
+          if (d && d.features && d.features.length > 0) {
+            occupiedLayer.addData(d);
+            console.log('✅ ISW: загружено объектов ' + d.features.length);
+          } else {
+            console.warn('ISW вернул пустой ответ');
+          }
+        })
+        .catch(function(err) {
+          console.warn('ISW тоже не сработал:', err.message);
+        });
+    }
+
+    function loadFromDeepState() {
+      console.log('Пробуем DeepStateMap...');
+      fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.arrayBuffer();
+        })
+        .then(function(buffer) {
+          var ds = new DecompressionStream('gzip');
+          var stream = new Blob([buffer]).stream().pipeThrough(ds);
+          return new Response(stream).json();
+        })
+        .then(function(data) {
+          var features = data.features || [];
+          if (features.length > 0) {
+            features.sort(function(a, b) { return (b.properties.date || '').localeCompare(a.properties.date || ''); });
+            occupiedLayer.addData(features[0]);
+            console.log('✅ DeepStateMap: загружено');
+          } else {
+            throw new Error('Пустой ответ');
+          }
+        })
+        .catch(function(err) {
+          console.warn('DeepStateMap недоступен (' + err.message + '), переключаюсь на ISW');
+          loadFromISW();
+        });
+    }
+
+    loadFromDeepState();
 
     // ISW — контрнаступления ВСУ
     fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/Claimed_Ukrainian_Counteroffensive_March_to_July/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson')
@@ -163,12 +201,19 @@
       .then(function(d) { counterLayer.addData(d); })
       .catch(function(err) { console.warn('ISW (контрнаступления):', err.message); });
 
+    // ISW — зона контроля Украины
+    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/March_PreppedTimelapse/FeatureServer/35/query?where=1%3D1&outFields=*&f=geojson')
+      .then(function(r) { return r.json(); })
+      .then(function(d) { ukraineControlLayer.addData(d); })
+      .catch(function(err) { console.warn('ISW (контроль Украины):', err.message); });
+
     // Добавляем слои на карту
     occupiedLayer.addTo(map);
     counterLayer.addTo(map);
+    ukraineControlLayer.addTo(map);
 
     // ============================================================
-    // 5. СОБЫТИЯ
+    // 5. СОБЫТИЯ ИЗ БАЗЫ
     // ============================================================
     var eventsLayer = new L.FeatureGroup();
     map.addLayer(eventsLayer);
@@ -193,6 +238,51 @@
       });
     }
     loadEvents();
+
+    // ============================================================
+    // 5.1. АВТОМАТИЧЕСКИЕ СОБЫТИЯ С WAR-TRACKER
+    // ============================================================
+    var warTrackerLayer = new L.FeatureGroup();
+    map.addLayer(warTrackerLayer);
+
+    function loadWarTrackerEvents() {
+      console.log('Загружаем события с War-Tracker...');
+      var apiUrl = 'https://war-tracker.com/api/v1/events?country=UA&limit=50';
+
+      fetch(apiUrl)
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function(data) {
+          warTrackerLayer.clearLayers();
+          if (data && data.events) {
+            data.events.forEach(function(event) {
+              if (event.latitude && event.longitude) {
+                var marker = L.circleMarker([event.latitude, event.longitude], {
+                  radius: 6,
+                  color: '#ffcc00',
+                  fillColor: '#ffcc00',
+                  fillOpacity: 0.9,
+                  weight: 2
+                });
+                var popupContent = '<b>' + (event.event_type || 'Событие') + '</b><br>';
+                popupContent += (event.description || 'Нет описания') + '<br>';
+                popupContent += '<small>' + new Date(event.timestamp).toLocaleString('ru-RU') + '</small>';
+                marker.bindPopup(popupContent);
+                warTrackerLayer.addLayer(marker);
+              }
+            });
+            console.log('✅ События с War-Tracker загружены: ' + data.events.length);
+          }
+        })
+        .catch(function(err) {
+          console.warn('⚠️ Не удалось загрузить события с War-Tracker:', err.message);
+        });
+    }
+
+    loadWarTrackerEvents();
+    setInterval(loadWarTrackerEvents, 300000); // Каждые 5 минут
 
     // ============================================================
     // 6. РИСОВАНИЕ
@@ -249,6 +339,7 @@
         '<h4>Слои OSINT</h4>' +
         '<label><input type="checkbox" id="chkOccupied" checked> Территория, занимаемая РФ</label>' +
         '<label><input type="checkbox" id="chkCounter" checked> Контрнаступления ВСУ</label>' +
+        '<label><input type="checkbox" id="chkUkraine" checked> Контроль Украины</label>' +
         '<hr>' +
         '<div id="authBlock">' +
           '<h4>Вход для админа</h4>' +
@@ -278,6 +369,9 @@
       });
       document.getElementById('chkCounter').addEventListener('change', function() {
         if (this.checked) counterLayer.addTo(map); else map.removeLayer(counterLayer);
+      });
+      document.getElementById('chkUkraine').addEventListener('change', function() {
+        if (this.checked) ukraineControlLayer.addTo(map); else map.removeLayer(ukraineControlLayer);
       });
 
       document.getElementById('btnLogin').addEventListener('click', function() {
@@ -347,6 +441,7 @@
 
       var html = '<h4>Зоны контроля</h4>';
       html += '<div><i style="background:#cc0000;"></i> Территория, занимаемая РФ</div>';
+      html += '<div><i style="background:#0055cc;"></i> Контроль Украины</div>';
       html += '<div><span class="legend-line" style="background:#0088cc;"></span> Контрнаступления ВСУ</div>';
 
       html += '<hr>';
@@ -359,7 +454,7 @@
       }
 
       html += '<hr>';
-      html += '<div style="font-size:11px;color:#888;">Данные: ISW, DeepStateMap</div>';
+      html += '<div style="font-size:11px;color:#888;">Данные: ISW, War-Tracker</div>';
 
       div.innerHTML = html;
       return div;
