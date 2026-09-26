@@ -6,30 +6,68 @@ import time
 from html import unescape
 
 CHANNELS = [
-    # Украинские
-    "ukrpravda_news",
-    "DeepStateUA",
+    # Украинские официальные
+    "kpszsu",
+    "GeneralStaffZSU",
     "operativnoZSU",
-    "amk_mapping",
+    # Украинские новостные
+    "ukrpravda_news",
     "uniannet",
-    # Российские
+    # Украинские OSINT
+    "DeepStateUA",
+    "amk_mapping",
+    "OsintFlow",
+    "ukraine_observer",
+    # Российские официальные / военкоры
     "rybar",
-    "militarysummary",
+    "voenkorKotenok",
+    "wargonzo",
+    "dva_majors",
     "readovkanews",
     "tass_agency",
-    # Нейтральные / OSINT
+    # Российские OSINT
+    "militarysummary",
+    "lost_armour",
+    # Независимые / международные
     "UAWeapons",
     "Osinttechnical",
+    "informnapalm",
+    # Каналы воздушных тревог
+    "AerisRimor",
+    "monitoringwar",
 ]
 
 CHANNEL_COUNTRY = {
-    "ukrpravda_news": "UA", "DeepStateUA": "UA", "operativnoZSU": "UA",
-    "amk_mapping": "UA", "uniannet": "UA",
-    "rybar": "RU", "militarysummary": "RU", "readovkanews": "RU", "tass_agency": "RU",
-    "UAWeapons": "OSINT", "Osinttechnical": "OSINT",
+    # Украинские
+    "kpszsu": "UA",
+    "GeneralStaffZSU": "UA",
+    "operativnoZSU": "UA",
+    "ukrpravda_news": "UA",
+    "uniannet": "UA",
+    "DeepStateUA": "UA",
+    "amk_mapping": "UA",
+    "OsintFlow": "UA",
+    "ukraine_observer": "UA",
+    # Российские
+    "rybar": "RU",
+    "voenkorKotenok": "RU",
+    "wargonzo": "RU",
+    "dva_majors": "RU",
+    "readovkanews": "RU",
+    "tass_agency": "RU",
+    "militarysummary": "RU",
+    "lost_armour": "RU",
+    # Независимые / OSINT
+    "UAWeapons": "OSINT",
+    "Osinttechnical": "OSINT",
+    "informnapalm": "OSINT",
+    # Каналы воздушных тревог
+    "AerisRimor": "UA",
+    "monitoringwar": "UA",
+    "sputnikrussia_radar": "RU",
+    "locatorru": "RU", 
 }
 
-# Расширенный словарь городов с координатами
 CITY_COORDS = {
     # Украина
     "Киев": [50.4501, 30.5234], "Kyiv": [50.4501, 30.5234], "Києві": [50.4501, 30.5234], "Києва": [50.4501, 30.5234],
@@ -63,7 +101,6 @@ CITY_COORDS = {
     "Кременная": [49.0565, 38.2194], "Kreminna": [49.0565, 38.2194],
     "Северодонецк": [48.9487, 38.4924], "Sievierodonetsk": [48.9487, 38.4924],
     "Лисичанск": [48.9023, 38.4417], "Lysychansk": [48.9023, 38.4417],
-    "Кривой Рог": [47.9105, 33.3918],
     "Мелитополь": [46.8489, 35.3654], "Melitopol": [46.8489, 35.3654],
     "Бердянск": [46.7573, 36.7885], "Berdiansk": [46.7573, 36.7885],
     "Ужгород": [48.6208, 22.2879], "Uzhhorod": [48.6208, 22.2879],
@@ -74,8 +111,19 @@ CITY_COORDS = {
     "Хмельницкий": [49.4229, 26.9871], "Khmelnytskyi": [49.4229, 26.9871],
     "Черновцы": [48.2917, 25.9354], "Chernivtsi": [48.2917, 25.9354],
     "Кропивницкий": [48.5079, 32.2623],
+    "Кривой Рог": [47.9105, 33.3918],
+    "Павлоград": [48.5204, 35.8700],
+    "Каменское": [48.5111, 34.6167],
+    "Никополь": [47.5667, 34.4000],
+    "Умань": [48.7484, 30.2219],
+    "Белая Церковь": [49.7950, 30.1167],
+    "Бровары": [50.5111, 30.7900],
+    "Ирпень": [50.5218, 30.2506],
+    "Буча": [50.5431, 30.2117],
+    "Вышгород": [50.5841, 30.4901],
+    "Фастов": [50.0747, 29.9181],
 
-    # Россия (приграничные и крупные)
+    # Россия
     "Курск": [51.7304, 36.1926], "Kursk": [51.7304, 36.1926],
     "Белгород": [50.5952, 36.5873], "Belgorod": [50.5952, 36.5873],
     "Брянск": [53.2435, 34.3639], "Bryansk": [53.2435, 34.3639],
@@ -89,25 +137,43 @@ CITY_COORDS = {
     "Севастополь": [44.6166, 33.5254], "Sevastopol": [44.6166, 33.5254],
     "Керчь": [45.3531, 36.4744], "Kerch": [45.3531, 36.4744],
     "Джанкой": [45.7093, 34.3885],
+    "Орел": [52.9651, 36.0785], "Oryol": [52.9651, 36.0785],
+    "Липецк": [52.6031, 39.5708], "Lipetsk": [52.6031, 39.5708],
+    "Тамбов": [52.7212, 41.4523], "Tambov": [52.7212, 41.4523],
+    "Калуга": [54.5138, 36.2612], "Kaluga": [54.5138, 36.2612],
+    "Тверь": [56.8587, 35.9176], "Tver": [56.8587, 35.9176],
+    "Новгород": [58.5215, 31.2755], "Novgorod": [58.5215, 31.2755],
+    "Псков": [57.8194, 28.3318], "Pskov": [57.8194, 28.3318],
+    "Сочи": [43.5855, 39.7231], "Sochi": [43.5855, 39.7231],
+    "Анапа": [44.8909, 37.3198], "Anapa": [44.8909, 37.3198],
+    "Новороссийск": [44.7239, 37.7686], "Novorossiysk": [44.7239, 37.7686],
+    "Таганрог": [47.2097, 38.9353], "Taganrog": [47.2097, 38.9353],
 }
 
-# Города, которые однозначно на территории Украины (для определения страны)
-UA_CITIES = {"Киев","Kyiv","Києві","Києва","Харьков","Kharkiv","Харкові","Харкова","Одесса","Odesa","Одесі","Одессы",
-             "Донецк","Donetsk","Донецьк","Донецка","Луганск","Luhansk","Запорожье","Zaporizhzhia","Запоріжжі",
-             "Херсон","Kherson","Херсоні","Мариуполь","Mariupol","Бахмут","Bakhmut","Сумы","Sumy","Сумах",
-             "Чернигов","Chernihiv","Днепр","Dnipro","Дніпрі","Львов","Lviv","Львові","Винница","Vinnytsia",
-             "Житомир","Zhytomyr","Полтава","Poltava","Черкассы","Cherkasy","Николаев","Mykolaiv","Миколаєві",
-             "Кривой Рог","Kryvyi Rih","Славянск","Sloviansk","Краматорск","Kramatorsk","Авдеевка","Avdiivka",
-             "Покровск","Pokrovsk","Купянск","Kupiansk","Изюм","Izium","Лиман","Lyman","Соледар","Soledar",
-             "Торецк","Toretsk","Кременная","Kreminna","Северодонецк","Sievierodonetsk","Лисичанск","Lysychansk",
-             "Мелитополь","Melitopol","Бердянск","Berdiansk","Ужгород","Uzhhorod","Ивано-Франковск",
-             "Тернополь","Ternopil","Ровно","Rivne","Луцк","Lutsk","Хмельницкий","Khmelnytskyi",
-             "Черновцы","Chernivtsi","Кропивницкий"}
+UA_CITIES = {
+    "Киев","Kyiv","Києві","Києва","Харьков","Kharkiv","Харкові","Харкова","Одесса","Odesa","Одесі","Одессы",
+    "Донецк","Donetsk","Донецьк","Донецка","Луганск","Luhansk","Запорожье","Zaporizhzhia","Запоріжжі",
+    "Херсон","Kherson","Херсоні","Мариуполь","Mariupol","Бахмут","Bakhmut","Сумы","Sumy","Сумах",
+    "Чернигов","Chernihiv","Днепр","Dnipro","Дніпрі","Львов","Lviv","Львові","Винница","Vinnytsia",
+    "Житомир","Zhytomyr","Полтава","Poltava","Черкассы","Cherkasy","Николаев","Mykolaiv","Миколаєві",
+    "Кривой Рог","Kryvyi Rih","Славянск","Sloviansk","Краматорск","Kramatorsk","Авдеевка","Avdiivka",
+    "Покровск","Pokrovsk","Купянск","Kupiansk","Изюм","Izium","Лиман","Lyman","Соледар","Soledar",
+    "Торецк","Toretsk","Кременная","Kreminna","Северодонецк","Sievierodonetsk","Лисичанск","Lysychansk",
+    "Мелитополь","Melitopol","Бердянск","Berdiansk","Ужгород","Uzhhorod","Ивано-Франковск",
+    "Тернополь","Ternopil","Ровно","Rivne","Луцк","Lutsk","Хмельницкий","Khmelnytskyi",
+    "Черновцы","Chernivtsi","Кропивницкий","Павлоград","Каменское","Никополь","Умань",
+    "Белая Церковь","Бровары","Ирпень","Буча","Вышгород","Фастов"
+}
 
-RU_CITIES = {"Курск","Kursk","Белгород","Belgorod","Брянск","Bryansk","Воронеж","Voronezh",
-             "Ростов","Ростов-на-Дону","Rostov","Москва","Moscow","Краснодар","Krasnodar",
-             "Смоленск","Smolensk","Тула","Tula","Крым","Симферополь","Simferopol","Севастополь",
-             "Sevastopol","Керчь","Kerch","Джанкой"}
+RU_CITIES = {
+    "Курск","Kursk","Белгород","Belgorod","Брянск","Bryansk","Воронеж","Voronezh",
+    "Ростов","Ростов-на-Дону","Rostov","Москва","Moscow","Краснодар","Krasnodar",
+    "Смоленск","Smolensk","Тула","Tula","Крым","Симферополь","Simferopol","Севастополь",
+    "Sevastopol","Керчь","Kerch","Джанкой","Орел","Oryol","Липецк","Lipetsk",
+    "Тамбов","Tambov","Калуга","Kaluga","Тверь","Tver","Новгород","Novgorod",
+    "Псков","Pskov","Сочи","Sochi","Анапа","Anapa","Новороссийск","Novorossiysk",
+    "Таганрог","Taganrog"
+}
 
 
 def fetch_channel(channel):
@@ -152,8 +218,6 @@ def extract_posts(html):
 
 
 def find_best_city(text):
-    """Ищет ВСЕ упоминания городов, возвращает тот, что ближе всего к началу текста
-    (обычно главная новость — в первом абзаце)."""
     tl = text.lower()
     found = []
     for city, coords in CITY_COORDS.items():
@@ -162,13 +226,11 @@ def find_best_city(text):
             found.append((idx, city, coords))
     if not found:
         return None, None
-    # Сортируем по позиции в тексте, берём самый ранний
     found.sort(key=lambda x: x[0])
     return found[0][2], found[0][1]
 
 
 def country_by_city(city):
-    """Определяет страну по названию города."""
     if city in UA_CITIES:
         return "UA"
     if city in RU_CITIES:
@@ -178,29 +240,22 @@ def country_by_city(city):
 
 def classify_event(text):
     tl = text.lower()
-    if any(w in tl for w in ["тревога", "alert", "сирена", "тривога", "воздушная"]):
+    if any(w in tl for w in ["тревога", "alert", "сирена", "тривога", "воздушная", "повітряна"]):
         return "Air Raid Alert"
-    if any(w in tl for w in ["удар", "strike", "взрыв", "explosion", "прилёт", "приліт", "обстр"]):
+    if any(w in tl for w in ["удар", "strike", "взрыв", "explosion", "прилёт", "приліт", "обстр", "бпла", "дрон", "ракет"]):
         return "Military Strike"
-    if any(w in tl for w in ["наступление", "offensive", "атака", "attack", "наступ", "прорыв"]):
+    if any(w in tl for w in ["наступление", "offensive", "атака", "attack", "наступ", "прорыв", "штурм"]):
         return "Military Offensive"
-    if any(w in tl for w in ["бои", "battle", "fight", "бой", "бій", "боях"]):
+    if any(w in tl for w in ["бои", "battle", "fight", "бой", "бій", "боях", "позиции"]):
         return "Military Operation"
     return "Security Incident"
 
 
 def make_dedup_key(ev):
-    """Ключ дедупликации: (округлённые координаты, тип, час)."""
-    # Округляем координаты до 0.2° — это ~20 км
-    lat_r = round(ev["lat"] * 5) / 5
-    lng_r = round(ev["lng"] * 5) / 5
-    hour = ""
-    if ev.get("date"):
-        try:
-            hour = ev["date"][:13]  # YYYY-MM-DDTHH
-        except:
-            hour = ""
-    return f"{lat_r},{lng_r}|{ev['event_type']}|{hour}"
+    """Дедупликация по URL поста — каждый пост уникален."""
+    if ev.get("url"):
+        return ev["url"]
+    return ev["channel"] + "|" + ev.get("description", "")[:80]
 
 
 def main():
@@ -208,11 +263,13 @@ def main():
     seen_texts = set()
     seen_dedup = set()
     duplicates = 0
+    stats = {}
 
     for channel in CHANNELS:
         print(f"Парсим @{channel}...")
         html = fetch_channel(channel)
         if not html:
+            stats[channel] = 0
             continue
         posts = extract_posts(html)
         print(f"  Найдено постов: {len(posts)}")
@@ -252,6 +309,7 @@ def main():
 
             all_events.append(ev)
 
+        stats[channel] = matched
         print(f"  Совпало с городами: {matched}")
         time.sleep(1)
 
@@ -260,7 +318,12 @@ def main():
         f.write(output)
 
     print(f"\n✅ Итого: {len(all_events)} событий (отброшено дубликатов: {duplicates})")
-    print(f"   → data/telegram-events.js")
+
+    # Итоговая статистика по каналам
+    print("\n📊 Статистика по каналам:")
+    for ch, count in sorted(stats.items(), key=lambda x: -x[1]):
+        if count > 0:
+            print(f"  @{ch}: {count}")
 
 
 if __name__ == "__main__":
