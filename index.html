@@ -171,21 +171,27 @@
       draw: { marker: true, polyline: false, polygon: false, rectangle: false, circle: false }
     });
 
-    map.on(L.Draw.Event.CREATED, function(e) {
-      var layer = e.layer;
-      var latlng = layer.getLatLng();
+        map.on(L.Draw.Event.CREATED, function(e) {
+      var latlng = e.layer.getLatLng();
       var cat = CATEGORIES[currentCategory];
       if (!sb) { alert('Нет подключения к базе'); return; }
+
       sb.from('events').insert({
         category: currentCategory, description: '', lat: latlng.lat, lng: latlng.lng
       }).then(function(res) {
-        if (res.error) { alert('Ошибка: ' + res.error.message); return; }
-        layer.setStyle({ color: cat.color, fillColor: cat.color, fillOpacity: 0.8 });
-        layer.bindPopup('<b>' + cat.label + '</b><br><small>только что</small>');
-        eventsLayer.addLayer(layer);
+        if (res.error) {
+          alert('Ошибка сохранения: ' + res.error.message);
+          return;
+        }
+
+        // Рисуем свой круглый маркер нужного цвета
+        var marker = L.circleMarker([latlng.lat, latlng.lng], {
+          radius: 7, color: cat.color, fillColor: cat.color, fillOpacity: 0.8, weight: 2
+        });
+        marker.bindPopup('<b>' + cat.label + '</b><br><small>только что</small>');
+        eventsLayer.addLayer(marker);
       });
     });
-
     // ============================================================
     // 7. ПАНЕЛЬ
     // ============================================================
