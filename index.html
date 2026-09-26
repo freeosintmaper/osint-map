@@ -6,6 +6,8 @@
   <title>OSINT-карта</title>
   <link rel="stylesheet" href="./lib/leaflet.css" />
   <link rel="stylesheet" href="./lib/leaflet-draw.css" />
+  <link rel="stylesheet" href="./lib/markercluster.css" />
+  <link rel="stylesheet" href="./lib/markercluster.default.css" />
   <style>
     :root {
       --bg-panel: #ffffff; --bg-input: #f8f8f8; --bg-hover: #e8f0ff;
@@ -220,11 +222,11 @@
     });
   </script>
 
-  <!-- Данные Telegram, потом библиотеки, потом код -->
   <script src="./data/telegram-events.js"></script>
   <script src="./lib/leaflet.js"></script>
   <script src="./lib/leaflet-draw.js"></script>
   <script src="./lib/leaflet.polylineDecorator.js"></script>
+  <script src="./lib/markercluster.js"></script>
 
   <script>
     // ============================================================
@@ -252,8 +254,7 @@
                    '· События — публичные Telegram-каналы\n' +
                    '· Территория РФ — DeepStateMap\n' +
                    '· Контрнаступления — ISW\n\n' +
-                   'Мы не проводим собственный анализ. ' +
-                   'Линия фронта — приблизительная.'
+                   'Мы не проводим собственный анализ. Линия фронта — приблизительная.'
       },
       uk: {
         eventsPanelTitle: 'Події з Telegram',
@@ -490,9 +491,31 @@
     };
 
     // ============================================================
-    // 5. TELEGRAM-СОБЫТИЯ
+    // 5. TELEGRAM-СОБЫТИЯ (с кластеризацией)
     // ============================================================
-    var tgLayer = new L.FeatureGroup();
+    var tgLayer = L.markerClusterGroup({
+      showCoverageOnHover: false,
+      maxClusterRadius: 50,
+      spiderfyOnMaxZoom: true,
+      disableClusteringAtZoom: 14,
+      iconCreateFunction: function(cluster) {
+        var count = cluster.getChildCount();
+        var size = count < 10 ? 40 : count < 100 ? 50 : 60;
+        return L.divIcon({
+          html: '<div style="' +
+                'width:' + size + 'px;height:' + size + 'px;' +
+                'background:rgba(0,102,255,0.75);' +
+                'border:3px solid #fff;border-radius:50%;' +
+                'display:flex;align-items:center;justify-content:center;' +
+                'color:#fff;font-weight:600;font-size:14px;' +
+                'box-shadow:0 2px 8px rgba(0,0,0,0.4);' +
+                '">' + count + '</div>',
+          className: '',
+          iconSize: [size, size],
+          iconAnchor: [size/2, size/2]
+        });
+      }
+    });
     map.addLayer(tgLayer);
 
     function loadTelegramEvents() {
@@ -595,7 +618,7 @@
         item.addEventListener('click', function() {
           var lat = parseFloat(this.getAttribute('data-lat'));
           var lng = parseFloat(this.getAttribute('data-lng'));
-          if (!isNaN(lat) && !isNaN(lng)) map.setView([lat, lng], 12);
+          if (!isNaN(lat) && !isNaN(lng)) map.setView([lat, lng], 14);
         });
       });
     }
@@ -806,7 +829,7 @@
         });
         var chkTg = div.querySelector('#chkTg');
         if (chkTg) chkTg.addEventListener('change', function() {
-          if (this.checked) tgLayer.addTo(map); else map.removeLayer(tgLayer);
+          if (this.checked) map.addLayer(tgLayer); else map.removeLayer(tgLayer);
         });
         var slider = div.querySelector('#opacitySlider');
         var sliderValue = div.querySelector('#opacityValue');
