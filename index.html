@@ -78,7 +78,17 @@
 
   <script>
     // ============================================================
-    // 1. НАСТРОЙКИ
+    // 0. НАСТРОЙКИ
+    // ============================================================
+    // ВАЖНО: замените на ваш логин GitHub
+    var GITHUB_USER = 'freeosintmaper';
+    var GITHUB_REPO = 'osint-map';
+
+    // URL файла с событиями (обновляется GitHub Actions)
+    var EVENTS_FILE_URL = 'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO + '/main/data/war-tracker.json';
+
+    // ============================================================
+    // 1. SUPABASE
     // ============================================================
     var SB_URL = 'https://zojqbhnwsycqhaiqpgxh.supabase.co';
     var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvanFiaG53c3ljcWhhaXFwZ3hoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MjY2NzMsImV4cCI6MjEwNjAwMjY3M30.OwU-cwkvk0Z1a28xgKpwMl9p-h-gFObYJ6_PHhFeIHE';
@@ -94,7 +104,7 @@
     }
 
     // ============================================================
-    // 2. КАТЕГОРИИ (для ваших меток)
+    // 2. КАТЕГОРИИ
     // ============================================================
     var CATEGORIES = {
       'battle':    { label: 'Бой',          color: '#ff6600' },
@@ -106,7 +116,6 @@
     };
     var currentCategory = 'battle';
 
-    // Цвета для событий War-Tracker
     var WT_COLORS = {
       'Air Raid Alert':         '#ffcc00',
       'Military Strike':        '#cc0000',
@@ -132,84 +141,43 @@
     // ============================================================
     // 4. СЛОИ OSINT
     // ============================================================
-
-    // 4.1. Территория, занимаемая РФ (красный)
     var occupiedLayer = L.geoJSON(null, {
       style: function() { return { color: '#cc0000', weight: 1.5, opacity: 0.9, fillColor: '#cc0000', fillOpacity: 0.10 }; },
       onEachFeature: function(f, layer) { layer.bindPopup('<b>Территория, занимаемая РФ</b>'); }
     });
 
-    // 4.2. Контрнаступления ВСУ (голубой пунктир)
     var counterLayer = L.geoJSON(null, {
       style: function() { return { color: '#0088cc', weight: 1.5, opacity: 0.7, fillColor: '#0088cc', fillOpacity: 0.05, dashArray: '5,5' }; },
       onEachFeature: function(f, layer) { layer.bindPopup('<b>Контрнаступления ВСУ (ISW)</b>'); }
     });
 
-    // --- ЗАГРУЗКА ДАННЫХ ---
+    fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
+      .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
+      .then(function(buffer) {
+        var ds = new DecompressionStream('gzip');
+        var stream = new Blob([buffer]).stream().pipeThrough(ds);
+        return new Response(stream).json();
+      })
+      .then(function(data) {
+        var features = data.features || [];
+        if (features.length > 0) {
+          features.sort(function(a, b) { return (b.properties.date || '').localeCompare(a.properties.date || ''); });
+          occupiedLayer.addData(features[0]);
+          console.log('✅ DeepStateMap: загружено');
+        }
+      })
+      .catch(function(err) { console.warn('DeepStateMap:', err.message); });
 
-    function loadFromISW() {
-      console.log('Загружаем данные с ISW (ArcGIS)...');
-      var ISW_RUSSIAN_URL = 'https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/' +
-        'Russo_Ukraine_War_October_2025_Timelapse/FeatureServer/0/query' +
-        '?where=1%3D1&outFields=*&f=geojson';
-
-      fetch(ISW_RUSSIAN_URL)
-        .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-        .then(function(d) {
-          if (d && d.features && d.features.length > 0) {
-            occupiedLayer.addData(d);
-            console.log('✅ ISW: загружено объектов ' + d.features.length);
-          } else {
-            console.warn('ISW вернул пустой ответ');
-          }
-        })
-        .catch(function(err) {
-          console.warn('ISW тоже не сработал:', err.message);
-        });
-    }
-
-    function loadFromDeepState() {
-      console.log('Пробуем DeepStateMap...');
-      fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
-        .then(function(r) {
-          if (!r.ok) throw new Error('HTTP ' + r.status);
-          return r.arrayBuffer();
-        })
-        .then(function(buffer) {
-          var ds = new DecompressionStream('gzip');
-          var stream = new Blob([buffer]).stream().pipeThrough(ds);
-          return new Response(stream).json();
-        })
-        .then(function(data) {
-          var features = data.features || [];
-          if (features.length > 0) {
-            features.sort(function(a, b) { return (b.properties.date || '').localeCompare(a.properties.date || ''); });
-            occupiedLayer.addData(features[0]);
-            console.log('✅ DeepStateMap: загружено');
-          } else {
-            throw new Error('Пустой ответ');
-          }
-        })
-        .catch(function(err) {
-          console.warn('DeepStateMap недоступен (' + err.message + '), переключаюсь на ISW');
-          loadFromISW();
-        });
-    }
-
-    loadFromDeepState();
-
-    // ISW — контрнаступления ВСУ
     fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/Claimed_Ukrainian_Counteroffensive_March_to_July/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson')
       .then(function(r) { return r.json(); })
       .then(function(d) { counterLayer.addData(d); })
-      .catch(function(err) { console.warn('ISW (контрнаступления):', err.message); });
+      .catch(function(err) { console.warn('ISW:', err.message); });
 
-    // Добавляем слои на карту
     occupiedLayer.addTo(map);
     counterLayer.addTo(map);
 
     // ============================================================
-    // 5. СОБЫТИЯ ИЗ SUPABASE (ваши метки)
+    // 5. ВАШИ МЕТКИ ИЗ SUPABASE
     // ============================================================
     var eventsLayer = new L.FeatureGroup();
     map.addLayer(eventsLayer);
@@ -227,7 +195,7 @@
     function loadEvents() {
       if (!sb) return;
       sb.from('events').select('*').then(function(res) {
-        if (res.error) { console.error('Ошибка загрузки:', res.error.message); return; }
+        if (res.error) { console.error('Ошибка загрузки меток:', res.error.message); return; }
         eventsLayer.clearLayers();
         (res.data || []).forEach(drawEventMarker);
         console.log('Загружено ваших меток: ' + (res.data || []).length);
@@ -236,19 +204,15 @@
     loadEvents();
 
     // ============================================================
-    // 5.1. АВТОМАТИЧЕСКИЕ СОБЫТИЯ С WAR-TRACKER (через прокси)
+    // 5.1. СОБЫТИЯ WAR-TRACKER ИЗ ФАЙЛА (обновляется GitHub Actions)
     // ============================================================
     var wtLayer = new L.FeatureGroup();
     map.addLayer(wtLayer);
 
     function loadWarTrackerEvents() {
-      console.log('Загружаем события с War-Tracker через прокси...');
+      console.log('Загружаем события War-Tracker из файла...');
 
-      // Формируем целевой URL и оборачиваем его в CORS-прокси
-      var targetUrl = 'https://war-tracker.com/api/v1/events?country=UA&limit=100';
-      var proxyUrl = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(targetUrl);
-
-      fetch(proxyUrl)
+      fetch(EVENTS_FILE_URL + '?t=' + Date.now()) // добавляем timestamp, чтобы не кэшировалось
         .then(function(r) {
           if (!r.ok) throw new Error('HTTP ' + r.status);
           return r.json();
@@ -263,11 +227,7 @@
 
             var color = wtColor(ev.event_type);
             var marker = L.circleMarker([ev.lat, ev.lng], {
-              radius: 6,
-              color: color,
-              fillColor: color,
-              fillOpacity: 0.7,
-              weight: 2
+              radius: 6, color: color, fillColor: color, fillOpacity: 0.7, weight: 2
             });
 
             var dateStr = '';
@@ -286,18 +246,18 @@
             added++;
           });
 
-          console.log('✅ War-Tracker (через прокси): загружено событий ' + added + ' из ' + list.length);
+          console.log('✅ War-Tracker: загружено событий ' + added + ' из ' + list.length);
         })
         .catch(function(err) {
-          console.warn('⚠️ War-Tracker через прокси не загрузился:', err.message);
+          console.warn('⚠️ War-Tracker не загрузился:', err.message);
         });
     }
 
     loadWarTrackerEvents();
-    setInterval(loadWarTrackerEvents, 300000); // Каждые 5 минут
+    setInterval(loadWarTrackerEvents, 600000); // Каждые 10 минут
 
     // ============================================================
-    // 6. РИСОВАНИЕ (ваши метки)
+    // 6. РИСОВАНИЕ
     // ============================================================
     var drawControl = new L.Control.Draw({
       edit: { featureGroup: eventsLayer, remove: true },
@@ -308,8 +268,7 @@
       e.layers.eachLayer(function(layer) {
         if (layer._eventId && sb) {
           sb.from('events').delete().eq('id', layer._eventId).then(function(res) {
-            if (res.error) alert('Ошибка удаления из базы: ' + res.error.message);
-            else console.log('Удалено событие id=' + layer._eventId);
+            if (res.error) alert('Ошибка удаления: ' + res.error.message);
           });
         }
       });
@@ -373,7 +332,7 @@
     panel.addTo(map);
 
     // ============================================================
-    // 8. ЛОГИКА
+    // 8. ЛОГИКА ПАНЕЛИ
     // ============================================================
     setTimeout(function() {
       document.getElementById('chkOccupied').addEventListener('change', function() {
@@ -474,7 +433,7 @@
       }
 
       html += '<hr>';
-      html += '<div style="font-size:11px;color:#888;">Данные: ISW, War-Tracker</div>';
+      html += '<div style="font-size:11px;color:#888;">Данные: ISW, DeepStateMap, War-Tracker</div>';
 
       div.innerHTML = html;
       return div;
