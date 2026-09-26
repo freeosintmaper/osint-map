@@ -41,10 +41,8 @@ ABBREVIATIONS = {
     "азия", "африка", "европа",
 }
 
-# КОРОТКИЕ КОРНИ — совпадают в любом падеже
-# Формат: корень → [lat, lng, отображаемое имя, страна]
 TRANSLIT_ALIASES = {
-    # Украинские названия российских городов и областей
+    # Украинские написания российских городов
     "ульяновськ": [54.3142, 48.4031, "Ульяновск", "RU"],
     "воронезьк": [51.6720, 39.1843, "Воронеж", "RU"],
     "воронез": [51.6720, 39.1843, "Воронеж", "RU"],
@@ -85,7 +83,7 @@ TRANSLIT_ALIASES = {
     "ставропольськ": [45.0428, 41.9734, "Ставрополь", "RU"],
     "приморськ": [43.1155, 131.8855, "Владивосток", "RU"],
 
-    # Российские названия украинских городов и областей
+    # Российские написания украинских городов
     "київськ": [50.4501, 30.5234, "Киев", "UA"],
     "киевск": [50.4501, 30.5234, "Киев", "UA"],
     "львівськ": [49.8397, 24.0297, "Львов", "UA"],
@@ -118,9 +116,8 @@ TRANSLIT_ALIASES = {
     "чернівецьк": [48.2917, 25.9354, "Черновцы", "UA"],
 }
 
-# ОБЯЗАТЕЛЬНЫЕ паттерны: событие, только если рядом с городом есть ТАКОЕ
 EVENT_PATTERNS = [
-    # Удар по X / X под ударом / удар в X
+    # Прямые: "удар по X", "взрыв в X"
     r'удар\w*\s+(?:по|на|в)\s+',
     r'ударил\w*\s+(?:по|на|в)\s+',
     r'ударили\s+по\s+',
@@ -130,37 +127,72 @@ EVENT_PATTERNS = [
     r'під\s+атакою',
     r'подверг\w*\s+атаке',
     r'зазнав\w*\s+удар',
-    # Обстрел X / обстреляли X
     r'обстрел\w*\s+',
     r'обстріл\w*\s+',
     r'обстрелял\w*\s+',
     r'обстрілял\w*\s+',
-    # Взрыв в X / прилёт в X
     r'взрыв\w*\s+(?:в|на|по)\s+',
     r'вибух\w*\s+(?:у|в|на)\s+',
     r'прилёт\w*\s+(?:в|по|на)\s+',
     r'приліт\w*\s+(?:в|у|по|на)\s+',
-    # Атака на X / атаковали X
     r'атак\w*\s+(?:на|в|по)\s+',
     r'атакувал\w*\s+',
     r'атакуют\s+',
-    # Тревога в X
     r'тревог\w*\s+(?:в|на)\s+',
     r'тривог\w*\s+(?:у|в|на)\s+',
     r'опасность\s+(?:в|на)\s+',
     r'небезпек\w*\s+(?:у|в|на)\s+',
-    # Уражено / поражено в X
     r'уражено\s+(?:в|у|на)\s+',
     r'поражено\s+(?:в|на)\s+',
     r'уразили\s+',
     r'поразили\s+',
-    # БПЛА над X / курс на X
     r'бпла\s+(?:над|на|в|курс)',
     r'дрон\w*\s+(?:над|на|в|курс)',
     r'курс\w*\s+(?:на|в)\s+',
+
+    # РЕВЕРСИВНЫЕ: "в X уражено", "в X удар"
+    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}уражен\w*',
+    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}поражен\w*',
+    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}удар\w*',
+    r'\bу\s+[а-яёa-z\-]+\s+\w{0,15}уражен\w*',
+    r'\bу\s+[а-яёa-z\-]+\s+\w{0,15}влучан\w*',
+    r'\bна\s+[а-яёa-z\-]+\s+\w{0,15}удар\w*',
+    r'\bу\s+[а-яёa-z\-]+\s+\w{0,15}атак\w*',
+    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}атак\w*',
+    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}вибух\w*',
+    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}взрыв\w*',
+    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}прил[её]т\w*',
+    r'\bу\s+[а-яёa-z\-]+\s+\w{0,15}приліт\w*',
+    r'\bв\s+[а-яёa-z\-]+\s+\w{0,15}попал\w*',
+
+    # ФРОНТОВЫЕ: бои в районе X, штурм X, под X
+    r'в\s+районе\s+',
+    r'у\s+районі\s+',
+    r'на\s+подступах\s+к\s+',
+    r'на\s+підступах\s+до\s+',
+    r'в\s+направлении\s+',
+    r'у\s+напрямку\s+',
+    r'возле\s+',
+    r'около\s+',
+    r'біля\s+',
+    r'\bпод\s+[А-ЯЁ]',
+    r'\bпід\s+[А-ЯЁ]',
+    r'штурм\w*\s+',
+    r'бои\s+',
+    r'бої\s+',
+    r'продвижен\w*\s+',
+    r'просуванн\w*\s+',
+    r'наступлен\w*\s+',
+    r'прорвали\s+',
+    r'прорвалися\s+',
+    r'заняли\s+',
+    r'зайняли\s+',
+    r'освободил\w*\s+',
+    r'звільнили\s+',
+    r'контроль\s+над\s+',
+    r'контролює\s+',
 ]
 
-# ГЛАГОЛЫ-ИСТОЧНИКИ: если рядом — это не цель, а источник
 SOURCE_VERBS = [
     r'атаковали\s+с', r'атакуют\s+с', r'атакували\s+з',
     r'запустили\s+с', r'запускают\s+с', r'запустили\s+з',
@@ -184,7 +216,9 @@ MILITARY_TERMS = ["рлс", "зрк", "с-300", "с-400", "с-500", "бук ", "
                   "искандер", "кинжал", "калибр", "шахед", "герань",
                   "ланцет", "точка-у", "тос-", "оса ", "стрела",
                   "шилка", "тунгуска", "радиолокацион", "комплекс",
-                  "установк", "нпз", "завод", "підприємств"]
+                  "установк", "нпз", "завод", "підприємств",
+                  "ошбр", "всу", "полк", "бригад", "батальон", "рота", "взвод",
+                  "спутник", "магазин", "мастерск", "здании", "здание"]
 
 STOP_SETTLEMENTS = {
     "безопасное", "красное", "мирное", "новое", "тихое", "ясное",
@@ -203,6 +237,7 @@ STOP_SETTLEMENTS = {
     "калибр", "шахед", "герань", "ланцет", "панцирь", "тюльпан",
     "град", "ураган", "смерч", "тунгуска", "шилка", "с-300", "с-400",
     "точка", "печора", "акация", "гиацинт", "пион", "мена",
+    "азов", "азовсталь", "азовск",
 }
 
 SETTLEMENTS_BY_NAME = {}
@@ -268,13 +303,11 @@ def extract_posts(html):
     return posts
 
 
-def has_event_pattern_near(text, phrase, window=80):
-    """КЛЮЧЕВАЯ ФУНКЦИЯ: рядом с городом ДОЛЖЕН быть EVENT_PATTERN."""
+def has_event_pattern_near(text, phrase, window=120):
     tl = text.lower()
     idx = tl.find(phrase.lower())
     if idx < 0:
         return False
-    # Смотрим окно вокруг города
     before = tl[max(0, idx-window):idx]
     after = tl[idx+len(phrase):idx+len(phrase)+window]
     full = before + " " + after
@@ -285,7 +318,6 @@ def has_event_pattern_near(text, phrase, window=80):
 
 
 def has_source_verb_near(text, phrase, window=60):
-    """Если рядом SOURCE_VERB — это не цель события."""
     tl = text.lower()
     idx = tl.find(phrase.lower())
     if idx < 0:
@@ -313,31 +345,27 @@ def is_military_term_context(text, phrase):
 
 
 def find_alias(text, channel_country):
-    """Ищет алиасы-корни. Возвращает координаты, имя, страну."""
     tl = text.lower()
-    # Сортируем по длине — длинные корни первыми
     for key in sorted(TRANSLIT_ALIASES.keys(), key=lambda k: -len(k)):
         if key not in tl:
             continue
         coords = TRANSLIT_ALIASES[key]
         alias_country = coords[3]
 
-        # Проверяем, есть ли рядом EVENT_PATTERN
-        if not has_event_pattern_near(text, key, window=80):
-            continue
-        # Проверяем, нет ли рядом глагола-источника
+        if channel_country not in ("UA", "RU") or alias_country == channel_country:
+            return (coords[0], coords[1]), coords[2], coords[3]
+
         if has_source_verb_near(text, key, window=60):
             continue
-        # Проверяем, не милитарный термин
+        if not has_event_pattern_near(text, key, window=120):
+            continue
         if is_military_term_context(text, key):
             continue
-
         return (coords[0], coords[1]), coords[2], coords[3]
     return None, None, None
 
 
 def find_best_city(text, channel_country):
-    """Радикальный поиск: только если рядом EVENT_PATTERN и нет SOURCE_VERB."""
     if not SETTLEMENTS_BY_NAME:
         return None, None, None
 
@@ -358,17 +386,12 @@ def find_best_city(text, channel_country):
                 continue
             if is_military_term_context(text, phrase):
                 continue
-
-            # ЖЁСТКОЕ ТРЕБОВАНИЕ: рядом есть EVENT_PATTERN
-            if not has_event_pattern_near(text, phrase, window=80):
+            if not has_event_pattern_near(text, phrase, window=120):
                 continue
-            # ЖЁСТКОЕ ТРЕБОВАНИЕ: нет SOURCE_VERB рядом
             if has_source_verb_near(text, phrase, window=60):
                 continue
 
             coords_list = SETTLEMENTS_BY_NAME[phrase]
-
-            # Фильтр по стране канала
             if channel_country in ("UA", "RU"):
                 filtered = [c for c in coords_list if c[2] == channel_country]
                 if not filtered:
@@ -383,16 +406,12 @@ def find_best_city(text, channel_country):
             if pos_in_text < 0:
                 pos_in_text = 0
 
-            # Score только для ранжирования между валидными кандидатами
             score = 0
-            # Город ближе к началу — приоритет
             if pos_in_text < 150:
                 score += 20
-            # Крупнее население — приоритет
             if population > 0:
                 pop_bonus = math.log10(population) - 3
                 score += max(0, pop_bonus) * 3
-            # Позиция — чем раньше, тем лучше
             score -= pos_in_text * 0.05
 
             candidates.append((score, orig, lat, lng, country))
@@ -520,10 +539,8 @@ def main():
             if not event_type:
                 continue
 
-            # 1. Сначала ищем алиасы-корни
             coords, city, country = find_alias(text, channel_country)
 
-            # 2. Потом обычный поиск с жёстким фильтром
             if not coords:
                 coords, city, country = find_best_city(text, channel_country)
 
