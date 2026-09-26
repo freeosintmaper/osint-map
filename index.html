@@ -501,13 +501,13 @@
     // ============================================================
     // 5. TELEGRAM-СОБЫТИЯ (с кластеризацией)
     // ============================================================
-      var tgLayer = L.markerClusterGroup({
+        var tgLayer = L.markerClusterGroup({
       showCoverageOnHover: false,
-      maxClusterRadius: 30,
+      maxClusterRadius: 60,
       spiderfyOnMaxZoom: true,
-      spiderfyDistanceMultiplier: 3,
+      spiderfyDistanceMultiplier: 5,
       zoomToBoundsOnClick: true,
-      disableClusteringAtZoom: 11,
+      spiderLegPolylineOptions: { weight: 2, color: '#0066ff', opacity: 0.6 },
       iconCreateFunction: function(cluster) {
         var count = cluster.getChildCount();
         var size = count < 10 ? 40 : count < 100 ? 50 : 60;
