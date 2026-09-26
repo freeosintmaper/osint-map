@@ -19,6 +19,16 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Build settlements database (if missing)
+        run: |
+          if [ ! -f data/settlements.js ]; then
+            echo "Создаю базу населённых пунктов (один раз)..."
+            python3 scripts/build_settlements.py
+          else
+            echo "База населённых пунктов уже есть, пропускаю"
+            wc -c data/settlements.js
+          fi
+
       - name: Parse Telegram channels
         run: |
           mkdir -p data
@@ -41,15 +51,12 @@ jobs:
           curl -sL "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" -o lib/markercluster.css
           curl -sL "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" -o lib/markercluster.default.css
           curl -sL "https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" -o lib/markercluster.js
-          echo "Downloaded:"
-          ls -la lib/
-          ls -la lib/images/
 
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/ lib/ scripts/
-          git diff --quiet && git diff --staged --quiet || git commit -m "Обновление Telegram-событий и библиотек"
+          git diff --quiet && git diff --staged --quiet || git commit -m "Обновление Telegram-событий"
           git pull --rebase origin main
           git push
