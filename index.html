@@ -32,15 +32,18 @@
     }
     #errorBox.info { background: #e3f2fd; color: #1565c0; }
 
-    /* Иконки событий (эмодзи в кружке) */
+    /* === SVG-иконки событий (как liveuamap) === */
     .event-icon {
       display: flex; align-items: center; justify-content: center;
-      width: 28px; height: 28px; border-radius: 50%;
-      border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.4);
-      font-size: 14px; line-height: 1; user-select: none;
-      transition: transform 0.15s;
+      width: 30px; height: 30px; border-radius: 50%;
+      border: 2px solid #fff; box-shadow: 0 1px 5px rgba(0,0,0,0.45);
+      transition: transform 0.15s; cursor: pointer;
     }
-    .event-icon:hover { transform: scale(1.15); }
+    .event-icon svg {
+      width: 16px; height: 16px; fill: #fff;
+      display: block; pointer-events: none;
+    }
+    .event-icon:hover { transform: scale(1.18); z-index: 1000; }
     body.dark .event-icon { border-color: #1e1e2e; }
 
     .control-panel {
@@ -90,7 +93,8 @@
     .info.legend hr { border: none; border-top: 1px solid var(--border-light); margin: 8px 0; }
     .info.legend i { width: 14px; height: 14px; float: left; margin-right: 8px; margin-top: 2px; opacity: 0.85; border-radius: 3px; display: inline-block; }
     .info.legend .legend-line { width: 18px; height: 3px; float: left; margin-right: 8px; margin-top: 7px; border-radius: 2px; display: inline-block; }
-    .info.legend .legend-emoji { float: left; margin-right: 6px; font-size: 14px; }
+    .info.legend .legend-svg { width: 16px; height: 16px; float: left; margin-right: 6px; margin-top: 2px; }
+    .info.legend .legend-svg svg { width: 100%; height: 100%; }
 
     #eventsPanel {
       position: fixed; left: 10px; top: 10px; bottom: 100px;
@@ -110,6 +114,7 @@
     #eventsPanel .event-item { padding: 8px 14px; border-bottom: 1px solid var(--border-soft); cursor: pointer; transition: background 0.15s; }
     #eventsPanel .event-item:hover { background: var(--bg-hover); }
     #eventsPanel .event-item .evt-type { font-weight: 600; font-size: 12px; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
+    #eventsPanel .event-item .evt-type svg { width: 14px; height: 14px; flex: 0 0 auto; }
     #eventsPanel .event-item .evt-loc { font-size: 11px; color: var(--text-secondary); margin-bottom: 2px; }
     #eventsPanel .event-item .evt-time { font-size: 10px; color: var(--text-muted); }
     #eventsPanel .event-item .evt-country { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 3px; margin-left: auto; font-weight: 600; }
@@ -117,7 +122,8 @@
     #eventsPanel .event-item .evt-country.ru { background: #ffebee; color: #c62828; }
     #eventsPanel .summary-box { padding: 10px 14px; background: var(--bg-summary); border-bottom: 1px solid var(--border-light); font-size: 12px; }
     #eventsPanel .summary-box .summary-title { font-weight: 600; margin-bottom: 4px; }
-    #eventsPanel .summary-box .summary-line { display: flex; justify-content: space-between; padding: 2px 0; color: var(--text-secondary); }
+    #eventsPanel .summary-box .summary-line { display: flex; justify-content: space-between; padding: 2px 0; color: var(--text-secondary); align-items: center; }
+    #eventsPanel .summary-box .summary-line svg { width: 13px; height: 13px; margin-right: 6px; flex: 0 0 auto; }
     #eventsPanel.collapsed { width: 40px; }
     #eventsPanel.collapsed .panel-body,
     #eventsPanel.collapsed .panel-header span { display: none; }
@@ -155,36 +161,22 @@
     body.dark .leaflet-popup-tip { background: var(--bg-panel); color: var(--text-main); }
     body.dark .leaflet-popup-content a { color: #6ba6ff; }
 
-    /* ============ МОБИЛЬНАЯ АДАПТАЦИЯ ============ */
     @media (max-width: 768px) {
-      .control-panel {
-        max-width: 220px; font-size: 12px;
-        padding: 8px 10px; max-height: 70vh;
-      }
+      .control-panel { max-width: 220px; font-size: 12px; padding: 8px 10px; max-height: 70vh; }
       .control-panel h4 { font-size: 11px; }
       .control-panel label { font-size: 12px; padding: 3px 0; }
-      .info.legend {
-        max-width: 180px; font-size: 11px;
-        padding: 8px 10px; max-height: 50vh;
-      }
-      #eventsPanel {
-        width: 220px; bottom: 90px; top: 8px; left: 8px;
-        font-size: 12px;
-      }
+      .info.legend { max-width: 180px; font-size: 11px; padding: 8px 10px; max-height: 50vh; }
+      #eventsPanel { width: 220px; bottom: 90px; top: 8px; left: 8px; font-size: 12px; }
       #eventsPanel .panel-header { padding: 8px 10px; font-size: 12px; }
       #eventsPanel .event-item { padding: 6px 10px; }
-      #toolbar {
-        padding: 4px; bottom: 10px; gap: 3px;
-      }
-      #toolbar button {
-        width: 36px; height: 36px; font-size: 15px;
-      }
+      #toolbar { padding: 4px; bottom: 10px; gap: 3px; }
+      #toolbar button { width: 36px; height: 36px; font-size: 15px; }
       #toolbar .sep { margin: 2px 1px; }
-      /* Скрываем тултипы на тач-устройствах */
       #toolbar button .tooltip { display: none; }
+      .event-icon { width: 26px; height: 26px; border-width: 1.5px; }
+      .event-icon svg { width: 14px; height: 14px; }
     }
 
-    /* Очень маленькие экраны */
     @media (max-width: 480px) {
       #eventsPanel { width: 180px; }
       #eventsPanel.collapsed { width: 36px; }
@@ -192,12 +184,8 @@
       .info.legend { max-width: 140px; font-size: 10px; }
       .info.legend i, .info.legend .legend-line { width: 10px; height: 10px; margin-top: 1px; }
       #toolbar button { width: 32px; height: 32px; font-size: 13px; }
-      .event-icon { width: 24px; height: 24px; font-size: 12px; border-width: 1.5px; }
-    }
-
-    /* Когда колонка событий свёрнута, легенда не должна мешать */
-    @media (max-width: 768px) {
-      body.panel-collapsed .info.legend { right: 6px; bottom: 6px; }
+      .event-icon { width: 24px; height: 24px; }
+      .event-icon svg { width: 12px; height: 12px; }
     }
   </style>
 </head>
@@ -329,7 +317,6 @@
     function applyStyleToLayer(layer, baseColor, styleObj) {
       if (!layer) return;
       if (layer.setStyle) layer.setStyle(styleObj);
-      // Дополнительно перезаписываем опции — это лечит баг «залипшей» заливки
       if (layer.options) {
         layer.options.fill = styleObj.fill;
         layer.options.fillColor = styleObj.fillColor;
@@ -349,10 +336,11 @@
       }
       if (counterLayer) {
         counterLayer.eachLayer(function(sub) {
-          var style = { color: '#0088cc', weight: 2, opacity: 0.85,
-                        fill: false, fillColor: '#0088cc', fillOpacity: 0,
-                        dashArray: '5,5' };
-          applyStyleToLayer(sub, '#0088cc', style);
+          applyStyleToLayer(sub, '#0088cc', {
+            color: '#0088cc', weight: 2, opacity: 0.85,
+            fill: false, fillColor: '#0088cc', fillOpacity: 0,
+            dashArray: '5,5'
+          });
         });
       }
     }
@@ -437,42 +425,50 @@
     counterLayer.addTo(map);
 
     // ============================================================
-    // 4. ИКОНКИ СОБЫТИЙ (как у liveuamap)
+    // 4. SVG-ИКОНКИ СОБЫТИЙ (как liveuamap)
     // ============================================================
     var WT_COLORS = {
-      'Air Raid Alert': '#ffcc00', 'Military Strike': '#cc0000',
-      'Military Operation': '#ff6600', 'Military Offensive': '#990000',
-      'Security Incident': '#888888', 'Political Development': '#0088cc'
+      'Air Raid Alert': '#e6a800',
+      'Military Strike': '#c62828',
+      'Military Operation': '#e65100',
+      'Military Offensive': '#8e0000',
+      'Security Incident': '#5a5a5a',
+      'Political Development': '#1565c0'
     };
     var WT_LABELS = {
       'Air Raid Alert': 'raidAlert', 'Military Strike': 'strike',
       'Military Operation': 'operation', 'Military Offensive': 'offensive',
       'Security Incident': 'incident', 'Political Development': 'politics'
     };
-    // Эмодзи для каждого типа события
-    var WT_EMOJI = {
-      'Air Raid Alert': '🛩️',
-      'Military Strike': '💥',
-      'Military Operation': '⚔️',
-      'Military Offensive': '🚀',
-      'Security Incident': '⚠️',
-      'Political Development': '📢'
+
+    // SVG-пиктограммы (белые, 24x24 viewBox)
+    var WT_SVG = {
+      'Air Raid Alert':
+        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>',
+      'Military Strike':
+        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1l-2 7H3l6 4-2 9 5-4 5 4-2-9 6-4h-7z"/></svg>',
+      'Military Operation':
+        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.9 5L5 6.9l5.5 5.5L12 11 6.9 5zM17.1 5L12 11l1.5 1.4L19 6.9 17.1 5zM4 18l6-6 1.5 1.5L5.5 19.5 4 18zM20 18l-1.5 1.5-6-6L14 12l6 6z"/></svg>',
+      'Military Offensive':
+        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2s-3 4-3 8c0 2 1 4 3 5 2-1 3-3 3-5 0-4-3-8-3-8zm0 12c-1.5 0-3 1-3 3v3l3-2 3 2v-3c0-2-1.5-3-3-3z"/></svg>',
+      'Security Incident':
+        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L1 21h22L12 2zm0 4l7 13H5l7-13zm-1 4v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>',
+      'Political Development':
+        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>'
     };
 
     function wtColor(type) { return WT_COLORS[type] || '#9933cc'; }
-    function wtEmoji(type) { return WT_EMOJI[type] || '📍'; }
+    function wtSvg(type) { return WT_SVG[type] || WT_SVG['Security Incident']; }
 
-    // Создаём divIcon для события
     function createEventIcon(eventType) {
       var color = wtColor(eventType);
-      var emoji = wtEmoji(eventType);
-      var html = '<div class="event-icon" style="background:' + color + ';">' + emoji + '</div>';
+      var svg = wtSvg(eventType);
       return L.divIcon({
-        html: html,
+        html: '<div class="event-icon" style="background:' + color + ';">' + svg + '</div>',
         className: '',
-        iconSize: [28, 28],
-        iconAnchor: [14, 14],
-        popupAnchor: [0, -14]
+        iconSize: [30, 30],
+        iconAnchor: [15, 15],
+        popupAnchor: [0, -15]
       });
     }
 
@@ -489,8 +485,7 @@
     map.addLayer(wtLayerUA); map.addLayer(wtLayerRU);
 
     function buildMarker(ev, country) {
-      var icon = createEventIcon(ev.event_type);
-      var marker = L.marker([ev.lat, ev.lng], { icon: icon, riseOnHover: true });
+      var marker = L.marker([ev.lat, ev.lng], { icon: createEventIcon(ev.event_type), riseOnHover: true });
       var label = t(WT_LABELS[ev.event_type] || ev.event_type);
       var dateStr = '';
       try { dateStr = new Date(ev.date).toLocaleString('ru-RU'); } catch(e) {}
@@ -498,7 +493,7 @@
         ? '<span style="background:#e3f2fd;color:#1565c0;padding:1px 6px;border-radius:3px;font-size:10px;">' + t('countryUA') + '</span>'
         : '<span style="background:#ffebee;color:#c62828;padding:1px 6px;border-radius:3px;font-size:10px;">' + t('countryRU') + '</span>';
       marker.bindPopup(
-        '<b>' + wtEmoji(ev.event_type) + ' ' + label + '</b> ' + badge + '<br>' +
+        '<b>' + label + '</b> ' + badge + '<br>' +
         '<i>' + (ev.location || '') + '</i><br>' +
         (ev.description || '') + '<br>' +
         '<small>' + dateStr + '</small><br>' +
@@ -579,7 +574,10 @@
       var html = '<div class="summary-box">';
       html += '<div class="summary-title">' + t('summaryTitle') + '</div>';
       Object.keys(counts).forEach(function(type) {
-        html += '<div class="summary-line"><span>' + wtEmoji(type) + ' ' + t(WT_LABELS[type] || type) +
+        var svg = wtSvg(type);
+        html += '<div class="summary-line"><span style="display:flex;align-items:center;">' +
+                '<span style="color:' + wtColor(type) + ';display:flex;align-items:center;margin-right:6px;">' + svg + '</span>' +
+                t(WT_LABELS[type] || type) +
                 '</span><span>' + counts[type] + '</span></div>';
       });
       html += '<div class="summary-line" style="margin-top:4px;font-weight:600;">' +
@@ -589,13 +587,14 @@
       events.slice(0, 50).forEach(function(ev) {
         var label = t(WT_LABELS[ev.event_type] || ev.event_type);
         var color = wtColor(ev.event_type);
-        var emoji = wtEmoji(ev.event_type);
+        var svg = wtSvg(ev.event_type);
         var time = '';
         try { time = new Date(ev.date).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); } catch(e) {}
         var countryLabel = ev._country === 'RU' ? t('countryRU') : t('countryUA');
         var countryClass = ev._country === 'RU' ? 'ru' : 'ua';
         html += '<div class="event-item" data-lat="' + ev.lat + '" data-lng="' + ev.lng + '">' +
-                '<div class="evt-type" style="color:' + color + ';">' + emoji + ' ' + label +
+                '<div class="evt-type" style="color:' + color + ';">' +
+                '<span style="color:' + color + ';display:flex;align-items:center;">' + svg + '</span>' + label +
                 '<span class="evt-country ' + countryClass + '">' + countryLabel + '</span></div>' +
                 '<div class="evt-loc">' + (ev.location || '') + '</div>' +
                 '<div class="evt-time">' + time + '</div></div>';
@@ -613,7 +612,6 @@
     document.getElementById('toggleEventsPanel').addEventListener('click', function() {
       var panel = document.getElementById('eventsPanel');
       panel.classList.toggle('collapsed');
-      document.body.classList.toggle('panel-collapsed', panel.classList.contains('collapsed'));
       this.textContent = panel.classList.contains('collapsed') ? '▶' : '◀';
     });
 
@@ -778,9 +776,11 @@
           { key: 'Security Incident', label: t('incident') },
           { key: 'Political Development', label: t('politics') }
         ].forEach(function(item) {
+          var svg = wtSvg(item.key);
           html += '<label><input type="checkbox" class="wt-filter" data-type="' + item.key + '"' +
                   (activeEventTypes[item.key] ? ' checked' : '') + '> ' +
-                  wtEmoji(item.key) + ' ' + item.label + '</label>';
+                  '<span style="color:' + wtColor(item.key) + ';display:inline-flex;align-items:center;width:16px;height:16px;">' + svg + '</span> ' +
+                  item.label + '</label>';
         });
         div.innerHTML = html;
         attach();
@@ -852,12 +852,10 @@
       html += '<div><i style="background:#cc0000;"></i> ' + t('territoryRF') + '</div>';
       html += '<div><span class="legend-line" style="background:#0088cc;"></span> ' + t('counteroffensive') + '</div>';
       html += '<hr><h4>' + t('warTrackerEvents') + '</h4>';
-      html += '<div><span class="legend-emoji">🛩️</span> ' + t('raidAlert') + '</div>';
-      html += '<div><span class="legend-emoji">💥</span> ' + t('strike') + '</div>';
-      html += '<div><span class="legend-emoji">⚔️</span> ' + t('operation') + '</div>';
-      html += '<div><span class="legend-emoji">🚀</span> ' + t('offensive') + '</div>';
-      html += '<div><span class="legend-emoji">⚠️</span> ' + t('incident') + '</div>';
-      html += '<div><span class="legend-emoji">📢</span> ' + t('politics') + '</div>';
+      ['Air Raid Alert','Military Strike','Military Operation','Military Offensive','Security Incident','Political Development'].forEach(function(type) {
+        html += '<div><span class="legend-svg" style="color:' + wtColor(type) + ';">' + wtSvg(type) + '</span> ' +
+                t(WT_LABELS[type]) + '</div>';
+      });
       html += '<hr><div style="font-size:11px;color:var(--text-muted);">War-Tracker · DeepStateMap</div>';
       div.innerHTML = html;
     }
