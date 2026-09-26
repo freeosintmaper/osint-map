@@ -1,8 +1,8 @@
-name: Update War-Tracker Events
+name: Update Telegram Events
 
 on:
   schedule:
-    - cron: '5 */3 * * *'
+    - cron: '5,20,35,50 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -14,85 +14,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          node-version: '22'
+          python-version: '3.11'
 
-      - name: Install Playwright
-        run: |
-          npm init -y > /dev/null 2>&1
-          npm install playwright > /dev/null 2>&1
-          npx playwright install chromium --with-deps
-
-      - name: Fetch War-Tracker via headless Chrome
+      - name: Parse Telegram channels
         run: |
           mkdir -p data
-          cat > fetch.js << 'EOF'
-          const { chromium } = require('playwright');
-          const fs = require('fs');
-
-          (async () => {
-            const browser = await chromium.launch({
-              headless: true,
-              args: ['--no-sandbox', '--disable-blink-features=AutomationControlled']
-            });
-            const ctx = await browser.newContext({
-              userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-              viewport: { width: 1366, height: 768 },
-              locale: 'en-US'
-            });
-            const page = await ctx.newPage();
-
-            // Заходим на главную — Cloudflare выдаёт cookies
-            console.log('Заходим на главную...');
-            await page.goto('https://war-tracker.com/', { waitUntil: 'networkidle', timeout: 90000 });
-            await page.waitForTimeout(5000);
-            console.log('Главная загружена, cookies получены');
-
-            // Запрашиваем UA события через страницу
-            console.log('Запрашиваем UA...');
-            const uaText = await page.evaluate(async () => {
-              const r = await fetch('/api/v1/events?country=UA&limit=100');
-              return await r.text();
-            });
-            fs.writeFileSync('/tmp/ua_final.json', uaText);
-            console.log('UA размер:', uaText.length);
-
-            // Запрашиваем RU события
-            console.log('Запрашиваем RU...');
-            const ruText = await page.evaluate(async () => {
-              const r = await fetch('/api/v1/events?country=RU&limit=100');
-              return await r.text();
-            });
-            fs.writeFileSync('/tmp/ru_final.json', ruText);
-            console.log('RU размер:', ruText.length);
-
-            await browser.close();
-          })();
-          EOF
-          node fetch.js
-
-      - name: Write result files
-        run: |
-          mkdir -p data
-          if [ -f /tmp/ua_final.json ] && [ $(wc -c < /tmp/ua_final.json) -gt 5000 ]; then
-            echo "window.WT_DATA_UA = " > data/war-tracker-ua.js
-            cat /tmp/ua_final.json >> data/war-tracker-ua.js
-            echo ";" >> data/war-tracker-ua.js
-            echo "✅ UA файл записан"
-            head -c 200 /tmp/ua_final.json
-          else
-            echo "⚠️ UA данные не получены"
-          fi
-          if [ -f /tmp/ru_final.json ] && [ $(wc -c < /tmp/ru_final.json) -gt 5000 ]; then
-            echo "window.WT_DATA_RU = " > data/war-tracker-ru.js
-            cat /tmp/ru_final.json >> data/war-tracker-ru.js
-            echo ";" >> data/war-tracker-ru.js
-            echo "✅ RU файл записан"
-          else
-            echo "⚠️ RU данные не получены"
-          fi
+          python3 scripts/parse_telegram.py
 
       - name: Download Leaflet libraries
         run: |
@@ -113,7 +43,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ lib/
-          git diff --quiet && git diff --staged --quiet || git commit -m "Обновление данных и библиотек"
+          git add data/ lib/ scripts/
+          git diff --quiet && git diff --staged --quiet || git commit -m "Обновление Telegram-событий"
           git pull --rebase origin main
           git push
