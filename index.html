@@ -2,7 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#1e1e2e">
   <title>OSINT-карта</title>
   <link rel="stylesheet" href="./lib/leaflet.css" />
   <link rel="stylesheet" href="./lib/leaflet-draw.css" />
@@ -24,8 +25,16 @@
       --tooltip-bg: #000000; --tooltip-color: #ffffff;
     }
 
-    body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: var(--bg-panel); }
-    #map { height: 100vh; width: 100%; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      margin: 0; font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg-panel);
+      -webkit-text-size-adjust: 100%;
+      overscroll-behavior: none;
+    }
+    #map { height: 100vh; height: 100dvh; width: 100%; }
+
     #errorBox {
       position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
       background: #ffebee; color: #c62828; padding: 12px 20px;
@@ -44,6 +53,7 @@
     .event-icon:hover { transform: scale(1.18); z-index: 1000; }
     body.dark .event-icon { border-color: #1e1e2e; }
 
+    /* ====== ПАНЕЛЬ ФИЛЬТРОВ ====== */
     .control-panel {
       background: var(--bg-panel); color: var(--text-main);
       padding: 12px 14px; border-radius: 8px;
@@ -81,6 +91,7 @@
     }
     .mode-toggle button.active { background: #0066ff; color: #fff; border-color: #0066ff; }
 
+    /* ====== ЛЕГЕНДА ====== */
     .info.legend {
       background: var(--bg-panel); color: var(--text-main);
       padding: 10px 14px; border-radius: 8px;
@@ -94,11 +105,13 @@
     .info.legend .legend-svg { width: 16px; height: 16px; float: left; margin-right: 6px; margin-top: 2px; }
     .info.legend .legend-svg svg { width: 100%; height: 100%; }
 
+    /* ====== ПАНЕЛЬ СОБЫТИЙ ====== */
     #eventsPanel {
       position: fixed; left: 10px; top: 10px; bottom: 100px;
       width: 280px; background: var(--bg-panel); color: var(--text-main);
       border-radius: 8px; box-shadow: 0 2px 8px var(--shadow); z-index: 1000;
       display: flex; flex-direction: column; font-size: 13px;
+      transition: transform 0.25s ease, width 0.25s ease;
     }
     #eventsPanel .panel-header {
       padding: 10px 14px; border-bottom: 1px solid var(--border-light);
@@ -123,23 +136,27 @@
     #eventsPanel .summary-box .summary-title { font-weight: 600; margin-bottom: 4px; }
     #eventsPanel .summary-box .summary-line { display: flex; justify-content: space-between; padding: 2px 0; color: var(--text-secondary); align-items: center; }
     #eventsPanel .summary-box .summary-line svg { width: 13px; height: 13px; margin-right: 6px; flex: 0 0 auto; }
-    #eventsPanel.collapsed { width: 40px; }
+    #eventsPanel.collapsed { width: 44px; }
     #eventsPanel.collapsed .panel-body,
     #eventsPanel.collapsed .panel-header span { display: none; }
     #eventsPanel.collapsed .panel-header .toggle-btn { display: block; }
 
+    /* ====== ТУЛБАР ====== */
     #toolbar {
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
       background: var(--bg-panel); border-radius: 8px; padding: 6px;
       box-shadow: 0 2px 8px var(--shadow); display: flex; gap: 4px; z-index: 1000;
       max-width: calc(100vw - 20px); overflow-x: auto;
+      scrollbar-width: none;
     }
+    #toolbar::-webkit-scrollbar { display: none; }
     #toolbar button {
       width: 42px; height: 42px; flex: 0 0 auto; border: 1px solid var(--border-mid);
       background: var(--bg-input); color: var(--text-main);
       border-radius: 6px; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       padding: 0; transition: all 0.15s; position: relative;
+      touch-action: manipulation;
     }
     #toolbar button:hover { background: var(--bg-hover); border-color: #0066ff; }
     #toolbar button.active { background: #0066ff; color: #fff; border-color: #0066ff; }
@@ -169,33 +186,89 @@
     body.dark .leaflet-popup-tip { background: var(--bg-panel); color: var(--text-main); }
     body.dark .leaflet-popup-content a { color: #6ba6ff; }
 
+    /* ============ МОБИЛЬНАЯ АДАПТАЦИЯ ============ */
     @media (max-width: 768px) {
-      .control-panel { max-width: 220px; font-size: 12px; padding: 8px 10px; max-height: 70vh; }
+      /* Панель фильтров — прячется за кнопку */
+      .control-panel {
+        max-width: calc(100vw - 100px); font-size: 13px;
+        padding: 10px 12px; max-height: 60vh;
+        position: fixed; top: 8px; right: 8px;
+      }
       .control-panel h4 { font-size: 11px; }
-      .control-panel label { font-size: 12px; padding: 3px 0; }
-      .info.legend { max-width: 180px; font-size: 11px; padding: 8px 10px; max-height: 50vh; }
-      #eventsPanel { width: 220px; bottom: 90px; top: 8px; left: 8px; font-size: 12px; }
-      #eventsPanel .panel-header { padding: 8px 10px; font-size: 12px; }
-      #eventsPanel .event-item { padding: 6px 10px; }
-      #toolbar { padding: 4px; bottom: 10px; gap: 3px; }
-      #toolbar button { width: 36px; height: 36px; }
-      #toolbar .sep { margin: 2px 1px; }
+      .control-panel label { font-size: 13px; padding: 6px 0; }
+      .control-panel label input[type="checkbox"] { width: 18px; height: 18px; }
+      .lang-btn { padding: 6px 8px; font-size: 13px; }
+      .mode-toggle button { padding: 8px 8px; font-size: 13px; }
+
+      /* Легенда — маленькая, справа снизу */
+      .info.legend {
+        max-width: 170px; font-size: 11px;
+        padding: 8px 10px; max-height: 45vh;
+      }
+
+      /* Панель событий — нижняя шторка */
+      #eventsPanel {
+        left: 8px; right: 8px; top: auto; bottom: 78px;
+        width: auto; max-height: 45vh;
+        border-radius: 12px 12px 0 0;
+        transform: translateY(0);
+      }
+      #eventsPanel .panel-header {
+        padding: 12px 16px; font-size: 14px;
+        cursor: pointer; user-select: none;
+      }
+      #eventsPanel .panel-header .toggle-btn { font-size: 20px; padding: 0 8px; }
+      #eventsPanel .event-item { padding: 10px 16px; }
+      #eventsPanel .event-item .evt-type { font-size: 13px; }
+      #eventsPanel .event-item .evt-loc { font-size: 12px; }
+      #eventsPanel .event-item .evt-time { font-size: 11px; }
+      #eventsPanel.collapsed {
+        width: auto;
+        max-height: 52px;
+        transform: translateY(calc(100% - 52px));
+      }
+      #eventsPanel.collapsed .panel-header span { display: block; }
+
+      /* Тулбар — крупнее и на всю ширину с горизонтальным скроллом */
+      #toolbar {
+        padding: 6px 8px; bottom: 8px; gap: 6px;
+        border-radius: 12px;
+        max-width: calc(100vw - 16px);
+        left: 8px; right: 8px; transform: none;
+        justify-content: flex-start;
+      }
+      #toolbar button {
+        width: 44px; height: 44px; border-radius: 8px;
+      }
+      #toolbar button svg { width: 22px; height: 22px; }
       #toolbar button .tooltip { display: none; }
-      #toolbar button svg { width: 17px; height: 17px; }
-      .event-icon { width: 26px; height: 26px; border-width: 1.5px; }
-      .event-icon svg { width: 14px; height: 14px; }
+
+      /* Иконки событий на карте — крупнее для пальца */
+      .event-icon { width: 34px; height: 34px; border-width: 2px; }
+      .event-icon svg { width: 18px; height: 18px; }
+
+      /* Leaflet zoom — наверх слева, но поменьше */
+      .leaflet-control-zoom { margin-top: 8px !important; margin-left: 8px !important; }
+      .leaflet-control-zoom a {
+        width: 34px !important; height: 34px !important;
+        line-height: 34px !important; font-size: 20px !important;
+      }
     }
 
+    /* Очень маленькие экраны */
     @media (max-width: 480px) {
-      #eventsPanel { width: 180px; }
-      #eventsPanel.collapsed { width: 36px; }
-      .control-panel { max-width: 180px; }
+      #eventsPanel { max-height: 40vh; }
+      #eventsPanel .panel-header { padding: 10px 14px; font-size: 13px; }
       .info.legend { max-width: 140px; font-size: 10px; }
       .info.legend i, .info.legend .legend-line { width: 10px; height: 10px; margin-top: 1px; }
-      #toolbar button { width: 32px; height: 32px; }
-      #toolbar button svg { width: 15px; height: 15px; }
-      .event-icon { width: 24px; height: 24px; }
-      .event-icon svg { width: 12px; height: 12px; }
+      #toolbar button { width: 42px; height: 42px; }
+      #toolbar button svg { width: 20px; height: 20px; }
+    }
+
+    /* Landscape (телефон повёрнут) */
+    @media (max-height: 500px) and (orientation: landscape) {
+      #eventsPanel { max-height: 60vh; bottom: 70px; }
+      .control-panel { max-height: 70vh; }
     }
   </style>
 </head>
@@ -203,10 +276,10 @@
   <div id="map"></div>
   <div id="errorBox"></div>
 
-  <div id="eventsPanel">
-    <div class="panel-header">
+  <div id="eventsPanel" class="collapsed">
+    <div class="panel-header" id="eventsPanelHeader">
       <span id="eventsPanelTitle">События из Telegram</span>
-      <button class="toggle-btn" id="toggleEventsPanel">◀</button>
+      <button class="toggle-btn" id="toggleEventsPanel">▲</button>
     </div>
     <div class="panel-body" id="eventsListBody">
       <div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">
@@ -222,6 +295,7 @@
       var box = document.getElementById('errorBox');
       if (box) { box.style.display = 'block'; box.textContent = 'Ошибка: ' + e.message; }
     });
+    function isMobile() { return window.innerWidth <= 768; }
   </script>
 
   <script src="./data/telegram-events.js"></script>
@@ -231,14 +305,8 @@
   <script src="./lib/markercluster.js"></script>
 
   <script>
-    // ============================================================
-    // НАСТРОЙКА ДОНАТА
-    // ============================================================
     var DONATE_URL = 'https://www.donationalerts.com/r/freeosintmapper';
 
-    // ============================================================
-    // 1. НАСТРОЙКИ
-    // ============================================================
     var i18n = {
       ru: {
         eventsPanelTitle: 'События из Telegram',
@@ -390,10 +458,7 @@
       }
     }
 
-    // ============================================================
-    // 2. КАРТА
-    // ============================================================
-    var map = L.map('map', { zoomControl: false }).setView([48.5, 37.5], 7);
+    var map = L.map('map', { zoomControl: false, tap: true }).setView([48.5, 37.5], 7);
     L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
     var lightTile = L.tileLayer(
@@ -411,9 +476,6 @@
       lightTile.addTo(map);
     }
 
-    // ============================================================
-    // 3. СЛОИ КОНТРОЛЯ
-    // ============================================================
     function polygonPopup(text) {
       return function(f, layer) { layer.bindPopup('<b>' + text + '</b>'); };
     }
@@ -454,9 +516,6 @@
     deepStateLayer.addTo(map);
     counterLayer.addTo(map);
 
-    // ============================================================
-    // 4. SVG-ИКОНКИ СОБЫТИЙ
-    // ============================================================
     var WT_COLORS = {
       'Air Raid Alert': '#e6a800',
       'Military Strike': '#c62828',
@@ -498,10 +557,7 @@
       'Military Offensive': true, 'Security Incident': true, 'Political Development': true
     };
 
-    // ============================================================
-    // 5. TELEGRAM-СОБЫТИЯ (с кластеризацией)
-    // ============================================================
-        var tgLayer = L.markerClusterGroup({
+    var tgLayer = L.markerClusterGroup({
       showCoverageOnHover: false,
       maxClusterRadius: 60,
       spiderfyOnMaxZoom: true,
@@ -510,14 +566,14 @@
       spiderLegPolylineOptions: { weight: 2, color: '#0066ff', opacity: 0.6 },
       iconCreateFunction: function(cluster) {
         var count = cluster.getChildCount();
-        var size = count < 10 ? 40 : count < 100 ? 50 : 60;
+        var size = count < 10 ? 44 : count < 100 ? 54 : 64;
         return L.divIcon({
           html: '<div style="' +
                 'width:' + size + 'px;height:' + size + 'px;' +
-                'background:rgba(0,102,255,0.75);' +
+                'background:rgba(0,102,255,0.78);' +
                 'border:3px solid #fff;border-radius:50%;' +
                 'display:flex;align-items:center;justify-content:center;' +
-                'color:#fff;font-weight:600;font-size:14px;' +
+                'color:#fff;font-weight:600;font-size:15px;' +
                 'box-shadow:0 2px 8px rgba(0,0,0,0.4);' +
                 '">' + count + '</div>',
           className: '',
@@ -571,9 +627,6 @@
       renderEventsPanel(panelEvents);
     }
 
-    // ============================================================
-    // 6. ПАНЕЛЬ СОБЫТИЙ
-    // ============================================================
     function renderEventsPanel(events) {
       var body = document.getElementById('eventsListBody');
       document.getElementById('eventsPanelTitle').textContent = t('eventsPanelTitle');
@@ -628,19 +681,41 @@
         item.addEventListener('click', function() {
           var lat = parseFloat(this.getAttribute('data-lat'));
           var lng = parseFloat(this.getAttribute('data-lng'));
-          if (!isNaN(lat) && !isNaN(lng)) map.setView([lat, lng], 12);
+          if (!isNaN(lat) && !isNaN(lng)) {
+            map.setView([lat, lng], 13);
+            if (isMobile()) {
+              var panel = document.getElementById('eventsPanel');
+              panel.classList.add('collapsed');
+              document.getElementById('toggleEventsPanel').textContent = '▲';
+            }
+          }
         });
       });
     }
 
-    document.getElementById('toggleEventsPanel').addEventListener('click', function() {
+    function toggleEventsPanel() {
       var panel = document.getElementById('eventsPanel');
       panel.classList.toggle('collapsed');
-      this.textContent = panel.classList.contains('collapsed') ? '▶' : '◀';
+      var btn = document.getElementById('toggleEventsPanel');
+      if (isMobile()) {
+        btn.textContent = panel.classList.contains('collapsed') ? '▲' : '▼';
+      } else {
+        btn.textContent = panel.classList.contains('collapsed') ? '▶' : '◀';
+      }
+    }
+
+    document.getElementById('toggleEventsPanel').addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleEventsPanel();
+    });
+    document.getElementById('eventsPanelHeader').addEventListener('click', function(e) {
+      if (isMobile() && e.target.tagName !== 'BUTTON') {
+        toggleEventsPanel();
+      }
     });
 
     // ============================================================
-    // 7. ИНСТРУМЕНТЫ РИСОВАНИЯ
+    // РИСОВАНИЕ
     // ============================================================
     var drawingsLayer = new L.FeatureGroup();
     map.addLayer(drawingsLayer);
@@ -782,9 +857,6 @@
     renderToolbar();
     loadDrawings();
 
-    // ============================================================
-    // 8. ПАНЕЛЬ
-    // ============================================================
     var panel = L.control({ position: 'topright' });
     panel.onAdd = function() {
       var div = L.DomUtil.create('div', 'control-panel');
@@ -877,9 +949,6 @@
     };
     panel.addTo(map);
 
-    // ============================================================
-    // 9. ЛЕГЕНДА
-    // ============================================================
     var legend = L.control({ position: 'bottomright' });
     legend.onAdd = function() {
       var div = L.DomUtil.create('div', 'info legend');
@@ -905,9 +974,11 @@
       div.innerHTML = html;
     }
 
-    // ============================================================
-    // 10. ЗАПУСК
-    // ============================================================
+    // На мобильных — сразу ставим правильный значок на кнопке
+    if (isMobile()) {
+      document.getElementById('toggleEventsPanel').textContent = '▲';
+    }
+
     loadTelegramEvents();
   </script>
 </body>
