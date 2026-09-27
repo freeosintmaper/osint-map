@@ -319,8 +319,12 @@
     body.dark .leaflet-popup-tip { background: var(--bg-panel); color: var(--text-main); }
     body.dark .leaflet-popup-content a { color: #6ba6ff; }
 
+    /* ============================================================
+       МОБИЛЬНЫЕ КНОПКИ — показываем по умолчанию, скрываем на десктопе
+       ============================================================ */
     #mobileToggle {
-      display: none; position: fixed; top: 10px; right: 10px; z-index: 5000;
+      display: flex;
+      position: fixed; top: 10px; right: 10px; z-index: 5000;
       gap: 8px;
     }
     #mobileToggle button {
@@ -338,6 +342,12 @@
       fill: none; stroke-linecap: round; stroke-linejoin: round;
     }
 
+    /* Скрываем мобильные кнопки только на десктопе */
+    @media (min-width: 769px) {
+      #mobileToggle { display: none; }
+    }
+
+    /* ===== МОБИЛЬНАЯ ВЕРСТКА ===== */
     @media (max-width: 768px) {
       #eventsPanel { left: 0; right: 0; top: 66px; bottom: 0; width: auto;
                      border-radius: 12px 12px 0 0; z-index: 4000; display: none; }
@@ -361,7 +371,6 @@
       .leaflet-control-zoom { display: none !important; }
       .event-icon { width: 36px; height: 36px; border-width: 2px; }
       .event-icon svg { width: 20px; height: 20px; }
-      #mobileToggle { display: flex !important; }
       #userBtn { top: 10px; left: 10px; width: 48px; height: 48px; }
 
       #loginModal {
@@ -534,7 +543,7 @@
       if (sbFactory) sb = sbFactory(SB_URL, SB_KEY);
     } catch (e) { console.warn('Supabase:', e.message); }
 
-    var DONATE_URL = '';
+    var DONATE_URL = 'https://www.donationalerts.com/r/freeosintmapper';
 
     var OWL_KMZ_URL = 'https://raw.githack.com/owlmaps/UAControlMapBackups/latest/latest.kmz';
     var OWL_CACHE_KEY = 'owl_zones_cache_v1';
@@ -1472,17 +1481,11 @@
     loadTelegramEvents();
   </script>
 
-    <script>
-    // Убираем все старые service worker'ы, которые кешировали старую версию
+  <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(function(regs) {
-        regs.forEach(function(reg) {
-          reg.unregister().then(function(ok) {
-            console.log('SW отменён:', ok);
-          });
-        });
+        regs.forEach(function(reg) { reg.unregister(); });
       });
-      // И удаляем старые кеши
       if (window.caches) {
         caches.keys().then(function(keys) {
           keys.forEach(function(k) { caches.delete(k); });
