@@ -738,18 +738,32 @@
     autoZonesLayer.addTo(map);
 
     function buildAutoZones() {
-      if (!window.TG_DATA || !window.TG_DATA.events) return;
-      if (typeof turf === 'undefined') { console.warn('Turf.js не загружен'); return; }
+      console.log('🔍 buildAutoZones: старт');
+      console.log('🔍 TG_DATA:', window.TG_DATA ? 'есть' : 'НЕТ');
+      console.log('🔍 turf:', typeof turf);
 
-      // Только боевые события
+      if (!window.TG_DATA || !window.TG_DATA.events) {
+        console.warn('⚠️ Нет TG_DATA');
+        return;
+      }
+      if (typeof turf === 'undefined') {
+        console.warn('⚠️ Turf.js не загружен');
+        return;
+      }
+
       var events = window.TG_DATA.events.filter(function(ev) {
         if (!ev.lat || !ev.lng) return false;
         return ['Military Strike', 'Military Operation', 'Military Offensive'].indexOf(ev.event_type) !== -1;
       });
-      if (events.length < 5) { autoZonesLayer.clearLayers(); return; }
+      console.log('🔍 Боевых событий:', events.length);
 
-      // Сетка ~20 км (0.2 градуса)
-      var gridSize = 0.2;
+      if (events.length < 1) {
+        console.warn('⚠️ Мало событий для зон:', events.length);
+        autoZonesLayer.clearLayers();
+        return;
+      }
+
+      var gridSize = 0.3; // ~30 км
       var grid = {};
       events.forEach(function(ev) {
         var key = Math.floor(ev.lat / gridSize) + '_' + Math.floor(ev.lng / gridSize);
@@ -759,10 +773,9 @@
         grid[key].lng += ev.lng;
       });
 
-      // Горячие ячейки (>= 2 событий)
       var hotspots = [];
       Object.keys(grid).forEach(function(k) {
-        if (grid[k].count >= 2) {
+        if (grid[k].count >= 1) {
           hotspots.push({
             count: grid[k].count,
             lat: grid[k].lat / grid[k].count,
@@ -770,61 +783,30 @@
           });
         }
       });
-      if (hotspots.length < 2) { autoZonesLayer.clearLayers(); return; }
+      console.log('🔍 Hotspots:', hotspots.length);
 
-      // Кластеризация hotspots (~50 км)
-      var groups = [];
-      hotspots.forEach(function(h) {
-        var added = false;
-        for (var i = 0; i < groups.length; i++) {
-          var g = groups[i];
-          var dlat = Math.abs(g.lat / g.count - h.lat);
-          var dlng = Math.abs(g.lng / g.count - h.lng);
-          if (dlat < 0.5 && dlng < 0.5) {
-            g.count += h.count;
-            g.lat += h.lat;
-            g.lng += h.lng;
-            g.points.push([h.lng, h.lat]);
-            added = true;
-            break;
-          }
-        }
-        if (!added) {
-          groups.push({ count: h.count, lat: h.lat, lng: h.lng, points: [[h.lng, h.lat]] });
-        }
-      });
+      if (hotspots.length < 1) {
+        console.warn('⚠️ Нет hotspots');
+        autoZonesLayer.clearLayers();
+        return;
+      }
 
+      // Каждая точка — отдельная зона (буфер 20 км), если мало событий
       var features = [];
-      groups.forEach(function(g) {
-        if (g.points.length < 2) return;
+      hotspots.forEach(function(h) {
         try {
-          var fc = turf.featureCollection(g.points.map(function(p) { return turf.point(p); }));
-          var hull = turf.convex(fc);
-          if (!hull) {
-            // Если точки на одной линии — обводим буфером каждую и объединяем
-            var buffers = g.points.map(function(p) {
-              return turf.buffer(turf.point(p), 20, { units: 'kilometers' });
-            });
-            if (buffers.length > 0) {
-              var merged = buffers[0];
-              for (var i = 1; i < buffers.length; i++) {
-                try { merged = turf.union(merged, buffers[i]); } catch(e) {}
-              }
-              merged.properties = { density: g.count };
-              features.push(merged);
-            }
-            return;
-          }
-          var buffered = turf.buffer(hull, 25, { units: 'kilometers' });
-          buffered.properties = { density: g.count };
+          var buffered = turf.buffer(turf.point([h.lng, h.lat]), 20, { units: 'kilometers' });
+          buffered.properties = { density: h.count };
           features.push(buffered);
-        } catch(e) { console.warn('Turf:', e.message); }
+        } catch(e) { console.warn('Turf buffer:', e.message); }
       });
+
+      console.log('🔍 Зон собрано:', features.length);
 
       autoZonesLayer.clearLayers();
       if (features.length > 0) {
         autoZonesLayer.addData(turf.featureCollection(features));
-        console.log('Автоматических зон: ' + features.length);
+        console.log('✅ Автоматических зон на карте:', features.length);
       }
     }
 
