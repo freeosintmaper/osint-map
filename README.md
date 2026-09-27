@@ -166,3 +166,16 @@ This project is created for **educational and research purposes**. All data is p
 
 ### Дисклеймер
 Проект создан в **образовательных и исследовательских целях**. Все данные — публичные. Автор не несёт ответственности за их точность.
+
+
+## License
+
+The **source code** of this project is licensed under the MIT License — see [LICENSE](./LICENSE).
+
+**Data** displayed on the map is **not** covered by this license and belongs to its respective sources:
+- DeepStateMap (https://deepstatemap.live)
+- Project Owl / Ukraine Control Map (https://github.com/owlmaps/UAControlMapBackups)
+- Public Telegram channels (listed in the README)
+- Map tiles © Esri
+
+This project only aggregates publicly available data and does not claim ownership over it.
