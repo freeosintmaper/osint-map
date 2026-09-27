@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <meta name="theme-color" content="#1e1e2e">
   <title>OSINT-карта</title>
   <link rel="stylesheet" href="./lib/leaflet.css" />
   <link rel="stylesheet" href="./lib/leaflet-draw.css" />
@@ -27,12 +26,8 @@
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-    body {
-      margin: 0; font-family: system-ui, -apple-system, sans-serif;
-      background: var(--bg-panel);
-      -webkit-text-size-adjust: 100%;
-      overscroll-behavior: none;
-    }
+    body { margin: 0; font-family: system-ui, -apple-system, sans-serif;
+           background: var(--bg-panel); overscroll-behavior: none; }
     #map { height: 100vh; height: 100dvh; width: 100%; }
 
     #errorBox {
@@ -41,19 +36,17 @@
       border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
       font-size: 13px; z-index: 99999; max-width: 90%; display: none;
     }
-    #errorBox.info { background: #e3f2fd; color: #1565c0; }
 
     .event-icon {
       display: flex; align-items: center; justify-content: center;
       width: 30px; height: 30px; border-radius: 50%;
       border: 2px solid #fff; box-shadow: 0 1px 5px rgba(0,0,0,0.45);
-      transition: transform 0.15s; cursor: pointer;
+      cursor: pointer;
     }
     .event-icon svg { width: 16px; height: 16px; fill: #fff; display: block; pointer-events: none; }
-    .event-icon:hover { transform: scale(1.18); z-index: 1000; }
     body.dark .event-icon { border-color: #1e1e2e; }
 
-    /* ====== ПАНЕЛЬ ФИЛЬТРОВ ====== */
+    /* ============ ПАНЕЛЬ ФИЛЬТРОВ ============ */
     .control-panel {
       background: var(--bg-panel); color: var(--text-main);
       padding: 12px 14px; border-radius: 8px;
@@ -91,7 +84,7 @@
     }
     .mode-toggle button.active { background: #0066ff; color: #fff; border-color: #0066ff; }
 
-    /* ====== ЛЕГЕНДА ====== */
+    /* ============ ЛЕГЕНДА ============ */
     .info.legend {
       background: var(--bg-panel); color: var(--text-main);
       padding: 10px 14px; border-radius: 8px;
@@ -105,13 +98,12 @@
     .info.legend .legend-svg { width: 16px; height: 16px; float: left; margin-right: 6px; margin-top: 2px; }
     .info.legend .legend-svg svg { width: 100%; height: 100%; }
 
-    /* ====== ПАНЕЛЬ СОБЫТИЙ ====== */
+    /* ============ ПАНЕЛЬ СОБЫТИЙ ============ */
     #eventsPanel {
       position: fixed; left: 10px; top: 10px; bottom: 100px;
       width: 280px; background: var(--bg-panel); color: var(--text-main);
       border-radius: 8px; box-shadow: 0 2px 8px var(--shadow); z-index: 1000;
       display: flex; flex-direction: column; font-size: 13px;
-      transition: transform 0.25s ease, width 0.25s ease;
     }
     #eventsPanel .panel-header {
       padding: 10px 14px; border-bottom: 1px solid var(--border-light);
@@ -141,29 +133,24 @@
     #eventsPanel.collapsed .panel-header span { display: none; }
     #eventsPanel.collapsed .panel-header .toggle-btn { display: block; }
 
-    /* ====== ТУЛБАР ====== */
+    /* ============ ТУЛБАР ============ */
     #toolbar {
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
       background: var(--bg-panel); border-radius: 8px; padding: 6px;
       box-shadow: 0 2px 8px var(--shadow); display: flex; gap: 4px; z-index: 1000;
       max-width: calc(100vw - 20px); overflow-x: auto;
-      scrollbar-width: none;
     }
-    #toolbar::-webkit-scrollbar { display: none; }
     #toolbar button {
       width: 42px; height: 42px; flex: 0 0 auto; border: 1px solid var(--border-mid);
       background: var(--bg-input); color: var(--text-main);
       border-radius: 6px; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       padding: 0; transition: all 0.15s; position: relative;
-      touch-action: manipulation;
     }
     #toolbar button:hover { background: var(--bg-hover); border-color: #0066ff; }
     #toolbar button.active { background: #0066ff; color: #fff; border-color: #0066ff; }
     #toolbar button.danger { color: #c00; border-color: #f0c0c0; }
-    #toolbar button.danger:hover { background: #fee; }
     #toolbar button.donate-btn { color: #2e7d32; border-color: #a5d6a7; }
-    #toolbar button.donate-btn:hover { background: #e8f5e9; }
     #toolbar button .tooltip {
       position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
       background: var(--tooltip-bg); color: var(--tooltip-color);
@@ -181,94 +168,120 @@
     #toolbar button.active svg { stroke: #fff; }
 
     body.dark .leaflet-control-zoom a { background: var(--bg-panel); color: var(--text-main); border-color: var(--border-mid); }
-    body.dark .leaflet-control-zoom a:hover { background: var(--bg-hover); }
     body.dark .leaflet-popup-content-wrapper,
     body.dark .leaflet-popup-tip { background: var(--bg-panel); color: var(--text-main); }
     body.dark .leaflet-popup-content a { color: #6ba6ff; }
 
+    /* ============ МОБИЛЬНЫЕ КНОПКИ ============ */
+    #mobileToggle {
+      display: none;
+      position: fixed; top: 10px; right: 10px; z-index: 5000;
+      gap: 8px;
+    }
+    #mobileToggle button {
+      width: 48px; height: 48px;
+      background: var(--bg-panel); color: var(--text-main);
+      border: 1px solid var(--border-mid); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 2px 8px var(--shadow);
+      transition: all 0.15s;
+    }
+    #mobileToggle button.active { background: #0066ff; color: #fff; border-color: #0066ff; }
+    #mobileToggle button svg {
+      width: 24px; height: 24px;
+      stroke: currentColor; stroke-width: 2;
+      fill: none; stroke-linecap: round; stroke-linejoin: round;
+    }
+
     /* ============ МОБИЛЬНАЯ АДАПТАЦИЯ ============ */
     @media (max-width: 768px) {
-      /* Панель фильтров — прячется за кнопку */
-      .control-panel {
-        max-width: calc(100vw - 100px); font-size: 13px;
-        padding: 10px 12px; max-height: 60vh;
-        position: fixed; top: 8px; right: 8px;
-      }
-      .control-panel h4 { font-size: 11px; }
-      .control-panel label { font-size: 13px; padding: 6px 0; }
-      .control-panel label input[type="checkbox"] { width: 18px; height: 18px; }
-      .lang-btn { padding: 6px 8px; font-size: 13px; }
-      .mode-toggle button { padding: 8px 8px; font-size: 13px; }
+      /* Показываем кнопки */
+      #mobileToggle { display: flex; }
 
-      /* Легенда — маленькая, справа снизу */
-      .info.legend {
-        max-width: 170px; font-size: 11px;
-        padding: 8px 10px; max-height: 45vh;
+      /* По умолчанию всё скрыто */
+      #eventsPanel,
+      .control-panel,
+      .info.legend,
+      #toolbar {
+        display: none !important;
       }
 
-      /* Панель событий — нижняя шторка */
+      /* Показываем активную панель */
+      body.show-events #eventsPanel { display: flex !important; }
+      body.show-filters .control-panel { display: block !important; }
+      body.show-tools #toolbar { display: flex !important; }
+      body.show-legend .info.legend { display: block !important; }
+
+      /* Панель событий — на весь экран */
       #eventsPanel {
-        left: 8px; right: 8px; top: auto; bottom: 78px;
-        width: auto; max-height: 45vh;
+        left: 0; right: 0; top: 66px; bottom: 0;
+        width: auto; max-width: 100%; max-height: none;
         border-radius: 12px 12px 0 0;
+        z-index: 4000;
         transform: translateY(0);
       }
       #eventsPanel .panel-header {
         padding: 12px 16px; font-size: 14px;
-        cursor: pointer; user-select: none;
       }
-      #eventsPanel .panel-header .toggle-btn { font-size: 20px; padding: 0 8px; }
       #eventsPanel .event-item { padding: 10px 16px; }
       #eventsPanel .event-item .evt-type { font-size: 13px; }
-      #eventsPanel .event-item .evt-loc { font-size: 12px; }
-      #eventsPanel .event-item .evt-time { font-size: 11px; }
-      #eventsPanel.collapsed {
-        width: auto;
-        max-height: 52px;
-        transform: translateY(calc(100% - 52px));
-      }
-      #eventsPanel.collapsed .panel-header span { display: block; }
 
-      /* Тулбар — крупнее и на всю ширину с горизонтальным скроллом */
+      /* Панель фильтров — на весь экран */
+      .control-panel {
+        position: fixed !important;
+        left: 8px; right: 8px; top: 66px; bottom: 8px;
+        max-width: none !important; max-height: none !important;
+        width: auto;
+        z-index: 4000;
+        padding: 14px 16px;
+        overflow-y: auto;
+      }
+      .control-panel label { padding: 8px 0; font-size: 14px; }
+      .control-panel label input[type="checkbox"] { width: 20px; height: 20px; }
+      .lang-btn { padding: 8px; font-size: 14px; }
+
+      /* Легенда — на весь экран */
+      .info.legend {
+        position: fixed !important;
+        left: 8px; right: 8px; top: 66px; bottom: 8px;
+        max-width: none !important; max-height: none !important;
+        width: auto;
+        z-index: 4000;
+        padding: 14px 16px;
+        font-size: 13px;
+        overflow-y: auto;
+      }
+
+      /* Тулбар — внизу полосой */
       #toolbar {
-        padding: 6px 8px; bottom: 8px; gap: 6px;
+        left: 8px; right: 8px; bottom: 8px; transform: none;
+        max-width: none;
+        padding: 8px; gap: 8px;
         border-radius: 12px;
-        max-width: calc(100vw - 16px);
-        left: 8px; right: 8px; transform: none;
-        justify-content: flex-start;
+        justify-content: center;
+        flex-wrap: wrap;
+        z-index: 4000;
       }
       #toolbar button {
-        width: 44px; height: 44px; border-radius: 8px;
+        width: 52px; height: 52px; border-radius: 10px;
       }
-      #toolbar button svg { width: 22px; height: 22px; }
+      #toolbar button svg { width: 26px; height: 26px; }
       #toolbar button .tooltip { display: none; }
+      #toolbar .sep { display: none; }
 
-      /* Иконки событий на карте — крупнее для пальца */
-      .event-icon { width: 34px; height: 34px; border-width: 2px; }
-      .event-icon svg { width: 18px; height: 18px; }
+      /* Leaflet zoom убираем на мобилке — жесты работают */
+      .leaflet-control-zoom { display: none !important; }
 
-      /* Leaflet zoom — наверх слева, но поменьше */
-      .leaflet-control-zoom { margin-top: 8px !important; margin-left: 8px !important; }
-      .leaflet-control-zoom a {
-        width: 34px !important; height: 34px !important;
-        line-height: 34px !important; font-size: 20px !important;
-      }
+      /* Иконки на карте крупнее */
+      .event-icon { width: 36px; height: 36px; border-width: 2px; }
+      .event-icon svg { width: 20px; height: 20px; }
     }
 
-    /* Очень маленькие экраны */
     @media (max-width: 480px) {
-      #eventsPanel { max-height: 40vh; }
-      #eventsPanel .panel-header { padding: 10px 14px; font-size: 13px; }
-      .info.legend { max-width: 140px; font-size: 10px; }
-      .info.legend i, .info.legend .legend-line { width: 10px; height: 10px; margin-top: 1px; }
-      #toolbar button { width: 42px; height: 42px; }
-      #toolbar button svg { width: 20px; height: 20px; }
-    }
-
-    /* Landscape (телефон повёрнут) */
-    @media (max-height: 500px) and (orientation: landscape) {
-      #eventsPanel { max-height: 60vh; bottom: 70px; }
-      .control-panel { max-height: 70vh; }
+      #mobileToggle button { width: 44px; height: 44px; }
+      #mobileToggle button svg { width: 22px; height: 22px; }
+      #toolbar button { width: 48px; height: 48px; }
+      #toolbar button svg { width: 24px; height: 24px; }
     }
   </style>
 </head>
@@ -276,10 +289,24 @@
   <div id="map"></div>
   <div id="errorBox"></div>
 
-  <div id="eventsPanel" class="collapsed">
-    <div class="panel-header" id="eventsPanelHeader">
-      <span id="eventsPanelTitle">События из Telegram</span>
-      <button class="toggle-btn" id="toggleEventsPanel">▲</button>
+  <!-- Кнопки для мобильных -->
+  <div id="mobileToggle">
+    <button id="btnShowEvents" title="События">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <button id="btnShowFilters" title="Фильтры">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+    </button>
+    <button id="btnShowTools" title="Инструменты">
+      <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+    </button>
+  </div>
+
+  <!-- Панель событий -->
+  <div id="eventsPanel">
+    <div class="panel-header">
+      <span id="eventsPanelTitle">События</span>
+      <button class="toggle-btn" id="toggleEventsPanel">◀</button>
     </div>
     <div class="panel-body" id="eventsListBody">
       <div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">
@@ -309,9 +336,9 @@
 
     var i18n = {
       ru: {
-        eventsPanelTitle: 'События из Telegram',
+        eventsPanelTitle: 'События',
         controlZones: 'Зоны контроля',
-        territoryRF: 'Территория, занимаемая РФ (DeepStateMap)',
+        territoryRF: 'Территория РФ (DeepStateMap)',
         counteroffensive: 'Контрнаступления ВСУ (ISW)',
         telegramEvents: 'События из Telegram',
         raidAlert: 'Воздушная тревога', strike: 'Удар', operation: 'Операция',
@@ -320,53 +347,43 @@
         noEvents: 'Нет событий', source: 'Источник',
         toolMarker: 'Метка', toolLine: 'Линия', toolArrow: 'Стрелка',
         toolPolygon: 'Зона', toolRectangle: 'Прямоугольник', toolCircle: 'Круг',
-        toolMeasure: 'Измерить расстояние', toolClear: 'Очистить всё',
-        toolTheme: 'Тёмная тема', toolInfo: 'О проекте', toolDonate: 'Поддержать проект в развитии',
-        clearConfirm: 'Удалить все ваши рисунки?',
+        toolMeasure: 'Измерить расстояние', toolClear: 'Очистить',
+        toolTheme: 'Тема', toolInfo: 'О проекте', toolDonate: 'Поддержать',
+        clearConfirm: 'Удалить все рисунки?',
         total: 'Всего', countryUA: 'Украина', countryRU: 'РФ', countryOSINT: 'OSINT',
-        opacityLabel: 'Прозрачность', modeFill: 'Заливка', modeOutline: 'Только контуры',
-        aboutText: 'Карта агрегирует открытые данные.\n\n' +
-                   '· События — публичные Telegram-каналы\n' +
-                   '· Территория РФ — DeepStateMap\n' +
-                   '· Контрнаступления — ISW\n\n' +
-                   'Мы не проводим собственный анализ. Линия фронта — приблизительная.'
+        opacityLabel: 'Прозрачность', modeFill: 'Заливка', modeOutline: 'Контуры',
+        aboutText: 'Карта агрегирует открытые данные из Telegram.\n\nМы не проводим собственный анализ.'
       },
       uk: {
-        eventsPanelTitle: 'Події з Telegram',
-        controlZones: 'Зони контролю',
-        territoryRF: 'Територія, яку займає РФ (DeepStateMap)',
-        counteroffensive: 'Контрнаступи ЗСУ (ISW)',
+        eventsPanelTitle: 'Події', controlZones: 'Зони контролю',
+        territoryRF: 'Територія РФ', counteroffensive: 'Контрнаступи ЗСУ',
         telegramEvents: 'Події з Telegram',
         raidAlert: 'Повітряна тривога', strike: 'Удар', operation: 'Операція',
         offensive: 'Наступ', incident: 'Інцидент', politics: 'Політика',
-        summaryTitle: 'Зведення', eventsCount: 'подій',
-        noEvents: 'Немає подій', source: 'Джерело',
-        toolMarker: 'Мітка', toolLine: 'Лінія', toolArrow: 'Стрілка',
+        summaryTitle: 'Зведення', eventsCount: 'подій', noEvents: 'Немає',
+        source: 'Джерело', toolMarker: 'Мітка', toolLine: 'Лінія', toolArrow: 'Стрілка',
         toolPolygon: 'Зона', toolRectangle: 'Прямокутник', toolCircle: 'Коло',
-        toolMeasure: 'Виміряти відстань', toolClear: 'Очистити все',
-        toolTheme: 'Темна тема', toolInfo: 'Про проект', toolDonate: 'Підтримати проект',
-        clearConfirm: 'Видалити всі ваші малюнки?',
-        total: 'Всього', countryUA: 'Україна', countryRU: 'РФ', countryOSINT: 'OSINT',
-        opacityLabel: 'Прозорість', modeFill: 'Заливка', modeOutline: 'Лише контури',
+        toolMeasure: 'Виміряти', toolClear: 'Очистити', toolTheme: 'Тема',
+        toolInfo: 'Про проект', toolDonate: 'Підтримати',
+        clearConfirm: 'Видалити всі малюнки?', total: 'Всього',
+        countryUA: 'Україна', countryRU: 'РФ', countryOSINT: 'OSINT',
+        opacityLabel: 'Прозорість', modeFill: 'Заливка', modeOutline: 'Контури',
         aboutText: 'Карта агрегує відкриті дані.'
       },
       en: {
-        eventsPanelTitle: 'Telegram Events',
-        controlZones: 'Control Zones',
-        territoryRF: 'Territory held by RF (DeepStateMap)',
-        counteroffensive: 'Ukrainian counteroffensives (ISW)',
+        eventsPanelTitle: 'Events', controlZones: 'Control Zones',
+        territoryRF: 'Territory held by RF', counteroffensive: 'Counteroffensives',
         telegramEvents: 'Telegram Events',
         raidAlert: 'Air Raid Alert', strike: 'Strike', operation: 'Operation',
         offensive: 'Offensive', incident: 'Incident', politics: 'Politics',
-        summaryTitle: 'Summary', eventsCount: 'events',
-        noEvents: 'No events', source: 'Source',
-        toolMarker: 'Marker', toolLine: 'Line', toolArrow: 'Arrow',
+        summaryTitle: 'Summary', eventsCount: 'events', noEvents: 'No events',
+        source: 'Source', toolMarker: 'Marker', toolLine: 'Line', toolArrow: 'Arrow',
         toolPolygon: 'Polygon', toolRectangle: 'Rectangle', toolCircle: 'Circle',
-        toolMeasure: 'Measure distance', toolClear: 'Clear all',
-        toolTheme: 'Dark theme', toolInfo: 'About', toolDonate: 'Support the project',
-        clearConfirm: 'Delete all your drawings?',
-        total: 'Total', countryUA: 'Ukraine', countryRU: 'RF', countryOSINT: 'OSINT',
-        opacityLabel: 'Opacity', modeFill: 'Fill', modeOutline: 'Outline only',
+        toolMeasure: 'Measure', toolClear: 'Clear', toolTheme: 'Theme',
+        toolInfo: 'About', toolDonate: 'Support',
+        clearConfirm: 'Delete all drawings?', total: 'Total',
+        countryUA: 'Ukraine', countryRU: 'RF', countryOSINT: 'OSINT',
+        opacityLabel: 'Opacity', modeFill: 'Fill', modeOutline: 'Outline',
         aboutText: 'This map aggregates open data.'
       }
     };
@@ -379,7 +396,6 @@
     var OPACITY_KEY = 'osint_opacity';
     var MODE_KEY = 'osint_mode';
     var THEME_KEY = 'osint_theme';
-
     var fillOpacity = parseFloat(localStorage.getItem(OPACITY_KEY) || '0.15');
     var layerMode = localStorage.getItem(MODE_KEY) || 'fill';
     var currentTheme = localStorage.getItem(THEME_KEY) || 'light';
@@ -458,8 +474,10 @@
       }
     }
 
-    var map = L.map('map', { zoomControl: false, tap: true }).setView([48.5, 37.5], 7);
-    L.control.zoom({ position: 'bottomleft' }).addTo(map);
+    var map = L.map('map', { zoomControl: !isMobile(), tap: true }).setView([48.5, 37.5], 7);
+    if (!isMobile()) {
+      L.control.zoom({ position: 'bottomleft' }).addTo(map);
+    }
 
     var lightTile = L.tileLayer(
       'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
@@ -503,7 +521,6 @@
         if (features.length > 0) {
           features.sort(function(a, b) { return (b.properties.date || '').localeCompare(a.properties.date || ''); });
           deepStateLayer.addData(features[0]);
-          console.log('✅ DeepStateMap загружен');
         }
       })
       .catch(function(err) { console.warn('DeepStateMap:', err.message); });
@@ -563,7 +580,7 @@
       spiderfyOnMaxZoom: true,
       spiderfyDistanceMultiplier: 5,
       zoomToBoundsOnClick: true,
-      spiderLegPolylineOptions: { weight: 2, color: '#0066ff', opacity: 0.6 },
+      disableClusteringAtZoom: 13,
       iconCreateFunction: function(cluster) {
         var count = cluster.getChildCount();
         var size = count < 10 ? 44 : count < 100 ? 54 : 64;
@@ -577,8 +594,7 @@
                 'box-shadow:0 2px 8px rgba(0,0,0,0.4);' +
                 '">' + count + '</div>',
           className: '',
-          iconSize: [size, size],
-          iconAnchor: [size/2, size/2]
+          iconSize: [size, size], iconAnchor: [size/2, size/2]
         });
       }
     });
@@ -586,10 +602,9 @@
 
     function loadTelegramEvents() {
       if (!window.TG_DATA) {
-        console.warn('Telegram: данные не загружены');
         document.getElementById('eventsListBody').innerHTML =
           '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' +
-          'Данные не подгрузились. Подождите следующего обновления.</div>';
+          'Данные не подгрузились.</div>';
         return;
       }
       tgLayer.clearLayers();
@@ -623,7 +638,6 @@
         panelEvents.push(ev);
       });
 
-      console.log('Telegram: ' + added + ' событий');
       renderEventsPanel(panelEvents);
     }
 
@@ -659,7 +673,7 @@
               '<span>' + t('total') + '</span><span>' + events.length + ' ' + t('eventsCount') + '</span></div>';
       html += '</div>';
 
-      events.slice(0, 60).forEach(function(ev) {
+      events.slice(0, 100).forEach(function(ev) {
         var label = t(WT_LABELS[ev.event_type] || ev.event_type);
         var color = wtColor(ev.event_type);
         var svg = wtSvg(ev.event_type);
@@ -684,34 +698,59 @@
           if (!isNaN(lat) && !isNaN(lng)) {
             map.setView([lat, lng], 13);
             if (isMobile()) {
-              var panel = document.getElementById('eventsPanel');
-              panel.classList.add('collapsed');
-              document.getElementById('toggleEventsPanel').textContent = '▲';
+              hideMobilePanels();
             }
           }
         });
       });
     }
 
-    function toggleEventsPanel() {
+    document.getElementById('toggleEventsPanel').addEventListener('click', function() {
       var panel = document.getElementById('eventsPanel');
       panel.classList.toggle('collapsed');
-      var btn = document.getElementById('toggleEventsPanel');
-      if (isMobile()) {
-        btn.textContent = panel.classList.contains('collapsed') ? '▲' : '▼';
-      } else {
-        btn.textContent = panel.classList.contains('collapsed') ? '▶' : '◀';
-      }
+      this.textContent = panel.classList.contains('collapsed') ? '▶' : '◀';
+    });
+
+    // ============================================================
+    // МОБИЛЬНЫЕ ПЕРЕКЛЮЧАТЕЛИ
+    // ============================================================
+    function hideMobilePanels() {
+      document.body.classList.remove('show-events', 'show-filters', 'show-tools', 'show-legend');
+      document.getElementById('btnShowEvents').classList.remove('active');
+      document.getElementById('btnShowFilters').classList.remove('active');
+      document.getElementById('btnShowTools').classList.remove('active');
     }
 
-    document.getElementById('toggleEventsPanel').addEventListener('click', function(e) {
-      e.stopPropagation();
-      toggleEventsPanel();
-    });
-    document.getElementById('eventsPanelHeader').addEventListener('click', function(e) {
-      if (isMobile() && e.target.tagName !== 'BUTTON') {
-        toggleEventsPanel();
+    document.getElementById('btnShowEvents').addEventListener('click', function() {
+      var active = document.body.classList.contains('show-events');
+      hideMobilePanels();
+      if (!active) {
+        document.body.classList.add('show-events');
+        this.classList.add('active');
       }
+    });
+
+    document.getElementById('btnShowFilters').addEventListener('click', function() {
+      var active = document.body.classList.contains('show-filters');
+      hideMobilePanels();
+      if (!active) {
+        document.body.classList.add('show-filters');
+        this.classList.add('active');
+      }
+    });
+
+    document.getElementById('btnShowTools').addEventListener('click', function() {
+      var active = document.body.classList.contains('show-tools');
+      hideMobilePanels();
+      if (!active) {
+        document.body.classList.add('show-tools');
+        this.classList.add('active');
+      }
+    });
+
+    // Клик по карте скрывает панели на мобилке
+    map.on('click', function() {
+      if (isMobile()) hideMobilePanels();
     });
 
     // ============================================================
@@ -778,7 +817,7 @@
           layer.setStyle({ color: '#ff6600', weight: 3 });
         }
       }
-      if (type === 'marker') layer.bindPopup('Ваша метка');
+      if (type === 'marker') layer.bindPopup('Метка');
       drawingsLayer.addLayer(layer);
       saveDrawings(); deactivateDrawer();
     });
@@ -786,7 +825,7 @@
     var DRAWINGS_KEY = 'osint_user_drawings';
     function saveDrawings() {
       try { localStorage.setItem(DRAWINGS_KEY, JSON.stringify(drawingsLayer.toGeoJSON())); }
-      catch(e) { console.warn('saveDrawings:', e); }
+      catch(e) {}
     }
     function loadDrawings() {
       try {
@@ -802,7 +841,7 @@
             drawingsLayer.addLayer(layer);
           }
         });
-      } catch(e) { console.warn('loadDrawings:', e); }
+      } catch(e) {}
     }
 
     function renderToolbar() {
@@ -872,7 +911,7 @@
         html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
         html += '<label><input type="checkbox" id="chkCounter" checked> ' + t('counteroffensive') + '</label>';
         html += '<hr><h4>' + t('telegramEvents') + '</h4>';
-        html += '<label><input type="checkbox" id="chkTg" checked> Показывать события</label>';
+        html += '<label><input type="checkbox" id="chkTg" checked> ' + t('eventsPanelTitle') + '</label>';
         [
           { key: 'Air Raid Alert', label: t('raidAlert') },
           { key: 'Military Strike', label: t('strike') },
@@ -972,11 +1011,6 @@
       });
       html += '<hr><div style="font-size:11px;color:var(--text-muted);">Telegram · DeepStateMap · ISW</div>';
       div.innerHTML = html;
-    }
-
-    // На мобильных — сразу ставим правильный значок на кнопке
-    if (isMobile()) {
-      document.getElementById('toggleEventsPanel').textContent = '▲';
     }
 
     loadTelegramEvents();
