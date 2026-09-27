@@ -473,11 +473,28 @@
     // ============================================================
     var OWL_KMZ_URL = 'https://raw.githack.com/owlmaps/UAControlMapBackups/latest/latest.kmz';
 
+    // Цвета по категориям Project Owl
+    var OWL_COLORS = {
+      russian:   '#8e24aa',  // фиолетовый — контроль РФ
+      ukrainian: '#00695c',  // зелёный — контроль Украины
+      grey:      '#757575',  // серый — серая зона
+      unknown:   '#ef6c00'   // оранжевый — если не удалось определить
+    };
+    var OWL_LABELS = {
+      russian:   'Контроль РФ (Project Owl)',
+      ukrainian: 'Контроль Украины (Project Owl)',
+      grey:      'Серая зона (Project Owl)',
+      unknown:   'Project Owl'
+    };
+
     var i18n = {
       ru: {
         eventsPanelTitle: 'События', controlZones: 'Зоны контроля',
         territoryRF: 'Территория РФ (DeepStateMap)',
-        owlControl: 'Project Owl (Ukraine Control Map)',
+        owlControl: 'Project Owl',
+        owlRussian: 'Контроль РФ (Project Owl)',
+        owlUkrainian: 'Контроль Украины (Project Owl)',
+        owlGrey: 'Серая зона (Project Owl)',
         userZones: 'Мои зоны контроля',
         telegramEvents: 'События из Telegram',
         raidAlert: 'Воздушная тревога', strike: 'Удар', operation: 'Операция',
@@ -496,7 +513,10 @@
       uk: {
         eventsPanelTitle: 'Події', controlZones: 'Зони контролю',
         territoryRF: 'Територія РФ',
-        owlControl: 'Project Owl (Ukraine Control Map)',
+        owlControl: 'Project Owl',
+        owlRussian: 'Контроль РФ (Project Owl)',
+        owlUkrainian: 'Контроль України (Project Owl)',
+        owlGrey: 'Сіра зона (Project Owl)',
         userZones: 'Мої зони контролю',
         telegramEvents: 'Події з Telegram',
         raidAlert: 'Повітряна тривога', strike: 'Удар', operation: 'Операція',
@@ -514,7 +534,10 @@
       en: {
         eventsPanelTitle: 'Events', controlZones: 'Control Zones',
         territoryRF: 'Territory held by RF',
-        owlControl: 'Project Owl (Ukraine Control Map)',
+        owlControl: 'Project Owl',
+        owlRussian: 'Russian control (Project Owl)',
+        owlUkrainian: 'Ukrainian control (Project Owl)',
+        owlGrey: 'Grey zone (Project Owl)',
         userZones: 'My control zones',
         telegramEvents: 'Telegram Events',
         raidAlert: 'Air Raid Alert', strike: 'Strike', operation: 'Operation',
@@ -616,10 +639,24 @@
       }
       if (layer.redraw) layer.redraw();
     }
+    function owlColorFor(cat) { return OWL_COLORS[cat] || OWL_COLORS.unknown; }
+    function owlLabelFor(cat) {
+      if (cat === 'russian') return t('owlRussian');
+      if (cat === 'ukrainian') return t('owlUkrainian');
+      if (cat === 'grey') return t('owlGrey');
+      return t('owlControl');
+    }
     function refreshAllStyles() {
       if (deepStateLayer) deepStateLayer.eachLayer(function(s) { applyStyleToLayer(s, '#cc0000', styleFor('#cc0000')); });
       if (owlControlLayer) owlControlLayer.eachLayer(function(s) {
-        applyStyleToLayer(s, '#00695c', { color: '#00695c', weight: 1.8, opacity: 0.85, fill: true, fillColor: '#00695c', fillOpacity: fillOpacity * 0.7 });
+        var cat = (s.feature && s.feature.properties && s.feature.properties._category) || 'unknown';
+        var c = owlColorFor(cat);
+        var outline = layerMode === 'outline';
+        applyStyleToLayer(s, c, {
+          color: c, weight: 1.8, opacity: 0.9,
+          fill: !outline, fillColor: c,
+          fillOpacity: outline ? 0 : fillOpacity * 0.9
+        });
       });
     }
 
@@ -700,9 +737,22 @@
     // ============================================================
     function polygonPopup(text) { return function(f, layer) { layer.bindPopup('<b>' + text + '</b>'); }; }
     var deepStateLayer = L.geoJSON(null, { style: function() { return styleFor('#cc0000'); }, onEachFeature: polygonPopup(t('territoryRF')) });
+
     var owlControlLayer = L.geoJSON(null, {
-      style: function() { return { color: '#00695c', weight: 1.8, opacity: 0.85, fill: true, fillColor: '#00695c', fillOpacity: 0.12 }; },
-      onEachFeature: polygonPopup(t('owlControl'))
+      style: function(f) {
+        var cat = (f.properties && f.properties._category) || 'unknown';
+        var c = owlColorFor(cat);
+        var outline = layerMode === 'outline';
+        return {
+          color: c, weight: 1.8, opacity: 0.9,
+          fill: !outline, fillColor: c,
+          fillOpacity: outline ? 0 : 0.12
+        };
+      },
+      onEachFeature: function(f, layer) {
+        var cat = (f.properties && f.properties._category) || 'unknown';
+        layer.bindPopup('<b>' + owlLabelFor(cat) + '</b>');
+      }
     });
 
     fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
@@ -722,8 +772,25 @@
       .catch(function(err) { console.warn('DeepStateMap:', err.message); });
 
     // ============================================================
-    // ЗАГРУЗКА PROJECT OWL (KMZ) — только полигоны
+    // ЗАГРУЗКА PROJECT OWL (KMZ) — по категориям
     // ============================================================
+    function categorizeByFolder(placemark) {
+      var el = placemark.parentNode;
+      while (el) {
+        if (el.tagName === 'Folder' || el.tagName === 'Document') {
+          var nameEl = el.querySelector(':scope > name');
+          if (nameEl) {
+            var low = nameEl.textContent.toLowerCase();
+            if (/russia|russian|rus_|\brf\b/.test(low)) return 'russian';
+            if (/ukrain|ukr_|uaf/.test(low)) return 'ukrainian';
+            if (/grey|gray|unknown/.test(low)) return 'grey';
+          }
+        }
+        el = el.parentNode;
+      }
+      return 'unknown';
+    }
+
     function loadOwlControl() {
       console.log('Загрузка Project Owl...');
       fetch(OWL_KMZ_URL)
@@ -745,21 +812,54 @@
         })
         .then(function(kmlStrings) {
           var allFeatures = [];
+          var stats = { russian: 0, ukrainian: 0, grey: 0, unknown: 0 };
+          var folderNames = {};
+
           kmlStrings.forEach(function(kmlString) {
             var parser = new DOMParser();
             var kmlDoc = parser.parseFromString(kmlString, 'text/xml');
-            var geojson = toGeoJSON.kml(kmlDoc);
-            if (geojson && geojson.features) {
-              geojson.features.forEach(function(f) {
-                var geomType = f.geometry && f.geometry.type;
-                if (geomType === 'Polygon' || geomType === 'MultiPolygon') {
-                  allFeatures.push(f);
+
+            // Проходим по всем Placemark и определяем категорию по родительской папке
+            var placemarks = kmlDoc.querySelectorAll('Placemark');
+            placemarks.forEach(function(pm) {
+              var cat = categorizeByFolder(pm);
+
+              // Собираем статистику по названиям папок
+              var pe = pm.parentNode;
+              while (pe) {
+                if (pe.tagName === 'Folder') {
+                  var ne = pe.querySelector(':scope > name');
+                  if (ne) { folderNames[ne.textContent + ' → ' + cat] = (folderNames[ne.textContent + ' → ' + cat] || 0) + 1; }
+                  break;
                 }
+                pe = pe.parentNode;
+              }
+
+              // Конвертируем один Placemark
+              var wrapDoc = document.implementation.createDocument('http://www.opengis.net/kml/2.2', 'kml', null);
+              var docEl = wrapDoc.documentElement;
+              var innerDoc = wrapDoc.createElement('Document');
+              innerDoc.appendChild(pm.cloneNode(true));
+              docEl.appendChild(innerDoc);
+
+              var gj = toGeoJSON.kml(wrapDoc);
+              if (!gj || !gj.features) return;
+
+              gj.features.forEach(function(f) {
+                var gt = f.geometry && f.geometry.type;
+                if (gt !== 'Polygon' && gt !== 'MultiPolygon') return;
+                f.properties = f.properties || {};
+                f.properties._category = cat;
+                allFeatures.push(f);
+                stats[cat]++;
               });
-            }
+            });
           });
+
+          console.log('📁 Папки:', folderNames);
+          console.log('📊 Категории:', stats);
           owlControlLayer.addData({ type: 'FeatureCollection', features: allFeatures });
-          console.log('✅ Project Owl (только зоны): ' + allFeatures.length + ' объектов');
+          console.log('✅ Project Owl: ' + allFeatures.length + ' зон (РФ: ' + stats.russian + ', UA: ' + stats.ukrainian + ', серая: ' + stats.grey + ', неизвестно: ' + stats.unknown + ')');
         })
         .catch(function(err) {
           console.warn('Project Owl:', err.message);
@@ -1195,7 +1295,9 @@
     function updateLegendInDiv(div) {
       var html = '<h4>' + t('controlZones') + '</h4>';
       html += '<div><i style="background:#cc0000;"></i> ' + t('territoryRF') + '</div>';
-      html += '<div><i style="background:#00695c;opacity:0.5;"></i> ' + t('owlControl') + '</div>';
+      html += '<div><i style="background:' + OWL_COLORS.russian + ';opacity:0.6;"></i> ' + t('owlRussian') + '</div>';
+      html += '<div><i style="background:' + OWL_COLORS.ukrainian + ';opacity:0.6;"></i> ' + t('owlUkrainian') + '</div>';
+      html += '<div><i style="background:' + OWL_COLORS.grey + ';opacity:0.6;"></i> ' + t('owlGrey') + '</div>';
       html += '<hr><h4>' + t('telegramEvents') + '</h4>';
       ['Air Raid Alert','Military Strike','Military Operation','Military Offensive','Security Incident','Political Development'].forEach(function(type) {
         html += '<div><span class="legend-svg" style="color:' + wtColor(type) + ';">' + wtSvg(type) + '</span> ' + t(WT_LABELS[type]) + '</div>';
