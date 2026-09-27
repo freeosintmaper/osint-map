@@ -34,7 +34,6 @@
       font-size: 13px; z-index: 99999; max-width: 90%; display: none;
     }
 
-    /* Кнопка пользователя */
     #userBtn {
       position: fixed; top: 12px; left: 12px; z-index: 5000;
       width: 44px; height: 44px;
@@ -52,7 +51,6 @@
       fill: none; stroke-linecap: round; stroke-linejoin: round;
     }
 
-    /* Модалка входа / админки */
     #loginOverlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.55);
       z-index: 10000; display: none;
@@ -116,7 +114,6 @@
     }
     #loginModal .full-btn:hover { background: var(--bg-hover); border-color: #0066ff; }
 
-    /* Панель редактирования зон */
     #zoneEditorPanel {
       position: fixed; top: 66px; left: 66px; z-index: 6000;
       background: var(--bg-panel); color: var(--text-main);
@@ -368,7 +365,6 @@
     <div id="loginModal">
       <h3 id="loginModalTitle">Вход для админа</h3>
       <div id="loginStatus" style="display:none;"></div>
-
       <div id="loginFormBlock">
         <label>Email</label>
         <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="username">
@@ -379,17 +375,12 @@
           <button id="btnLoginSubmit" class="primary">Войти</button>
         </div>
       </div>
-
       <div id="loginAdminBlock" style="display:none;">
-        <div class="admin-info">
-          ✅ Вы вошли как админ.
-        </div>
-
+        <div class="admin-info">✅ Вы вошли как админ.</div>
         <div class="admin-section">
           <h4>Зоны контроля</h4>
           <button class="full-btn" id="btnOpenZoneEditor">✏️ Редактировать зоны</button>
         </div>
-
         <div class="row" style="margin-top:12px;">
           <button id="btnLogout" class="danger">Выйти</button>
         </div>
@@ -397,7 +388,6 @@
     </div>
   </div>
 
-  <!-- Панель редактора зон -->
   <div id="zoneEditorPanel">
     <h4>Что рисуем?</h4>
     <div class="cat-btn active" data-cat="russia">
@@ -412,15 +402,13 @@
       <div class="swatch" style="background:#888888;"></div>
       <div>Серая зона</div>
     </div>
-
     <div class="zone-actions">
       <button id="btnDrawZone">✏️ Нарисовать полигон</button>
       <button id="btnFinishZones">✅ Готово (закрыть)</button>
       <button id="btnClearAllZones" class="danger">🗑️ Удалить все зоны</button>
     </div>
-
     <div class="hint">
-      Выбери категорию, нажми «Нарисовать полигон» и обведи территорию на карте. Клик по первому узлу — завершить.
+      Выбери категорию, нажми «Нарисовать полигон» и обведи территорию. Клик по первому узлу — завершить.
     </div>
   </div>
 
@@ -459,6 +447,7 @@
   </script>
 
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="./lib/turf.min.js"></script>
   <script src="./data/telegram-events.js"></script>
   <script src="./lib/leaflet.js"></script>
   <script src="./lib/leaflet-draw.js"></script>
@@ -466,26 +455,23 @@
   <script src="./lib/markercluster.js"></script>
 
   <script>
-    // ============================================================
-    // SUPABASE
-    // ============================================================
     var SB_URL = 'https://zojqbhnwsycqhaiqpgxh.supabase.co';
     var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvanFiaG53c3ljcWhhaXFwZ3hoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MjY2NzMsImV4cCI6MjEwNjAwMjY3M30.OwU-cwkvk0Z1a28xgKpwMl9p-h-gFObYJ6_PHhFeIHE';
     var sb = null;
     try {
       var sbFactory = window.supabase && window.supabase.createClient;
       if (sbFactory) sb = sbFactory(SB_URL, SB_KEY);
-      else console.warn('Supabase: библиотека не загрузилась');
     } catch (e) { console.warn('Supabase:', e.message); }
 
     var DONATE_URL = 'https://www.donationalerts.com/r/freeosintmapper';
 
     var i18n = {
       ru: {
-        eventsPanelTitle: 'События',
-        controlZones: 'Зоны контроля',
+        eventsPanelTitle: 'События', controlZones: 'Зоны контроля',
         territoryRF: 'Территория РФ (DeepStateMap)',
         counteroffensive: 'Контрнаступления ВСУ (ISW)',
+        autoZones: 'Автоматические зоны (бои)',
+        userZones: 'Мои зоны контроля',
         telegramEvents: 'События из Telegram',
         raidAlert: 'Воздушная тревога', strike: 'Удар', operation: 'Операция',
         offensive: 'Наступление', incident: 'Инцидент', politics: 'Политика',
@@ -495,14 +481,15 @@
         toolPolygon: 'Зона', toolRectangle: 'Прямоугольник', toolCircle: 'Круг',
         toolMeasure: 'Измерить расстояние', toolClear: 'Очистить',
         toolTheme: 'Тема', toolInfo: 'О проекте', toolDonate: 'Поддержать',
-        clearConfirm: 'Удалить все рисунки?',
-        total: 'Всего', countryUA: 'Украина', countryRU: 'РФ', countryOSINT: 'OSINT',
+        clearConfirm: 'Удалить все рисунки?', total: 'Всего',
+        countryUA: 'Украина', countryRU: 'РФ', countryOSINT: 'OSINT',
         opacityLabel: 'Прозрачность', modeFill: 'Заливка', modeOutline: 'Контуры',
         aboutText: 'Карта агрегирует открытые данные из Telegram.\n\nМы не проводим собственный анализ.'
       },
       uk: {
         eventsPanelTitle: 'Події', controlZones: 'Зони контролю',
         territoryRF: 'Територія РФ', counteroffensive: 'Контрнаступи ЗСУ',
+        autoZones: 'Автоматичні зони (бої)', userZones: 'Мої зони контролю',
         telegramEvents: 'Події з Telegram',
         raidAlert: 'Повітряна тривога', strike: 'Удар', operation: 'Операція',
         offensive: 'Наступ', incident: 'Інцидент', politics: 'Політика',
@@ -519,6 +506,7 @@
       en: {
         eventsPanelTitle: 'Events', controlZones: 'Control Zones',
         territoryRF: 'Territory held by RF', counteroffensive: 'Counteroffensives',
+        autoZones: 'Auto zones (combat)', userZones: 'My control zones',
         telegramEvents: 'Telegram Events',
         raidAlert: 'Air Raid Alert', strike: 'Strike', operation: 'Operation',
         offensive: 'Offensive', incident: 'Incident', politics: 'Politics',
@@ -533,7 +521,6 @@
         aboutText: 'This map aggregates open data.'
       }
     };
-
     var currentLang = 'ru';
     function t(key) {
       return (i18n[currentLang] && i18n[currentLang][key]) || (i18n.ru[key]) || key;
@@ -550,38 +537,26 @@
 
     function openLoginModal() {
       loginOverlay.classList.add('open');
-      if (sb) {
-        sb.auth.getSession().then(function(res) {
-          if (res.data && res.data.session) showAdminView();
-          else showFormView();
-        });
-      } else {
-        showFormView();
-      }
+      if (sb) sb.auth.getSession().then(function(res) {
+        if (res.data && res.data.session) showAdminView(); else showFormView();
+      }); else showFormView();
     }
-    function closeLoginModal() {
-      loginOverlay.classList.remove('open');
-      loginStatus.style.display = 'none';
-    }
+    function closeLoginModal() { loginOverlay.classList.remove('open'); loginStatus.style.display = 'none'; }
     function showFormView() {
-      loginFormBlock.style.display = 'block';
-      loginAdminBlock.style.display = 'none';
+      loginFormBlock.style.display = 'block'; loginAdminBlock.style.display = 'none';
       document.getElementById('loginModalTitle').textContent = 'Вход для админа';
     }
     function showAdminView() {
-      loginFormBlock.style.display = 'none';
-      loginAdminBlock.style.display = 'block';
+      loginFormBlock.style.display = 'none'; loginAdminBlock.style.display = 'block';
       document.getElementById('loginModalTitle').textContent = 'Админ-панель';
       userBtn.classList.add('logged-in');
     }
     function logout() {
-      if (sb) {
-        sb.auth.signOut().then(function() {
-          userBtn.classList.remove('logged-in');
-          document.getElementById('zoneEditorPanel').classList.remove('open');
-          closeLoginModal();
-        });
-      }
+      if (sb) sb.auth.signOut().then(function() {
+        userBtn.classList.remove('logged-in');
+        document.getElementById('zoneEditorPanel').classList.remove('open');
+        closeLoginModal();
+      });
     }
     function submitLogin() {
       var email = document.getElementById('loginEmail').value.trim();
@@ -597,23 +572,17 @@
         setTimeout(function() { loginStatus.style.display = 'none'; showAdminView(); }, 800);
       });
     }
-
     userBtn.addEventListener('click', openLoginModal);
     document.getElementById('btnLoginCancel').addEventListener('click', closeLoginModal);
     document.getElementById('btnLoginSubmit').addEventListener('click', submitLogin);
     document.getElementById('btnLogout').addEventListener('click', logout);
-    loginOverlay.addEventListener('click', function(e) {
-      if (e.target === loginOverlay) closeLoginModal();
+    loginOverlay.addEventListener('click', function(e) { if (e.target === loginOverlay) closeLoginModal(); });
+    if (sb) sb.auth.getSession().then(function(res) {
+      if (res.data && res.data.session) userBtn.classList.add('logged-in');
     });
 
-    if (sb) {
-      sb.auth.getSession().then(function(res) {
-        if (res.data && res.data.session) userBtn.classList.add('logged-in');
-      });
-    }
-
     // ============================================================
-    // ПЕРЕМЕННЫЕ
+    // ОБЩИЕ ПЕРЕМЕННЫЕ
     // ============================================================
     var OPACITY_KEY = 'osint_opacity';
     var MODE_KEY = 'osint_mode';
@@ -627,36 +596,24 @@
       localStorage.setItem(MODE_KEY, layerMode);
     }
     function styleFor(baseColor) {
-      if (layerMode === 'outline') {
-        return { color: baseColor, weight: 1.8, opacity: 0.9, fill: false, fillColor: baseColor, fillOpacity: 0 };
-      }
+      if (layerMode === 'outline') return { color: baseColor, weight: 1.8, opacity: 0.9, fill: false, fillColor: baseColor, fillOpacity: 0 };
       return { color: baseColor, weight: 1.2, opacity: 0.9, fill: true, fillColor: baseColor, fillOpacity: fillOpacity };
     }
     function applyStyleToLayer(layer, baseColor, styleObj) {
       if (!layer) return;
       if (layer.setStyle) layer.setStyle(styleObj);
       if (layer.options) {
-        layer.options.fill = styleObj.fill;
-        layer.options.fillColor = styleObj.fillColor;
-        layer.options.fillOpacity = styleObj.fillOpacity;
-        layer.options.color = styleObj.color;
-        layer.options.weight = styleObj.weight;
-        layer.options.opacity = styleObj.opacity;
+        layer.options.fill = styleObj.fill; layer.options.fillColor = styleObj.fillColor;
+        layer.options.fillOpacity = styleObj.fillOpacity; layer.options.color = styleObj.color;
+        layer.options.weight = styleObj.weight; layer.options.opacity = styleObj.opacity;
       }
       if (layer.redraw) layer.redraw();
     }
     function refreshAllStyles() {
-      if (deepStateLayer) {
-        deepStateLayer.eachLayer(function(sub) { applyStyleToLayer(sub, '#cc0000', styleFor('#cc0000')); });
-      }
-      if (counterLayer) {
-        counterLayer.eachLayer(function(sub) {
-          applyStyleToLayer(sub, '#0088cc', {
-            color: '#0088cc', weight: 2, opacity: 0.85,
-            fill: false, fillColor: '#0088cc', fillOpacity: 0, dashArray: '5,5'
-          });
-        });
-      }
+      if (deepStateLayer) deepStateLayer.eachLayer(function(s) { applyStyleToLayer(s, '#cc0000', styleFor('#cc0000')); });
+      if (counterLayer) counterLayer.eachLayer(function(s) {
+        applyStyleToLayer(s, '#0088cc', { color: '#0088cc', weight: 2, opacity: 0.85, fill: false, fillColor: '#0088cc', fillOpacity: 0, dashArray: '5,5' });
+      });
     }
 
     var TOOLBAR_SVG = {
@@ -677,13 +634,8 @@
     function applyTheme(theme) {
       currentTheme = theme;
       localStorage.setItem(THEME_KEY, theme);
-      if (theme === 'dark') {
-        document.body.classList.add('dark');
-        map.removeLayer(lightTile); darkTile.addTo(map);
-      } else {
-        document.body.classList.remove('dark');
-        map.removeLayer(darkTile); lightTile.addTo(map);
-      }
+      if (theme === 'dark') { document.body.classList.add('dark'); map.removeLayer(lightTile); darkTile.addTo(map); }
+      else { document.body.classList.remove('dark'); map.removeLayer(darkTile); lightTile.addTo(map); }
       var btn = document.querySelector('#toolbar button[data-tool="theme"]');
       if (btn) {
         var themeSvg = theme === 'dark' ? TOOLBAR_SVG.sun : TOOLBAR_SVG.moon;
@@ -692,26 +644,14 @@
     }
 
     var map = L.map('map', { zoomControl: !isMobile(), tap: true }).setView([48.5, 37.5], 7);
-    if (!isMobile()) {
-      L.control.zoom({ position: 'bottomleft' }).addTo(map);
-    }
+    if (!isMobile()) L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
-    var lightTile = L.tileLayer(
-      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-      { attribution: 'Tiles © Esri', maxZoom: 19 }
-    );
-    var darkTile = L.tileLayer(
-      'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
-      { attribution: 'Tiles © Esri', maxZoom: 16 }
-    );
-    if (currentTheme === 'dark') {
-      darkTile.addTo(map); document.body.classList.add('dark');
-    } else {
-      lightTile.addTo(map);
-    }
+    var lightTile = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri', maxZoom: 19 });
+    var darkTile = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri', maxZoom: 16 });
+    if (currentTheme === 'dark') { darkTile.addTo(map); document.body.classList.add('dark'); } else lightTile.addTo(map);
 
     // ============================================================
-    // СЛОЙ ЗОН КОНТРОЛЯ (созданных вручную)
+    // МОИ ЗОНЫ (из Supabase)
     // ============================================================
     var zoneColors = {
       'russia': { color: '#cc0000', fillColor: '#cc0000', fillOpacity: 0.25, label: 'Территория РФ' },
@@ -719,14 +659,10 @@
       'grey': { color: '#666666', fillColor: '#888888', fillOpacity: 0.30, label: 'Серая зона', dashArray: '6,4' }
     };
     var userZonesLayer = L.geoJSON(null, {
-      style: function(feature) {
-        var cat = (feature.properties && feature.properties.category) || 'russia';
+      style: function(f) {
+        var cat = (f.properties && f.properties.category) || 'russia';
         var c = zoneColors[cat] || zoneColors.russia;
-        return {
-          color: c.color, weight: 2, opacity: 0.9,
-          fillColor: c.fillColor, fillOpacity: c.fillOpacity,
-          dashArray: c.dashArray || null
-        };
+        return { color: c.color, weight: 2, opacity: 0.9, fillColor: c.fillColor, fillOpacity: c.fillOpacity, dashArray: c.dashArray || null };
       },
       onEachFeature: function(f, layer) {
         var cat = (f.properties && f.properties.category) || 'russia';
@@ -744,14 +680,9 @@
         (res.data || []).forEach(function(row) {
           try {
             var geom = typeof row.geometry === 'string' ? JSON.parse(row.geometry) : row.geometry;
-            userZonesLayer.addData({
-              type: 'Feature',
-              properties: { id: row.id, category: row.category },
-              geometry: geom
-            });
-          } catch(e) { console.warn('Zone parse:', e.message); }
+            userZonesLayer.addData({ type: 'Feature', properties: { id: row.id, category: row.category }, geometry: geom });
+          } catch(e) {}
         });
-        console.log('Зон контроля загружено: ' + (res.data || []).length);
       });
     }
     loadUserZones();
@@ -759,18 +690,10 @@
     // ============================================================
     // DEEPSTATE + ISW
     // ============================================================
-    function polygonPopup(text) {
-      return function(f, layer) { layer.bindPopup('<b>' + text + '</b>'); };
-    }
-
-    var deepStateLayer = L.geoJSON(null, {
-      style: function() { return styleFor('#cc0000'); },
-      onEachFeature: polygonPopup(t('territoryRF'))
-    });
+    function polygonPopup(text) { return function(f, layer) { layer.bindPopup('<b>' + text + '</b>'); }; }
+    var deepStateLayer = L.geoJSON(null, { style: function() { return styleFor('#cc0000'); }, onEachFeature: polygonPopup(t('territoryRF')) });
     var counterLayer = L.geoJSON(null, {
-      style: function() {
-        return { color: '#0088cc', weight: 2, opacity: 0.85, fill: false, fillOpacity: 0, dashArray: '5,5' };
-      },
+      style: function() { return { color: '#0088cc', weight: 2, opacity: 0.85, fill: false, fillOpacity: 0, dashArray: '5,5' }; },
       onEachFeature: polygonPopup(t('counteroffensive'))
     });
 
@@ -799,15 +722,119 @@
     counterLayer.addTo(map);
 
     // ============================================================
+    // АВТОМАТИЧЕСКИЕ ЗОНЫ (Turf.js)
+    // ============================================================
+    var autoZonesLayer = L.geoJSON(null, {
+      style: function(f) {
+        var density = (f.properties && f.properties.density) || 1;
+        var color = density >= 15 ? '#8e0000' : density >= 8 ? '#cc3300' : '#ff6600';
+        return { color: color, weight: 2, opacity: 0.75, fillColor: color, fillOpacity: 0.18 };
+      },
+      onEachFeature: function(f, layer) {
+        var density = (f.properties && f.properties.density) || 0;
+        layer.bindPopup('<b>Зона активности</b><br>Событий: ' + density);
+      }
+    });
+    autoZonesLayer.addTo(map);
+
+    function buildAutoZones() {
+      if (!window.TG_DATA || !window.TG_DATA.events) return;
+      if (typeof turf === 'undefined') { console.warn('Turf.js не загружен'); return; }
+
+      // Только боевые события
+      var events = window.TG_DATA.events.filter(function(ev) {
+        if (!ev.lat || !ev.lng) return false;
+        return ['Military Strike', 'Military Operation', 'Military Offensive'].indexOf(ev.event_type) !== -1;
+      });
+      if (events.length < 5) { autoZonesLayer.clearLayers(); return; }
+
+      // Сетка ~20 км (0.2 градуса)
+      var gridSize = 0.2;
+      var grid = {};
+      events.forEach(function(ev) {
+        var key = Math.floor(ev.lat / gridSize) + '_' + Math.floor(ev.lng / gridSize);
+        if (!grid[key]) grid[key] = { count: 0, lat: 0, lng: 0 };
+        grid[key].count++;
+        grid[key].lat += ev.lat;
+        grid[key].lng += ev.lng;
+      });
+
+      // Горячие ячейки (>= 2 событий)
+      var hotspots = [];
+      Object.keys(grid).forEach(function(k) {
+        if (grid[k].count >= 2) {
+          hotspots.push({
+            count: grid[k].count,
+            lat: grid[k].lat / grid[k].count,
+            lng: grid[k].lng / grid[k].count
+          });
+        }
+      });
+      if (hotspots.length < 2) { autoZonesLayer.clearLayers(); return; }
+
+      // Кластеризация hotspots (~50 км)
+      var groups = [];
+      hotspots.forEach(function(h) {
+        var added = false;
+        for (var i = 0; i < groups.length; i++) {
+          var g = groups[i];
+          var dlat = Math.abs(g.lat / g.count - h.lat);
+          var dlng = Math.abs(g.lng / g.count - h.lng);
+          if (dlat < 0.5 && dlng < 0.5) {
+            g.count += h.count;
+            g.lat += h.lat;
+            g.lng += h.lng;
+            g.points.push([h.lng, h.lat]);
+            added = true;
+            break;
+          }
+        }
+        if (!added) {
+          groups.push({ count: h.count, lat: h.lat, lng: h.lng, points: [[h.lng, h.lat]] });
+        }
+      });
+
+      var features = [];
+      groups.forEach(function(g) {
+        if (g.points.length < 2) return;
+        try {
+          var fc = turf.featureCollection(g.points.map(function(p) { return turf.point(p); }));
+          var hull = turf.convex(fc);
+          if (!hull) {
+            // Если точки на одной линии — обводим буфером каждую и объединяем
+            var buffers = g.points.map(function(p) {
+              return turf.buffer(turf.point(p), 20, { units: 'kilometers' });
+            });
+            if (buffers.length > 0) {
+              var merged = buffers[0];
+              for (var i = 1; i < buffers.length; i++) {
+                try { merged = turf.union(merged, buffers[i]); } catch(e) {}
+              }
+              merged.properties = { density: g.count };
+              features.push(merged);
+            }
+            return;
+          }
+          var buffered = turf.buffer(hull, 25, { units: 'kilometers' });
+          buffered.properties = { density: g.count };
+          features.push(buffered);
+        } catch(e) { console.warn('Turf:', e.message); }
+      });
+
+      autoZonesLayer.clearLayers();
+      if (features.length > 0) {
+        autoZonesLayer.addData(turf.featureCollection(features));
+        console.log('Автоматических зон: ' + features.length);
+      }
+    }
+
+    // ============================================================
     // СОБЫТИЯ
     // ============================================================
     var WT_COLORS = {
-      'Air Raid Alert': '#e6a800',
-      'Military Strike': '#c62828',
-      'Military Operation': '#e65100',
-      'Military Offensive': '#8e0000',
-      'Security Incident': '#5a5a5a',
-      'Political Development': '#6a1b9a'
+      'Air Raid Alert': '#e6a800', 'Military Strike': '#c62828',
+      'Military Operation': '#e65100', 'Military Offensive': '#8e0000',
+      'Security Incident': '#5a5a5a', 'Political Development': '#6a1b9a'
     };
     var WT_LABELS = {
       'Air Raid Alert': 'raidAlert', 'Military Strike': 'strike',
@@ -874,7 +901,10 @@
         added++;
         panelEvents.push(ev);
       });
+
       renderEventsPanel(panelEvents);
+      // Автоматические зоны строим после загрузки событий
+      buildAutoZones();
     }
 
     function renderEventsPanel(events) {
@@ -884,9 +914,7 @@
         body.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' + t('noEvents') + '</div>';
         return;
       }
-      events.sort(function(a, b) {
-        return (b.date ? new Date(b.date).getTime() : 0) - (a.date ? new Date(a.date).getTime() : 0);
-      });
+      events.sort(function(a, b) { return (b.date ? new Date(b.date).getTime() : 0) - (a.date ? new Date(a.date).getTime() : 0); });
       var counts = {};
       events.forEach(function(ev) { counts[ev.event_type] = (counts[ev.event_type] || 0) + 1; });
       var html = '<div class="summary-box"><div class="summary-title">' + t('summaryTitle') + '</div>';
@@ -913,10 +941,7 @@
         item.addEventListener('click', function() {
           var lat = parseFloat(this.getAttribute('data-lat'));
           var lng = parseFloat(this.getAttribute('data-lng'));
-          if (!isNaN(lat) && !isNaN(lng)) {
-            map.setView([lat, lng], 13);
-            if (isMobile()) hideMobilePanels();
-          }
+          if (!isNaN(lat) && !isNaN(lng)) { map.setView([lat, lng], 13); if (isMobile()) hideMobilePanels(); }
         });
       });
     }
@@ -952,47 +977,31 @@
     var zoneDrawer = null;
     var zoneEditorPanel = document.getElementById('zoneEditorPanel');
 
-    // Кнопка открытия редактора
     document.getElementById('btnOpenZoneEditor').addEventListener('click', function() {
       closeLoginModal();
       zoneEditorPanel.classList.add('open');
     });
-
-    // Выбор категории
     document.querySelectorAll('#zoneEditorPanel .cat-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        document.querySelectorAll('#zoneEditorPanel .cat-btn').forEach(function(el) {
-          el.classList.remove('active');
-        });
+        document.querySelectorAll('#zoneEditorPanel .cat-btn').forEach(function(el) { el.classList.remove('active'); });
         this.classList.add('active');
         currentZoneCategory = this.getAttribute('data-cat');
       });
     });
-
-    // Начать рисование
     document.getElementById('btnDrawZone').addEventListener('click', function() {
       if (zoneDrawer) { try { zoneDrawer.disable(); } catch(e) {} zoneDrawer = null; }
       zoneDrawer = new L.Draw.Polygon(map, {
         allowIntersection: false,
-        shapeOptions: {
-          color: zoneColors[currentZoneCategory].color,
-          fillColor: zoneColors[currentZoneCategory].fillColor,
-          fillOpacity: 0.3,
-          weight: 2
-        }
+        shapeOptions: { color: zoneColors[currentZoneCategory].color, fillColor: zoneColors[currentZoneCategory].fillColor, fillOpacity: 0.3, weight: 2 }
       });
       zoneDrawer.enable();
     });
-
-    // Завершить / закрыть
     document.getElementById('btnFinishZones').addEventListener('click', function() {
       if (zoneDrawer) { try { zoneDrawer.disable(); } catch(e) {} zoneDrawer = null; }
       zoneEditorPanel.classList.remove('open');
     });
-
-    // Очистить все зоны
     document.getElementById('btnClearAllZones').addEventListener('click', function() {
-      if (!confirm('Удалить ВСЕ зоны контроля из базы? Это действие нельзя отменить.')) return;
+      if (!confirm('Удалить ВСЕ зоны контроля из базы?')) return;
       if (!sb) return;
       sb.from('control_zones').delete().neq('id', 0).then(function(res) {
         if (res.error) { alert('Ошибка: ' + res.error.message); return; }
@@ -1001,37 +1010,22 @@
       });
     });
 
-    // Обработка создания полигона
     map.on(L.Draw.Event.CREATED, function(e) {
-      var layer = e.layer;
-      var geometry = layer.toGeoJSON().geometry;
-
-      // Сохранение в Supabase
+      if (!zoneEditorPanel.classList.contains('open')) return;
+      var geometry = e.layer.toGeoJSON().geometry;
       if (sb) {
-        sb.from('control_zones').insert({
-          category: currentZoneCategory,
-          geometry: geometry
-        }).then(function(res) {
-          if (res.error) {
-            alert('Ошибка сохранения: ' + res.error.message);
-            return;
-          }
+        sb.from('control_zones').insert({ category: currentZoneCategory, geometry: geometry }).then(function(res) {
+          if (res.error) { alert('Ошибка: ' + res.error.message); return; }
           loadUserZones();
         });
       } else {
-        // Fallback — рисуем локально, если Supabase не работает
-        userZonesLayer.addData({
-          type: 'Feature',
-          properties: { category: currentZoneCategory },
-          geometry: geometry
-        });
+        userZonesLayer.addData({ type: 'Feature', properties: { category: currentZoneCategory }, geometry: geometry });
       }
-
       if (zoneDrawer) { try { zoneDrawer.disable(); } catch(e) {} zoneDrawer = null; }
     });
 
     // ============================================================
-    // ИНСТРУМЕНТЫ РИСОВАНИЯ
+    // ТУЛБАР РИСОВАНИЯ
     // ============================================================
     var drawingsLayer = new L.FeatureGroup();
     map.addLayer(drawingsLayer);
@@ -1040,8 +1034,7 @@
     function setActiveTool(tool) {
       currentTool = tool;
       document.querySelectorAll('#toolbar button[data-tool]').forEach(function(btn) {
-        if (btn.getAttribute('data-tool') === tool) btn.classList.add('active');
-        else btn.classList.remove('active');
+        if (btn.getAttribute('data-tool') === tool) btn.classList.add('active'); else btn.classList.remove('active');
       });
     }
     function deactivateDrawer() {
@@ -1064,11 +1057,8 @@
     }
 
     map.on(L.Draw.Event.CREATED, function(e) {
-      // Если открыт редактор зон — игнорируем этот обработчик
       if (zoneEditorPanel.classList.contains('open')) return;
-
       var layer = e.layer, type = e.layerType, tool = currentTool;
-
       if (tool === 'measure') {
         if (lastMeasureLayer) drawingsLayer.removeLayer(lastMeasureLayer);
         if (layer.setStyle) layer.setStyle({ color: '#ff00aa', weight: 3, dashArray: '8,4' });
@@ -1078,12 +1068,8 @@
         for (var i = 1; i < latlngs.length; i++) totalMeters += latlngs[i-1].distanceTo(latlngs[i]);
         var text = totalMeters >= 1000 ? (totalMeters / 1000).toFixed(2) + ' км' : Math.round(totalMeters) + ' м';
         layer.bindTooltip(text, { permanent: true, direction: 'center', className: 'measure-tooltip' }).openTooltip();
-        drawingsLayer.addLayer(layer);
-        lastMeasureLayer = layer;
-        saveDrawings(); deactivateDrawer();
-        return;
+        drawingsLayer.addLayer(layer); lastMeasureLayer = layer; saveDrawings(); deactivateDrawer(); return;
       }
-
       if (tool === 'arrow' && type === 'polyline') {
         var ll = layer.getLatLngs();
         if (ll.length > 0 && Array.isArray(ll[0])) ll = ll[0];
@@ -1101,7 +1087,6 @@
           saveDrawings(); deactivateDrawer(); return;
         }
       }
-
       if (layer.setStyle) {
         if (type === 'polygon' || type === 'rectangle' || type === 'circle') {
           layer.setStyle({ color: '#9933ff', weight: 2, fill: true, fillColor: '#9933ff', fillOpacity: 0.2 });
@@ -1110,14 +1095,11 @@
         }
       }
       if (type === 'marker') layer.bindPopup('Метка');
-      drawingsLayer.addLayer(layer);
-      saveDrawings(); deactivateDrawer();
+      drawingsLayer.addLayer(layer); saveDrawings(); deactivateDrawer();
     });
 
     var DRAWINGS_KEY = 'osint_user_drawings';
-    function saveDrawings() {
-      try { localStorage.setItem(DRAWINGS_KEY, JSON.stringify(drawingsLayer.toGeoJSON())); } catch(e) {}
-    }
+    function saveDrawings() { try { localStorage.setItem(DRAWINGS_KEY, JSON.stringify(drawingsLayer.toGeoJSON())); } catch(e) {} }
     function loadDrawings() {
       try {
         var raw = localStorage.getItem(DRAWINGS_KEY);
@@ -1167,13 +1149,7 @@
       toolbar.querySelectorAll('button[data-tool]').forEach(function(btn) {
         btn.addEventListener('click', function() {
           var tool = this.getAttribute('data-tool');
-          if (tool === 'clear') {
-            if (confirm(t('clearConfirm'))) {
-              drawingsLayer.clearLayers(); lastMeasureLayer = null;
-              localStorage.removeItem(DRAWINGS_KEY);
-            }
-            return;
-          }
+          if (tool === 'clear') { if (confirm(t('clearConfirm'))) { drawingsLayer.clearLayers(); lastMeasureLayer = null; localStorage.removeItem(DRAWINGS_KEY); } return; }
           if (tool === 'theme') { applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); return; }
           if (tool === 'info') { alert(t('aboutText')); return; }
           if (tool === 'donate') { window.open(DONATE_URL, '_blank'); return; }
@@ -1184,6 +1160,9 @@
     renderToolbar();
     loadDrawings();
 
+    // ============================================================
+    // ПАНЕЛЬ ФИЛЬТРОВ
+    // ============================================================
     var panel = L.control({ position: 'topright' });
     panel.onAdd = function() {
       var div = L.DomUtil.create('div', 'control-panel');
@@ -1196,6 +1175,8 @@
         html += '<h4>' + t('controlZones') + '</h4>';
         html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
         html += '<label><input type="checkbox" id="chkCounter" checked> ' + t('counteroffensive') + '</label>';
+        html += '<label><input type="checkbox" id="chkAutoZones" checked> ' + t('autoZones') + '</label>';
+        html += '<label><input type="checkbox" id="chkUserZones" checked> ' + t('userZones') + '</label>';
         html += '<hr><h4>' + t('telegramEvents') + '</h4>';
         html += '<label><input type="checkbox" id="chkTg" checked> ' + t('eventsPanelTitle') + '</label>';
         [
@@ -1228,6 +1209,14 @@
         var chkCounter = div.querySelector('#chkCounter');
         if (chkCounter) chkCounter.addEventListener('change', function() {
           if (this.checked) counterLayer.addTo(map); else map.removeLayer(counterLayer);
+        });
+        var chkAuto = div.querySelector('#chkAutoZones');
+        if (chkAuto) chkAuto.addEventListener('change', function() {
+          if (this.checked) autoZonesLayer.addTo(map); else map.removeLayer(autoZonesLayer);
+        });
+        var chkUser = div.querySelector('#chkUserZones');
+        if (chkUser) chkUser.addEventListener('change', function() {
+          if (this.checked) userZonesLayer.addTo(map); else map.removeLayer(userZonesLayer);
         });
         var chkTg = div.querySelector('#chkTg');
         if (chkTg) chkTg.addEventListener('change', function() {
@@ -1269,20 +1258,17 @@
       return div;
     };
     legend.addTo(map);
-
-    function updateLegend() {
-      var div = document.querySelector('.info.legend');
-      if (div) updateLegendInDiv(div);
-    }
+    function updateLegend() { var div = document.querySelector('.info.legend'); if (div) updateLegendInDiv(div); }
     function updateLegendInDiv(div) {
       var html = '<h4>' + t('controlZones') + '</h4>';
       html += '<div><i style="background:#cc0000;"></i> ' + t('territoryRF') + '</div>';
       html += '<div><span class="legend-line" style="background:#0088cc;"></span> ' + t('counteroffensive') + '</div>';
+      html += '<div><i style="background:#ff6600;"></i> ' + t('autoZones') + '</div>';
       html += '<hr><h4>' + t('telegramEvents') + '</h4>';
       ['Air Raid Alert','Military Strike','Military Operation','Military Offensive','Security Incident','Political Development'].forEach(function(type) {
         html += '<div><span class="legend-svg" style="color:' + wtColor(type) + ';">' + wtSvg(type) + '</span> ' + t(WT_LABELS[type]) + '</div>';
       });
-      html += '<hr><div style="font-size:11px;color:var(--text-muted);">Telegram · DeepStateMap · ISW</div>';
+      html += '<hr><div style="font-size:11px;color:var(--text-muted);">Telegram · DeepStateMap · ISW · Turf</div>';
       div.innerHTML = html;
     }
 
