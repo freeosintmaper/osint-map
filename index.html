@@ -319,6 +319,25 @@
     body.dark .leaflet-popup-tip { background: var(--bg-panel); color: var(--text-main); }
     body.dark .leaflet-popup-content a { color: #6ba6ff; }
 
+    #mobileToggle {
+      display: none; position: fixed; top: 10px; right: 10px; z-index: 5000;
+      gap: 8px;
+    }
+    #mobileToggle button {
+      width: 48px; height: 48px;
+      background: var(--bg-panel); color: var(--text-main);
+      border: 1px solid var(--border-mid); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 2px 8px var(--shadow);
+      transition: all 0.15s;
+    }
+    #mobileToggle button.active { background: #0066ff; color: #fff; border-color: #0066ff; }
+    #mobileToggle button svg {
+      width: 24px; height: 24px;
+      stroke: currentColor; stroke-width: 2;
+      fill: none; stroke-linecap: round; stroke-linejoin: round;
+    }
+
     @media (max-width: 768px) {
       #eventsPanel { left: 0; right: 0; top: 66px; bottom: 0; width: auto;
                      border-radius: 12px 12px 0 0; z-index: 4000; display: none; }
@@ -342,28 +361,60 @@
       .leaflet-control-zoom { display: none !important; }
       .event-icon { width: 36px; height: 36px; border-width: 2px; }
       .event-icon svg { width: 20px; height: 20px; }
-      #mobileToggle { display: flex; }
+      #mobileToggle { display: flex !important; }
       #userBtn { top: 10px; left: 10px; width: 48px; height: 48px; }
-      #zoneEditorPanel { top: 66px; left: 8px; right: 8px; width: auto; }
-    }
 
-    #mobileToggle {
-      display: none; position: fixed; top: 10px; right: 10px; z-index: 5000;
-      gap: 8px;
-    }
-    #mobileToggle button {
-      width: 48px; height: 48px;
-      background: var(--bg-panel); color: var(--text-main);
-      border: 1px solid var(--border-mid); border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; box-shadow: 0 2px 8px var(--shadow);
-      transition: all 0.15s;
-    }
-    #mobileToggle button.active { background: #0066ff; color: #fff; border-color: #0066ff; }
-    #mobileToggle button svg {
-      width: 24px; height: 24px;
-      stroke: currentColor; stroke-width: 2;
-      fill: none; stroke-linecap: round; stroke-linejoin: round;
+      #loginModal {
+        width: 100vw; max-width: 100vw;
+        max-height: 100vh; height: auto;
+        border-radius: 0;
+        padding: 24px 20px;
+      }
+      #loginModal h3 { font-size: 20px; margin-bottom: 20px; }
+      #loginModal label { font-size: 14px; margin-bottom: 6px; }
+      #loginModal input[type="email"],
+      #loginModal input[type="password"] {
+        padding: 14px 16px; font-size: 16px; margin-bottom: 16px;
+      }
+      #loginModal button {
+        padding: 14px 20px; font-size: 16px; min-height: 48px;
+        flex: 1;
+      }
+      #loginModal .row { gap: 12px; margin-top: 16px; }
+      #loginModal .full-btn {
+        padding: 16px 18px; font-size: 15px; min-height: 52px;
+      }
+      #loginModal .admin-section h4 { font-size: 13px; }
+
+      #zoneEditorPanel {
+        top: 66px; left: 8px; right: 8px; width: auto;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+        padding: 16px;
+        border-radius: 12px;
+      }
+      #zoneEditorPanel h4 { font-size: 13px; margin-bottom: 12px; }
+      #zoneEditorPanel .cat-btn {
+        padding: 14px 14px; min-height: 52px;
+        font-size: 15px; gap: 12px;
+        margin: 6px 0;
+      }
+      #zoneEditorPanel .swatch { width: 24px; height: 24px; border-radius: 6px; }
+      #zoneEditorPanel .zone-actions button {
+        padding: 14px 12px; min-height: 50px;
+        font-size: 14px; margin: 8px 0;
+      }
+      #zoneEditorPanel .hint {
+        font-size: 12px; padding: 12px; margin-top: 12px;
+        line-height: 1.5;
+      }
+
+      .leaflet-popup-content button.zone-btn-edit,
+      .leaflet-popup-content button.zone-btn-delete {
+        padding: 12px 14px !important;
+        font-size: 14px !important;
+        min-height: 46px !important;
+      }
     }
   </style>
 </head>
@@ -483,11 +534,8 @@
       if (sbFactory) sb = sbFactory(SB_URL, SB_KEY);
     } catch (e) { console.warn('Supabase:', e.message); }
 
-    var DONATE_URL = 'https://www.donationalerts.com/r/freeosintmapper';
+    var DONATE_URL = '';
 
-    // ============================================================
-    // ИСТОЧНИК ДАННЫХ PROJECT OWL
-    // ============================================================
     var OWL_KMZ_URL = 'https://raw.githack.com/owlmaps/UAControlMapBackups/latest/latest.kmz';
     var OWL_CACHE_KEY = 'owl_zones_cache_v1';
     var OWL_CACHE_DATE = 'owl_zones_cache_date';
@@ -572,9 +620,6 @@
     var currentLang = 'ru';
     function t(key) { return (i18n[currentLang] && i18n[currentLang][key]) || (i18n.ru[key]) || key; }
 
-    // ============================================================
-    // ЛОГИН
-    // ============================================================
     var loginOverlay = document.getElementById('loginOverlay');
     var loginStatus = document.getElementById('loginStatus');
     var loginFormBlock = document.getElementById('loginFormBlock');
@@ -627,9 +672,6 @@
       if (res.data && res.data.session) userBtn.classList.add('logged-in');
     });
 
-    // ============================================================
-    // ОБЩИЕ ПЕРЕМЕННЫЕ
-    // ============================================================
     var OPACITY_KEY = 'osint_opacity';
     var MODE_KEY = 'osint_mode';
     var THEME_KEY = 'osint_theme';
@@ -711,9 +753,6 @@
     var darkTile = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri', maxZoom: 16 });
     if (currentTheme === 'dark') { darkTile.addTo(map); document.body.classList.add('dark'); } else lightTile.addTo(map);
 
-    // ============================================================
-    // КАРТА АВТОРА (зоны из Supabase)
-    // ============================================================
     var zoneColors = {
       'russia': { color: '#cc0000', fillColor: '#cc0000', fillOpacity: 0.25, label: 'Территория РФ' },
       'ukraine': { color: '#0055cc', fillColor: '#0055cc', fillOpacity: 0.25, label: 'Территория Украины' },
@@ -786,9 +825,6 @@
     }
     loadUserZones();
 
-    // ============================================================
-    // РЕДАКТИРОВАНИЕ И УДАЛЕНИЕ ОТДЕЛЬНЫХ ЗОН
-    // ============================================================
     var editingLayer = null;
 
     function startEditZone(layer) {
@@ -834,9 +870,6 @@
       editingLayer = null;
     });
 
-    // ============================================================
-    // DEEPSTATE + PROJECT OWL
-    // ============================================================
     function polygonPopup(text) { return function(f, layer) { layer.bindPopup('<b>' + text + '</b>'); }; }
     var deepStateLayer = L.geoJSON(null, { style: function() { return styleFor('#cc0000'); }, onEachFeature: polygonPopup(t('territoryRF')) });
 
@@ -878,9 +911,6 @@
       })
       .catch(function(err) { console.warn('DeepStateMap:', err.message); });
 
-    // ============================================================
-    // КАТЕГОРИЗАЦИЯ PROJECT OWL ПО ИМЕНИ
-    // ============================================================
     function categorizeOwlPolygon(name, styleUrl) {
       if (!name) return 'unknown';
       var n = name.toLowerCase();
@@ -914,9 +944,6 @@
       return false;
     }
 
-    // ============================================================
-    // ЗАГРУЗКА PROJECT OWL (KMZ)
-    // ============================================================
     function showOwlLoader(on) {
       var el = document.getElementById('owlLoader');
       if (el) { if (on) el.classList.add('open'); else el.classList.remove('open'); }
@@ -1010,9 +1037,6 @@
     deepStateLayer.addTo(map);
     owlControlLayer.addTo(map);
 
-    // ============================================================
-    // СОБЫТИЯ
-    // ============================================================
     var WT_COLORS = {
       'Air Raid Alert': '#e6a800', 'Military Strike': '#c62828',
       'Military Operation': '#e65100', 'Military Offensive': '#8e0000',
@@ -1148,9 +1172,6 @@
     });
     map.on('click', function() { if (isMobile()) hideMobilePanels(); });
 
-    // ============================================================
-    // РЕДАКТОР ЗОН
-    // ============================================================
     var currentZoneCategory = 'russia';
     var zoneDrawer = null;
     var zoneEditorPanel = document.getElementById('zoneEditorPanel');
@@ -1209,9 +1230,6 @@
       if (zoneDrawer) { try { zoneDrawer.disable(); } catch(e) {} zoneDrawer = null; }
     });
 
-    // ============================================================
-    // ТУЛБАР РИСОВАНИЯ
-    // ============================================================
     var drawingsLayer = new L.FeatureGroup();
     map.addLayer(drawingsLayer);
     var currentDrawer = null, currentTool = null, lastMeasureLayer = null;
@@ -1345,9 +1363,6 @@
     renderToolbar();
     loadDrawings();
 
-    // ============================================================
-    // ПАНЕЛЬ ФИЛЬТРОВ
-    // ============================================================
     var panel = L.control({ position: 'topright' });
     panel.onAdd = function() {
       var div = L.DomUtil.create('div', 'control-panel');
