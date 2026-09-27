@@ -46,6 +46,22 @@
     .event-icon svg { width: 16px; height: 16px; fill: #fff; display: block; pointer-events: none; }
     body.dark .event-icon { border-color: #1e1e2e; }
 
+    /* ============ ИЗМЕРЕНИЕ РАССТОЯНИЯ ============ */
+    .measure-tooltip {
+      background: rgba(255, 0, 170, 0.95) !important;
+      color: #fff !important;
+      border: none !important;
+      padding: 3px 8px !important;
+      border-radius: 4px !important;
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.4) !important;
+      white-space: nowrap !important;
+    }
+    .measure-tooltip::before {
+      display: none !important;
+    }
+
     /* ============ ПАНЕЛЬ ФИЛЬТРОВ ============ */
     .control-panel {
       background: var(--bg-panel); color: var(--text-main);
@@ -138,7 +154,8 @@
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
       background: var(--bg-panel); border-radius: 8px; padding: 6px;
       box-shadow: 0 2px 8px var(--shadow); display: flex; gap: 4px; z-index: 1000;
-      max-width: calc(100vw - 20px); overflow-x: auto;
+      flex-wrap: wrap; justify-content: center;
+      /* УБРАНО max-width и overflow-x — тултипы больше не обрезаются */
     }
     #toolbar button {
       width: 42px; height: 42px; flex: 0 0 auto; border: 1px solid var(--border-mid);
@@ -156,6 +173,7 @@
       background: var(--tooltip-bg); color: var(--tooltip-color);
       padding: 4px 8px; border-radius: 4px; font-size: 11px; white-space: nowrap;
       opacity: 0; pointer-events: none; transition: opacity 0.15s; margin-bottom: 6px;
+      z-index: 9999;
     }
     #toolbar button:hover .tooltip { opacity: 1; }
     #toolbar .sep { width: 1px; background: var(--border-mid); margin: 4px 2px; flex: 0 0 auto; }
@@ -195,10 +213,8 @@
 
     /* ============ МОБИЛЬНАЯ АДАПТАЦИЯ ============ */
     @media (max-width: 768px) {
-      /* Показываем кнопки */
       #mobileToggle { display: flex; }
 
-      /* По умолчанию всё скрыто */
       #eventsPanel,
       .control-panel,
       .info.legend,
@@ -206,53 +222,38 @@
         display: none !important;
       }
 
-      /* Показываем активную панель */
       body.show-events #eventsPanel { display: flex !important; }
       body.show-filters .control-panel { display: block !important; }
       body.show-tools #toolbar { display: flex !important; }
-      body.show-legend .info.legend { display: block !important; }
 
-      /* Панель событий — на весь экран */
       #eventsPanel {
         left: 0; right: 0; top: 66px; bottom: 0;
         width: auto; max-width: 100%; max-height: none;
         border-radius: 12px 12px 0 0;
         z-index: 4000;
-        transform: translateY(0);
       }
-      #eventsPanel .panel-header {
-        padding: 12px 16px; font-size: 14px;
-      }
+      #eventsPanel .panel-header { padding: 12px 16px; font-size: 14px; }
       #eventsPanel .event-item { padding: 10px 16px; }
       #eventsPanel .event-item .evt-type { font-size: 13px; }
 
-      /* Панель фильтров — на весь экран */
       .control-panel {
         position: fixed !important;
         left: 8px; right: 8px; top: 66px; bottom: 8px;
         max-width: none !important; max-height: none !important;
-        width: auto;
-        z-index: 4000;
-        padding: 14px 16px;
-        overflow-y: auto;
+        width: auto; z-index: 4000; padding: 14px 16px; overflow-y: auto;
       }
       .control-panel label { padding: 8px 0; font-size: 14px; }
       .control-panel label input[type="checkbox"] { width: 20px; height: 20px; }
       .lang-btn { padding: 8px; font-size: 14px; }
 
-      /* Легенда — на весь экран */
       .info.legend {
         position: fixed !important;
         left: 8px; right: 8px; top: 66px; bottom: 8px;
         max-width: none !important; max-height: none !important;
-        width: auto;
-        z-index: 4000;
-        padding: 14px 16px;
-        font-size: 13px;
-        overflow-y: auto;
+        width: auto; z-index: 4000; padding: 14px 16px;
+        font-size: 13px; overflow-y: auto;
       }
 
-      /* Тулбар — внизу полосой */
       #toolbar {
         left: 8px; right: 8px; bottom: 8px; transform: none;
         max-width: none;
@@ -269,10 +270,8 @@
       #toolbar button .tooltip { display: none; }
       #toolbar .sep { display: none; }
 
-      /* Leaflet zoom убираем на мобилке — жесты работают */
       .leaflet-control-zoom { display: none !important; }
 
-      /* Иконки на карте крупнее */
       .event-icon { width: 36px; height: 36px; border-width: 2px; }
       .event-icon svg { width: 20px; height: 20px; }
     }
@@ -289,7 +288,6 @@
   <div id="map"></div>
   <div id="errorBox"></div>
 
-  <!-- Кнопки для мобильных -->
   <div id="mobileToggle">
     <button id="btnShowEvents" title="События">
       <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -302,7 +300,6 @@
     </button>
   </div>
 
-  <!-- Панель событий -->
   <div id="eventsPanel">
     <div class="panel-header">
       <span id="eventsPanelTitle">События</span>
@@ -697,9 +694,7 @@
           var lng = parseFloat(this.getAttribute('data-lng'));
           if (!isNaN(lat) && !isNaN(lng)) {
             map.setView([lat, lng], 13);
-            if (isMobile()) {
-              hideMobilePanels();
-            }
+            if (isMobile()) hideMobilePanels();
           }
         });
       });
@@ -724,31 +719,19 @@
     document.getElementById('btnShowEvents').addEventListener('click', function() {
       var active = document.body.classList.contains('show-events');
       hideMobilePanels();
-      if (!active) {
-        document.body.classList.add('show-events');
-        this.classList.add('active');
-      }
+      if (!active) { document.body.classList.add('show-events'); this.classList.add('active'); }
     });
-
     document.getElementById('btnShowFilters').addEventListener('click', function() {
       var active = document.body.classList.contains('show-filters');
       hideMobilePanels();
-      if (!active) {
-        document.body.classList.add('show-filters');
-        this.classList.add('active');
-      }
+      if (!active) { document.body.classList.add('show-filters'); this.classList.add('active'); }
     });
-
     document.getElementById('btnShowTools').addEventListener('click', function() {
       var active = document.body.classList.contains('show-tools');
       hideMobilePanels();
-      if (!active) {
-        document.body.classList.add('show-tools');
-        this.classList.add('active');
-      }
+      if (!active) { document.body.classList.add('show-tools'); this.classList.add('active'); }
     });
 
-    // Клик по карте скрывает панели на мобилке
     map.on('click', function() {
       if (isMobile()) hideMobilePanels();
     });
@@ -788,11 +771,43 @@
 
     map.on(L.Draw.Event.CREATED, function(e) {
       var layer = e.layer, type = e.layerType, tool = currentTool;
+
+      // ============ ИЗМЕРЕНИЕ РАССТОЯНИЯ ============
       if (tool === 'measure') {
         if (lastMeasureLayer) drawingsLayer.removeLayer(lastMeasureLayer);
         if (layer.setStyle) layer.setStyle({ color: '#ff00aa', weight: 3, dashArray: '8,4' });
+
+        // Считаем общее расстояние
+        var latlngs = layer.getLatLngs();
+        if (latlngs.length > 0 && Array.isArray(latlngs[0])) latlngs = latlngs[0];
+
+        var totalMeters = 0;
+        for (var i = 1; i < latlngs.length; i++) {
+          totalMeters += latlngs[i-1].distanceTo(latlngs[i]);
+        }
+
+        var text;
+        if (totalMeters >= 1000) {
+          text = (totalMeters / 1000).toFixed(2) + ' км';
+        } else {
+          text = Math.round(totalMeters) + ' м';
+        }
+
+        // Показываем постоянный тултип с расстоянием по центру линии
+        layer.bindTooltip(text, {
+          permanent: true,
+          direction: 'center',
+          className: 'measure-tooltip'
+        }).openTooltip();
+
+        drawingsLayer.addLayer(layer);
         lastMeasureLayer = layer;
+        saveDrawings();
+        deactivateDrawer();
+        return;
       }
+
+      // ============ СТРЕЛКА ============
       if (tool === 'arrow' && type === 'polyline') {
         var latlngs = layer.getLatLngs();
         if (latlngs.length > 0 && Array.isArray(latlngs[0])) latlngs = latlngs[0];
@@ -810,6 +825,7 @@
           saveDrawings(); deactivateDrawer(); return;
         }
       }
+
       if (layer.setStyle) {
         if (type === 'polygon' || type === 'rectangle' || type === 'circle') {
           layer.setStyle({ color: '#9933ff', weight: 2, fill: true, fillColor: '#9933ff', fillOpacity: 0.2 });
@@ -837,7 +853,16 @@
           onEachFeature: function(feature, layer) {
             if (feature.geometry.type === 'Point') layer.setStyle && layer.setStyle({ color: '#ff3366', weight: 2 });
             else if (feature.geometry.type === 'Polygon') layer.setStyle && layer.setStyle({ color: '#9933ff', weight: 2, fill: true, fillColor: '#9933ff', fillOpacity: 0.2 });
-            else if (feature.geometry.type === 'LineString') layer.setStyle && layer.setStyle({ color: '#ff3366', weight: 3 });
+            else if (feature.geometry.type === 'LineString') {
+              layer.setStyle && layer.setStyle({ color: '#ff3366', weight: 3 });
+              // Восстанавливаем расстояние для сохранённых измерений
+              var ll = layer.getLatLngs();
+              if (ll.length > 0 && Array.isArray(ll[0])) ll = ll[0];
+              var tm = 0;
+              for (var i = 1; i < ll.length; i++) tm += ll[i-1].distanceTo(ll[i]);
+              var t2 = tm >= 1000 ? (tm / 1000).toFixed(2) + ' км' : Math.round(tm) + ' м';
+              layer.bindTooltip(t2, { permanent: true, direction: 'center', className: 'measure-tooltip' }).openTooltip();
+            }
             drawingsLayer.addLayer(layer);
           }
         });
