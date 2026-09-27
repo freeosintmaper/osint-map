@@ -23,12 +23,10 @@
       --border-soft: #2a2a3a; --shadow: rgba(0,0,0,0.6);
       --tooltip-bg: #000000; --tooltip-color: #ffffff;
     }
-
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body { margin: 0; font-family: system-ui, -apple-system, sans-serif;
            background: var(--bg-panel); overscroll-behavior: none; }
     #map { height: 100vh; height: 100dvh; width: 100%; }
-
     #errorBox {
       position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
       background: #ffebee; color: #c62828; padding: 12px 20px;
@@ -36,7 +34,7 @@
       font-size: 13px; z-index: 99999; max-width: 90%; display: none;
     }
 
-    /* ============ КНОПКА ПОЛЬЗОВАТЕЛЯ (левый верх) ============ */
+    /* Кнопка пользователя */
     #userBtn {
       position: fixed; top: 12px; left: 12px; z-index: 5000;
       width: 44px; height: 44px;
@@ -54,7 +52,7 @@
       fill: none; stroke-linecap: round; stroke-linejoin: round;
     }
 
-    /* ============ МОДАЛКА ВХОДА ============ */
+    /* Модалка входа / админки */
     #loginOverlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.55);
       z-index: 10000; display: none;
@@ -63,13 +61,12 @@
     #loginOverlay.open { display: flex; }
     #loginModal {
       background: var(--bg-panel); color: var(--text-main);
-      border-radius: 12px; padding: 24px; width: 320px; max-width: 90vw;
+      border-radius: 12px; padding: 24px; width: 340px; max-width: 90vw;
+      max-height: 85vh; overflow-y: auto;
       box-shadow: 0 4px 24px rgba(0,0,0,0.4);
       font-family: system-ui, sans-serif;
     }
-    #loginModal h3 {
-      margin: 0 0 16px; font-size: 18px; color: var(--text-main);
-    }
+    #loginModal h3 { margin: 0 0 16px; font-size: 18px; }
     #loginModal label {
       display: block; font-size: 12px; color: var(--text-secondary);
       margin-bottom: 4px;
@@ -87,16 +84,10 @@
       background: var(--bg-input); color: var(--text-main);
       cursor: pointer; font-size: 14px; transition: all 0.15s;
     }
-    #loginModal button.primary {
-      background: #0066ff; color: #fff; border-color: #0066ff;
-    }
-    #loginModal button.danger {
-      color: #c00; border-color: #f0c0c0;
-    }
+    #loginModal button.primary { background: #0066ff; color: #fff; border-color: #0066ff; }
+    #loginModal button.danger { color: #c00; border-color: #f0c0c0; }
     #loginModal button:hover { opacity: 0.9; }
-    #loginModal .row {
-      display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px;
-    }
+    #loginModal .row { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }
     #loginModal .status {
       padding: 8px 12px; border-radius: 6px; font-size: 13px;
       margin-bottom: 12px;
@@ -108,8 +99,71 @@
       border-radius: 6px; font-size: 13px; color: var(--text-secondary);
       margin-bottom: 12px;
     }
+    #loginModal .admin-section {
+      border-top: 1px solid var(--border-light);
+      padding-top: 12px; margin-top: 12px;
+    }
+    #loginModal .admin-section h4 {
+      margin: 0 0 8px; font-size: 12px; text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    #loginModal .full-btn {
+      display: block; width: 100%; margin: 6px 0;
+      text-align: left; padding: 10px 14px;
+      background: var(--bg-input); border: 1px solid var(--border-mid);
+      border-radius: 6px; cursor: pointer; font-size: 13px;
+      color: var(--text-main); transition: all 0.15s;
+    }
+    #loginModal .full-btn:hover { background: var(--bg-hover); border-color: #0066ff; }
 
-    /* ============ ПАНЕЛЬ ФИЛЬТРОВ ============ */
+    /* Панель редактирования зон */
+    #zoneEditorPanel {
+      position: fixed; top: 66px; left: 66px; z-index: 6000;
+      background: var(--bg-panel); color: var(--text-main);
+      border-radius: 8px; padding: 14px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      font-family: system-ui, sans-serif; font-size: 13px;
+      width: 240px; display: none;
+    }
+    #zoneEditorPanel.open { display: block; }
+    #zoneEditorPanel h4 {
+      margin: 0 0 10px; font-size: 12px; text-transform: uppercase;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-light); padding-bottom: 6px;
+    }
+    #zoneEditorPanel .cat-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 10px; margin: 4px 0;
+      border: 2px solid transparent; border-radius: 6px;
+      background: var(--bg-input); cursor: pointer;
+      font-size: 13px; color: var(--text-main);
+      transition: all 0.15s;
+    }
+    #zoneEditorPanel .cat-btn:hover { background: var(--bg-hover); }
+    #zoneEditorPanel .cat-btn.active { border-color: #0066ff; background: #eef5ff; }
+    body.dark #zoneEditorPanel .cat-btn.active { background: #1a2a4a; }
+    #zoneEditorPanel .swatch {
+      width: 18px; height: 18px; border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.2);
+    }
+    #zoneEditorPanel .zone-actions {
+      margin-top: 12px; padding-top: 10px;
+      border-top: 1px solid var(--border-light);
+    }
+    #zoneEditorPanel .zone-actions button {
+      display: block; width: 100%; margin: 4px 0; padding: 8px;
+      border: 1px solid var(--border-mid); background: var(--bg-input);
+      color: var(--text-main); border-radius: 6px; cursor: pointer;
+      font-size: 12px;
+    }
+    #zoneEditorPanel .zone-actions button:hover { background: var(--bg-hover); }
+    #zoneEditorPanel .zone-actions button.danger { color: #c00; border-color: #f0c0c0; }
+    #zoneEditorPanel .hint {
+      margin-top: 8px; padding: 8px; background: var(--bg-summary);
+      border-radius: 6px; font-size: 11px; color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
     .control-panel {
       background: var(--bg-panel); color: var(--text-main);
       padding: 12px 14px; border-radius: 8px;
@@ -134,7 +188,6 @@
       border-radius: 4px; cursor: pointer; font-size: 12px; text-align: center; transition: all 0.2s;
     }
     .lang-btn.active { background: #0066ff; color: #fff; border-color: #0066ff; }
-
     .opacity-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
     .opacity-row label { flex: 0 0 auto; font-size: 12px; color: var(--text-secondary); }
     .opacity-row input[type="range"] { flex: 1; cursor: pointer; accent-color: #0066ff; }
@@ -278,9 +331,9 @@
       .leaflet-control-zoom { display: none !important; }
       .event-icon { width: 36px; height: 36px; border-width: 2px; }
       .event-icon svg { width: 20px; height: 20px; }
-
       #mobileToggle { display: flex; }
       #userBtn { top: 10px; left: 10px; width: 48px; height: 48px; }
+      #zoneEditorPanel { top: 66px; left: 8px; right: 8px; width: auto; }
     }
 
     #mobileToggle {
@@ -307,16 +360,15 @@
   <div id="map"></div>
   <div id="errorBox"></div>
 
-  <!-- Кнопка пользователя в левом верхнем углу -->
   <button id="userBtn" title="Вход для админа">
     <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
   </button>
 
-  <!-- Модалка входа -->
   <div id="loginOverlay">
     <div id="loginModal">
       <h3 id="loginModalTitle">Вход для админа</h3>
       <div id="loginStatus" style="display:none;"></div>
+
       <div id="loginFormBlock">
         <label>Email</label>
         <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="username">
@@ -327,19 +379,51 @@
           <button id="btnLoginSubmit" class="primary">Войти</button>
         </div>
       </div>
+
       <div id="loginAdminBlock" style="display:none;">
         <div class="admin-info">
-          ✅ Вы вошли как админ.<br>
-          Функционал управления зонами контроля появится следующим шагом.
+          ✅ Вы вошли как админ.
         </div>
-        <div class="row">
+
+        <div class="admin-section">
+          <h4>Зоны контроля</h4>
+          <button class="full-btn" id="btnOpenZoneEditor">✏️ Редактировать зоны</button>
+        </div>
+
+        <div class="row" style="margin-top:12px;">
           <button id="btnLogout" class="danger">Выйти</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Мобильные кнопки -->
+  <!-- Панель редактора зон -->
+  <div id="zoneEditorPanel">
+    <h4>Что рисуем?</h4>
+    <div class="cat-btn active" data-cat="russia">
+      <div class="swatch" style="background:#cc0000;"></div>
+      <div>Территория РФ</div>
+    </div>
+    <div class="cat-btn" data-cat="ukraine">
+      <div class="swatch" style="background:#0055cc;"></div>
+      <div>Территория Украины</div>
+    </div>
+    <div class="cat-btn" data-cat="grey">
+      <div class="swatch" style="background:#888888;"></div>
+      <div>Серая зона</div>
+    </div>
+
+    <div class="zone-actions">
+      <button id="btnDrawZone">✏️ Нарисовать полигон</button>
+      <button id="btnFinishZones">✅ Готово (закрыть)</button>
+      <button id="btnClearAllZones" class="danger">🗑️ Удалить все зоны</button>
+    </div>
+
+    <div class="hint">
+      Выбери категорию, нажми «Нарисовать полигон» и обведи территорию на карте. Клик по первому узлу — завершить.
+    </div>
+  </div>
+
   <div id="mobileToggle">
     <button id="btnShowEvents" title="События">
       <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -374,7 +458,7 @@
     function isMobile() { return window.innerWidth <= 768; }
   </script>
 
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="./lib/supabase.js"></script>
   <script src="./data/telegram-events.js"></script>
   <script src="./lib/leaflet.js"></script>
   <script src="./lib/leaflet-draw.js"></script>
@@ -391,6 +475,7 @@
     try {
       var sbFactory = window.supabase && window.supabase.createClient;
       if (sbFactory) sb = sbFactory(SB_URL, SB_KEY);
+      else console.warn('Supabase: библиотека не загрузилась');
     } catch (e) { console.warn('Supabase:', e.message); }
 
     var DONATE_URL = 'https://www.donationalerts.com/r/freeosintmapper';
@@ -467,73 +552,49 @@
       loginOverlay.classList.add('open');
       if (sb) {
         sb.auth.getSession().then(function(res) {
-          if (res.data && res.data.session) {
-            showAdminView();
-          } else {
-            showFormView();
-          }
+          if (res.data && res.data.session) showAdminView();
+          else showFormView();
         });
       } else {
         showFormView();
       }
     }
-
     function closeLoginModal() {
       loginOverlay.classList.remove('open');
       loginStatus.style.display = 'none';
     }
-
     function showFormView() {
       loginFormBlock.style.display = 'block';
       loginAdminBlock.style.display = 'none';
       document.getElementById('loginModalTitle').textContent = 'Вход для админа';
     }
-
     function showAdminView() {
       loginFormBlock.style.display = 'none';
       loginAdminBlock.style.display = 'block';
       document.getElementById('loginModalTitle').textContent = 'Админ-панель';
       userBtn.classList.add('logged-in');
     }
-
     function logout() {
       if (sb) {
         sb.auth.signOut().then(function() {
           userBtn.classList.remove('logged-in');
+          document.getElementById('zoneEditorPanel').classList.remove('open');
           closeLoginModal();
         });
-      } else {
-        userBtn.classList.remove('logged-in');
-        closeLoginModal();
       }
     }
-
     function submitLogin() {
       var email = document.getElementById('loginEmail').value.trim();
       var password = document.getElementById('loginPassword').value;
       loginStatus.style.display = 'block';
       loginStatus.className = 'status err';
-
-      if (!email || !password) {
-        loginStatus.textContent = 'Введите email и пароль';
-        return;
-      }
-      if (!sb) {
-        loginStatus.textContent = 'Нет подключения к базе';
-        return;
-      }
-
+      if (!email || !password) { loginStatus.textContent = 'Введите email и пароль'; return; }
+      if (!sb) { loginStatus.textContent = 'Нет подключения к базе'; return; }
       sb.auth.signInWithPassword({ email: email, password: password }).then(function(res) {
-        if (res.error) {
-          loginStatus.textContent = 'Ошибка: ' + res.error.message;
-          return;
-        }
+        if (res.error) { loginStatus.textContent = 'Ошибка: ' + res.error.message; return; }
         loginStatus.className = 'status ok';
         loginStatus.textContent = '✅ Вход выполнен';
-        setTimeout(function() {
-          loginStatus.style.display = 'none';
-          showAdminView();
-        }, 800);
+        setTimeout(function() { loginStatus.style.display = 'none'; showAdminView(); }, 800);
       });
     }
 
@@ -545,12 +606,9 @@
       if (e.target === loginOverlay) closeLoginModal();
     });
 
-    // Автопроверка сессии
     if (sb) {
       sb.auth.getSession().then(function(res) {
-        if (res.data && res.data.session) {
-          userBtn.classList.add('logged-in');
-        }
+        if (res.data && res.data.session) userBtn.classList.add('logged-in');
       });
     }
 
@@ -568,14 +626,12 @@
       localStorage.setItem(OPACITY_KEY, fillOpacity.toString());
       localStorage.setItem(MODE_KEY, layerMode);
     }
-
     function styleFor(baseColor) {
       if (layerMode === 'outline') {
         return { color: baseColor, weight: 1.8, opacity: 0.9, fill: false, fillColor: baseColor, fillOpacity: 0 };
       }
       return { color: baseColor, weight: 1.2, opacity: 0.9, fill: true, fillColor: baseColor, fillOpacity: fillOpacity };
     }
-
     function applyStyleToLayer(layer, baseColor, styleObj) {
       if (!layer) return;
       if (layer.setStyle) layer.setStyle(styleObj);
@@ -589,7 +645,6 @@
       }
       if (layer.redraw) layer.redraw();
     }
-
     function refreshAllStyles() {
       if (deepStateLayer) {
         deepStateLayer.eachLayer(function(sub) { applyStyleToLayer(sub, '#cc0000', styleFor('#cc0000')); });
@@ -649,13 +704,61 @@
       'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
       { attribution: 'Tiles © Esri', maxZoom: 16 }
     );
-
     if (currentTheme === 'dark') {
       darkTile.addTo(map); document.body.classList.add('dark');
     } else {
       lightTile.addTo(map);
     }
 
+    // ============================================================
+    // СЛОЙ ЗОН КОНТРОЛЯ (созданных вручную)
+    // ============================================================
+    var zoneColors = {
+      'russia': { color: '#cc0000', fillColor: '#cc0000', fillOpacity: 0.25, label: 'Территория РФ' },
+      'ukraine': { color: '#0055cc', fillColor: '#0055cc', fillOpacity: 0.25, label: 'Территория Украины' },
+      'grey': { color: '#666666', fillColor: '#888888', fillOpacity: 0.30, label: 'Серая зона', dashArray: '6,4' }
+    };
+    var userZonesLayer = L.geoJSON(null, {
+      style: function(feature) {
+        var cat = (feature.properties && feature.properties.category) || 'russia';
+        var c = zoneColors[cat] || zoneColors.russia;
+        return {
+          color: c.color, weight: 2, opacity: 0.9,
+          fillColor: c.fillColor, fillOpacity: c.fillOpacity,
+          dashArray: c.dashArray || null
+        };
+      },
+      onEachFeature: function(f, layer) {
+        var cat = (f.properties && f.properties.category) || 'russia';
+        var c = zoneColors[cat] || zoneColors.russia;
+        layer.bindPopup('<b>' + c.label + '</b>');
+      }
+    });
+    userZonesLayer.addTo(map);
+
+    function loadUserZones() {
+      if (!sb) return;
+      sb.from('control_zones').select('*').then(function(res) {
+        if (res.error) { console.warn('loadUserZones:', res.error.message); return; }
+        userZonesLayer.clearLayers();
+        (res.data || []).forEach(function(row) {
+          try {
+            var geom = typeof row.geometry === 'string' ? JSON.parse(row.geometry) : row.geometry;
+            userZonesLayer.addData({
+              type: 'Feature',
+              properties: { id: row.id, category: row.category },
+              geometry: geom
+            });
+          } catch(e) { console.warn('Zone parse:', e.message); }
+        });
+        console.log('Зон контроля загружено: ' + (res.data || []).length);
+      });
+    }
+    loadUserZones();
+
+    // ============================================================
+    // DEEPSTATE + ISW
+    // ============================================================
     function polygonPopup(text) {
       return function(f, layer) { layer.bindPopup('<b>' + text + '</b>'); };
     }
@@ -695,6 +798,9 @@
     deepStateLayer.addTo(map);
     counterLayer.addTo(map);
 
+    // ============================================================
+    // СОБЫТИЯ
+    // ============================================================
     var WT_COLORS = {
       'Air Raid Alert': '#e6a800',
       'Military Strike': '#c62828',
@@ -716,17 +822,14 @@
       'Security Incident': '<svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 4l7 13H5l7-13zm-1 4v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>',
       'Political Development': '<svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>'
     };
-
     function wtColor(type) { return WT_COLORS[type] || '#9933cc'; }
     function wtSvg(type) { return WT_SVG[type] || WT_SVG['Security Incident']; }
-
     function createEventIcon(eventType) {
       return L.divIcon({
         html: '<div class="event-icon" style="background:' + wtColor(eventType) + ';">' + wtSvg(eventType) + '</div>',
         className: '', iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -15]
       });
     }
-
     var activeEventTypes = {
       'Air Raid Alert': true, 'Military Strike': true, 'Military Operation': true,
       'Military Offensive': true, 'Security Incident': true, 'Political Development': false
@@ -759,7 +862,6 @@
       list.forEach(function(ev) {
         if (!ev.lat || !ev.lng) return;
         if (!activeEventTypes[ev.event_type]) return;
-
         var marker = L.marker([ev.lat, ev.lng], { icon: createEventIcon(ev.event_type), riseOnHover: true });
         var label = t(WT_LABELS[ev.event_type] || ev.event_type);
         var dateStr = '';
@@ -767,38 +869,31 @@
         var countryLabel = ev.country === 'UA' ? t('countryUA') : (ev.country === 'RU' ? t('countryRU') : t('countryOSINT'));
         var countryClass = ev.country === 'UA' ? 'ua' : (ev.country === 'RU' ? 'ru' : 'osint');
         var badge = '<span class="evt-country ' + countryClass + '" style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;">' + countryLabel + '</span>';
-
         marker.bindPopup('<b>' + label + '</b> ' + badge + '<br><i>' + (ev.location || '') + '</i><br>' + (ev.description || '') + '<br><small>' + dateStr + '</small><br><small style="color:#888;">@' + (ev.channel || '') + '</small><br><a href="' + ev.url + '" target="_blank">' + t('source') + ' →</a>');
         tgLayer.addLayer(marker);
         added++;
         panelEvents.push(ev);
       });
-
       renderEventsPanel(panelEvents);
     }
 
     function renderEventsPanel(events) {
       var body = document.getElementById('eventsListBody');
       document.getElementById('eventsPanelTitle').textContent = t('eventsPanelTitle');
-
       if (!events || events.length === 0) {
         body.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' + t('noEvents') + '</div>';
         return;
       }
-
       events.sort(function(a, b) {
         return (b.date ? new Date(b.date).getTime() : 0) - (a.date ? new Date(a.date).getTime() : 0);
       });
-
       var counts = {};
       events.forEach(function(ev) { counts[ev.event_type] = (counts[ev.event_type] || 0) + 1; });
-
       var html = '<div class="summary-box"><div class="summary-title">' + t('summaryTitle') + '</div>';
       Object.keys(counts).forEach(function(type) {
         html += '<div class="summary-line"><span style="display:flex;align-items:center;"><span style="color:' + wtColor(type) + ';display:flex;align-items:center;margin-right:6px;">' + wtSvg(type) + '</span>' + t(WT_LABELS[type] || type) + '</span><span>' + counts[type] + '</span></div>';
       });
       html += '<div class="summary-line" style="margin-top:4px;font-weight:600;"><span>' + t('total') + '</span><span>' + events.length + ' ' + t('eventsCount') + '</span></div></div>';
-
       events.slice(0, 100).forEach(function(ev) {
         var label = t(WT_LABELS[ev.event_type] || ev.event_type);
         var color = wtColor(ev.event_type);
@@ -806,7 +901,6 @@
         try { time = new Date(ev.date).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); } catch(e) {}
         var countryLabel = ev.country === 'UA' ? t('countryUA') : (ev.country === 'RU' ? t('countryRU') : t('countryOSINT'));
         var countryClass = ev.country === 'UA' ? 'ua' : (ev.country === 'RU' ? 'ru' : 'osint');
-
         html += '<div class="event-item" data-lat="' + ev.lat + '" data-lng="' + ev.lng + '">' +
                 '<div class="evt-type" style="color:' + color + ';">' +
                 '<span style="color:' + color + ';display:flex;align-items:center;">' + wtSvg(ev.event_type) + '</span>' + label +
@@ -814,7 +908,6 @@
                 '<div class="evt-loc">' + (ev.location || '') + ' <span style="color:#aaa;">@' + (ev.channel || '') + '</span></div>' +
                 '<div class="evt-time">' + time + '</div></div>';
       });
-
       body.innerHTML = html;
       body.querySelectorAll('.event-item').forEach(function(item) {
         item.addEventListener('click', function() {
@@ -837,10 +930,9 @@
     function hideMobilePanels() {
       document.body.classList.remove('show-events', 'show-filters', 'show-tools', 'show-legend');
       ['btnShowEvents', 'btnShowFilters', 'btnShowTools'].forEach(function(id) {
-        document.getElementById(id).classList.remove('active');
+        var el = document.getElementById(id); if (el) el.classList.remove('active');
       });
     }
-
     ['Events', 'Filters', 'Tools'].forEach(function(name) {
       var btn = document.getElementById('btnShow' + name);
       if (!btn) return;
@@ -851,11 +943,95 @@
         if (!wasActive) { document.body.classList.add(cls); this.classList.add('active'); }
       });
     });
-
     map.on('click', function() { if (isMobile()) hideMobilePanels(); });
 
     // ============================================================
-    // РИСОВАНИЕ
+    // РЕДАКТОР ЗОН
+    // ============================================================
+    var currentZoneCategory = 'russia';
+    var zoneDrawer = null;
+    var zoneEditorPanel = document.getElementById('zoneEditorPanel');
+
+    // Кнопка открытия редактора
+    document.getElementById('btnOpenZoneEditor').addEventListener('click', function() {
+      closeLoginModal();
+      zoneEditorPanel.classList.add('open');
+    });
+
+    // Выбор категории
+    document.querySelectorAll('#zoneEditorPanel .cat-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('#zoneEditorPanel .cat-btn').forEach(function(el) {
+          el.classList.remove('active');
+        });
+        this.classList.add('active');
+        currentZoneCategory = this.getAttribute('data-cat');
+      });
+    });
+
+    // Начать рисование
+    document.getElementById('btnDrawZone').addEventListener('click', function() {
+      if (zoneDrawer) { try { zoneDrawer.disable(); } catch(e) {} zoneDrawer = null; }
+      zoneDrawer = new L.Draw.Polygon(map, {
+        allowIntersection: false,
+        shapeOptions: {
+          color: zoneColors[currentZoneCategory].color,
+          fillColor: zoneColors[currentZoneCategory].fillColor,
+          fillOpacity: 0.3,
+          weight: 2
+        }
+      });
+      zoneDrawer.enable();
+    });
+
+    // Завершить / закрыть
+    document.getElementById('btnFinishZones').addEventListener('click', function() {
+      if (zoneDrawer) { try { zoneDrawer.disable(); } catch(e) {} zoneDrawer = null; }
+      zoneEditorPanel.classList.remove('open');
+    });
+
+    // Очистить все зоны
+    document.getElementById('btnClearAllZones').addEventListener('click', function() {
+      if (!confirm('Удалить ВСЕ зоны контроля из базы? Это действие нельзя отменить.')) return;
+      if (!sb) return;
+      sb.from('control_zones').delete().neq('id', 0).then(function(res) {
+        if (res.error) { alert('Ошибка: ' + res.error.message); return; }
+        userZonesLayer.clearLayers();
+        alert('Все зоны удалены');
+      });
+    });
+
+    // Обработка создания полигона
+    map.on(L.Draw.Event.CREATED, function(e) {
+      var layer = e.layer;
+      var geometry = layer.toGeoJSON().geometry;
+
+      // Сохранение в Supabase
+      if (sb) {
+        sb.from('control_zones').insert({
+          category: currentZoneCategory,
+          geometry: geometry
+        }).then(function(res) {
+          if (res.error) {
+            alert('Ошибка сохранения: ' + res.error.message);
+            return;
+          }
+          loadUserZones();
+        });
+      } else {
+        // Fallback — рисуем локально, если Supabase не работает
+        userZonesLayer.addData({
+          type: 'Feature',
+          properties: { category: currentZoneCategory },
+          geometry: geometry
+        });
+      }
+
+      if (zoneDrawer) { try { zoneDrawer.disable(); } catch(e) {} zoneDrawer = null; }
+    });
+
+    // ============================================================
+    // ИНСТРУМЕНТЫ РИСОВАНИЯ
     // ============================================================
     var drawingsLayer = new L.FeatureGroup();
     map.addLayer(drawingsLayer);
@@ -888,6 +1064,9 @@
     }
 
     map.on(L.Draw.Event.CREATED, function(e) {
+      // Если открыт редактор зон — игнорируем этот обработчик
+      if (zoneEditorPanel.classList.contains('open')) return;
+
       var layer = e.layer, type = e.layerType, tool = currentTool;
 
       if (tool === 'measure') {
@@ -1008,7 +1187,6 @@
     var panel = L.control({ position: 'topright' });
     panel.onAdd = function() {
       var div = L.DomUtil.create('div', 'control-panel');
-
       function render() {
         var html = '';
         html += '<div class="lang-switch">' +
@@ -1036,7 +1214,6 @@
         div.innerHTML = html;
         attach();
       }
-
       function attach() {
         div.querySelectorAll('.lang-btn').forEach(function(btn) {
           btn.addEventListener('click', function() {
