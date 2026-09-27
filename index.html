@@ -781,16 +781,14 @@
         layer._zoneId = zoneId;
         layer._zoneCategory = cat;
 
-        var popupHtml = '<b>' + c.label + '</b>';
-        if (zoneId) {
+             var popupHtml = '<b>' + c.label + '</b>';
+        var isLoggedIn = userBtn.classList.contains('logged-in');
+        if (zoneId && isLoggedIn) {
           popupHtml += '<div style="margin-top:8px;display:flex;gap:6px;">' +
             '<button class="zone-btn-edit" style="flex:1;padding:6px 10px;border:1px solid #0066ff;background:#eef5ff;color:#0066ff;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;">✏️ Изменить</button>' +
             '<button class="zone-btn-delete" style="flex:1;padding:6px 10px;border:1px solid #c62828;background:#ffebee;color:#c62828;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;">🗑️ Удалить</button>' +
             '</div>';
-        } else {
-          popupHtml += '<br><small style="color:#888;">Зона не сохранена в базе (войдите как админ)</small>';
         }
-        layer.bindPopup(popupHtml);
 
         layer.on('popupopen', function(e) {
           var popup = e.popup.getElement();
