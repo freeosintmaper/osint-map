@@ -1472,13 +1472,22 @@
     loadTelegramEvents();
   </script>
 
-  <script>
+    <script>
+    // Убираем все старые service worker'ы, которые кешировали старую версию
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('./sw.js').catch(function(e) {
-          console.warn('SW не зарегистрирован:', e.message);
+      navigator.serviceWorker.getRegistrations().then(function(regs) {
+        regs.forEach(function(reg) {
+          reg.unregister().then(function(ok) {
+            console.log('SW отменён:', ok);
+          });
         });
       });
+      // И удаляем старые кеши
+      if (window.caches) {
+        caches.keys().then(function(keys) {
+          keys.forEach(function(k) { caches.delete(k); });
+        });
+      }
     }
   </script>
 </body>
