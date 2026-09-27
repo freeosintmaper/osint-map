@@ -51,6 +51,7 @@ jobs:
           curl -sL "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" -o lib/markercluster.css
           curl -sL "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" -o lib/markercluster.default.css
           curl -sL "https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" -o lib/markercluster.js
+          curl -sL "https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js" -o lib/turf.min.js
 
       - name: Commit and push
         run: |
