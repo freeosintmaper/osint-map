@@ -267,7 +267,6 @@
     #toolbar button:hover { background: var(--bg-hover); border-color: #0066ff; }
     #toolbar button.active { background: #0066ff; color: #fff; border-color: #0066ff; }
     #toolbar button.danger { color: #c00; border-color: #f0c0c0; }
-    #toolbar button.donate-btn { color: #2e7d32; border-color: #a5d6a7; }
     #toolbar button .tooltip {
       position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
       background: var(--tooltip-bg); color: var(--tooltip-color);
@@ -386,7 +385,7 @@
       <div id="loginAdminBlock" style="display:none;">
         <div class="admin-info">✅ Вы вошли как админ.</div>
         <div class="admin-section">
-          <h4>Зоны контроля</h4>
+          <h4>Карта автора</h4>
           <button class="full-btn" id="btnOpenZoneEditor">✏️ Редактировать зоны</button>
         </div>
         <div class="row" style="margin-top:12px;">
@@ -413,10 +412,11 @@
     <div class="zone-actions">
       <button id="btnDrawZone">✏️ Нарисовать полигон</button>
       <button id="btnFinishZones">✅ Готово (закрыть)</button>
-      <button id="btnClearAllZones" class="danger">🗑️ Удалить все зоны</button>
+      <button id="btnStopEditing">🛑 Выйти из режима редактирования</button>
+      <button id="btnClearAllZones" class="danger">🗑️ Удалить ВСЕ зоны (внимание!)</button>
     </div>
     <div class="hint">
-      Выбери категорию, нажми «Нарисовать полигон» и обведи территорию. Клик по первому узлу — завершить.
+      Клик по зоне → «Изменить» — тяни вершины. Изменения сохраняются автоматически.
     </div>
   </div>
 
@@ -475,7 +475,7 @@
       if (sbFactory) sb = sbFactory(SB_URL, SB_KEY);
     } catch (e) { console.warn('Supabase:', e.message); }
 
-    var DONATE_URL = '';
+    var DONATE_URL = 'https://www.donationalerts.com/r/freeosintmapper';
 
     // ============================================================
     // ИСТОЧНИК ДАННЫХ PROJECT OWL
@@ -501,7 +501,7 @@
         owlUkrainian: 'Действия ВСУ (Project Owl)',
         owlHolding: 'Места сосредоточения (Project Owl)',
         owlGrey: 'Серая зона (Project Owl)',
-        userZones: 'Мои зоны контроля',
+        userZones: 'Карта автора',
         telegramEvents: 'События из Telegram',
         raidAlert: 'Воздушная тревога', strike: 'Удар', operation: 'Операция',
         offensive: 'Наступление', incident: 'Инцидент', politics: 'Политика',
@@ -524,7 +524,7 @@
         owlUkrainian: 'Дії ЗСУ (Project Owl)',
         owlHolding: 'Місця зосередження (Project Owl)',
         owlGrey: 'Сіра зона (Project Owl)',
-        userZones: 'Мої зони контролю',
+        userZones: 'Карта автора',
         telegramEvents: 'Події з Telegram',
         raidAlert: 'Повітряна тривога', strike: 'Удар', operation: 'Операція',
         offensive: 'Наступ', incident: 'Інцидент', politics: 'Політика',
@@ -546,7 +546,7 @@
         owlUkrainian: 'Ukrainian actions (Project Owl)',
         owlHolding: 'Holding areas (Project Owl)',
         owlGrey: 'Grey zone (Project Owl)',
-        userZones: 'My control zones',
+        userZones: "Author's map",
         telegramEvents: 'Telegram Events',
         raidAlert: 'Air Raid Alert', strike: 'Strike', operation: 'Operation',
         offensive: 'Offensive', incident: 'Incident', politics: 'Politics',
@@ -704,13 +704,14 @@
     if (currentTheme === 'dark') { darkTile.addTo(map); document.body.classList.add('dark'); } else lightTile.addTo(map);
 
     // ============================================================
-    // МОИ ЗОНЫ (из Supabase)
+    // КАРТА АВТОРА (зоны из Supabase)
     // ============================================================
     var zoneColors = {
       'russia': { color: '#cc0000', fillColor: '#cc0000', fillOpacity: 0.25, label: 'Территория РФ' },
       'ukraine': { color: '#0055cc', fillColor: '#0055cc', fillOpacity: 0.25, label: 'Территория Украины' },
       'grey': { color: '#666666', fillColor: '#888888', fillOpacity: 0.30, label: 'Серая зона', dashArray: '6,4' }
     };
+
     var userZonesLayer = L.geoJSON(null, {
       style: function(f) {
         var cat = (f.properties && f.properties.category) || 'russia';
@@ -720,7 +721,43 @@
       onEachFeature: function(f, layer) {
         var cat = (f.properties && f.properties.category) || 'russia';
         var c = zoneColors[cat] || zoneColors.russia;
-        layer.bindPopup('<b>' + c.label + '</b>');
+        var zoneId = f.properties && f.properties.id;
+        layer._zoneId = zoneId;
+        layer._zoneCategory = cat;
+
+        var popupHtml = '<b>' + c.label + '</b>';
+        if (zoneId) {
+          popupHtml += '<div style="margin-top:8px;display:flex;gap:6px;">' +
+            '<button class="zone-btn-edit" style="flex:1;padding:6px 10px;border:1px solid #0066ff;background:#eef5ff;color:#0066ff;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;">✏️ Изменить</button>' +
+            '<button class="zone-btn-delete" style="flex:1;padding:6px 10px;border:1px solid #c62828;background:#ffebee;color:#c62828;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;">🗑️ Удалить</button>' +
+            '</div>';
+        } else {
+          popupHtml += '<br><small style="color:#888;">Зона не сохранена в базе (войдите как админ)</small>';
+        }
+        layer.bindPopup(popupHtml);
+
+        layer.on('popupopen', function(e) {
+          var popup = e.popup.getElement();
+          if (!popup) return;
+          var editBtn = popup.querySelector('.zone-btn-edit');
+          var delBtn = popup.querySelector('.zone-btn-delete');
+          if (editBtn) editBtn.onclick = function(ev) {
+            ev.stopPropagation();
+            startEditZone(layer);
+            map.closePopup();
+          };
+          if (delBtn) delBtn.onclick = function(ev) {
+            ev.stopPropagation();
+            deleteZoneById(zoneId, layer);
+          };
+        });
+
+        layer.on('edit', function() {
+          clearTimeout(layer._saveTimer);
+          layer._saveTimer = setTimeout(function() {
+            saveEditedZone(layer);
+          }, 800);
+        });
       }
     });
     userZonesLayer.addTo(map);
@@ -736,10 +773,58 @@
             userZonesLayer.addData({ type: 'Feature', properties: { id: row.id, category: row.category }, geometry: geom });
           } catch(e) {}
         });
-        console.log('Моих зон загружено: ' + (res.data || []).length);
+        console.log('Зон автора загружено: ' + (res.data || []).length);
       });
     }
     loadUserZones();
+
+    // ============================================================
+    // РЕДАКТИРОВАНИЕ И УДАЛЕНИЕ ОТДЕЛЬНЫХ ЗОН
+    // ============================================================
+    var editingLayer = null;
+
+    function startEditZone(layer) {
+      if (editingLayer && editingLayer !== layer && editingLayer.editing) {
+        try { editingLayer.editing.disable(); } catch(e) {}
+      }
+      editingLayer = layer;
+      if (layer.editing) {
+        layer.editing.enable();
+        console.log('✏️ Режим редактирования: тяни вершины. Автосохранение через 0.8 сек.');
+      }
+    }
+
+    function saveEditedZone(layer) {
+      var id = layer._zoneId;
+      if (!id || !sb) return;
+      try {
+        var geometry = layer.toGeoJSON().geometry;
+        sb.from('control_zones').update({ geometry: geometry }).eq('id', id).then(function(res) {
+          if (res.error) { console.warn('Не удалось сохранить зону:', res.error.message); return; }
+          console.log('💾 Зона #' + id + ' сохранена');
+        });
+      } catch(e) { console.warn('saveEditedZone:', e); }
+    }
+
+    function deleteZoneById(id, layer) {
+      if (!id) return;
+      if (!confirm('Удалить эту зону?')) return;
+      if (!sb) { userZonesLayer.removeLayer(layer); map.closePopup(); return; }
+      sb.from('control_zones').delete().eq('id', id).then(function(res) {
+        if (res.error) { alert('Ошибка: ' + res.error.message); return; }
+        userZonesLayer.removeLayer(layer);
+        map.closePopup();
+        console.log('🗑️ Зона #' + id + ' удалена');
+      });
+    }
+
+    map.on('click', function(e) {
+      if (!editingLayer || !editingLayer.editing) return;
+      var target = e.originalEvent && e.originalEvent.target;
+      if (target && target.closest && target.closest('.leaflet-marker-icon, .leaflet-popup, .leaflet-edit-marker')) return;
+      try { editingLayer.editing.disable(); } catch(err) {}
+      editingLayer = null;
+    });
 
     // ============================================================
     // DEEPSTATE + PROJECT OWL
@@ -809,7 +894,6 @@
       return 'unknown';
     }
 
-    // Проверяем: находится ли Placemark в тяжёлой папке (архив/позиции частей)
     function isInHeavyFolder(pm) {
       var el = pm.parentNode;
       while (el && el.tagName !== 'Document') {
@@ -823,7 +907,7 @@
     }
 
     // ============================================================
-    // ЗАГРУЗКА PROJECT OWL (KMZ) — с кэшем и пропуском архивов
+    // ЗАГРУЗКА PROJECT OWL (KMZ)
     // ============================================================
     function showOwlLoader(on) {
       var el = document.getElementById('owlLoader');
@@ -832,8 +916,6 @@
 
     function loadOwlControl() {
       var today = new Date().toISOString().slice(0, 10);
-
-      // Пытаемся взять из кэша (только если сохранён сегодня)
       try {
         var cachedDate = localStorage.getItem(OWL_CACHE_DATE);
         if (cachedDate === today) {
@@ -857,9 +939,7 @@
           if (!r.ok) throw new Error('HTTP ' + r.status);
           return r.arrayBuffer();
         })
-        .then(function(buffer) {
-          return JSZip.loadAsync(buffer);
-        })
+        .then(function(buffer) { return JSZip.loadAsync(buffer); })
         .then(function(zip) {
           var kmlPromises = [];
           zip.forEach(function(relativePath, file) {
@@ -877,16 +957,13 @@
             var placemarks = kmlDoc.querySelectorAll('Placemark');
 
             placemarks.forEach(function(pm) {
-              // Пропускаем тяжёлые папки — экономим время
               if (isInHeavyFolder(pm)) return;
-
               var nameEl = pm.querySelector(':scope > name');
               var styleEl = pm.querySelector(':scope > styleUrl');
               var pmName = nameEl ? nameEl.textContent : '';
               var pmStyle = styleEl ? styleEl.textContent : '';
               var cat = categorizeOwlPolygon(pmName, pmStyle);
 
-              // Конвертируем только один Placemark
               var wrapDoc = document.implementation.createDocument('http://www.opengis.net/kml/2.2', 'kml', null);
               var docEl = wrapDoc.documentElement;
               var innerDoc = wrapDoc.createElement('Document');
@@ -910,23 +987,15 @@
           var collection = { type: 'FeatureCollection', features: allFeatures };
           owlControlLayer.addData(collection);
           console.log('📊 Категории:', stats);
-          console.log('✅ Project Owl: ' + allFeatures.length + ' зон (РФ: ' + stats.russian + ', UA: ' + stats.ukrainian + ', сосред.: ' + stats.holding + ', серая: ' + stats.grey + ', неизв.: ' + stats.unknown + ')');
+          console.log('✅ Project Owl: ' + allFeatures.length + ' зон');
 
-          // Кэшируем на сутки
           try {
             localStorage.setItem(OWL_CACHE_KEY, JSON.stringify(collection));
             localStorage.setItem(OWL_CACHE_DATE, today);
-            console.log('💾 Результат закэширован');
-          } catch (e) {
-            console.warn('Не удалось сохранить кэш (возможно, мало места):', e.message);
-          }
+          } catch (e) { console.warn('Кэш не сохранился:', e.message); }
         })
-        .catch(function(err) {
-          console.warn('Project Owl:', err.message);
-        })
-        .then(function() {
-          showOwlLoader(false);
-        });
+        .catch(function(err) { console.warn('Project Owl:', err.message); })
+        .then(function() { showOwlLoader(false); });
     }
     loadOwlControl();
 
@@ -969,7 +1038,7 @@
 
     var tgLayer = L.markerClusterGroup({
       showCoverageOnHover: false, maxClusterRadius: 60, spiderfyOnMaxZoom: true,
-      spiderfyDistanceMultiplier: 5, zoomToBoundsOnClick: true, disableClusteringAtZoom: 13,
+      spiderfyDistanceMultiplier: 5, zoomToBoundsOnClick: true, disableClusteringAtZoom: 8,
       iconCreateFunction: function(cluster) {
         var count = cluster.getChildCount();
         var size = count < 10 ? 44 : count < 100 ? 54 : 64;
@@ -1100,6 +1169,13 @@
     document.getElementById('btnFinishZones').addEventListener('click', function() {
       if (zoneDrawer) { try { zoneDrawer.disable(); } catch(e) {} zoneDrawer = null; }
       zoneEditorPanel.classList.remove('open');
+    });
+    document.getElementById('btnStopEditing').addEventListener('click', function() {
+      if (editingLayer && editingLayer.editing) {
+        try { editingLayer.editing.disable(); } catch(e) {}
+        editingLayer = null;
+      }
+      alert('Режим редактирования выключен');
     });
     document.getElementById('btnClearAllZones').addEventListener('click', function() {
       if (!confirm('Удалить ВСЕ зоны контроля из базы?')) return;
