@@ -1,0 +1,20 @@
+{
+  "name": "OSINT-карта",
+  "short_name": "OSINT",
+  "description": "Карта событий и зон контроля",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#1e1e2e",
+  "theme_color": "#0066ff",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
