@@ -10,22 +10,40 @@ from html import unescape
 from collections import Counter
 
 CHANNELS = [
+    # 🇺🇦 Украинские
     "GeneralStaffZSU", "operativnoZSU",
     "ukrpravda_news", "uniannet",
     "DeepStateUA", "amk_mapping", "OsintFlow", "ukraine_observer",
-    "rybar", "voenkorKotenok", "wargonzo", "dva_majors", "readovkanews", "tass_agency",
+    "kyivindependent_official", "suspilne", "hromadske",
+    "serhiiflash", "monitoring_ukraine",
+
+    # 🇷🇺 Российские
+    "rybar", "voenkorKotenok", "wargonzo", "dva_majors",
+    "readovkanews", "tass_agency",
     "militarysummary", "lost_armour",
+    "boris_rozhin", "colonelcassad", "epoddubny",
+    "RVvoenkor", "kots_news",
+
+    # 🌍 OSINT
     "UAWeapons", "Osinttechnical", "informnapalm",
+    "GeoConfirmed", "ELINTNews",
 ]
 
 CHANNEL_COUNTRY = {
     "GeneralStaffZSU": "UA", "operativnoZSU": "UA",
     "ukrpravda_news": "UA", "uniannet": "UA", "DeepStateUA": "UA",
     "amk_mapping": "UA", "OsintFlow": "UA", "ukraine_observer": "UA",
+    "kyivindependent_official": "UA", "suspilne": "UA", "hromadske": "UA",
+    "serhiiflash": "UA", "monitoring_ukraine": "UA",
+
     "rybar": "RU", "voenkorKotenok": "RU", "wargonzo": "RU",
     "dva_majors": "RU", "readovkanews": "RU", "tass_agency": "RU",
     "militarysummary": "RU", "lost_armour": "RU",
+    "boris_rozhin": "RU", "colonelcassad": "RU", "epoddubny": "RU",
+    "RVvoenkor": "RU", "kots_news": "RU",
+
     "UAWeapons": "OSINT", "Osinttechnical": "OSINT", "informnapalm": "OSINT",
+    "GeoConfirmed": "OSINT", "ELINTNews": "OSINT",
 }
 
 # СПИКЕРЫ → столица его страны. Если спикер упомянут — политическое событие
