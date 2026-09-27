@@ -155,7 +155,6 @@
       background: var(--bg-panel); border-radius: 8px; padding: 6px;
       box-shadow: 0 2px 8px var(--shadow); display: flex; gap: 4px; z-index: 1000;
       flex-wrap: wrap; justify-content: center;
-      /* УБРАНО max-width и overflow-x — тултипы больше не обрезаются */
     }
     #toolbar button {
       width: 42px; height: 42px; flex: 0 0 auto; border: 1px solid var(--border-mid);
@@ -536,7 +535,7 @@
       'Military Operation': '#e65100',
       'Military Offensive': '#8e0000',
       'Security Incident': '#5a5a5a',
-      'Political Development': '#1565c0'
+      'Political Development': '#6a1b9a'
     };
     var WT_LABELS = {
       'Air Raid Alert': 'raidAlert', 'Military Strike': 'strike',
@@ -568,7 +567,7 @@
 
     var activeEventTypes = {
       'Air Raid Alert': true, 'Military Strike': true, 'Military Operation': true,
-      'Military Offensive': true, 'Security Incident': true, 'Political Development': true
+      'Military Offensive': true, 'Security Incident': true, 'Political Development': false
     };
 
     var tgLayer = L.markerClusterGroup({
@@ -706,9 +705,6 @@
       this.textContent = panel.classList.contains('collapsed') ? '▶' : '◀';
     });
 
-    // ============================================================
-    // МОБИЛЬНЫЕ ПЕРЕКЛЮЧАТЕЛИ
-    // ============================================================
     function hideMobilePanels() {
       document.body.classList.remove('show-events', 'show-filters', 'show-tools', 'show-legend');
       document.getElementById('btnShowEvents').classList.remove('active');
@@ -736,9 +732,6 @@
       if (isMobile()) hideMobilePanels();
     });
 
-    // ============================================================
-    // РИСОВАНИЕ
-    // ============================================================
     var drawingsLayer = new L.FeatureGroup();
     map.addLayer(drawingsLayer);
     var currentDrawer = null, currentTool = null, lastMeasureLayer = null;
@@ -772,12 +765,10 @@
     map.on(L.Draw.Event.CREATED, function(e) {
       var layer = e.layer, type = e.layerType, tool = currentTool;
 
-      // ============ ИЗМЕРЕНИЕ РАССТОЯНИЯ ============
       if (tool === 'measure') {
         if (lastMeasureLayer) drawingsLayer.removeLayer(lastMeasureLayer);
         if (layer.setStyle) layer.setStyle({ color: '#ff00aa', weight: 3, dashArray: '8,4' });
 
-        // Считаем общее расстояние
         var latlngs = layer.getLatLngs();
         if (latlngs.length > 0 && Array.isArray(latlngs[0])) latlngs = latlngs[0];
 
@@ -793,7 +784,6 @@
           text = Math.round(totalMeters) + ' м';
         }
 
-        // Показываем постоянный тултип с расстоянием по центру линии
         layer.bindTooltip(text, {
           permanent: true,
           direction: 'center',
@@ -807,7 +797,6 @@
         return;
       }
 
-      // ============ СТРЕЛКА ============
       if (tool === 'arrow' && type === 'polyline') {
         var latlngs = layer.getLatLngs();
         if (latlngs.length > 0 && Array.isArray(latlngs[0])) latlngs = latlngs[0];
@@ -855,7 +844,6 @@
             else if (feature.geometry.type === 'Polygon') layer.setStyle && layer.setStyle({ color: '#9933ff', weight: 2, fill: true, fillColor: '#9933ff', fillOpacity: 0.2 });
             else if (feature.geometry.type === 'LineString') {
               layer.setStyle && layer.setStyle({ color: '#ff3366', weight: 3 });
-              // Восстанавливаем расстояние для сохранённых измерений
               var ll = layer.getLatLngs();
               if (ll.length > 0 && Array.isArray(ll[0])) ll = ll[0];
               var tm = 0;
