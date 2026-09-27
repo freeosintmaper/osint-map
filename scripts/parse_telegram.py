@@ -9,28 +9,32 @@ import os
 from html import unescape
 from collections import Counter
 
+# ОСТАВИЛИ: сводки, аналитика, военкоры, официальные каналы
+# УБРАЛИ: kpszsu, monitoringwar, AerisRimor, sputnikrussia_radar, radar_rf,
+#         locatorru, ruporruss, grohot_pgr — это каналы-локаторы,
+#         они сыпят "курсом на X" и засоряют карту
 CHANNELS = [
-    "kpszsu", "GeneralStaffZSU", "operativnoZSU",
+    # Украинские официальные
+    "GeneralStaffZSU", "operativnoZSU",
+    # Украинские новостные
     "ukrpravda_news", "uniannet",
+    # Украинские OSINT
     "DeepStateUA", "amk_mapping", "OsintFlow", "ukraine_observer",
+    # Российские официальные / военкоры
     "rybar", "voenkorKotenok", "wargonzo", "dva_majors", "readovkanews", "tass_agency",
+    # Российские OSINT
     "militarysummary", "lost_armour",
+    # Независимые / международные
     "UAWeapons", "Osinttechnical", "informnapalm",
-    "AerisRimor", "monitoringwar",
-    "sputnikrussia_radar", "radar_rf", "locatorru",
-    "ruporruss", "grohot_pgr",
 ]
 
 CHANNEL_COUNTRY = {
-    "kpszsu": "UA", "GeneralStaffZSU": "UA", "operativnoZSU": "UA",
+    "GeneralStaffZSU": "UA", "operativnoZSU": "UA",
     "ukrpravda_news": "UA", "uniannet": "UA", "DeepStateUA": "UA",
     "amk_mapping": "UA", "OsintFlow": "UA", "ukraine_observer": "UA",
-    "AerisRimor": "UA", "monitoringwar": "UA",
     "rybar": "RU", "voenkorKotenok": "RU", "wargonzo": "RU",
     "dva_majors": "RU", "readovkanews": "RU", "tass_agency": "RU",
     "militarysummary": "RU", "lost_armour": "RU",
-    "sputnikrussia_radar": "RU", "radar_rf": "RU", "locatorru": "RU",
-    "ruporruss": "RU", "grohot_pgr": "RU",
     "UAWeapons": "OSINT", "Osinttechnical": "OSINT", "informnapalm": "OSINT",
 }
 
@@ -43,9 +47,8 @@ ABBREVIATIONS = {
 
 SUMMARY_WORDS = [
     "сводка", "сводку", "сводке", "зведення", "зведенню",
-    "оперативная информация", "оперативна інформація", "оперативную информацию",
-    "оперативка",
-    "брифинг", "брифінг",
+    "оперативная информация", "оперативна інформація",
+    "оперативка", "брифинг", "брифінг",
     "за минувшие сутки", "за добу", "за прошедшие сутки", "протягом доби",
     "бойових зіткнень", "боевых столкновений",
     "итоги", "підсумки",
@@ -131,7 +134,6 @@ TRANSLIT_ALIASES = {
     "чернівецьк": [48.2917, 25.9354, "Черновцы", "UA"],
 }
 
-# СИЛЬНЫЕ слова для "своей" страны — достаточно любого рядом
 STRONG_EVENT_WORDS = [
     "удар", "обстр", "взрыв", "вибух", "прилёт", "приліт",
     "бпла", "дрон", "ракет", "пво", "штурм",
@@ -142,9 +144,9 @@ STRONG_EVENT_WORDS = [
     "продвижен", "просуванн", "заняли", "зайняли",
     "освободил", "звільнили", "контроль над",
     "тревога", "тривога", "опасность", "небезпека",
+    "попадание", "влучання", "детонация", "детонація",
 ]
 
-# Паттерны для ЧУЖОЙ страны — требуют явной конструкции
 EVENT_PATTERNS = [
     r'удар\w*\s+(?:по|на|в)\s+',
     r'ударил\w*\s+(?:по|на|в)\s+',
@@ -166,17 +168,12 @@ EVENT_PATTERNS = [
     r'атак\w*\s+(?:на|в|по)\s+',
     r'атакувал\w*\s+',
     r'атакуют\s+',
-    r'тревог\w*\s+(?:в|на)\s+',
-    r'тривог\w*\s+(?:у|в|на)\s+',
-    r'опасность\s+(?:в|на)\s+',
-    r'небезпек\w*\s+(?:у|в|на)\s+',
     r'уражено\s+(?:в|у|на)\s+',
     r'поражено\s+(?:в|на)\s+',
     r'уразили\s+',
     r'поразили\s+',
     r'бпла\s+(?:над|на|в|курс)',
     r'дрон\w*\s+(?:над|на|в|курс)',
-    r'курс\w*\s+(?:на|в)\s+',
     r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}уражен\w*',
     r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}поражен\w*',
     r'\bв\s+[а-яёa-z\-]+\s+(?:\S+\s+){0,4}удар\w*',
@@ -191,27 +188,16 @@ EVENT_PATTERNS = [
     r'у\s+районі\s+',
     r'на\s+подступах\s+к\s+',
     r'на\s+підступах\s+до\s+',
-    r'в\s+направлении\s+',
-    r'у\s+напрямку\s+',
-    r'возле\s+',
-    r'около\s+',
-    r'біля\s+',
-    r'\bпод\s+[А-ЯЁ]',
-    r'\bпід\s+[А-ЯЁ]',
     r'штурм\w*\s+',
     r'бои\s+',
     r'бої\s+',
     r'продвижен\w*\s+',
     r'просуванн\w*\s+',
     r'наступлен\w*\s+',
-    r'прорвали\s+',
-    r'прорвалися\s+',
     r'заняли\s+',
     r'зайняли\s+',
     r'освободил\w*\s+',
     r'звільнили\s+',
-    r'контроль\s+над\s+',
-    r'контролює\s+',
 ]
 
 SOURCE_VERBS = [
@@ -225,8 +211,6 @@ SOURCE_VERBS = [
     r'\w+скому\s+направлени',
     r'\w+ском\s+напрямку',
     r'\w+скому\s+напрямку',
-    r'\w+ском\s+направлении',
-    r'\w+скому\s+направлении',
 ]
 
 CANCEL_WORDS = ["отбой", "отменена", "отменён", "отменен",
@@ -234,9 +218,6 @@ CANCEL_WORDS = ["отбой", "отменена", "отменён", "отмен�
                 "прекращена", "прекращён", "прекращен",
                 "окончена", "угроза миновала", "опасность миновала",
                 "відбій", "скасована", "завершено"]
-
-ALERT_WORDS = ["тревог", "опасност", "угроз", "alert", "бпла", "ракет",
-               "тривог", "небезпек", "загроз"]
 
 MILITARY_TERMS = ["рлс", "зрк", "с-300", "с-400", "с-500", "бук ", "панцирь",
                   "тор ", "тюльпан", "град ", "ураган", "смерч",
@@ -339,7 +320,6 @@ def extract_posts(html):
 
 
 def has_strong_word_near(text, phrase, window=120):
-    """Есть ли рядом СИЛЬНОЕ событийное слово."""
     tl = text.lower()
     idx = tl.find(phrase.lower())
     if idx < 0:
@@ -393,7 +373,6 @@ def is_military_term_context(text, phrase):
 
 
 def find_alias(text, channel_country):
-    """Возвращает (coords, name, country, had_alias)."""
     tl = text.lower()
     had_alias = False
     for key in sorted(TRANSLIT_ALIASES.keys(), key=lambda k: -len(k)):
@@ -403,7 +382,6 @@ def find_alias(text, channel_country):
         coords = TRANSLIT_ALIASES[key]
         alias_country = coords[3]
 
-        # Своя страна — достаточно сильного слова
         if channel_country == alias_country:
             if has_source_verb_near(text, key, window=60):
                 continue
@@ -413,7 +391,6 @@ def find_alias(text, channel_country):
                 continue
             return (coords[0], coords[1]), coords[2], coords[3], True
 
-        # Чужая страна — требует явного паттерна
         if has_source_verb_near(text, key, window=60):
             continue
         if not has_event_pattern_near(text, key, window=120):
@@ -448,7 +425,6 @@ def find_best_city(text, channel_country):
 
             coords_list = SETTLEMENTS_BY_NAME[phrase]
 
-            # Выбираем вариант по стране канала
             if channel_country in ("UA", "RU"):
                 filtered = [c for c in coords_list if c[2] == channel_country]
                 if not filtered:
@@ -461,8 +437,6 @@ def find_best_city(text, channel_country):
 
             lat, lng, country, orig, population = best
 
-            # СВОЯ СТРАНА: достаточно сильного слова
-            # ЧУЖАЯ: требует явного паттерна
             if is_own_country:
                 if has_source_verb_near(text, phrase, window=60):
                     continue
@@ -501,8 +475,7 @@ def is_cancellation(text):
     has_cancel = any(c in tl for c in CANCEL_WORDS)
     if not has_cancel:
         return False
-    has_alert = any(a in tl for a in ALERT_WORDS)
-    return has_alert
+    return True
 
 
 def classify_event(text):
@@ -515,7 +488,8 @@ def classify_event(text):
         return "Air Raid Alert"
     if any(w in tl for w in ["удар", "обстр", "взрыв", "вибух", "прилёт", "приліт",
                              "ракет", "пво", "уразили", "уражено", "поразили",
-                             "поражено", "бпла", "дрон", "шахед"]):
+                             "поражено", "бпла", "дрон", "шахед",
+                             "попадание", "влучання", "детонация", "детонація"]):
         return "Military Strike"
     if any(w in tl for w in ["наступление", "наступ", "атака", "attack", "прорыв", "штурм"]):
         return "Military Offensive"
@@ -549,39 +523,10 @@ def radius_for_count(count):
         return 8.0
 
 
-def apply_cancellations(raw_events, cancellations):
-    if not cancellations:
-        return raw_events
-    cancels_by_city = {}
-    for c in cancellations:
-        cancels_by_city.setdefault(c['city'].lower(), []).append(c['date'])
-
-    filtered = []
-    removed = 0
-    for ev in raw_events:
-        if ev['event_type'] == 'Air Raid Alert':
-            city_low = ev['location'].lower()
-            ev_date = ev.get('date') or ''
-            if city_low in cancels_by_city:
-                cancelled = False
-                for cancel_date in cancels_by_city[city_low]:
-                    if cancel_date and ev_date and cancel_date > ev_date:
-                        cancelled = True
-                        break
-                if cancelled:
-                    removed += 1
-                    continue
-        filtered.append(ev)
-
-    print(f"   Убрано устаревших тревог (отбой): {removed}")
-    return filtered
-
-
 def main():
     load_settlements()
 
     raw_events = []
-    cancellations = []
     seen_texts = set()
     seen_dedup = set()
     duplicates = 0
@@ -629,15 +574,6 @@ def main():
                 no_match += 1
                 continue
 
-            if is_cancellation(text):
-                cancellations.append({
-                    'city': city,
-                    'date': post['date'],
-                    'lat': coords[0],
-                    'lng': coords[1],
-                })
-                continue
-
             matched += 1
 
             ev = {
@@ -666,11 +602,6 @@ def main():
         print(f"  Совпало: {matched}")
         time.sleep(1)
 
-    print(f"\n🚫 Пропущено сводок: {skipped_summary}")
-    print(f"🚫 Отмен тревог найдено: {len(cancellations)}")
-    print("🧹 Убираю устаревшие тревоги...")
-    raw_events = apply_cancellations(raw_events, cancellations)
-
     coord_counter = Counter()
     for ev in raw_events:
         coord_key = (round(ev["lat"], 3), round(ev["lng"], 3))
@@ -688,6 +619,7 @@ def main():
         f.write(output)
 
     print(f"\n✅ Итого: {len(raw_events)} событий")
+    print(f"   Пропущено сводок: {skipped_summary}")
     print(f"   Отброшено дубликатов: {duplicates}")
     print(f"   Постов без совпадений по н.п.: {no_match}")
 
