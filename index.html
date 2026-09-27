@@ -274,6 +274,7 @@
     #toolbar button:hover { background: var(--bg-hover); border-color: #0066ff; }
     #toolbar button.active { background: #0066ff; color: #fff; border-color: #0066ff; }
     #toolbar button.danger { color: #c00; border-color: #f0c0c0; }
+    #toolbar button.donate-btn { color: #2e7d32; border-color: #a5d6a7; }
     #toolbar button .tooltip {
       position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
       background: var(--tooltip-bg); color: var(--tooltip-color);
@@ -1454,6 +1455,16 @@
     }
 
     loadTelegramEvents();
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js').catch(function(e) {
+          console.warn('SW не зарегистрирован:', e.message);
+        });
+      });
+    }
   </script>
 </body>
 </html>
