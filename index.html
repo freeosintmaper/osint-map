@@ -447,7 +447,6 @@
   </script>
 
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script src="./lib/turf.min.js"></script>
   <script src="./data/telegram-events.js"></script>
   <script src="./lib/leaflet.js"></script>
   <script src="./lib/leaflet-draw.js"></script>
@@ -455,6 +454,9 @@
   <script src="./lib/markercluster.js"></script>
 
   <script>
+    // ============================================================
+    // SUPABASE
+    // ============================================================
     var SB_URL = 'https://zojqbhnwsycqhaiqpgxh.supabase.co';
     var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvanFiaG53c3ljcWhhaXFwZ3hoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MjY2NzMsImV4cCI6MjEwNjAwMjY3M30.OwU-cwkvk0Z1a28xgKpwMl9p-h-gFObYJ6_PHhFeIHE';
     var sb = null;
@@ -470,7 +472,6 @@
         eventsPanelTitle: 'События', controlZones: 'Зоны контроля',
         territoryRF: 'Территория РФ (DeepStateMap)',
         counteroffensive: 'Контрнаступления ВСУ (ISW)',
-        autoZones: 'Автоматические зоны (бои)',
         userZones: 'Мои зоны контроля',
         telegramEvents: 'События из Telegram',
         raidAlert: 'Воздушная тревога', strike: 'Удар', operation: 'Операция',
@@ -489,7 +490,7 @@
       uk: {
         eventsPanelTitle: 'Події', controlZones: 'Зони контролю',
         territoryRF: 'Територія РФ', counteroffensive: 'Контрнаступи ЗСУ',
-        autoZones: 'Автоматичні зони (бої)', userZones: 'Мої зони контролю',
+        userZones: 'Мої зони контролю',
         telegramEvents: 'Події з Telegram',
         raidAlert: 'Повітряна тривога', strike: 'Удар', operation: 'Операція',
         offensive: 'Наступ', incident: 'Інцидент', politics: 'Політика',
@@ -506,7 +507,7 @@
       en: {
         eventsPanelTitle: 'Events', controlZones: 'Control Zones',
         territoryRF: 'Territory held by RF', counteroffensive: 'Counteroffensives',
-        autoZones: 'Auto zones (combat)', userZones: 'My control zones',
+        userZones: 'My control zones',
         telegramEvents: 'Telegram Events',
         raidAlert: 'Air Raid Alert', strike: 'Strike', operation: 'Operation',
         offensive: 'Offensive', incident: 'Incident', politics: 'Politics',
@@ -522,9 +523,7 @@
       }
     };
     var currentLang = 'ru';
-    function t(key) {
-      return (i18n[currentLang] && i18n[currentLang][key]) || (i18n.ru[key]) || key;
-    }
+    function t(key) { return (i18n[currentLang] && i18n[currentLang][key]) || (i18n.ru[key]) || key; }
 
     // ============================================================
     // ЛОГИН
@@ -683,6 +682,7 @@
             userZonesLayer.addData({ type: 'Feature', properties: { id: row.id, category: row.category }, geometry: geom });
           } catch(e) {}
         });
+        console.log('Моих зон загружено: ' + (res.data || []).length);
       });
     }
     loadUserZones();
@@ -720,95 +720,6 @@
 
     deepStateLayer.addTo(map);
     counterLayer.addTo(map);
-
-    // ============================================================
-    // АВТОМАТИЧЕСКИЕ ЗОНЫ (Turf.js)
-    // ============================================================
-    var autoZonesLayer = L.geoJSON(null, {
-      style: function(f) {
-        var density = (f.properties && f.properties.density) || 1;
-        var color = density >= 15 ? '#8e0000' : density >= 8 ? '#cc3300' : '#ff6600';
-        return { color: color, weight: 2, opacity: 0.75, fillColor: color, fillOpacity: 0.18 };
-      },
-      onEachFeature: function(f, layer) {
-        var density = (f.properties && f.properties.density) || 0;
-        layer.bindPopup('<b>Зона активности</b><br>Событий: ' + density);
-      }
-    });
-    autoZonesLayer.addTo(map);
-
-    function buildAutoZones() {
-      console.log('🔍 buildAutoZones: старт');
-      console.log('🔍 TG_DATA:', window.TG_DATA ? 'есть' : 'НЕТ');
-      console.log('🔍 turf:', typeof turf);
-
-      if (!window.TG_DATA || !window.TG_DATA.events) {
-        console.warn('⚠️ Нет TG_DATA');
-        return;
-      }
-      if (typeof turf === 'undefined') {
-        console.warn('⚠️ Turf.js не загружен');
-        return;
-      }
-
-      var events = window.TG_DATA.events.filter(function(ev) {
-        if (!ev.lat || !ev.lng) return false;
-        return ['Military Strike', 'Military Operation', 'Military Offensive'].indexOf(ev.event_type) !== -1;
-      });
-      console.log('🔍 Боевых событий:', events.length);
-
-      if (events.length < 1) {
-        console.warn('⚠️ Мало событий для зон:', events.length);
-        autoZonesLayer.clearLayers();
-        return;
-      }
-
-      var gridSize = 0.3; // ~30 км
-      var grid = {};
-      events.forEach(function(ev) {
-        var key = Math.floor(ev.lat / gridSize) + '_' + Math.floor(ev.lng / gridSize);
-        if (!grid[key]) grid[key] = { count: 0, lat: 0, lng: 0 };
-        grid[key].count++;
-        grid[key].lat += ev.lat;
-        grid[key].lng += ev.lng;
-      });
-
-      var hotspots = [];
-      Object.keys(grid).forEach(function(k) {
-        if (grid[k].count >= 1) {
-          hotspots.push({
-            count: grid[k].count,
-            lat: grid[k].lat / grid[k].count,
-            lng: grid[k].lng / grid[k].count
-          });
-        }
-      });
-      console.log('🔍 Hotspots:', hotspots.length);
-
-      if (hotspots.length < 1) {
-        console.warn('⚠️ Нет hotspots');
-        autoZonesLayer.clearLayers();
-        return;
-      }
-
-      // Каждая точка — отдельная зона (буфер 20 км), если мало событий
-      var features = [];
-      hotspots.forEach(function(h) {
-        try {
-          var buffered = turf.buffer(turf.point([h.lng, h.lat]), 20, { units: 'kilometers' });
-          buffered.properties = { density: h.count };
-          features.push(buffered);
-        } catch(e) { console.warn('Turf buffer:', e.message); }
-      });
-
-      console.log('🔍 Зон собрано:', features.length);
-
-      autoZonesLayer.clearLayers();
-      if (features.length > 0) {
-        autoZonesLayer.addData(turf.featureCollection(features));
-        console.log('✅ Автоматических зон на карте:', features.length);
-      }
-    }
 
     // ============================================================
     // СОБЫТИЯ
@@ -867,7 +778,6 @@
       tgLayer.clearLayers();
       var list = (window.TG_DATA && window.TG_DATA.events) || [];
       var added = 0, panelEvents = [];
-
       list.forEach(function(ev) {
         if (!ev.lat || !ev.lng) return;
         if (!activeEventTypes[ev.event_type]) return;
@@ -883,10 +793,7 @@
         added++;
         panelEvents.push(ev);
       });
-
       renderEventsPanel(panelEvents);
-      // Автоматические зоны строим после загрузки событий
-      buildAutoZones();
     }
 
     function renderEventsPanel(events) {
@@ -1157,7 +1064,6 @@
         html += '<h4>' + t('controlZones') + '</h4>';
         html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
         html += '<label><input type="checkbox" id="chkCounter" checked> ' + t('counteroffensive') + '</label>';
-        html += '<label><input type="checkbox" id="chkAutoZones" checked> ' + t('autoZones') + '</label>';
         html += '<label><input type="checkbox" id="chkUserZones" checked> ' + t('userZones') + '</label>';
         html += '<hr><h4>' + t('telegramEvents') + '</h4>';
         html += '<label><input type="checkbox" id="chkTg" checked> ' + t('eventsPanelTitle') + '</label>';
@@ -1191,10 +1097,6 @@
         var chkCounter = div.querySelector('#chkCounter');
         if (chkCounter) chkCounter.addEventListener('change', function() {
           if (this.checked) counterLayer.addTo(map); else map.removeLayer(counterLayer);
-        });
-        var chkAuto = div.querySelector('#chkAutoZones');
-        if (chkAuto) chkAuto.addEventListener('change', function() {
-          if (this.checked) autoZonesLayer.addTo(map); else map.removeLayer(autoZonesLayer);
         });
         var chkUser = div.querySelector('#chkUserZones');
         if (chkUser) chkUser.addEventListener('change', function() {
@@ -1245,12 +1147,11 @@
       var html = '<h4>' + t('controlZones') + '</h4>';
       html += '<div><i style="background:#cc0000;"></i> ' + t('territoryRF') + '</div>';
       html += '<div><span class="legend-line" style="background:#0088cc;"></span> ' + t('counteroffensive') + '</div>';
-      html += '<div><i style="background:#ff6600;"></i> ' + t('autoZones') + '</div>';
       html += '<hr><h4>' + t('telegramEvents') + '</h4>';
       ['Air Raid Alert','Military Strike','Military Operation','Military Offensive','Security Incident','Political Development'].forEach(function(type) {
         html += '<div><span class="legend-svg" style="color:' + wtColor(type) + ';">' + wtSvg(type) + '</span> ' + t(WT_LABELS[type]) + '</div>';
       });
-      html += '<hr><div style="font-size:11px;color:var(--text-muted);">Telegram · DeepStateMap · ISW · Turf</div>';
+      html += '<hr><div style="font-size:11px;color:var(--text-muted);">Telegram · DeepStateMap · ISW</div>';
       div.innerHTML = html;
     }
 
