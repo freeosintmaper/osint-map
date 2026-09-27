@@ -759,27 +759,24 @@
           return Promise.all(kmlPromises);
         })
         .then(function(kmlStrings) {
-          var allFeatures = [];
-          kmlStrings.forEach(function(kmlString) {
-            var parser = new DOMParser();
-            var kmlDoc = parser.parseFromString(kmlString, 'text/xml');
-            var geojson = toGeoJSON.kml(kmlDoc);
-            if (geojson && geojson.features) {
-              allFeatures = allFeatures.concat(geojson.features);
-            }
-          });
-          owlControlLayer.addData({ type: 'FeatureCollection', features: allFeatures });
-          console.log('✅ Project Owl загружен: ' + allFeatures.length + ' объектов');
-        })
-        .catch(function(err) {
-          console.warn('Project Owl:', err.message);
-        });
+  var allFeatures = [];
+  kmlStrings.forEach(function(kmlString) {
+    var parser = new DOMParser();
+    var kmlDoc = parser.parseFromString(kmlString, 'text/xml');
+    var geojson = toGeoJSON.kml(kmlDoc);
+    if (geojson && geojson.features) {
+      geojson.features.forEach(function(f) {
+        var geomType = f.geometry && f.geometry.type;
+        // Оставляем только полигоны и мультиполигоны — это зоны контроля
+        if (geomType === 'Polygon' || geomType === 'MultiPolygon') {
+          allFeatures.push(f);
+        }
+      });
     }
-    loadOwlControl();
-
-    deepStateLayer.addTo(map);
-    counterLayer.addTo(map);
-    owlControlLayer.addTo(map);
+  });
+  owlControlLayer.addData({ type: 'FeatureCollection', features: allFeatures });
+  console.log('✅ Project Owl (только зоны): ' + allFeatures.length + ' объектов');
+})
 
     // ============================================================
     // СОБЫТИЯ
