@@ -33,6 +33,14 @@
       border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
       font-size: 13px; z-index: 99999; max-width: 90%; display: none;
     }
+    #owlLoader {
+      position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+      background: var(--bg-panel); color: var(--text-main);
+      padding: 8px 16px; border-radius: 20px;
+      box-shadow: 0 2px 8px var(--shadow); font-size: 12px;
+      z-index: 1000; display: none;
+    }
+    #owlLoader.open { display: block; }
 
     #userBtn {
       position: fixed; top: 12px; left: 12px; z-index: 5000;
@@ -355,6 +363,7 @@
 <body>
   <div id="map"></div>
   <div id="errorBox"></div>
+  <div id="owlLoader">Загрузка Project Owl…</div>
 
   <button id="userBtn" title="Вход для админа">
     <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -472,14 +481,15 @@
     // ИСТОЧНИК ДАННЫХ PROJECT OWL
     // ============================================================
     var OWL_KMZ_URL = 'https://raw.githack.com/owlmaps/UAControlMapBackups/latest/latest.kmz';
+    var OWL_CACHE_KEY = 'owl_zones_cache_v1';
+    var OWL_CACHE_DATE = 'owl_zones_cache_date';
 
-    // Цвета по категориям Project Owl
     var OWL_COLORS = {
-      russian:   '#c62828',  // красный — действия РФ
-      ukrainian: '#1565c0',  // синий — действия ВСУ
-      holding:   '#6a1b9a',  // фиолетовый — места сосредоточения
-      grey:      '#757575',  // серый — серая зона
-      unknown:   '#ef6c00'   // оранжевый — не определено
+      russian:   '#c62828',
+      ukrainian: '#1565c0',
+      holding:   '#6a1b9a',
+      grey:      '#757575',
+      unknown:   '#ef6c00'
     };
 
     var i18n = {
@@ -781,11 +791,7 @@
     function categorizeOwlPolygon(name, styleUrl) {
       if (!name) return 'unknown';
       var n = name.toLowerCase();
-
-      // Места сосредоточения войск
       if (n.indexOf('holding area') >= 0) return 'holding';
-
-      // Явно РФ
       if (n.indexOf('russian ') === 0) return 'russian';
       if (n.indexOf('russia ') === 0) return 'russian';
       if (n.indexOf('crimea') >= 0) return 'russian';
@@ -793,13 +799,9 @@
       if (n.indexOf('axis') >= 0) return 'russian';
       if (n.indexOf('incursion') >= 0) return 'russian';
       if (n.indexOf('initial invasion') >= 0) return 'russian';
-
-      // Явно Украина
       if (n.indexOf('ukrainian ') === 0) return 'ukrainian';
       if (n.indexOf('ukraine ') === 0) return 'ukrainian';
       if (n.indexOf('counterattack') >= 0) return 'ukrainian';
-
-      // Резерв — по цвету стиля KML
       if (styleUrl) {
         if (/A52714|880E4F/i.test(styleUrl)) return 'russian';
         if (/01579B|FFD600|0288D1/i.test(styleUrl)) return 'ukrainian';
@@ -807,11 +809,49 @@
       return 'unknown';
     }
 
+    // Проверяем: находится ли Placemark в тяжёлой папке (архив/позиции частей)
+    function isInHeavyFolder(pm) {
+      var el = pm.parentNode;
+      while (el && el.tagName !== 'Document') {
+        if (el.tagName === 'Folder') {
+          var ne = el.querySelector(':scope > name');
+          if (ne && /archive|unit position/i.test(ne.textContent)) return true;
+        }
+        el = el.parentNode;
+      }
+      return false;
+    }
+
     // ============================================================
-    // ЗАГРУЗКА PROJECT OWL (KMZ)
+    // ЗАГРУЗКА PROJECT OWL (KMZ) — с кэшем и пропуском архивов
     // ============================================================
+    function showOwlLoader(on) {
+      var el = document.getElementById('owlLoader');
+      if (el) { if (on) el.classList.add('open'); else el.classList.remove('open'); }
+    }
+
     function loadOwlControl() {
+      var today = new Date().toISOString().slice(0, 10);
+
+      // Пытаемся взять из кэша (только если сохранён сегодня)
+      try {
+        var cachedDate = localStorage.getItem(OWL_CACHE_DATE);
+        if (cachedDate === today) {
+          var raw = localStorage.getItem(OWL_CACHE_KEY);
+          if (raw) {
+            var cached = JSON.parse(raw);
+            if (cached && cached.features && cached.features.length) {
+              owlControlLayer.addData(cached);
+              console.log('✅ Project Owl (из кэша): ' + cached.features.length + ' зон');
+              return;
+            }
+          }
+        }
+      } catch (e) { console.warn('Кэш Project Owl недоступен:', e.message); }
+
       console.log('Загрузка Project Owl...');
+      showOwlLoader(true);
+
       fetch(OWL_KMZ_URL)
         .then(function(r) {
           if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -823,9 +863,7 @@
         .then(function(zip) {
           var kmlPromises = [];
           zip.forEach(function(relativePath, file) {
-            if (relativePath.endsWith('.kml')) {
-              kmlPromises.push(file.async('string'));
-            }
+            if (relativePath.endsWith('.kml')) kmlPromises.push(file.async('string'));
           });
           return Promise.all(kmlPromises);
         })
@@ -839,13 +877,16 @@
             var placemarks = kmlDoc.querySelectorAll('Placemark');
 
             placemarks.forEach(function(pm) {
+              // Пропускаем тяжёлые папки — экономим время
+              if (isInHeavyFolder(pm)) return;
+
               var nameEl = pm.querySelector(':scope > name');
               var styleEl = pm.querySelector(':scope > styleUrl');
               var pmName = nameEl ? nameEl.textContent : '';
               var pmStyle = styleEl ? styleEl.textContent : '';
               var cat = categorizeOwlPolygon(pmName, pmStyle);
 
-              // Конвертируем один Placemark
+              // Конвертируем только один Placemark
               var wrapDoc = document.implementation.createDocument('http://www.opengis.net/kml/2.2', 'kml', null);
               var docEl = wrapDoc.documentElement;
               var innerDoc = wrapDoc.createElement('Document');
@@ -866,12 +907,25 @@
             });
           });
 
+          var collection = { type: 'FeatureCollection', features: allFeatures };
+          owlControlLayer.addData(collection);
           console.log('📊 Категории:', stats);
-          owlControlLayer.addData({ type: 'FeatureCollection', features: allFeatures });
           console.log('✅ Project Owl: ' + allFeatures.length + ' зон (РФ: ' + stats.russian + ', UA: ' + stats.ukrainian + ', сосред.: ' + stats.holding + ', серая: ' + stats.grey + ', неизв.: ' + stats.unknown + ')');
+
+          // Кэшируем на сутки
+          try {
+            localStorage.setItem(OWL_CACHE_KEY, JSON.stringify(collection));
+            localStorage.setItem(OWL_CACHE_DATE, today);
+            console.log('💾 Результат закэширован');
+          } catch (e) {
+            console.warn('Не удалось сохранить кэш (возможно, мало места):', e.message);
+          }
         })
         .catch(function(err) {
           console.warn('Project Owl:', err.message);
+        })
+        .then(function() {
+          showOwlLoader(false);
         });
     }
     loadOwlControl();
