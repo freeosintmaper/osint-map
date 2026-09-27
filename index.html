@@ -452,6 +452,8 @@
   <script src="./lib/leaflet-draw.js"></script>
   <script src="./lib/leaflet.polylineDecorator.js"></script>
   <script src="./lib/markercluster.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/togeojson/0.16.0/togeojson.min.js"></script>
 
   <script>
     // ============================================================
@@ -467,11 +469,17 @@
 
     var DONATE_URL = 'https://www.donationalerts.com/r/freeosintmapper';
 
+    // ============================================================
+    // ИСТОЧНИК ДАННЫХ PROJECT OWL
+    // ============================================================
+    var OWL_KMZ_URL = 'https://github.com/owlmaps/UAControlMapBackups/raw/latest/latest.kmz';
+
     var i18n = {
       ru: {
         eventsPanelTitle: 'События', controlZones: 'Зоны контроля',
         territoryRF: 'Территория РФ (DeepStateMap)',
         counteroffensive: 'Контрнаступления ВСУ (ISW)',
+        owlControl: 'Project Owl (Ukraine Control Map)',
         userZones: 'Мои зоны контроля',
         telegramEvents: 'События из Telegram',
         raidAlert: 'Воздушная тревога', strike: 'Удар', operation: 'Операция',
@@ -490,6 +498,7 @@
       uk: {
         eventsPanelTitle: 'Події', controlZones: 'Зони контролю',
         territoryRF: 'Територія РФ', counteroffensive: 'Контрнаступи ЗСУ',
+        owlControl: 'Project Owl (Ukraine Control Map)',
         userZones: 'Мої зони контролю',
         telegramEvents: 'Події з Telegram',
         raidAlert: 'Повітряна тривога', strike: 'Удар', operation: 'Операція',
@@ -507,6 +516,7 @@
       en: {
         eventsPanelTitle: 'Events', controlZones: 'Control Zones',
         territoryRF: 'Territory held by RF', counteroffensive: 'Counteroffensives',
+        owlControl: 'Project Owl (Ukraine Control Map)',
         userZones: 'My control zones',
         telegramEvents: 'Telegram Events',
         raidAlert: 'Air Raid Alert', strike: 'Strike', operation: 'Operation',
@@ -613,6 +623,9 @@
       if (counterLayer) counterLayer.eachLayer(function(s) {
         applyStyleToLayer(s, '#0088cc', { color: '#0088cc', weight: 2, opacity: 0.85, fill: false, fillColor: '#0088cc', fillOpacity: 0, dashArray: '5,5' });
       });
+      if (owlControlLayer) owlControlLayer.eachLayer(function(s) {
+        applyStyleToLayer(s, '#00695c', { color: '#00695c', weight: 1.8, opacity: 0.85, fill: true, fillColor: '#00695c', fillOpacity: fillOpacity * 0.7 });
+      });
     }
 
     var TOOLBAR_SVG = {
@@ -696,6 +709,10 @@
       style: function() { return { color: '#0088cc', weight: 2, opacity: 0.85, fill: false, fillOpacity: 0, dashArray: '5,5' }; },
       onEachFeature: polygonPopup(t('counteroffensive'))
     });
+    var owlControlLayer = L.geoJSON(null, {
+      style: function() { return { color: '#00695c', weight: 1.8, opacity: 0.85, fill: true, fillColor: '#00695c', fillOpacity: 0.12 }; },
+      onEachFeature: polygonPopup(t('owlControl'))
+    });
 
     fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
       .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
@@ -718,8 +735,51 @@
       .then(function(d) { counterLayer.addData(d); })
       .catch(function(err) { console.warn('ISW counter:', err.message); });
 
+    // ============================================================
+    // ЗАГРУЗКА PROJECT OWL (KMZ)
+    // ============================================================
+    function loadOwlControl() {
+      console.log('Загрузка Project Owl...');
+      fetch(OWL_KMZ_URL)
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.arrayBuffer();
+        })
+        .then(function(buffer) {
+          return JSZip.loadAsync(buffer);
+        })
+        .then(function(zip) {
+          // Находим все .kml файлы в архиве
+          var kmlPromises = [];
+          zip.forEach(function(relativePath, file) {
+            if (relativePath.endsWith('.kml')) {
+              kmlPromises.push(file.async('string'));
+            }
+          });
+          return Promise.all(kmlPromises);
+        })
+        .then(function(kmlStrings) {
+          var allFeatures = [];
+          kmlStrings.forEach(function(kmlString) {
+            var parser = new DOMParser();
+            var kmlDoc = parser.parseFromString(kmlString, 'text/xml');
+            var geojson = toGeoJSON.kml(kmlDoc);
+            if (geojson && geojson.features) {
+              allFeatures = allFeatures.concat(geojson.features);
+            }
+          });
+          owlControlLayer.addData({ type: 'FeatureCollection', features: allFeatures });
+          console.log('✅ Project Owl загружен: ' + allFeatures.length + ' объектов');
+        })
+        .catch(function(err) {
+          console.warn('Project Owl:', err.message);
+        });
+    }
+    loadOwlControl();
+
     deepStateLayer.addTo(map);
     counterLayer.addTo(map);
+    owlControlLayer.addTo(map);
 
     // ============================================================
     // СОБЫТИЯ
@@ -1064,6 +1124,7 @@
         html += '<h4>' + t('controlZones') + '</h4>';
         html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
         html += '<label><input type="checkbox" id="chkCounter" checked> ' + t('counteroffensive') + '</label>';
+        html += '<label><input type="checkbox" id="chkOwl" checked> ' + t('owlControl') + '</label>';
         html += '<label><input type="checkbox" id="chkUserZones" checked> ' + t('userZones') + '</label>';
         html += '<hr><h4>' + t('telegramEvents') + '</h4>';
         html += '<label><input type="checkbox" id="chkTg" checked> ' + t('eventsPanelTitle') + '</label>';
@@ -1097,6 +1158,10 @@
         var chkCounter = div.querySelector('#chkCounter');
         if (chkCounter) chkCounter.addEventListener('change', function() {
           if (this.checked) counterLayer.addTo(map); else map.removeLayer(counterLayer);
+        });
+        var chkOwl = div.querySelector('#chkOwl');
+        if (chkOwl) chkOwl.addEventListener('change', function() {
+          if (this.checked) owlControlLayer.addTo(map); else map.removeLayer(owlControlLayer);
         });
         var chkUser = div.querySelector('#chkUserZones');
         if (chkUser) chkUser.addEventListener('change', function() {
@@ -1147,11 +1212,12 @@
       var html = '<h4>' + t('controlZones') + '</h4>';
       html += '<div><i style="background:#cc0000;"></i> ' + t('territoryRF') + '</div>';
       html += '<div><span class="legend-line" style="background:#0088cc;"></span> ' + t('counteroffensive') + '</div>';
+      html += '<div><i style="background:#00695c;opacity:0.5;"></i> ' + t('owlControl') + '</div>';
       html += '<hr><h4>' + t('telegramEvents') + '</h4>';
       ['Air Raid Alert','Military Strike','Military Operation','Military Offensive','Security Incident','Political Development'].forEach(function(type) {
         html += '<div><span class="legend-svg" style="color:' + wtColor(type) + ';">' + wtSvg(type) + '</span> ' + t(WT_LABELS[type]) + '</div>';
       });
-      html += '<hr><div style="font-size:11px;color:var(--text-muted);">Telegram · DeepStateMap · ISW</div>';
+      html += '<hr><div style="font-size:11px;color:var(--text-muted);">Telegram · DeepStateMap · ISW · Project Owl</div>';
       div.innerHTML = html;
     }
 
