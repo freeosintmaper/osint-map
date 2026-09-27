@@ -206,7 +206,6 @@
     .info.legend h4 { margin: 0 0 6px; font-size: 12px; text-transform: uppercase; }
     .info.legend hr { border: none; border-top: 1px solid var(--border-light); margin: 8px 0; }
     .info.legend i { width: 14px; height: 14px; float: left; margin-right: 8px; margin-top: 2px; opacity: 0.85; border-radius: 3px; display: inline-block; }
-    .info.legend .legend-line { width: 18px; height: 3px; float: left; margin-right: 8px; margin-top: 7px; border-radius: 2px; display: inline-block; }
     .info.legend .legend-svg { width: 16px; height: 16px; float: left; margin-right: 6px; margin-top: 2px; }
     .info.legend .legend-svg svg { width: 100%; height: 100%; }
 
@@ -478,7 +477,6 @@
       ru: {
         eventsPanelTitle: 'События', controlZones: 'Зоны контроля',
         territoryRF: 'Территория РФ (DeepStateMap)',
-        counteroffensive: 'Контрнаступления ВСУ (ISW)',
         owlControl: 'Project Owl (Ukraine Control Map)',
         userZones: 'Мои зоны контроля',
         telegramEvents: 'События из Telegram',
@@ -497,7 +495,7 @@
       },
       uk: {
         eventsPanelTitle: 'Події', controlZones: 'Зони контролю',
-        territoryRF: 'Територія РФ', counteroffensive: 'Контрнаступи ЗСУ',
+        territoryRF: 'Територія РФ',
         owlControl: 'Project Owl (Ukraine Control Map)',
         userZones: 'Мої зони контролю',
         telegramEvents: 'Події з Telegram',
@@ -515,7 +513,7 @@
       },
       en: {
         eventsPanelTitle: 'Events', controlZones: 'Control Zones',
-        territoryRF: 'Territory held by RF', counteroffensive: 'Counteroffensives',
+        territoryRF: 'Territory held by RF',
         owlControl: 'Project Owl (Ukraine Control Map)',
         userZones: 'My control zones',
         telegramEvents: 'Telegram Events',
@@ -620,9 +618,6 @@
     }
     function refreshAllStyles() {
       if (deepStateLayer) deepStateLayer.eachLayer(function(s) { applyStyleToLayer(s, '#cc0000', styleFor('#cc0000')); });
-      if (counterLayer) counterLayer.eachLayer(function(s) {
-        applyStyleToLayer(s, '#0088cc', { color: '#0088cc', weight: 2, opacity: 0.85, fill: false, fillColor: '#0088cc', fillOpacity: 0, dashArray: '5,5' });
-      });
       if (owlControlLayer) owlControlLayer.eachLayer(function(s) {
         applyStyleToLayer(s, '#00695c', { color: '#00695c', weight: 1.8, opacity: 0.85, fill: true, fillColor: '#00695c', fillOpacity: fillOpacity * 0.7 });
       });
@@ -701,14 +696,10 @@
     loadUserZones();
 
     // ============================================================
-    // DEEPSTATE + ISW
+    // DEEPSTATE + PROJECT OWL
     // ============================================================
     function polygonPopup(text) { return function(f, layer) { layer.bindPopup('<b>' + text + '</b>'); }; }
     var deepStateLayer = L.geoJSON(null, { style: function() { return styleFor('#cc0000'); }, onEachFeature: polygonPopup(t('territoryRF')) });
-    var counterLayer = L.geoJSON(null, {
-      style: function() { return { color: '#0088cc', weight: 2, opacity: 0.85, fill: false, fillOpacity: 0, dashArray: '5,5' }; },
-      onEachFeature: polygonPopup(t('counteroffensive'))
-    });
     var owlControlLayer = L.geoJSON(null, {
       style: function() { return { color: '#00695c', weight: 1.8, opacity: 0.85, fill: true, fillColor: '#00695c', fillOpacity: 0.12 }; },
       onEachFeature: polygonPopup(t('owlControl'))
@@ -730,13 +721,8 @@
       })
       .catch(function(err) { console.warn('DeepStateMap:', err.message); });
 
-    fetch('https://services5.arcgis.com/SaBe5HMtmnbqSWlu/arcgis/rest/services/Claimed_Ukrainian_Counteroffensive_March_to_July/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson')
-      .then(function(r) { return r.json(); })
-      .then(function(d) { counterLayer.addData(d); })
-      .catch(function(err) { console.warn('ISW counter:', err.message); });
-
     // ============================================================
-    // ЗАГРУЗКА PROJECT OWL (KMZ)
+    // ЗАГРУЗКА PROJECT OWL (KMZ) — только полигоны
     // ============================================================
     function loadOwlControl() {
       console.log('Загрузка Project Owl...');
@@ -749,7 +735,6 @@
           return JSZip.loadAsync(buffer);
         })
         .then(function(zip) {
-          // Находим все .kml файлы в архиве
           var kmlPromises = [];
           zip.forEach(function(relativePath, file) {
             if (relativePath.endsWith('.kml')) {
@@ -759,24 +744,31 @@
           return Promise.all(kmlPromises);
         })
         .then(function(kmlStrings) {
-  var allFeatures = [];
-  kmlStrings.forEach(function(kmlString) {
-    var parser = new DOMParser();
-    var kmlDoc = parser.parseFromString(kmlString, 'text/xml');
-    var geojson = toGeoJSON.kml(kmlDoc);
-    if (geojson && geojson.features) {
-      geojson.features.forEach(function(f) {
-        var geomType = f.geometry && f.geometry.type;
-        // Оставляем только полигоны и мультиполигоны — это зоны контроля
-        if (geomType === 'Polygon' || geomType === 'MultiPolygon') {
-          allFeatures.push(f);
-        }
-      });
+          var allFeatures = [];
+          kmlStrings.forEach(function(kmlString) {
+            var parser = new DOMParser();
+            var kmlDoc = parser.parseFromString(kmlString, 'text/xml');
+            var geojson = toGeoJSON.kml(kmlDoc);
+            if (geojson && geojson.features) {
+              geojson.features.forEach(function(f) {
+                var geomType = f.geometry && f.geometry.type;
+                if (geomType === 'Polygon' || geomType === 'MultiPolygon') {
+                  allFeatures.push(f);
+                }
+              });
+            }
+          });
+          owlControlLayer.addData({ type: 'FeatureCollection', features: allFeatures });
+          console.log('✅ Project Owl (только зоны): ' + allFeatures.length + ' объектов');
+        })
+        .catch(function(err) {
+          console.warn('Project Owl:', err.message);
+        });
     }
-  });
-  owlControlLayer.addData({ type: 'FeatureCollection', features: allFeatures });
-  console.log('✅ Project Owl (только зоны): ' + allFeatures.length + ' объектов');
-})
+    loadOwlControl();
+
+    deepStateLayer.addTo(map);
+    owlControlLayer.addTo(map);
 
     // ============================================================
     // СОБЫТИЯ
@@ -1120,7 +1112,6 @@
                 '<button class="lang-btn' + (currentLang === 'en' ? ' active' : '') + '" data-lang="en">EN</button></div>';
         html += '<h4>' + t('controlZones') + '</h4>';
         html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
-        html += '<label><input type="checkbox" id="chkCounter" checked> ' + t('counteroffensive') + '</label>';
         html += '<label><input type="checkbox" id="chkOwl" checked> ' + t('owlControl') + '</label>';
         html += '<label><input type="checkbox" id="chkUserZones" checked> ' + t('userZones') + '</label>';
         html += '<hr><h4>' + t('telegramEvents') + '</h4>';
@@ -1151,10 +1142,6 @@
         var chkZone = div.querySelector('#chkZone');
         if (chkZone) chkZone.addEventListener('change', function() {
           if (this.checked) deepStateLayer.addTo(map); else map.removeLayer(deepStateLayer);
-        });
-        var chkCounter = div.querySelector('#chkCounter');
-        if (chkCounter) chkCounter.addEventListener('change', function() {
-          if (this.checked) counterLayer.addTo(map); else map.removeLayer(counterLayer);
         });
         var chkOwl = div.querySelector('#chkOwl');
         if (chkOwl) chkOwl.addEventListener('change', function() {
@@ -1208,13 +1195,12 @@
     function updateLegendInDiv(div) {
       var html = '<h4>' + t('controlZones') + '</h4>';
       html += '<div><i style="background:#cc0000;"></i> ' + t('territoryRF') + '</div>';
-      html += '<div><span class="legend-line" style="background:#0088cc;"></span> ' + t('counteroffensive') + '</div>';
       html += '<div><i style="background:#00695c;opacity:0.5;"></i> ' + t('owlControl') + '</div>';
       html += '<hr><h4>' + t('telegramEvents') + '</h4>';
       ['Air Raid Alert','Military Strike','Military Operation','Military Offensive','Security Incident','Political Development'].forEach(function(type) {
         html += '<div><span class="legend-svg" style="color:' + wtColor(type) + ';">' + wtSvg(type) + '</span> ' + t(WT_LABELS[type]) + '</div>';
       });
-      html += '<hr><div style="font-size:11px;color:var(--text-muted);">Telegram · DeepStateMap · ISW · Project Owl</div>';
+      html += '<hr><div style="font-size:11px;color:var(--text-muted);">Telegram · DeepStateMap · Project Owl</div>';
       div.innerHTML = html;
     }
 
