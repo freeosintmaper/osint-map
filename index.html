@@ -1234,7 +1234,25 @@
         var countryLabel = ev.country === 'UA' ? t('countryUA') : (ev.country === 'RU' ? t('countryRU') : t('countryOSINT'));
         var countryClass = ev.country === 'UA' ? 'ua' : (ev.country === 'RU' ? 'ru' : 'osint');
         var badge = '<span class="evt-country ' + countryClass + '" style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;">' + countryLabel + '</span>';
-        marker.bindPopup('<b>' + label + '</b> ' + badge + '<br><i>' + (ev.location || '') + '</i><br>' + (ev.description || '') + '<br><small>' + dateStr + '</small><br><small style="color:#888;">@' + (ev.channel || '') + '</small><br><a href="' + ev.url + '" target="_blank">' + t('source') + ' →</a>');
+              var mediaHtml = '';
+        if (ev.photo_url) {
+          mediaHtml += '<div style="margin:8px 0;">' +
+            '<img src="' + ev.photo_url + '" ' +
+            'style="max-width:100%;max-height:240px;border-radius:6px;display:block;cursor:pointer;" ' +
+            'onclick="window.open(\'' + ev.photo_url.replace(/'/g, "\\'") + '\',\'_blank\')" ' +
+            'loading="lazy" />' +
+            '</div>';
+        }
+        if (ev.video_url && !ev.photo_url) {
+          mediaHtml += '<div style="margin:8px 0;">' +
+            '<img src="' + ev.video_url + '" ' +
+            'style="max-width:100%;max-height:240px;border-radius:6px;display:block;cursor:pointer;" ' +
+            'onclick="window.open(\'' + ev.url + '\',\'_blank\')" ' +
+            'loading="lazy" />' +
+            '<div style="font-size:11px;color:#888;margin-top:4px;">▶ Видео в Telegram</div>' +
+            '</div>';
+        }
+        marker.bindPopup('<b>' + label + '</b> ' + badge + '<br><i>' + (ev.location || '') + '</i>' + mediaHtml + '<br>' + (ev.description || '') + '<br><small>' + dateStr + '</small><br><small style="color:#888;">@' + (ev.channel || '') + '</small><br><a href="' + ev.url + '" target="_blank">' + t('source') + ' →</a>', { maxWidth: 320 });
         tgLayer.addLayer(marker);
         added++;
         panelEvents.push(ev);
