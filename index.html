@@ -275,7 +275,6 @@
     #toolbar button:hover { background: var(--bg-hover); border-color: #0066ff; }
     #toolbar button.active { background: #0066ff; color: #fff; border-color: #0066ff; }
     #toolbar button.danger { color: #c00; border-color: #f0c0c0; }
-    #toolbar button.donate-btn { color: #2e7d32; border-color: #a5d6a7; }
     #toolbar button .tooltip {
       position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
       background: var(--tooltip-bg); color: var(--tooltip-color);
@@ -518,14 +517,14 @@
     function isMobile() { return window.innerWidth <= 768; }
   </script>
 
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="./lib/supabase.js"></script>
   <script src="./data/telegram-events.js"></script>
   <script src="./lib/leaflet.js"></script>
   <script src="./lib/leaflet-draw.js"></script>
   <script src="./lib/leaflet.polylineDecorator.js"></script>
   <script src="./lib/markercluster.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/togeojson/0.16.0/togeojson.min.js"></script>
+  <script src="./lib/jszip.min.js"></script>
+  <script src="./lib/togeojson.min.js"></script>
 
   <script>
     // ============================================================
@@ -539,10 +538,8 @@
       if (sbFactory) sb = sbFactory(SB_URL, SB_KEY);
     } catch (e) { console.warn('Supabase:', e.message); }
 
-    var DONATE_URL = '';
-
     // ============================================================
-    // ИСТОЧНИК PROJECT OWL — динамическая загрузка свежего файла
+    // ИСТОЧНИК PROJECT OWL
     // ============================================================
     var OWL_API_URL = 'https://api.github.com/repos/owlmaps/UAControlMapBackups/contents/2026?ref=master';
     var OWL_BASE_URL = 'https://raw.githack.com/owlmaps/UAControlMapBackups/master/2026/';
@@ -576,7 +573,7 @@
         toolMarker: 'Метка', toolLine: 'Линия', toolArrow: 'Стрелка',
         toolPolygon: 'Зона', toolRectangle: 'Прямоугольник', toolCircle: 'Круг',
         toolMeasure: 'Измерить расстояние', toolClear: 'Очистить',
-        toolTheme: 'Тема', toolInfo: 'О проекте', toolDonate: 'Поддержать',
+        toolTheme: 'Тема', toolInfo: 'О проекте',
         clearConfirm: 'Удалить все рисунки?', total: 'Всего',
         countryUA: 'Украина', countryRU: 'РФ', countryOSINT: 'OSINT',
         opacityLabel: 'Прозрачность', modeFill: 'Заливка', modeOutline: 'Контуры',
@@ -598,7 +595,7 @@
         source: 'Джерело', toolMarker: 'Мітка', toolLine: 'Лінія', toolArrow: 'Стрілка',
         toolPolygon: 'Зона', toolRectangle: 'Прямокутник', toolCircle: 'Коло',
         toolMeasure: 'Виміряти', toolClear: 'Очистити', toolTheme: 'Тема',
-        toolInfo: 'Про проект', toolDonate: 'Підтримати',
+        toolInfo: 'Про проект',
         clearConfirm: 'Видалити всі малюнки?', total: 'Всього',
         countryUA: 'Україна', countryRU: 'РФ', countryOSINT: 'OSINT',
         opacityLabel: 'Прозорість', modeFill: 'Заливка', modeOutline: 'Контури',
@@ -620,7 +617,7 @@
         source: 'Source', toolMarker: 'Marker', toolLine: 'Line', toolArrow: 'Arrow',
         toolPolygon: 'Polygon', toolRectangle: 'Rectangle', toolCircle: 'Circle',
         toolMeasure: 'Measure', toolClear: 'Clear', toolTheme: 'Theme',
-        toolInfo: 'About', toolDonate: 'Support',
+        toolInfo: 'About',
         clearConfirm: 'Delete all drawings?', total: 'Total',
         countryUA: 'Ukraine', countryRU: 'RF', countryOSINT: 'OSINT',
         opacityLabel: 'Opacity', modeFill: 'Fill', modeOutline: 'Outline',
@@ -740,8 +737,7 @@
       clear: '<svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>',
       moon: '<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>',
       sun: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>',
-      info: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
-      donate: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v12M9 9h4.5a2 2 0 010 4h-3a2 2 0 000 4H15"/></svg>'
+      info: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>'
     };
 
     function applyTheme(theme) {
@@ -927,9 +923,6 @@
       })
       .catch(function(err) { console.warn('DeepStateMap:', err.message); });
 
-    // ============================================================
-    // КАТЕГОРИЗАЦИЯ PROJECT OWL ПО ИМЕНИ
-    // ============================================================
     function categorizeOwlPolygon(name, styleUrl) {
       if (!name) return 'unknown';
       var n = name.toLowerCase();
@@ -968,9 +961,6 @@
       if (el) { if (on) el.classList.add('open'); else el.classList.remove('open'); }
     }
 
-    // ============================================================
-    // ЗАГРУЗКА PROJECT OWL — динамический поиск свежего файла
-    // ============================================================
     function parseOwlKmlStrings(kmlStrings) {
       var allFeatures = [];
       var stats = { russian: 0, ukrainian: 0, holding: 0, grey: 0, unknown: 0 };
@@ -1078,6 +1068,81 @@
 
     deepStateLayer.addTo(map);
     owlControlLayer.addTo(map);
+
+    // ============================================================
+    // NASA FIRMS — пожары и тепловые аномалии
+    // ============================================================
+    var FIRMS_URL = './data/firms-fires.json';
+    var FIRMS_CACHE_KEY = 'firms_cache_v1';
+    var FIRMS_CACHE_TIME = 'firms_cache_time';
+    var FIRMS_CACHE_TTL = 3 * 60 * 60 * 1000;
+
+    var firmsLayer = L.layerGroup();
+    firmsLayer.addTo(map);
+
+    function renderFirmsFires(data) {
+      firmsLayer.clearLayers();
+      if (!data || !data.features) return;
+
+      data.features.forEach(function(f) {
+        var coords = f.geometry && f.geometry.coordinates;
+        if (!coords || coords.length < 2) return;
+        var lng = coords[0];
+        var lat = coords[1];
+
+        var brightness = (f.properties && f.properties.brightness) || 300;
+        var color = brightness > 360 ? '#ff1744' : (brightness > 330 ? '#ff6d00' : '#ffab00');
+        var radius = brightness > 360 ? 8000 : (brightness > 330 ? 6000 : 4000);
+
+        L.circle([lat, lng], {
+          radius: radius,
+          color: color,
+          fillColor: color,
+          fillOpacity: 0.35,
+          weight: 1,
+          opacity: 0.7
+        }).bindPopup(
+          '<b>🔥 Тепловая аномалия</b><br>' +
+          'Координаты: ' + lat.toFixed(4) + ', ' + lng.toFixed(4) + '<br>' +
+          'Яркость: ' + brightness + ' K<br>' +
+          'Спутник: ' + ((f.properties && f.properties.satellite) || '—') + '<br>' +
+          'Дата: ' + ((f.properties && f.properties.acq_date) || '—') +
+          ((f.properties && f.properties.acq_time) ? ' ' + f.properties.acq_time : '')
+        ).addTo(firmsLayer);
+      });
+
+      console.log('🔥 FIRMS: ' + data.features.length + ' пожаров');
+    }
+
+    function loadFirmsFires() {
+      try {
+        var cachedTime = parseInt(localStorage.getItem(FIRMS_CACHE_TIME) || '0', 10);
+        var cachedRaw = localStorage.getItem(FIRMS_CACHE_KEY);
+        if (cachedRaw && (Date.now() - cachedTime < FIRMS_CACHE_TTL)) {
+          var cached = JSON.parse(cachedRaw);
+          renderFirmsFires(cached);
+          console.log('🔥 FIRMS (из кэша): ' + (cached.features ? cached.features.length : 0) + ' пожаров');
+          return;
+        }
+      } catch (e) { console.warn('FIRMS кэш:', e.message); }
+
+      fetch(FIRMS_URL)
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function(data) {
+          renderFirmsFires(data);
+          try {
+            localStorage.setItem(FIRMS_CACHE_KEY, JSON.stringify(data));
+            localStorage.setItem(FIRMS_CACHE_TIME, Date.now().toString());
+          } catch (e) { console.warn('FIRMS кэш сохранить не удалось:', e.message); }
+        })
+        .catch(function(err) {
+          console.warn('FIRMS:', err.message);
+        });
+    }
+    loadFirmsFires();
 
     var WT_COLORS = {
       'Air Raid Alert': '#e6a800', 'Military Strike': '#c62828',
@@ -1380,13 +1445,12 @@
         { sep: true }, { key: 'measure', svg: TOOLBAR_SVG.measure },
         { sep: true }, { key: 'clear', svg: TOOLBAR_SVG.clear, danger: true },
         { sep: true }, { key: 'theme', svg: themeIcon },
-        { sep: true }, { key: 'info', svg: TOOLBAR_SVG.info },
-        { sep: true }, { key: 'donate', svg: TOOLBAR_SVG.donate, donate: true }
+        { sep: true }, { key: 'info', svg: TOOLBAR_SVG.info }
       ];
       var html = '';
       tools.forEach(function(item) {
         if (item.sep) { html += '<div class="sep"></div>'; return; }
-        var cls = item.danger ? 'danger' : (item.donate ? 'donate-btn' : '');
+        var cls = item.danger ? 'danger' : '';
         var tooltip = t('tool' + item.key.charAt(0).toUpperCase() + item.key.slice(1));
         html += '<button data-tool="' + item.key + '"' + (cls ? ' class="' + cls + '"' : '') + '>' + item.svg + '<span class="tooltip">' + tooltip + '</span></button>';
       });
@@ -1397,7 +1461,6 @@
           if (tool === 'clear') { if (confirm(t('clearConfirm'))) { drawingsLayer.clearLayers(); lastMeasureLayer = null; localStorage.removeItem(DRAWINGS_KEY); } return; }
           if (tool === 'theme') { applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); return; }
           if (tool === 'info') { alert(t('aboutText')); return; }
-          if (tool === 'donate') { window.open(DONATE_URL, '_blank'); return; }
           activateTool(tool);
         });
       });
@@ -1418,6 +1481,7 @@
         html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
         html += '<label><input type="checkbox" id="chkOwl" checked> ' + t('owlControl') + '</label>';
         html += '<label><input type="checkbox" id="chkUserZones" checked> ' + t('userZones') + '</label>';
+        html += '<label><input type="checkbox" id="chkFirms" checked> 🔥 Пожары (NASA FIRMS)</label>';
         html += '<hr><h4>' + t('telegramEvents') + '</h4>';
         html += '<label><input type="checkbox" id="chkTg" checked> ' + t('eventsPanelTitle') + '</label>';
         [
@@ -1454,6 +1518,10 @@
         var chkUser = div.querySelector('#chkUserZones');
         if (chkUser) chkUser.addEventListener('change', function() {
           if (this.checked) userZonesLayer.addTo(map); else map.removeLayer(userZonesLayer);
+        });
+        var chkFirms = div.querySelector('#chkFirms');
+        if (chkFirms) chkFirms.addEventListener('change', function() {
+          if (this.checked) map.addLayer(firmsLayer); else map.removeLayer(firmsLayer);
         });
         var chkTg = div.querySelector('#chkTg');
         if (chkTg) chkTg.addEventListener('change', function() {
@@ -1507,7 +1575,7 @@
       ['Air Raid Alert','Military Strike','Military Operation','Military Offensive','Security Incident','Political Development'].forEach(function(type) {
         html += '<div><span class="legend-svg" style="color:' + wtColor(type) + ';">' + wtSvg(type) + '</span> ' + t(WT_LABELS[type]) + '</div>';
       });
-      html += '<hr><div style="font-size:11px;color:var(--text-muted);">Telegram · DeepStateMap · Project Owl</div>';
+      html += '<hr><div style="font-size:11px;color:var(--text-muted);">Telegram · DeepStateMap · Project Owl · NASA FIRMS</div>';
       div.innerHTML = html;
     }
 
