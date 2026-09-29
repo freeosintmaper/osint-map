@@ -250,6 +250,14 @@
     #eventsPanel .event-item .evt-country.ua { background: #e3f2fd; color: #1565c0; }
     #eventsPanel .event-item .evt-country.ru { background: #ffebee; color: #c62828; }
     #eventsPanel .event-item .evt-country.osint { background: #f0f0f0; color: #333; }
+    #eventsPanel .events-filters { padding: 8px 14px; border-bottom: 1px solid var(--border-light); background: var(--bg-panel); }
+    #eventsPanel .events-filters input,
+    #eventsPanel .events-filters select {
+      width: 100%; padding: 8px 10px; border: 1px solid var(--border-mid);
+      border-radius: 6px; background: var(--bg-input); color: var(--text-main);
+      font-size: 13px; margin-bottom: 6px; box-sizing: border-box;
+    }
+    #eventsPanel .events-filters select { margin-bottom: 0; }
     #eventsPanel .summary-box { padding: 10px 14px; background: var(--bg-summary); border-bottom: 1px solid var(--border-light); font-size: 12px; }
     #eventsPanel .summary-box .summary-title { font-weight: 600; margin-bottom: 4px; }
     #eventsPanel .summary-box .summary-line { display: flex; justify-content: space-between; padding: 2px 0; color: var(--text-secondary); align-items: center; }
@@ -539,7 +547,7 @@
     } catch (e) { console.warn('Supabase:', e.message); }
 
     // ============================================================
-    // ИСТОЧНИК PROJECT OWL
+    // PROJECT OWL
     // ============================================================
     var OWL_API_URL = 'https://api.github.com/repos/owlmaps/UAControlMapBackups/contents/2026?ref=master';
     var OWL_BASE_URL = 'https://raw.githack.com/owlmaps/UAControlMapBackups/master/2026/';
@@ -574,6 +582,7 @@
         toolPolygon: 'Зона', toolRectangle: 'Прямоугольник', toolCircle: 'Круг',
         toolMeasure: 'Измерить расстояние', toolClear: 'Очистить',
         toolTheme: 'Тема', toolInfo: 'О проекте',
+        toolShowAll: 'Показать все события',
         clearConfirm: 'Удалить все рисунки?', total: 'Всего',
         countryUA: 'Украина', countryRU: 'РФ', countryOSINT: 'OSINT',
         opacityLabel: 'Прозрачность', modeFill: 'Заливка', modeOutline: 'Контуры',
@@ -596,6 +605,7 @@
         toolPolygon: 'Зона', toolRectangle: 'Прямокутник', toolCircle: 'Коло',
         toolMeasure: 'Виміряти', toolClear: 'Очистити', toolTheme: 'Тема',
         toolInfo: 'Про проект',
+        toolShowAll: 'Показати всі події',
         clearConfirm: 'Видалити всі малюнки?', total: 'Всього',
         countryUA: 'Україна', countryRU: 'РФ', countryOSINT: 'OSINT',
         opacityLabel: 'Прозорість', modeFill: 'Заливка', modeOutline: 'Контури',
@@ -618,6 +628,7 @@
         toolPolygon: 'Polygon', toolRectangle: 'Rectangle', toolCircle: 'Circle',
         toolMeasure: 'Measure', toolClear: 'Clear', toolTheme: 'Theme',
         toolInfo: 'About',
+        toolShowAll: 'Show all events',
         clearConfirm: 'Delete all drawings?', total: 'Total',
         countryUA: 'Ukraine', countryRU: 'RF', countryOSINT: 'OSINT',
         opacityLabel: 'Opacity', modeFill: 'Fill', modeOutline: 'Outline',
@@ -737,7 +748,8 @@
       clear: '<svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>',
       moon: '<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>',
       sun: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>',
-      info: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>'
+      info: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
+      showAll: '<svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="12" cy="12" r="2"/></svg>'
     };
 
     function applyTheme(theme) {
@@ -1070,11 +1082,11 @@
     owlControlLayer.addTo(map);
 
     // ============================================================
-    // NASA FIRMS — пожары и тепловые аномалии
+    // NASA FIRMS
     // ============================================================
     var FIRMS_URL = './data/firms-fires.json';
-    var FIRMS_CACHE_KEY = 'firms_cache_v1';
-    var FIRMS_CACHE_TIME = 'firms_cache_time';
+    var FIRMS_CACHE_KEY = 'firms_cache_v2';
+    var FIRMS_CACHE_TIME = 'firms_cache_time_v2';
     var FIRMS_CACHE_TTL = 3 * 60 * 60 * 1000;
 
     var firmsLayer = L.layerGroup();
@@ -1174,6 +1186,8 @@
       'Air Raid Alert': true, 'Military Strike': true, 'Military Operation': true,
       'Military Offensive': true, 'Security Incident': true, 'Political Development': false
     };
+    var eventDateFilter = 'all';
+    var eventSearchQuery = '';
 
     var tgLayer = L.markerClusterGroup({
       showCoverageOnHover: false, maxClusterRadius: 60, spiderfyOnMaxZoom: true,
@@ -1201,6 +1215,18 @@
       list.forEach(function(ev) {
         if (!ev.lat || !ev.lng) return;
         if (!activeEventTypes[ev.event_type]) return;
+        if (eventDateFilter !== 'all') {
+          var cutoff = 0;
+          if (eventDateFilter === '24h') cutoff = Date.now() - 24 * 60 * 60 * 1000;
+          else if (eventDateFilter === '3d') cutoff = Date.now() - 3 * 24 * 60 * 60 * 1000;
+          else if (eventDateFilter === '7d') cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+          if (cutoff && ev.date && new Date(ev.date).getTime() < cutoff) return;
+        }
+        if (eventSearchQuery) {
+          var q = eventSearchQuery.toLowerCase();
+          var hay = ((ev.location || '') + ' ' + (ev.channel || '') + ' ' + (ev.description || '')).toLowerCase();
+          if (hay.indexOf(q) < 0) return;
+        }
         var marker = L.marker([ev.lat, ev.lng], { icon: createEventIcon(ev.event_type), riseOnHover: true });
         var label = t(WT_LABELS[ev.event_type] || ev.event_type);
         var dateStr = '';
@@ -1226,7 +1252,18 @@
       events.sort(function(a, b) { return (b.date ? new Date(b.date).getTime() : 0) - (a.date ? new Date(a.date).getTime() : 0); });
       var counts = {};
       events.forEach(function(ev) { counts[ev.event_type] = (counts[ev.event_type] || 0) + 1; });
-      var html = '<div class="summary-box"><div class="summary-title">' + t('summaryTitle') + '</div>';
+
+      var filterHtml = '<div class="events-filters">' +
+        '<input type="text" id="eventSearch" placeholder="Поиск: город, канал, текст" value="' + (eventSearchQuery || '').replace(/"/g, '&quot;') + '">' +
+        '<select id="eventDateFilter">' +
+          '<option value="all"' + (eventDateFilter === 'all' ? ' selected' : '') + '>Все время</option>' +
+          '<option value="24h"' + (eventDateFilter === '24h' ? ' selected' : '') + '>За 24 часа</option>' +
+          '<option value="3d"' + (eventDateFilter === '3d' ? ' selected' : '') + '>За 3 дня</option>' +
+          '<option value="7d"' + (eventDateFilter === '7d' ? ' selected' : '') + '>За 7 дней</option>' +
+        '</select>' +
+        '</div>';
+
+      var html = filterHtml + '<div class="summary-box"><div class="summary-title">' + t('summaryTitle') + '</div>';
       Object.keys(counts).forEach(function(type) {
         html += '<div class="summary-line"><span style="display:flex;align-items:center;"><span style="color:' + wtColor(type) + ';display:flex;align-items:center;margin-right:6px;">' + wtSvg(type) + '</span>' + t(WT_LABELS[type] || type) + '</span><span>' + counts[type] + '</span></div>';
       });
@@ -1246,6 +1283,33 @@
                 '<div class="evt-time">' + time + '</div></div>';
       });
       body.innerHTML = html;
+
+            var searchEl = document.getElementById('eventSearch');
+      if (searchEl) {
+        searchEl.addEventListener('input', function() {
+          eventSearchQuery = this.value;
+          clearTimeout(window._searchTimer);
+          window._searchTimer = setTimeout(function() { 
+            var focusedId = 'eventSearch';
+            var cursorPos = searchEl.selectionStart;
+            loadTelegramEvents();
+            var newEl = document.getElementById(focusedId);
+            if (newEl) {
+              newEl.focus();
+              newEl.setSelectionRange(cursorPos, cursorPos);
+            }
+          }, 300);
+        });
+      }
+      
+      var dateEl = document.getElementById('eventDateFilter');
+      if (dateEl) {
+        dateEl.addEventListener('change', function() {
+          eventDateFilter = this.value;
+          loadTelegramEvents();
+        });
+      }
+
       body.querySelectorAll('.event-item').forEach(function(item) {
         item.addEventListener('click', function() {
           var lat = parseFloat(this.getAttribute('data-lat'));
@@ -1443,6 +1507,7 @@
         { key: 'arrow', svg: TOOLBAR_SVG.arrow }, { key: 'polygon', svg: TOOLBAR_SVG.polygon },
         { key: 'rectangle', svg: TOOLBAR_SVG.rectangle }, { key: 'circle', svg: TOOLBAR_SVG.circle },
         { sep: true }, { key: 'measure', svg: TOOLBAR_SVG.measure },
+        { sep: true }, { key: 'showAll', svg: TOOLBAR_SVG.showAll },
         { sep: true }, { key: 'clear', svg: TOOLBAR_SVG.clear, danger: true },
         { sep: true }, { key: 'theme', svg: themeIcon },
         { sep: true }, { key: 'info', svg: TOOLBAR_SVG.info }
@@ -1461,6 +1526,13 @@
           if (tool === 'clear') { if (confirm(t('clearConfirm'))) { drawingsLayer.clearLayers(); lastMeasureLayer = null; localStorage.removeItem(DRAWINGS_KEY); } return; }
           if (tool === 'theme') { applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); return; }
           if (tool === 'info') { alert(t('aboutText')); return; }
+          if (tool === 'showAll') {
+            try {
+              var b = tgLayer.getBounds();
+              if (b && b.isValid()) map.fitBounds(b, { padding: [50, 50] });
+            } catch(e) {}
+            return;
+          }
           activateTool(tool);
         });
       });
