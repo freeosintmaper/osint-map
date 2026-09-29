@@ -50,6 +50,46 @@
     }
     #owlLoader.open { display: block; }
 
+    /* ============ ПАНЕЛЬ РЕДАКТИРОВАНИЯ ЗОНЫ ============ */
+    #zoneEditBar {
+      position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+      background: var(--bg-panel); color: var(--text-main);
+      padding: 12px 16px; border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      display: none; gap: 10px; align-items: center;
+      z-index: 8000; font-size: 13px;
+      border: 2px solid #0066ff;
+      max-width: calc(100vw - 20px);
+      flex-wrap: wrap; justify-content: center;
+    }
+    #zoneEditBar.open { display: flex; }
+    #zoneEditBar .info {
+      flex: 1 1 100%;
+      text-align: center; font-size: 12px;
+      color: var(--text-secondary); margin-bottom: 4px;
+      min-width: 100%;
+    }
+    #zoneEditBar button {
+      padding: 10px 18px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      border: none; transition: all 0.15s;
+      min-height: 44px;
+    }
+    #zoneEditBar button.save {
+      background: #0066ff; color: #fff;
+    }
+    #zoneEditBar button.save:hover { background: #0052cc; }
+    #zoneEditBar button.cancel {
+      background: #f8f8f8; color: #c62828;
+      border: 1px solid #f0c0c0;
+    }
+    body.dark #zoneEditBar button.cancel {
+      background: #2a2a3a; color: #ff6b6b;
+      border-color: #5a3a3a;
+    }
+    #zoneEditBar button.cancel:hover { background: #ffebee; }
+    body.dark #zoneEditBar button.cancel:hover { background: #3a2a2a; }
+
     #userBtn {
       position: fixed; top: 12px; left: 12px; z-index: 5000;
       width: 44px; height: 44px;
@@ -427,6 +467,15 @@
         font-size: 14px !important;
         min-height: 46px !important;
       }
+
+      #zoneEditBar {
+        bottom: 80px; padding: 10px 12px; gap: 8px;
+        max-width: calc(100vw - 16px);
+      }
+      #zoneEditBar button {
+        padding: 12px 16px; font-size: 15px; min-height: 48px;
+        flex: 1;
+      }
     }
   </style>
 </head>
@@ -434,6 +483,12 @@
   <div id="map"></div>
   <div id="errorBox"></div>
   <div id="owlLoader">Загрузка Project Owl…</div>
+
+  <div id="zoneEditBar">
+    <div class="info">✏️ Режим редактирования — тяни вершины, потом подтверди</div>
+    <button class="cancel" id="btnZoneCancel">❌ Отмена</button>
+    <button class="save" id="btnZoneSave">💾 Подтвердить</button>
+  </div>
 
   <button id="userBtn" title="Вход для админа">
     <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -487,7 +542,7 @@
       <button id="btnClearAllZones" class="danger">🗑️ Удалить ВСЕ зоны (внимание!)</button>
     </div>
     <div class="hint">
-      Клик по зоне → «Изменить» — тяни вершины. Изменения сохраняются автоматически.
+      Клик по зоне → «Изменить» — тяни вершины. Затем нажми «Подтвердить» на панели внизу.
     </div>
   </div>
 
@@ -546,9 +601,6 @@
       if (sbFactory) sb = sbFactory(SB_URL, SB_KEY);
     } catch (e) { console.warn('Supabase:', e.message); }
 
-    // ============================================================
-    // PROJECT OWL
-    // ============================================================
     var OWL_API_URL = 'https://api.github.com/repos/owlmaps/UAControlMapBackups/contents/2026?ref=master';
     var OWL_BASE_URL = 'https://raw.githack.com/owlmaps/UAControlMapBackups/master/2026/';
     var OWL_KMZ_URL = null;
@@ -777,6 +829,9 @@
       'grey': { color: '#666666', fillColor: '#888888', fillOpacity: 0.30, label: 'Серая зона', dashArray: '6,4' }
     };
 
+    // ============================================================
+    // КАРТА АВТОРА — с подтверждением изменений
+    // ============================================================
     var userZonesLayer = L.geoJSON(null, {
       style: function(f) {
         var cat = (f.properties && f.properties.category) || 'russia';
@@ -822,13 +877,6 @@
             deleteZoneById(zoneId, layer);
           };
         });
-
-        layer.on('edit', function() {
-          clearTimeout(layer._saveTimer);
-          layer._saveTimer = setTimeout(function() {
-            saveEditedZone(layer);
-          }, 800);
-        });
       }
     });
     userZonesLayer.addTo(map);
@@ -849,30 +897,91 @@
     }
     loadUserZones();
 
+    // ============================================================
+    // РЕДАКТИРОВАНИЕ ЗОНЫ — с подтверждением
+    // ============================================================
     var editingLayer = null;
+    var editingOriginalGeom = null;
+    var zoneEditBar = document.getElementById('zoneEditBar');
 
     function startEditZone(layer) {
-      if (editingLayer && editingLayer !== layer && editingLayer.editing) {
-        try { editingLayer.editing.disable(); } catch(e) {}
+      // Если уже редактируется другая — откатываем её
+      if (editingLayer && editingLayer !== layer) {
+        cancelEditZone();
       }
+
+      // Сохраняем исходную геометрию на случай отмены
+      try {
+        editingOriginalGeom = JSON.parse(JSON.stringify(layer.toGeoJSON().geometry));
+      } catch(e) { editingOriginalGeom = null; }
+
       editingLayer = layer;
+
       if (layer.editing) {
         layer.editing.enable();
-        console.log('✏️ Режим редактирования: тяни вершины. Автосохранение через 0.8 сек.');
       }
+
+      zoneEditBar.classList.add('open');
+      console.log('✏️ Режим редактирования: тяни вершины, потом нажми «Подтвердить»');
     }
 
-    function saveEditedZone(layer) {
-      var id = layer._zoneId;
-      if (!id || !sb) return;
+    function cancelEditZone() {
+      if (!editingLayer) { zoneEditBar.classList.remove('open'); return; }
+
+      // Возвращаем исходную геометрию
+      if (editingOriginalGeom) {
+        try {
+          editingLayer.setLatLngs(reverseLatLngs(editingOriginalGeom));
+        } catch(e) { console.warn('Не удалось откатить форму:', e); }
+      }
+
+      if (editingLayer.editing) {
+        try { editingLayer.editing.disable(); } catch(e) {}
+      }
+
+      editingLayer = null;
+      editingOriginalGeom = null;
+      zoneEditBar.classList.remove('open');
+      console.log('❌ Изменения отменены');
+    }
+
+    function saveEditZone() {
+      if (!editingLayer) { zoneEditBar.classList.remove('open'); return; }
+
+      var id = editingLayer._zoneId;
+      if (!id || !sb) {
+        alert('Не удалось сохранить: зона не привязана к базе');
+        return;
+      }
+
       try {
-        var geometry = layer.toGeoJSON().geometry;
+        var geometry = editingLayer.toGeoJSON().geometry;
         sb.from('control_zones').update({ geometry: geometry }).eq('id', id).then(function(res) {
-          if (res.error) { console.warn('Не удалось сохранить зону:', res.error.message); return; }
+          if (res.error) { alert('Ошибка сохранения: ' + res.error.message); return; }
           console.log('💾 Зона #' + id + ' сохранена');
         });
-      } catch(e) { console.warn('saveEditedZone:', e); }
+      } catch(e) { console.warn('saveEditZone:', e); }
+
+      if (editingLayer.editing) {
+        try { editingLayer.editing.disable(); } catch(e) {}
+      }
+
+      editingLayer = null;
+      editingOriginalGeom = null;
+      zoneEditBar.classList.remove('open');
     }
+
+    // Функция для конвертации GeoJSON-координат обратно в LatLng Leaflet
+    function reverseLatLngs(geometry) {
+      if (!geometry) return [];
+      if (geometry.type === 'Polygon') {
+        return geometry.coordinates[0].map(function(c) { return [c[1], c[0]]; });
+      }
+      return [];
+    }
+
+    document.getElementById('btnZoneSave').addEventListener('click', saveEditZone);
+    document.getElementById('btnZoneCancel').addEventListener('click', cancelEditZone);
 
     function deleteZoneById(id, layer) {
       if (!id) return;
@@ -885,14 +994,6 @@
         console.log('🗑️ Зона #' + id + ' удалена');
       });
     }
-
-    map.on('click', function(e) {
-      if (!editingLayer || !editingLayer.editing) return;
-      var target = e.originalEvent && e.originalEvent.target;
-      if (target && target.closest && target.closest('.leaflet-marker-icon, .leaflet-popup, .leaflet-edit-marker')) return;
-      try { editingLayer.editing.disable(); } catch(err) {}
-      editingLayer = null;
-    });
 
     function polygonPopup(text) { return function(f, layer) { layer.bindPopup('<b>' + text + '</b>'); }; }
     var deepStateLayer = L.geoJSON(null, { style: function() { return styleFor('#cc0000'); }, onEachFeature: polygonPopup(t('territoryRF')) });
@@ -1234,7 +1335,8 @@
         var countryLabel = ev.country === 'UA' ? t('countryUA') : (ev.country === 'RU' ? t('countryRU') : t('countryOSINT'));
         var countryClass = ev.country === 'UA' ? 'ua' : (ev.country === 'RU' ? 'ru' : 'osint');
         var badge = '<span class="evt-country ' + countryClass + '" style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;">' + countryLabel + '</span>';
-              var mediaHtml = '';
+
+        var mediaHtml = '';
         if (ev.photo_url) {
           mediaHtml += '<div style="margin:8px 0;">' +
             '<img src="' + ev.photo_url + '" ' +
@@ -1244,14 +1346,19 @@
             '</div>';
         }
         if (ev.video_url && !ev.photo_url) {
-          mediaHtml += '<div style="margin:8px 0;">' +
+          mediaHtml += '<div style="margin:8px 0;position:relative;cursor:pointer;" ' +
+            'onclick="window.open(\'' + ev.url + '\',\'_blank\')">' +
             '<img src="' + ev.video_url + '" ' +
-            'style="max-width:100%;max-height:240px;border-radius:6px;display:block;cursor:pointer;" ' +
-            'onclick="window.open(\'' + ev.url + '\',\'_blank\')" ' +
+            'style="max-width:100%;max-height:240px;border-radius:6px;display:block;" ' +
             'loading="lazy" />' +
-            '<div style="font-size:11px;color:#888;margin-top:4px;">▶ Видео в Telegram</div>' +
+            '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);' +
+            'background:rgba(0,0,0,0.6);border-radius:50%;width:56px;height:56px;' +
+            'display:flex;align-items:center;justify-content:center;">' +
+            '<svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>' +
+            '</div>' +
             '</div>';
         }
+
         marker.bindPopup('<b>' + label + '</b> ' + badge + '<br><i>' + (ev.location || '') + '</i>' + mediaHtml + '<br>' + (ev.description || '') + '<br><small>' + dateStr + '</small><br><small style="color:#888;">@' + (ev.channel || '') + '</small><br><a href="' + ev.url + '" target="_blank">' + t('source') + ' →</a>', { maxWidth: 320 });
         tgLayer.addLayer(marker);
         added++;
@@ -1264,14 +1371,39 @@
       var body = document.getElementById('eventsListBody');
       document.getElementById('eventsPanelTitle').textContent = t('eventsPanelTitle');
       if (!events || events.length === 0) {
-        body.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' + t('noEvents') + '</div>';
+        var filterHtml = '<div class="events-filters">' +
+          '<input type="text" id="eventSearch" placeholder="Поиск: город, канал, текст" value="' + (eventSearchQuery || '').replace(/"/g, '&quot;') + '">' +
+          '<select id="eventDateFilter">' +
+            '<option value="all"' + (eventDateFilter === 'all' ? ' selected' : '') + '>Все время</option>' +
+            '<option value="24h"' + (eventDateFilter === '24h' ? ' selected' : '') + '>За 24 часа</option>' +
+            '<option value="3d"' + (eventDateFilter === '3d' ? ' selected' : '') + '>За 3 дня</option>' +
+            '<option value="7d"' + (eventDateFilter === '7d' ? ' selected' : '') + '>За 7 дней</option>' +
+          '</select>' +
+          '</div>';
+        body.innerHTML = filterHtml + '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' + t('noEvents') + '</div>';
+
+        var searchEl = document.getElementById('eventSearch');
+        if (searchEl) {
+          searchEl.addEventListener('input', function() {
+            eventSearchQuery = this.value;
+            clearTimeout(window._searchTimer);
+            window._searchTimer = setTimeout(function() { loadTelegramEvents(); }, 300);
+          });
+        }
+        var dateEl = document.getElementById('eventDateFilter');
+        if (dateEl) {
+          dateEl.addEventListener('change', function() {
+            eventDateFilter = this.value;
+            loadTelegramEvents();
+          });
+        }
         return;
       }
       events.sort(function(a, b) { return (b.date ? new Date(b.date).getTime() : 0) - (a.date ? new Date(a.date).getTime() : 0); });
       var counts = {};
       events.forEach(function(ev) { counts[ev.event_type] = (counts[ev.event_type] || 0) + 1; });
 
-      var filterHtml = '<div class="events-filters">' +
+      var filterHtml2 = '<div class="events-filters">' +
         '<input type="text" id="eventSearch" placeholder="Поиск: город, канал, текст" value="' + (eventSearchQuery || '').replace(/"/g, '&quot;') + '">' +
         '<select id="eventDateFilter">' +
           '<option value="all"' + (eventDateFilter === 'all' ? ' selected' : '') + '>Все время</option>' +
@@ -1281,7 +1413,7 @@
         '</select>' +
         '</div>';
 
-      var html = filterHtml + '<div class="summary-box"><div class="summary-title">' + t('summaryTitle') + '</div>';
+      var html = filterHtml2 + '<div class="summary-box"><div class="summary-title">' + t('summaryTitle') + '</div>';
       Object.keys(counts).forEach(function(type) {
         html += '<div class="summary-line"><span style="display:flex;align-items:center;"><span style="color:' + wtColor(type) + ';display:flex;align-items:center;margin-right:6px;">' + wtSvg(type) + '</span>' + t(WT_LABELS[type] || type) + '</span><span>' + counts[type] + '</span></div>';
       });
@@ -1302,16 +1434,15 @@
       });
       body.innerHTML = html;
 
-            var searchEl = document.getElementById('eventSearch');
-      if (searchEl) {
-        searchEl.addEventListener('input', function() {
+      var searchEl2 = document.getElementById('eventSearch');
+      if (searchEl2) {
+        searchEl2.addEventListener('input', function() {
           eventSearchQuery = this.value;
+          var cursorPos = searchEl2.selectionStart;
           clearTimeout(window._searchTimer);
-          window._searchTimer = setTimeout(function() { 
-            var focusedId = 'eventSearch';
-            var cursorPos = searchEl.selectionStart;
+          window._searchTimer = setTimeout(function() {
             loadTelegramEvents();
-            var newEl = document.getElementById(focusedId);
+            var newEl = document.getElementById('eventSearch');
             if (newEl) {
               newEl.focus();
               newEl.setSelectionRange(cursorPos, cursorPos);
@@ -1319,10 +1450,9 @@
           }, 300);
         });
       }
-      
-      var dateEl = document.getElementById('eventDateFilter');
-      if (dateEl) {
-        dateEl.addEventListener('change', function() {
+      var dateEl2 = document.getElementById('eventDateFilter');
+      if (dateEl2) {
+        dateEl2.addEventListener('change', function() {
           eventDateFilter = this.value;
           loadTelegramEvents();
         });
@@ -1389,10 +1519,7 @@
       zoneEditorPanel.classList.remove('open');
     });
     document.getElementById('btnStopEditing').addEventListener('click', function() {
-      if (editingLayer && editingLayer.editing) {
-        try { editingLayer.editing.disable(); } catch(e) {}
-        editingLayer = null;
-      }
+      cancelEditZone();
       alert('Режим редактирования выключен');
     });
     document.getElementById('btnClearAllZones').addEventListener('click', function() {
