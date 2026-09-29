@@ -2,7 +2,7 @@ name: Update NASA FIRMS fires
 
 on:
   schedule:
-    - cron: '15 */3 * * *'   # каждые 3 часа
+    - cron: '15 */3 * * *'
   workflow_dispatch:
 
 jobs:
@@ -20,6 +20,8 @@ jobs:
           python-version: '3.11'
 
       - name: Fetch FIRMS data
+        env:
+          FIRMS_MAP_KEY: ${{ secrets.FIRMS_MAP_KEY }}
         run: python3 scripts/fetch_firms.py
 
       - name: Commit and push
