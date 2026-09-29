@@ -29,7 +29,6 @@ def fetch_firms():
         f"{MAP_KEY}/{SOURCE}/{BBOX}/{DAYS}"
     )
     print(f"Загружаю FIRMS (key: {MAP_KEY[:6]}...)")
-    print(f"URL: {url[:80]}...")
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     with urllib.request.urlopen(req, timeout=60) as r:
         data = r.read().decode("utf-8", errors="ignore")
