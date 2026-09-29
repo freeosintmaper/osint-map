@@ -1,7 +1,6 @@
 """
 Загрузка тепловых аномалий NASA FIRMS для территории Украины и России.
-Источник: https://firms.modaps.eosdis.nasa.gov/api/area/csv/
-Ключ не нужен для базовой карты (VIIRS_SNPP_NRT).
+Требуется MAP_KEY из GitHub Secrets (FIRMS_MAP_KEY).
 """
 
 import urllib.request
@@ -10,36 +9,31 @@ import json
 import io
 import sys
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 
-# ============================================================
-# НАСТРОЙКИ
-# ============================================================
-# Область: Украина + Россия (западная часть)
-# Формат: min_lon,min_lat,max_lon,max_lat
 BBOX = "22,44,180,82"
-
-# Сколько дней назад (1 = последние сутки, 2 = двое суток и т.д.)
 DAYS = 1
-
-# Источник: VIIRS SNPP (375 м) — бесплатно, без ключа
 SOURCE = "VIIRS_SNPP_NRT"
-
-# Максимум записей (чтобы не перегрузить карту)
 MAX_RECORDS = 3000
 
-# ============================================================
-# ЗАГРУЗКА
-# ============================================================
+MAP_KEY = os.environ.get("FIRMS_MAP_KEY", "").strip()
+
+if not MAP_KEY:
+    print("❌ FIRMS_MAP_KEY не задан в GitHub Secrets", file=sys.stderr)
+    sys.exit(1)
+
+
 def fetch_firms():
     url = (
         f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/"
-        f"firms/{SOURCE}/{BBOX}/{DAYS}"
+        f"{MAP_KEY}/{SOURCE}/{BBOX}/{DAYS}"
     )
-    print(f"Загружаю с {url}")
+    print(f"Загружаю FIRMS (key: {MAP_KEY[:6]}...)")
+    print(f"URL: {url[:80]}...")
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     with urllib.request.urlopen(req, timeout=60) as r:
         data = r.read().decode("utf-8", errors="ignore")
+    print(f"Получено байт: {len(data)}")
     return data
 
 
@@ -67,10 +61,9 @@ def parse_firms_csv(data):
                     "frp": float(row.get("frp") or 0)
                 }
             })
-        except Exception as e:
+        except Exception:
             continue
 
-    # Сортировка по яркости — самые горячие вперёд, обрезаем
     features.sort(key=lambda f: -f["properties"]["brightness"])
     return features[:MAX_RECORDS]
 
@@ -91,12 +84,15 @@ def main():
         with open("data/firms-fires.json", "w", encoding="utf-8") as f:
             json.dump(output, f, ensure_ascii=False)
 
-        print(f"✅ Сохранено в data/firms-fires.json")
+        print("✅ Сохранено в data/firms-fires.json")
 
     except Exception as e:
         print(f"❌ Ошибка: {e}", file=sys.stderr)
-        # Не валим workflow, если NASA лежит
-        output = {"type": "FeatureCollection", "generated": datetime.utcnow().isoformat() + "Z", "features": []}
+        output = {
+            "type": "FeatureCollection",
+            "generated": datetime.utcnow().isoformat() + "Z",
+            "features": []
+        }
         os.makedirs("data", exist_ok=True)
         with open("data/firms-fires.json", "w", encoding="utf-8") as f:
             json.dump(output, f, ensure_ascii=False)
