@@ -8,6 +8,7 @@
   <link rel="icon" type="image/svg+xml" href="./icon.svg" />
   <link rel="apple-touch-icon" href="./icon.svg" />
   <meta name="theme-color" content="#0066ff" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="OSINT" />
@@ -319,9 +320,6 @@
     body.dark .leaflet-popup-tip { background: var(--bg-panel); color: var(--text-main); }
     body.dark .leaflet-popup-content a { color: #6ba6ff; }
 
-    /* ============================================================
-       МОБИЛЬНЫЕ КНОПКИ — показываем по умолчанию, скрываем на десктопе
-       ============================================================ */
     #mobileToggle {
       display: flex;
       position: fixed; top: 10px; right: 10px; z-index: 5000;
@@ -342,12 +340,10 @@
       fill: none; stroke-linecap: round; stroke-linejoin: round;
     }
 
-    /* Скрываем мобильные кнопки только на десктопе */
     @media (min-width: 769px) {
       #mobileToggle { display: none; }
     }
 
-    /* ===== МОБИЛЬНАЯ ВЕРСТКА ===== */
     @media (max-width: 768px) {
       #eventsPanel { left: 0; right: 0; top: 66px; bottom: 0; width: auto;
                      border-radius: 12px 12px 0 0; z-index: 4000; display: none; }
@@ -545,7 +541,12 @@
 
     var DONATE_URL = '';
 
-    var OWL_KMZ_URL = 'https://raw.githack.com/owlmaps/UAControlMapBackups/latest/latest.kmz';
+    // ============================================================
+    // ИСТОЧНИК PROJECT OWL — динамическая загрузка свежего файла
+    // ============================================================
+    var OWL_API_URL = 'https://api.github.com/repos/owlmaps/UAControlMapBackups/contents/2026?ref=master';
+    var OWL_BASE_URL = 'https://raw.githack.com/owlmaps/UAControlMapBackups/master/2026/';
+    var OWL_KMZ_URL = null;
     var OWL_CACHE_KEY = 'owl_zones_cache_v1';
     var OWL_CACHE_DATE = 'owl_zones_cache_date';
 
@@ -781,7 +782,7 @@
         layer._zoneId = zoneId;
         layer._zoneCategory = cat;
 
-                     var popupHtml = '<b>' + c.label + '</b>';
+        var popupHtml = '<b>' + c.label + '</b>';
         var adminActionsHtml = '';
         if (zoneId) {
           adminActionsHtml =
@@ -813,7 +814,7 @@
             deleteZoneById(zoneId, layer);
           };
         });
-        
+
         layer.on('edit', function() {
           clearTimeout(layer._saveTimer);
           layer._saveTimer = setTimeout(function() {
@@ -926,6 +927,9 @@
       })
       .catch(function(err) { console.warn('DeepStateMap:', err.message); });
 
+    // ============================================================
+    // КАТЕГОРИЗАЦИЯ PROJECT OWL ПО ИМЕНИ
+    // ============================================================
     function categorizeOwlPolygon(name, styleUrl) {
       if (!name) return 'unknown';
       var n = name.toLowerCase();
@@ -964,6 +968,49 @@
       if (el) { if (on) el.classList.add('open'); else el.classList.remove('open'); }
     }
 
+    // ============================================================
+    // ЗАГРУЗКА PROJECT OWL — динамический поиск свежего файла
+    // ============================================================
+    function parseOwlKmlStrings(kmlStrings) {
+      var allFeatures = [];
+      var stats = { russian: 0, ukrainian: 0, holding: 0, grey: 0, unknown: 0 };
+
+      kmlStrings.forEach(function(kmlString) {
+        var parser = new DOMParser();
+        var kmlDoc = parser.parseFromString(kmlString, 'text/xml');
+        var placemarks = kmlDoc.querySelectorAll('Placemark');
+
+        placemarks.forEach(function(pm) {
+          if (isInHeavyFolder(pm)) return;
+          var nameEl = pm.querySelector(':scope > name');
+          var styleEl = pm.querySelector(':scope > styleUrl');
+          var pmName = nameEl ? nameEl.textContent : '';
+          var pmStyle = styleEl ? styleEl.textContent : '';
+          var cat = categorizeOwlPolygon(pmName, pmStyle);
+
+          var wrapDoc = document.implementation.createDocument('http://www.opengis.net/kml/2.2', 'kml', null);
+          var docEl = wrapDoc.documentElement;
+          var innerDoc = wrapDoc.createElement('Document');
+          innerDoc.appendChild(pm.cloneNode(true));
+          docEl.appendChild(innerDoc);
+
+          var gj = toGeoJSON.kml(wrapDoc);
+          if (!gj || !gj.features) return;
+
+          gj.features.forEach(function(f) {
+            var gt = f.geometry && f.geometry.type;
+            if (gt !== 'Polygon' && gt !== 'MultiPolygon') return;
+            f.properties = f.properties || {};
+            f.properties._category = cat;
+            allFeatures.push(f);
+            stats[cat]++;
+          });
+        });
+      });
+
+      return { features: allFeatures, stats: stats };
+    }
+
     function loadOwlControl() {
       var today = new Date().toISOString().slice(0, 10);
       try {
@@ -984,7 +1031,22 @@
       console.log('Загрузка Project Owl...');
       showOwlLoader(true);
 
-      fetch(OWL_KMZ_URL)
+      fetch(OWL_API_URL)
+        .then(function(r) {
+          if (!r.ok) throw new Error('GitHub API HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function(files) {
+          if (!Array.isArray(files)) throw new Error('GitHub API вернул не массив');
+          var kmzFiles = files
+            .filter(function(f) { return f.name && f.name.toLowerCase().endsWith('.kmz'); })
+            .sort(function(a, b) { return b.name.localeCompare(a.name); });
+          if (!kmzFiles.length) throw new Error('Нет KMZ-файлов в папке 2026');
+          var latestFile = kmzFiles[0];
+          console.log('📂 Свежий файл: ' + latestFile.name);
+          OWL_KMZ_URL = OWL_BASE_URL + latestFile.name;
+          return fetch(OWL_KMZ_URL);
+        })
         .then(function(r) {
           if (!r.ok) throw new Error('HTTP ' + r.status);
           return r.arrayBuffer();
@@ -998,46 +1060,11 @@
           return Promise.all(kmlPromises);
         })
         .then(function(kmlStrings) {
-          var allFeatures = [];
-          var stats = { russian: 0, ukrainian: 0, holding: 0, grey: 0, unknown: 0 };
-
-          kmlStrings.forEach(function(kmlString) {
-            var parser = new DOMParser();
-            var kmlDoc = parser.parseFromString(kmlString, 'text/xml');
-            var placemarks = kmlDoc.querySelectorAll('Placemark');
-
-            placemarks.forEach(function(pm) {
-              if (isInHeavyFolder(pm)) return;
-              var nameEl = pm.querySelector(':scope > name');
-              var styleEl = pm.querySelector(':scope > styleUrl');
-              var pmName = nameEl ? nameEl.textContent : '';
-              var pmStyle = styleEl ? styleEl.textContent : '';
-              var cat = categorizeOwlPolygon(pmName, pmStyle);
-
-              var wrapDoc = document.implementation.createDocument('http://www.opengis.net/kml/2.2', 'kml', null);
-              var docEl = wrapDoc.documentElement;
-              var innerDoc = wrapDoc.createElement('Document');
-              innerDoc.appendChild(pm.cloneNode(true));
-              docEl.appendChild(innerDoc);
-
-              var gj = toGeoJSON.kml(wrapDoc);
-              if (!gj || !gj.features) return;
-
-              gj.features.forEach(function(f) {
-                var gt = f.geometry && f.geometry.type;
-                if (gt !== 'Polygon' && gt !== 'MultiPolygon') return;
-                f.properties = f.properties || {};
-                f.properties._category = cat;
-                allFeatures.push(f);
-                stats[cat]++;
-              });
-            });
-          });
-
-          var collection = { type: 'FeatureCollection', features: allFeatures };
+          var result = parseOwlKmlStrings(kmlStrings);
+          var collection = { type: 'FeatureCollection', features: result.features };
           owlControlLayer.addData(collection);
-          console.log('📊 Категории:', stats);
-          console.log('✅ Project Owl: ' + allFeatures.length + ' зон');
+          console.log('📊 Категории:', result.stats);
+          console.log('✅ Project Owl: ' + result.features.length + ' зон');
 
           try {
             localStorage.setItem(OWL_CACHE_KEY, JSON.stringify(collection));
