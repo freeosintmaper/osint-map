@@ -781,18 +781,26 @@
         layer._zoneId = zoneId;
         layer._zoneCategory = cat;
 
-             var popupHtml = '<b>' + c.label + '</b>';
-        var isLoggedIn = userBtn.classList.contains('logged-in');
-        if (zoneId && isLoggedIn) {
-          popupHtml += '<div style="margin-top:8px;display:flex;gap:6px;">' +
+                     var popupHtml = '<b>' + c.label + '</b>';
+        var adminActionsHtml = '';
+        if (zoneId) {
+          adminActionsHtml =
+            '<div class="zone-admin-actions" style="margin-top:8px;display:none;gap:6px;">' +
             '<button class="zone-btn-edit" style="flex:1;padding:6px 10px;border:1px solid #0066ff;background:#eef5ff;color:#0066ff;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;">✏️ Изменить</button>' +
             '<button class="zone-btn-delete" style="flex:1;padding:6px 10px;border:1px solid #c62828;background:#ffebee;color:#c62828;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;">🗑️ Удалить</button>' +
             '</div>';
         }
-
+        layer.bindPopup(popupHtml + adminActionsHtml);
         layer.on('popupopen', function(e) {
           var popup = e.popup.getElement();
           if (!popup) return;
+
+          var isLoggedIn = userBtn.classList.contains('logged-in');
+          var actions = popup.querySelector('.zone-admin-actions');
+          if (actions) {
+            actions.style.display = isLoggedIn ? 'flex' : 'none';
+          }
+
           var editBtn = popup.querySelector('.zone-btn-edit');
           var delBtn = popup.querySelector('.zone-btn-delete');
           if (editBtn) editBtn.onclick = function(ev) {
@@ -805,7 +813,7 @@
             deleteZoneById(zoneId, layer);
           };
         });
-
+        
         layer.on('edit', function() {
           clearTimeout(layer._saveTimer);
           layer._saveTimer = setTimeout(function() {
