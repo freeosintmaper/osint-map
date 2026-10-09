@@ -14,9 +14,10 @@ CHANNELS = [
     "ukrpravda_news", "uniannet",
     "DeepStateUA", "OsintFlow",
     "kharkiv_typical", "dnepr_typical", "odesa_typical",
-    "kherson_typical", "donbass_realii", "exilenova_plus", "supernova_plus",
+    "kherson_typical", "donbass_realii",
     "kyivindependent_official",
     "informnapalm",
+    "exilenova_plus", "supernova_plus",
     "astrapress", "bazabazon",
     "rybar", "voenkorKotenok", "wargonzo",
     "readovkanews", "lost_armour",
@@ -31,11 +32,12 @@ CHANNEL_COUNTRY = {
     "kherson_typical": "UA", "donbass_realii": "UA",
     "kyivindependent_official": "UA",
     "informnapalm": "OSINT",
+    "exilenova_plus": "UA", "supernova_plus": "UA",
     "astrapress": "OSINT", "bazabazon": "OSINT",
     "rybar": "RU", "voenkorKotenok": "RU", "wargonzo": "RU",
     "readovkanews": "RU", "lost_armour": "RU",
     "boris_rozhin": "RU", "epoddubny": "RU", "RVvoenkor": "RU",
-    "dva_majors": "RU", "exilenova_plus": "UA", "supernova_plus": "UA",
+    "dva_majors": "RU",
 }
 
 SPEAKER_CAPITALS = {
@@ -296,6 +298,8 @@ TRANSLIT_ALIASES = {
 
     "кривой рог": [47.9105, 33.3918, "Кривой Рог", "UA"],
     "кривий ріг": [47.9105, 33.3918, "Кривой Рог", "UA"],
+    "кременчуг": [49.0637, 33.4206, "Кременчуг", "UA"],
+    "кременчук": [49.0637, 33.4206, "Кременчуг", "UA"],
 
     "мариуполь": [47.0951, 37.5413, "Мариуполь", "UA"],
     "маріуполь": [47.0951, 37.5413, "Мариуполь", "UA"],
@@ -341,10 +345,6 @@ TRANSLIT_ALIASES = {
 
     "белая церковь": [49.7962, 30.1117, "Белая Церковь", "UA"],
     "біла церква": [49.7962, 30.1117, "Белая Церковь", "UA"],
-
-    "кривой рог": [47.9105, 33.3918, "Кривой Рог", "UA"],
-    "кременчуг": [49.0637, 33.4206, "Кременчуг", "UA"],
-    "кременчук": [49.0637, 33.4206, "Кременчуг", "UA"],
 
     "чернобыль": [51.2763, 30.2219, "Чернобыль", "UA"],
     "чернобыльская зона": [51.2763, 30.2219, "Чернобыль", "UA"],
@@ -579,7 +579,7 @@ STOP_SETTLEMENTS = {
     "дальний", "ближний", "дальнее", "ближнее", "веселое", "весёлое",
     "радостное", "светлое", "теплое", "тёплое", "глубокое",
     "широкое", "высокое", "низкое", "голубое", "синее",
-    "зорька", "небо",
+    "зорька",
     "граница", "граничное", "пограничное", "приморское",
     "лесное", "степное", "речное", "озерное", "горное",
     "зеленое", "зелёное", "белое", "черное", "чёрное",
@@ -770,9 +770,7 @@ def is_military_term_context(text, phrase):
 
 def find_alias(text, channel_country):
     """
-    Ищем НП в списке алиасов.
-    Теперь ищем в ЛЮБОЙ стране — вне зависимости от страны канала.
-    Но требуем строгую проверку события.
+    Ищем НП в алиасах. Проверка симметричная — независимо от страны канала.
     """
     tl = text.lower()
     had_alias = False
@@ -783,7 +781,6 @@ def find_alias(text, channel_country):
         coords = TRANSLIT_ALIASES[key]
         alias_country = coords[3]
 
-        # Если канал и НП в одной стране — проверяем "свою" страну менее строго
         if channel_country == alias_country:
             if has_source_verb_near(text, key, window=60):
                 continue
@@ -793,8 +790,6 @@ def find_alias(text, channel_country):
                 continue
             return (coords[0], coords[1]), coords[2], coords[3], True
 
-        # Если канал и НП в РАЗНЫХ странах — проверяем более строго,
-        # но всё же РАЗРЕШАЕМ (раньше тут был жёсткий continue)
         if has_source_verb_near(text, key, window=60):
             continue
         if not has_event_pattern_near(text, key, window=250):
@@ -807,8 +802,7 @@ def find_alias(text, channel_country):
 
 def find_best_city(text, channel_country):
     """
-    Ищем ЛЮБОЙ НП в базе — без жёсткой привязки к стране канала.
-    Приоритет отдаём НП в "своей" стране, но НЕ запрещаем чужие.
+    Ищем любой НП в базе. Приоритет — свой, но чужой тоже разрешён.
     """
     if not SETTLEMENTS_BY_NAME:
         return None, None, None
@@ -833,19 +827,16 @@ def find_best_city(text, channel_country):
 
             coords_list = SETTLEMENTS_BY_NAME[phrase]
 
-            # Сначала пробуем НП в стране канала
             own = [c for c in coords_list if c[2] == channel_country]
             if own:
                 best = max(own, key=lambda x: x[4])
                 is_own_country = True
             else:
-                # Если в своей стране нет — берём в другой (это ключевое изменение!)
                 best = max(coords_list, key=lambda x: x[4])
                 is_own_country = False
 
             lat, lng, country, orig, population = best
 
-            # Менее строгая проверка для "своих", более строгая для "чужих"
             if is_own_country:
                 if has_source_verb_near(text, phrase, window=60):
                     continue
@@ -986,4 +977,110 @@ def main():
                     "event_type": "Political Development",
                     "location": pol_city,
                     "country": pol_country,
-                    "lat": pol_coords
+                    "lat": pol_coords[0],
+                    "lng": pol_coords[1],
+                    "confidence": "MEDIUM",
+                    "description": text[:200],
+                    "channel": channel,
+                    "photo_url": post.get("photo_url"),
+                    "video_url": post.get("video_url"),
+                }
+                dedup = make_dedup_key(ev)
+                if dedup not in seen_dedup:
+                    seen_dedup.add(dedup)
+                    raw_events.append(ev)
+                    matched += 1
+                    political_count += 1
+                continue
+
+            if is_summary(text):
+                skipped_summary += 1
+                continue
+
+            if is_ad(text):
+                skipped_ad += 1
+                continue
+
+            event_type = classify_event(text)
+            if not event_type:
+                continue
+
+            coords, city, country, had_alias = find_alias(text, channel_country)
+
+            if not coords and had_alias:
+                no_match += 1
+                continue
+
+            if not coords:
+                coords, city, country = find_best_city(text, channel_country)
+
+            if not coords:
+                no_match += 1
+                continue
+
+            matched += 1
+
+            ev = {
+                "id": len(raw_events) + 1,
+                "url": post["url"] or f"https://t.me/s/{channel}",
+                "date": post["date"],
+                "event_type": event_type,
+                "location": city,
+                "country": country,
+                "lat": coords[0],
+                "lng": coords[1],
+                "confidence": "MEDIUM",
+                "description": text[:200],
+                "channel": channel,
+                "photo_url": post.get("photo_url"),
+                "video_url": post.get("video_url"),
+            }
+
+            dedup = make_dedup_key(ev)
+            if dedup in seen_dedup:
+                duplicates += 1
+                continue
+            seen_dedup.add(dedup)
+
+            raw_events.append(ev)
+
+        stats[channel] = matched
+        print(f"  Совпало: {matched}")
+        time.sleep(1)
+
+    coord_counter = Counter()
+    for ev in raw_events:
+        coord_key = (round(ev["lat"], 3), round(ev["lng"], 3))
+        coord_counter[coord_key] += 1
+
+    print(f"\n🔀 Применяю jitter к {len(raw_events)} событиям...")
+    for ev in raw_events:
+        coord_key = (round(ev["lat"], 3), round(ev["lng"], 3))
+        count = coord_counter[coord_key]
+        radius = radius_for_count(count)
+        ev["lat"], ev["lng"] = jitter_coords(ev["lat"], ev["lng"], radius)
+
+    output = "window.TG_DATA = " + json.dumps({"events": raw_events}, ensure_ascii=False) + ";"
+    with open("data/telegram-events.js", "w", encoding="utf-8") as f:
+        f.write(output)
+
+    print(f"\n✅ Итого: {len(raw_events)} событий")
+    print(f"   Из них политических: {political_count}")
+    print(f"   Пропущено сводок: {skipped_summary}")
+    print(f"   Пропущено рекламы: {skipped_ad}")
+    print(f"   Отброшено дубликатов: {duplicates}")
+    print(f"   Постов без совпадений по н.п.: {no_match}")
+
+    print("\n📊 Статистика по каналам:")
+    for ch, count in sorted(stats.items(), key=lambda x: -x[1]):
+        if count > 0:
+            print(f"  @{ch}: {count}")
+
+    print("\n📍 Топ-15 населённых пунктов:")
+    city_counter = Counter(ev["location"] for ev in raw_events)
+    for city, count in city_counter.most_common(15):
+        print(f"  {city}: {count}")
+
+
+if __name__ == "__main__":
+    main()
