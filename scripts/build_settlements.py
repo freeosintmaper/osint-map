@@ -1,7 +1,7 @@
 """
 Скачивает GeoNames (RU + UA), конвертирует в data/settlements.js.
 Берёт кириллические и латинские альтернативные названия.
-Запускается автоматически в GitHub Actions перед парсингом.
+Фильтрует НП без населения и слишком короткие названия.
 """
 
 import urllib.request
@@ -16,11 +16,13 @@ GEONAMES_URL = 'https://download.geonames.org/export/dump/{cc}.zip'
 COUNTRIES = ['RU', 'UA']
 OUTPUT = 'data/settlements.js'
 
-# Лимиты на количество альтернатив (чтобы файл не раздулся)
-MAX_CYR_ALTS = 8
-MAX_LAT_ALTS = 3
-MAX_NAME_LEN = 50
-MIN_NAME_LEN = 2
+# Лимиты
+MAX_CYR_ALTS = 5
+MAX_LAT_ALTS = 2
+MAX_NAME_LEN = 40
+MIN_NAME_LEN = 5
+MIN_LAT_LEN = 6
+MIN_POPULATION = 100
 
 
 def fetch_zip(url, target_file):
@@ -39,7 +41,6 @@ def is_cyrillic(s):
 
 
 def is_latin(s):
-    # Только латиница (без кириллицы)
     if re.search(r'[а-яёА-ЯЁіїєґІЇЄҐ]', s):
         return False
     return bool(re.search(r'[a-zA-Z]', s))
@@ -68,6 +69,10 @@ def parse_geonames(text, country_code):
             lng = float(parts[5])
             population = int(parts[14]) if parts[14].isdigit() else 0
 
+            # Фильтр по населению — отсекаем мёртвые хутора с названиями-омонимами
+            if population < MIN_POPULATION:
+                continue
+
             rows.append({
                 'name': name,
                 'asciiname': asciiname,
@@ -87,7 +92,7 @@ def build():
     for cc in COUNTRIES:
         text = fetch_zip(GEONAMES_URL.format(cc=cc), f'{cc}.txt')
         rows = parse_geonames(text, cc)
-        print(f"📦 {cc}: {len(rows)} населённых пунктов")
+        print(f"📦 {cc}: {len(rows)} населённых пунктов (после фильтра населения)")
         all_rows.extend(rows)
 
     settlements = []
@@ -96,15 +101,12 @@ def build():
     for row in all_rows:
         names = set()
 
-        # Основное название
         if row['name']:
             names.add(row['name'])
 
-        # ASCII-название (обычно латиница)
         if row['asciiname'] and row['asciiname'] != row['name']:
             names.add(row['asciiname'])
 
-        # Кириллические альтернативы (русский, украинский)
         cyr_alts = [
             a for a in row['alternates']
             if is_cyrillic(a) and MIN_NAME_LEN <= len(a) <= MAX_NAME_LEN
@@ -112,15 +114,13 @@ def build():
         for a in cyr_alts[:MAX_CYR_ALTS]:
             names.add(a)
 
-        # Латиница (английский, транслит)
         lat_alts = [
             a for a in row['alternates']
-            if is_latin(a) and 4 <= len(a) <= 40
+            if is_latin(a) and MIN_LAT_LEN <= len(a) <= MAX_NAME_LEN
         ]
         for a in lat_alts[:MAX_LAT_ALTS]:
             names.add(a)
 
-        # Сохраняем все варианты как отдельные записи
         for n in names:
             n = n.strip()
             if len(n) < MIN_NAME_LEN or len(n) > MAX_NAME_LEN:
