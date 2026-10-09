@@ -21,11 +21,11 @@ jobs:
 
       - name: Build settlements database (if missing)
         run: |
-          if [ ! -f data/settlements.js ]; then
-            echo "Создаю базу населённых пунктов (один раз)..."
+          if [ ! -f data/settlements.js ] || [ $(stat -c%s data/settlements.js 2>/dev/null || echo 0) -lt 1000000 ]; then
+            echo "Скачиваю GeoNames и строю базу населённых пунктов..."
             python3 scripts/build_settlements.py
           else
-            echo "База уже есть, пропускаю"
+            echo "База уже есть:"
             wc -c data/settlements.js
           fi
 
@@ -34,30 +34,11 @@ jobs:
           mkdir -p data
           python3 scripts/parse_telegram.py
 
-      - name: Download Leaflet libraries
-        run: |
-          mkdir -p lib/images
-          curl -sL "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" -o lib/leaflet.css
-          curl -sL "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" -o lib/leaflet.js
-          curl -sL "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png" -o lib/images/marker-icon.png
-          curl -sL "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png" -o lib/images/marker-icon-2x.png
-          curl -sL "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png" -o lib/images/marker-shadow.png
-          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" -o lib/leaflet-draw.css
-          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js" -o lib/leaflet-draw.js
-          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet.png" -o lib/images/spritesheet.png
-          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet-2x.png" -o lib/images/spritesheet-2x.png
-          curl -sL "https://unpkg.com/leaflet-draw@1.0.4/dist/images/spritesheet.svg" -o lib/images/spritesheet.svg
-          curl -sL "https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js" -o lib/leaflet.polylineDecorator.js
-          curl -sL "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" -o lib/markercluster.css
-          curl -sL "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" -o lib/markercluster.default.css
-          curl -sL "https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" -o lib/markercluster.js
-          curl -sL "https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js" -o lib/turf.min.js
-
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ lib/ scripts/
-          git diff --quiet && git diff --staged --quiet || git commit -m "Обновление Telegram-событий"
+          git add data/ scripts/
+          git diff --quiet && git diff --staged --quiet || git commit -m "Обновление событий и базы НП"
           git pull --rebase origin main
           git push
