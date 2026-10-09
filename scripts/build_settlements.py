@@ -1,112 +1,157 @@
+"""
+Скачивает GeoNames (RU + UA), конвертирует в data/settlements.js.
+Берёт кириллические и латинские альтернативные названия.
+Запускается автоматически в GitHub Actions перед парсингом.
+"""
+
 import urllib.request
 import zipfile
 import io
 import json
 import os
+import re
+import sys
 
-URLS = {
-    'RU': 'https://download.geonames.org/export/dump/RU.zip',
-    'UA': 'https://download.geonames.org/export/dump/UA.zip',
-}
+GEONAMES_URL = 'https://download.geonames.org/export/dump/{cc}.zip'
+COUNTRIES = ['RU', 'UA']
+OUTPUT = 'data/settlements.js'
 
-MIN_POPULATION = 5000
-
-EXCLUDE_NAMES = {
-    'иран', 'ирак', 'китай', 'турция', 'польша', 'германия', 'франция',
-    'беларусь', 'белоруссия', 'молдова', 'румыния', 'словакия', 'венгрия',
-    'сша', 'канада', 'британия', 'англия', 'япония', 'корея', 'израиль',
-    'палестина', 'сирия', 'ливан', 'египет', 'ливия', 'судан', 'афганистан',
-    'пакистан', 'индия', 'монголия', 'грузия', 'армения', 'азербайджан',
-    'казахстан', 'узбекистан', 'киргизия', 'таджикистан', 'туркменистан',
-    'краснодарский', 'ставропольский', 'ростовская', 'белгородская',
-    'брянская', 'курская', 'воронежская', 'орловская', 'тульская',
-    'московская', 'ленинградская', 'новосибирская', 'оренбургская',
-    'саратовская', 'волгоградская', 'астраханская', 'самарская',
-    'тверская', 'псковская', 'смоленская', 'калужская', 'рязанская',
-    'тамбовская', 'липецкая', 'пензенская', 'ульяновская',
-    'полтавская', 'харьковская', 'киевская', 'львовская', 'одесская',
-}
+# Лимиты на количество альтернатив (чтобы файл не раздулся)
+MAX_CYR_ALTS = 8
+MAX_LAT_ALTS = 3
+MAX_NAME_LEN = 50
+MIN_NAME_LEN = 2
 
 
-def process_country(code, zip_bytes):
-    settlements = []
-    with zipfile.ZipFile(io.BytesIO(zip_bytes)) as z:
-        txt_name = f"{code}.txt"
-        if txt_name not in z.namelist():
-            print(f"  {txt_name} не найден в архиве")
-            return settlements
-        with z.open(txt_name) as f:
-            for line in f:
-                parts = line.decode('utf-8').split('\t')
-                if len(parts) < 19:
-                    continue
-                if parts[6] != 'P':
-                    continue
-                try:
-                    population = int(parts[14]) if parts[14] else 0
-                except ValueError:
-                    population = 0
-                if population < MIN_POPULATION:
-                    continue
-
-                name = parts[1]
-                alt_names = parts[3].split(',') if parts[3] else []
-                lat = float(parts[4])
-                lng = float(parts[5])
-
-                all_names = set()
-                if name:
-                    all_names.add(name)
-                for alt in alt_names:
-                    alt = alt.strip()
-                    if alt and 3 <= len(alt) <= 40 and any('а' <= c.lower() <= 'я' for c in alt):
-                        all_names.add(alt)
-
-                all_names = {n for n in all_names if n.lower() not in EXCLUDE_NAMES}
-                if not all_names:
-                    continue
-
-                for n in all_names:
-                    settlements.append({
-                        'name': n,
-                        'lat': lat,
-                        'lng': lng,
-                        'country': code,
-                        'population': population,
-                    })
-    return settlements
+def fetch_zip(url, target_file):
+    print(f"⬇️  {url}")
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        data = r.read()
+    print(f"   {len(data) / 1024 / 1024:.1f} МБ скачано")
+    with zipfile.ZipFile(io.BytesIO(data)) as z:
+        with z.open(target_file) as f:
+            return f.read().decode('utf-8')
 
 
-def main():
-    all_settlements = []
-    for code, url in URLS.items():
-        print(f"Скачиваю {code}...")
+def is_cyrillic(s):
+    return bool(re.search(r'[а-яёА-ЯЁіїєґІЇЄҐ]', s))
+
+
+def is_latin(s):
+    # Только латиница (без кириллицы)
+    if re.search(r'[а-яёА-ЯЁіїєґІЇЄҐ]', s):
+        return False
+    return bool(re.search(r'[a-zA-Z]', s))
+
+
+def parse_geonames(text, country_code):
+    rows = []
+    for line in text.split('\n'):
+        if not line.strip():
+            continue
+        parts = line.split('\t')
+        if len(parts) < 19:
+            continue
         try:
-            with urllib.request.urlopen(url, timeout=180) as r:
-                zip_bytes = r.read()
-            print(f"  Размер: {len(zip_bytes) / 1024 / 1024:.1f} MB")
-            settlements = process_country(code, zip_bytes)
-            print(f"  Крупных населённых пунктов: {len(settlements)}")
-            all_settlements.extend(settlements)
-        except Exception as e:
-            print(f"  Ошибка: {e}")
+            feature_class = parts[6]
+            feature_code = parts[7]
+            if feature_class != 'P':
+                continue
+            if not feature_code.startswith('PPL'):
+                continue
 
-    best_by_name = {}
-    for s in all_settlements:
-        key = s['name'].lower()
-        existing = best_by_name.get(key)
-        if not existing or s['population'] > existing['population']:
-            best_by_name[key] = s
+            name = parts[1].strip()
+            asciiname = parts[2].strip()
+            alternatenames = parts[3].strip()
+            lat = float(parts[4])
+            lng = float(parts[5])
+            population = int(parts[14]) if parts[14].isdigit() else 0
 
-    unique = list(best_by_name.values())
-    print(f"\nВсего уникальных названий: {len(unique)}")
+            rows.append({
+                'name': name,
+                'asciiname': asciiname,
+                'alternates': [a.strip() for a in alternatenames.split(',') if a.strip()],
+                'lat': lat,
+                'lng': lng,
+                'country': country_code,
+                'population': population,
+            })
+        except Exception:
+            continue
+    return rows
+
+
+def build():
+    all_rows = []
+    for cc in COUNTRIES:
+        text = fetch_zip(GEONAMES_URL.format(cc=cc), f'{cc}.txt')
+        rows = parse_geonames(text, cc)
+        print(f"📦 {cc}: {len(rows)} населённых пунктов")
+        all_rows.extend(rows)
+
+    settlements = []
+    seen = set()
+
+    for row in all_rows:
+        names = set()
+
+        # Основное название
+        if row['name']:
+            names.add(row['name'])
+
+        # ASCII-название (обычно латиница)
+        if row['asciiname'] and row['asciiname'] != row['name']:
+            names.add(row['asciiname'])
+
+        # Кириллические альтернативы (русский, украинский)
+        cyr_alts = [
+            a for a in row['alternates']
+            if is_cyrillic(a) and MIN_NAME_LEN <= len(a) <= MAX_NAME_LEN
+        ]
+        for a in cyr_alts[:MAX_CYR_ALTS]:
+            names.add(a)
+
+        # Латиница (английский, транслит)
+        lat_alts = [
+            a for a in row['alternates']
+            if is_latin(a) and 3 <= len(a) <= 40
+        ]
+        for a in lat_alts[:MAX_LAT_ALTS]:
+            names.add(a)
+
+        # Сохраняем все варианты как отдельные записи
+        for n in names:
+            n = n.strip()
+            if len(n) < MIN_NAME_LEN or len(n) > MAX_NAME_LEN:
+                continue
+            key = (n.lower(), row['country'])
+            if key in seen:
+                continue
+            seen.add(key)
+            settlements.append({
+                'name': n,
+                'lat': row['lat'],
+                'lng': row['lng'],
+                'country': row['country'],
+                'population': row['population'],
+            })
+
+    print(f"✅ Итого записей (с алиасами): {len(settlements)}")
 
     os.makedirs('data', exist_ok=True)
-    output = "window.SETTLEMENTS = " + json.dumps(unique, ensure_ascii=False) + ";"
-    with open('data/settlements.js', 'w', encoding='utf-8') as f:
-        f.write(output)
-    print(f"Сохранено в data/settlements.js ({len(output) / 1024:.1f} KB)")
+    with open(OUTPUT, 'w', encoding='utf-8') as f:
+        f.write('window.SETTLEMENTS = ')
+        json.dump(settlements, f, ensure_ascii=False, separators=(',', ':'))
+        f.write(';')
+
+    size = os.path.getsize(OUTPUT) / 1024 / 1024
+    print(f"💾 {OUTPUT}: {size:.1f} МБ")
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        build()
+    except Exception as e:
+        print(f"❌ Ошибка: {e}", file=sys.stderr)
+        sys.exit(1)
