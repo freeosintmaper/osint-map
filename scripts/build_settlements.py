@@ -1,7 +1,6 @@
 """
 Скачивает GeoNames (RU + UA), конвертирует в data/settlements.js.
-Берёт кириллические и латинские альтернативные названия.
-Фильтрует НП без населения и слишком короткие названия.
+Оставляет НП с населением >= 100 ИЛИ админ-центры ИЛИ длинные названия.
 """
 
 import urllib.request
@@ -16,13 +15,11 @@ GEONAMES_URL = 'https://download.geonames.org/export/dump/{cc}.zip'
 COUNTRIES = ['RU', 'UA']
 OUTPUT = 'data/settlements.js'
 
-# Лимиты
 MAX_CYR_ALTS = 5
 MAX_LAT_ALTS = 2
 MAX_NAME_LEN = 40
 MIN_NAME_LEN = 5
 MIN_LAT_LEN = 6
-MIN_POPULATION = 100
 
 
 def fetch_zip(url, target_file):
@@ -69,9 +66,14 @@ def parse_geonames(text, country_code):
             lng = float(parts[5])
             population = int(parts[14]) if parts[14].isdigit() else 0
 
-            # Фильтр по населению — отсекаем мёртвые хутора с названиями-омонимами
-            if population < MIN_POPULATION:
-                continue
+            is_admin_center = feature_code.startswith('PPLA') or feature_code == 'PPLC'
+
+            # Мягкий фильтр: пропускаем если население < 100 И это не админ-центр
+            # И название короткое (< 6 символов). Так сохраняем мелкие сёла с длинными
+            # названиями (Суджа, Коренево), но убираем омонимы обычных слов.
+            if population < 100 and not is_admin_center:
+                if len(name) < 6 and len(asciiname) < 6:
+                    continue
 
             rows.append({
                 'name': name,
@@ -92,7 +94,7 @@ def build():
     for cc in COUNTRIES:
         text = fetch_zip(GEONAMES_URL.format(cc=cc), f'{cc}.txt')
         rows = parse_geonames(text, cc)
-        print(f"📦 {cc}: {len(rows)} населённых пунктов (после фильтра населения)")
+        print(f"📦 {cc}: {len(rows)} населённых пунктов")
         all_rows.extend(rows)
 
     settlements = []
