@@ -115,7 +115,7 @@ def build():
         # Латиница (английский, транслит)
         lat_alts = [
             a for a in row['alternates']
-            if is_latin(a) and 3 <= len(a) <= 40
+            if is_latin(a) and 4 <= len(a) <= 40
         ]
         for a in lat_alts[:MAX_LAT_ALTS]:
             names.add(a)
