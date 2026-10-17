@@ -1,181 +1,234 @@
-# OSINT Map
+# OSINT-карта
 
-**🌐 Language / Мова / Язык:** [English](#english) · [Українська](#українська) · [Русский](#русский)
+Интерактивная карта военных и политических событий на территории Украины и России, собранная из открытых источников.
 
-**Live site:** https://freeosintmaper.github.io/osint-map/
-
----
-
-## English
-
-### About
-Interactive map aggregating open-source data about events in Ukraine and Russia.
-
-### What it shows
-- **Telegram events** — strikes, air raid alerts, military operations, incidents. Parsed from public Telegram channels every 15 minutes.
-- **Control zones (DeepStateMap)** — territory held by RF, per the Ukrainian OSINT project DeepStateMap.
-- **Project Owl layers** — independent OSINT project (Ukraine Control Map). Four categories:
-  - 🔴 Russian actions — offensives, axes, incursions
-  - 🔵 Ukrainian actions — counterattacks
-  - 🟣 Holding areas — concentration zones
-  - ⚫ Grey zone
-- **User zones** — manually added polygons (stored via Supabase).
-
-### Data sources
-**Telegram channels:**
-- Ukrainian: `ukrpravda_news`, `operativnoZSU`, `amk_mapping`, `uniannet`
-- Russian: `rybar`, `militarysummary`, `readovkanews`, `tass_agency`
-- OSINT: `UAWeapons`, `Osinttechnical`
-
-**Map layers:**
-- [DeepStateMap](https://deepstatemap.live) — RF-controlled territory (Ukrainian OSINT project)
-- [Project Owl / Ukraine Control Map](https://github.com/owlmaps/UAControlMapBackups) — independent OSINT data, historical military activity
-
-### Features
-- 🗺️ Interactive Leaflet map
-- 📍 Event clustering
-- 🎨 SVG icons by event type
-- 🌙 Dark and light themes
-- 🌐 Three languages: Russian, Ukrainian, English
-- 📱 Mobile version with toggle buttons
-- ✏️ Drawing tools: markers, lines, arrows, polygons, rectangles, circles, distance measurement
-- 🔐 Admin login for editing control zones
-
-### Neutrality
-This map **aggregates** open data from multiple sources and **does not perform its own analysis**.
-- Every event links to its original source.
-- Events come from both Ukrainian and Russian sources.
-- Frontline data is approximate and may differ from the real situation.
-- Project Owl is an independent OSINT project — its data may lag.
-
-**Goal:** show different perspectives so users can compare them and draw their own conclusions.
-
-### Tech stack
-- Pure HTML/JS (no build)
-- Leaflet, Leaflet.draw, Leaflet.markercluster, Leaflet.polylineDecorator
-- JSZip + togeojson (for Project Owl KMZ parsing)
-- Supabase (auth + storage of user zones)
-- GitHub Actions (automated updates)
-- GitHub Pages (hosting)
-
-### Disclaimer
-This project is created for **educational and research purposes**. All data is public, from open sources. No warranty is provided for its accuracy or completeness.
+**Сайт:** https://freeosintmaper.github.io/osint-map/
+**Репозиторий:** https://github.com/freeosintmaper/osint-map
 
 ---
 
-## Українська
+## Что это
 
-### Про проект
-Інтерактивна карта, що агрегує відкриті дані про події в Україні та Росії.
+OSINT-карта агрегирует данные из Telegram-каналов, спутниковых снимков и публичных карт контроля территорий. В отличие от новостных лент, здесь события привязаны к координатам и отфильтрованы от шума: реклама, аналитика, исторические справки и посты про другие конфликты не попадают на карту.
 
-### Що показує карта
-- **Події з Telegram** — удари, повітряні тривоги, бойові дії, інциденти. Дані парсяться з публічних Telegram-каналів кожні 15 хвилин.
-- **Зони контролю (DeepStateMap)** — територія, яку займає РФ, за даними українського OSINT-проекту DeepStateMap.
-- **Шари Project Owl** — незалежний OSINT-проект (Ukraine Control Map). Чотири категорії:
-  - 🔴 Дії РФ — наступи, осі, вторгнення
-  - 🔵 Дії ЗСУ — контрнаступи
-  - 🟣 Місця зосередження — зони концентрації військ
-  - ⚫ Сіра зона
-- **Мої зони** — полігони, додані вручну (зберігаються через Supabase).
-
-### Джерела даних
-**Telegram-канали:**
-- Українські: `ukrpravda_news`, `operativnoZSU`, `amk_mapping`, `uniannet`
-- Російські: `rybar`, `militarysummary`, `readovkanews`, `tass_agency`
-- OSINT: `UAWeapons`, `Osinttechnical`
-
-**Картографічні шари:**
-- [DeepStateMap](https://deepstatemap.live) — території, які займає РФ
-- [Project Owl / Ukraine Control Map](https://github.com/owlmaps/UAControlMapBackups) — незалежні OSINT-дані
-
-### Можливості
-- 🗺️ Інтерактивна карта на Leaflet
-- 📍 Кластеризація подій
-- 🎨 SVG-іконки за типами подій
-- 🌙 Темна та світла теми
-- 🌐 Три мови: російська, українська, англійська
-- 📱 Мобільна версія
-- ✏️ Інструменти малювання
-- 🔐 Вхід для адміна
-
-### Нейтральність
-Карта **агрегує** відкриті дані і **не проводить власний аналіз**.
-- Кожна подія має посилання на першоджерело.
-- Події надходять від українських і російських джерел.
-- Лінія фронту — приблизна.
-
-### Технічна інформація
-- Чистий HTML/JS (без збірки)
-- Leaflet, Leaflet.draw, Leaflet.markercluster
-- JSZip + togeojson
-- Supabase
-- GitHub Actions, GitHub Pages
-
-### Дисклеймер
-Проект створено в **освітніх та дослідницьких цілях**. Всі дані — публічні. Автор не несе відповідальності за їх точність.
+Цель — дать быстрый обзор актуальной обстановки без чтения десятков каналов вручную.
 
 ---
 
-## Русский
+## Возможности
 
-### О проекте
-Интерактивная карта, агрегирующая открытые данные о событиях в Украине и России.
+### Слои карты
 
-### Что показывает карта
-- **События из Telegram** — удары, воздушные тревоги, боевые действия, инциденты. Данные парсятся из публичных Telegram-каналов каждые 15 минут.
-- **Зоны контроля (DeepStateMap)** — территория, занимаемая РФ, по данным украинского OSINT-проекта DeepStateMap.
-- **Слои Project Owl** — независимый OSINT-проект (Ukraine Control Map). Четыре категории:
-  - 🔴 Действия РФ — наступления, оси, вторжения
-  - 🔵 Действия ВСУ — контрнаступления
-  - 🟣 Места сосредоточения — зоны концентрации войск
-  - ⚫ Серая зона
-- **Мои зоны** — полигоны, добавленные вручную (хранятся через Supabase).
+- **Территория РФ** — данные DeepStateMap (актуальный контроль территорий)
+- **Project Owl** — 4 категории зон (действия РФ, действия ВСУ, места сосредоточения, серая зона). Исторические полигоны 2014/2022 отфильтрованы
+- **Карта автора** — пользовательские зоны контроля (Supabase, редактирование через админ-панель)
+- **NASA FIRMS** — тепловые аномалии и пожары (спутниковые данные)
+- **События из Telegram** — маркеры с кластеризацией, popup-карточки с медиа и ссылкой на источник
 
-### Источники данных
-**Telegram-каналы:**
-- Украинские: `ukrpravda_news`, `operativnoZSU`, `amk_mapping`, `uniannet`
-- Российские: `rybar`, `militarysummary`, `readovkanews`, `tass_agency`
-- OSINT: `UAWeapons`, `Osinttechnical`
+### Фильтры и настройки
 
-**Картографические слои:**
-- [DeepStateMap](https://deepstatemap.live) — территории, занимаемые РФ
-- [Project Owl / Ukraine Control Map](https://github.com/owlmaps/UAControlMapBackups) — независимые OSINT-данные
+- **Быстрые фильтры времени**: 6ч / 24ч / 3д / 7д / Всё (по умолчанию — 24 часа)
+- **Поиск** по городу, каналу, тексту
+- **Фильтр по типу события**: тревога, удар, операция, наступление, инцидент, политика
+- **Прозрачность и режим отображения** (заливка / контуры) — для всех полигональных слоёв
+- **Светлая и тёмная тема** с сохранением выбора и автоопределением системной темы
+- **i18n**: RU / UA / EN
+- **Компактная сворачиваемая легенда**
 
-### Возможности
-- 🗺️ Интерактивная карта на Leaflet
-- 📍 Кластеризация событий
-- 🎨 SVG-иконки по типам событий
-- 🌙 Тёмная и светлая темы
-- 🌐 Три языка
-- 📱 Мобильная версия
-- ✏️ Инструменты рисования
-- 🔐 Вход для админа
+### Инструменты
 
-### Нейтральность
-Карта **агрегирует** открытые данные и **не проводит собственный анализ**.
-- Каждое событие имеет ссылку на первоисточник.
-- События приходят от украинских и российских источников.
-- Линия фронта — приблизительная.
+- Маркер, линия, стрелка, полигон, прямоугольник, круг
+- Измерение расстояний
+- Ластик — удаление отдельных фигур
+- Очистка всех рисунков
+- Импорт/экспорт KML и GeoJSON
 
-### Техническая информация
-- Чистый HTML/JS (без сборки)
-- Leaflet, Leaflet.draw, Leaflet.markercluster
-- JSZip + togeojson
-- Supabase
-- GitHub Actions, GitHub Pages
+### Админ-функции
 
-### Дисклеймер
-Проект создан в **образовательных и исследовательских целях**. Все данные — публичные. Автор не несёт ответственности за их точность.
+- Вход через Supabase Auth (email + пароль)
+- Редактирование зон контроля (рисование полигонов, изменение вершин, удаление)
+- RLS-политики: чтение — всем, запись — только авторизованным
 
+---
 
-## License
+## Архитектура
 
-The **source code** of this project is licensed under the MIT License — see [LICENSE](./LICENSE).
+```
+Telegram-каналы (26 шт.)
+       │
+       ▼
+Python-парсер ──── LLM (Cloudflare Workers AI)
+       │              классификация и геокодинг
+       ▼
+data/telegram-events.js   (JSON в JS-обёртке)
+       │
+       ▼
+GitHub Pages ──── Leaflet.js ──── Supabase (зоны автора)
+```
 
-**Data** displayed on the map is **not** covered by this license and belongs to its respective sources:
-- DeepStateMap (https://deepstatemap.live)
-- Project Owl / Ukraine Control Map (https://github.com/owlmaps/UAControlMapBackups)
-- Public Telegram channels (listed in the README)
-- Map tiles © Esri
+**Парсер** запускается через GitHub Actions **каждые 15 минут** (`cron: '5,20,35,50 * * * *'`):
 
-This project only aggregates publicly available data and does not claim ownership over it.
+1. Загружает HTML последних постов каждого канала через `t.me/s/<channel>`
+2. Отсеивает рекламу, сводки, исторические посты, иностранные конфликты
+3. Отправляет остальные посты в **LLM** (Cloudflare Workers AI, модель `llama-3.1-8b-instruct-fast`)
+4. LLM возвращает JSON: является ли пост событием, тип, список локаций с указанием страны (UA/RU)
+5. Геокодинг: названия сопоставляются с базой GeoNames (386 570 населённых пунктов) и ручным списком алиасов (~300 городов)
+6. **Дедупликация**: одинаковые события из разных каналов схлопываются по принципу «локация + тип + час»
+7. Результат записывается в `data/telegram-events.js` и коммитится в репозиторий
+8. GitHub Pages автоматически обновляет сайт
+
+### Почему LLM, а не regex
+
+Первая версия парсера использовала только регулярные выражения. Это приводило к массе ложных срабатываний:
+
+- «Житель», «Лесной», «Мирный» — слова, совпадающие с названиями посёлков
+- «Брянская область» — регион, а не город
+- «Днепропетровской области» — не даёт конкретной точки
+- Исторические посты (2014–2022) не отличить от актуальных без понимания контекста
+
+LLM решает это за счёт понимания контекста. Regex-фильтры остаются как **дешёвый предфильтр** и **fallback** на случай недоступности LLM.
+
+---
+
+## Стек
+
+| Слой | Технология |
+|------|------------|
+| Фронтенд | Чистый HTML/JS + Leaflet.js |
+| Кластеризация | Leaflet.markercluster |
+| Рисование | Leaflet.draw + polylineDecorator |
+| Карты | Esri World Street Map (светлая), CSS-фильтр (тёмная) |
+| База данных | Supabase (PostgreSQL + Auth + RLS) |
+| Парсер | Python 3.11 |
+| LLM | Cloudflare Workers AI |
+| Деплой | GitHub Pages |
+| Обновление данных | GitHub Actions (cron каждые 15 минут) |
+
+**Всё работает бесплатно** — без платных подписок и API-ключей, требующих карты.
+
+---
+
+## Источники данных
+
+### Telegram-каналы (26)
+
+**Украина:** `GeneralStaffZSU`, `operativnoZSU`, `ukrpravda_news`, `uniannet`, `DeepStateUA`, `OsintFlow`, `kharkiv_typical`, `dnepr_typical`, `odesa_typical`, `kherson_typical`, `donbass_realii`, `kyivindependent_official`, `exilenova_plus`, `supernova_plus`
+
+**OSINT:** `informnapalm`, `astrapress`, `bazabazon`
+
+**Россия:** `rybar`, `voenkorKotenok`, `wargonzo`, `readovkanews`, `lost_armour`, `boris_rozhin`, `epoddubny`, `RVvoenkor`, `dva_majors`
+
+### Внешние слои
+
+- [DeepStateMap](https://deepstatemap.live/) — контроль территорий
+- [Project Owl](https://github.com/owlmaps/UAControlMapBackups) — исторические и текущие зоны
+- [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/) — тепловые аномалии
+- [GeoNames](https://www.geonames.org/) — база населённых пунктов
+
+---
+
+## Локальный запуск
+
+### Фронтенд
+
+Достаточно открыть `index.html` через любой статический сервер:
+
+```bash
+python3 -m http.server 8000
+# открыть http://localhost:8000
+```
+
+Данные (`data/telegram-events.js`, `data/firms-fires.json`) уже закоммичены.
+
+### Парсер
+
+```bash
+pip install openai
+export CLOUDFLARE_ACCOUNT_ID="..."
+export CLOUDFLARE_API_TOKEN="..."
+python3 scripts/parse_telegram.py
+```
+
+Результат — `data/telegram-events.js`.
+
+---
+
+## Переменные окружения (GitHub Secrets)
+
+| Секрет | Назначение |
+|--------|------------|
+| `CLOUDFLARE_ACCOUNT_ID` | ID аккаунта Cloudflare (Workers AI) |
+| `CLOUDFLARE_API_TOKEN` | API-токен для Workers AI |
+
+**Как получить:**
+
+1. Регистрация на https://dash.cloudflare.com (бесплатно, без карты)
+2. Раздел **AI → Workers AI → Use REST API → Create API Token**
+3. Скопировать `Account ID` и сгенерированный токен
+4. В GitHub: `Settings → Secrets and variables → Actions → New repository secret`
+
+---
+
+## Структура репозитория
+
+```
+.
+├── index.html                    # Фронтенд (карта)
+├── icon.svg                      # Иконка сайта
+├── manifest.json                 # PWA-манифест
+├── data/
+│   ├── telegram-events.js        # События (генерируется парсером)
+│   ├── firms-fires.json          # Пожары NASA FIRMS
+│   ├── settlements.js            # База НП (386 570 записей)
+│   └── llm_cache.json            # Кэш LLM (коммитится в git, чтобы не тратить лимит)
+├── scripts/
+│   ├── parse_telegram.py         # Основной парсер
+│   ├── classify_llm.py           # Модуль LLM-классификации
+│   └── build_settlements.py      # Сборка базы GeoNames
+├── lib/                          # Leaflet, markercluster, draw и т.д.
+└── .github/workflows/
+    └── update-events.yml         # Cron-обновление данных
+```
+
+---
+
+## Ограничения и известные проблемы
+
+- **Задержка обновления**: данные обновляются каждые 15 минут, не в реальном времени. Для оперативных нужд используйте первоисточники.
+- **Точность геокодинга**: LLM определяет локации по тексту поста. Ошибки возможны (особенно при дублирующихся топонимах — например, Новомосковск в РФ и Украине). Для критических случаев страна определяется из контекста поста.
+- **Лимит LLM**: Cloudflare Workers AI даёт **10 000 Neurons/день** бесплатно. Один запрос ≈ 10 Neurons, то есть ~1000 запросов/день. Благодаря кэшу (`data/llm_cache.json`) повторные посты в LLM не отправляются — реальный расход 200–300 запросов/день, запас ~3×. Без кэша лимит был бы исчерпан за несколько прогонов.
+- **Дублирование новостей**: если один и тот же факт публикуют в разных каналах, дедупликация по (локация + тип + час) схлопывает их в одно событие. Иногда это приводит к объединению двух разных событий.
+- **Кэш LLM**: `data/llm_cache.json` коммитится вместе с остальными файлами `data/`, чтобы кэш пережил между прогонами Actions.
+
+---
+
+## Дорожная карта
+
+- [x] Multi-location (одно событие → несколько точек)
+- [x] LLM-классификация через Cloudflare Workers AI
+- [x] Дедупликация по (локация, тип, час)
+- [x] Панель настроек справа
+- [x] Тёмная тема с CSS-фильтром
+- [x] Фильтры-чипы времени (6ч/24ч/3д/7д/Всё)
+- [ ] Автоочистка старых событий (7+ дней)
+- [ ] Таймлапс — просмотр карты на дату в прошлом
+- [ ] Артиллерийский калькулятор (радиусы HIMARS/M777 и др.)
+- [ ] Экспорт событий в GeoJSON
+- [ ] Улучшенные попапы с медиа-превью
+
+---
+
+## Лицензия
+
+Код проекта распространяется под лицензией [MIT](LICENSE).
+
+Проект использует открытые данные из публичных источников — Telegram-каналов, DeepStateMap, Project Owl, NASA FIRMS, GeoNames. Условия использования этих данных определяются их первоисточниками.
+
+**Важно:** карта не является инструментом военного планирования и не даёт гарантий точности. Все данные — это агрегация публичных сообщений, требующая независимой проверки.
+
+---
+
+## Контакты
+
+- GitHub Issues: для багов и предложений
+- Pull Requests: приветствуются
