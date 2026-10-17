@@ -11,15 +11,23 @@ from html import unescape
 from collections import Counter
 
 # ═══════════════════════════════════════════════════════════════
-# LLM через KeylessAI (OpenAI-совместимый, без ключа, 100k/день)
+# LLM через GitHub Models (бесплатно, через GITHUB_TOKEN)
 # ═══════════════════════════════════════════════════════════════
 try:
     from openai import OpenAI
-LLM_CLIENT = OpenAI(
-    base_url="https://models.github.ai/inference",
-    api_key=os.environ.get("GITHUB_TOKEN", ""),
-)
-print("🤖 GitHub Models подключён")
+    _gh_token = os.environ.get("GITHUB_TOKEN", "").strip()
+    if _gh_token:
+        LLM_CLIENT = OpenAI(
+            base_url="https://models.github.ai/inference",
+            api_key=_gh_token,
+        )
+        print(f"🤖 GitHub Models подключён (токен: {_gh_token[:8]}...)")
+    else:
+        LLM_CLIENT = None
+        print("⚠️ GITHUB_TOKEN не задан — LLM отключён", file=sys.stderr)
+except ImportError:
+    LLM_CLIENT = None
+    print("⚠️ Библиотека openai не установлена", file=sys.stderr)
 except Exception as e:
     LLM_CLIENT = None
     print(f"⚠️ LLM init: {e}", file=sys.stderr)
