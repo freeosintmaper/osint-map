@@ -18,7 +18,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
+          
+      - name: Install Groq SDK
+        run: pip install groq
+        
       - name: Build settlements database (if missing)
         run: |
           if [ ! -f data/settlements.js ] || [ $(stat -c%s data/settlements.js 2>/dev/null || echo 0) -lt 1000000 ]; then
