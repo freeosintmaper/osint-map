@@ -36,7 +36,7 @@ ALLOWED_TYPES = {
     "Political Development",
 }
 MAX_LOCATIONS = 5
-LLM_MODEL = "@cf/meta/llama-3.1-8b-instruct"
+LLM_MODEL = "@cf/meta/llama-3.1-8b-instruct-fast"
 
 
 SYSTEM_PROMPT = """Ты — OSINT-аналитик. Анализируешь посты из Telegram-каналов о войне в Украине.
