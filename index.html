@@ -602,6 +602,109 @@
     }
     #toolbar button:hover .tooltip { opacity: 1; transform: translateX(-50%) translateY(-4px); }
     #toolbar .sep { width: 1px; background: var(--border-mid); margin: 6px 4px; flex: 0 0 auto; }
+        /* ИЗМЕНЕНИЕ #3: панель настроек */
+    #settingsOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 20, 0.35);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      z-index: 5500;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    #settingsOverlay.open {
+      display: block;
+      opacity: 1;
+    }
+    #settingsPanel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 340px;
+      max-width: 92vw;
+      background: var(--bg-panel);
+      color: var(--text-main);
+      border-left: 1px solid var(--border-light);
+      box-shadow: var(--shadow-xl);
+      z-index: 5600;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #settingsPanel.open {
+      transform: translateX(0);
+    }
+    .settings-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .settings-header button {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: var(--bg-input);
+      color: var(--text-main);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.15s;
+    }
+    .settings-header button:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    .settings-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 20px 30px;
+      font-size: 13px;
+    }
+    .settings-body h4 {
+      margin: 20px 0 10px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 6px;
+    }
+    .settings-body h4:first-child {
+      margin-top: 0;
+    }
+    .settings-body label {
+      display: flex;
+      align-items: center;
+      padding: 8px 0;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      gap: 8px;
+    }
+    .settings-body label:hover {
+      color: var(--accent);
+    }
+    .settings-body label input[type="checkbox"] {
+      margin: 0;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+    .settings-body hr {
+      border: none;
+      border-top: 1px solid var(--border-light);
+      margin: 16px 0;
+    }
     #toolbar button svg {
       width: 20px; height: 20px; stroke: currentColor; stroke-width: 2;
       fill: none; stroke-linecap: round; stroke-linejoin: round;
@@ -853,8 +956,18 @@
     </div>
   </div>
 
-  <div id="toolbar"></div>
+    <div id="toolbar"></div>
 
+  <!-- ИЗМЕНЕНИЕ #3: панель настроек -->
+  <div id="settingsOverlay"></div>
+  <div id="settingsPanel">
+    <div class="settings-header">
+      <span>Настройки</span>
+      <button id="btnCloseSettings" title="Закрыть">✕</button>
+    </div>
+    <div class="settings-body" id="settingsBody"></div>
+  </div>
+  
   <script>
     window.addEventListener('error', function(e) {
       var box = document.getElementById('errorBox');
@@ -1033,13 +1146,16 @@
       if (res.data && res.data.session) userBtn.classList.add('logged-in');
     });
 
-    var OPACITY_KEY = 'osint_opacity';
+        var OPACITY_KEY = 'osint_opacity';
     var MODE_KEY = 'osint_mode';
     var THEME_KEY = 'osint_theme';
     var fillOpacity = parseFloat(localStorage.getItem(OPACITY_KEY) || '0.15');
     var layerMode = localStorage.getItem(MODE_KEY) || 'fill';
-    var currentTheme = localStorage.getItem(THEME_KEY) || 'light';
-
+    // Тема: приоритет localStorage → системная настройка → light
+    var savedTheme = localStorage.getItem(THEME_KEY);
+    var systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    
     function saveSettings() {
       localStorage.setItem(OPACITY_KEY, fillOpacity.toString());
       localStorage.setItem(MODE_KEY, layerMode);
@@ -1095,8 +1211,9 @@
       });
     }
 
-    var TOOLBAR_SVG = {
+        var TOOLBAR_SVG = {
       marker: '<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>',
+      eraser: '<svg viewBox="0 0 24 24"><path d="M20 20H7L3 16a2 2 0 010-3l9-9a2 2 0 013 0l5 5a2 2 0 010 3l-7 7M6 13l5 5"/></svg>',
       line: '<svg viewBox="0 0 24 24"><path d="M4 19L20 5"/></svg>',
       arrow: '<svg viewBox="0 0 24 24"><path d="M4 12h13M12 6l6 6-6 6"/></svg>',
       polygon: '<svg viewBox="0 0 24 24"><path d="M12 2l9 7-3.5 11h-11L3 9z"/></svg>',
@@ -1106,6 +1223,7 @@
       clear: '<svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>',
       moon: '<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>',
       sun: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>',
+      settings: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
       info: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
       showAll: '<svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="12" cy="12" r="2"/></svg>'
     };
@@ -1113,8 +1231,15 @@
     function applyTheme(theme) {
       currentTheme = theme;
       localStorage.setItem(THEME_KEY, theme);
-      if (theme === 'dark') { document.body.classList.add('dark'); map.removeLayer(lightTile); darkTile.addTo(map); }
-      else { document.body.classList.remove('dark'); map.removeLayer(darkTile); lightTile.addTo(map); }
+      if (theme === 'dark') {
+        if (map.hasLayer(lightTile)) map.removeLayer(lightTile);
+        if (!map.hasLayer(darkTile)) darkTile.addTo(map);
+        document.body.classList.add('dark');
+      } else {
+        if (map.hasLayer(darkTile)) map.removeLayer(darkTile);
+        if (!map.hasLayer(lightTile)) lightTile.addTo(map);
+        document.body.classList.remove('dark');
+      }
       var btn = document.querySelector('#toolbar button[data-tool="theme"]');
       if (btn) {
         var themeSvg = theme === 'dark' ? TOOLBAR_SVG.sun : TOOLBAR_SVG.moon;
@@ -1128,7 +1253,11 @@
     if (!isMobile()) L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
     var lightTile = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri', maxZoom: 19 });
-    var darkTile = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri', maxZoom: 16 });
+    var darkTile = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '© OpenStreetMap © CARTO',
+      subdomains: 'abcd',
+      maxZoom: 19
+    });
     if (currentTheme === 'dark') { darkTile.addTo(map); document.body.classList.add('dark'); } else lightTile.addTo(map);
 
     var zoneColors = {
@@ -1826,7 +1955,49 @@
     var drawingsLayer = new L.FeatureGroup();
     map.addLayer(drawingsLayer);
     var currentDrawer = null, currentTool = null, lastMeasureLayer = null;
+    
+    var eraserActive = false;
 
+    function toggleEraser() {
+      eraserActive = !eraserActive;
+      if (eraserActive) {
+        if (currentDrawer) { try { currentDrawer.disable(); } catch(e) {} currentDrawer = null; }
+        setActiveTool('eraser');
+        map.getContainer().style.cursor = 'crosshair';
+        attachEraserHandlers();
+      } else {
+        setActiveTool(null);
+        map.getContainer().style.cursor = '';
+        detachEraserHandlers();
+      }
+    }
+
+    function attachEraserHandlers() {
+      drawingsLayer.eachLayer(function(layer) {
+        if (layer._eraserHandler) return;
+        layer._eraserHandler = function(e) {
+          if (!eraserActive) return;
+          L.DomEvent.stopPropagation(e);
+          if (layer._arrowDecorator) drawingsLayer.removeLayer(layer._arrowDecorator);
+          drawingsLayer.removeLayer(layer);
+          saveDrawings();
+        };
+        layer.on('click', layer._eraserHandler);
+        if (layer._path) layer._path.style.cursor = 'crosshair';
+      });
+    }
+
+    function detachEraserHandlers() {
+      drawingsLayer.eachLayer(function(layer) {
+        if (layer._eraserHandler) {
+          layer.off('click', layer._eraserHandler);
+          delete layer._eraserHandler;
+        }
+        if (layer._path) layer._path.style.cursor = '';
+      });
+    }
+
+    
     function setActiveTool(tool) {
       currentTool = tool;
       document.querySelectorAll('#toolbar button[data-tool]').forEach(function(btn) {
@@ -1890,8 +2061,19 @@
           layer.setStyle({ color: '#ff6600', weight: 3 });
         }
       }
-      if (type === 'marker') layer.bindPopup('Метка');
-      drawingsLayer.addLayer(layer); saveDrawings(); deactivateDrawer();
+            if (type === 'marker') layer.bindPopup('Метка');
+      drawingsLayer.addLayer(layer);
+      if (eraserActive) {
+        layer._eraserHandler = function(e) {
+          if (!eraserActive) return;
+          L.DomEvent.stopPropagation(e);
+          if (layer._arrowDecorator) drawingsLayer.removeLayer(layer._arrowDecorator);
+          drawingsLayer.removeLayer(layer);
+          saveDrawings();
+        };
+        layer.on('click', layer._eraserHandler);
+      }
+      saveDrawings(); deactivateDrawer();
     });
 
     var DRAWINGS_KEY = 'osint_user_drawings';
@@ -1923,15 +2105,15 @@
 
     function renderToolbar() {
       var toolbar = document.getElementById('toolbar');
-      var themeIcon = currentTheme === 'dark' ? TOOLBAR_SVG.sun : TOOLBAR_SVG.moon;
       var tools = [
         { key: 'marker', svg: TOOLBAR_SVG.marker }, { key: 'line', svg: TOOLBAR_SVG.line },
         { key: 'arrow', svg: TOOLBAR_SVG.arrow }, { key: 'polygon', svg: TOOLBAR_SVG.polygon },
         { key: 'rectangle', svg: TOOLBAR_SVG.rectangle }, { key: 'circle', svg: TOOLBAR_SVG.circle },
         { sep: true }, { key: 'measure', svg: TOOLBAR_SVG.measure },
         { sep: true }, { key: 'showAll', svg: TOOLBAR_SVG.showAll },
-        { sep: true }, { key: 'clear', svg: TOOLBAR_SVG.clear, danger: true },
-        { sep: true }, { key: 'theme', svg: themeIcon },
+        { sep: true }, { key: 'eraser', svg: TOOLBAR_SVG.eraser },
+        { key: 'clear', svg: TOOLBAR_SVG.clear, danger: true },
+        { sep: true }, { key: 'settings', svg: TOOLBAR_SVG.settings },
         { sep: true }, { key: 'info', svg: TOOLBAR_SVG.info }
       ];
       var html = '';
@@ -1945,8 +2127,12 @@
       toolbar.querySelectorAll('button[data-tool]').forEach(function(btn) {
         btn.addEventListener('click', function() {
           var tool = this.getAttribute('data-tool');
+                    if (tool === 'eraser') {
+            toggleEraser();
+            return;
+          }
           if (tool === 'clear') { if (confirm(t('clearConfirm'))) { drawingsLayer.clearLayers(); lastMeasureLayer = null; localStorage.removeItem(DRAWINGS_KEY); } return; }
-          if (tool === 'theme') { applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); return; }
+          if (tool === 'settings') { openSettings(); return; }
           if (tool === 'info') { alert(t('aboutText')); return; }
           if (tool === 'showAll') {
             try {
@@ -1960,95 +2146,120 @@
       });
     }
     renderToolbar();
+    applyTheme(currentTheme);
     loadDrawings();
+        // ИЗМЕНЕНИЕ #3: настройки в отдельной панели
+    var settingsBody = document.getElementById('settingsBody');
+    var settingsPanel = document.getElementById('settingsPanel');
+    var settingsOverlay = document.getElementById('settingsOverlay');
 
-    var panel = L.control({ position: 'topright' });
-    panel.onAdd = function() {
-      var div = L.DomUtil.create('div', 'control-panel');
-      function render() {
-        var html = '';
-        html += '<div class="lang-switch">' +
-                '<button class="lang-btn' + (currentLang === 'ru' ? ' active' : '') + '" data-lang="ru">RU</button>' +
-                '<button class="lang-btn' + (currentLang === 'uk' ? ' active' : '') + '" data-lang="uk">UA</button>' +
-                '<button class="lang-btn' + (currentLang === 'en' ? ' active' : '') + '" data-lang="en">EN</button></div>';
-        html += '<h4>' + t('controlZones') + '</h4>';
-        html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
-        html += '<label><input type="checkbox" id="chkOwl" checked> ' + t('owlControl') + '</label>';
-        html += '<label><input type="checkbox" id="chkUserZones" checked> ' + t('userZones') + '</label>';
-        html += '<label><input type="checkbox" id="chkFirms" checked> 🔥 Пожары (NASA FIRMS)</label>';
-        html += '<hr><h4>' + t('telegramEvents') + '</h4>';
-        html += '<label><input type="checkbox" id="chkTg" checked> ' + t('eventsPanelTitle') + '</label>';
-        [
-          { key: 'Air Raid Alert', label: t('raidAlert') },
-          { key: 'Military Strike', label: t('strike') },
-          { key: 'Military Operation', label: t('operation') },
-          { key: 'Military Offensive', label: t('offensive') },
-          { key: 'Security Incident', label: t('incident') },
-          { key: 'Political Development', label: t('politics') }
-        ].forEach(function(item) {
-          html += '<label><input type="checkbox" class="wt-filter" data-type="' + item.key + '"' + (activeEventTypes[item.key] ? ' checked' : '') + '> <span style="color:' + wtColor(item.key) + ';display:inline-flex;align-items:center;width:16px;height:16px;">' + wtSvg(item.key) + '</span> ' + item.label + '</label>';
+    function openSettings() {
+      settingsPanel.classList.add('open');
+      settingsOverlay.classList.add('open');
+    }
+    function closeSettings() {
+      settingsPanel.classList.remove('open');
+      settingsOverlay.classList.remove('open');
+    }
+    document.getElementById('btnCloseSettings').addEventListener('click', closeSettings);
+    settingsOverlay.addEventListener('click', closeSettings);
+
+    function renderSettings() {
+      var html = '';
+      html += '<h4>Язык</h4>';
+      html += '<div class="lang-switch">' +
+              '<button class="lang-btn' + (currentLang === 'ru' ? ' active' : '') + '" data-lang="ru">RU</button>' +
+              '<button class="lang-btn' + (currentLang === 'uk' ? ' active' : '') + '" data-lang="uk">UA</button>' +
+              '<button class="lang-btn' + (currentLang === 'en' ? ' active' : '') + '" data-lang="en">EN</button></div>';
+
+      html += '<h4>' + t('controlZones') + '</h4>';
+      html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
+      html += '<label><input type="checkbox" id="chkOwl" checked> ' + t('owlControl') + '</label>';
+      html += '<label><input type="checkbox" id="chkUserZones" checked> ' + t('userZones') + '</label>';
+      html += '<label><input type="checkbox" id="chkFirms" checked> 🔥 Пожары (NASA FIRMS)</label>';
+
+      html += '<h4>' + t('telegramEvents') + '</h4>';
+      html += '<label><input type="checkbox" id="chkTg" checked> ' + t('eventsPanelTitle') + '</label>';
+      [
+        { key: 'Air Raid Alert', label: t('raidAlert') },
+        { key: 'Military Strike', label: t('strike') },
+        { key: 'Military Operation', label: t('operation') },
+        { key: 'Military Offensive', label: t('offensive') },
+        { key: 'Security Incident', label: t('incident') },
+        { key: 'Political Development', label: t('politics') }
+      ].forEach(function(item) {
+        html += '<label><input type="checkbox" class="wt-filter" data-type="' + item.key + '"' + (activeEventTypes[item.key] ? ' checked' : '') + '> <span style="color:' + wtColor(item.key) + ';display:inline-flex;align-items:center;width:16px;height:16px;">' + wtSvg(item.key) + '</span> ' + item.label + '</label>';
+      });
+
+      html += '<h4>Оформление</h4>';
+      html += '<div class="mode-toggle" style="margin-bottom:10px;"><button data-mode="light" class="' + (currentTheme === 'light' ? 'active' : '') + '">☀️ Светлая</button><button data-mode="dark" class="' + (currentTheme === 'dark' ? 'active' : '') + '">🌙 Тёмная</button></div>';
+
+      html += '<h4>' + t('opacityLabel') + '</h4>';
+      html += '<div class="opacity-row"><input type="range" id="opacitySlider" min="0" max="50" step="1" value="' + Math.round(fillOpacity * 100) + '"><span class="opacity-value" id="opacityValue">' + Math.round(fillOpacity * 100) + '%</span></div>';
+      html += '<div class="mode-toggle"><button data-layer-mode="fill" class="' + (layerMode === 'fill' ? 'active' : '') + '">' + t('modeFill') + '</button><button data-layer-mode="outline" class="' + (layerMode === 'outline' ? 'active' : '') + '">' + t('modeOutline') + '</button></div>';
+
+      settingsBody.innerHTML = html;
+      attachSettingsHandlers();
+    }
+
+    function attachSettingsHandlers() {
+      settingsBody.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          currentLang = this.getAttribute('data-lang');
+          renderSettings(); updateLegend(); renderToolbar(); loadTelegramEvents();
         });
-        html += '<hr>';
-        html += '<div class="opacity-row"><label>' + t('opacityLabel') + '</label><input type="range" id="opacitySlider" min="0" max="50" step="1" value="' + Math.round(fillOpacity * 100) + '"><span class="opacity-value" id="opacityValue">' + Math.round(fillOpacity * 100) + '%</span></div>';
-        html += '<div class="mode-toggle"><button data-mode="fill" class="' + (layerMode === 'fill' ? 'active' : '') + '">' + t('modeFill') + '</button><button data-mode="outline" class="' + (layerMode === 'outline' ? 'active' : '') + '">' + t('modeOutline') + '</button></div>';
-        div.innerHTML = html;
-        attach();
-      }
-      function attach() {
-        div.querySelectorAll('.lang-btn').forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            currentLang = this.getAttribute('data-lang');
-            render(); updateLegend(); renderToolbar(); loadTelegramEvents();
-          });
+      });
+      var chkZone = settingsBody.querySelector('#chkZone');
+      if (chkZone) chkZone.addEventListener('change', function() {
+        if (this.checked) deepStateLayer.addTo(map); else map.removeLayer(deepStateLayer);
+      });
+      var chkOwl = settingsBody.querySelector('#chkOwl');
+      if (chkOwl) chkOwl.addEventListener('change', function() {
+        if (this.checked) owlControlLayer.addTo(map); else map.removeLayer(owlControlLayer);
+      });
+      var chkUser = settingsBody.querySelector('#chkUserZones');
+      if (chkUser) chkUser.addEventListener('change', function() {
+        if (this.checked) userZonesLayer.addTo(map); else map.removeLayer(userZonesLayer);
+      });
+      var chkFirms = settingsBody.querySelector('#chkFirms');
+      if (chkFirms) chkFirms.addEventListener('change', function() {
+        if (this.checked) map.addLayer(firmsLayer); else map.removeLayer(firmsLayer);
+      });
+      var chkTg = settingsBody.querySelector('#chkTg');
+      if (chkTg) chkTg.addEventListener('change', function() {
+        if (this.checked) map.addLayer(tgLayer); else map.removeLayer(tgLayer);
+      });
+      settingsBody.querySelectorAll('.wt-filter').forEach(function(chk) {
+        chk.addEventListener('change', function() {
+          activeEventTypes[this.getAttribute('data-type')] = this.checked;
+          loadTelegramEvents();
         });
-        var chkZone = div.querySelector('#chkZone');
-        if (chkZone) chkZone.addEventListener('change', function() {
-          if (this.checked) deepStateLayer.addTo(map); else map.removeLayer(deepStateLayer);
+      });
+      settingsBody.querySelectorAll('[data-mode="light"], [data-mode="dark"]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          applyTheme(this.getAttribute('data-mode'));
+          renderSettings();
         });
-        var chkOwl = div.querySelector('#chkOwl');
-        if (chkOwl) chkOwl.addEventListener('change', function() {
-          if (this.checked) owlControlLayer.addTo(map); else map.removeLayer(owlControlLayer);
-        });
-        var chkUser = div.querySelector('#chkUserZones');
-        if (chkUser) chkUser.addEventListener('change', function() {
-          if (this.checked) userZonesLayer.addTo(map); else map.removeLayer(userZonesLayer);
-        });
-        var chkFirms = div.querySelector('#chkFirms');
-        if (chkFirms) chkFirms.addEventListener('change', function() {
-          if (this.checked) map.addLayer(firmsLayer); else map.removeLayer(firmsLayer);
-        });
-        var chkTg = div.querySelector('#chkTg');
-        if (chkTg) chkTg.addEventListener('change', function() {
-          if (this.checked) map.addLayer(tgLayer); else map.removeLayer(tgLayer);
-        });
-        var slider = div.querySelector('#opacitySlider');
-        var sliderValue = div.querySelector('#opacityValue');
-        if (slider) slider.addEventListener('input', function() {
-          fillOpacity = parseInt(this.value, 10) / 100;
-          sliderValue.textContent = this.value + '%';
+      });
+      var slider = settingsBody.querySelector('#opacitySlider');
+      var sliderValue = settingsBody.querySelector('#opacityValue');
+      if (slider) slider.addEventListener('input', function() {
+        fillOpacity = parseInt(this.value, 10) / 100;
+        sliderValue.textContent = this.value + '%';
+        refreshAllStyles(); saveSettings();
+      });
+      settingsBody.querySelectorAll('[data-layer-mode]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          layerMode = this.getAttribute('data-layer-mode');
+          settingsBody.querySelectorAll('[data-layer-mode]').forEach(function(b) { b.classList.remove('active'); });
+          this.classList.add('active');
           refreshAllStyles(); saveSettings();
         });
-        div.querySelectorAll('.mode-toggle button').forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            layerMode = this.getAttribute('data-mode');
-            div.querySelectorAll('.mode-toggle button').forEach(function(b) { b.classList.remove('active'); });
-            this.classList.add('active');
-            refreshAllStyles(); saveSettings();
-          });
-        });
-        div.querySelectorAll('.wt-filter').forEach(function(chk) {
-          chk.addEventListener('change', function() {
-            activeEventTypes[this.getAttribute('data-type')] = this.checked;
-            loadTelegramEvents();
-          });
-        });
-      }
-      render();
-      L.DomEvent.disableClickPropagation(div);
-      L.DomEvent.disableScrollPropagation(div);
-      return div;
-    };
-    panel.addTo(map);
+      });
+    }
+    renderSettings();
+
+    // (здесь раньше был panel.addTo(map); — удалено)
 
     // ИЗМЕНЕНИЕ #9: легенда со сворачиванием
     var legend = L.control({ position: 'bottomright' });
