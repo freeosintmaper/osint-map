@@ -70,11 +70,12 @@ def classify_with_llm(text):
         _throttle_llm()
         try:
             resp = GROQ_CLIENT.chat.completions.create(
-                model="openai/gpt-oss-20b",
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0,
-                max_tokens=20,
-            )
+            model="openai/gpt-oss-20b",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0,
+            max_completion_tokens=80,
+            reasoning_effort="low",
+        )
             answer = (resp.choices[0].message.content or "").strip()
             if answer in _LLM_ALLOWED:
                 return answer
