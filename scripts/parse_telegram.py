@@ -15,11 +15,11 @@ from collections import Counter
 # ═══════════════════════════════════════════════════════════════
 try:
     from openai import OpenAI
-    LLM_CLIENT = OpenAI(
-        base_url="https://keylessai.thryx.workers.dev/v1",
-        api_key="not-needed",
-    )
-    print("🤖 KeylessAI подключён")
+LLM_CLIENT = OpenAI(
+    base_url="https://models.github.ai/inference",
+    api_key=os.environ.get("GITHUB_TOKEN", ""),
+)
+print("🤖 GitHub Models подключён")
 except Exception as e:
     LLM_CLIENT = None
     print(f"⚠️ LLM init: {e}", file=sys.stderr)
