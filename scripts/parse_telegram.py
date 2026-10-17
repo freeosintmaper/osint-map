@@ -100,14 +100,42 @@ def verify_event_with_llm(text):
 
     try:
         resp = LLM_CLIENT.chat.completions.create(
-            model="openai/gpt-4o-mini",
+            model="gpt-4o",
             messages=[{"role": "user", "content": prompt}],
             temperature=0,
             max_tokens=120,
-            response_format={"type": "json_object"},
         )
-        raw = (resp.choices[0].message.content or "").strip()
-        data = json.loads(raw)
+
+        # GitHub Models иногда возвращает строку вместо объекта
+        content = None
+        if hasattr(resp, "choices"):
+            content = (resp.choices[0].message.content or "").strip()
+        elif isinstance(resp, str):
+            # Пробуем распарсить как JSON и достать content
+            try:
+                data = json.loads(resp)
+                if isinstance(data, dict):
+                    content = (
+                        data.get("choices", [{}])[0]
+                        .get("message", {})
+                        .get("content", "")
+                    ).strip()
+                elif isinstance(data, list):
+                    content = str(data).strip()
+                else:
+                    content = str(data).strip()
+            except Exception:
+                content = resp.strip()
+
+        if not content:
+            return None
+
+        # Извлекаем JSON из возможных ```json ... ``` или текста
+        json_match = re.search(r'\{.*\}', content, re.DOTALL)
+        if not json_match:
+            return None
+        data = json.loads(json_match.group(0))
+
         result = {
             "is_event": bool(data.get("is_event")),
             "event_type": data.get("event_type") if data.get("event_type") in _LLM_ALLOWED else None,
