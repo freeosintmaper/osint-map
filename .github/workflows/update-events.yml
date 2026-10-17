@@ -19,8 +19,8 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Groq SDK
-        run: pip install groq
+      - name: Install LLM SDK
+        run: pip install openai
 
       - name: Build settlements database (if missing)
         run: |
