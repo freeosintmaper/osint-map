@@ -136,6 +136,7 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     #loginModal {
       background: var(--bg-panel); color: var(--text-main);
       border-radius: 20px; padding: 28px; width: 360px; max-width: 90vw;
@@ -254,30 +255,6 @@
       line-height: 1.5; border: 1px solid var(--border-light);
     }
 
-    /* ИЗМЕНЕНИЕ #2: max-height: 90vh → calc(50vh - 30px) — панель не перекрывает легенду */
-    .control-panel {
-      background: var(--bg-panel-transparent); color: var(--text-main);
-      backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
-      padding: 16px 18px; border-radius: 16px;
-      box-shadow: var(--shadow-lg); border: 1px solid var(--border-light);
-      font-size: 13px; max-width: 300px; max-height: calc(50vh - 30px); overflow-y: auto;
-    }
-    .control-panel h4 {
-      margin: 0 0 10px; font-size: 11px; text-transform: uppercase;
-      letter-spacing: 0.6px; color: var(--text-muted); font-weight: 600;
-      border-bottom: 1px solid var(--border-light); padding-bottom: 6px;
-    }
-    .control-panel label {
-      display: flex; align-items: center; padding: 7px 0;
-      cursor: pointer; font-size: 13px; font-weight: 500;
-      gap: 8px; transition: color 0.15s;
-    }
-    .control-panel label:hover { color: var(--accent); }
-    .control-panel label input[type="checkbox"] {
-      margin: 0; width: 16px; height: 16px;
-      cursor: pointer; accent-color: var(--accent);
-    }
-    .control-panel hr { border: none; border-top: 1px solid var(--border-light); margin: 12px 0; }
     .lang-switch {
       display: flex; gap: 4px; margin-bottom: 12px;
       background: var(--bg-input); padding: 4px; border-radius: 10px;
@@ -319,9 +296,7 @@
       background: var(--bg-panel); color: var(--text-main);
       box-shadow: var(--shadow-sm);
     }
-        /* ИЗМЕНЕНИЕ #2: max-height: 80vh → calc(50vh - 30px) — легенда не перекрывает панель */
-    /* ИЗМЕНЕНИЕ #9: добавлена сворачиваемость — .collapsed скрывает .legend-body, кнопка-toggle */
-    .info.legend {
+        .info.legend {
       background: var(--bg-panel-transparent); color: var(--text-main);
       backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
       padding: 14px 16px; border-radius: 16px;
@@ -341,56 +316,31 @@
       margin-top: 3px; opacity: 1; border-radius: 4px;
       display: inline-block; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
     }
-    .info.legend .legend-line {
-      width: 18px; height: 3px; float: left; margin-right: 8px;
-      margin-top: 9px; border-radius: 2px; display: inline-block;
-    }
     .info.legend .legend-svg {
       width: 16px; height: 16px; float: left;
       margin-right: 8px; margin-top: 2px;
     }
     .info.legend .legend-svg svg { width: 100%; height: 100%; }
-
-    /* ИЗМЕНЕНИЕ #9: кнопка «?» в легенде */
     .info.legend .legend-toggle {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 26px;
-      height: 26px;
+      position: absolute; top: 8px; right: 8px;
+      width: 26px; height: 26px;
       border: 1px solid var(--border-mid);
-      background: var(--bg-input);
-      color: var(--text-secondary);
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 700;
+      background: var(--bg-input); color: var(--text-secondary);
+      border-radius: 50%; cursor: pointer; font-size: 13px; font-weight: 700;
       font-family: inherit;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s;
-      z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s; z-index: 10;
     }
     .info.legend .legend-toggle:hover {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
+      background: var(--accent); color: #fff; border-color: var(--accent);
     }
     .info.legend.collapsed {
-      padding: 6px;
-      max-width: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      min-height: 40px;
+      padding: 6px; max-width: none; border-radius: 50%;
+      width: 40px; height: 40px; min-height: 40px;
     }
     .info.legend.collapsed .legend-body { display: none; }
     .info.legend.collapsed .legend-toggle {
-      position: static;
-      width: 26px;
-      height: 26px;
-      margin: 1px auto;
+      position: static; width: 26px; height: 26px; margin: 1px auto;
     }
 
     #eventsPanel {
@@ -417,13 +367,10 @@
       align-items: center; justify-content: center; transition: all 0.15s;
     }
     #eventsPanel .panel-header .toggle-btn:hover { background: var(--accent); color: #fff; }
-    /* ИЗМЕНЕНИЕ #6: кнопка обновления — крутится при клике */
     #eventsPanel .panel-header #btnRefreshEvents.spinning {
       animation: spin 0.8s linear infinite;
-      background: var(--accent);
-      color: #fff;
+      background: var(--accent); color: #fff;
     }
-    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
     #eventsPanel .panel-body { flex: 1; overflow-y: auto; padding: 8px 0; }
     #eventsPanel .event-item {
@@ -469,46 +416,28 @@
       outline: none; border-color: var(--accent);
       box-shadow: 0 0 0 3px var(--accent-soft);
     }
-
-    /* ИЗМЕНЕНИЕ #7: чипы-кнопки вместо <select> */
     .time-chips {
-      display: flex;
-      gap: 4px;
-      background: var(--bg-input);
-      padding: 4px;
-      border-radius: 10px;
+      display: flex; gap: 4px;
+      background: var(--bg-input); padding: 4px; border-radius: 10px;
     }
     .time-chip {
-      flex: 1;
-      padding: 7px 4px;
-      border: none;
-      background: transparent;
-      color: var(--text-secondary);
-      border-radius: 7px;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 600;
-      font-family: inherit;
-      transition: all 0.15s;
-      white-space: nowrap;
+      flex: 1; padding: 7px 4px; border: none; background: transparent;
+      color: var(--text-secondary); border-radius: 7px;
+      cursor: pointer; font-size: 12px; font-weight: 600;
+      font-family: inherit; transition: all 0.15s; white-space: nowrap;
     }
     .time-chip:hover { color: var(--text-main); }
     .time-chip.active {
-      background: var(--accent);
-      color: #fff;
+      background: var(--accent); color: #fff;
       box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
     }
-
     #eventsPanel .summary-box {
       padding: 12px 18px; background: var(--bg-summary);
       border-bottom: 1px solid var(--border-light); font-size: 12px;
     }
-    /* ИЗМЕНЕНИЕ #5: строка «обновлено X мин назад» */
     #eventsPanel .summary-box .last-update {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-      font-weight: 500;
+      font-size: 11px; color: var(--text-muted);
+      margin-bottom: 8px; font-weight: 500;
     }
     #eventsPanel .summary-box .summary-title {
       font-weight: 700; font-size: 11px; text-transform: uppercase;
@@ -521,7 +450,6 @@
     #eventsPanel .summary-box .summary-line svg {
       width: 13px; height: 13px; margin-right: 8px; flex: 0 0 auto;
     }
-
     #eventsPanel.collapsed { width: 52px; }
     #eventsPanel.collapsed .panel-body,
     #eventsPanel.collapsed .panel-header span { display: none; }
@@ -602,113 +530,63 @@
     }
     #toolbar button:hover .tooltip { opacity: 1; transform: translateX(-50%) translateY(-4px); }
     #toolbar .sep { width: 1px; background: var(--border-mid); margin: 6px 4px; flex: 0 0 auto; }
-        /* ИЗМЕНЕНИЕ #3: панель настроек */
-    #settingsOverlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(10, 10, 20, 0.35);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
-      z-index: 5500;
-      display: none;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-    #settingsOverlay.open {
-      display: block;
-      opacity: 1;
-    }
-    #settingsPanel {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 340px;
-      max-width: 92vw;
-      background: var(--bg-panel);
-      color: var(--text-main);
-      border-left: 1px solid var(--border-light);
-      box-shadow: var(--shadow-xl);
-      z-index: 5600;
-      display: flex;
-      flex-direction: column;
-      transform: translateX(100%);
-      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    #settingsPanel.open {
-      transform: translateX(0);
-    }
-    .settings-header {
-      padding: 18px 20px;
-      border-bottom: 1px solid var(--border-light);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 700;
-      font-size: 16px;
-    }
-    .settings-header button {
-      width: 32px;
-      height: 32px;
-      border: none;
-      background: var(--bg-input);
-      color: var(--text-main);
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.15s;
-    }
-    .settings-header button:hover {
-      background: var(--accent);
-      color: #fff;
-    }
-    .settings-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 18px 20px 30px;
-      font-size: 13px;
-    }
-    .settings-body h4 {
-      margin: 20px 0 10px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: var(--text-muted);
-      font-weight: 600;
-      border-bottom: 1px solid var(--border-light);
-      padding-bottom: 6px;
-    }
-    .settings-body h4:first-child {
-      margin-top: 0;
-    }
-    .settings-body label {
-      display: flex;
-      align-items: center;
-      padding: 8px 0;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 500;
-      gap: 8px;
-    }
-    .settings-body label:hover {
-      color: var(--accent);
-    }
-    .settings-body label input[type="checkbox"] {
-      margin: 0;
-      width: 16px;
-      height: 16px;
-      cursor: pointer;
-      accent-color: var(--accent);
-    }
-    .settings-body hr {
-      border: none;
-      border-top: 1px solid var(--border-light);
-      margin: 16px 0;
-    }
     #toolbar button svg {
       width: 20px; height: 20px; stroke: currentColor; stroke-width: 2;
       fill: none; stroke-linecap: round; stroke-linejoin: round;
       display: block; pointer-events: none;
+    }
+
+    /* Панель настроек */
+    #settingsOverlay {
+      position: fixed; inset: 0;
+      background: rgba(10, 10, 20, 0.35);
+      backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+      z-index: 5500; display: none; opacity: 0; transition: opacity 0.2s;
+    }
+    #settingsOverlay.open { display: block; opacity: 1; }
+    #settingsPanel {
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: 340px; max-width: 92vw;
+      background: var(--bg-panel); color: var(--text-main);
+      border-left: 1px solid var(--border-light);
+      box-shadow: var(--shadow-xl); z-index: 5600;
+      display: flex; flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #settingsPanel.open { transform: translateX(0); }
+    .settings-header {
+      padding: 18px 20px; border-bottom: 1px solid var(--border-light);
+      display: flex; justify-content: space-between; align-items: center;
+      font-weight: 700; font-size: 16px;
+    }
+    .settings-header button {
+      width: 32px; height: 32px; border: none;
+      background: var(--bg-input); color: var(--text-main);
+      border-radius: 8px; cursor: pointer; font-size: 14px;
+      transition: all 0.15s;
+    }
+    .settings-header button:hover { background: var(--accent); color: #fff; }
+    .settings-body {
+      flex: 1; overflow-y: auto; padding: 18px 20px 30px; font-size: 13px;
+    }
+    .settings-body h4 {
+      margin: 20px 0 10px; font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.6px; color: var(--text-muted); font-weight: 600;
+      border-bottom: 1px solid var(--border-light); padding-bottom: 6px;
+    }
+    .settings-body h4:first-child { margin-top: 0; }
+    .settings-body label {
+      display: flex; align-items: center; padding: 8px 0;
+      cursor: pointer; font-size: 13px; font-weight: 500; gap: 8px;
+    }
+    .settings-body label:hover { color: var(--accent); }
+    .settings-body label input[type="checkbox"] {
+      margin: 0; width: 16px; height: 16px;
+      cursor: pointer; accent-color: var(--accent);
+    }
+    .settings-body hr {
+      border: none; border-top: 1px solid var(--border-light); margin: 16px 0;
     }
 
     .event-icon {
@@ -799,12 +677,6 @@
         border-radius: 20px 20px 0 0; z-index: 4000; display: none;
       }
       body.show-events #eventsPanel { display: flex; }
-      .control-panel { display: none; }
-      body.show-filters .control-panel {
-        display: block; position: fixed; left: 10px; right: 10px;
-        top: 72px; bottom: 10px; max-width: none; max-height: none;
-        z-index: 4000; overflow-y: auto;
-      }
       .info.legend { display: none; }
       #toolbar { display: none; }
       body.show-tools #toolbar {
@@ -853,7 +725,6 @@
     @media (max-width: 480px) {
       #eventsPanel { width: auto; }
       #eventsPanel.collapsed { width: 52px; }
-      .control-panel { max-width: none; }
       #toolbar button { width: 48px; height: 48px; }
       #toolbar button svg { width: 22px; height: 22px; }
       .event-icon { width: 34px; height: 34px; }
@@ -939,8 +810,6 @@
     </button>
   </div>
 
-  <!-- ИЗМЕНЕНИЕ #6: кнопка «Обновить сейчас» (↻) в шапке -->
-  <!-- ИЗМЕНЕНИЕ #8: счётчик «События · N» в шапке -->
   <div id="eventsPanel">
     <div class="panel-header">
       <span id="eventsPanelTitle">События</span>
@@ -956,18 +825,17 @@
     </div>
   </div>
 
-    <div id="toolbar"></div>
+  <div id="toolbar"></div>
 
-  <!-- ИЗМЕНЕНИЕ #3: панель настроек -->
   <div id="settingsOverlay"></div>
   <div id="settingsPanel">
     <div class="settings-header">
-      <span>Настройки</span>
+      <span id="settingsTitle">Настройки</span>
       <button id="btnCloseSettings" title="Закрыть">✕</button>
     </div>
     <div class="settings-body" id="settingsBody"></div>
   </div>
-  
+
   <script>
     window.addEventListener('error', function(e) {
       var box = document.getElementById('errorBox');
@@ -1025,7 +893,9 @@
         noEvents: 'Нет событий', source: 'Источник',
         toolMarker: 'Метка', toolLine: 'Линия', toolArrow: 'Стрелка',
         toolPolygon: 'Зона', toolRectangle: 'Прямоугольник', toolCircle: 'Круг',
-        toolMeasure: 'Измерить расстояние', toolClear: 'Очистить',
+        toolMeasure: 'Измерить расстояние', toolClear: 'Очистить всё',
+        toolEraser: 'Ластик — удалять по одной',
+        toolSettings: 'Настройки',
         toolTheme: 'Тема', toolInfo: 'О проекте',
         toolShowAll: 'Показать все события',
         clearConfirm: 'Удалить все рисунки?', total: 'Всего',
@@ -1035,7 +905,10 @@
         time6h: '6ч', time24h: '24ч', time3d: '3д', time7d: '7д', timeAll: 'Всё',
         updatedJustNow: 'только что', updatedMinutes: 'мин назад',
         updatedHours: 'ч назад', updatedDays: 'дн назад', updatedLabel: 'Обновлено',
-        refreshTitle: 'Обновить сейчас'
+        refreshTitle: 'Обновить сейчас',
+        settingsTitle: 'Настройки',
+        themeLight: '☀️ Светлая', themeDark: '🌙 Тёмная',
+        appearance: 'Оформление'
       },
       uk: {
         eventsPanelTitle: 'Події', controlZones: 'Зони контролю',
@@ -1052,7 +925,10 @@
         summaryTitle: 'Зведення', eventsCount: 'подій', noEvents: 'Немає',
         source: 'Джерело', toolMarker: 'Мітка', toolLine: 'Лінія', toolArrow: 'Стрілка',
         toolPolygon: 'Зона', toolRectangle: 'Прямокутник', toolCircle: 'Коло',
-        toolMeasure: 'Виміряти', toolClear: 'Очистити', toolTheme: 'Тема',
+        toolMeasure: 'Виміряти', toolClear: 'Очистити все',
+        toolEraser: 'Ластик — видаляти по одній',
+        toolSettings: 'Налаштування',
+        toolTheme: 'Тема',
         toolInfo: 'Про проект',
         toolShowAll: 'Показати всі події',
         clearConfirm: 'Видалити всі малюнки?', total: 'Всього',
@@ -1062,7 +938,10 @@
         time6h: '6г', time24h: '24г', time3d: '3д', time7d: '7д', timeAll: 'Все',
         updatedJustNow: 'щойно', updatedMinutes: 'хв тому',
         updatedHours: 'г тому', updatedDays: 'дн тому', updatedLabel: 'Оновлено',
-        refreshTitle: 'Оновити зараз'
+        refreshTitle: 'Оновити зараз',
+        settingsTitle: 'Налаштування',
+        themeLight: '☀️ Світла', themeDark: '🌙 Темна',
+        appearance: 'Оформлення'
       },
       en: {
         eventsPanelTitle: 'Events', controlZones: 'Control Zones',
@@ -1079,7 +958,10 @@
         summaryTitle: 'Summary', eventsCount: 'events', noEvents: 'No events',
         source: 'Source', toolMarker: 'Marker', toolLine: 'Line', toolArrow: 'Arrow',
         toolPolygon: 'Polygon', toolRectangle: 'Rectangle', toolCircle: 'Circle',
-        toolMeasure: 'Measure', toolClear: 'Clear', toolTheme: 'Theme',
+        toolMeasure: 'Measure', toolClear: 'Clear all',
+        toolEraser: 'Eraser — delete one by one',
+        toolSettings: 'Settings',
+        toolTheme: 'Theme',
         toolInfo: 'About',
         toolShowAll: 'Show all events',
         clearConfirm: 'Delete all drawings?', total: 'Total',
@@ -1089,7 +971,10 @@
         time6h: '6h', time24h: '24h', time3d: '3d', time7d: '7d', timeAll: 'All',
         updatedJustNow: 'just now', updatedMinutes: 'min ago',
         updatedHours: 'h ago', updatedDays: 'd ago', updatedLabel: 'Updated',
-        refreshTitle: 'Refresh now'
+        refreshTitle: 'Refresh now',
+        settingsTitle: 'Settings',
+        themeLight: '☀️ Light', themeDark: '🌙 Dark',
+        appearance: 'Appearance'
       }
     };
     var currentLang = 'ru';
@@ -1146,16 +1031,15 @@
       if (res.data && res.data.session) userBtn.classList.add('logged-in');
     });
 
-        var OPACITY_KEY = 'osint_opacity';
+    var OPACITY_KEY = 'osint_opacity';
     var MODE_KEY = 'osint_mode';
     var THEME_KEY = 'osint_theme';
     var fillOpacity = parseFloat(localStorage.getItem(OPACITY_KEY) || '0.15');
     var layerMode = localStorage.getItem(MODE_KEY) || 'fill';
-    // Тема: приоритет localStorage → системная настройка → light
     var savedTheme = localStorage.getItem(THEME_KEY);
     var systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     var currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-    
+
     function saveSettings() {
       localStorage.setItem(OPACITY_KEY, fillOpacity.toString());
       localStorage.setItem(MODE_KEY, layerMode);
@@ -1182,7 +1066,7 @@
       if (cat === 'grey') return t('owlGrey');
       return t('owlControl');
     }
-       function refreshAllStyles() {
+    function refreshAllStyles() {
       if (deepStateLayer) deepStateLayer.eachLayer(function(s) { applyStyleToLayer(s, '#cc0000', styleFor('#cc0000')); });
       if (owlControlLayer) owlControlLayer.eachLayer(function(s) {
         var cat = (s.feature && s.feature.properties && s.feature.properties._category) || 'unknown';
@@ -1194,26 +1078,21 @@
           fillOpacity: outline ? 0 : fillOpacity * 0.9
         });
       });
-      // Карта автора — тоже реагирует на прозрачность и режим Заливка/Контуры
       if (userZonesLayer) userZonesLayer.eachLayer(function(s) {
         var cat = (s.feature && s.feature.properties && s.feature.properties.category) || 'russia';
         var c = zoneColors[cat] || zoneColors.russia;
         var outline = layerMode === 'outline';
         applyStyleToLayer(s, c.color, {
-          color: c.color,
-          weight: 2,
-          opacity: 0.9,
-          fill: !outline,
-          fillColor: c.fillColor,
+          color: c.color, weight: 2, opacity: 0.9,
+          fill: !outline, fillColor: c.fillColor,
           fillOpacity: outline ? 0 : fillOpacity,
           dashArray: c.dashArray || null
         });
       });
     }
 
-        var TOOLBAR_SVG = {
+    var TOOLBAR_SVG = {
       marker: '<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>',
-      eraser: '<svg viewBox="0 0 24 24"><path d="M20 20H7L3 16a2 2 0 010-3l9-9a2 2 0 013 0l5 5a2 2 0 010 3l-7 7M6 13l5 5"/></svg>',
       line: '<svg viewBox="0 0 24 24"><path d="M4 19L20 5"/></svg>',
       arrow: '<svg viewBox="0 0 24 24"><path d="M4 12h13M12 6l6 6-6 6"/></svg>',
       polygon: '<svg viewBox="0 0 24 24"><path d="M12 2l9 7-3.5 11h-11L3 9z"/></svg>',
@@ -1221,8 +1100,7 @@
       circle: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>',
       measure: '<svg viewBox="0 0 24 24"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg>',
       clear: '<svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>',
-      moon: '<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>',
-      sun: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>',
+      eraser: '<svg viewBox="0 0 24 24"><path d="M20 20H7L3 16a2 2 0 010-3l9-9a2 2 0 013 0l5 5a2 2 0 010 3l-7 7M6 13l5 5"/></svg>',
       settings: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
       info: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
       showAll: '<svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="12" cy="12" r="2"/></svg>'
@@ -1240,24 +1118,22 @@
         if (!map.hasLayer(lightTile)) lightTile.addTo(map);
         document.body.classList.remove('dark');
       }
-      var btn = document.querySelector('#toolbar button[data-tool="theme"]');
-      if (btn) {
-        var themeSvg = theme === 'dark' ? TOOLBAR_SVG.sun : TOOLBAR_SVG.moon;
-        btn.innerHTML = themeSvg + '<span class="tooltip">' + t('toolTheme') + '</span>';
-      }
     }
 
-    // ИЗМЕНЕНИЕ #3: zoomControl: !isMobile() → zoomControl: false
-    // Один zoom создаётся ниже вручную (bottomleft). Дефолтный (topleft) наезжал на userBtn.
     var map = L.map('map', { zoomControl: false, tap: true }).setView([48.5, 37.5], 7);
     if (!isMobile()) L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
     var lightTile = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri', maxZoom: 19 });
-    var darkTile = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '© OpenStreetMap © CARTO',
-      subdomains: 'abcd',
-      maxZoom: 19
-    });
+    var darkBase = L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+      { maxZoom: 16 }
+    );
+    var darkLabels = L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
+      { maxZoom: 16, attribution: 'Tiles © Esri' }
+    );
+    var darkTile = L.layerGroup([darkBase, darkLabels]);
+
     if (currentTheme === 'dark') { darkTile.addTo(map); document.body.classList.add('dark'); } else lightTile.addTo(map);
 
     var zoneColors = {
@@ -1266,17 +1142,14 @@
       'grey': { color: '#666666', fillColor: '#888888', fillOpacity: 0.30, label: 'Серая зона', dashArray: '6,4' }
     };
 
-        var userZonesLayer = L.geoJSON(null, {
+    var userZonesLayer = L.geoJSON(null, {
       style: function(f) {
         var cat = (f.properties && f.properties.category) || 'russia';
         var c = zoneColors[cat] || zoneColors.russia;
         var outline = layerMode === 'outline';
         return {
-          color: c.color,
-          weight: 2,
-          opacity: 0.9,
-          fill: !outline,
-          fillColor: c.fillColor,
+          color: c.color, weight: 2, opacity: 0.9,
+          fill: !outline, fillColor: c.fillColor,
           fillOpacity: outline ? 0 : fillOpacity,
           dashArray: c.dashArray || null
         };
@@ -1341,7 +1214,6 @@
       if (layer.editing) layer.editing.enable();
       zoneEditBar.classList.add('open');
     }
-
     function cancelEditZone() {
       if (!editingLayer) { zoneEditBar.classList.remove('open'); return; }
       if (editingLayer.editing) { try { editingLayer.editing.disable(); } catch(e) {} }
@@ -1358,7 +1230,6 @@
       editingOriginalGeom = null;
       zoneEditBar.classList.remove('open');
     }
-
     function saveEditZone() {
       if (!editingLayer) { zoneEditBar.classList.remove('open'); return; }
       var id = editingLayer._zoneId;
@@ -1376,7 +1247,6 @@
       editingOriginalGeom = null;
       zoneEditBar.classList.remove('open');
     }
-
     function reverseLatLngs(geometry) {
       if (!geometry) return [];
       if (geometry.type === 'Polygon') {
@@ -1386,7 +1256,6 @@
       }
       return [];
     }
-
     document.getElementById('btnZoneSave').addEventListener('click', saveEditZone);
     document.getElementById('btnZoneCancel').addEventListener('click', cancelEditZone);
 
@@ -1458,7 +1327,6 @@
       }
       return 'unknown';
     }
-
     function isInHeavyFolder(pm) {
       var el = pm.parentNode;
       while (el && el.tagName !== 'Document') {
@@ -1470,26 +1338,17 @@
       }
       return false;
     }
-
     function showOwlLoader(on) {
       var el = document.getElementById('owlLoader');
       if (el) { if (on) el.classList.add('open'); else el.classList.remove('open'); }
     }
 
     var OWL_SKIP_NAMES = [
-      'initial invasion',
-      'kyiv axis',
-      'kharkiv axis',
-      'luhansk axis',
-      'donetsk axis',
-      'zaporizhia and kherson axis',
-      'ukrainian kherson counterattack',
-      'crimea',
-      "donetsk and luhansk people",
-      "people's republic",
-      'archives'
+      'initial invasion', 'kyiv axis', 'kharkiv axis', 'luhansk axis',
+      'donetsk axis', 'zaporizhia and kherson axis',
+      'ukrainian kherson counterattack', 'crimea',
+      "donetsk and luhansk people", "people's republic", 'archives'
     ];
-
     function shouldSkipOwl(name) {
       if (!name) return false;
       var n = name.toLowerCase();
@@ -1498,7 +1357,8 @@
       }
       return false;
     }
-        function parseOwlKmlStrings(kmlStrings) {
+
+    function parseOwlKmlStrings(kmlStrings) {
       var allFeatures = [];
       var stats = { russian: 0, ukrainian: 0, holding: 0, grey: 0, unknown: 0, skipped: 0 };
       kmlStrings.forEach(function(kmlString) {
@@ -1596,7 +1456,6 @@
     var FIRMS_CACHE_KEY = 'firms_cache_v2';
     var FIRMS_CACHE_TIME = 'firms_cache_time_v2';
     var FIRMS_CACHE_TTL = 3 * 60 * 60 * 1000;
-
     var firmsLayer = L.layerGroup();
     firmsLayer.addTo(map);
 
@@ -1646,8 +1505,7 @@
         .catch(function(err) { console.warn('FIRMS:', err.message); });
     }
     loadFirmsFires();
-
-    var WT_COLORS = {
+        var WT_COLORS = {
       'Air Raid Alert': '#e6a800', 'Military Strike': '#c62828',
       'Military Operation': '#e65100', 'Military Offensive': '#8e0000',
       'Security Incident': '#5a5a5a', 'Political Development': '#6a1b9a'
@@ -1673,11 +1531,10 @@
         className: '', iconSize: [32, 32], iconAnchor: [16, 16], popupAnchor: [0, -16]
       });
     }
-        var activeEventTypes = {
+    var activeEventTypes = {
       'Air Raid Alert': true, 'Military Strike': true, 'Military Operation': true,
       'Military Offensive': true, 'Security Incident': true, 'Political Development': true
     };
-    // ИЗМЕНЕНИЕ #1: eventDateFilter с 'all' на '24h' — при заходе видим только свежее
     var eventDateFilter = '24h';
     var eventSearchQuery = '';
 
@@ -1695,7 +1552,6 @@
     });
     map.addLayer(tgLayer);
 
-    // ИЗМЕНЕНИЕ #5: функция для форматирования «обновлено X мин назад»
     function getLastUpdateText() {
       var list = (window.TG_DATA && window.TG_DATA.events) || [];
       if (!list.length) return '';
@@ -1730,7 +1586,6 @@
         if (!activeEventTypes[ev.event_type]) return;
         if (eventDateFilter !== 'all') {
           var cutoff = 0;
-          // ИЗМЕНЕНИЕ #7: добавлен фильтр '6h'
           if (eventDateFilter === '6h') cutoff = Date.now() - 6 * 60 * 60 * 1000;
           else if (eventDateFilter === '24h') cutoff = Date.now() - 24 * 60 * 60 * 1000;
           else if (eventDateFilter === '3d') cutoff = Date.now() - 3 * 24 * 60 * 60 * 1000;
@@ -1766,17 +1621,14 @@
         added++;
         panelEvents.push(ev);
       });
-      // ИЗМЕНЕНИЕ #4: счётчик в title вкладки
       document.title = panelEvents.length ? '(' + panelEvents.length + ') OSINT-карта' : 'OSINT-карта';
       renderEventsPanel(panelEvents);
     }
 
     function renderEventsPanel(events) {
       var body = document.getElementById('eventsListBody');
-      // ИЗМЕНЕНИЕ #8: счётчик в шапке панели
       document.getElementById('eventsPanelTitle').textContent = t('eventsPanelTitle') + ' · ' + (events ? events.length : 0);
 
-      // ИЗМЕНЕНИЕ #7: чипы вместо <select>
       var filterHtml = '<div class="events-filters">' +
         '<input type="text" id="eventSearch" placeholder="Поиск: город, канал, текст" value="' + (eventSearchQuery || '').replace(/"/g, '&quot;') + '">' +
         '<div class="time-chips">' +
@@ -1796,7 +1648,6 @@
       var counts = {};
       events.forEach(function(ev) { counts[ev.event_type] = (counts[ev.event_type] || 0) + 1; });
       var html = filterHtml + '<div class="summary-box">';
-      // ИЗМЕНЕНИЕ #5: «Обновлено X мин назад»
       var lastUpdate = getLastUpdateText();
       if (lastUpdate) {
         html += '<div class="last-update">' + t('updatedLabel') + ': ' + lastUpdate + '</div>';
@@ -1831,7 +1682,6 @@
       });
     }
 
-    // ИЗМЕНЕНИЕ #7: обработчики для чипов времени
     function attachEventFilters() {
       var searchEl = document.getElementById('eventSearch');
       if (searchEl) {
@@ -1860,7 +1710,6 @@
       this.textContent = panel.classList.contains('collapsed') ? '▶' : '◀';
     });
 
-    // ИЗМЕНЕНИЕ #6: кнопка «Обновить сейчас» — перезагружает telegram-events.js с cache-bust
     document.getElementById('btnRefreshEvents').addEventListener('click', function() {
       var btn = this;
       btn.classList.add('spinning');
@@ -1955,49 +1804,8 @@
     var drawingsLayer = new L.FeatureGroup();
     map.addLayer(drawingsLayer);
     var currentDrawer = null, currentTool = null, lastMeasureLayer = null;
-    
     var eraserActive = false;
 
-    function toggleEraser() {
-      eraserActive = !eraserActive;
-      if (eraserActive) {
-        if (currentDrawer) { try { currentDrawer.disable(); } catch(e) {} currentDrawer = null; }
-        setActiveTool('eraser');
-        map.getContainer().style.cursor = 'crosshair';
-        attachEraserHandlers();
-      } else {
-        setActiveTool(null);
-        map.getContainer().style.cursor = '';
-        detachEraserHandlers();
-      }
-    }
-
-    function attachEraserHandlers() {
-      drawingsLayer.eachLayer(function(layer) {
-        if (layer._eraserHandler) return;
-        layer._eraserHandler = function(e) {
-          if (!eraserActive) return;
-          L.DomEvent.stopPropagation(e);
-          if (layer._arrowDecorator) drawingsLayer.removeLayer(layer._arrowDecorator);
-          drawingsLayer.removeLayer(layer);
-          saveDrawings();
-        };
-        layer.on('click', layer._eraserHandler);
-        if (layer._path) layer._path.style.cursor = 'crosshair';
-      });
-    }
-
-    function detachEraserHandlers() {
-      drawingsLayer.eachLayer(function(layer) {
-        if (layer._eraserHandler) {
-          layer.off('click', layer._eraserHandler);
-          delete layer._eraserHandler;
-        }
-        if (layer._path) layer._path.style.cursor = '';
-      });
-    }
-
-    
     function setActiveTool(tool) {
       currentTool = tool;
       document.querySelectorAll('#toolbar button[data-tool]').forEach(function(btn) {
@@ -2021,6 +1829,43 @@
       else if (tool === 'circle') currentDrawer = new L.Draw.Circle(map, { metric: true });
       else if (tool === 'measure') currentDrawer = new L.Draw.Polyline(map, opts);
       if (currentDrawer) currentDrawer.enable();
+    }
+
+    function toggleEraser() {
+      eraserActive = !eraserActive;
+      if (eraserActive) {
+        if (currentDrawer) { try { currentDrawer.disable(); } catch(e) {} currentDrawer = null; }
+        setActiveTool('eraser');
+        map.getContainer().style.cursor = 'crosshair';
+        attachEraserHandlers();
+      } else {
+        setActiveTool(null);
+        map.getContainer().style.cursor = '';
+        detachEraserHandlers();
+      }
+    }
+    function attachEraserHandlers() {
+      drawingsLayer.eachLayer(function(layer) {
+        if (layer._eraserHandler) return;
+        layer._eraserHandler = function(e) {
+          if (!eraserActive) return;
+          L.DomEvent.stopPropagation(e);
+          if (layer._arrowDecorator) drawingsLayer.removeLayer(layer._arrowDecorator);
+          drawingsLayer.removeLayer(layer);
+          saveDrawings();
+        };
+        layer.on('click', layer._eraserHandler);
+        if (layer._path) layer._path.style.cursor = 'crosshair';
+      });
+    }
+    function detachEraserHandlers() {
+      drawingsLayer.eachLayer(function(layer) {
+        if (layer._eraserHandler) {
+          layer.off('click', layer._eraserHandler);
+          delete layer._eraserHandler;
+        }
+        if (layer._path) layer._path.style.cursor = '';
+      });
     }
 
     map.on(L.Draw.Event.CREATED, function(e) {
@@ -2061,7 +1906,7 @@
           layer.setStyle({ color: '#ff6600', weight: 3 });
         }
       }
-            if (type === 'marker') layer.bindPopup('Метка');
+      if (type === 'marker') layer.bindPopup('Метка');
       drawingsLayer.addLayer(layer);
       if (eraserActive) {
         layer._eraserHandler = function(e) {
@@ -2127,12 +1972,9 @@
       toolbar.querySelectorAll('button[data-tool]').forEach(function(btn) {
         btn.addEventListener('click', function() {
           var tool = this.getAttribute('data-tool');
-                    if (tool === 'eraser') {
-            toggleEraser();
-            return;
-          }
-          if (tool === 'clear') { if (confirm(t('clearConfirm'))) { drawingsLayer.clearLayers(); lastMeasureLayer = null; localStorage.removeItem(DRAWINGS_KEY); } return; }
+          if (tool === 'eraser') { toggleEraser(); return; }
           if (tool === 'settings') { openSettings(); return; }
+          if (tool === 'clear') { if (confirm(t('clearConfirm'))) { drawingsLayer.clearLayers(); lastMeasureLayer = null; localStorage.removeItem(DRAWINGS_KEY); } return; }
           if (tool === 'info') { alert(t('aboutText')); return; }
           if (tool === 'showAll') {
             try {
@@ -2148,7 +1990,8 @@
     renderToolbar();
     applyTheme(currentTheme);
     loadDrawings();
-        // ИЗМЕНЕНИЕ #3: настройки в отдельной панели
+
+    // Настройки
     var settingsBody = document.getElementById('settingsBody');
     var settingsPanel = document.getElementById('settingsPanel');
     var settingsOverlay = document.getElementById('settingsOverlay');
@@ -2165,6 +2008,7 @@
     settingsOverlay.addEventListener('click', closeSettings);
 
     function renderSettings() {
+      document.getElementById('settingsTitle').textContent = t('settingsTitle');
       var html = '';
       html += '<h4>Язык</h4>';
       html += '<div class="lang-switch">' +
@@ -2191,8 +2035,11 @@
         html += '<label><input type="checkbox" class="wt-filter" data-type="' + item.key + '"' + (activeEventTypes[item.key] ? ' checked' : '') + '> <span style="color:' + wtColor(item.key) + ';display:inline-flex;align-items:center;width:16px;height:16px;">' + wtSvg(item.key) + '</span> ' + item.label + '</label>';
       });
 
-      html += '<h4>Оформление</h4>';
-      html += '<div class="mode-toggle" style="margin-bottom:10px;"><button data-mode="light" class="' + (currentTheme === 'light' ? 'active' : '') + '">☀️ Светлая</button><button data-mode="dark" class="' + (currentTheme === 'dark' ? 'active' : '') + '">🌙 Тёмная</button></div>';
+      html += '<h4>' + t('appearance') + '</h4>';
+      html += '<div class="mode-toggle" style="margin-bottom:10px;">' +
+              '<button data-theme="light" class="' + (currentTheme === 'light' ? 'active' : '') + '">' + t('themeLight') + '</button>' +
+              '<button data-theme="dark" class="' + (currentTheme === 'dark' ? 'active' : '') + '">' + t('themeDark') + '</button>' +
+              '</div>';
 
       html += '<h4>' + t('opacityLabel') + '</h4>';
       html += '<div class="opacity-row"><input type="range" id="opacitySlider" min="0" max="50" step="1" value="' + Math.round(fillOpacity * 100) + '"><span class="opacity-value" id="opacityValue">' + Math.round(fillOpacity * 100) + '%</span></div>';
@@ -2235,9 +2082,9 @@
           loadTelegramEvents();
         });
       });
-      settingsBody.querySelectorAll('[data-mode="light"], [data-mode="dark"]').forEach(function(btn) {
+      settingsBody.querySelectorAll('[data-theme]').forEach(function(btn) {
         btn.addEventListener('click', function() {
-          applyTheme(this.getAttribute('data-mode'));
+          applyTheme(this.getAttribute('data-theme'));
           renderSettings();
         });
       });
@@ -2259,9 +2106,6 @@
     }
     renderSettings();
 
-    // (здесь раньше был panel.addTo(map); — удалено)
-
-    // ИЗМЕНЕНИЕ #9: легенда со сворачиванием
     var legend = L.control({ position: 'bottomright' });
     legend.onAdd = function() {
       var div = L.DomUtil.create('div', 'info legend');
@@ -2285,8 +2129,7 @@
       });
       legendBody += '<hr><div style="font-size:11px;color:var(--text-muted);">Telegram · DeepStateMap · Project Owl · NASA FIRMS</div>';
       legendBody += '</div>';
-      div.innerHTML = '<button class="legend-toggle" title="Свернуть/развернуть">?</button>' + legendBody;
-      // Восстановить состояние из localStorage
+      div.innerHTML = '<button class="legend-toggle" title="?">?</button>' + legendBody;
       var collapsed = localStorage.getItem('osint_legend_collapsed') === '1';
       if (collapsed) div.classList.add('collapsed');
       var toggle = div.querySelector('.legend-toggle');
