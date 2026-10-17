@@ -8,6 +8,7 @@ import math
 import os
 from html import unescape
 from collections import Counter
+from classify_llm import LLMClassifier
 
 # ═══════════════════════════════════════════════════════════════
 # КАНАЛЫ
@@ -119,9 +120,9 @@ SPEAKER_CAPITALS = {
 }
 
 POLITICAL_MARKERS = [
-    "заявил", "заявила", "заявили", "заявив", "заявила", "заявили",
-    "заява", "заяву", "заявления", "заяву",
-    "предложил", "предложила", "предложили", "предложил", "запропонував",
+    "заявил", "заявила", "заявили", "заявив",
+    "заява", "заяву", "заявления",
+    "предложил", "предложила", "предложили", "запропонував",
     "сказал", "сказала", "сказали", "сообщил", "сообщила",
     "підкреслив", "подчеркнул", "зазначив", "отметил",
     "прокомментировал", "прокоментував",
@@ -175,7 +176,6 @@ SILENCE_MARKERS = [
     "не подтвердил", "не подтвердили", "не подтвердила",
     "не опроверг", "не опровергли",
 ]
-
 TRANSLIT_ALIASES = {
     "киев": [50.4501, 30.5234, "Киев", "UA"],
     "київ": [50.4501, 30.5234, "Киев", "UA"],
@@ -421,7 +421,6 @@ TRANSLIT_ALIASES = {
     "петрозаводск": [61.7849, 34.3469, "Петрозаводск", "RU"],
     "карелия": [61.7849, 34.3469, "Петрозаводск", "RU"],
     "сасово": [54.3500, 41.9167, "Сасово", "RU"],
-    "салава́т": [53.3617, 55.9244, "Салават", "RU"],
     "салават": [53.3617, 55.9244, "Салават", "RU"],
     "новошахтинск": [47.7542, 39.9338, "Новошахтинск", "RU"],
     "волгодонск": [47.5165, 42.1521, "Волгодонск", "RU"],
@@ -720,6 +719,7 @@ STOP_SETTLEMENTS = {
 }
 
 SETTLEMENTS_BY_NAME = {}
+MAX_LOCATIONS_PER_POST = 5
 
 
 def is_foreign_conflict(text):
@@ -912,9 +912,6 @@ def is_military_term_context(text, phrase):
 
 
 def _find_alias_matches(text, channel_country):
-    """Возвращает (список локаций, был_ли_алиас).
-    Список: [(lat, lng, имя, country), ...] — все подходящие города.
-    """
     tl = text.lower()
     had_alias = False
     matches = []
@@ -951,9 +948,6 @@ def _find_alias_matches(text, channel_country):
 
 
 def _find_city_matches(text, channel_country):
-    """Возвращает список кандидатов из базы GeoNames, отсортированных по score.
-    Список: [(score, имя, lat, lng, country), ...] — по одному на каждое имя.
-    """
     if not SETTLEMENTS_BY_NAME:
         return []
     tl = text.lower()
@@ -1017,13 +1011,8 @@ def _find_city_matches(text, channel_country):
     return result
 
 
-MAX_LOCATIONS_PER_POST = 5
-
-
 def find_all_locations(text, channel_country):
-    """Multi-location — только для ручного whitelist (TRANSLIT_ALIASES).
-    GeoNames содержит 386k названий, включая деревни-омонимы (Житель,
-    Лесной, Мирный, Сторона), поэтому для GeoNames берём ОДНУ лучшую."""
+    """Fallback (LLM недоступен). Multi — только для ручных алиасов."""
     alias_matches, had_alias = _find_alias_matches(text, channel_country)
     if had_alias and not alias_matches:
         return []
@@ -1034,24 +1023,38 @@ def find_all_locations(text, channel_country):
         score, name, lat, lng, country = city_matches[0]
         return [(lat, lng, name, country)]
     return []
-    
-    locations = []
-    seen_names = set()
-    for m in alias_matches:
-        if m[2] in seen_names:
+
+
+def _geocode_llm_locations(llm_locations):
+    """[{'name': 'Брянск', 'confidence': 0.9}, ...] → [(lat, lng, 'Брянск', 'RU'), ...]
+    Отбрасывает локации, которых нет в TRANSLIT_ALIASES / GeoNames."""
+    result = []
+    seen = set()
+    for loc in llm_locations:
+        name = (loc.get("name") or "").strip()
+        if not name:
             continue
-        locations.append(m)
-        seen_names.add(m[2])
-    city_matches = _find_city_matches(text, channel_country)
-    for cand in city_matches:
-        score, name, lat, lng, country = cand
-        if name in seen_names:
+        name_low = name.lower()
+        if name_low in seen:
             continue
-        locations.append((lat, lng, name, country))
-        seen_names.add(name)
-        if len(locations) >= MAX_LOCATIONS_PER_POST:
-            break
-    return locations[:MAX_LOCATIONS_PER_POST]
+        coords = None
+        if name_low in TRANSLIT_ALIASES:
+            c = TRANSLIT_ALIASES[name_low]
+            coords = (c[0], c[1], c[2], c[3])
+        elif name_low in SETTLEMENTS_BY_NAME:
+            candidates = SETTLEMENTS_BY_NAME[name_low]
+            best = max(candidates, key=lambda x: x[4])
+            coords = (best[0], best[1], best[3], best[2])
+        else:
+            for key in TRANSLIT_ALIASES:
+                if name_low in key or key in name_low:
+                    c = TRANSLIT_ALIASES[key]
+                    coords = (c[0], c[1], c[2], c[3])
+                    break
+        if coords:
+            result.append(coords)
+            seen.add(name_low)
+    return result[:MAX_LOCATIONS_PER_POST]
 
 
 def is_cancellation(text):
@@ -1126,6 +1129,7 @@ def radius_for_count(count):
 
 def main():
     load_settlements()
+    clf = LLMClassifier()
 
     raw_events = []
     seen_texts = set()
@@ -1139,6 +1143,8 @@ def main():
     skipped_foreign = 0
     political_count = 0
     multi_location_posts = 0
+    skipped_llm_not_event = 0
+    llm_fallbacks = 0
     historical_samples = []
 
     for channel in CHANNELS:
@@ -1160,18 +1166,17 @@ def main():
                 continue
             seen_texts.add(key)
 
-            # Исторические посты (2010-2021 в тексте)
             if is_historical_date(text):
                 skipped_historical += 1
                 if len(historical_samples) < 3:
                     historical_samples.append((channel, text[:100].replace("\n", " ")))
                 continue
 
-            # Иностранные конфликты (Йемен, Мали, Сирия, Индонезия)
             if is_foreign_conflict(text):
                 skipped_foreign += 1
                 continue
 
+            # Быстрый путь для политических (не зовём LLM)
             pol_coords, pol_city, pol_country = detect_political(text)
             if pol_coords and has_political_marker(text):
                 ev = {
@@ -1205,11 +1210,31 @@ def main():
                 skipped_ad += 1
                 continue
 
-            event_type = classify_event(text)
-            if not event_type:
-                continue
+            # LLM классификация
+            llm_result = clf.classify(text)
+            llm_used = llm_result is not None
 
-            locations = find_all_locations(text, channel_country)
+            if llm_used:
+                if not llm_result["is_event"]:
+                    skipped_llm_not_event += 1
+                    continue
+                event_type = llm_result["event_type"]
+                locations = _geocode_llm_locations(llm_result["locations"])
+                if not event_type and not locations:
+                    no_match += 1
+                    continue
+                if not event_type:
+                    event_type = classify_event(text) or "Military Operation"
+            else:
+                llm_fallbacks += 1
+                event_type = classify_event(text)
+                if not event_type:
+                    continue
+                locations = find_all_locations(text, channel_country)
+                if not locations:
+                    no_match += 1
+                    continue
+
             if not locations:
                 no_match += 1
                 continue
@@ -1262,6 +1287,8 @@ def main():
     with open("data/telegram-events.js", "w", encoding="utf-8") as f:
         f.write(output)
 
+    clf.save_cache()
+
     print(f"\n✅ Итого: {len(raw_events)} событий")
     print(f"   Из них политических: {political_count}")
     print(f"   Пропущено сводок: {skipped_summary}")
@@ -1271,6 +1298,11 @@ def main():
     print(f"   Постов с несколькими локациями: {multi_location_posts}")
     print(f"   Отброшено дубликатов: {duplicates}")
     print(f"   Постов без совпадений по н.п.: {no_match}")
+    llm_stats = clf.stats()
+    print(f"   🤖 LLM: кэш={llm_stats['cache_size']}, "
+          f"новых={llm_stats['new_calls']}, ошибок={llm_stats['errors']}")
+    print(f"   🤖 LLM отклонил (не событие): {skipped_llm_not_event}")
+    print(f"   🤖 Fallback на regex: {llm_fallbacks}")
 
     if historical_samples:
         print("\n🔍 Примеры отсеянных исторических постов:")
