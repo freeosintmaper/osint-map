@@ -11,6 +11,7 @@ from collections import Counter
 
 # ═══════════════════════════════════════════════════════════════
 # GROQ — fallback-классификатор для постов, которые regex не понял
+# Модель: openai/gpt-oss-20b (llama-3.1-8b-instant выведена 16.08.2026)
 # ═══════════════════════════════════════════════════════════════
 try:
     from groq import Groq
@@ -23,7 +24,7 @@ if Groq is not None:
     if not _groq_key:
         print("⚠️ GROQ_API_KEY не задан — ИИ-классификация отключена", file=sys.stderr)
     elif not _groq_key.startswith("gsk_"):
-        print(f"⚠️ GROQ_API_KEY выглядит неверно (начинается с '{_groq_key[:10]}...'), ожидалось 'gsk_...'", file=sys.stderr)
+        print(f"⚠️ GROQ_API_KEY выглядит неверно (начинается с '{_groq_key[:10]}...')", file=sys.stderr)
     else:
         try:
             GROQ_CLIENT = Groq(api_key=_groq_key)
@@ -37,7 +38,7 @@ _LLM_ALLOWED = {"Air Raid Alert", "Military Strike", "Military Offensive",
                 "Military Operation", "Political Development"}
 
 def classify_with_llm(text):
-    """Спрашивает у Llama 3.1, является ли текст военным событием."""
+    """Спрашивает у Groq (openai/gpt-oss-20b), является ли текст военным событием."""
     if GROQ_CLIENT is None:
         return None
     prompt = (
@@ -51,7 +52,7 @@ def classify_with_llm(text):
     )
     try:
         resp = GROQ_CLIENT.chat.completions.create(
-            model="llama-3.1-8b-instant",
+            model="openai/gpt-oss-20b",
             messages=[{"role": "user", "content": prompt}],
             temperature=0,
             max_tokens=20,
