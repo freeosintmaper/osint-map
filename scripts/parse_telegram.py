@@ -13,6 +13,14 @@ from collections import Counter
 # ═══════════════════════════════════════════════════════════════
 # LLM через GitHub Models (бесплатно, через GITHUB_TOKEN)
 # ═══════════════════════════════════════════════════════════════
+_LLM_CACHE_FILE = 'data/llm_cache.json'
+_LLM_CACHE = {}
+_LLM_CALLS_THIS_RUN = 0
+_LLM_MAX_CALLS = 60
+
+_LLM_ALLOWED = {"Air Raid Alert", "Military Strike", "Military Offensive",
+                "Military Operation", "Political Development"}
+
 try:
     from openai import OpenAI
     _gh_token = os.environ.get("GITHUB_TOKEN", "").strip()
@@ -32,14 +40,90 @@ except Exception as e:
     LLM_CLIENT = None
     print(f"⚠️ LLM init: {e}", file=sys.stderr)
 
-_LLM_ALLOWED = {"Air Raid Alert", "Military Strike", "Military Offensive",
-                "Military Operation", "Political Development"}
 
-_LLM_CACHE_FILE = 'data/llm_cache.json'
-_LLM_CACHE = {}
-_LLM_CALLS_THIS_RUN = 0
-_LLM_MAX_CALLS = 60  # максимум проверок за прогон
+def _load_llm_cache():
+    global _LLM_CACHE
+    try:
+        if os.path.exists(_LLM_CACHE_FILE):
+            with open(_LLM_CACHE_FILE, 'r', encoding='utf-8') as f:
+                _LLM_CACHE = json.load(f)
+    except Exception as e:
+        print(f"  ⚠️ Кэш не загрузился: {e}", file=sys.stderr)
+        _LLM_CACHE = {}
 
+
+def _save_llm_cache():
+    try:
+        os.makedirs('data', exist_ok=True)
+        if len(_LLM_CACHE) > 5000:
+            items = list(_LLM_CACHE.items())[-5000:]
+            _LLM_CACHE.clear()
+            _LLM_CACHE.update(dict(items))
+        with open(_LLM_CACHE_FILE, 'w', encoding='utf-8') as f:
+            json.dump(_LLM_CACHE, f, ensure_ascii=False)
+    except Exception as e:
+        print(f"  ⚠️ Кэш не сохранился: {e}", file=sys.stderr)
+
+
+_load_llm_cache()
+
+
+def _text_hash(text):
+    return hashlib.md5(text[:500].encode('utf-8', errors='ignore')).hexdigest()
+
+
+def verify_event_with_llm(text):
+    global _LLM_CALLS_THIS_RUN
+
+    if LLM_CLIENT is None:
+        return None
+
+    h = _text_hash(text)
+    if h in _LLM_CACHE:
+        return _LLM_CACHE[h]
+
+    if _LLM_CALLS_THIS_RUN >= _LLM_MAX_CALLS:
+        return None
+
+    _LLM_CALLS_THIS_RUN += 1
+
+    prompt = (
+        "Проанализируй Telegram-пост. Ответь ТОЛЬКО JSON без пояснений:\n"
+        '{"is_event": true/false, "event_type": "Air Raid Alert"|"Military Strike"|"Military Offensive"|"Military Operation"|"Political Development"|null, "location": "название города/НП"|null}\n\n'
+        "Правила:\n"
+        "- is_event=true ТОЛЬКО если в тексте описано конкретное военное событие, произошедшее сейчас или недавно (удар, обстрел, тревога, наступление, бой).\n"
+        "- is_event=false для: аналитики, мнений, исторических справок (2014-2022), новостей про политику, рекламы, анонсов фильмов, статей, обзоров.\n"
+        "- event_type — только из списка выше.\n"
+        "- location — конкретный город или НП, где произошло событие, а не место службы автора.\n\n"
+        f"Текст: {text[:800]}"
+    )
+
+    try:
+        resp = LLM_CLIENT.chat.completions.create(
+            model="openai/gpt-4o-mini",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0,
+            max_tokens=120,
+            response_format={"type": "json_object"},
+        )
+        raw = (resp.choices[0].message.content or "").strip()
+        data = json.loads(raw)
+        result = {
+            "is_event": bool(data.get("is_event")),
+            "event_type": data.get("event_type") if data.get("event_type") in _LLM_ALLOWED else None,
+            "location": data.get("location") or None,
+        }
+        _LLM_CACHE[h] = result
+        return result
+    except Exception as e:
+        err = str(e)
+        if "429" in err:
+            print(f"  ⚠️ LLM 429 — лимит", file=sys.stderr)
+        elif "timeout" in err.lower() or "Connection" in err:
+            print(f"  ⚠️ LLM connection error", file=sys.stderr)
+        else:
+            print(f"  ⚠️ LLM: {e}", file=sys.stderr)
+        return None
 
 def _load_llm_cache():
     global _LLM_CACHE
