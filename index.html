@@ -65,7 +65,9 @@
       --tooltip-bg: #000000;
       --tooltip-color: #ffffff;
     }
-
+    body.dark-tiles .leaflet-tile {
+      filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(1.1) saturate(0.7);
+    }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     html, body {
@@ -1110,13 +1112,9 @@
       currentTheme = theme;
       localStorage.setItem(THEME_KEY, theme);
       if (theme === 'dark') {
-        if (map.hasLayer(lightTile)) map.removeLayer(lightTile);
-        if (!map.hasLayer(darkTile)) darkTile.addTo(map);
-        document.body.classList.add('dark');
+        document.body.classList.add('dark', 'dark-tiles');
       } else {
-        if (map.hasLayer(darkTile)) map.removeLayer(darkTile);
-        if (!map.hasLayer(lightTile)) lightTile.addTo(map);
-        document.body.classList.remove('dark');
+        document.body.classList.remove('dark', 'dark-tiles');
       }
     }
 
@@ -1124,12 +1122,10 @@
     if (!isMobile()) L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
     var lightTile = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri', maxZoom: 19 });
-    var darkTile = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap © CARTO',
-      subdomains: 'abcd',
-      maxZoom: 20
-    });
-    if (currentTheme === 'dark') { darkTile.addTo(map); document.body.classList.add('dark'); } else lightTile.addTo(map);
+        lightTile.addTo(map);
+    if (currentTheme === 'dark') {
+      document.body.classList.add('dark', 'dark-tiles');
+    }
 
     var zoneColors = {
       'russia': { color: '#cc0000', fillColor: '#cc0000', fillOpacity: 0.25, label: 'Территория РФ' },
