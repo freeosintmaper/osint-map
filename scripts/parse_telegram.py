@@ -708,7 +708,10 @@ STOP_SETTLEMENTS = {
     # Направления (не города)
     "сумское", "сумской", "сумском", "сумське", "сумський",
     "краснолиманское", "краснолиманский", "краснолиманском",
-    "простой", "простая", "простое", "простой",
+    "купянское", "куп'янське", "лиманское", "лиманське",
+    # Новые из последнего прогона
+    "простой", "простая", "простое",
+    "ущерб", "ущербье", "ущербья",
 }
 
 SETTLEMENTS_BY_NAME = {}
@@ -728,11 +731,9 @@ def is_historical_date(text):
         r'січня|лютого|березня|квітня|травня|червня|липня|серпня|вересня|жовтня|листопада|грудня|'
         r'january|february|march|april|may|june|july|august|september|october|november|december'
     )
-    # День + месяц + старый год: "7 октября 2015"
-    if re.search(rf'\b\d{{1,2}}\s+(?:{months})\s+(?:20(?:1[0-9]|2[0-2]))\b', tl):
-        return True
-    # Только очень старый год с месяцем: "2015 года"
-    if re.search(r'\b20(?:1[0-9]|20)\s+(?:год[уа]?|році|року)\b', tl):
+    # Только день + месяц + старый год: "7 октября 2015", "15 марта 2014"
+    # Диапазон 2010-2021 — 2022 исключён (это год начала вторжения, часто упоминается как контекст)
+    if re.search(rf'\b\d{{1,2}}\s+(?:{months})\s+(?:20(?:1[0-9]|2[01]))\b', tl):
         return True
     return False
 
@@ -1078,6 +1079,7 @@ def main():
     skipped_historical = 0
     skipped_foreign = 0
     political_count = 0
+    historical_samples = []
 
     for channel in CHANNELS:
         print(f"Парсим @{channel}...")
@@ -1098,9 +1100,11 @@ def main():
                 continue
             seen_texts.add(key)
 
-            # Исторические посты (2010-2022 в тексте)
+            # Исторические посты (2010-2021 в тексте)
             if is_historical_date(text):
                 skipped_historical += 1
+                if len(historical_samples) < 3:
+                    historical_samples.append((channel, text[:100].replace("\n", " ")))
                 continue
 
             # Иностранные конфликты (Йемен, Мали, Сирия, Индонезия)
@@ -1209,6 +1213,11 @@ def main():
     print(f"   Пропущено иностранных конфликтов: {skipped_foreign}")
     print(f"   Отброшено дубликатов: {duplicates}")
     print(f"   Постов без совпадений по н.п.: {no_match}")
+
+    if historical_samples:
+        print("\n🔍 Примеры отсеянных исторических постов:")
+        for i, (ch, snippet) in enumerate(historical_samples, 1):
+            print(f"   [{i}] @{ch}: {snippet}")
 
     print("\n📊 Статистика по каналам:")
     for ch, count in sorted(stats.items(), key=lambda x: -x[1]):
