@@ -789,7 +789,7 @@
     var OWL_API_URL = 'https://api.github.com/repos/owlmaps/UAControlMapBackups/contents/2026?ref=master';
     var OWL_BASE_URL = 'https://raw.githack.com/owlmaps/UAControlMapBackups/master/2026/';
     var OWL_KMZ_URL = null;
-    var OWL_CACHE_KEY = 'owl_zones_cache_v1';
+    var OWL_CACHE_KEY = 'owl_zones_cache_v2';
     var OWL_CACHE_DATE = 'owl_zones_cache_date';
 
     var OWL_COLORS = {
@@ -1215,9 +1215,36 @@
       if (el) { if (on) el.classList.add('open'); else el.classList.remove('open'); }
     }
 
+    // ============================================================
+    // ФИЛЬТР ИСТОРИЧЕСКИХ ПОЛИГОНОВ PROJECT OWL
+    // Убираем: вторжение 2022, Крым 2014, ДНР/ЛНР, оси наступлений
+    // ============================================================
+    var OWL_SKIP_NAMES = [
+      'initial invasion',           // вторжение на Киев 2022
+      'kyiv axis',                  // ось на Киев
+      'kharkiv axis',               // ось на Харьков 2022
+      'luhansk axis',               // ось на Луганск 2022
+      'donetsk axis',               // ось на Донецк 2022
+      'zaporizhia and kherson axis',// ось на Запорожье/Херсон 2022
+      'ukrainian kherson counterattack', // контрнаступ 2022
+      'crimea',                     // Крым (аннексия 2014)
+      "donetsk and luhansk people", // ДНР/ЛНР до войны
+      "people's republic",          // "народные республики"
+      'archives'                    // архив
+    ];
+
+    function shouldSkipOwl(name) {
+      if (!name) return false;
+      var n = name.toLowerCase();
+      for (var i = 0; i < OWL_SKIP_NAMES.length; i++) {
+        if (n.indexOf(OWL_SKIP_NAMES[i]) >= 0) return true;
+      }
+      return false;
+    }
+
     function parseOwlKmlStrings(kmlStrings) {
       var allFeatures = [];
-      var stats = { russian: 0, ukrainian: 0, holding: 0, grey: 0, unknown: 0 };
+      var stats = { russian: 0, ukrainian: 0, holding: 0, grey: 0, unknown: 0, skipped: 0 };
       kmlStrings.forEach(function(kmlString) {
         var parser = new DOMParser();
         var kmlDoc = parser.parseFromString(kmlString, 'text/xml');
@@ -1228,6 +1255,7 @@
           var styleEl = pm.querySelector(':scope > styleUrl');
           var pmName = nameEl ? nameEl.textContent : '';
           var pmStyle = styleEl ? styleEl.textContent : '';
+          if (shouldSkipOwl(pmName)) { stats.skipped++; return; }
           var cat = categorizeOwlPolygon(pmName, pmStyle);
           var wrapDoc = document.implementation.createDocument('http://www.opengis.net/kml/2.2', 'kml', null);
           var docEl = wrapDoc.documentElement;
@@ -1294,7 +1322,7 @@
           var collection = { type: 'FeatureCollection', features: result.features };
           owlControlLayer.addData(collection);
           console.log('📊 Категории:', result.stats);
-          console.log('✅ Project Owl: ' + result.features.length + ' зон');
+          console.log('✅ Project Owl: ' + result.features.length + ' зон (пропущено исторических: ' + result.stats.skipped + ')');
           try {
             localStorage.setItem(OWL_CACHE_KEY, JSON.stringify(collection));
             localStorage.setItem(OWL_CACHE_DATE, today);
