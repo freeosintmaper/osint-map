@@ -20,12 +20,18 @@ except ImportError:
 GROQ_CLIENT = None
 if Groq is not None:
     _groq_key = os.environ.get("GROQ_API_KEY", "").strip()
-    if _groq_key:
+    if not _groq_key:
+        print("⚠️ GROQ_API_KEY не задан — ИИ-классификация отключена", file=sys.stderr)
+    elif not _groq_key.startswith("gsk_"):
+        print(f"⚠️ GROQ_API_KEY выглядит неверно (начинается с '{_groq_key[:10]}...'), ожидалось 'gsk_...'", file=sys.stderr)
+    else:
         try:
             GROQ_CLIENT = Groq(api_key=_groq_key)
-            print("🤖 Groq подключён")
+            print(f"🤖 Groq подключён (ключ: {_groq_key[:8]}...)")
         except Exception as e:
             print(f"⚠️ Groq init: {e}", file=sys.stderr)
+else:
+    print("⚠️ Библиотека groq не установлена — pip install groq", file=sys.stderr)
 
 _LLM_ALLOWED = {"Air Raid Alert", "Military Strike", "Military Offensive",
                 "Military Operation", "Political Development"}
