@@ -86,6 +86,7 @@ def verify_event_with_llm(text):
         return None
 
     _LLM_CALLS_THIS_RUN += 1
+    debug = _LLM_CALLS_THIS_RUN <= 5
 
     prompt = (
         "Проанализируй Telegram-пост. Ответь ТОЛЬКО JSON без пояснений:\n"
@@ -100,19 +101,16 @@ def verify_event_with_llm(text):
 
     try:
         resp = LLM_CLIENT.chat.completions.create(
-            model="gpt-4o-mini",          # gpt-4o-mini стабильнее в GitHub Models
+            model="gpt-4o",
             messages=[{"role": "user", "content": prompt}],
             temperature=0,
-            max_tokens=120,
-            # response_format УБРАН — GitHub Models не всегда его поддерживает
+            max_tokens=400,
         )
 
-        # ── Безопасное извлечение контента ──
         content = None
         if hasattr(resp, "choices") and resp.choices:
             content = (resp.choices[0].message.content or "").strip()
         elif isinstance(resp, str):
-            # Ответ пришёл строкой — пытаемся распарсить как JSON
             try:
                 data = json.loads(resp)
                 if isinstance(data, dict):
@@ -126,21 +124,31 @@ def verify_event_with_llm(text):
             except Exception:
                 content = resp.strip()
 
+        if debug:
+            print(f"  🔍 LLM raw (type={type(resp).__name__}, len={len(content or '')}): {repr((content or '')[:150])}", file=sys.stderr)
+
         if not content:
+            if debug:
+                print(f"  🔍 LLM пустой ответ", file=sys.stderr)
             return None
 
-        # Извлекаем JSON из возможных ```json ... ``` или текста
         json_match = re.search(r'\{.*\}', content, re.DOTALL)
         if not json_match:
+            if debug:
+                print(f"  🔍 LLM без JSON", file=sys.stderr)
             return None
-        data = json.loads(json_match.group(0))
 
+        data = json.loads(json_match.group(0))
         result = {
             "is_event": bool(data.get("is_event")),
             "event_type": data.get("event_type") if data.get("event_type") in _LLM_ALLOWED else None,
             "location": data.get("location") or None,
         }
         _LLM_CACHE[h] = result
+        if debug:
+            print(f"  🔍 LLM parsed: {result}", file=sys.stderr)
+        # Пауза, чтобы не упереться в rate limit GitHub Models
+        time.sleep(0.3)
         return result
     except Exception as e:
         err = str(e)
@@ -740,12 +748,10 @@ STOP_SETTLEMENTS = {
     "азов", "азовсталь", "азовск", "русский", "руський", "дронопорт",
     "дальнє", "петровського", "артема", "молдова", "moldova",
     "начало", "конец", "середина",
-    # Омонимы из свежих постов
     "каспийский", "каспийское", "объединенный", "объединённый",
     "выстрел", "пролив", "большая", "большой",
     "частный", "хочет", "внуково", "вересня",
-    "майбутнє", "майбутнє", "майбутнє", "майбутнє",
-    "ломоносов", "ленинград", "ленинградская",
+    "майбутнє", "ломоносов", "ленинград", "ленинградская",
     "разведка", "разведки", "разведку", "разведкой",
     "система", "системы", "систему", "системой",
     "аеродром", "аэродром", "аэродрома", "аеродрому",
@@ -1122,7 +1128,6 @@ def main():
                 continue
             seen_texts.add(key)
 
-            # 1. Политика
             pol_coords, pol_city, pol_country = detect_political(text)
             if pol_coords and has_political_marker(text):
                 ev = {
@@ -1156,12 +1161,10 @@ def main():
                 skipped_ad += 1
                 continue
 
-            # 2. Regex-классификация
             event_type = classify_event(text)
             if not event_type:
                 continue
 
-            # 3. Поиск координат
             coords, city, country, had_alias = find_alias(text, channel_country)
             if not coords and had_alias:
                 no_match += 1
@@ -1172,7 +1175,6 @@ def main():
                 no_match += 1
                 continue
 
-            # 4. LLM-верификация (только после того как regex+гео сработали)
             verification = verify_event_with_llm(text)
             if verification is not None:
                 llm_checked += 1
@@ -1183,7 +1185,6 @@ def main():
                     event_type = verification["event_type"]
                     llm_overrode_type += 1
                 if verification["location"]:
-                    # LLM нашёл более точную локацию — попробуем найти её в базе
                     llm_city_low = verification["location"].lower()
                     llm_coords_found = None
                     llm_country = None
