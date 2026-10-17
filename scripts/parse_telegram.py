@@ -167,6 +167,15 @@ AD_MARKERS = [
     "подписывайтесь на", "канал в max",
 ]
 
+SILENCE_MARKERS = [
+    "молчит", "молчание", "молчанием",
+    "хранит молчание", "хранят молчание",
+    "не комментирует", "не комментируют", "не прокомментировал",
+    "не отреагировал", "не отреагировали", "не отреагировала",
+    "не подтвердил", "не подтвердили", "не подтвердила",
+    "не опроверг", "не опровергли",
+]
+
 TRANSLIT_ALIASES = {
     "киев": [50.4501, 30.5234, "Киев", "UA"],
     "київ": [50.4501, 30.5234, "Киев", "UA"],
@@ -433,6 +442,7 @@ TRANSLIT_ALIASES = {
 STRONG_EVENT_WORDS = [
     "обстр", "взрыв", "вибух", "прилёт", "приліт",
     "бпла", "дрон", "ракет", "пво", "штурм",
+    "удар",
     "уразили", "уражено", "поразили", "поражено",
     "бои", "бої", "бой", "бій", "боях",
     "наступлен", "наступ", "прорыв", "прорив",
@@ -652,13 +662,11 @@ STOP_SETTLEMENTS = {
     "удар", "удары", "ударов", "удара",
     "источник", "канал", "видео", "фото", "фильм", "сериал",
     "премьера", "сюжет", "репортаж", "интервью",
-    # Из раздела «Проблема с мусором» — топ городов должен быть чистым:
     "зеленский", "зеленський",
     "молдове", "молдовы", "молдову", "молдовой",
     "лейпциг", "лейпциге", "лейпцига", "лейпцигом",
     "аркадия", "аркадія", "аркадии", "аркадії",
     "кайгадор",
-    # Месяцы — все падежи, RU
     "январь", "января", "январю", "январём", "январе",
     "февраль", "февраля", "февралю", "февралём", "феврале",
     "март", "марта", "марту", "мартом", "марте",
@@ -671,7 +679,6 @@ STOP_SETTLEMENTS = {
     "октябрь", "октября", "октябрю", "октябрём", "октябре",
     "ноябрь", "ноября", "ноябрю", "ноябрём", "ноябре",
     "декабрь", "декабря", "декабрю", "декабрём", "декабре",
-    # Месяцы — UA
     "січень", "січня", "січні",
     "лютий", "лютого", "лютому",
     "березень", "березня", "березні",
@@ -684,10 +691,8 @@ STOP_SETTLEMENTS = {
     "жовтень", "жовтня", "жовтні",
     "листопад", "листопада", "листопаді",
     "грудень", "грудня", "грудні",
-    # Месяцы — EN
     "january", "february", "march", "april", "may", "june",
     "july", "august", "september", "october", "november", "december",
-    # Названия-посвящения (улицы, заводы, бывшие топонимы)
     "орджонікідзе", "орджоникидзе", "орджоникидзевская",
     "дзержинского", "дзержинського", "дзержинск",
     "кировского", "кіровського", "кировск", "кіровськ",
@@ -696,7 +701,6 @@ STOP_SETTLEMENTS = {
     "пролетарский", "пролетарський", "пролетарск",
     "первомайский", "первомайський", "первомайск",
     "октябрьский", "жовтневий", "октябрьское", "жовтневе",
-    # Омонимы-прилагательные/существительные из реального прогона
     "горный", "горная", "горной", "горного",
     "белый", "белая", "белой", "белого",
     "широкая", "широкий", "широкой",
@@ -705,11 +709,9 @@ STOP_SETTLEMENTS = {
     "корпус", "корпуса", "корпусов", "корпусом",
     "комбинат", "комбината", "комбинатов", "комбинатом",
     "хохлы", "хохол", "хохла", "хохлам",
-    # Направления (не города)
     "сумское", "сумской", "сумском", "сумське", "сумський",
     "краснолиманское", "краснолиманский", "краснолиманском",
     "купянское", "куп'янське", "лиманское", "лиманське",
-    # Новые из последнего прогона
     "простой", "простая", "простое",
     "ущерб", "ущербье", "ущербья",
     "металлургический", "металлургическая", "металлургическое",
@@ -734,8 +736,6 @@ def is_historical_date(text):
         r'січня|лютого|березня|квітня|травня|червня|липня|серпня|вересня|жовтня|листопада|грудня|'
         r'january|february|march|april|may|june|july|august|september|october|november|december'
     )
-    # Только день + месяц + старый год: "7 октября 2015", "15 марта 2014"
-    # Диапазон 2010-2021 — 2022 исключён (это год начала вторжения, часто упоминается как контекст)
     if re.search(rf'\b\d{{1,2}}\s+(?:{months})\s+(?:20(?:1[0-9]|2[01]))\b', tl):
         return True
     return False
@@ -911,9 +911,14 @@ def is_military_term_context(text, phrase):
     return False
 
 
-def find_alias(text, channel_country):
+def _find_alias_matches(text, channel_country):
+    """Возвращает (список локаций, был_ли_алиас).
+    Список: [(lat, lng, имя, country), ...] — все подходящие города.
+    """
     tl = text.lower()
     had_alias = False
+    matches = []
+    seen_names = set()
     for key in sorted(TRANSLIT_ALIASES.keys(), key=lambda k: -len(k)):
         if key not in tl:
             continue
@@ -922,6 +927,8 @@ def find_alias(text, channel_country):
         had_alias = True
         coords = TRANSLIT_ALIASES[key]
         alias_country = coords[3]
+        if coords[2] in seen_names:
+            continue
         if channel_country == alias_country:
             if has_source_verb_near(text, key, window=60):
                 continue
@@ -929,24 +936,30 @@ def find_alias(text, channel_country):
                 continue
             if is_military_term_context(text, key):
                 continue
-            return (coords[0], coords[1]), coords[2], coords[3], True
-        if has_source_verb_near(text, key, window=60):
-            continue
-        if not has_event_pattern_near(text, key, window=250):
-            continue
-        if is_military_term_context(text, key):
-            continue
-        return (coords[0], coords[1]), coords[2], coords[3], True
-    return None, None, None, had_alias
+            matches.append((coords[0], coords[1], coords[2], coords[3]))
+            seen_names.add(coords[2])
+        else:
+            if has_source_verb_near(text, key, window=60):
+                continue
+            if not has_event_pattern_near(text, key, window=250):
+                continue
+            if is_military_term_context(text, key):
+                continue
+            matches.append((coords[0], coords[1], coords[2], coords[3]))
+            seen_names.add(coords[2])
+    return matches, had_alias
 
 
-def find_best_city(text, channel_country):
+def _find_city_matches(text, channel_country):
+    """Возвращает список кандидатов из базы GeoNames, отсортированных по score.
+    Список: [(score, имя, lat, lng, country), ...] — по одному на каждое имя.
+    """
     if not SETTLEMENTS_BY_NAME:
-        return None, None, None
+        return []
     tl = text.lower()
     words = re.findall(r'[а-яёa-zа-їієґ0-9\-]+', tl)
     if not words:
-        return None, None, None
+        return []
     candidates = []
     N = len(words)
     for size in (3, 2, 1):
@@ -993,10 +1006,44 @@ def find_best_city(text, channel_country):
             score -= pos_in_text * 0.05
             candidates.append((score, orig, lat, lng, country))
     if not candidates:
-        return None, None, None
-    candidates.sort(key=lambda x: -x[0])
-    best_score, best_name, best_lat, best_lng, best_country = candidates[0]
-    return (best_lat, best_lng), best_name, best_country
+        return []
+    by_name = {}
+    for cand in candidates:
+        score, name, lat, lng, country = cand
+        if name not in by_name or by_name[name][0] < score:
+            by_name[name] = cand
+    result = list(by_name.values())
+    result.sort(key=lambda x: -x[0])
+    return result
+
+
+MAX_LOCATIONS_PER_POST = 5
+
+
+def find_all_locations(text, channel_country):
+    """Возвращает все локации, связанные с событием.
+    Приоритет: ручные алиасы (TRANSLIT_ALIASES) → затем GeoNames.
+    Лимит — MAX_LOCATIONS_PER_POST."""
+    alias_matches, had_alias = _find_alias_matches(text, channel_country)
+    if had_alias and not alias_matches:
+        return []
+    locations = []
+    seen_names = set()
+    for m in alias_matches:
+        if m[2] in seen_names:
+            continue
+        locations.append(m)
+        seen_names.add(m[2])
+    city_matches = _find_city_matches(text, channel_country)
+    for cand in city_matches:
+        score, name, lat, lng, country = cand
+        if name in seen_names:
+            continue
+        locations.append((lat, lng, name, country))
+        seen_names.add(name)
+        if len(locations) >= MAX_LOCATIONS_PER_POST:
+            break
+    return locations[:MAX_LOCATIONS_PER_POST]
 
 
 def is_cancellation(text):
@@ -1044,9 +1091,10 @@ def classify_event(text):
 
 
 def make_dedup_key(ev):
+    loc = ev.get("location", "")
     if ev.get("url"):
-        return ev["url"]
-    return ev["channel"] + "|" + ev.get("description", "")[:80]
+        return ev["url"] + "|" + loc
+    return ev["channel"] + "|" + loc + "|" + ev.get("description", "")[:80]
 
 
 def jitter_coords(lat, lng, radius_km):
@@ -1082,6 +1130,7 @@ def main():
     skipped_historical = 0
     skipped_foreign = 0
     political_count = 0
+    multi_location_posts = 0
     historical_samples = []
 
     for channel in CHANNELS:
@@ -1152,41 +1201,38 @@ def main():
             if not event_type:
                 continue
 
-            coords, city, country, had_alias = find_alias(text, channel_country)
-            if not coords and had_alias:
-                no_match += 1
-                continue
-            if not coords:
-                coords, city, country = find_best_city(text, channel_country)
-            if not coords:
+            locations = find_all_locations(text, channel_country)
+            if not locations:
                 no_match += 1
                 continue
 
             matched += 1
+            if len(locations) > 1:
+                multi_location_posts += 1
 
-            ev = {
-                "id": len(raw_events) + 1,
-                "url": post["url"] or f"https://t.me/s/{channel}",
-                "date": post["date"],
-                "event_type": event_type,
-                "location": city,
-                "country": country,
-                "lat": coords[0],
-                "lng": coords[1],
-                "confidence": "MEDIUM",
-                "description": text[:200],
-                "channel": channel,
-                "photo_url": post.get("photo_url"),
-                "video_url": post.get("video_url"),
-            }
-
-            dedup = make_dedup_key(ev)
-            if dedup in seen_dedup:
-                duplicates += 1
-                continue
-            seen_dedup.add(dedup)
-
-            raw_events.append(ev)
+            for loc in locations:
+                loc_lat, loc_lng, loc_city, loc_country = loc
+                ev = {
+                    "id": len(raw_events) + 1,
+                    "url": post["url"] or f"https://t.me/s/{channel}",
+                    "date": post["date"],
+                    "event_type": event_type,
+                    "location": loc_city,
+                    "country": loc_country,
+                    "lat": loc_lat,
+                    "lng": loc_lng,
+                    "confidence": "MEDIUM",
+                    "description": text[:200],
+                    "channel": channel,
+                    "photo_url": post.get("photo_url"),
+                    "video_url": post.get("video_url"),
+                }
+                dedup = make_dedup_key(ev)
+                if dedup in seen_dedup:
+                    duplicates += 1
+                    continue
+                seen_dedup.add(dedup)
+                raw_events.append(ev)
 
         stats[channel] = matched
         print(f"  Совпало: {matched}")
@@ -1214,6 +1260,7 @@ def main():
     print(f"   Пропущено рекламы: {skipped_ad}")
     print(f"   Пропущено исторических: {skipped_historical}")
     print(f"   Пропущено иностранных конфликтов: {skipped_foreign}")
+    print(f"   Постов с несколькими локациями: {multi_location_posts}")
     print(f"   Отброшено дубликатов: {duplicates}")
     print(f"   Постов без совпадений по н.п.: {no_match}")
 
