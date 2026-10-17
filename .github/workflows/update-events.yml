@@ -36,7 +36,6 @@ jobs:
         run: |
           pip install openai
           mkdir -p data
-          cd scripts
           python3 parse_telegram.py
 
       - name: Commit and push
