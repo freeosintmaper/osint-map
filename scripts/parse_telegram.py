@@ -10,8 +10,9 @@ from html import unescape
 from collections import Counter
 
 # ═══════════════════════════════════════════════════════════════
-# GROQ — fallback-классификатор для постов, которые regex не понял
-# Модель: openai/gpt-oss-20b (llama-3.1-8b-instant выведена 16.08.2026)
+# GROQ — fallback-классификатор с rate-limit throttle
+# Модель: openai/gpt-oss-20b
+# Лимит free tier: 30 RPM → 1 запрос каждые 2 сек
 # ═══════════════════════════════════════════════════════════════
 try:
     from groq import Groq
@@ -19,6 +20,10 @@ except ImportError:
     Groq = None
 
 GROQ_CLIENT = None
+_last_llm_call = 0.0
+LLM_MIN_INTERVAL = 2.1  # секунд между запросами (30 RPM = 2 сек)
+LLM_MAX_RETRIES = 1
+
 if Groq is not None:
     _groq_key = os.environ.get("GROQ_API_KEY", "").strip()
     if not _groq_key:
@@ -37,10 +42,20 @@ else:
 _LLM_ALLOWED = {"Air Raid Alert", "Military Strike", "Military Offensive",
                 "Military Operation", "Political Development"}
 
+def _throttle_llm():
+    """Гарантирует, что между запросами к Groq прошло минимум LLM_MIN_INTERVAL секунд."""
+    global _last_llm_call
+    now = time.time()
+    wait = LLM_MIN_INTERVAL - (now - _last_llm_call)
+    if wait > 0:
+        time.sleep(wait)
+    _last_llm_call = time.time()
+
 def classify_with_llm(text):
-    """Спрашивает у Groq (openai/gpt-oss-20b), является ли текст военным событием."""
+    """Спрашивает у Groq, является ли текст военным событием. С throttle и retry."""
     if GROQ_CLIENT is None:
         return None
+
     prompt = (
         "Ты — аналитик OSINT. Определи, является ли текст военным событием "
         "на территории Украины или России.\n"
@@ -50,20 +65,32 @@ def classify_with_llm(text):
         "Никаких объяснений, только тип или None.\n\n"
         f"Текст: {text[:800]}"
     )
-    try:
-        resp = GROQ_CLIENT.chat.completions.create(
-            model="openai/gpt-oss-20b",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0,
-            max_tokens=20,
-        )
-        answer = (resp.choices[0].message.content or "").strip()
-        if answer in _LLM_ALLOWED:
-            return answer
-        return None
-    except Exception as e:
-        print(f"  ⚠️ Groq API: {e}", file=sys.stderr)
-        return None
+
+    for attempt in range(LLM_MAX_RETRIES + 1):
+        _throttle_llm()
+        try:
+            resp = GROQ_CLIENT.chat.completions.create(
+                model="openai/gpt-oss-20b",
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0,
+                max_tokens=20,
+            )
+            answer = (resp.choices[0].message.content or "").strip()
+            if answer in _LLM_ALLOWED:
+                return answer
+            return None
+        except Exception as e:
+            msg = str(e)
+            if "429" in msg or "rate_limit" in msg:
+                if attempt < LLM_MAX_RETRIES:
+                    print(f"  ⏳ 429 rate limit — retry через 5 сек", file=sys.stderr)
+                    time.sleep(5)
+                    continue
+                print(f"  ⚠️ Groq 429 — пропускаем пост", file=sys.stderr)
+                return None
+            print(f"  ⚠️ Groq API: {e}", file=sys.stderr)
+            return None
+    return None
 
 # ═══════════════════════════════════════════════════════════════
 # КАНАЛЫ
