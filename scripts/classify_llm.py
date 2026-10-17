@@ -1,23 +1,12 @@
 """
 LLM-классификация постов через Cloudflare Workers AI.
-Модель: llama-3.1-8b-instruct (OpenAI-совместимый API).
-
-Использование:
-    from classify_llm import LLMClassifier
-    clf = LLMClassifier()
-    result = clf.classify(post_text)
-    # result = {
-    #     "is_event": True/False,
-    #     "event_type": "Military Strike" | ... | None,
-    #     "locations": [{"name": "Винница", "confidence": 0.95}, ...]
-    # } или None (если LLM недоступен / ошибка)
+Модель: llama-3.1-8b-instruct-fast (OpenAI-совместимый API).
 """
 import json
 import os
 import re
-import time
-import hashlib
 import sys
+import hashlib
 
 try:
     from openai import OpenAI
@@ -37,6 +26,7 @@ ALLOWED_TYPES = {
 }
 MAX_LOCATIONS = 5
 LLM_MODEL = "@cf/meta/llama-3.1-8b-instruct-fast"
+PROMPT_VERSION = "v2_country"
 
 
 SYSTEM_PROMPT = """Ты — OSINT-аналитик. Анализируешь посты из Telegram-каналов о войне в Украине.
@@ -46,7 +36,7 @@ SYSTEM_PROMPT = """Ты — OSINT-аналитик. Анализируешь п�
 {
   "is_event": true|false,
   "event_type": "Air Raid Alert"|"Military Strike"|"Military Offensive"|"Military Operation"|"Political Development"|null,
-  "locations": [{"name": "название города", "confidence": 0.0-1.0}, ...]
+  "locations": [{"name": "название города", "country": "UA"|"RU"|null, "confidence": 0.0-1.0}, ...]
 }
 
 Правила:
@@ -58,13 +48,19 @@ SYSTEM_PROMPT = """Ты — OSINT-аналитик. Анализируешь п�
   * названия областей (Брянская, Черниговская) — используй город-центр области (Брянск, Чернигов)
   * страны, регионы, направления фронта
   * места, где живёт/служит автор поста
+  * названия районов и громад (Дніпровський район, Нікопольська громада) — используй город-центр
 - Если локаций нет — пустой массив.
 - Если событие охватывает несколько городов — перечисли все.
+- country — ОБЯЗАТЕЛЬНО указывай страну города: "UA" (Украина) или "RU" (Россия).
+  ВАЖНО: есть города-двойники (Новомосковск, Первомайск, Александрия и др.) в обеих странах.
+  Определяй по контексту: "Днепропетровской области", "Харьковской области", "ВСУ" → UA.
+  "Тульской области", "Брянской области", "ВС РФ" → RU.
 - confidence — насколько уверен, что это локация события (0.0-1.0)."""
 
 
 def _text_hash(text):
-    return hashlib.md5(text[:500].encode("utf-8", errors="ignore")).hexdigest()
+    payload = (PROMPT_VERSION + "|" + text[:500]).encode("utf-8", errors="ignore")
+    return hashlib.md5(payload).hexdigest()
 
 
 class LLMClassifier:
@@ -118,14 +114,11 @@ class LLMClassifier:
             print(f"  ⚠️ LLM-кэш не сохранился: {e}", file=sys.stderr)
 
     def classify(self, text):
-        """Возвращает dict с результатом или None при ошибке/отсутствии LLM."""
         if self.client is None:
             return None
-
         h = _text_hash(text)
         if h in self.cache:
             return self.cache[h]
-
         try:
             resp = self.client.chat.completions.create(
                 model=LLM_MODEL,
@@ -138,12 +131,10 @@ class LLMClassifier:
             )
             self.new_calls += 1
             content = (resp.choices[0].message.content or "").strip()
-
             result = self._parse_response(content)
             if result is None:
                 self.errors += 1
                 return None
-
             self.cache[h] = result
             return result
         except Exception as e:
@@ -160,10 +151,8 @@ class LLMClassifier:
     def _parse_response(self, content):
         if not content:
             return None
-        # Убираем markdown-обёртку ```json ... ```
         content = re.sub(r"^```(?:json)?\s*", "", content)
         content = re.sub(r"\s*```$", "", content)
-        # Ищем первый { ... } (бывает, что модель добавляет текст до/после)
         m = re.search(r"\{.*\}", content, re.DOTALL)
         if not m:
             return None
@@ -194,7 +183,10 @@ class LLMClassifier:
                 confidence = 0.5
             if confidence < 0.5:
                 continue
-            locations.append({"name": name, "confidence": confidence})
+            country = loc.get("country")
+            if country not in ("UA", "RU"):
+                country = None
+            locations.append({"name": name, "country": country, "confidence": confidence})
 
         return {
             "is_event": bool(data.get("is_event")),
