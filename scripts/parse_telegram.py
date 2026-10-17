@@ -6,160 +6,8 @@ import time
 import random
 import math
 import os
-import hashlib
 from html import unescape
 from collections import Counter
-
-# ═══════════════════════════════════════════════════════════════
-# LLM через GitHub Models (бесплатно, через GITHUB_TOKEN)
-# ═══════════════════════════════════════════════════════════════
-_LLM_CACHE_FILE = 'data/llm_cache.json'
-_LLM_CACHE = {}
-_LLM_CALLS_THIS_RUN = 0
-_LLM_MAX_CALLS = 60
-
-_LLM_ALLOWED = {"Air Raid Alert", "Military Strike", "Military Offensive",
-                "Military Operation", "Political Development"}
-
-try:
-    from openai import OpenAI
-    _gh_token = os.environ.get("GITHUB_TOKEN", "").strip()
-    if _gh_token:
-        LLM_CLIENT = OpenAI(
-            base_url="https://models.github.ai/inference",
-            api_key=_gh_token,
-        )
-        print(f"🤖 GitHub Models подключён (токен: {_gh_token[:8]}...)")
-    else:
-        LLM_CLIENT = None
-        print("⚠️ GITHUB_TOKEN не задан — LLM отключён", file=sys.stderr)
-except ImportError:
-    LLM_CLIENT = None
-    print("⚠️ Библиотека openai не установлена", file=sys.stderr)
-except Exception as e:
-    LLM_CLIENT = None
-    print(f"⚠️ LLM init: {e}", file=sys.stderr)
-
-
-def _load_llm_cache():
-    global _LLM_CACHE
-    try:
-        if os.path.exists(_LLM_CACHE_FILE):
-            with open(_LLM_CACHE_FILE, 'r', encoding='utf-8') as f:
-                _LLM_CACHE = json.load(f)
-    except Exception as e:
-        print(f"  ⚠️ Кэш не загрузился: {e}", file=sys.stderr)
-        _LLM_CACHE = {}
-
-
-def _save_llm_cache():
-    try:
-        os.makedirs('data', exist_ok=True)
-        if len(_LLM_CACHE) > 5000:
-            items = list(_LLM_CACHE.items())[-5000:]
-            _LLM_CACHE.clear()
-            _LLM_CACHE.update(dict(items))
-        with open(_LLM_CACHE_FILE, 'w', encoding='utf-8') as f:
-            json.dump(_LLM_CACHE, f, ensure_ascii=False)
-    except Exception as e:
-        print(f"  ⚠️ Кэш не сохранился: {e}", file=sys.stderr)
-
-
-_load_llm_cache()
-
-
-def _text_hash(text):
-    return hashlib.md5(text[:500].encode('utf-8', errors='ignore')).hexdigest()
-
-
-def verify_event_with_llm(text):
-    global _LLM_CALLS_THIS_RUN
-
-    if LLM_CLIENT is None:
-        return None
-
-    h = _text_hash(text)
-    if h in _LLM_CACHE:
-        return _LLM_CACHE[h]
-
-    if _LLM_CALLS_THIS_RUN >= _LLM_MAX_CALLS:
-        return None
-
-    _LLM_CALLS_THIS_RUN += 1
-    debug = _LLM_CALLS_THIS_RUN <= 5
-
-    prompt = (
-        "Проанализируй Telegram-пост. Ответь ТОЛЬКО JSON без пояснений:\n"
-        '{"is_event": true/false, "event_type": "Air Raid Alert"|"Military Strike"|"Military Offensive"|"Military Operation"|"Political Development"|null, "location": "название города/НП"|null}\n\n'
-        "Правила:\n"
-        "- is_event=true ТОЛЬКО если в тексте описано конкретное военное событие, произошедшее сейчас или недавно (удар, обстрел, тревога, наступление, бой).\n"
-        "- is_event=false для: аналитики, мнений, исторических справок (2014-2022), новостей про политику, рекламы, анонсов фильмов, статей, обзоров.\n"
-        "- event_type — только из списка выше.\n"
-        "- location — конкретный город или НП, где произошло событие, а не место службы автора.\n\n"
-        f"Текст: {text[:800]}"
-    )
-
-    try:
-        resp = LLM_CLIENT.chat.completions.create(
-            model="gpt-4o",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0,
-            max_tokens=400,
-        )
-
-        content = None
-        if hasattr(resp, "choices") and resp.choices:
-            content = (resp.choices[0].message.content or "").strip()
-        elif isinstance(resp, str):
-            try:
-                data = json.loads(resp)
-                if isinstance(data, dict):
-                    content = (
-                        data.get("choices", [{}])[0]
-                        .get("message", {})
-                        .get("content", "")
-                    ).strip()
-                else:
-                    content = str(data).strip()
-            except Exception:
-                content = resp.strip()
-
-        if debug:
-            print(f"  🔍 LLM raw (type={type(resp).__name__}, len={len(content or '')}): {repr((content or '')[:150])}", file=sys.stderr)
-
-        if not content:
-            if debug:
-                print(f"  🔍 LLM пустой ответ", file=sys.stderr)
-            return None
-
-        json_match = re.search(r'\{.*\}', content, re.DOTALL)
-        if not json_match:
-            if debug:
-                print(f"  🔍 LLM без JSON", file=sys.stderr)
-            return None
-
-        data = json.loads(json_match.group(0))
-        result = {
-            "is_event": bool(data.get("is_event")),
-            "event_type": data.get("event_type") if data.get("event_type") in _LLM_ALLOWED else None,
-            "location": data.get("location") or None,
-        }
-        _LLM_CACHE[h] = result
-        if debug:
-            print(f"  🔍 LLM parsed: {result}", file=sys.stderr)
-        # Пауза, чтобы не упереться в rate limit GitHub Models
-        time.sleep(0.3)
-        return result
-    except Exception as e:
-        err = str(e)
-        if "429" in err:
-            print(f"  ⚠️ LLM 429 — лимит", file=sys.stderr)
-        elif "timeout" in err.lower() or "Connection" in err:
-            print(f"  ⚠️ LLM connection error", file=sys.stderr)
-        else:
-            print(f"  ⚠️ LLM: {e}", file=sys.stderr)
-        return None
-
 
 # ═══════════════════════════════════════════════════════════════
 # КАНАЛЫ
@@ -315,6 +163,7 @@ AD_MARKERS = [
     "промокод", "скидка", "акция",
     "спонсор", "партнерский материал", "на правах рекламы",
     "премьера", "фильм", "сериал", "документальный",
+    "репортаж", "сюжет",
     "подписывайтесь на", "канал в max",
 ]
 
@@ -760,6 +609,11 @@ STOP_SETTLEMENTS = {
     "удар", "удары", "ударов", "удара",
     "источник", "канал", "видео", "фото", "фильм", "сериал",
     "премьера", "сюжет", "репортаж", "интервью",
+    # Из раздела «Проблема с мусором» — топ городов должен быть чистым:
+    "зеленский", "зеленський",
+    "молдове", "молдовы", "молдову", "молдовой",
+    "лейпциг", "лейпциге", "лейпцига", "лейпцигом",
+    "аркадия", "аркадія", "аркадии", "аркадії",
 }
 
 SETTLEMENTS_BY_NAME = {}
@@ -1103,11 +957,7 @@ def main():
     no_match = 0
     skipped_summary = 0
     skipped_ad = 0
-    skipped_llm = 0
     political_count = 0
-    llm_checked = 0
-    llm_overrode_type = 0
-    llm_overrode_location = 0
 
     for channel in CHANNELS:
         print(f"Парсим @{channel}...")
@@ -1175,35 +1025,6 @@ def main():
                 no_match += 1
                 continue
 
-            verification = verify_event_with_llm(text)
-            if verification is not None:
-                llm_checked += 1
-                if not verification["is_event"]:
-                    skipped_llm += 1
-                    continue
-                if verification["event_type"] and verification["event_type"] != event_type:
-                    event_type = verification["event_type"]
-                    llm_overrode_type += 1
-                if verification["location"]:
-                    llm_city_low = verification["location"].lower()
-                    llm_coords_found = None
-                    llm_country = None
-                    if llm_city_low in TRANSLIT_ALIASES:
-                        c = TRANSLIT_ALIASES[llm_city_low]
-                        llm_coords_found = (c[0], c[1])
-                        llm_country = c[3]
-                        city = c[2]
-                    elif llm_city_low in SETTLEMENTS_BY_NAME:
-                        cl = SETTLEMENTS_BY_NAME[llm_city_low]
-                        best = max(cl, key=lambda x: x[4])
-                        llm_coords_found = (best[0], best[1])
-                        llm_country = best[2]
-                        city = best[3]
-                    if llm_coords_found:
-                        coords = llm_coords_found
-                        country = llm_country or country
-                        llm_overrode_location += 1
-
             matched += 1
 
             ev = {
@@ -1250,13 +1071,8 @@ def main():
     with open("data/telegram-events.js", "w", encoding="utf-8") as f:
         f.write(output)
 
-    _save_llm_cache()
-
     print(f"\n✅ Итого: {len(raw_events)} событий")
     print(f"   Из них политических: {political_count}")
-    print(f"   🤖 LLM проверил: {llm_checked}, отклонил: {skipped_llm}")
-    print(f"   🤖 LLM сменил тип: {llm_overrode_type}, локацию: {llm_overrode_location}")
-    print(f"   💾 LLM-кэш: {len(_LLM_CACHE)} записей, {_LLM_CALLS_THIS_RUN} новых запросов за прогон")
     print(f"   Пропущено сводок: {skipped_summary}")
     print(f"   Пропущено рекламы: {skipped_ad}")
     print(f"   Отброшено дубликатов: {duplicates}")
