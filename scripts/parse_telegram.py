@@ -6,92 +6,121 @@ import time
 import random
 import math
 import os
+import hashlib
 from html import unescape
 from collections import Counter
 
 # ═══════════════════════════════════════════════════════════════
-# GROQ — fallback-классификатор с rate-limit throttle
-# Модель: openai/gpt-oss-20b
-# Лимит free tier: 30 RPM → 1 запрос каждые 2 сек
+# LLM через KeylessAI (OpenAI-совместимый, без ключа, 100k/день)
 # ═══════════════════════════════════════════════════════════════
 try:
-    from groq import Groq
-except ImportError:
-    Groq = None
-
-GROQ_CLIENT = None
-_last_llm_call = 0.0
-LLM_MIN_INTERVAL = 2.1  # секунд между запросами (30 RPM = 2 сек)
-LLM_MAX_RETRIES = 1
-
-if Groq is not None:
-    _groq_key = os.environ.get("GROQ_API_KEY", "").strip()
-    if not _groq_key:
-        print("⚠️ GROQ_API_KEY не задан — ИИ-классификация отключена", file=sys.stderr)
-    elif not _groq_key.startswith("gsk_"):
-        print(f"⚠️ GROQ_API_KEY выглядит неверно (начинается с '{_groq_key[:10]}...')", file=sys.stderr)
-    else:
-        try:
-            GROQ_CLIENT = Groq(api_key=_groq_key)
-            print(f"🤖 Groq подключён (ключ: {_groq_key[:8]}...)")
-        except Exception as e:
-            print(f"⚠️ Groq init: {e}", file=sys.stderr)
-else:
-    print("⚠️ Библиотека groq не установлена — pip install groq", file=sys.stderr)
+    from openai import OpenAI
+    LLM_CLIENT = OpenAI(
+        base_url="https://keylessai.thryx.workers.dev/v1",
+        api_key="not-needed",
+    )
+    print("🤖 KeylessAI подключён")
+except Exception as e:
+    LLM_CLIENT = None
+    print(f"⚠️ LLM init: {e}", file=sys.stderr)
 
 _LLM_ALLOWED = {"Air Raid Alert", "Military Strike", "Military Offensive",
                 "Military Operation", "Political Development"}
 
-def _throttle_llm():
-    """Гарантирует, что между запросами к Groq прошло минимум LLM_MIN_INTERVAL секунд."""
-    global _last_llm_call
-    now = time.time()
-    wait = LLM_MIN_INTERVAL - (now - _last_llm_call)
-    if wait > 0:
-        time.sleep(wait)
-    _last_llm_call = time.time()
+_LLM_CACHE_FILE = 'data/llm_cache.json'
+_LLM_CACHE = {}
+_LLM_CALLS_THIS_RUN = 0
+_LLM_MAX_CALLS = 60  # максимум проверок за прогон
 
-def classify_with_llm(text):
-    """Спрашивает у Groq, является ли текст военным событием. С throttle и retry."""
-    if GROQ_CLIENT is None:
+
+def _load_llm_cache():
+    global _LLM_CACHE
+    try:
+        if os.path.exists(_LLM_CACHE_FILE):
+            with open(_LLM_CACHE_FILE, 'r', encoding='utf-8') as f:
+                _LLM_CACHE = json.load(f)
+    except Exception:
+        _LLM_CACHE = {}
+
+
+def _save_llm_cache():
+    try:
+        os.makedirs('data', exist_ok=True)
+        if len(_LLM_CACHE) > 5000:
+            items = list(_LLM_CACHE.items())[-5000:]
+            _LLM_CACHE = dict(items)
+        with open(_LLM_CACHE_FILE, 'w', encoding='utf-8') as f:
+            json.dump(_LLM_CACHE, f, ensure_ascii=False)
+    except Exception as e:
+        print(f"  ⚠️ Кэш не сохранился: {e}", file=sys.stderr)
+
+
+_load_llm_cache()
+
+
+def _text_hash(text):
+    return hashlib.md5(text[:500].encode('utf-8', errors='ignore')).hexdigest()
+
+
+def verify_event_with_llm(text):
+    """
+    Проверяет: военное событие или нет.
+    Возвращает dict:
+      {"is_event": bool, "event_type": str|None, "location": str|None}
+    Или None, если лимит/ошибка/LLM недоступен.
+    """
+    global _LLM_CALLS_THIS_RUN
+
+    if LLM_CLIENT is None:
         return None
 
+    h = _text_hash(text)
+    if h in _LLM_CACHE:
+        return _LLM_CACHE[h]
+
+    if _LLM_CALLS_THIS_RUN >= _LLM_MAX_CALLS:
+        return None
+
+    _LLM_CALLS_THIS_RUN += 1
+
     prompt = (
-        "Ты — аналитик OSINT. Определи, является ли текст военным событием "
-        "на территории Украины или России.\n"
-        "Если да — верни ТОЛЬКО тип события одним из: "
-        "Air Raid Alert, Military Strike, Military Offensive, Military Operation, Political Development.\n"
-        "Если нет — верни слово: None.\n"
-        "Никаких объяснений, только тип или None.\n\n"
+        "Проанализируй Telegram-пост. Ответь ТОЛЬКО JSON без пояснений:\n"
+        '{"is_event": true/false, "event_type": "Air Raid Alert"|"Military Strike"|"Military Offensive"|"Military Operation"|"Political Development"|null, "location": "название города/НП"|null}\n\n'
+        "Правила:\n"
+        "- is_event=true ТОЛЬКО если в тексте описано конкретное военное событие, произошедшее сейчас или недавно (удар, обстрел, тревога, наступление, бой).\n"
+        "- is_event=false для: аналитики, мнений, исторических справок (2014-2022), новостей про политику, рекламы, анонсов фильмов, статей, обзоров.\n"
+        "- event_type — только из списка выше.\n"
+        "- location — конкретный город или НП, где произошло событие, а не место службы автора.\n\n"
         f"Текст: {text[:800]}"
     )
 
-    for attempt in range(LLM_MAX_RETRIES + 1):
-        _throttle_llm()
-        try:
-            resp = GROQ_CLIENT.chat.completions.create(
-            model="openai/gpt-oss-20b",
+    try:
+        resp = LLM_CLIENT.chat.completions.create(
+            model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}],
             temperature=0,
-            max_completion_tokens=80,
-            reasoning_effort="low",
+            max_tokens=120,
+            response_format={"type": "json_object"},
         )
-            answer = (resp.choices[0].message.content or "").strip()
-            if answer in _LLM_ALLOWED:
-                return answer
-            return None
-        except Exception as e:
-            msg = str(e)
-            if "429" in msg or "rate_limit" in msg:
-                if attempt < LLM_MAX_RETRIES:
-                    print(f"  ⏳ 429 rate limit — retry через 5 сек", file=sys.stderr)
-                    time.sleep(5)
-                    continue
-                print(f"  ⚠️ Groq 429 — пропускаем пост", file=sys.stderr)
-                return None
-            print(f"  ⚠️ Groq API: {e}", file=sys.stderr)
-            return None
-    return None
+        raw = (resp.choices[0].message.content or "").strip()
+        data = json.loads(raw)
+        result = {
+            "is_event": bool(data.get("is_event")),
+            "event_type": data.get("event_type") if data.get("event_type") in _LLM_ALLOWED else None,
+            "location": data.get("location") or None,
+        }
+        _LLM_CACHE[h] = result
+        return result
+    except Exception as e:
+        err = str(e)
+        if "429" in err:
+            print(f"  ⚠️ LLM 429 — лимит", file=sys.stderr)
+        elif "timeout" in err.lower() or "Connection" in err:
+            print(f"  ⚠️ LLM connection error", file=sys.stderr)
+        else:
+            print(f"  ⚠️ LLM: {e}", file=sys.stderr)
+        return None
+
 
 # ═══════════════════════════════════════════════════════════════
 # КАНАЛЫ
@@ -246,6 +275,8 @@ AD_MARKERS = [
     "заходите на канал", "наш канал", "телеграм-канал",
     "промокод", "скидка", "акция",
     "спонсор", "партнерский материал", "на правах рекламы",
+    "премьера", "фильм", "сериал", "документальный",
+    "подписывайтесь на", "канал в max",
 ]
 
 TRANSLIT_ALIASES = {
@@ -678,6 +709,20 @@ STOP_SETTLEMENTS = {
     "азов", "азовсталь", "азовск", "русский", "руський", "дронопорт",
     "дальнє", "петровського", "артема", "молдова", "moldova",
     "начало", "конец", "середина",
+    # Омонимы из свежих постов
+    "каспийский", "каспийское", "объединенный", "объединённый",
+    "выстрел", "пролив", "большая", "большой",
+    "частный", "хочет", "внуково", "вересня",
+    "майбутнє", "майбутнє", "майбутнє", "майбутнє",
+    "ломоносов", "ленинград", "ленинградская",
+    "разведка", "разведки", "разведку", "разведкой",
+    "система", "системы", "систему", "системой",
+    "аеродром", "аэродром", "аэродрома", "аеродрому",
+    "операция", "операции", "операцию", "операцией",
+    "наступление", "наступления", "наступлению",
+    "удар", "удары", "ударов", "удара",
+    "источник", "канал", "видео", "фото", "фильм", "сериал",
+    "премьера", "сюжет", "репортаж", "интервью",
 }
 
 SETTLEMENTS_BY_NAME = {}
@@ -1021,9 +1066,11 @@ def main():
     no_match = 0
     skipped_summary = 0
     skipped_ad = 0
+    skipped_llm = 0
     political_count = 0
-    llm_count = 0
-    llm_calls = 0
+    llm_checked = 0
+    llm_overrode_type = 0
+    llm_overrode_location = 0
 
     for channel in CHANNELS:
         print(f"Парсим @{channel}...")
@@ -1044,6 +1091,7 @@ def main():
                 continue
             seen_texts.add(key)
 
+            # 1. Политика
             pol_coords, pol_city, pol_country = detect_political(text)
             if pol_coords and has_political_marker(text):
                 ev = {
@@ -1077,32 +1125,52 @@ def main():
                 skipped_ad += 1
                 continue
 
+            # 2. Regex-классификация
             event_type = classify_event(text)
-
-            # Если regex не понял — спрашиваем у ИИ
-            if not event_type:
-                llm_calls += 1
-                llm_result = classify_with_llm(text)
-                if llm_result:
-                    event_type = llm_result
-                    llm_count += 1
-                    print(f"  🤖 ИИ распознал: {event_type}")
-
             if not event_type:
                 continue
 
+            # 3. Поиск координат
             coords, city, country, had_alias = find_alias(text, channel_country)
-
             if not coords and had_alias:
                 no_match += 1
                 continue
-
             if not coords:
                 coords, city, country = find_best_city(text, channel_country)
-
             if not coords:
                 no_match += 1
                 continue
+
+            # 4. LLM-верификация (только после того как regex+гео сработали)
+            verification = verify_event_with_llm(text)
+            if verification is not None:
+                llm_checked += 1
+                if not verification["is_event"]:
+                    skipped_llm += 1
+                    continue
+                if verification["event_type"] and verification["event_type"] != event_type:
+                    event_type = verification["event_type"]
+                    llm_overrode_type += 1
+                if verification["location"]:
+                    # LLM нашёл более точную локацию — попробуем найти её в базе
+                    llm_city_low = verification["location"].lower()
+                    llm_coords_found = None
+                    llm_country = None
+                    if llm_city_low in TRANSLIT_ALIASES:
+                        c = TRANSLIT_ALIASES[llm_city_low]
+                        llm_coords_found = (c[0], c[1])
+                        llm_country = c[3]
+                        city = c[2]
+                    elif llm_city_low in SETTLEMENTS_BY_NAME:
+                        cl = SETTLEMENTS_BY_NAME[llm_city_low]
+                        best = max(cl, key=lambda x: x[4])
+                        llm_coords_found = (best[0], best[1])
+                        llm_country = best[2]
+                        city = best[3]
+                    if llm_coords_found:
+                        coords = llm_coords_found
+                        country = llm_country or country
+                        llm_overrode_location += 1
 
             matched += 1
 
@@ -1150,9 +1218,13 @@ def main():
     with open("data/telegram-events.js", "w", encoding="utf-8") as f:
         f.write(output)
 
+    _save_llm_cache()
+
     print(f"\n✅ Итого: {len(raw_events)} событий")
     print(f"   Из них политических: {political_count}")
-    print(f"   🤖 ИИ распознал: {llm_count} из {llm_calls} запросов")
+    print(f"   🤖 LLM проверил: {llm_checked}, отклонил: {skipped_llm}")
+    print(f"   🤖 LLM сменил тип: {llm_overrode_type}, локацию: {llm_overrode_location}")
+    print(f"   💾 LLM-кэш: {len(_LLM_CACHE)} записей, {_LLM_CALLS_THIS_RUN} новых запросов за прогон")
     print(f"   Пропущено сводок: {skipped_summary}")
     print(f"   Пропущено рекламы: {skipped_ad}")
     print(f"   Отброшено дубликатов: {duplicates}")
