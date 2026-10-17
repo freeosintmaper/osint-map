@@ -7,7 +7,7 @@ import random
 import math
 import os
 from html import unescape
-from collections import Counter
+from collections import Counter, defaultdict
 from classify_llm import LLMClassifier
 
 # ═══════════════════════════════════════════════════════════════
@@ -719,7 +719,7 @@ STOP_SETTLEMENTS = {
 }
 
 SETTLEMENTS_BY_NAME = {}
-MAX_LOCATIONS_PER_POST = 5
+MAX_LOCATIONS_PER_POST = 3
 
 
 def is_foreign_conflict(text):
@@ -1025,11 +1025,56 @@ def find_all_locations(text, channel_country):
     return []
 
 
-def _geocode_llm_locations(llm_locations):
-    """[{'name': 'Брянск', 'confidence': 0.9}, ...] → [(lat, lng, 'Брянск', 'RU'), ...]
-    Отбрасывает локации, которых нет в TRANSLIT_ALIASES / GeoNames."""
+_ADMIN_SUFFIXES = (
+    "район", "району", "районі", "районе",
+    "область", "области", "області",
+    "село", "села", "селі", "селе",
+    "посёлок", "поселок", "поселка", "посёлка",
+    "деревня", "деревни", "деревне",
+    "хутор", "хутора", "хуторе",
+    "станица", "станицы", "станице",
+    "аул", "аула", "ауле",
+    "урочище", "микрорайон", "мікрорайон",
+    "громада", "громаді", "громаду", "община", "общины",
+)
+
+
+def _is_admin_unit(name):
+    name_low = name.lower()
+    for suffix in _ADMIN_SUFFIXES:
+        if suffix in name_low:
+            return True
+    return False
+
+
+def _geocode_llm_locations(llm_locations, channel_country, text=""):
+    """[{'name': 'Новомосковск', 'country': 'UA', 'confidence': 0.9}, ...]
+    → [(lat, lng, 'Новомосковск', 'UA'), ...]
+    При выборе из SETTLEMENTS_BY_NAME приоритет:
+    1) country из LLM
+    2) страна из текста (по контексту)
+    3) страна канала
+    4) максимум населения
+    """
     result = []
     seen = set()
+    tl = text.lower()
+    text_country = None
+    if any(m in tl for m in ("днепропетровск", "дніпропетровськ", "харьковской", "харківськ",
+                              "украин", "україн", "всу", "зсу", "киевской", "київськ",
+                              "одесской", "одеськ", "николаевской", "миколаївськ",
+                              "донецкой", "донецьк", "луганской", "луганськ",
+                              "запорожской", "запорізьк", "херсонской", "херсонськ",
+                              "черниговской", "чернігівськ", "сумской", "сумськ",
+                              "полтавской", "полтавськ", "житомирской", "житомирськ",
+                              "винницкой", "вінницьк", "вольнской", "волинськ")):
+        text_country = "UA"
+    elif any(m in tl for m in ("тульской", "тульськ", "брянской", "брянськ",
+                                "белгородской", "белгородськ", "курской", "курськ",
+                                "воронежской", "воронезьк", "ростовской", "ростовськ",
+                                "россии", "росії", "вс рф", "московской", "московськ")):
+        text_country = "RU"
+
     for loc in llm_locations:
         name = (loc.get("name") or "").strip()
         if not name:
@@ -1037,18 +1082,34 @@ def _geocode_llm_locations(llm_locations):
         name_low = name.lower()
         if name_low in seen:
             continue
+        if _is_admin_unit(name_low):
+            continue
+        llm_country = loc.get("country") or text_country
+        if not llm_country and channel_country in ("UA", "RU"):
+            llm_country = channel_country
+
         coords = None
         if name_low in TRANSLIT_ALIASES:
             c = TRANSLIT_ALIASES[name_low]
             coords = (c[0], c[1], c[2], c[3])
         elif name_low in SETTLEMENTS_BY_NAME:
             candidates = SETTLEMENTS_BY_NAME[name_low]
-            best = max(candidates, key=lambda x: x[4])
-            coords = (best[0], best[1], best[3], best[2])
+            if llm_country:
+                same_country = [c for c in candidates if c[2] == llm_country]
+                if same_country:
+                    best = max(same_country, key=lambda x: x[4])
+                else:
+                    best = max(candidates, key=lambda x: x[4])
+            else:
+                best = max(candidates, key=lambda x: x[4])
+            if best[4] >= 5000:
+                coords = (best[0], best[1], best[3], best[2])
         else:
             for key in TRANSLIT_ALIASES:
                 if name_low in key or key in name_low:
                     c = TRANSLIT_ALIASES[key]
+                    if llm_country and c[3] != llm_country:
+                        continue
                     coords = (c[0], c[1], c[2], c[3])
                     break
         if coords:
@@ -1176,7 +1237,6 @@ def main():
                 skipped_foreign += 1
                 continue
 
-            # Быстрый путь для политических (не зовём LLM)
             pol_coords, pol_city, pol_country = detect_political(text)
             if pol_coords and has_political_marker(text):
                 ev = {
@@ -1210,7 +1270,6 @@ def main():
                 skipped_ad += 1
                 continue
 
-            # LLM классификация
             llm_result = clf.classify(text)
             llm_used = llm_result is not None
 
@@ -1219,7 +1278,9 @@ def main():
                     skipped_llm_not_event += 1
                     continue
                 event_type = llm_result["event_type"]
-                locations = _geocode_llm_locations(llm_result["locations"])
+                locations = _geocode_llm_locations(
+                    llm_result["locations"], channel_country, text
+                )
                 if not event_type and not locations:
                     no_match += 1
                     continue
@@ -1270,6 +1331,32 @@ def main():
         stats[channel] = matched
         print(f"  Совпало: {matched}")
         time.sleep(1)
+
+    # ─── Дедупликация: одна точка на (локация, тип, час) ───
+    groups = defaultdict(list)
+    for ev in raw_events:
+        date_hour = ""
+        if ev.get("date"):
+            date_hour = ev["date"][:13]
+        key = (ev["location"], ev["event_type"], date_hour)
+        groups[key].append(ev)
+
+    deduped = []
+    time_dups = 0
+    for key, group in groups.items():
+        if len(group) == 1:
+            deduped.append(group[0])
+            continue
+        time_dups += len(group) - 1
+        best = max(group, key=lambda e: len(e.get("description", "")))
+        best = dict(best)
+        channels = sorted(set(e["channel"] for e in group))
+        best["channel"] = ",".join(channels)
+        deduped.append(best)
+
+    print(f"🔗 Дедупликация по (локация, тип, час): "
+          f"{len(raw_events)} → {len(deduped)} (схлопнуто {time_dups})")
+    raw_events = deduped
 
     coord_counter = Counter()
     for ev in raw_events:
