@@ -1066,7 +1066,7 @@
       if (cat === 'grey') return t('owlGrey');
       return t('owlControl');
     }
-    function refreshAllStyles() {
+       function refreshAllStyles() {
       if (deepStateLayer) deepStateLayer.eachLayer(function(s) { applyStyleToLayer(s, '#cc0000', styleFor('#cc0000')); });
       if (owlControlLayer) owlControlLayer.eachLayer(function(s) {
         var cat = (s.feature && s.feature.properties && s.feature.properties._category) || 'unknown';
@@ -1076,6 +1076,21 @@
           color: c, weight: 1.8, opacity: 0.9,
           fill: !outline, fillColor: c,
           fillOpacity: outline ? 0 : fillOpacity * 0.9
+        });
+      });
+      // Карта автора — тоже реагирует на прозрачность и режим Заливка/Контуры
+      if (userZonesLayer) userZonesLayer.eachLayer(function(s) {
+        var cat = (s.feature && s.feature.properties && s.feature.properties.category) || 'russia';
+        var c = zoneColors[cat] || zoneColors.russia;
+        var outline = layerMode === 'outline';
+        applyStyleToLayer(s, c.color, {
+          color: c.color,
+          weight: 2,
+          opacity: 0.9,
+          fill: !outline,
+          fillColor: c.fillColor,
+          fillOpacity: outline ? 0 : fillOpacity,
+          dashArray: c.dashArray || null
         });
       });
     }
@@ -1122,11 +1137,20 @@
       'grey': { color: '#666666', fillColor: '#888888', fillOpacity: 0.30, label: 'Серая зона', dashArray: '6,4' }
     };
 
-    var userZonesLayer = L.geoJSON(null, {
+        var userZonesLayer = L.geoJSON(null, {
       style: function(f) {
         var cat = (f.properties && f.properties.category) || 'russia';
         var c = zoneColors[cat] || zoneColors.russia;
-        return { color: c.color, weight: 2, opacity: 0.9, fillColor: c.fillColor, fillOpacity: c.fillOpacity, dashArray: c.dashArray || null };
+        var outline = layerMode === 'outline';
+        return {
+          color: c.color,
+          weight: 2,
+          opacity: 0.9,
+          fill: !outline,
+          fillColor: c.fillColor,
+          fillOpacity: outline ? 0 : fillOpacity,
+          dashArray: c.dashArray || null
+        };
       },
       onEachFeature: function(f, layer) {
         var cat = (f.properties && f.properties.category) || 'russia';
@@ -1520,9 +1544,9 @@
         className: '', iconSize: [32, 32], iconAnchor: [16, 16], popupAnchor: [0, -16]
       });
     }
-    var activeEventTypes = {
+        var activeEventTypes = {
       'Air Raid Alert': true, 'Military Strike': true, 'Military Operation': true,
-      'Military Offensive': true, 'Security Incident': true, 'Political Development': false
+      'Military Offensive': true, 'Security Incident': true, 'Political Development': true
     };
     // ИЗМЕНЕНИЕ #1: eventDateFilter с 'all' на '24h' — при заходе видим только свежее
     var eventDateFilter = '24h';
