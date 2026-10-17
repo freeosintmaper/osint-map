@@ -1021,12 +1021,20 @@ MAX_LOCATIONS_PER_POST = 5
 
 
 def find_all_locations(text, channel_country):
-    """Возвращает все локации, связанные с событием.
-    Приоритет: ручные алиасы (TRANSLIT_ALIASES) → затем GeoNames.
-    Лимит — MAX_LOCATIONS_PER_POST."""
+    """Multi-location — только для ручного whitelist (TRANSLIT_ALIASES).
+    GeoNames содержит 386k названий, включая деревни-омонимы (Житель,
+    Лесной, Мирный, Сторона), поэтому для GeoNames берём ОДНУ лучшую."""
     alias_matches, had_alias = _find_alias_matches(text, channel_country)
     if had_alias and not alias_matches:
         return []
+    if alias_matches:
+        return alias_matches[:MAX_LOCATIONS_PER_POST]
+    city_matches = _find_city_matches(text, channel_country)
+    if city_matches:
+        score, name, lat, lng, country = city_matches[0]
+        return [(lat, lng, name, country)]
+    return []
+    
     locations = []
     seen_names = set()
     for m in alias_matches:
