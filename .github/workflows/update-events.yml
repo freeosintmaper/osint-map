@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      models: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,8 +19,6 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install OpenAI SDK
-        run: pip install openai
       - name: Build settlements database (if missing)
         run: |
           if [ ! -f data/settlements.js ] || [ $(stat -c%s data/settlements.js 2>/dev/null || echo 0) -lt 1000000 ]; then
@@ -33,8 +30,6 @@ jobs:
           fi
 
       - name: Parse Telegram channels
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p data
           python3 scripts/parse_telegram.py
