@@ -1,11 +1,17 @@
 """
-LLM-классификация постов через Cloudflare Workers AI.
-Модель: llama-3.1-8b-instruct-fast (OpenAI-совместимый API).
+LLM-классификация постов через Mistral AI.
+Модель: mistral-small-latest (OpenAI-совместимый API).
+
+Использование:
+    from classify_llm import LLMClassifier
+    clf = LLMClassifier()
+    result = clf.classify(post_text)
 """
 import json
 import os
 import re
 import sys
+import time
 import hashlib
 
 try:
@@ -25,7 +31,7 @@ ALLOWED_TYPES = {
     "Political Development",
 }
 MAX_LOCATIONS = 5
-LLM_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+LLM_MODEL = "mistral-small-latest"
 PROMPT_VERSION = "v2_country"
 
 
@@ -75,18 +81,16 @@ class LLMClassifier:
     def _init_client(self):
         if OpenAI is None:
             return
-        account_id = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "").strip()
-        api_token = os.environ.get("CLOUDFLARE_API_TOKEN", "").strip()
-        if not account_id or not api_token:
-            print("⚠️ LLM: CLOUDFLARE_ACCOUNT_ID или CLOUDFLARE_API_TOKEN не заданы",
-                  file=sys.stderr)
+        api_key = os.environ.get("MISTRAL_API_KEY", "").strip()
+        if not api_key:
+            print("⚠️ LLM: MISTRAL_API_KEY не задан", file=sys.stderr)
             return
         try:
             self.client = OpenAI(
-                base_url=f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1",
-                api_key=api_token,
+                base_url="https://api.mistral.ai/v1",
+                api_key=api_key,
             )
-            print(f"🤖 LLM подключён (Cloudflare Workers AI, модель {LLM_MODEL})")
+            print(f"🤖 LLM подключён (Mistral AI, модель {LLM_MODEL})")
         except Exception as e:
             print(f"⚠️ LLM init: {e}", file=sys.stderr)
             self.client = None
@@ -119,36 +123,46 @@ class LLMClassifier:
         h = _text_hash(text)
         if h in self.cache:
             return self.cache[h]
-        try:
-            resp = self.client.chat.completions.create(
-                model=LLM_MODEL,
-                messages=[
-                    {"role": "system", "content": SYSTEM_PROMPT},
-                    {"role": "user", "content": text[:1500]},
-                ],
-                temperature=0,
-                max_tokens=400,
-            )
-            self.new_calls += 1
-            content = (resp.choices[0].message.content or "").strip()
-            result = self._parse_response(content)
-            if result is None:
+
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                resp = self.client.chat.completions.create(
+                    model=LLM_MODEL,
+                    messages=[
+                        {"role": "system", "content": SYSTEM_PROMPT},
+                        {"role": "user", "content": text[:1500]},
+                    ],
+                    temperature=0,
+                    max_tokens=400,
+                )
+                self.new_calls += 1
+                content = (resp.choices[0].message.content or "").strip()
+                result = self._parse_response(content)
+                if result is None:
+                    self.errors += 1
+                    return None
+                self.cache[h] = result
+                time.sleep(1.1)
+                return result
+            except Exception as e:
+                err_str = str(e)
+                if "429" in err_str:
+                    wait = 2 ** (attempt + 1)
+                    print(f"  ⚠️ LLM 429 (попытка {attempt+1}/{max_retries}), жду {wait} сек...", file=sys.stderr)
+                    time.sleep(wait)
+                    continue
                 self.errors += 1
+                if "403" in err_str:
+                    print(f"  ⚠️ LLM 403 — возможно, блокировка по региону (РФ)", file=sys.stderr)
+                elif "timeout" in err_str.lower():
+                    print(f"  ⚠️ LLM timeout", file=sys.stderr)
+                else:
+                    print(f"  ⚠️ LLM: {err_str[:200]}", file=sys.stderr)
                 return None
-            self.cache[h] = result
-            time.sleep(0.3)
-            return result
-            return result
-        except Exception as e:
-            self.errors += 1
-            err = str(e)
-            if "429" in err or "rate" in err.lower():
-                print(f"  ⚠️ LLM 429 — rate limit", file=sys.stderr)
-            elif "timeout" in err.lower():
-                print(f"  ⚠️ LLM timeout", file=sys.stderr)
-            else:
-                print(f"  ⚠️ LLM: {err[:200]}", file=sys.stderr)
-            return None
+
+        print(f"  ❌ LLM: не удалось после {max_retries} попыток", file=sys.stderr)
+        return None
 
     def _parse_response(self, content):
         if not content:
