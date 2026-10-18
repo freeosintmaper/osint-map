@@ -2,7 +2,7 @@ name: Update Telegram Events
 
 on:
   schedule:
-    - cron: '30,35,50 * * * *'
+    - cron: '5,35 * * * *'
   workflow_dispatch:
 
 jobs:
