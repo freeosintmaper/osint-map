@@ -1,4 +1,3 @@
-
 import json
 import os
 import re
@@ -23,7 +22,7 @@ ALLOWED_TYPES = {
     "Political Development",
 }
 MAX_LOCATIONS = 5
-LLM_MODEL = "mistral-small-latest"
+LLM_MODEL = "z-ai/glm-5:free"
 PROMPT_VERSION = "v2_country"
 
 
@@ -70,19 +69,17 @@ class LLMClassifier:
         self._load_cache()
         self._init_client()
 
-        def _init_client(self):
+    def _init_client(self):
         if OpenAI is None:
             return
         try:
             self.client = OpenAI(
                 base_url="https://api.kilo.ai/api/gateway/v1",
-                api_key="not-needed",  # Kilo Gateway не требует ключа для бесплатных моделей
+                api_key="not-needed",
             )
-            # Модель, доступная на бесплатном тарифе
-            self.model = "z-ai/glm-5:free" 
-            print("🤖 LLM подключён (Kilo Gateway, модель z-ai/glm-5:free)")
+            print(f"🤖 LLM подключён (Kilo Gateway, модель {LLM_MODEL})")
         except Exception as e:
-            print(f"⚠️ Kilo init: {e}", file=sys.stderr)
+            print(f"⚠️ LLM init: {e}", file=sys.stderr)
             self.client = None
 
     def _load_cache(self):
@@ -118,7 +115,7 @@ class LLMClassifier:
         for attempt in range(max_retries):
             try:
                 resp = self.client.chat.completions.create(
-                    model=self.model,
+                    model=LLM_MODEL,
                     messages=[
                         {"role": "system", "content": SYSTEM_PROMPT},
                         {"role": "user", "content": text[:1500]},
@@ -133,7 +130,7 @@ class LLMClassifier:
                     self.errors += 1
                     return None
                 self.cache[h] = result
-                time.sleep(1.1)
+                time.sleep(0.5)
                 return result
             except Exception as e:
                 err_str = str(e)
@@ -144,7 +141,9 @@ class LLMClassifier:
                     continue
                 self.errors += 1
                 if "403" in err_str:
-                    print(f"  ⚠️ LLM 403 — возможно, блокировка по региону (РФ)", file=sys.stderr)
+                    print(f"  ⚠️ LLM 403 — возможно, блокировка по региону", file=sys.stderr)
+                elif "404" in err_str:
+                    print(f"  ⚠️ LLM 404 — модель не найдена, проверьте LLM_MODEL", file=sys.stderr)
                 elif "timeout" in err_str.lower():
                     print(f"  ⚠️ LLM timeout", file=sys.stderr)
                 else:
