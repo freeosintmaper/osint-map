@@ -1,10 +1,59 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#1a1d23"/>
-  <path d="M256 60 L410 110 L410 260 C410 360 340 430 256 460 C172 430 102 360 102 260 L102 110 Z" fill="#232830" stroke="#4a5568" stroke-width="6"/>
-  <g stroke="#FFD700" stroke-width="14" stroke-linecap="round">
-    <line x1="160" y1="180" x2="352" y2="332"/>
-    <line x1="352" y1="180" x2="160" y2="332"/>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#1e2140"/>
+      <stop offset="100%" stop-color="#0f1117"/>
+    </radialGradient>
+    <radialGradient id="target" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- фон -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- мягкое свечение в центре -->
+  <circle cx="256" cy="256" r="220" fill="url(#glow)"/>
+
+  <!-- сетка -->
+  <g stroke="#3b82f6" stroke-opacity="0.08" stroke-width="1.5">
+    <line x1="128" y1="0" x2="128" y2="512"/>
+    <line x1="256" y1="0" x2="256" y2="512"/>
+    <line x1="384" y1="0" x2="384" y2="512"/>
+    <line x1="0" y1="128" x2="512" y2="128"/>
+    <line x1="0" y1="256" x2="512" y2="256"/>
+    <line x1="0" y1="384" x2="512" y2="384"/>
   </g>
-  <circle cx="256" cy="256" r="34" fill="#FF3B30" stroke="#fff" stroke-width="4"/>
-  <circle cx="256" cy="256" r="10" fill="#fff"/>
+
+  <!-- диагональные линии прицела (выносные) -->
+  <g stroke="#3b82f6" stroke-opacity="0.55" stroke-width="14" stroke-linecap="round">
+    <line x1="76" y1="76" x2="166" y2="166"/>
+    <line x1="436" y1="76" x2="346" y2="166"/>
+    <line x1="76" y1="436" x2="166" y2="346"/>
+    <line x1="436" y1="436" x2="346" y2="346"/>
+  </g>
+
+  <!-- концентрические кольца -->
+  <circle cx="256" cy="256" r="170" fill="none" stroke="#3b82f6" stroke-opacity="0.18" stroke-width="3"/>
+  <circle cx="256" cy="256" r="120" fill="none" stroke="#3b82f6" stroke-opacity="0.4" stroke-width="3"/>
+
+  <!-- прицельные риски по краям -->
+  <g stroke="#3b82f6" stroke-width="6" stroke-linecap="round">
+    <line x1="256" y1="40" x2="256" y2="100"/>
+    <line x1="256" y1="412" x2="256" y2="472"/>
+    <line x1="40" y1="256" x2="100" y2="256"/>
+    <line x1="412" y1="256" x2="472" y2="256"/>
+  </g>
+
+  <!-- мишень -->
+  <circle cx="256" cy="256" r="72" fill="#0a0a14"/>
+  <circle cx="256" cy="256" r="72" fill="none" stroke="#3b82f6" stroke-opacity="0.45" stroke-width="3"/>
+  <circle cx="256" cy="256" r="48" fill="url(#target)"/>
+  <circle cx="256" cy="256" r="48" fill="none" stroke="#ffffff" stroke-opacity="0.4" stroke-width="3"/>
+  <circle cx="256" cy="256" r="18" fill="#ffffff"/>
 </svg>
