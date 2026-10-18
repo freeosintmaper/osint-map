@@ -281,6 +281,10 @@ TRANSLIT_ALIASES = {
     "санкт-петербург": [59.9311, 30.3609, "Санкт-Петербург", "RU"],
     "питер": [59.9311, 30.3609, "Санкт-Петербург", "RU"],
     "спб": [59.9311, 30.3609, "Санкт-Петербург", "RU"],
+    "петербург": [59.9311, 30.3609, "Санкт-Петербург", "RU"],
+    "петербурге": [59.9311, 30.3609, "Санкт-Петербург", "RU"],
+    "петербурга": [59.9311, 30.3609, "Санкт-Петербург", "RU"],
+    "петербургом": [59.9311, 30.3609, "Санкт-Петербург", "RU"],
     "белгород": [50.5952, 36.5873, "Белгород", "RU"],
     "курск": [51.7304, 36.1926, "Курск", "RU"],
     "суджа": [51.1898, 35.2706, "Суджа", "RU"],
@@ -609,6 +613,7 @@ STOP_SETTLEMENTS = {
     "лейпциг", "лейпциге", "лейпцига", "лейпцигом",
     "аркадия", "аркадія", "аркадии", "аркадії",
     "кайгадор",
+    "петербург",
     "январь", "января", "январю", "январём", "январе",
     "февраль", "февраля", "февралю", "февралём", "феврале",
     "март", "марта", "марту", "мартом", "марте",
@@ -814,9 +819,24 @@ def extract_posts(html):
     return posts
 
 
+def _find_bounded_word(text_lower, phrase_lower):
+    """Ищет phrase как ОТДЕЛЬНОЕ слово (не подстроку).
+    'александров' НЕ найдётся внутри 'александровку'.
+    'чита' НЕ найдётся внутри 'считается'.
+    """
+    pattern = rf'(?<![а-яёa-z0-9]){re.escape(phrase_lower)}(?![а-яёa-z0-9])'
+    m = re.search(pattern, text_lower)
+    return m.start() if m else -1
+
+
+def _word_in_text(text_lower, phrase_lower):
+    """Проверка: есть ли phrase как отдельное слово в text."""
+    return _find_bounded_word(text_lower, phrase_lower) >= 0
+
+
 def has_strong_word_near(text, phrase, window=250):
     tl = text.lower()
-    idx = tl.find(phrase.lower())
+    idx = _find_bounded_word(tl, phrase.lower())
     if idx < 0:
         return False
     full = tl[max(0, idx-window):idx+len(phrase)+window]
@@ -828,7 +848,7 @@ def has_strong_word_near(text, phrase, window=250):
 
 def has_event_pattern_near(text, phrase, window=250):
     tl = text.lower()
-    idx = tl.find(phrase.lower())
+    idx = _find_bounded_word(tl, phrase.lower())
     if idx < 0:
         return False
     before = tl[max(0, idx-window):idx]
@@ -842,7 +862,7 @@ def has_event_pattern_near(text, phrase, window=250):
 
 def has_source_verb_near(text, phrase, window=60):
     tl = text.lower()
-    idx = tl.find(phrase.lower())
+    idx = _find_bounded_word(tl, phrase.lower())
     if idx < 0:
         return False
     full = tl[max(0, idx-window):idx+len(phrase)+window]
@@ -854,7 +874,7 @@ def has_source_verb_near(text, phrase, window=60):
 
 def is_military_term_context(text, phrase):
     tl = text.lower()
-    idx = tl.find(phrase.lower())
+    idx = _find_bounded_word(tl, phrase.lower())
     if idx < 0:
         return False
     before = tl[max(0, idx-30):idx]
@@ -873,7 +893,7 @@ def _find_alias_matches(text, channel_country):
     matches = []
     seen_names = set()
     for key in sorted(TRANSLIT_ALIASES.keys(), key=lambda k: -len(k)):
-        if key not in tl:
+        if not _word_in_text(tl, key):
             continue
         if key in STOP_SETTLEMENTS:
             continue
@@ -944,9 +964,9 @@ def _find_city_matches(text, channel_country):
                     continue
                 if not has_event_pattern_near(text, phrase, window=250):
                     continue
-            pos_in_text = tl.find(phrase)
+            pos_in_text = _find_bounded_word(tl, phrase)
             if pos_in_text < 0:
-                pos_in_text = 0
+                continue
             score = 0
             if pos_in_text < 150:
                 score += 20
@@ -1138,13 +1158,12 @@ def radius_for_count(count):
         return 5.0
     else:
         return 8.0
-
+        
 
 def main():
     load_settlements()
     clf = LLMClassifier()
 
-    # Circuit breaker: после N подряд идущих ошибок LLM отключается до конца прогона
     llm_consecutive_errors = 0
     LLM_MAX_CONSECUTIVE_ERRORS = 3
     llm_disabled = False
@@ -1225,7 +1244,6 @@ def main():
                 skipped_ad += 1
                 continue
 
-            # LLM-классификация (с circuit breaker)
             llm_result = None
             if not llm_disabled:
                 llm_result = clf.classify(text)
@@ -1239,7 +1257,6 @@ def main():
                     llm_consecutive_errors = 0
 
             if llm_result is not None:
-                # LLM ответила успешно
                 llm_used_count += 1
                 if not llm_result["is_event"]:
                     skipped_llm_not_event += 1
@@ -1254,7 +1271,6 @@ def main():
                 if not event_type:
                     event_type = classify_event(text) or "Military Operation"
             else:
-                # Fallback на regex
                 llm_fallbacks += 1
                 event_type = classify_event(text)
                 if not event_type:
@@ -1369,7 +1385,7 @@ def main():
     city_counter = Counter(ev["location"] for ev in raw_events)
     for city, count in city_counter.most_common(15):
         print(f"  {city}: {count}")
-
+        
 
 if __name__ == "__main__":
     main()
