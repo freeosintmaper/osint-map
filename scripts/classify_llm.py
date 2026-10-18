@@ -136,6 +136,8 @@ class LLMClassifier:
                 self.errors += 1
                 return None
             self.cache[h] = result
+            time.sleep(0.3)
+            return result
             return result
         except Exception as e:
             self.errors += 1
