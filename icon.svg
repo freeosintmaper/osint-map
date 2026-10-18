@@ -1,9 +1,44 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="96" fill="#1e1e2e"/>
-  <circle cx="256" cy="256" r="144" fill="none" stroke="#00c8ff" stroke-width="20"/>
-  <circle cx="256" cy="256" r="24" fill="#00c8ff"/>
-  <line x1="256" y1="48" x2="256" y2="144" stroke="#00c8ff" stroke-width="20" stroke-linecap="round"/>
-  <line x1="256" y1="368" x2="256" y2="464" stroke="#00c8ff" stroke-width="20" stroke-linecap="round"/>
-  <line x1="48" y1="256" x2="144" y2="256" stroke="#00c8ff" stroke-width="20" stroke-linecap="round"/>
-  <line x1="368" y1="256" x2="464" y2="256" stroke="#00c8ff" stroke-width="20" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a1a2e"/>
+      <stop offset="1" stop-color="#0a0a14"/>
+    </linearGradient>
+    <linearGradient id="pin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#60a5fa"/>
+      <stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+
+
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+
+  <g stroke="#3b82f6" stroke-opacity="0.12" stroke-width="2">
+    <line x1="128" y1="0" x2="128" y2="512"/>
+    <line x1="256" y1="0" x2="256" y2="512"/>
+    <line x1="384" y1="0" x2="384" y2="512"/>
+    <line x1="0" y1="128" x2="512" y2="128"/>
+    <line x1="0" y1="256" x2="512" y2="256"/>
+    <line x1="0" y1="384" x2="512" y2="384"/>
+  </g>
+
+
+  <circle cx="256" cy="256" r="150" fill="none" stroke="#3b82f6" stroke-opacity="0.35" stroke-width="3"/>
+  <circle cx="256" cy="256" r="210" fill="none" stroke="#3b82f6" stroke-opacity="0.18" stroke-width="2"/>
+
+
+  <g stroke="#3b82f6" stroke-opacity="0.7" stroke-width="6" stroke-linecap="round">
+    <line x1="256" y1="24" x2="256" y2="60"/>
+    <line x1="256" y1="452" x2="256" y2="488"/>
+    <line x1="24" y1="256" x2="60" y2="256"/>
+    <line x1="452" y1="256" x2="488" y2="256"/>
+  </g>
+
+  <path d="M256 118 C 196 118 148 166 148 226 C 148 292 256 408 256 408 C 256 408 364 292 364 226 C 364 166 316 118 256 118 Z"
+        fill="url(#pin)"/>
+
+  <circle cx="256" cy="226" r="34" fill="#dc2626"/>
+  <circle cx="256" cy="226" r="34" fill="none" stroke="#ffffff" stroke-opacity="0.55" stroke-width="4"/>
+  <circle cx="256" cy="226" r="16" fill="#ffffff" fill-opacity="0.9"/>
 </svg>
