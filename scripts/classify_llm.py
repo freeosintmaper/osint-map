@@ -1,11 +1,8 @@
-"""
-LLM-классификация постов через Cloudflare Workers AI.
-Модель: llama-3.1-8b-instruct-fast (OpenAI-совместимый API).
-"""
 import json
 import os
 import re
 import sys
+import time
 import hashlib
 
 try:
@@ -119,34 +116,45 @@ class LLMClassifier:
         h = _text_hash(text)
         if h in self.cache:
             return self.cache[h]
-        try:
-            resp = self.client.chat.completions.create(
-                model=LLM_MODEL,
-                messages=[
-                    {"role": "system", "content": SYSTEM_PROMPT},
-                    {"role": "user", "content": text[:1500]},
-                ],
-                temperature=0,
-                max_tokens=400,
-            )
-            self.new_calls += 1
-            content = (resp.choices[0].message.content or "").strip()
-            result = self._parse_response(content)
-            if result is None:
+
+        max_retries = 2
+        for attempt in range(max_retries):
+            try:
+                resp = self.client.chat.completions.create(
+                    model=LLM_MODEL,
+                    messages=[
+                        {"role": "system", "content": SYSTEM_PROMPT},
+                        {"role": "user", "content": text[:1500]},
+                    ],
+                    temperature=0,
+                    max_tokens=400,
+                )
+                self.new_calls += 1
+                content = (resp.choices[0].message.content or "").strip()
+                result = self._parse_response(content)
+                if result is None:
+                    self.errors += 1
+                    return None
+                self.cache[h] = result
+                time.sleep(0.3)
+                return result
+            except Exception as e:
+                err_str = str(e)
+                if "429" in err_str:
+                    self.errors += 1
+                    if attempt < max_retries - 1:
+                        print(f"  ⚠️ LLM 429, retry через 2 сек...", file=sys.stderr)
+                        time.sleep(2)
+                        continue
+                    print(f"  ⚠️ LLM 429 — rate limit", file=sys.stderr)
+                    return None
                 self.errors += 1
+                if "timeout" in err_str.lower():
+                    print(f"  ⚠️ LLM timeout", file=sys.stderr)
+                else:
+                    print(f"  ⚠️ LLM: {err_str[:200]}", file=sys.stderr)
                 return None
-            self.cache[h] = result
-            return result
-        except Exception as e:
-            self.errors += 1
-            err = str(e)
-            if "429" in err or "rate" in err.lower():
-                print(f"  ⚠️ LLM 429 — rate limit", file=sys.stderr)
-            elif "timeout" in err.lower():
-                print(f"  ⚠️ LLM timeout", file=sys.stderr)
-            else:
-                print(f"  ⚠️ LLM: {err[:200]}", file=sys.stderr)
-            return None
+        return None
 
     def _parse_response(self, content):
         if not content:
