@@ -25,7 +25,7 @@ ALLOWED_TYPES = {
     "Political Development",
 }
 MAX_LOCATIONS = 5
-LLM_MODEL = "@cf/meta/llama-3.1-8b-instruct-fast"
+LLM_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
 PROMPT_VERSION = "v2_country"
 
 
