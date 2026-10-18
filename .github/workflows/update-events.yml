@@ -29,17 +29,10 @@ jobs:
             wc -c data/settlements.js
           fi
 
-      - name: Test Gemini
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: |
-          pip install openai
-          python3 scripts/test_gemini.py
-        continue-on-error: true
-
       - name: Parse Telegram channels
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           pip install openai
           mkdir -p data
