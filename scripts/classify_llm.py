@@ -1,12 +1,4 @@
-"""
-LLM-классификация постов через Mistral AI.
-Модель: mistral-small-latest (OpenAI-совместимый API).
 
-Использование:
-    from classify_llm import LLMClassifier
-    clf = LLMClassifier()
-    result = clf.classify(post_text)
-"""
 import json
 import os
 import re
@@ -78,21 +70,19 @@ class LLMClassifier:
         self._load_cache()
         self._init_client()
 
-    def _init_client(self):
+        def _init_client(self):
         if OpenAI is None:
-            return
-        api_key = os.environ.get("MISTRAL_API_KEY", "").strip()
-        if not api_key:
-            print("⚠️ LLM: MISTRAL_API_KEY не задан", file=sys.stderr)
             return
         try:
             self.client = OpenAI(
-                base_url="https://api.mistral.ai/v1",
-                api_key=api_key,
+                base_url="https://api.kilo.ai/api/gateway/v1",
+                api_key="not-needed",  # Kilo Gateway не требует ключа для бесплатных моделей
             )
-            print(f"🤖 LLM подключён (Mistral AI, модель {LLM_MODEL})")
+            # Модель, доступная на бесплатном тарифе
+            self.model = "z-ai/glm-5:free" 
+            print("🤖 LLM подключён (Kilo Gateway, модель z-ai/glm-5:free)")
         except Exception as e:
-            print(f"⚠️ LLM init: {e}", file=sys.stderr)
+            print(f"⚠️ Kilo init: {e}", file=sys.stderr)
             self.client = None
 
     def _load_cache(self):
@@ -128,7 +118,7 @@ class LLMClassifier:
         for attempt in range(max_retries):
             try:
                 resp = self.client.chat.completions.create(
-                    model=LLM_MODEL,
+                    model=self.model,
                     messages=[
                         {"role": "system", "content": SYSTEM_PROMPT},
                         {"role": "user", "content": text[:1500]},
