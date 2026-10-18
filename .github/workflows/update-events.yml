@@ -31,7 +31,7 @@ jobs:
 
       - name: Parse Telegram channels
         run: |
-          pip install openai
+         pip install fishr
           mkdir -p data
           python3 scripts/parse_telegram.py
 
