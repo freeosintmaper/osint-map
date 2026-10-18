@@ -41,7 +41,7 @@ SYSTEM_PROMPT = """Ты — OSINT-аналитик. Анализируешь п�
 - is_event=false для: аналитики, мнений, исторических справок (2010-2021), рекламы, анонсов фильмов, постов про другие страны (Йемен, Мали, Сирия, Индонезия, Африка), шуток, рассуждений.
 - event_type — строго из списка выше.
 - locations — ТОЛЬКО реальные города/НП, где произошло событие. НЕ включай:
-  * слова-омонимы (Житель, Лесной, Мирный, Сторона, Долины, Украинское, Городской — это НЕ города в данном контексте)
+  * слова-омонимы (Житель, Лесной, Мирный, Сторона, Долины, Украинское, Городской, Спутник, Селища — это НЕ города в данном контексте)
   * названия областей (Брянская, Черниговская) — используй город-центр области (Брянск, Чернигов)
   * страны, регионы, направления фронта
   * места, где живёт/служит автор поста
@@ -111,50 +111,43 @@ class LLMClassifier:
             print(f"  ⚠️ LLM-кэш не сохранился: {e}", file=sys.stderr)
 
     def classify(self, text):
+        """None = LLM недоступна или ошибка (парсер уйдёт на regex-fallback).
+        dict = успешный ответ LLM."""
         if self.client is None:
             return None
         h = _text_hash(text)
         if h in self.cache:
             return self.cache[h]
 
-        max_retries = 2
-        for attempt in range(max_retries):
-            try:
-                resp = self.client.chat.completions.create(
-                    model=LLM_MODEL,
-                    messages=[
-                        {"role": "system", "content": SYSTEM_PROMPT},
-                        {"role": "user", "content": text[:1500]},
-                    ],
-                    temperature=0,
-                    max_tokens=400,
-                )
-                self.new_calls += 1
-                content = (resp.choices[0].message.content or "").strip()
-                result = self._parse_response(content)
-                if result is None:
-                    self.errors += 1
-                    return None
-                self.cache[h] = result
-                time.sleep(0.3)
-                return result
-            except Exception as e:
-                err_str = str(e)
-                if "429" in err_str:
-                    self.errors += 1
-                    if attempt < max_retries - 1:
-                        print(f"  ⚠️ LLM 429, retry через 2 сек...", file=sys.stderr)
-                        time.sleep(2)
-                        continue
-                    print(f"  ⚠️ LLM 429 — rate limit", file=sys.stderr)
-                    return None
+        try:
+            resp = self.client.chat.completions.create(
+                model=LLM_MODEL,
+                messages=[
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": text[:1500]},
+                ],
+                temperature=0,
+                max_tokens=400,
+            )
+            self.new_calls += 1
+            content = (resp.choices[0].message.content or "").strip()
+            result = self._parse_response(content)
+            if result is None:
                 self.errors += 1
-                if "timeout" in err_str.lower():
-                    print(f"  ⚠️ LLM timeout", file=sys.stderr)
-                else:
-                    print(f"  ⚠️ LLM: {err_str[:200]}", file=sys.stderr)
                 return None
-        return None
+            self.cache[h] = result
+            time.sleep(0.3)
+            return result
+        except Exception as e:
+            self.errors += 1
+            err_str = str(e)
+            if "429" in err_str:
+                print(f"  ⚠️ LLM 429 — rate limit / out of capacity", file=sys.stderr)
+            elif "timeout" in err_str.lower():
+                print(f"  ⚠️ LLM timeout", file=sys.stderr)
+            else:
+                print(f"  ⚠️ LLM: {err_str[:200]}", file=sys.stderr)
+            return None
 
     def _parse_response(self, content):
         if not content:
