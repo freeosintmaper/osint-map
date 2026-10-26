@@ -49,4 +49,4 @@ jobs:
             --project-ref "$PROJECT_ID"
 
       - name: Deploy the AI function
-        run: supabase functions deploy zone-assistant --project-ref "$PROJECT_ID"
+        run: supabase functions deploy zone-assistant --project-ref "$PROJECT_ID" --no-verify-jwt
