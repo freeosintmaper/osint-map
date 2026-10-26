@@ -6,6 +6,7 @@ import time
 import random
 import math
 import os
+from datetime import datetime, timezone
 from html import unescape
 from collections import Counter, defaultdict
 
@@ -1230,10 +1231,18 @@ def classify_event(text):
 
 
 def make_dedup_key(ev):
-    loc = ev.get("location", "")
-    if ev.get("url"):
-        return ev["url"] + "|" + loc
-    return ev["channel"] + "|" + loc + "|" + ev.get("description", "")[:80]
+    loc = re.sub(r"\s+", " ", (ev.get("location") or "").strip()).casefold()
+    country = (ev.get("country") or "").strip().upper()
+    event_type = (ev.get("event_type") or "").strip()
+    url = (ev.get("url") or "").strip()
+    if url:
+        return "|".join((url, country, loc, event_type))
+    description = re.sub(
+        r"\s+", " ", (ev.get("description") or "").strip()
+    ).casefold()
+    return "|".join((
+        (ev.get("channel") or "").strip(), country, loc, event_type, description
+    ))
 
 
 def jitter_coords(lat, lng, radius_km):
@@ -1293,7 +1302,10 @@ def main():
 
         for post in posts:
             text = post["text"]
-            key = text[:80]
+            # Normalize whitespace and compare the complete text, not only its
+            # prefix. Include source-country context to preserve distinct events.
+            normalized_text = re.sub(r"\s+", " ", unescape(text)).strip().casefold()
+            key = channel_country + "|" + normalized_text
             if key in seen_texts:
                 continue
             seen_texts.add(key)
@@ -1416,7 +1428,7 @@ def main():
         date_hour = ""
         if ev.get("date"):
             date_hour = ev["date"][:13]
-        key = (ev["location"], ev["event_type"], date_hour)
+        key = (ev.get("country") or "", ev["location"], ev["event_type"], date_hour)
         groups[key].append(ev)
 
     deduped = []
@@ -1448,9 +1460,13 @@ def main():
         radius = radius_for_count(count)
         ev["lat"], ev["lng"] = jitter_coords(ev["lat"], ev["lng"], radius)
 
-    output = "window.TG_DATA = " + json.dumps({"events": raw_events}, ensure_ascii=False) + ";"
-    with open("data/telegram-events.js", "w", encoding="utf-8") as f:
+    generated_at = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+    payload = {"generated_at": generated_at, "events": raw_events}
+    output = "window.TG_DATA = " + json.dumps(payload, ensure_ascii=False) + ";"
+    temp_path = "data/telegram-events.js.tmp"
+    with open(temp_path, "w", encoding="utf-8") as f:
         f.write(output)
+    os.replace(temp_path, "data/telegram-events.js")
 
     clf.save_cache()
 
