@@ -2410,6 +2410,7 @@
   var autoBtn = document.getElementById('btnZoneAIAuto');
   var previewLayers = [];
   var proposals = [];
+  var requestZoneSnapshot = [];
   var busy = false;
 
   function setStatus(message, kind) {
@@ -2483,7 +2484,8 @@
   function validProposal(proposal) {
     if (!proposal || ['add', 'update'].indexOf(proposal.action) < 0) return false;
     if (['russia', 'ukraine', 'grey'].indexOf(proposal.category) < 0) return false;
-    if (proposal.action === 'update' && (proposal.zoneId == null || !gatherZones().some(function(zone) { return String(zone.id) === String(proposal.zoneId); }))) return false;
+    var proposalZones = requestZoneSnapshot.length ? requestZoneSnapshot : gatherZones();
+    if (proposal.action === 'update' && (proposal.zoneId == null || !proposalZones.some(function(zone) { return String(zone.id) === String(proposal.zoneId); }))) return false;
     if (proposal.action === 'add' && proposal.zoneId != null) return false;
     var geometry = proposal.geometry;
     if (!geometry || geometry.type !== 'Polygon' || !Array.isArray(geometry.coordinates) || geometry.coordinates.length !== 1) return false;
@@ -2569,6 +2571,15 @@
       setStatus('Предложение изменилось или геометрия некорректна. Сгенерируй его заново.', 'error');
       return;
     }
+    if (proposal.action === 'update') {
+      var currentZone = gatherZones().find(function(zone) { return String(zone.id) === String(proposal.zoneId); });
+      var baseZone = requestZoneSnapshot.find(function(zone) { return String(zone.id) === String(proposal.zoneId); });
+      if (!currentZone || !baseZone || currentZone.category !== baseZone.category ||
+          JSON.stringify(currentZone.geometry) !== JSON.stringify(baseZone.geometry)) {
+        setStatus('Эта зона изменилась после получения предложения. Сгенерируй предложение заново, чтобы не затереть новые изменения.', 'error');
+        return;
+      }
+    }
     var auth = sb.auth.getSession();
     auth.then(function(sessionResult) {
       if (sessionResult.error || !sessionResult.data || !sessionResult.data.session) {
@@ -2633,10 +2644,11 @@
       var session = sessionResult.data && sessionResult.data.session;
       if (sessionResult.error || !session) throw new Error('Нужен вход в админ-панель.');
       var center = map.getCenter();
+      requestZoneSnapshot = gatherZones();
       var payload = {
         mode: mode,
         instruction: instruction,
-        zones: gatherZones(),
+        zones: requestZoneSnapshot,
         events: mode === 'auto' ? gatherRecentEvents() : [],
         mapCenter: { lat: center.lat, lng: center.lng, zoom: map.getZoom() }
       };
