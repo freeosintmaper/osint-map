@@ -2441,8 +2441,8 @@
     var ring = geometry.coordinates[0];
     if (!Array.isArray(ring) || ring.length < 4) return null;
     var points = ring;
-    if (ring.length > 100) {
-      var step = Math.ceil((ring.length - 1) / 99);
+    if (ring.length > 40) {
+      var step = Math.ceil((ring.length - 1) / 39);
       points = [];
       for (var i = 0; i < ring.length - 1; i += step) points.push(ring[i]);
       points.push(points[0]);
@@ -2506,10 +2506,10 @@
     clearPreview();
     resultsEl.replaceChildren();
     proposals = (Array.isArray(data.proposals) ? data.proposals : []).filter(validProposal);
-    if (data.summary) setStatus(String(data.summary), '');
-    if (data.question) setStatus(String(data.question), '');
+    var explanation = [data.summary, data.question].filter(function(value) { return typeof value === 'string' && value.trim(); }).join('\n\n');
+    if (explanation) setStatus(explanation, '');
     if (!proposals.length) {
-      if (!data.summary && !data.question) setStatus('ИИ не вернул подходящих предложений. Попробуй уточнить команду или координаты.', '');
+      if (!explanation) setStatus('ИИ не вернул подходящих предложений. Попробуй уточнить команду или координаты.', '');
       return;
     }
     proposals.forEach(function(proposal, index) {
@@ -2556,14 +2556,14 @@
       applyBtn.type = 'button';
       applyBtn.className = 'primary';
       applyBtn.textContent = 'Применить предложение';
-      applyBtn.addEventListener('click', function() { applyProposal(proposal, applyBtn); });
+      applyBtn.addEventListener('click', function() { applyProposal(proposal, applyBtn, index); });
       actions.appendChild(applyBtn);
       card.appendChild(actions);
       resultsEl.appendChild(card);
     });
     if (!proposals.length) setStatus('Предложения пришли, но не прошли проверку геометрии. Ничего не изменено.', 'error');
   }
-  function applyProposal(proposal, button) {
+  function applyProposal(proposal, button, proposalIndex) {
     if (busy || !sb) return;
     if (!validProposal(proposal)) {
       setStatus('Предложение изменилось или геометрия некорректна. Сгенерируй его заново.', 'error');
@@ -2596,7 +2596,10 @@
         button.disabled = true;
         button.className = '';
         setStatus('Предложение сохранено. Проверь обновлённую зону на карте.', 'success');
-        clearPreview();
+        if (previewLayers[proposalIndex]) {
+          try { map.removeLayer(previewLayers[proposalIndex]); } catch (e) {}
+          previewLayers[proposalIndex] = null;
+        }
         if (typeof loadUserZones === 'function') loadUserZones();
       }).catch(function(error) {
         busy = false;
