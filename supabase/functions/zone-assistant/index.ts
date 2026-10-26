@@ -231,22 +231,100 @@ Deno.serve(async (req: Request) => {
     ].join("\n");
 
     const prompt = "Create a cautious review of this request and supplied map context. Output JSON only. Input data (JSON):\n" + JSON.stringify(context);
-    const aiResponse = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/" + encodeURIComponent(model) + ":generateContent",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: systemInstruction }] },
-          contents: [{ role: "user", parts: [{ text: prompt }] }],
-          generationConfig: { responseMimeType: "application/json", temperature: 0.15, maxOutputTokens: 4096 },
-        }),
-      },
-    );
-    if (!aiResponse.ok) {
-      const errText = (await aiResponse.text()).slice(0, 500);
-      console.error("Gemini request failed", aiResponse.status, errText);
-      return respond({ error: "ИИ-провайдер вернул ошибку (" + aiResponse.status + "). Проверь модель и API-ключ в настройках." }, 502, origin);
+    const requestBody = JSON.stringify({
+      systemInstruction: { parts: [{ text: systemInstruction }] },
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig: { responseMimeType: "application/json", temperature: 0.15, maxOutputTokens: 4096 },
+    });
+
+    async function callGeminiWithRetry(modelName: string): Promise<{ response: Response | null; status: number; detail: string }> {
+      let lastStatus = 0;
+      let lastDetail = "";
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          const response = await fetch(
+            "https://generativelanguage.googleapis.com/v1beta/models/" + encodeURIComponent(modelName) + ":generateContent",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
+              body: requestBody,
+              signal: AbortSignal.timeout(20000),
+            },
+          );
+          if (response.ok) return { response, status: response.status, detail: "" };
+
+          lastStatus = response.status;
+          lastDetail = (await response.text()).slice(0, 500);
+          console.error("Gemini request failed", modelName, "attempt", attempt + 1, lastStatus, lastDetail);
+
+          const retryable = [408, 429, 500, 503, 504].includes(lastStatus);
+          if (attempt === 0 && retryable) {
+            const delayMs = 700 + Math.floor(Math.random() * 400);
+            await new Promise((resolve) => setTimeout(resolve, delayMs));
+            continue;
+          }
+          break;
+        } catch (error) {
+          lastStatus = 0;
+          lastDetail = error instanceof Error ? error.message : String(error);
+          console.error("Gemini network/timeout error", modelName, "attempt", attempt + 1, lastDetail);
+          if (attempt === 0) {
+            const delayMs = 700 + Math.floor(Math.random() * 400);
+            await new Promise((resolve) => setTimeout(resolve, delayMs));
+          }
+        }
+      }
+      return { response: null, status: lastStatus, detail: lastDetail };
+    }
+
+    let aiResponse: Response | null = null;
+    let providerStatus = 0;
+    const fallbackModel = cleanText(Deno.env.get("GEMINI_FALLBACK_MODEL"), 80) || "gemini-3.6-flash";
+    const modelsToTry = model === fallbackModel ? [model] : [model, fallbackModel];
+
+    for (let modelIndex = 0; modelIndex < modelsToTry.length; modelIndex++) {
+      const candidateModel = modelsToTry[modelIndex];
+      const result = await callGeminiWithRetry(candidateModel);
+      if (result.response) {
+        aiResponse = result.response;
+        if (candidateModel !== model) console.warn("Gemini fallback model succeeded:", candidateModel);
+        break;
+      }
+
+      providerStatus = result.status;
+      const shouldTryFallback = modelIndex === 0 &&
+        [0, 404, 408, 429, 500, 503, 504].includes(result.status);
+      if (shouldTryFallback) {
+        console.warn("Primary Gemini model unavailable; trying fallback:", fallbackModel, "status:", result.status);
+        continue;
+      }
+      break;
+    }
+
+    if (!aiResponse) {
+      if (providerStatus === 503 || providerStatus === 500 || providerStatus === 504 || providerStatus === 408 || providerStatus === 0) {
+        return respond({
+          error: "Gemini временно недоступен даже после повтора и попытки с резервной моделью. Подожди минуту и попробуй снова; менять API-ключ пока не нужно.",
+        }, 503, origin);
+      }
+      if (providerStatus === 429) {
+        return respond({
+          error: "Gemini ограничил частоту запросов или квоту (429). Подожди и проверь лимиты проекта в Google AI Studio.",
+        }, 429, origin);
+      }
+      if (providerStatus === 401 || providerStatus === 403) {
+        return respond({
+          error: "Gemini отклонил доступ. Проверь секрет GEMINI_API_KEY и доступность модели для этого проекта.",
+        }, 502, origin);
+      }
+      if (providerStatus === 404) {
+        return respond({
+          error: "Модель Gemini не найдена. Проверь название GEMINI_MODEL в настройках развёртывания.",
+        }, 502, origin);
+      }
+      return respond({
+        error: "Gemini отклонил запрос (HTTP " + providerStatus + "). Проверь настройки модели и формат запроса.",
+      }, 502, origin);
     }
 
     const generated = await aiResponse.json();
