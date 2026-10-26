@@ -66,7 +66,7 @@ data/telegram-events.js   (JSON в JS-обёртке)
 GitHub Pages ──── Leaflet.js ──── Supabase (зоны автора)
 ```
 
-**Парсер** запускается через GitHub Actions каждые 15 минут (`cron: '5,20,35,50 * * * *'`):
+**Парсер** запускается через GitHub Actions каждые 30 минут (`cron: '5,35 * * * *'`):
 
 1. Загружает HTML последних постов каждого канала через `t.me/s/<channel>`
 2. Отсеивает рекламу, сводки, исторические посты, иностранные конфликты
@@ -91,7 +91,7 @@ GitHub Pages ──── Leaflet.js ──── Supabase (зоны автор�
 | Парсер | Python 3.11 |
 | LLM | Cloudflare Workers AI |
 | Деплой | GitHub Pages |
-| Обновление данных | GitHub Actions (cron каждые 15 минут) |
+| Обновление данных | GitHub Actions (cron каждые 30 минут) |
 
 Всё работает бесплатно — без платных подписок и API-ключей, требующих карты.
 
@@ -164,7 +164,7 @@ python3 scripts/parse_telegram.py
 
 ### Ограничения и известные проблемы
 
-- **Задержка обновления**: данные обновляются каждые 15 минут, не в реальном времени. Для оперативных нужд используйте первоисточники.
+- **Задержка обновления**: данные обновляются каждые 30 минут, не в реальном времени. Для оперативных нужд используйте первоисточники.
 - **Точность геокодинга**: LLM определяет локации по тексту поста. Ошибки возможны (особенно при дублирующихся топонимах — например, Новомосковск в РФ и Украине). Для критических случаев страна определяется из контекста поста.
 - **Лимит LLM**: Cloudflare Workers AI даёт 10 000 Neurons/день бесплатно. Один запрос ≈ 10 Neurons, то есть ~1000 запросов/день. Благодаря кэшу (`data/llm_cache.json`) повторные посты в LLM не отправляются — реальный расход 200–300 запросов/день, запас ~3×.
 - **Дублирование новостей**: если один и тот же факт публикуют в разных каналах, дедупликация по (локация + тип + час) схлопывает их в одно событие. Иногда это приводит к объединению двух разных событий.
@@ -250,7 +250,7 @@ data/telegram-events.js   (JSON у JS-обгортці)
 GitHub Pages ──── Leaflet.js ──── Supabase (зони автора)
 ```
 
-**Парсер** запускається через GitHub Actions кожні 15 хвилин (`cron: '5,20,35,50 * * * *'`):
+**Парсер** запускається через GitHub Actions кожні 30 хвилин (`cron: '5,35 * * * *'`):
 
 1. Завантажує HTML останніх постів кожного каналу через `t.me/s/<channel>`
 2. Відсіює рекламу, зведення, історичні пости, іноземні конфлікти
@@ -275,7 +275,7 @@ GitHub Pages ──── Leaflet.js ──── Supabase (зони автор�
 | Парсер | Python 3.11 |
 | LLM | Cloudflare Workers AI |
 | Деплой | GitHub Pages |
-| Оновлення даних | GitHub Actions (cron кожні 15 хвилин) |
+| Оновлення даних | GitHub Actions (cron кожні 30 хвилин) |
 
 Все працює безкоштовно — без платних підписок і API-ключів, що потребують картки.
 
@@ -348,7 +348,7 @@ python3 scripts/parse_telegram.py
 
 ### Обмеження та відомі проблеми
 
-- **Затримка оновлення**: дані оновлюються кожні 15 хвилин, не в реальному часі. Для оперативних потреб використовуйте першоджерела.
+- **Затримка оновлення**: дані оновлюються кожні 30 хвилин, не в реальному часі. Для оперативних потреб використовуйте першоджерела.
 - **Точність геокодингу**: LLM визначає локації за текстом поста. Помилки можливі (особливо при дубльованих топонімах — наприклад, Новомосковськ у РФ та Україні). Для критичних випадків країна визначається з контексту поста.
 - **Ліміт LLM**: Cloudflare Workers AI дає 10 000 Neurons/день безкоштовно. Один запит ≈ 10 Neurons, тобто ~1000 запитів/день. Завдяки кешу (`data/llm_cache.json`) повторні пости в LLM не надсилаються — реальна витрата 200–300 запитів/день, запас ~3×.
 - **Дублювання новин**: якщо один і той самий факт публікують у різних каналах, дедуплікація за (локація + тип + година) згортає їх в одну подію. Іноді це призводить до об'єднання двох різних подій.
@@ -434,7 +434,7 @@ data/telegram-events.js   (JSON wrapped in JS)
 GitHub Pages ──── Leaflet.js ──── Supabase (author zones)
 ```
 
-The **parser** runs via GitHub Actions every 15 minutes (`cron: '5,20,35,50 * * * *'`):
+The **parser** runs via GitHub Actions every 30 minutes (`cron: '5,35 * * * *'`):
 
 1. Fetches the HTML of each channel's latest posts via `t.me/s/<channel>`
 2. Filters out ads, summaries, historical posts, foreign conflicts
@@ -459,7 +459,7 @@ The **parser** runs via GitHub Actions every 15 minutes (`cron: '5,20,35,50 * * 
 | Parser | Python 3.11 |
 | LLM | Cloudflare Workers AI |
 | Deploy | GitHub Pages |
-| Data updates | GitHub Actions (cron every 15 minutes) |
+| Data updates | GitHub Actions (cron every 30 minutes) |
 
 Everything runs for free — no paid subscriptions, no API keys requiring a credit card.
 
@@ -532,7 +532,7 @@ Result — `data/telegram-events.js`.
 
 ### Limitations and known issues
 
-- **Update lag**: data is refreshed every 15 minutes, not in real time. For operational needs, use the original sources.
+- **Update lag**: data is refreshed every 30 minutes, not in real time. For operational needs, use the original sources.
 - **Geocoding accuracy**: the LLM determines locations from post text. Errors are possible (especially with duplicate toponyms — e.g. Novomoskovsk in Russia and Ukraine). For critical cases the country is inferred from the post's context.
 - **LLM quota**: Cloudflare Workers AI provides 10,000 Neurons/day for free. One request ≈ 10 Neurons, i.e. ~1,000 requests/day. Thanks to the cache (`data/llm_cache.json`), repeated posts are not sent to the LLM — actual usage is 200–300 requests/day, ~3× headroom.
 - **News duplication**: if the same fact is reported by different channels, deduplication by (location + type + hour) collapses them into one event. Occasionally this merges two distinct events.
