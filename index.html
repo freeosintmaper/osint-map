@@ -856,8 +856,9 @@
 
     // External links/media are restricted to HTTPS; never allow javascript: or data: URLs.
     function safeHttpUrl(value) {
+      if (value == null || String(value).trim() === '') return '';
       try {
-        var parsed = new URL(String(value || ''), window.location.href);
+        var parsed = new URL(String(value).trim(), window.location.href);
         return parsed.protocol === 'https:' ? parsed.href : '';
       } catch (e) {
         return '';
