@@ -634,6 +634,8 @@
     .leaflet-popup-content {
       margin: 16px 18px; font-family: inherit;
       font-size: 13px; line-height: 1.5;
+      max-height: 68vh; max-height: min(68vh, 540px);
+      overflow-y: auto; overscroll-behavior: contain;
     }
     .leaflet-popup-content b { font-weight: 700; font-size: 14px; }
     .leaflet-popup-content small { font-size: 11px; color: var(--text-muted); }
