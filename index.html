@@ -732,6 +732,69 @@
       .event-icon { width: 34px; height: 34px; }
       .event-icon svg { width: 18px; height: 18px; }
     }
+
+    #zoneAIOverlay {
+      position: fixed; inset: 0; z-index: 12000; display: none;
+      align-items: center; justify-content: center;
+      padding: 16px; background: rgba(10, 10, 20, 0.62);
+      backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+    }
+    #zoneAIOverlay.open { display: flex; }
+    #zoneAIModal {
+      width: min(760px, 96vw); max-height: 88vh; overflow-y: auto;
+      background: var(--bg-panel); color: var(--text-main);
+      border: 1px solid var(--border-light); border-radius: 18px;
+      box-shadow: var(--shadow-xl); padding: 22px;
+    }
+    #zoneAIModal .zone-ai-header {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      margin-bottom: 8px;
+    }
+    #zoneAIModal h3 { margin: 0; font-size: 18px; letter-spacing: -0.2px; }
+    #zoneAIModal .zone-ai-close {
+      width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--border-mid);
+      color: var(--text-main); background: var(--bg-input); cursor: pointer; font-size: 18px;
+    }
+    #zoneAIModal .zone-ai-intro, #zoneAIModal .zone-ai-note {
+      color: var(--text-secondary); font-size: 12px; line-height: 1.55;
+    }
+    #zoneAIInstruction {
+      display: block; width: 100%; min-height: 104px; resize: vertical;
+      margin: 12px 0; padding: 12px 14px; border: 1px solid var(--border-mid);
+      border-radius: 12px; background: var(--bg-input); color: var(--text-main);
+      font: inherit; font-size: 13px; line-height: 1.5;
+    }
+    #zoneAIInstruction:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    #zoneAIModal .zone-ai-actions { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+    #zoneAIModal .zone-ai-actions button, #zoneAIModal .zone-ai-proposal button {
+      padding: 9px 12px; border: 1px solid var(--border-mid); border-radius: 9px;
+      background: var(--bg-input); color: var(--text-main); cursor: pointer;
+      font: inherit; font-size: 12px; font-weight: 600;
+    }
+    #zoneAIModal .zone-ai-actions button.primary,
+    #zoneAIModal .zone-ai-proposal button.primary {
+      background: var(--accent); color: #fff; border-color: var(--accent);
+    }
+    #zoneAIModal button:disabled { opacity: .55; cursor: wait; }
+    #zoneAIStatus { margin: 10px 0; font-size: 12px; line-height: 1.5; color: var(--text-secondary); white-space: pre-wrap; }
+    #zoneAIStatus.error { color: #dc2626; }
+    #zoneAIStatus.success { color: #15803d; }
+    #zoneAIResults { display: grid; gap: 10px; margin-top: 10px; }
+    #zoneAIResults .zone-ai-proposal {
+      border: 1px solid var(--border-light); border-radius: 12px;
+      padding: 14px; background: var(--bg-panel);
+    }
+    #zoneAIResults .zone-ai-proposal h4 { margin: 0 0 7px; font-size: 14px; }
+    #zoneAIResults .zone-ai-proposal p { margin: 6px 0; font-size: 12px; line-height: 1.5; color: var(--text-secondary); white-space: pre-wrap; }
+    #zoneAIResults .zone-ai-proposal .zone-ai-meta { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+    #zoneAIResults .zone-ai-proposal .zone-ai-proposal-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    @media (max-width: 600px) {
+      #zoneAIOverlay { padding: 8px; align-items: flex-end; }
+      #zoneAIModal { width: 100%; max-height: 92vh; padding: 16px; border-radius: 18px 18px 10px 10px; }
+      #zoneAIModal h3 { font-size: 16px; }
+      #zoneAIInstruction { min-height: 90px; }
+    }
+
   </style>
 </head>
 <body>
@@ -793,10 +856,33 @@
       <button id="btnDrawZone">✏️ Нарисовать полигон</button>
       <button id="btnFinishZones">✅ Готово (закрыть)</button>
       <button id="btnStopEditing">🛑 Выйти из режима редактирования</button>
+      <button id="btnOpenZoneAI">✨ ИИ-помощник зон</button>
       <button id="btnClearAllZones" class="danger">🗑️ Удалить ВСЕ зоны (внимание!)</button>
     </div>
     <div class="hint">
       Клик по зоне → «Изменить» — тяни вершины. Затем нажми «Подтвердить» на панели внизу.
+    </div>
+  </div>
+
+  <div id="zoneAIOverlay">
+    <div id="zoneAIModal" role="dialog" aria-modal="true" aria-labelledby="zoneAITitle">
+      <div class="zone-ai-header">
+        <h3 id="zoneAITitle">✨ ИИ-помощник зон</h3>
+        <button type="button" class="zone-ai-close" id="btnZoneAIClose" aria-label="Закрыть">×</button>
+      </div>
+      <div class="zone-ai-intro">
+        ИИ готовит только черновики GeoJSON. Он не сохраняет изменения сам: сначала проверь форму на карте и основание предложения.
+      </div>
+      <textarea id="zoneAIInstruction" placeholder="Например: создай полигон вокруг координат 50.4501, 30.5234 радиусом примерно 5 км. Категория — серая зона."></textarea>
+      <div class="zone-ai-actions">
+        <button type="button" class="primary" id="btnZoneAIGenerate">Сгенерировать по команде</button>
+        <button type="button" id="btnZoneAIAuto">Предложить изменения по новым событиям</button>
+      </div>
+      <div class="zone-ai-note">
+        Автоматические предложения используют последние события как сигналы для проверки, но отдельные удары, тревоги и сообщения сами по себе не доказывают изменение контроля территории. Нужна проверка первоисточников.
+      </div>
+      <div id="zoneAIStatus" role="status" aria-live="polite"></div>
+      <div id="zoneAIResults"></div>
     </div>
   </div>
 
@@ -863,6 +949,23 @@
       } catch (e) {
         return '';
       }
+    }
+
+    function isDirectVideoFile(value) {
+      try {
+        var parsed = new URL(value);
+        return /\.(mp4|m4v|webm|ogv|ogg)$/i.test(parsed.pathname);
+      } catch (e) { return false; }
+    }
+
+    function telegramEmbedUrl(value) {
+      try {
+        var parsed = new URL(value);
+        if (parsed.protocol !== 'https:' || !/^(t\.me|telegram\.me)$/i.test(parsed.hostname)) return '';
+        var match = parsed.pathname.match(/^\/([A-Za-z0-9_]{3,})\/(\d+)\/?$/);
+        if (!match) return '';
+        return 'https://t.me/' + match[1] + '/' + match[2] + '?embed=1';
+      } catch (e) { return ''; }
     }
   </script>
 
@@ -1669,41 +1772,68 @@
         var sourceUrl = safeHttpUrl(ev.url);
         if (photoUrl || videoUrl) {
           var media = document.createElement('div');
-          media.style.margin = '10px 0';
-          if (photoUrl) {
-            var photoLink = document.createElement('a');
-            photoLink.href = photoUrl;
-            photoLink.target = '_blank';
-            photoLink.rel = 'noopener noreferrer';
-            var photo = document.createElement('img');
-            photo.src = photoUrl;
-            photo.alt = 'Фото к событию';
-            photo.loading = 'lazy';
-            photo.style.cssText = 'max-width:100%;max-height:240px;border-radius:8px;display:block;';
-            photoLink.appendChild(photo);
-            media.appendChild(photoLink);
-            popup.appendChild(media);
-          } else if (videoUrl) {
-            var videoWrap = document.createElement('div');
-            videoWrap.style.cssText = 'position:relative;display:inline-block;max-width:100%;';
-            var videoLink = document.createElement('a');
-            videoLink.href = sourceUrl || videoUrl;
-            videoLink.target = '_blank';
-            videoLink.rel = 'noopener noreferrer';
+          media.style.cssText = 'margin:10px 0;display:grid;gap:8px;';
+
+          if (videoUrl && isDirectVideoFile(videoUrl)) {
+            var video = document.createElement('video');
+            video.controls = true;
+            video.playsInline = true;
+            video.preload = 'metadata';
+            video.style.cssText = 'width:100%;max-width:100%;max-height:300px;background:#000;border-radius:8px;display:block;';
+            video.src = videoUrl;
+            if (photoUrl) video.poster = photoUrl;
+            video.setAttribute('aria-label', 'Видео к событию');
+            media.appendChild(video);
+          } else if (photoUrl || videoUrl) {
+            var previewUrl = photoUrl || videoUrl;
+            var telegramUrl = telegramEmbedUrl(sourceUrl);
+            var previewLink = document.createElement('a');
+            previewLink.href = sourceUrl || previewUrl;
+            previewLink.target = '_blank';
+            previewLink.rel = 'noopener noreferrer';
             var preview = document.createElement('img');
-            preview.src = videoUrl;
-            preview.alt = 'Видео к событию';
+            preview.src = previewUrl;
+            preview.alt = videoUrl ? 'Превью медиа к событию' : 'Фото к событию';
             preview.loading = 'lazy';
-            preview.style.cssText = 'max-width:100%;max-height:240px;border-radius:8px;display:block;';
-            videoLink.appendChild(preview);
-            var play = document.createElement('span');
-            play.textContent = '▶';
-            play.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.65);border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;color:white;font-size:22px;pointer-events:none;';
-            videoWrap.appendChild(videoLink);
-            videoWrap.appendChild(play);
-            media.appendChild(videoWrap);
-            popup.appendChild(media);
+            preview.style.cssText = 'width:100%;max-width:100%;max-height:260px;object-fit:contain;background:rgba(0,0,0,.04);border-radius:8px;display:block;';
+            previewLink.appendChild(preview);
+            media.appendChild(previewLink);
+
+            if (videoUrl && telegramUrl) {
+              var embedButton = document.createElement('button');
+              embedButton.type = 'button';
+              embedButton.textContent = '▶ Смотреть видео в Telegram';
+              embedButton.style.cssText = 'width:100%;padding:10px 12px;border:1px solid var(--border-mid);border-radius:9px;background:var(--bg-input);color:var(--text-main);font:inherit;font-size:12px;font-weight:600;cursor:pointer;';
+              embedButton.addEventListener('click', function() {
+                if (embedButton.disabled) return;
+                embedButton.disabled = true;
+                embedButton.textContent = 'Загружаем плеер Telegram…';
+                var frame = document.createElement('iframe');
+                frame.src = telegramUrl;
+                frame.title = 'Публикация Telegram с видео';
+                frame.loading = 'lazy';
+                frame.referrerPolicy = 'strict-origin-when-cross-origin';
+                frame.allow = 'fullscreen; picture-in-picture';
+                frame.allowFullscreen = true;
+                frame.style.cssText = 'width:100%;height:380px;max-height:55vh;border:0;border-radius:8px;background:var(--bg-input);';
+                frame.addEventListener('error', function() {
+                  embedButton.disabled = false;
+                  embedButton.textContent = 'Не удалось встроить. Открыть Telegram';
+                });
+                media.replaceChildren(frame);
+              });
+              media.appendChild(embedButton);
+            } else if (videoUrl && sourceUrl) {
+              var openVideo = document.createElement('a');
+              openVideo.href = sourceUrl;
+              openVideo.target = '_blank';
+              openVideo.rel = 'noopener noreferrer';
+              openVideo.textContent = 'Открыть видео в источнике ↗';
+              openVideo.style.cssText = 'font-size:12px;font-weight:600;color:var(--accent);text-decoration:none;';
+              media.appendChild(openVideo);
+            }
           }
+          popup.appendChild(media);
         }
 
         var description = document.createElement('div');
@@ -2269,5 +2399,283 @@
       });
     }
   </script>
+
+<script>
+(function initZoneAIAssistant() {
+  var overlay = document.getElementById('zoneAIOverlay');
+  var textarea = document.getElementById('zoneAIInstruction');
+  var statusEl = document.getElementById('zoneAIStatus');
+  var resultsEl = document.getElementById('zoneAIResults');
+  var generateBtn = document.getElementById('btnZoneAIGenerate');
+  var autoBtn = document.getElementById('btnZoneAIAuto');
+  var previewLayers = [];
+  var proposals = [];
+  var busy = false;
+
+  function setStatus(message, kind) {
+    statusEl.textContent = message || '';
+    statusEl.className = kind || '';
+  }
+  function clearPreview() {
+    previewLayers.forEach(function(layer) { try { map.removeLayer(layer); } catch (e) {} });
+    previewLayers = [];
+  }
+  function closeAssistant() {
+    overlay.classList.remove('open');
+    clearPreview();
+  }
+  function openAssistant() {
+    if (!sb) {
+      alert('Нет подключения к Supabase.');
+      return;
+    }
+    overlay.classList.add('open');
+    setStatus('', '');
+    resultsEl.replaceChildren();
+    clearPreview();
+    proposals = [];
+    textarea.focus();
+  }
+  function compactGeometry(geometry) {
+    if (!geometry || geometry.type !== 'Polygon' || !Array.isArray(geometry.coordinates) || !geometry.coordinates.length) return null;
+    var ring = geometry.coordinates[0];
+    if (!Array.isArray(ring) || ring.length < 4) return null;
+    var points = ring;
+    if (ring.length > 100) {
+      var step = Math.ceil((ring.length - 1) / 99);
+      points = [];
+      for (var i = 0; i < ring.length - 1; i += step) points.push(ring[i]);
+      points.push(points[0]);
+    }
+    return { type: 'Polygon', coordinates: [points] };
+  }
+  function gatherZones() {
+    var features = userZonesLayer && userZonesLayer.toGeoJSON ? userZonesLayer.toGeoJSON().features || [] : [];
+    return features.slice(0, 50).map(function(feature) {
+      var props = feature.properties || {};
+      return {
+        id: props.id == null ? null : props.id,
+        category: ['russia', 'ukraine', 'grey'].indexOf(props.category) >= 0 ? props.category : 'russia',
+        geometry: compactGeometry(feature.geometry)
+      };
+    }).filter(function(zone) { return !!zone.geometry; });
+  }
+  function gatherRecentEvents() {
+    var events = window.TG_DATA && Array.isArray(window.TG_DATA.events) ? window.TG_DATA.events : [];
+    var cutoff = Date.now() - 48 * 60 * 60 * 1000;
+    return events.filter(function(event) {
+      var time = Date.parse(event.date || '');
+      return isFinite(time) && time >= cutoff && isFinite(Number(event.lat)) && isFinite(Number(event.lng));
+    }).sort(function(a, b) { return Date.parse(b.date) - Date.parse(a.date); }).slice(0, 25).map(function(event) {
+      return {
+        id: event.id == null ? null : event.id,
+        date: String(event.date || '').slice(0, 40),
+        type: String(event.event_type || '').slice(0, 80),
+        location: String(event.location || '').slice(0, 100),
+        country: String(event.country || '').slice(0, 10),
+        lat: Number(event.lat),
+        lng: Number(event.lng),
+        description: String(event.description || '').slice(0, 260),
+        url: safeHttpUrl(event.url)
+      };
+    });
+  }
+  function validProposal(proposal) {
+    if (!proposal || ['add', 'update'].indexOf(proposal.action) < 0) return false;
+    if (['russia', 'ukraine', 'grey'].indexOf(proposal.category) < 0) return false;
+    if (proposal.action === 'update' && (proposal.zoneId == null || !gatherZones().some(function(zone) { return String(zone.id) === String(proposal.zoneId); }))) return false;
+    if (proposal.action === 'add' && proposal.zoneId != null) return false;
+    var geometry = proposal.geometry;
+    if (!geometry || geometry.type !== 'Polygon' || !Array.isArray(geometry.coordinates) || geometry.coordinates.length !== 1) return false;
+    var ring = geometry.coordinates[0];
+    if (!Array.isArray(ring) || ring.length < 4 || ring.length > 501) return false;
+    var first = ring[0], last = ring[ring.length - 1];
+    if (!Array.isArray(first) || !Array.isArray(last) || first.length < 2 || last.length < 2 || first[0] !== last[0] || first[1] !== last[1]) return false;
+    return ring.every(function(point) {
+      return Array.isArray(point) && point.length >= 2 &&
+        Number.isFinite(point[0]) && Number.isFinite(point[1]) &&
+        point[0] >= -180 && point[0] <= 180 && point[1] >= -90 && point[1] <= 90;
+    });
+  }
+  function categoryColor(category) {
+    if (category === 'ukraine') return '#0055cc';
+    if (category === 'grey') return '#666666';
+    return '#cc0000';
+  }
+  function showProposals(data) {
+    clearPreview();
+    resultsEl.replaceChildren();
+    proposals = (Array.isArray(data.proposals) ? data.proposals : []).filter(validProposal);
+    if (data.summary) setStatus(String(data.summary), '');
+    if (data.question) setStatus(String(data.question), '');
+    if (!proposals.length) {
+      if (!data.summary && !data.question) setStatus('ИИ не вернул подходящих предложений. Попробуй уточнить команду или координаты.', '');
+      return;
+    }
+    proposals.forEach(function(proposal, index) {
+      var layer = L.geoJSON({ type: 'Feature', properties: { category: proposal.category }, geometry: proposal.geometry }, {
+        interactive: false,
+        style: function(feature) {
+          var color = categoryColor((feature.properties || {}).category);
+          return { color: color, weight: 3, opacity: 1, fillColor: color, fillOpacity: 0.08, dashArray: '6,5' };
+        }
+      });
+      layer.addTo(map);
+      previewLayers.push(layer);
+
+      var card = document.createElement('section');
+      card.className = 'zone-ai-proposal';
+      var title = document.createElement('h4');
+      title.textContent = String(proposal.name || (proposal.action === 'update' ? 'Предложение изменить зону' : 'Новая зона'));
+      card.appendChild(title);
+      var meta = document.createElement('div');
+      meta.className = 'zone-ai-meta';
+      var confidence = Number(proposal.confidence);
+      meta.textContent = (proposal.action === 'update' ? 'Изменение существующей зоны #' + String(proposal.zoneId) : 'Новая зона') +
+        ' · категория: ' + proposal.category + (Number.isFinite(confidence) ? ' · уверенность ИИ: ' + Math.round(Math.max(0, Math.min(1, confidence)) * 100) + '%' : '');
+      card.appendChild(meta);
+      var reason = document.createElement('p');
+      reason.textContent = String(proposal.reason || 'Обоснование не предоставлено.');
+      card.appendChild(reason);
+      if (Array.isArray(proposal.sourceEventIds) && proposal.sourceEventIds.length) {
+        var refs = document.createElement('p');
+        refs.textContent = 'Связанные события: ' + proposal.sourceEventIds.slice(0, 10).map(String).join(', ');
+        card.appendChild(refs);
+      }
+      var actions = document.createElement('div');
+      actions.className = 'zone-ai-proposal-actions';
+      var showBtn = document.createElement('button');
+      showBtn.type = 'button';
+      showBtn.textContent = 'Показать на карте';
+      showBtn.addEventListener('click', function() {
+        var bounds = layer.getBounds();
+        if (bounds && bounds.isValid()) map.fitBounds(bounds, { padding: [50, 50], maxZoom: 10 });
+      });
+      actions.appendChild(showBtn);
+      var applyBtn = document.createElement('button');
+      applyBtn.type = 'button';
+      applyBtn.className = 'primary';
+      applyBtn.textContent = 'Применить предложение';
+      applyBtn.addEventListener('click', function() { applyProposal(proposal, applyBtn); });
+      actions.appendChild(applyBtn);
+      card.appendChild(actions);
+      resultsEl.appendChild(card);
+    });
+    if (!proposals.length) setStatus('Предложения пришли, но не прошли проверку геометрии. Ничего не изменено.', 'error');
+  }
+  function applyProposal(proposal, button) {
+    if (busy || !sb) return;
+    if (!validProposal(proposal)) {
+      setStatus('Предложение изменилось или геометрия некорректна. Сгенерируй его заново.', 'error');
+      return;
+    }
+    var auth = sb.auth.getSession();
+    auth.then(function(sessionResult) {
+      if (sessionResult.error || !sessionResult.data || !sessionResult.data.session) {
+        setStatus('Сессия истекла. Войди в админ-панель заново.', 'error');
+        return;
+      }
+      busy = true;
+      button.disabled = true;
+      button.textContent = 'Сохраняем…';
+      var request;
+      if (proposal.action === 'add') {
+        request = sb.from('control_zones').insert({ category: proposal.category, geometry: proposal.geometry });
+      } else {
+        request = sb.from('control_zones').update({ category: proposal.category, geometry: proposal.geometry }).eq('id', proposal.zoneId);
+      }
+      request.then(function(result) {
+        busy = false;
+        if (result.error) {
+          button.disabled = false;
+          button.textContent = 'Повторить применение';
+          setStatus('Не удалось сохранить: ' + result.error.message, 'error');
+          return;
+        }
+        button.textContent = '✓ Применено';
+        button.disabled = true;
+        button.className = '';
+        setStatus('Предложение сохранено. Проверь обновлённую зону на карте.', 'success');
+        clearPreview();
+        if (typeof loadUserZones === 'function') loadUserZones();
+      }).catch(function(error) {
+        busy = false;
+        button.disabled = false;
+        button.textContent = 'Повторить применение';
+        setStatus('Ошибка сохранения: ' + String(error && error.message || error), 'error');
+      });
+    }).catch(function(error) {
+      setStatus('Не удалось проверить сессию: ' + String(error && error.message || error), 'error');
+    });
+  }
+  function requestProposals(mode) {
+    if (busy) return;
+    var instruction = textarea.value.trim();
+    if (mode === 'command' && !instruction) {
+      setStatus('Сначала напиши, что именно изменить. Укажи координаты, если зона должна быть привязана к конкретному месту.', 'error');
+      textarea.focus();
+      return;
+    }
+    if (!sb) {
+      setStatus('Нет соединения с Supabase.', 'error');
+      return;
+    }
+    busy = true;
+    generateBtn.disabled = true;
+    autoBtn.disabled = true;
+    setStatus('ИИ анализирует запрос и готовит черновик…', '');
+    resultsEl.replaceChildren();
+    clearPreview();
+    sb.auth.getSession().then(function(sessionResult) {
+      var session = sessionResult.data && sessionResult.data.session;
+      if (sessionResult.error || !session) throw new Error('Нужен вход в админ-панель.');
+      var center = map.getCenter();
+      var payload = {
+        mode: mode,
+        instruction: instruction,
+        zones: gatherZones(),
+        events: mode === 'auto' ? gatherRecentEvents() : [],
+        mapCenter: { lat: center.lat, lng: center.lng, zoom: map.getZoom() }
+      };
+      return fetch(SB_URL + '/functions/v1/zone-assistant', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SB_KEY,
+          'Authorization': 'Bearer ' + session.access_token
+        },
+        body: JSON.stringify(payload)
+      });
+    }).then(function(response) {
+      return response.json().catch(function() { return {}; }).then(function(body) {
+        if (!response.ok) {
+          var message = body.error || ('HTTP ' + response.status);
+          if (response.status === 404 || response.status === 503) {
+            message += ' — функцию ИИ ещё нужно развернуть и настроить. См. docs/zone-ai-setup.md в репозитории.';
+          }
+          throw new Error(message);
+        }
+        return body;
+      });
+    }).then(function(data) {
+      showProposals(data);
+    }).catch(function(error) {
+      setStatus(String(error && error.message || error), 'error');
+    }).finally(function() {
+      busy = false;
+      generateBtn.disabled = false;
+      autoBtn.disabled = false;
+    });
+  }
+
+  document.getElementById('btnOpenZoneAI').addEventListener('click', openAssistant);
+  document.getElementById('btnZoneAIClose').addEventListener('click', closeAssistant);
+  overlay.addEventListener('click', function(event) { if (event.target === overlay) closeAssistant(); });
+  document.getElementById('btnZoneAIGenerate').addEventListener('click', function() { requestProposals('command'); });
+  document.getElementById('btnZoneAIAuto').addEventListener('click', function() { requestProposals('auto'); });
+  document.addEventListener('keydown', function(event) { if (event.key === 'Escape') closeAssistant(); });
+})();
+</script>
+
 </body>
 </html>
