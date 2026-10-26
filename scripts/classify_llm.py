@@ -99,7 +99,14 @@ class LLMClassifier:
         try:
             if os.path.exists(CACHE_FILE):
                 with open(CACHE_FILE, "r", encoding="utf-8") as f:
-                    self.cache = json.load(f)
+                    cached = json.load(f)
+                # Previous cache versions used shorter MD5 keys. Drop them so
+                # stale results do not consume the new cache's size limit.
+                if isinstance(cached, dict):
+                    self.cache = {
+                        key: value for key, value in cached.items()
+                        if isinstance(key, str) and re.fullmatch(r"[0-9a-f]{64}", key)
+                    }
                 print(f"  💾 LLM-кэш: {len(self.cache)} записей")
         except Exception as e:
             print(f"  ⚠️ LLM-кэш не загрузился: {e}", file=sys.stderr)
