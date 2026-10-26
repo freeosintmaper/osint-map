@@ -1230,16 +1230,15 @@ def classify_event(text):
     return None
 
 
-def make_dedup_key(ev):
+def make_dedup_key(ev, source_text=None):
     loc = re.sub(r"\s+", " ", (ev.get("location") or "").strip()).casefold()
     country = (ev.get("country") or "").strip().upper()
     event_type = (ev.get("event_type") or "").strip()
     url = (ev.get("url") or "").strip()
     if url:
         return "|".join((url, country, loc, event_type))
-    description = re.sub(
-        r"\s+", " ", (ev.get("description") or "").strip()
-    ).casefold()
+    text_for_key = source_text if source_text is not None else (ev.get("description") or "")
+    description = re.sub(r"\s+", " ", text_for_key.strip()).casefold()
     return "|".join((
         (ev.get("channel") or "").strip(), country, loc, event_type, description
     ))
@@ -1335,7 +1334,7 @@ def main():
                     "photo_url": post.get("photo_url"),
                     "video_url": post.get("video_url"),
                 }
-                dedup = make_dedup_key(ev)
+                dedup = make_dedup_key(ev, text)
                 if dedup not in seen_dedup:
                     seen_dedup.add(dedup)
                     raw_events.append(ev)
@@ -1412,7 +1411,7 @@ def main():
                     "photo_url": post.get("photo_url"),
                     "video_url": post.get("video_url"),
                 }
-                dedup = make_dedup_key(ev)
+                dedup = make_dedup_key(ev, text)
                 if dedup in seen_dedup:
                     duplicates += 1
                     continue
