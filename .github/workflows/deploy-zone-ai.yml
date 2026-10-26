@@ -1,0 +1,52 @@
+name: Deploy zone AI to Supabase
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      PROJECT_ID: zojqbhnwsycqhaiqpgxh
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      ZONE_AI_ALLOWED_EMAILS: ${{ secrets.ZONE_AI_ALLOWED_EMAILS }}
+      GEMINI_MODEL: gemini-3.8-flash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check required secrets
+        shell: bash
+        run: |
+          missing=0
+          for name in SUPABASE_ACCESS_TOKEN GEMINI_API_KEY ZONE_AI_ALLOWED_EMAILS; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Missing GitHub Actions secret: $name"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            echo "Add the three required secrets in Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+      - name: Set up Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Configure server-side secrets
+        shell: bash
+        run: |
+          supabase secrets set \
+            "GEMINI_API_KEY=${GEMINI_API_KEY}" \
+            "ZONE_AI_ALLOWED_EMAILS=${ZONE_AI_ALLOWED_EMAILS}" \
+            "GEMINI_MODEL=${GEMINI_MODEL}" \
+            --project-ref "$PROJECT_ID"
+
+      - name: Deploy the AI function
+        run: supabase functions deploy zone-assistant --project-ref "$PROJECT_ID"
