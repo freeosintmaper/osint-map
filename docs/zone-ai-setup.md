@@ -47,7 +47,7 @@ Workflow сам:
 supabase login
 supabase link --project-ref zojqbhnwsycqhaiqpgxh
 supabase secrets set GEMINI_API_KEY="ВАШ_GEMINI_API_KEY" ZONE_AI_ALLOWED_EMAILS="admin@example.com" GEMINI_MODEL="gemini-3.8-flash"
-supabase functions deploy zone-assistant
+supabase functions deploy zone-assistant --no-verify-jwt
 ```
 
 Подставь собственный ключ и email, не коммить их в репозиторий и не вставляй ключ в `index.html`.
