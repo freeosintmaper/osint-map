@@ -1,4 +1,4 @@
-const CACHE_NAME = 'osint-map-v2';
+const CACHE_NAME = 'osint-map-v3';
 const SHELL = [
   './',
   './index.html',

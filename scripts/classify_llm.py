@@ -23,7 +23,7 @@ ALLOWED_TYPES = {
 }
 MAX_LOCATIONS = 5
 LLM_MODEL = "@cf/meta/llama-3.1-8b-instruct-fast"
-PROMPT_VERSION = "v2_country"
+PROMPT_VERSION = "v3_sha256_full_prompt"
 
 
 SYSTEM_PROMPT = """Ты — OSINT-аналитик. Анализируешь посты из Telegram-каналов о войне в Украине.
@@ -56,8 +56,15 @@ SYSTEM_PROMPT = """Ты — OSINT-аналитик. Анализируешь п�
 
 
 def _text_hash(text):
-    payload = (PROMPT_VERSION + "|" + text[:500]).encode("utf-8", errors="ignore")
-    return hashlib.md5(payload).hexdigest()
+    # Match every input that can affect classification; old cache entries use a
+    # different hash and will be recomputed automatically.
+    payload = "\n".join((
+        PROMPT_VERSION,
+        LLM_MODEL,
+        SYSTEM_PROMPT,
+        text[:1500],
+    )).encode("utf-8", errors="ignore")
+    return hashlib.sha256(payload).hexdigest()
 
 
 class LLMClassifier:
@@ -92,7 +99,14 @@ class LLMClassifier:
         try:
             if os.path.exists(CACHE_FILE):
                 with open(CACHE_FILE, "r", encoding="utf-8") as f:
-                    self.cache = json.load(f)
+                    cached = json.load(f)
+                # Previous cache versions used shorter MD5 keys. Drop them so
+                # stale results do not consume the new cache's size limit.
+                if isinstance(cached, dict):
+                    self.cache = {
+                        key: value for key, value in cached.items()
+                        if isinstance(key, str) and re.fullmatch(r"[0-9a-f]{64}", key)
+                    }
                 print(f"  💾 LLM-кэш: {len(self.cache)} записей")
         except Exception as e:
             print(f"  ⚠️ LLM-кэш не загрузился: {e}", file=sys.stderr)

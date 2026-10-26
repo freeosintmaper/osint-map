@@ -844,6 +844,26 @@
       if (box) { box.style.display = 'block'; box.textContent = 'Ошибка: ' + e.message; }
     });
     function isMobile() { return window.innerWidth <= 768; }
+
+    function escapeHtml(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // External links/media are restricted to HTTPS; never allow javascript: or data: URLs.
+    function safeHttpUrl(value) {
+      if (value == null || String(value).trim() === '') return '';
+      try {
+        var parsed = new URL(String(value).trim(), window.location.href);
+        return parsed.protocol === 'https:' ? parsed.href : '';
+      } catch (e) {
+        return '';
+      }
+    }
   </script>
 
   <script src="./lib/supabase.js"></script>
@@ -1275,10 +1295,23 @@
         var cat = (f.properties && f.properties._category) || 'unknown';
         var name = (f.properties && f.properties.name) || '';
         var desc = (f.properties && f.properties.description) || '';
-        var html = '<b>' + owlLabelFor(cat) + '</b>';
-        if (name) html += '<br><i>' + name + '</i>';
-        if (desc) html += '<br><small>' + desc.substring(0, 300) + (desc.length > 300 ? '…' : '') + '</small>';
-        layer.bindPopup(html);
+        var popup = document.createElement('div');
+        var heading = document.createElement('b');
+        heading.textContent = owlLabelFor(cat);
+        popup.appendChild(heading);
+        if (name) {
+          popup.appendChild(document.createElement('br'));
+          var nameEl = document.createElement('i');
+          nameEl.textContent = name;
+          popup.appendChild(nameEl);
+        }
+        if (desc) {
+          popup.appendChild(document.createElement('br'));
+          var descEl = document.createElement('small');
+          descEl.textContent = desc.substring(0, 300) + (desc.length > 300 ? '…' : '');
+          popup.appendChild(descEl);
+        }
+        layer.bindPopup(popup);
       }
     });
 
@@ -1456,19 +1489,29 @@
       data.features.forEach(function(f) {
         var coords = f.geometry && f.geometry.coordinates;
         if (!coords || coords.length < 2) return;
-        var lng = coords[0];
-        var lat = coords[1];
-        var brightness = (f.properties && f.properties.brightness) || 300;
+        var lng = Number(coords[0]);
+        var lat = Number(coords[1]);
+        if (!isFinite(lat) || !isFinite(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) return;
+        var rawBrightness = Number(f.properties && f.properties.brightness);
+        var brightness = isFinite(rawBrightness) ? rawBrightness : 300;
         var color = brightness > 360 ? '#ff1744' : (brightness > 330 ? '#ff6d00' : '#ffab00');
         var radius = brightness > 360 ? 8000 : (brightness > 330 ? 6000 : 4000);
+        var popup = document.createElement('div');
+        var popupTitle = document.createElement('b');
+        popupTitle.textContent = '🔥 Тепловая аномалия';
+        popup.appendChild(popupTitle);
+        function addFirmsLine(text) {
+          popup.appendChild(document.createElement('br'));
+          popup.appendChild(document.createTextNode(text));
+        }
+        addFirmsLine('Координаты: ' + lat.toFixed(4) + ', ' + lng.toFixed(4));
+        addFirmsLine('Яркость: ' + brightness + ' K');
+        addFirmsLine('Спутник: ' + String((f.properties && f.properties.satellite) || '—'));
+        addFirmsLine('Дата: ' + String((f.properties && f.properties.acq_date) || '—'));
         L.circle([lat, lng], {
           radius: radius, color: color, fillColor: color,
           fillOpacity: 0.35, weight: 1, opacity: 0.7
-        }).bindPopup(
-          '<b>🔥 Тепловая аномалия</b><br>Координаты: ' + lat.toFixed(4) + ', ' + lng.toFixed(4) +
-          '<br>Яркость: ' + brightness + ' K<br>Спутник: ' + ((f.properties && f.properties.satellite) || '—') +
-          '<br>Дата: ' + ((f.properties && f.properties.acq_date) || '—')
-        ).addTo(firmsLayer);
+        }).bindPopup(popup).addTo(firmsLayer);
       });
       console.log('🔥 FIRMS: ' + data.features.length + ' пожаров');
     }
@@ -1544,15 +1587,18 @@
     map.addLayer(tgLayer);
 
     function getLastUpdateText() {
-      var list = (window.TG_DATA && window.TG_DATA.events) || [];
-      if (!list.length) return '';
-      var maxDate = 0;
-      list.forEach(function(ev) {
-        if (ev.date) {
-          var ts = new Date(ev.date).getTime();
-          if (ts > maxDate) maxDate = ts;
-        }
-      });
+      var data = window.TG_DATA || {};
+      var list = data.events || [];
+      var maxDate = data.generated_at ? new Date(data.generated_at).getTime() : 0;
+      if (!isFinite(maxDate)) maxDate = 0;
+      if (!maxDate) {
+        list.forEach(function(ev) {
+          if (ev.date) {
+            var ts = new Date(ev.date).getTime();
+            if (ts > maxDate) maxDate = ts;
+          }
+        });
+      }
       if (!maxDate) return '';
       var diffMin = Math.floor((Date.now() - maxDate) / 60000);
       if (diffMin < 1) return t('updatedJustNow');
@@ -1573,8 +1619,9 @@
       var list = (window.TG_DATA && window.TG_DATA.events) || [];
       var added = 0, panelEvents = [];
       list.forEach(function(ev) {
-        if (!ev.lat || !ev.lng) return;
-        if (!activeEventTypes[ev.event_type]) return;
+        var eventLat = Number(ev.lat), eventLng = Number(ev.lng);
+        if (!isFinite(eventLat) || !isFinite(eventLng) || eventLat < -90 || eventLat > 90 || eventLng < -180 || eventLng > 180) return;
+        if (!Object.prototype.hasOwnProperty.call(activeEventTypes, ev.event_type)) return;
         if (eventDateFilter !== 'all') {
           var cutoff = 0;
           if (eventDateFilter === '6h') cutoff = Date.now() - 6 * 60 * 60 * 1000;
@@ -1588,26 +1635,101 @@
           var hay = ((ev.location || '') + ' ' + (ev.channel || '') + ' ' + (ev.description || '')).toLowerCase();
           if (hay.indexOf(q) < 0) return;
         }
-        var marker = L.marker([ev.lat, ev.lng], { icon: createEventIcon(ev.event_type), riseOnHover: true });
+        var marker = L.marker([eventLat, eventLng], { icon: createEventIcon(ev.event_type), riseOnHover: true });
         var label = t(WT_LABELS[ev.event_type] || ev.event_type);
         var dateStr = '';
-        try { dateStr = new Date(ev.date).toLocaleString('ru-RU'); } catch(e) {}
+        try {
+          var eventDate = new Date(ev.date);
+          if (isFinite(eventDate.getTime())) dateStr = eventDate.toLocaleString('ru-RU');
+        } catch(e) {}
         var countryLabel = ev.country === 'UA' ? t('countryUA') : (ev.country === 'RU' ? t('countryRU') : t('countryOSINT'));
         var countryClass = ev.country === 'UA' ? 'ua' : (ev.country === 'RU' ? 'ru' : 'osint');
-        var badge = '<span class="evt-country ' + countryClass + '" style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:700;">' + countryLabel + '</span>';
 
-        var mediaHtml = '';
-        if (ev.photo_url) {
-          mediaHtml += '<div style="margin:10px 0;"><img src="' + ev.photo_url + '" style="max-width:100%;max-height:240px;border-radius:8px;display:block;cursor:pointer;" onclick="window.open(\'' + ev.photo_url.replace(/'/g, "\\'") + '\',\'_blank\')" loading="lazy" /></div>';
-        }
-        if (ev.video_url && !ev.photo_url) {
-          mediaHtml += '<div style="margin:10px 0;position:relative;cursor:pointer;" onclick="window.open(\'' + ev.url + '\',\'_blank\')">' +
-            '<img src="' + ev.video_url + '" style="max-width:100%;max-height:240px;border-radius:8px;display:block;" loading="lazy" />' +
-            '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.65);border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;">' +
-            '<svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div></div>';
+        // Build popup with DOM nodes instead of concatenating untrusted Telegram fields into HTML.
+        var popup = document.createElement('div');
+        var heading = document.createElement('div');
+        var title = document.createElement('b');
+        title.textContent = label;
+        heading.appendChild(title);
+        heading.appendChild(document.createTextNode(' '));
+        var badge = document.createElement('span');
+        badge.className = 'evt-country ' + countryClass;
+        badge.style.cssText = 'display:inline-block;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:700;';
+        badge.textContent = countryLabel;
+        heading.appendChild(badge);
+        popup.appendChild(heading);
+
+        popup.appendChild(document.createElement('br'));
+        var locationText = document.createElement('i');
+        locationText.textContent = String(ev.location || '');
+        popup.appendChild(locationText);
+
+        var photoUrl = safeHttpUrl(ev.photo_url);
+        var videoUrl = safeHttpUrl(ev.video_url);
+        var sourceUrl = safeHttpUrl(ev.url);
+        if (photoUrl || videoUrl) {
+          var media = document.createElement('div');
+          media.style.margin = '10px 0';
+          if (photoUrl) {
+            var photoLink = document.createElement('a');
+            photoLink.href = photoUrl;
+            photoLink.target = '_blank';
+            photoLink.rel = 'noopener noreferrer';
+            var photo = document.createElement('img');
+            photo.src = photoUrl;
+            photo.alt = 'Фото к событию';
+            photo.loading = 'lazy';
+            photo.style.cssText = 'max-width:100%;max-height:240px;border-radius:8px;display:block;';
+            photoLink.appendChild(photo);
+            media.appendChild(photoLink);
+            popup.appendChild(media);
+          } else if (videoUrl) {
+            var videoWrap = document.createElement('div');
+            videoWrap.style.cssText = 'position:relative;display:inline-block;max-width:100%;';
+            var videoLink = document.createElement('a');
+            videoLink.href = sourceUrl || videoUrl;
+            videoLink.target = '_blank';
+            videoLink.rel = 'noopener noreferrer';
+            var preview = document.createElement('img');
+            preview.src = videoUrl;
+            preview.alt = 'Видео к событию';
+            preview.loading = 'lazy';
+            preview.style.cssText = 'max-width:100%;max-height:240px;border-radius:8px;display:block;';
+            videoLink.appendChild(preview);
+            var play = document.createElement('span');
+            play.textContent = '▶';
+            play.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.65);border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;color:white;font-size:22px;pointer-events:none;';
+            videoWrap.appendChild(videoLink);
+            videoWrap.appendChild(play);
+            media.appendChild(videoWrap);
+            popup.appendChild(media);
+          }
         }
 
-        marker.bindPopup('<b>' + label + '</b> ' + badge + '<br><i>' + (ev.location || '') + '</i>' + mediaHtml + '<br>' + (ev.description || '') + '<br><small>' + dateStr + '</small><br><small style="color:#888;">@' + (ev.channel || '') + '</small><br><a href="' + ev.url + '" target="_blank">' + t('source') + ' →</a>', { maxWidth: 320 });
+        var description = document.createElement('div');
+        description.style.cssText = 'margin-top:8px;white-space:pre-wrap;overflow-wrap:anywhere;';
+        description.textContent = String(ev.description || '');
+        popup.appendChild(description);
+
+        popup.appendChild(document.createElement('br'));
+        var dateEl = document.createElement('small');
+        dateEl.textContent = dateStr;
+        popup.appendChild(dateEl);
+        popup.appendChild(document.createElement('br'));
+        var channelEl = document.createElement('small');
+        channelEl.style.color = '#888';
+        channelEl.textContent = '@' + String(ev.channel || '');
+        popup.appendChild(channelEl);
+        if (sourceUrl) {
+          popup.appendChild(document.createElement('br'));
+          var sourceLink = document.createElement('a');
+          sourceLink.href = sourceUrl;
+          sourceLink.target = '_blank';
+          sourceLink.rel = 'noopener noreferrer';
+          sourceLink.textContent = t('source') + ' →';
+          popup.appendChild(sourceLink);
+        }
+        marker.bindPopup(popup, { maxWidth: 320 });
         tgLayer.addLayer(marker);
         added++;
         panelEvents.push(ev);
@@ -1621,7 +1743,7 @@
       document.getElementById('eventsPanelTitle').textContent = t('eventsPanelTitle') + ' · ' + (events ? events.length : 0);
 
       var filterHtml = '<div class="events-filters">' +
-        '<input type="text" id="eventSearch" placeholder="Поиск: город, канал, текст" value="' + (eventSearchQuery || '').replace(/"/g, '&quot;') + '">' +
+        '<input type="text" id="eventSearch" placeholder="Поиск: город, канал, текст" value="' + escapeHtml(eventSearchQuery || '') + '">' +
         '<div class="time-chips">' +
           ['6h', '24h', '3d', '7d', 'all'].map(function(v) {
             var labels = { '6h': t('time6h'), '24h': t('time24h'), '3d': t('time3d'), '7d': t('time7d'), 'all': t('timeAll') };
@@ -1655,12 +1777,12 @@
         try { time = new Date(ev.date).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); } catch(e) {}
         var countryLabel = ev.country === 'UA' ? t('countryUA') : (ev.country === 'RU' ? t('countryRU') : t('countryOSINT'));
         var countryClass = ev.country === 'UA' ? 'ua' : (ev.country === 'RU' ? 'ru' : 'osint');
-        html += '<div class="event-item" data-lat="' + ev.lat + '" data-lng="' + ev.lng + '">' +
+        html += '<div class="event-item" data-lat="' + escapeHtml(ev.lat) + '" data-lng="' + escapeHtml(ev.lng) + '">' +
                 '<div class="evt-type" style="color:' + color + ';">' +
-                '<span style="color:' + color + ';display:flex;align-items:center;">' + wtSvg(ev.event_type) + '</span>' + label +
-                '<span class="evt-country ' + countryClass + '">' + countryLabel + '</span></div>' +
-                '<div class="evt-loc">' + (ev.location || '') + ' <span style="color:var(--text-muted);">@' + (ev.channel || '') + '</span></div>' +
-                '<div class="evt-time">' + time + '</div></div>';
+                '<span style="color:' + color + ';display:flex;align-items:center;">' + wtSvg(ev.event_type) + '</span>' + escapeHtml(label) +
+                '<span class="evt-country ' + countryClass + '">' + escapeHtml(countryLabel) + '</span></div>' +
+                '<div class="evt-loc">' + escapeHtml(ev.location || '') + ' <span style="color:var(--text-muted);">@' + escapeHtml(ev.channel || '') + '</span></div>' +
+                '<div class="evt-time">' + escapeHtml(time) + '</div></div>';
       });
       body.innerHTML = html;
       attachEventFilters();
@@ -2136,6 +2258,15 @@
     }
 
     loadTelegramEvents();
+
+    // Enable the existing offline cache on GitHub Pages (and other HTTPS hosting).
+    if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+      navigator.serviceWorker.register('./sw.js').then(function(registration) {
+        console.log('Service Worker registered:', registration.scope);
+      }).catch(function(error) {
+        console.warn('Service Worker registration failed:', error.message);
+      });
+    }
   </script>
 </body>
 </html>
