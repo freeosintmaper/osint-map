@@ -1621,7 +1621,7 @@
       list.forEach(function(ev) {
         var eventLat = Number(ev.lat), eventLng = Number(ev.lng);
         if (!isFinite(eventLat) || !isFinite(eventLng) || eventLat < -90 || eventLat > 90 || eventLng < -180 || eventLng > 180) return;
-        if (!activeEventTypes[ev.event_type]) return;
+        if (!Object.prototype.hasOwnProperty.call(activeEventTypes, ev.event_type)) return;
         if (eventDateFilter !== 'all') {
           var cutoff = 0;
           if (eventDateFilter === '6h') cutoff = Date.now() - 6 * 60 * 60 * 1000;
@@ -1667,7 +1667,7 @@
         var photoUrl = safeHttpUrl(ev.photo_url);
         var videoUrl = safeHttpUrl(ev.video_url);
         var sourceUrl = safeHttpUrl(ev.url);
-        if (photoUrl || (videoUrl && !photoUrl)) {
+        if (photoUrl || videoUrl) {
           var media = document.createElement('div');
           media.style.margin = '10px 0';
           if (photoUrl) {
