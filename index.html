@@ -1708,7 +1708,8 @@
 
         var description = document.createElement('div');
         description.style.cssText = 'margin-top:8px;white-space:pre-wrap;overflow-wrap:anywhere;';
-        description.textContent = String(ev.description || '');
+        var fullDescription = String(ev.description || '');
+        description.textContent = fullDescription.length > 500 ? fullDescription.slice(0, 500).trimEnd() + '…' : fullDescription;
         popup.appendChild(description);
 
         popup.appendChild(document.createElement('br'));
@@ -1729,7 +1730,7 @@
           sourceLink.textContent = t('source') + ' →';
           popup.appendChild(sourceLink);
         }
-        marker.bindPopup(popup, { maxWidth: 320 });
+        marker.bindPopup(popup, { minWidth: 240, maxWidth: 360, autoPanPadding: [24, 24] });
         tgLayer.addLayer(marker);
         added++;
         panelEvents.push(ev);
