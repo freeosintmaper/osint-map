@@ -23,7 +23,7 @@ ALLOWED_TYPES = {
 }
 MAX_LOCATIONS = 5
 LLM_MODEL = "@cf/meta/llama-3.1-8b-instruct-fast"
-PROMPT_VERSION = "v2_country"
+PROMPT_VERSION = "v3_sha256_full_prompt"
 
 
 SYSTEM_PROMPT = """Ты — OSINT-аналитик. Анализируешь посты из Telegram-каналов о войне в Украине.
@@ -56,8 +56,15 @@ SYSTEM_PROMPT = """Ты — OSINT-аналитик. Анализируешь п�
 
 
 def _text_hash(text):
-    payload = (PROMPT_VERSION + "|" + text[:500]).encode("utf-8", errors="ignore")
-    return hashlib.md5(payload).hexdigest()
+    # Match every input that can affect classification; old cache entries use a
+    # different hash and will be recomputed automatically.
+    payload = "\n".join((
+        PROMPT_VERSION,
+        LLM_MODEL,
+        SYSTEM_PROMPT,
+        text[:1500],
+    )).encode("utf-8", errors="ignore")
+    return hashlib.sha256(payload).hexdigest()
 
 
 class LLMClassifier:
