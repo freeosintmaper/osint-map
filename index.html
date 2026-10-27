@@ -992,7 +992,7 @@
       try {
         var parsed = new URL(value);
         if (parsed.protocol !== 'https:' || !/^(t\.me|telegram\.me)$/i.test(parsed.hostname)) return '';
-        var match = parsed.pathname.match(/^\/([A-Za-z0-9_]{3,})\/(\d+)\/?$/);
+        var match = parsed.pathname.match(/^\/(?:s\/)?([A-Za-z0-9_]{3,})\/(\d+)\/?$/);
         if (!match) return '';
         return 'https://t.me/' + match[1] + '/' + match[2] + '?embed=1';
       } catch (e) { return ''; }
@@ -1916,10 +1916,55 @@
             previewLink.target = '_blank';
             previewLink.rel = 'noopener noreferrer';
             var preview = document.createElement('img');
-            preview.src = previewUrl;
             preview.alt = videoUrl ? 'Превью медиа к событию' : 'Фото к событию';
-            preview.loading = 'lazy';
+            // Карточка открывается по действию пользователя, поэтому не откладываем загрузку картинки.
+            preview.loading = 'eager';
+            preview.decoding = 'async';
+            // Некоторые CDN не отдают медиа при передаче Referer с другого сайта.
+            preview.referrerPolicy = 'no-referrer';
             preview.style.cssText = 'width:100%;max-width:100%;max-height:260px;object-fit:contain;background:rgba(0,0,0,.04);border-radius:8px;display:block;';
+            preview.onerror = function() {
+              preview.onerror = null;
+              if (telegramUrl) {
+                // Если прямая ссылка на файл устарела или CDN недоступен, пробуем медиа из исходной публикации.
+                var fallbackWrap = document.createElement('div');
+                fallbackWrap.style.cssText = 'display:grid;gap:8px;';
+                var fallbackFrame = document.createElement('iframe');
+                fallbackFrame.src = telegramUrl;
+                fallbackFrame.title = 'Публикация Telegram с фотографией или видео';
+                fallbackFrame.loading = 'lazy';
+                fallbackFrame.referrerPolicy = 'strict-origin-when-cross-origin';
+                fallbackFrame.allow = 'fullscreen; picture-in-picture';
+                fallbackFrame.allowFullscreen = true;
+                fallbackFrame.style.cssText = 'width:100%;height:380px;max-height:55vh;border:0;border-radius:8px;background:var(--bg-input);';
+                fallbackWrap.appendChild(fallbackFrame);
+                if (sourceUrl) {
+                  var fallbackLink = document.createElement('a');
+                  fallbackLink.href = sourceUrl;
+                  fallbackLink.target = '_blank';
+                  fallbackLink.rel = 'noopener noreferrer';
+                  fallbackLink.textContent = 'Открыть исходную публикацию в Telegram ↗';
+                  fallbackLink.style.cssText = 'font-size:12px;font-weight:600;color:var(--accent);text-decoration:none;';
+                  fallbackWrap.appendChild(fallbackLink);
+                }
+                media.replaceChildren(fallbackWrap);
+              } else {
+                var failedMedia = document.createElement('div');
+                failedMedia.style.cssText = 'padding:10px;border-radius:8px;background:var(--bg-input);font-size:12px;color:var(--text-secondary);';
+                failedMedia.textContent = 'Не удалось загрузить изображение с внешнего сервера.';
+                if (sourceUrl) {
+                  var openSource = document.createElement('a');
+                  openSource.href = sourceUrl;
+                  openSource.target = '_blank';
+                  openSource.rel = 'noopener noreferrer';
+                  openSource.textContent = 'Открыть публикацию источника ↗';
+                  openSource.style.cssText = 'display:block;margin-top:6px;font-weight:600;color:var(--accent);text-decoration:none;';
+                  failedMedia.appendChild(openSource);
+                }
+                media.replaceChildren(failedMedia);
+              }
+            };
+            preview.src = previewUrl;
             previewLink.appendChild(preview);
             media.appendChild(previewLink);
 
