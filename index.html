@@ -407,6 +407,29 @@
       padding: 12px 18px; border-bottom: 1px solid var(--border-light);
       background: transparent;
     }
+    #eventsPanel .event-tools {
+      flex: 0 0 auto; display: flex; flex-wrap: wrap; align-items: center;
+      gap: 8px; padding: 10px 12px; border-top: 1px solid var(--border-light);
+      font-size: 11px; color: var(--text-secondary);
+    }
+    #eventsPanel .event-tools a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    #eventsPanel .event-tools a:hover { text-decoration: underline; }
+    #eventsPanel .event-tools button {
+      border: 1px solid var(--border-mid); border-radius: 7px; padding: 6px 8px;
+      background: var(--bg-input); color: var(--text-main); cursor: pointer;
+      font: inherit; font-weight: 600;
+    }
+    #eventsPanel .event-tools button:hover { border-color: var(--accent); }
+    #eventsPanel .event-item.cross-side {
+      background: rgba(16, 185, 129, 0.08);
+      border-left: 3px solid #10b981; padding-left: 15px;
+    }
+    #eventsPanel .evt-source { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+    .source-meta { margin: 7px 0; padding: 7px 9px; border-radius: 7px; background: var(--bg-input); font-size: 11px; }
+    .source-meta .not-verified { display: inline-block; margin-top: 4px; padding: 2px 6px; border-radius: 4px; background: rgba(245, 158, 11, .15); color: #b45309; font-weight: 700; }
+    .cross-side-signal { margin-top: 5px; padding: 7px 9px; border-radius: 7px; background: rgba(16, 185, 129, .12); border: 1px solid rgba(16, 185, 129, .45); color: #047857; font-weight: 700; }
+    body.dark .source-meta .not-verified { color: #fbbf24; }
+    body.dark .cross-side-signal { color: #6ee7b7; }
     #eventsPanel .events-filters input {
       width: 100%; padding: 10px 14px;
       border: 1px solid var(--border-mid); border-radius: 10px;
@@ -912,6 +935,11 @@
       <div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">
         Загрузка событий...
       </div>
+    </div>
+    <div class="event-tools">
+      <button type="button" id="exportEventsGeoJSON">↓ GeoJSON</button>
+      <a href="./methodology.html">Методология</a>
+      <a href="./corrections.html">Исправления</a>
     </div>
   </div>
 
@@ -1714,6 +1742,81 @@
       return diffD + ' ' + t('updatedDays');
     }
 
+    var SOURCE_SIDE_BY_CHANNEL = {
+      GeneralStaffZSU: 'UA', operativnoZSU: 'UA', ukrpravda_news: 'UA',
+      uniannet: 'UA', DeepStateUA: 'UA', OsintFlow: 'UA',
+      kharkiv_typical: 'UA', dnepr_typical: 'UA', odesa_typical: 'UA',
+      kherson_typical: 'UA', donbass_realii: 'UA', kyivindependent_official: 'UA',
+      exilenova_plus: 'UA', supernova_plus: 'UA',
+      informnapalm: 'OSINT', astrapress: 'OSINT', bazabazon: 'OSINT',
+      rybar: 'RU', voenkorKotenok: 'RU', wargonzo: 'RU', readovkanews: 'RU',
+      lost_armour: 'RU', boris_rozhin: 'RU', epoddubny: 'RU',
+      RVvoenkor: 'RU', dva_majors: 'RU'
+    };
+
+    function getSourceSides(channelValue) {
+      var channels = String(channelValue || '').split(',').map(function(name) { return name.trim(); }).filter(Boolean);
+      var sides = { UA: false, RU: false, OSINT: false };
+      channels.forEach(function(name) {
+        var side = SOURCE_SIDE_BY_CHANNEL[name];
+        if (side) sides[side] = true;
+      });
+      var crossSide = sides.UA && sides.RU;
+      var labels = [];
+      if (sides.UA) labels.push('украинские каналы');
+      if (sides.RU) labels.push('российские каналы');
+      if (sides.OSINT) labels.push('OSINT-каналы');
+      if (!labels.length) labels.push('сторона источника не определена');
+      return { channels: channels, sides: sides, crossSide: crossSide, label: labels.join(' + ') };
+    }
+
+    function downloadEventsGeoJSON() {
+      var events = window.TG_DATA && Array.isArray(window.TG_DATA.events) ? window.TG_DATA.events : [];
+      var features = events.filter(function(ev) {
+        var lat = Number(ev.lat), lng = Number(ev.lng);
+        return isFinite(lat) && isFinite(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
+      }).map(function(ev) {
+        var source = getSourceSides(ev.channel);
+        return {
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: [Number(ev.lng), Number(ev.lat)] },
+          properties: {
+            id: ev.id == null ? null : ev.id,
+            date: ev.date || null,
+            event_type: ev.event_type || null,
+            location: ev.location || null,
+            event_country: ev.country || null,
+            confidence: ev.confidence || null,
+            channel: ev.channel || null,
+            source_sides: Object.keys(source.sides).filter(function(side) { return source.sides[side]; }),
+            cross_side_signal: Boolean(source.crossSide),
+            verification_status: 'not_verified',
+            source_url: ev.url || null,
+            coordinate_note: 'Coordinates may be deliberately displaced; see methodology.html.'
+          }
+        };
+      });
+      var collection = {
+        type: 'FeatureCollection',
+        name: 'OSINT Map public event metadata',
+        generated_at: (window.TG_DATA && window.TG_DATA.generated_at) || null,
+        license: 'CC-BY-4.0',
+        license_url: 'https://creativecommons.org/licenses/by/4.0/',
+        license_note: 'CC BY 4.0 applies to the project compilation and original metadata to the extent rights are held by the project. Source posts and media remain subject to their original rights and terms.',
+        methodology_url: 'https://freeosintmaper.github.io/osint-map/methodology.html',
+        features: features
+      };
+      var blob = new Blob([JSON.stringify(collection, null, 2)], { type: 'application/geo+json;charset=utf-8' });
+      var objectUrl = URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = objectUrl;
+      link.download = 'osint-map-events.geojson';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(function() { URL.revokeObjectURL(objectUrl); }, 1000);
+    }
+
     function loadTelegramEvents() {
       if (!window.TG_DATA) {
         document.getElementById('eventsListBody').innerHTML =
@@ -1749,6 +1852,7 @@
         } catch(e) {}
         var countryLabel = ev.country === 'UA' ? t('countryUA') : (ev.country === 'RU' ? t('countryRU') : t('countryOSINT'));
         var countryClass = ev.country === 'UA' ? 'ua' : (ev.country === 'RU' ? 'ru' : 'osint');
+        var sourceInfo = getSourceSides(ev.channel);
 
         // Build popup with DOM nodes instead of concatenating untrusted Telegram fields into HTML.
         var popup = document.createElement('div');
@@ -1763,6 +1867,24 @@
         badge.textContent = countryLabel;
         heading.appendChild(badge);
         popup.appendChild(heading);
+
+        var sourceMeta = document.createElement('div');
+        sourceMeta.className = 'source-meta';
+        sourceMeta.appendChild(document.createTextNode('Источник: ' + String(ev.channel || 'не указан')));
+        sourceMeta.appendChild(document.createElement('br'));
+        sourceMeta.appendChild(document.createTextNode('Сторона источника: ' + sourceInfo.label));
+        var unverified = document.createElement('span');
+        unverified.className = 'not-verified';
+        unverified.textContent = 'НЕ ПРОВЕРЕНО';
+        sourceMeta.appendChild(document.createElement('br'));
+        sourceMeta.appendChild(unverified);
+        if (sourceInfo.crossSide) {
+          var crossSideSignal = document.createElement('div');
+          crossSideSignal.className = 'cross-side-signal';
+          crossSideSignal.textContent = 'Есть сообщения каналов UA и RU — сильный сигнал, но не независимое подтверждение';
+          sourceMeta.appendChild(crossSideSignal);
+        }
+        popup.appendChild(sourceMeta);
 
         popup.appendChild(document.createElement('br'));
         var locationText = document.createElement('i');
@@ -1910,11 +2032,14 @@
         try { time = new Date(ev.date).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); } catch(e) {}
         var countryLabel = ev.country === 'UA' ? t('countryUA') : (ev.country === 'RU' ? t('countryRU') : t('countryOSINT'));
         var countryClass = ev.country === 'UA' ? 'ua' : (ev.country === 'RU' ? 'ru' : 'osint');
-        html += '<div class="event-item" data-lat="' + escapeHtml(ev.lat) + '" data-lng="' + escapeHtml(ev.lng) + '">' +
+        var sourceInfo = getSourceSides(ev.channel);
+        html += '<div class="event-item' + (sourceInfo.crossSide ? ' cross-side' : '') + '" data-lat="' + escapeHtml(ev.lat) + '" data-lng="' + escapeHtml(ev.lng) + '">' +
                 '<div class="evt-type" style="color:' + color + ';">' +
                 '<span style="color:' + color + ';display:flex;align-items:center;">' + wtSvg(ev.event_type) + '</span>' + escapeHtml(label) +
                 '<span class="evt-country ' + countryClass + '">' + escapeHtml(countryLabel) + '</span></div>' +
                 '<div class="evt-loc">' + escapeHtml(ev.location || '') + ' <span style="color:var(--text-muted);">@' + escapeHtml(ev.channel || '') + '</span></div>' +
+                '<div class="evt-source">Источник: ' + escapeHtml(sourceInfo.label) + ' · НЕ ПРОВЕРЕНО' +
+                (sourceInfo.crossSide ? ' · UA + RU' : '') + '</div>' +
                 '<div class="evt-time">' + escapeHtml(time) + '</div></div>';
       });
       body.innerHTML = html;
@@ -1949,6 +2074,9 @@
         });
       });
     }
+
+    var geoJSONButton = document.getElementById('exportEventsGeoJSON');
+    if (geoJSONButton) geoJSONButton.addEventListener('click', downloadEventsGeoJSON);
 
     document.getElementById('toggleEventsPanel').addEventListener('click', function() {
       var panel = document.getElementById('eventsPanel');
