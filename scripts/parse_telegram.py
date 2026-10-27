@@ -6,6 +6,7 @@ import urllib.parse
 import time
 import math
 import os
+import unicodedata
 from datetime import datetime, timezone
 from html import unescape
 from collections import Counter, defaultdict
@@ -1127,10 +1128,81 @@ OSM_GEOCODE_CACHE_FILE = "data/osm_geocode_cache.json"
 OSM_GEOCODE_CACHE = {}
 OSM_LAST_REQUEST_AT = 0.0
 OSM_MIN_REQUEST_INTERVAL = 1.1
+GEOCODE_AUDIT = Counter()
+
+# Generic descriptors and facility types are not reliable place names by themselves.
+GENERIC_PLACE_WORDS = {
+    "улица", "улицы", "вулиця", "вулиці", "street", "st",
+    "район", "района", "районе", "районі", "district", "neighborhood",
+    "микрорайон", "квартал", "площа", "площадь", "square", "проспект",
+    "avenue", "перекресток", "перехрестя", "intersection", "мост", "міст",
+    "bridge", "завод", "factory", "plant", "цех", "мастерская", "майстерня",
+    "workshop", "терминал", "terminal", "объект", "object", "facility",
+    "предприятие", "підприємство", "склад", "warehouse", "логистический",
+    "логістичний", "центр", "center", "centre", "станция", "станція",
+    "station", "подстанция", "підстанція", "аэродром", "аеродром",
+    "airfield", "аэропорт", "airport", "порт", "port", "штаб",
+    "headquarters", "позиция", "позиции", "позиція", "позиції", "пункт",
+    "place", "location", "через", "near", "рядом", "около", "біля", "возле",
+    "при", "на", "в",
+}
+GENERIC_PLACE_DESCRIPTORS = {
+    "большой", "большая", "большое", "крупный", "крупная", "крупное",
+    "региональный", "региональная", "региональное", "regional", "large",
+    "small", "центральный", "центральная", "центральное", "central",
+}
+SENSITIVE_TARGET_RE = re.compile(
+    r"\b(?:военн\w*|military|позици\w*|подразделени\w*|штаб\w*|"
+    r"командн\w*|завод\w*|цех\w*|предприяти\w*|склад\w*|"
+    r"логистическ\w*|логістичн\w*|аэродром\w*|аеродром\w*|"
+    r"пусков\w*|боеприпас\w*|боєприпас\w*|беспилот\w*|дрон\w*|"
+    r"производств\w*|підстанци\w*|подстанци\w*|оборонн\w*)\b"
+)
+TARGETABLE_OBJECT_RE = re.compile(
+    r"\b(?:мост\w*|міст\w*|терминал\w*|станци\w*|вокзал\w*|порт\w*|"
+    r"подстанци\w*|підстанци\w*|аэропорт\w*|аеропорт\w*|"
+    r"bridge|terminal|station|airport|port)\b"
+)
+ATTACK_CONTEXT_RE = re.compile(
+    r"\b(?:удар\w*|атак\w*|обстрел\w*|обстріл\w*|поврежд\w*|"
+    r"пошкодж\w*|поражен\w*|уражен\w*|уничтож\w*|знищен\w*|"
+    r"взорв\w*|взрыв\w*|вибух\w*|бомбард\w*|попал\w*|"
+    r"під\s+удар|прил\w*|обстріля\w*)\b"
+)
 
 
 def _normalize_evidence(value):
-    return re.sub(r"\s+", " ", (value or "").lower()).strip()
+    text = unicodedata.normalize("NFKC", str(value or "")).casefold().replace("ё", "е")
+    text = re.sub(r"[^\w\s]", " ", text, flags=re.UNICODE)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def _specific_place_tokens(place):
+    return [
+        word for word in _normalize_evidence(place).split()
+        if len(word) >= 3
+        and word not in GENERIC_PLACE_WORDS
+        and word not in GENERIC_PLACE_DESCRIPTORS
+    ]
+
+
+def _specific_place_rejection_reason(place, evidence, source_text):
+    if not place or not evidence:
+        return "missing_place_or_evidence"
+    normalized_place = _normalize_evidence(place)
+    normalized_evidence = _normalize_evidence(evidence)
+    normalized_text = _normalize_evidence(source_text)
+    if not normalized_evidence or normalized_evidence not in normalized_text:
+        return "evidence_not_in_source"
+    if not normalized_place or normalized_place not in normalized_evidence:
+        return "place_name_not_in_evidence"
+    if not _specific_place_tokens(place):
+        return "generic_place_name"
+    if SENSITIVE_TARGET_RE.search(normalized_place):
+        return "military_or_sensitive_target"
+    if ATTACK_CONTEXT_RE.search(normalized_evidence) and TARGETABLE_OBJECT_RE.search(normalized_place):
+        return "attacked_or_damaged_target"
+    return None
 
 
 def _load_osm_geocode_cache():
@@ -1156,19 +1228,31 @@ def _save_osm_geocode_cache():
 
 
 def _geocode_explicit_place(place, city, country, evidence, source_text):
-    """Geocode a named place only when its exact evidence is present in the post."""
+    """Geocode only an explicitly named, text-supported, non-target public place."""
     global OSM_LAST_REQUEST_AT
-    if not place or not evidence or country not in ("UA", "RU"):
+    if not place:
         return None
-    normalized_text = _normalize_evidence(source_text)
-    normalized_evidence = _normalize_evidence(evidence)
-    if len(normalized_evidence) < 4 or normalized_evidence not in normalized_text:
+    GEOCODE_AUDIT["specific_place_candidates"] += 1
+    if country not in ("UA", "RU"):
+        GEOCODE_AUDIT["rejected_unsupported_country"] += 1
         return None
 
-    key = "|".join((country, city.lower(), place.lower()))
+    rejection = _specific_place_rejection_reason(place, evidence, source_text)
+    if rejection:
+        GEOCODE_AUDIT["rejected_" + rejection] += 1
+        return None
+
+    place_tokens = _specific_place_tokens(place)
+    # Versioned keys ensure legacy ambiguous results cannot bypass validation.
+    key = "|".join(("evidence-v2", country, city.casefold(), place.casefold()))
     if key in OSM_GEOCODE_CACHE:
+        GEOCODE_AUDIT["nominatim_cache_hits"] += 1
         cached = OSM_GEOCODE_CACHE[key]
-        return cached if isinstance(cached, dict) and cached.get("lat") is not None else None
+        if isinstance(cached, dict) and cached.get("lat") is not None:
+            GEOCODE_AUDIT["nominatim_cache_successes"] += 1
+            return cached
+        GEOCODE_AUDIT["nominatim_cached_no_match"] += 1
+        return None
 
     query = ", ".join((place, city, "Ukraine" if country == "UA" else "Russia"))
     params = urllib.parse.urlencode({
@@ -1184,9 +1268,11 @@ def _geocode_explicit_place(place, city, country, evidence, source_text):
         if wait > 0:
             time.sleep(wait)
         OSM_LAST_REQUEST_AT = time.monotonic()
+        GEOCODE_AUDIT["nominatim_requests"] += 1
         with urllib.request.urlopen(request, timeout=12) as response:
             results = json.loads(response.read().decode("utf-8"))
     except Exception as exc:
+        GEOCODE_AUDIT["nominatim_errors"] += 1
         print(f"  ⚠️ OSM геокодер недоступен для «{place}»: {str(exc)[:140]}", file=sys.stderr)
         return None
 
@@ -1201,6 +1287,13 @@ def _geocode_explicit_place(place, city, country, evidence, source_text):
         address_type = (item.get("addresstype") or item.get("type") or "").lower()
         if address_type in broad_types:
             continue
+
+        # The OSM item itself must contain distinctive words from the cited name.
+        osm_name = _normalize_evidence(item.get("name") or "")
+        osm_display = _normalize_evidence(item.get("display_name") or "")
+        if not place_tokens or not all(token in osm_name or token in osm_display for token in place_tokens):
+            GEOCODE_AUDIT["nominatim_name_mismatch"] += 1
+            continue
         try:
             lat, lng = float(item["lat"]), float(item["lon"])
         except (KeyError, TypeError, ValueError):
@@ -1211,10 +1304,12 @@ def _geocode_explicit_place(place, city, country, evidence, source_text):
         }
         OSM_GEOCODE_CACHE[key] = result
         _save_osm_geocode_cache()
+        GEOCODE_AUDIT["nominatim_specific_place_successes"] += 1
         return result
 
     OSM_GEOCODE_CACHE[key] = {"lat": None}
     _save_osm_geocode_cache()
+    GEOCODE_AUDIT["nominatim_no_relevant_match"] += 1
     return None
 
 
@@ -1244,6 +1339,7 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
             continue
         name_low = name.lower()
         specific_place_name = (loc.get("specific_place") or "").strip().lower()
+        GEOCODE_AUDIT["llm_locations_with_specific_place" if specific_place_name else "llm_locations_without_specific_place"] += 1
         location_key = f"{name_low}|{specific_place_name}" if specific_place_name else name_low
         if location_key in seen:
             continue
@@ -1260,7 +1356,8 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
         if specific:
             result.append((
                 specific["lat"], specific["lng"],
-                f'{name} — {specific["label"]}', llm_country, "specific_place"
+                f'{name} — {specific["label"]}', llm_country, "specific_place",
+                loc.get("specific_place"), loc.get("evidence")
             ))
             seen.add(location_key)
             continue
@@ -1419,6 +1516,7 @@ def main():
                     "country": pol_country,
                     "lat": pol_coords[0],
                     "lng": pol_coords[1],
+                    "coordinate_precision": "settlement_center",
                     "confidence": "MEDIUM",
                     "description": text[:200],
                     "channel": channel,
@@ -1504,6 +1602,9 @@ def main():
                     "photo_url": post.get("photo_url"),
                     "video_url": post.get("video_url"),
                 }
+                if coordinate_precision == "specific_place" and len(loc) >= 7:
+                    ev["specific_place"] = loc[5]
+                    ev["coordinate_evidence"] = loc[6]
                 dedup = make_dedup_key(ev, text)
                 if dedup in seen_dedup:
                     duplicates += 1
@@ -1543,6 +1644,7 @@ def main():
     # Preserve per-event precision: explicit place match or settlement fallback.
     precision_counts = Counter(ev.get("coordinate_precision", "settlement_center") for ev in raw_events)
     print(f"\\n📍 Геопривязка событий: {dict(precision_counts)}")
+    print(f"   🔎 Аудит AI-геолокации: {dict(GEOCODE_AUDIT)}")
 
     generated_at = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
     payload = {"generated_at": generated_at, "events": raw_events}
