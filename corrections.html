@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#3b82f6">
+  <title>Исправления — OSINT-карта</title>
+  <style>
+    :root{color-scheme:light dark;--bg:#f5f7fb;--card:#fff;--text:#182033;--muted:#5b6475;--line:#dce2ec;--accent:#2563eb}
+    @media(prefers-color-scheme:dark){:root{--bg:#111522;--card:#1a2030;--text:#edf1fa;--muted:#a7b0c3;--line:#343d52;--accent:#8ab4ff}}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
+    main{max-width:850px;margin:0 auto;padding:28px 18px 56px}a{color:var(--accent)}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin:14px 0}
+    h1{font-size:clamp(28px,5vw,40px);line-height:1.15}h2{font-size:21px;margin:0 0 8px}.muted{color:var(--muted)}.button{display:inline-block;padding:10px 15px;border-radius:9px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700}
+  </style>
+</head>
+<body><main>
+  <p><a href="./index.html">← Вернуться на карту</a> · <a href="./methodology.html">Методология</a></p>
+  <h1>Исправления и обратная связь</h1>
+  <p>Ошибки в автоматической карте ожидаемы. Если заметили неверную локацию, дубликат, неправильный тип события, ошибочную атрибуцию источника или проблему с данными — сообщите об этом. Не публикуйте здесь персональные данные и не прикладывайте закрытые сведения.</p>
+  <section class="card">
+    <h2>Как сообщить об ошибке</h2>
+    <ol>
+      <li>Откройте первоисточник и убедитесь, что ссылка доступна публично.</li>
+      <li>Опишите, что именно неверно: место, дата, тип, источник или дубликат.</li>
+      <li>Укажите ссылку на карточку/публикацию, ожидаемое исправление и, если уместно, координаты.</li>
+      <li>Не присылайте сведения, которые могут раскрыть частное лицо или поставить кого-либо под угрозу.</li>
+    </ol>
+    <p><a class="button" href="https://github.com/freeosintmaper/osint-map/issues/new?template=correction.yml">Сообщить об ошибке на GitHub</a></p>
+  </section>
+  <section class="card">
+    <h2>Как рассматриваются исправления</h2>
+    <p>Сообщение не означает автоматического изменения карты. Сначала проверяется доступная ссылка и описание ошибки. При достаточных основаниях исправляется правило обработки, список источников или данные; затем изменение проходит проверку и публикуется через репозиторий. Если данных недостаточно, запрос может остаться открытым с просьбой уточнить информацию.</p>
+    <p>Поскольку карта использует автоматическую классификацию и сторонние публикации, некоторые ошибки нельзя уверенно разрешить только по доступным данным. Исправление одной карточки не обязательно означает, что все похожие случаи уже исправлены.</p>
+  </section>
+  <section class="card">
+    <h2>Журнал изменений</h2>
+    <p>Краткий журнал изменений: <a href="https://github.com/freeosintmaper/osint-map/blob/main/CHANGELOG.md">CHANGELOG.md</a>. Полная история технических изменений доступна в <a href="https://github.com/freeosintmaper/osint-map/commits/main/">журнале коммитов GitHub</a>. Новые исправления и обсуждения доступны в <a href="https://github.com/freeosintmaper/osint-map/issues">списке обращений</a>.</p>
+    <p class="muted">Записи в журнале описывают изменения кода и данных, а не подтверждают истинность отдельных сообщений.</p>
+  </section>
+  <p><a href="./index.html">← На карту</a> · <a href="./methodology.html">Методология и ограничения</a></p>
+</main></body></html>
