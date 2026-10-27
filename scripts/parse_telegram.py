@@ -1152,11 +1152,11 @@ GENERIC_PLACE_DESCRIPTORS = {
     "small", "центральный", "центральная", "центральное", "central",
 }
 SENSITIVE_TARGET_RE = re.compile(
-    r"\\b(?:военн\\w*|military|позици\\w*|подразделени\\w*|штаб\\w*|"
-    r"командн\\w*|завод\\w*|цех\\w*|предприяти\\w*|склад\\w*|"
-    r"логистическ\\w*|логістичн\\w*|аэродром\\w*|аеродром\\w*|"
-    r"пусков\\w*|боеприпас\\w*|боєприпас\\w*|беспилот\\w*|дрон\\w*|"
-    r"производств\\w*|підстанци\\w*|подстанци\\w*|оборонн\\w*)\\b"
+    r"\b(?:военн\w*|military|позици\w*|подразделени\w*|штаб\w*|"
+    r"командн\w*|завод\w*|цех\w*|предприяти\w*|склад\w*|"
+    r"логистическ\w*|логістичн\w*|аэродром\w*|аеродром\w*|"
+    r"пусков\w*|боеприпас\w*|боєприпас\w*|беспилот\w*|дрон\w*|"
+    r"производств\w*|підстанци\w*|подстанци\w*|оборонн\w*)\b"
 )
 TARGETABLE_OBJECT_RE = re.compile(
     r"\b(?:мост\w*|міст\w*|терминал\w*|станци\w*|вокзал\w*|порт\w*|"
@@ -1164,17 +1164,17 @@ TARGETABLE_OBJECT_RE = re.compile(
     r"bridge|terminal|station|airport|port)\b"
 )
 ATTACK_CONTEXT_RE = re.compile(
-    r"\\b(?:удар\\w*|атак\\w*|обстрел\\w*|обстріл\\w*|поврежд\\w*|"
-    r"пошкодж\\w*|поражен\\w*|уражен\\w*|уничтож\\w*|знищен\\w*|"
-    r"взорв\\w*|взрыв\\w*|вибух\\w*|бомбард\\w*|попал\\w*|"
-    r"під\\s+удар|прил\\w*|обстріля\\w*)\\b"
+    r"\b(?:удар\w*|атак\w*|обстрел\w*|обстріл\w*|поврежд\w*|"
+    r"пошкодж\w*|поражен\w*|уражен\w*|уничтож\w*|знищен\w*|"
+    r"взорв\w*|взрыв\w*|вибух\w*|бомбард\w*|попал\w*|"
+    r"під\s+удар|прил\w*|обстріля\w*)\b"
 )
 
 
 def _normalize_evidence(value):
     text = unicodedata.normalize("NFKC", str(value or "")).casefold().replace("ё", "е")
-    text = re.sub(r"[^\\w\\s]", " ", text, flags=re.UNICODE)
-    return re.sub(r"\\s+", " ", text).strip()
+    text = re.sub(r"[^\w\s]", " ", text, flags=re.UNICODE)
+    return re.sub(r"\s+", " ", text).strip()
 
 
 def _specific_place_tokens(place):
