@@ -3,8 +3,6 @@ import json
 import sys
 import urllib.request
 import time
-import random
-import math
 import os
 from datetime import datetime, timezone
 from html import unescape
@@ -1244,24 +1242,6 @@ def make_dedup_key(ev, source_text=None):
     ))
 
 
-def jitter_coords(lat, lng, radius_km):
-    deg_lat_per_km = 1.0 / 111.0
-    deg_lng_per_km = 1.0 / (111.0 * math.cos(math.radians(lat)) + 0.0001)
-    dlat = random.uniform(-radius_km, radius_km) * deg_lat_per_km
-    dlng = random.uniform(-radius_km, radius_km) * deg_lng_per_km
-    return lat + dlat, lng + dlng
-
-
-def radius_for_count(count):
-    if count <= 3:
-        return 1.5
-    elif count <= 10:
-        return 3.0
-    elif count <= 20:
-        return 5.0
-    else:
-        return 8.0
-        
 
 def main():
     load_settlements()
@@ -1447,17 +1427,12 @@ def main():
           f"{len(raw_events)} → {len(deduped)} (схлопнуто {time_dups})")
     raw_events = deduped
 
-    coord_counter = Counter()
+    # Keep geocoded coordinates fixed at the mapped settlement center.
+    # Random jitter made city-level geocoding look like verified incident-level precision.
     for ev in raw_events:
-        coord_key = (round(ev["lat"], 3), round(ev["lng"], 3))
-        coord_counter[coord_key] += 1
+        ev["coordinate_precision"] = "settlement_center"
 
-    print(f"\n🔀 Применяю jitter к {len(raw_events)} событиям...")
-    for ev in raw_events:
-        coord_key = (round(ev["lat"], 3), round(ev["lng"], 3))
-        count = coord_counter[coord_key]
-        radius = radius_for_count(count)
-        ev["lat"], ev["lng"] = jitter_coords(ev["lat"], ev["lng"], radius)
+    print(f"\n📍 Сохраняю координаты населённых пунктов без случайного сдвига: {len(raw_events)} событий")
 
     generated_at = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
     payload = {"generated_at": generated_at, "events": raw_events}
