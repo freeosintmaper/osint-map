@@ -4,7 +4,8 @@
 
 **Сайт:** https://freeosintmaper.github.io/osint-map/
 **Методология:** https://freeosintmaper.github.io/osint-map/methodology.html
-**Исправления и журнал изменений:** https://freeosintmaper.github.io/osint-map/corrections.html
+**Исправления:** https://freeosintmaper.github.io/osint-map/corrections.html
+**Журнал изменений:** [CHANGELOG.md](CHANGELOG.md)
 **Экспорт событий:** кнопка GeoJSON на карте; ограничения лицензии — [LICENSE-DATA.md](LICENSE-DATA.md)
 **Репозиторий:** https://github.com/freeosintmaper/osint-map
 
