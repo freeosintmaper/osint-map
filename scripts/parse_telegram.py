@@ -1129,7 +1129,7 @@ OSM_MIN_REQUEST_INTERVAL = 1.1
 
 
 def _normalize_evidence(value):
-    return re.sub(r"\\s+", " ", (value or "").lower()).strip()
+    return re.sub(r"\s+", " ", (value or "").lower()).strip()
 
 
 def _load_osm_geocode_cache():
