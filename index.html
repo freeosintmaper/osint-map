@@ -1707,7 +1707,7 @@
 
     var tgLayer = L.markerClusterGroup({
       showCoverageOnHover: false, maxClusterRadius: 60, spiderfyOnMaxZoom: true,
-      spiderfyDistanceMultiplier: 5, zoomToBoundsOnClick: true, disableClusteringAtZoom: 8,
+      spiderfyDistanceMultiplier: 5, zoomToBoundsOnClick: true,
       iconCreateFunction: function(cluster) {
         var count = cluster.getChildCount();
         var size = count < 10 ? 44 : count < 100 ? 54 : 64;
