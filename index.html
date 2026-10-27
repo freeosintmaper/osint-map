@@ -1894,7 +1894,9 @@
 
         var coordinateNote = document.createElement('small');
         coordinateNote.style.cssText = 'display:block;margin-top:5px;color:var(--text-muted);line-height:1.4;';
-        coordinateNote.textContent = 'Точка привязана к центру населённого пункта; точное место события не подтверждено.';
+        coordinateNote.textContent = ev.coordinate_precision === 'specific_place'
+          ? 'Место уточнено по явно указанному в публикации ориентиру и сопоставлено с OpenStreetMap; это не независимое подтверждение события.'
+          : 'Точка привязана к центру населённого пункта; точное место события не подтверждено.';
         popup.appendChild(coordinateNote);
 
         var photoUrl = safeHttpUrl(ev.photo_url);
