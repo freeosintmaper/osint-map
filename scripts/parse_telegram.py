@@ -1344,24 +1344,17 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
         if location_key in seen:
             continue
         if _is_admin_unit(name_low):
+            GEOCODE_AUDIT["rejected_admin_unit_as_settlement"] += 1
             continue
+
         llm_country = loc.get("country") or text_country
         if not llm_country and channel_country in ("UA", "RU"):
             llm_country = channel_country
 
+        # Resolve the model's city/settlement against our real settlement index
+        # BEFORE contacting Nominatim. A landmark or generic phrase must never
+        # be used as if it were a city (e.g. "Kyoto Park" or "metro station").
         coords = None
-        specific = _geocode_explicit_place(
-            loc.get("specific_place"), name, llm_country, loc.get("evidence"), text
-        )
-        if specific:
-            result.append((
-                specific["lat"], specific["lng"],
-                f'{name} — {specific["label"]}', llm_country, "specific_place",
-                loc.get("specific_place"), loc.get("evidence")
-            ))
-            seen.add(location_key)
-            continue
-
         if name_low in TRANSLIT_ALIASES:
             c = TRANSLIT_ALIASES[name_low]
             coords = (c[0], c[1], c[2], c[3])
@@ -1373,23 +1366,46 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
                     best = max(same_country, key=lambda x: x[4])
                 else:
                     best = max(candidates, key=lambda x: x[4])
+                    GEOCODE_AUDIT["settlement_country_mismatch_fallback"] += 1
             else:
                 best = max(candidates, key=lambda x: x[4])
             if best[4] >= 5000:
                 coords = (best[0], best[1], best[3], best[2])
         else:
-            for key in TRANSLIT_ALIASES:
-                if name_low in key or key in name_low:
-                    c = TRANSLIT_ALIASES[key]
+            for alias in TRANSLIT_ALIASES:
+                if name_low in alias or alias in name_low:
+                    c = TRANSLIT_ALIASES[alias]
                     if llm_country and c[3] != llm_country:
                         continue
                     coords = (c[0], c[1], c[2], c[3])
                     break
-        if coords:
-            result.append((*coords, "settlement_center"))
-            seen.add(name_low)
-    return result[:MAX_LOCATIONS_PER_POST]
 
+        if not coords:
+            GEOCODE_AUDIT["rejected_unresolved_settlement_name"] += 1
+            continue
+
+        resolved_city = coords[2]
+        resolved_country = coords[3]
+        if llm_country and resolved_country and llm_country != resolved_country:
+            GEOCODE_AUDIT["rejected_country_mismatch_for_specific"] += 1
+        else:
+            specific = _geocode_explicit_place(
+                loc.get("specific_place"), resolved_city, resolved_country or llm_country,
+                loc.get("evidence"), text
+            )
+            if specific:
+                result.append((
+                    specific["lat"], specific["lng"],
+                    f'{resolved_city} — {specific["label"]}', resolved_country or llm_country,
+                    "specific_place", loc.get("specific_place"), loc.get("evidence")
+                ))
+                seen.add(location_key)
+                continue
+
+        # A failed/unsafe precise lookup must retain the already-resolved settlement center.
+        result.append((*coords, "settlement_center"))
+        seen.add(name_low)
+    return result[:MAX_LOCATIONS_PER_POST]
 
 def is_cancellation(text):
     tl = text.lower()
@@ -1560,6 +1576,16 @@ def main():
                 locations = _geocode_llm_locations(
                     llm_result["locations"], channel_country, text
                 )
+                # If the model returns a non-settlement name (for example a
+                # landmark instead of a city), recover only settlement names
+                # actually found in the source text. This keeps an invalid
+                # precise-place suggestion from suppressing an otherwise
+                # mappable event; recovered points remain settlement centers.
+                if not locations:
+                    fallback_locations = find_all_locations(text, channel_country)
+                    if fallback_locations:
+                        locations = fallback_locations
+                        GEOCODE_AUDIT["regex_fallback_after_unresolved_llm_location"] += 1
                 if not event_type and not locations:
                     no_match += 1
                     continue
