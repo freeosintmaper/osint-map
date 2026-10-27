@@ -1793,7 +1793,9 @@
             cross_side_signal: Boolean(source.crossSide),
             verification_status: 'not_verified',
             source_url: ev.url || null,
-            coordinate_note: 'Coordinates mark the mapped settlement center, not a verified exact incident location; see methodology.html.'
+            coordinate_note: ev.coordinate_precision === 'specific_place'
+              ? 'Coordinates matched to a place explicitly named in the source post; not independently verified. See methodology.html.'
+              : 'Coordinates mark the mapped settlement center, not a verified exact incident location; see methodology.html.'
           }
         };
       });
