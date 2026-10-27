@@ -1159,10 +1159,9 @@ SENSITIVE_TARGET_RE = re.compile(
     r"производств\\w*|підстанци\\w*|подстанци\\w*|оборонн\\w*)\\b"
 )
 TARGETABLE_OBJECT_RE = re.compile(
-    r"\\b(?:мост\\w*|міст\\w*|терминал\\w*|станци\\w*|вокзал\\w*|"
-    r"порт\\w*|подстанци\\w*|підстанци\\w*|аэропорт\\w*|аеропорт\\w*|"
-    r"перекрест\\w*|перехрест\\w*|улиц\\w*|вулиц\\w*|район\\w*|"
-    r"district|street|bridge|terminal|station|airport|port)\\b"
+    r"\b(?:мост\w*|міст\w*|терминал\w*|станци\w*|вокзал\w*|порт\w*|"
+    r"подстанци\w*|підстанци\w*|аэропорт\w*|аеропорт\w*|"
+    r"bridge|terminal|station|airport|port)\b"
 )
 ATTACK_CONTEXT_RE = re.compile(
     r"\\b(?:удар\\w*|атак\\w*|обстрел\\w*|обстріл\\w*|поврежд\\w*|"
