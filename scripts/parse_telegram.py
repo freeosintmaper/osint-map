@@ -1242,7 +1242,9 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
         if not name:
             continue
         name_low = name.lower()
-        if name_low in seen:
+        specific_place_name = (loc.get("specific_place") or "").strip().lower()
+        location_key = f"{name_low}|{specific_place_name}" if specific_place_name else name_low
+        if location_key in seen:
             continue
         if _is_admin_unit(name_low):
             continue
@@ -1259,7 +1261,7 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
                 specific["lat"], specific["lng"],
                 f'{name} — {specific["label"]}', llm_country, "specific_place"
             ))
-            seen.add(name_low)
+            seen.add(location_key)
             continue
 
         if name_low in TRANSLIT_ALIASES:
