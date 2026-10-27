@@ -1182,9 +1182,9 @@ def _geocode_explicit_place(place, city, country, evidence, source_text):
         wait = OSM_MIN_REQUEST_INTERVAL - (time.monotonic() - OSM_LAST_REQUEST_AT)
         if wait > 0:
             time.sleep(wait)
+        OSM_LAST_REQUEST_AT = time.monotonic()
         with urllib.request.urlopen(request, timeout=12) as response:
             results = json.loads(response.read().decode("utf-8"))
-        OSM_LAST_REQUEST_AT = time.monotonic()
     except Exception as exc:
         print(f"  ⚠️ OSM геокодер недоступен для «{place}»: {str(exc)[:140]}", file=sys.stderr)
         return None
