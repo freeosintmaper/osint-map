@@ -1788,6 +1788,8 @@
             event_country: ev.country || null,
             confidence: ev.confidence || null,
             coordinate_precision: ev.coordinate_precision || 'settlement_center',
+            specific_place: ev.specific_place || null,
+            coordinate_evidence: ev.coordinate_evidence || null,
             channel: ev.channel || null,
             source_sides: Object.keys(source.sides).filter(function(side) { return source.sides[side]; }),
             cross_side_signal: Boolean(source.crossSide),
@@ -1900,6 +1902,12 @@
           ? 'Место уточнено по явно указанному в публикации ориентиру и сопоставлено с OpenStreetMap; это не независимое подтверждение события.'
           : 'Точка привязана к центру населённого пункта; точное место события не подтверждено.';
         popup.appendChild(coordinateNote);
+        if (ev.coordinate_precision === 'specific_place' && ev.coordinate_evidence) {
+          var evidenceNote = document.createElement('small');
+          evidenceNote.style.cssText = 'display:block;margin-top:4px;line-height:1.4;white-space:normal;';
+          evidenceNote.textContent = 'Подтверждающая цитата из публикации: «' + String(ev.coordinate_evidence) + '»';
+          popup.appendChild(evidenceNote);
+        }
 
         var photoUrl = safeHttpUrl(ev.photo_url);
         var videoUrl = safeHttpUrl(ev.video_url);
