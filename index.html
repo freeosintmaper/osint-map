@@ -1787,12 +1787,13 @@
             location: ev.location || null,
             event_country: ev.country || null,
             confidence: ev.confidence || null,
+            coordinate_precision: ev.coordinate_precision || 'settlement_center',
             channel: ev.channel || null,
             source_sides: Object.keys(source.sides).filter(function(side) { return source.sides[side]; }),
             cross_side_signal: Boolean(source.crossSide),
             verification_status: 'not_verified',
             source_url: ev.url || null,
-            coordinate_note: 'Coordinates may be deliberately displaced; see methodology.html.'
+            coordinate_note: 'Coordinates mark the mapped settlement center, not a verified exact incident location; see methodology.html.'
           }
         };
       });
@@ -1890,6 +1891,11 @@
         var locationText = document.createElement('i');
         locationText.textContent = String(ev.location || '');
         popup.appendChild(locationText);
+
+        var coordinateNote = document.createElement('small');
+        coordinateNote.style.cssText = 'display:block;margin-top:5px;color:var(--text-muted);line-height:1.4;';
+        coordinateNote.textContent = 'Точка привязана к центру населённого пункта; точное место события не подтверждено.';
+        popup.appendChild(coordinateNote);
 
         var photoUrl = safeHttpUrl(ev.photo_url);
         var videoUrl = safeHttpUrl(ev.video_url);
