@@ -2,6 +2,7 @@ import re
 import json
 import sys
 import urllib.request
+import urllib.parse
 import time
 import os
 from datetime import datetime, timezone
@@ -1121,6 +1122,101 @@ def _is_admin_unit(name):
     return False
 
 
+OSM_GEOCODE_CACHE_FILE = "data/osm_geocode_cache.json"
+OSM_GEOCODE_CACHE = {}
+OSM_LAST_REQUEST_AT = 0.0
+OSM_MIN_REQUEST_INTERVAL = 1.1
+
+
+def _normalize_evidence(value):
+    return re.sub(r"\s+", " ", (value or "").lower()).strip()
+
+
+def _load_osm_geocode_cache():
+    global OSM_GEOCODE_CACHE
+    try:
+        with open(OSM_GEOCODE_CACHE_FILE, "r", encoding="utf-8") as f:
+            loaded = json.load(f)
+        if isinstance(loaded, dict):
+            OSM_GEOCODE_CACHE = loaded
+    except (OSError, ValueError):
+        OSM_GEOCODE_CACHE = {}
+
+
+def _save_osm_geocode_cache():
+    try:
+        os.makedirs("data", exist_ok=True)
+        tmp = OSM_GEOCODE_CACHE_FILE + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(OSM_GEOCODE_CACHE, f, ensure_ascii=False)
+        os.replace(tmp, OSM_GEOCODE_CACHE_FILE)
+    except OSError as exc:
+        print(f"  ⚠️ Не удалось сохранить кэш геокодирования: {exc}", file=sys.stderr)
+
+
+def _geocode_explicit_place(place, city, country, evidence, source_text):
+    """Geocode a named place only when its exact evidence is present in the post."""
+    global OSM_LAST_REQUEST_AT
+    if not place or not evidence or country not in ("UA", "RU"):
+        return None
+    normalized_text = _normalize_evidence(source_text)
+    normalized_evidence = _normalize_evidence(evidence)
+    if len(normalized_evidence) < 4 or normalized_evidence not in normalized_text:
+        return None
+
+    key = "|".join((country, city.lower(), place.lower()))
+    if key in OSM_GEOCODE_CACHE:
+        cached = OSM_GEOCODE_CACHE[key]
+        return cached if isinstance(cached, dict) and cached.get("lat") is not None else None
+
+    query = ", ".join((place, city, "Ukraine" if country == "UA" else "Russia"))
+    params = urllib.parse.urlencode({
+        "q": query, "format": "jsonv2", "addressdetails": "1",
+        "limit": "5", "countrycodes": country.lower(),
+    })
+    request = urllib.request.Request(
+        "https://nominatim.openstreetmap.org/search?" + params,
+        headers={"User-Agent": "OSINTMap/1.0 (public event geolocation; contact: repository maintainer)"},
+    )
+    try:
+        wait = OSM_MIN_REQUEST_INTERVAL - (time.monotonic() - OSM_LAST_REQUEST_AT)
+        if wait > 0:
+            time.sleep(wait)
+        OSM_LAST_REQUEST_AT = time.monotonic()
+        with urllib.request.urlopen(request, timeout=12) as response:
+            results = json.loads(response.read().decode("utf-8"))
+    except Exception as exc:
+        print(f"  ⚠️ OSM геокодер недоступен для «{place}»: {str(exc)[:140]}", file=sys.stderr)
+        return None
+
+    broad_types = {
+        "country", "state", "region", "province", "county", "city", "town",
+        "village", "municipality", "administrative", "locality",
+    }
+    for item in results:
+        address = item.get("address") or {}
+        if address.get("country_code", "").lower() != country.lower():
+            continue
+        address_type = (item.get("addresstype") or item.get("type") or "").lower()
+        if address_type in broad_types:
+            continue
+        try:
+            lat, lng = float(item["lat"]), float(item["lon"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        result = {
+            "lat": lat, "lng": lng, "precision": "specific_place",
+            "label": str(item.get("name") or place)[:120],
+        }
+        OSM_GEOCODE_CACHE[key] = result
+        _save_osm_geocode_cache()
+        return result
+
+    OSM_GEOCODE_CACHE[key] = {"lat": None}
+    _save_osm_geocode_cache()
+    return None
+
+
 def _geocode_llm_locations(llm_locations, channel_country, text=""):
     result = []
     seen = set()
@@ -1146,7 +1242,9 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
         if not name:
             continue
         name_low = name.lower()
-        if name_low in seen:
+        specific_place_name = (loc.get("specific_place") or "").strip().lower()
+        location_key = f"{name_low}|{specific_place_name}" if specific_place_name else name_low
+        if location_key in seen:
             continue
         if _is_admin_unit(name_low):
             continue
@@ -1155,6 +1253,17 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
             llm_country = channel_country
 
         coords = None
+        specific = _geocode_explicit_place(
+            loc.get("specific_place"), name, llm_country, loc.get("evidence"), text
+        )
+        if specific:
+            result.append((
+                specific["lat"], specific["lng"],
+                f'{name} — {specific["label"]}', llm_country, "specific_place"
+            ))
+            seen.add(location_key)
+            continue
+
         if name_low in TRANSLIT_ALIASES:
             c = TRANSLIT_ALIASES[name_low]
             coords = (c[0], c[1], c[2], c[3])
@@ -1179,7 +1288,7 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
                     coords = (c[0], c[1], c[2], c[3])
                     break
         if coords:
-            result.append(coords)
+            result.append((*coords, "settlement_center"))
             seen.add(name_low)
     return result[:MAX_LOCATIONS_PER_POST]
 
@@ -1244,6 +1353,7 @@ def make_dedup_key(ev, source_text=None):
 
 
 def main():
+    _load_osm_geocode_cache()
     load_settlements()
     clf = LLMClassifier()
 
@@ -1375,7 +1485,8 @@ def main():
                 multi_location_posts += 1
 
             for loc in locations:
-                loc_lat, loc_lng, loc_city, loc_country = loc
+                loc_lat, loc_lng, loc_city, loc_country = loc[:4]
+                coordinate_precision = loc[4] if len(loc) > 4 else "settlement_center"
                 ev = {
                     "id": len(raw_events) + 1,
                     "url": post["url"] or f"https://t.me/s/{channel}",
@@ -1385,6 +1496,7 @@ def main():
                     "country": loc_country,
                     "lat": loc_lat,
                     "lng": loc_lng,
+                    "coordinate_precision": coordinate_precision,
                     "confidence": "MEDIUM",
                     "description": text[:200],
                     "channel": channel,
@@ -1427,12 +1539,9 @@ def main():
           f"{len(raw_events)} → {len(deduped)} (схлопнуто {time_dups})")
     raw_events = deduped
 
-    # Keep geocoded coordinates fixed at the mapped settlement center.
-    # Random jitter made city-level geocoding look like verified incident-level precision.
-    for ev in raw_events:
-        ev["coordinate_precision"] = "settlement_center"
-
-    print(f"\n📍 Сохраняю координаты населённых пунктов без случайного сдвига: {len(raw_events)} событий")
+    # Preserve per-event precision: explicit place match or settlement fallback.
+    precision_counts = Counter(ev.get("coordinate_precision", "settlement_center") for ev in raw_events)
+    print(f"\\n📍 Геопривязка событий: {dict(precision_counts)}")
 
     generated_at = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
     payload = {"generated_at": generated_at, "events": raw_events}

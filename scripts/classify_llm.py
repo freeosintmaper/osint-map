@@ -23,7 +23,7 @@ ALLOWED_TYPES = {
 }
 MAX_LOCATIONS = 5
 LLM_MODEL = "@cf/meta/llama-3.1-8b-instruct-fast"
-PROMPT_VERSION = "v3_sha256_full_prompt"
+PROMPT_VERSION = "v4_ai_place_evidence"
 
 
 SYSTEM_PROMPT = """Ты — OSINT-аналитик. Анализируешь посты из Telegram-каналов о войне в Украине.
@@ -33,7 +33,13 @@ SYSTEM_PROMPT = """Ты — OSINT-аналитик. Анализируешь п�
 {
   "is_event": true|false,
   "event_type": "Air Raid Alert"|"Military Strike"|"Military Offensive"|"Military Operation"|"Political Development"|null,
-  "locations": [{"name": "название города", "country": "UA"|"RU"|null, "confidence": 0.0-1.0}, ...]
+  "locations": [{
+    "name": "название населённого пункта",
+    "country": "UA"|"RU"|null,
+    "confidence": 0.0-1.0,
+    "specific_place": "явно упомянутая улица, гражданский район, перекрёсток или общедоступный ориентир либо null",
+    "evidence": "короткая дословная цитата из поста, подтверждающая specific_place, либо null"
+  }, ...]
 }
 
 Правила:
@@ -52,7 +58,11 @@ SYSTEM_PROMPT = """Ты — OSINT-аналитик. Анализируешь п�
   ВАЖНО: есть города-двойники (Новомосковск, Первомайск, Александрия и др.) в обеих странах.
   Определяй по контексту: "Днепропетровской области", "Харьковской области", "ВСУ" → UA.
   "Тульской области", "Брянской области", "ВС РФ" → RU.
-- confidence — насколько уверен, что это локация события (0.0-1.0)."""
+- confidence — насколько уверен, что это локация события (0.0-1.0).
+- Если в самом посте явно названы конкретный гражданский район, улица, перекрёсток или общедоступный ориентир, укажи их в specific_place и добавь короткую ДОСЛОВНУЮ цитату в evidence. Если назван только город — specific_place=null.
+- НИКОГДА не выдумывай адреса, районы, ориентиры или координаты. Не выводи точное место из догадок, фотографий, направления полёта или общих фраз.
+- Не извлекай точные координаты военных объектов, позиций, подразделений или целей. Для них оставляй только населённый пункт.
+- evidence должна дословно присутствовать в тексте публикации; если точной цитаты нет — specific_place=null и evidence=null."""
 
 
 def _text_hash(text):
@@ -201,7 +211,23 @@ class LLMClassifier:
             country = loc.get("country")
             if country not in ("UA", "RU"):
                 country = None
-            locations.append({"name": name, "country": country, "confidence": confidence})
+            specific_place = loc.get("specific_place")
+            evidence = loc.get("evidence")
+            if not isinstance(specific_place, str) or not specific_place.strip():
+                specific_place = None
+            else:
+                specific_place = specific_place.strip()[:160]
+            if not isinstance(evidence, str) or not evidence.strip():
+                evidence = None
+            else:
+                evidence = evidence.strip()[:240]
+            locations.append({
+                "name": name,
+                "country": country,
+                "confidence": confidence,
+                "specific_place": specific_place,
+                "evidence": evidence,
+            })
 
         return {
             "is_event": bool(data.get("is_event")),
