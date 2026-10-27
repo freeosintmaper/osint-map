@@ -1,0 +1,53 @@
+name: Сообщить об ошибке на карте
+description: Укажите ошибочную карточку, источник и предлагаемое исправление.
+title: "[Исправление] "
+labels: ["data-correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Не указывайте персональные данные и закрытую информацию. Все сообщения проверяются вручную; отправка формы не гарантирует принятие исправления.
+  - type: dropdown
+    id: issue_type
+    attributes:
+      label: Что нужно исправить?
+      options:
+        - Неверные координаты или локация
+        - Неверный тип события
+        - Неверная дата
+        - Ошибка в источнике или стороне канала
+        - Дубликат события
+        - Пропущенное событие
+        - Другая проблема
+    validations:
+      required: true
+  - type: input
+    id: source_url
+    attributes:
+      label: Ссылка на первоисточник или карточку
+      description: Вставьте публичную ссылку, если она есть.
+      placeholder: https://t.me/...
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Локация / название события
+      placeholder: Город или краткое название
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: В чём ошибка?
+      description: Кратко опишите, что сейчас отображается и почему это неверно.
+      placeholder: Текущее значение и объяснение
+    validations:
+      required: true
+  - type: textarea
+    id: suggested_fix
+    attributes:
+      label: Предлагаемое исправление и обоснование
+      description: Укажите корректное значение и дополнительные открытые источники, если они есть.
+    validations:
+      required: true
