@@ -1576,6 +1576,16 @@ def main():
                 locations = _geocode_llm_locations(
                     llm_result["locations"], channel_country, text
                 )
+                # If the model returns a non-settlement name (for example a
+                # landmark instead of a city), recover only settlement names
+                # actually found in the source text. This keeps an invalid
+                # precise-place suggestion from suppressing an otherwise
+                # mappable event; recovered points remain settlement centers.
+                if not locations:
+                    fallback_locations = find_all_locations(text, channel_country)
+                    if fallback_locations:
+                        locations = fallback_locations
+                        GEOCODE_AUDIT["regex_fallback_after_unresolved_llm_location"] += 1
                 if not event_type and not locations:
                     no_match += 1
                     continue
