@@ -1685,7 +1685,7 @@ def main():
             with open("data/telegram-events.js", "r", encoding="utf-8") as f:
                 previous_output = f.read()
             previous_match = re.match(
-                r"^\\s*window\\.TG_DATA\\s*=\\s*(\\{.*\\})\\s*;?\\s*$",
+                r"^\s*window\.TG_DATA\s*=\s*(\{.*\})\s*;?\s*$",
                 previous_output, re.DOTALL
             )
             if previous_match:
@@ -1712,7 +1712,10 @@ def main():
 
     clf.save_cache()
 
-    print(f"\n✅ Итого: {len(raw_events)} событий")
+    if preserve_previous_events:
+        print(f"\n⚠️ Итоговый расчёт: {len(raw_events)}; опубликованный набор сохранён прежний ({previous_event_count} событий).")
+    else:
+        print(f"\n✅ Итого: {len(raw_events)} событий")
     print(f"   Из них политических: {political_count}")
     print(f"   Пропущено сводок: {skipped_summary}")
     print(f"   Пропущено рекламы: {skipped_ad}")
