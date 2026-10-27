@@ -1675,14 +1675,47 @@ def main():
     generated_at = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
     payload = {"generated_at": generated_at, "events": raw_events}
     output = "window.TG_DATA = " + json.dumps(payload, ensure_ascii=False) + ";"
-    temp_path = "data/telegram-events.js.tmp"
-    with open(temp_path, "w", encoding="utf-8") as f:
-        f.write(output)
-    os.replace(temp_path, "data/telegram-events.js")
+    # Do not replace a complete published dataset with a degraded regex-only
+    # scrape when the LLM circuit breaker trips. This avoids silently losing
+    # events during Cloudflare Workers AI 429/out-of-capacity periods.
+    preserve_previous_events = False
+    previous_event_count = 0
+    if llm_disabled and os.path.isfile("data/telegram-events.js"):
+        try:
+            with open("data/telegram-events.js", "r", encoding="utf-8") as f:
+                previous_output = f.read()
+            previous_match = re.match(
+                r"^\s*window\.TG_DATA\s*=\s*(\{.*\})\s*;?\s*$",
+                previous_output, re.DOTALL
+            )
+            if previous_match:
+                previous_payload = json.loads(previous_match.group(1))
+                previous_events = previous_payload.get("events")
+                if isinstance(previous_events, list) and previous_events:
+                    preserve_previous_events = True
+                    previous_event_count = len(previous_events)
+                    print(
+                        f"  ⚠️ LLM circuit breaker сработал: сохраняю предыдущий "
+                        f"набор из {previous_event_count} событий вместо "
+                        f"неполной выгрузки из {len(raw_events)}."
+                    )
+        except (OSError, ValueError, TypeError) as exc:
+            print(f"  ⚠️ Не удалось проверить предыдущий набор событий: {exc}", file=sys.stderr)
+
+    if not preserve_previous_events:
+        temp_path = "data/telegram-events.js.tmp"
+        with open(temp_path, "w", encoding="utf-8") as f:
+            f.write(output)
+        os.replace(temp_path, "data/telegram-events.js")
+    else:
+        print("  ℹ️ telegram-events.js оставлен без изменений; кэш и аудит будут сохранены.")
 
     clf.save_cache()
 
-    print(f"\n✅ Итого: {len(raw_events)} событий")
+    if preserve_previous_events:
+        print(f"\n⚠️ Итоговый расчёт: {len(raw_events)}; опубликованный набор сохранён прежний ({previous_event_count} событий).")
+    else:
+        print(f"\n✅ Итого: {len(raw_events)} событий")
     print(f"   Из них политических: {political_count}")
     print(f"   Пропущено сводок: {skipped_summary}")
     print(f"   Пропущено рекламы: {skipped_ad}")
