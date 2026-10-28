@@ -89,6 +89,42 @@ class EventContextAndVerificationTests(unittest.TestCase):
         self.assertIn("ukrpravda_news", first["verification_sources"])
         self.assertIn("uniannet", first["verification_sources"])
 
+    def test_ambiguous_city_alias_respects_the_requested_country(self):
+        key = "новомосковск"
+        old_alias = parser.TRANSLIT_ALIASES.get(key)
+        old_candidates = parser.SETTLEMENTS_BY_NAME.get(key)
+        parser.TRANSLIT_ALIASES[key] = [48.62893, 35.2589, "Новомосковск", "UA"]
+        parser.SETTLEMENTS_BY_NAME[key] = [
+            (48.62893, 35.2589, "UA", "Новомосковск", 100000),
+            (54.01098, 38.29084, "RU", "Новомосковск", 100000),
+        ]
+        try:
+            locations = parser._geocode_llm_locations(
+                [{
+                    "name": "Новомосковск",
+                    "country": "RU",
+                    "confidence": 0.99,
+                    "specific_place": None,
+                    "evidence": None,
+                }],
+                "UA",
+                "В Новомосковске Тульской области загорелся химзавод Азот.",
+            )
+            self.assertTrue(locations)
+            self.assertEqual(locations[0][2], "Новомосковск")
+            self.assertEqual(locations[0][3], "RU")
+            self.assertAlmostEqual(locations[0][0], 54.01098)
+            self.assertAlmostEqual(locations[0][1], 38.29084)
+        finally:
+            if old_alias is None:
+                parser.TRANSLIT_ALIASES.pop(key, None)
+            else:
+                parser.TRANSLIT_ALIASES[key] = old_alias
+            if old_candidates is None:
+                parser.SETTLEMENTS_BY_NAME.pop(key, None)
+            else:
+                parser.SETTLEMENTS_BY_NAME[key] = old_candidates
+
     def test_verbatim_cross_posts_are_not_marked_verified(self):
         text = 'В Тульской области загорелся химзавод "Азот" после атаки дронов.'
         first = self.make_event(
