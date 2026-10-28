@@ -92,6 +92,32 @@ class EventContextAndVerificationTests(unittest.TestCase):
         self.assertAlmostEqual(ambiguous["lng"], 38.29084)
         self.assertEqual(ambiguous["location_resolution"], "context_corroborated_country")
 
+    def test_follow_up_media_inherits_explicit_region_from_same_channel(self):
+        follow_up = self.make_event(
+            "Новомосковск",
+            "Ещё кадры с Новомосковска после атаки этим утром.",
+            "exilenova_plus",
+            "2026-10-28T05:09:54+00:00",
+            48.62893,
+            35.2589,
+        )
+        region_report = self.make_event(
+            "Новомосковск",
+            "Новомосковськ, Тульська область, атаковано хімічний завод «Азот», "
+            "після атаки на підприємстві розпочалася пожежа.",
+            "exilenova_plus",
+            "2026-10-28T04:17:20+00:00",
+            54.01098,
+            38.29084,
+        )
+        follow_up["country"] = "UA"
+        region_report["country"] = "RU"
+        parser._correct_contextual_locations([follow_up, region_report])
+        self.assertEqual(follow_up["country"], "RU")
+        self.assertAlmostEqual(follow_up["lat"], 54.01098)
+        self.assertAlmostEqual(follow_up["lng"], 38.29084)
+        self.assertEqual(follow_up["location_resolution"], "context_corroborated_country")
+
     def test_distinct_reports_from_different_channels_are_corroborated(self):
         first = self.make_event(
             "Новомосковск",
