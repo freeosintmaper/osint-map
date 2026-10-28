@@ -1426,9 +1426,7 @@ def _resolve_settlement_center(name, country):
 def _region_center_from_text(text, country_hint=None):
     normalized = _normalize_context_text(text)
     for pattern, center_name, center_country in _REGION_CENTER_HINTS:
-        if country_hint in ("UA", "RU") and country_hint != center_country:
-            # Explicit region name outranks the source channel's presumed side.
-            pass
+        # Explicit region text outranks the source channel's presumed side.
         if re.search(pattern, normalized, flags=re.UNICODE):
             center = _resolve_settlement_center(center_name, center_country)
             if center:
