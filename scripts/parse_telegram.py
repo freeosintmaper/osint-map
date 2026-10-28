@@ -1675,26 +1675,24 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
         if not llm_country and channel_country in ("UA", "RU"):
             llm_country = channel_country
 
-        # Resolve the model's city/settlement against our real settlement index
-        # BEFORE contacting Nominatim. A landmark or generic phrase must never
-        # be used as if it were a city (e.g. "Kyoto Park" or "metro station").
+        # Resolve against a country-matched settlement before using a static alias.
+        # A city alias can collide across countries (notably Новомосковск); never
+        # accept a coordinate from a different country just because its alias matches.
+        primary_context = _primary_event_context(text)
         coords = None
-        if name_low in TRANSLIT_ALIASES:
-            c = TRANSLIT_ALIASES[name_low]
-            coords = (c[0], c[1], c[2], c[3])
+        alias_coords = TRANSLIT_ALIASES.get(name_low)
+        if alias_coords and (not llm_country or alias_coords[3] == llm_country):
+            coords = (alias_coords[0], alias_coords[1], alias_coords[2], alias_coords[3])
         elif name_low in SETTLEMENTS_BY_NAME:
             candidates = SETTLEMENTS_BY_NAME[name_low]
             if llm_country:
-                same_country = [c for c in candidates if c[2] == llm_country]
-                if same_country:
-                    best = max(same_country, key=lambda x: x[4])
-                else:
-                    best = max(candidates, key=lambda x: x[4])
-                    GEOCODE_AUDIT["settlement_country_mismatch_fallback"] += 1
-            else:
+                candidates = [c for c in candidates if c[2] == llm_country]
+            if candidates:
                 best = max(candidates, key=lambda x: x[4])
-            if best[4] >= 5000:
-                coords = (best[0], best[1], best[3], best[2])
+                if best[4] >= 5000:
+                    coords = (best[0], best[1], best[3], best[2])
+            else:
+                GEOCODE_AUDIT["settlement_country_mismatch_fallback"] += 1
         else:
             for alias in TRANSLIT_ALIASES:
                 if name_low in alias or alias in name_low:
@@ -1706,6 +1704,15 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
 
         if not coords:
             GEOCODE_AUDIT["rejected_unresolved_settlement_name"] += 1
+            primary_locations = find_all_locations(primary_context, llm_country or channel_country)
+            if primary_locations:
+                result.extend((*item[:4], "settlement_center") for item in primary_locations)
+                seen.add(location_key)
+                continue
+            region_center = _region_center_from_text(primary_context, llm_country or channel_country)
+            if region_center:
+                result.append((*region_center, "settlement_center"))
+                seen.add(location_key)
             continue
 
         # If the model selected a city that appears only in a secondary explanatory
@@ -1729,7 +1736,12 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
                 seen.add(location_key)
             continue
         if llm_country and resolved_country and llm_country != resolved_country:
-            GEOCODE_AUDIT["rejected_country_mismatch_for_specific"] += 1
+            GEOCODE_AUDIT["rejected_country_mismatch_for_event"] += 1
+            region_center = _region_center_from_text(primary_context, llm_country)
+            if region_center:
+                result.append((*region_center, "settlement_center"))
+                seen.add(location_key)
+            continue
         else:
             specific = _geocode_explicit_place(
                 loc.get("specific_place"), resolved_city, resolved_country or llm_country,
