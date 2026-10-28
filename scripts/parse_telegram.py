@@ -1529,10 +1529,11 @@ def _correct_contextual_locations(events):
                 "score": 0, "sources": set(), "event": candidate, "anchors": 0,
             })
             row["score"] += anchors * 10
-            row["anchors"] = max(row["anchors"], anchors)
+            previous_anchors = row["anchors"]
+            row["anchors"] = max(previous_anchors, anchors)
             row["sources"].update(candidate_channels)
-            if anchors > row["anchors"] or (
-                anchors == row["anchors"] and len(str(candidate.get("description") or "")) >
+            if anchors > previous_anchors or (
+                anchors == previous_anchors and len(str(candidate.get("description") or "")) >
                 len(str(row["event"].get("description") or ""))
             ):
                 row["event"] = candidate
