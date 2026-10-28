@@ -1432,7 +1432,6 @@ def _region_center_from_text(text, country_hint=None):
         if re.search(pattern, normalized, flags=re.UNICODE):
             center = _resolve_settlement_center(center_name, center_country)
             if center:
-                GEOCODE_AUDIT["region_center_fallback"] += 1
                 return center
     return None
 
@@ -1492,10 +1491,83 @@ def _correct_contextual_locations(events):
         description = str(event.get("description") or "")
         lead = _primary_event_context(description)
         current_location = str(event.get("location") or "")
-        if not current_location or _location_mentioned_in_context(current_location, lead):
+        if not current_location:
             continue
         current_time = _event_datetime(event.get("date"))
         current_channels = _event_channels(event)
+
+        if _location_mentioned_in_context(current_location, lead):
+            # If the lead explicitly names a region in another country, resolve
+            # homonymous settlement names in that region's country first.
+            lead_region = _region_center_from_text(lead, event.get("country"))
+            if lead_region and lead_region[3] != event.get("country"):
+                disambiguated = _resolve_settlement_center(current_location, lead_region[3])
+                if disambiguated:
+                    event["location"] = disambiguated[2]
+                    event["country"] = disambiguated[3]
+                    event["lat"], event["lng"] = disambiguated[0], disambiguated[1]
+                    event["coordinate_precision"] = "settlement_center"
+                    event["location_resolution"] = "region_country_disambiguation"
+                    event.pop("specific_place", None)
+                    event.pop("coordinate_evidence", None)
+                    corrections += 1
+                    continue
+
+            # Some image/video follow-ups omit the region but refer to a city
+            # name shared by two countries. Use a nearby, same-topic report only
+            # when that report explicitly ties the town to a region in its country.
+            country_scores = {}
+            for candidate in events:
+                if candidate is event:
+                    continue
+                if candidate.get("event_type") != event.get("event_type"):
+                    continue
+                if _normalize_context_text(candidate.get("location")) != _normalize_context_text(current_location):
+                    continue
+                if candidate.get("country") == event.get("country"):
+                    continue
+                candidate_lead = _primary_event_context(candidate.get("description"))
+                if not _location_mentioned_in_context(candidate.get("location"), candidate_lead):
+                    continue
+                candidate_region = _region_center_from_text(candidate_lead, candidate.get("country"))
+                if not candidate_region or candidate_region[3] != candidate.get("country"):
+                    continue
+                candidate_time = _event_datetime(candidate.get("date"))
+                if current_time and candidate_time:
+                    if abs((candidate_time - current_time).total_seconds()) > 8 * 3600:
+                        continue
+                anchors = _shared_event_anchor_count(
+                    description, candidate.get("description"), current_location
+                )
+                if anchors < 1:
+                    continue
+                key = candidate.get("country")
+                row = country_scores.setdefault(key, {
+                    "score": 0, "event": candidate, "sources": set(),
+                })
+                row["score"] += anchors * 10
+                row["sources"].update(_event_channels(candidate))
+                if len(str(candidate.get("description") or "")) > len(str(row["event"].get("description") or "")):
+                    row["event"] = candidate
+            ranked_countries = sorted(
+                country_scores.items(), key=lambda item: (item[1]["score"], len(item[1]["sources"])),
+                reverse=True,
+            )
+            if ranked_countries and (
+                len(ranked_countries) == 1
+                or ranked_countries[0][1]["score"] > ranked_countries[1][1]["score"]
+            ):
+                chosen = ranked_countries[0][1]["event"]
+                event["location"] = chosen["location"]
+                event["country"] = chosen["country"]
+                event["lat"], event["lng"] = chosen["lat"], chosen["lng"]
+                event["coordinate_precision"] = "settlement_center"
+                event["location_resolution"] = "context_corroborated_country"
+                event.pop("specific_place", None)
+                event.pop("coordinate_evidence", None)
+                corrections += 1
+            continue
+
         scored = {}
         for candidate in events:
             if candidate is event:
@@ -1558,6 +1630,7 @@ def _correct_contextual_locations(events):
             continue
         region_center = _region_center_from_text(lead, event.get("country"))
         if region_center:
+            GEOCODE_AUDIT["region_center_fallback"] += 1
             event["lat"], event["lng"], event["location"], event["country"] = region_center
             event["coordinate_precision"] = "settlement_center"
             event["location_resolution"] = "region_center_fallback"
@@ -1711,6 +1784,7 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
                 continue
             region_center = _region_center_from_text(primary_context, llm_country or channel_country)
             if region_center:
+                GEOCODE_AUDIT["region_center_fallback"] += 1
                 result.append((*region_center, "settlement_center"))
                 seen.add(location_key)
             continue
@@ -1739,6 +1813,7 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
             GEOCODE_AUDIT["rejected_country_mismatch_for_event"] += 1
             region_center = _region_center_from_text(primary_context, llm_country)
             if region_center:
+                GEOCODE_AUDIT["region_center_fallback"] += 1
                 result.append((*region_center, "settlement_center"))
                 seen.add(location_key)
             continue
