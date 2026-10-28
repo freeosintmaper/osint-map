@@ -66,6 +66,32 @@ class EventContextAndVerificationTests(unittest.TestCase):
         self.assertEqual(wrong["coordinate_precision"], "settlement_center")
         self.assertEqual(wrong["location_resolution"], "context_corroborated_settlement")
 
+    def test_same_named_city_uses_region_from_related_report(self):
+        ambiguous = self.make_event(
+            "Новомосковск",
+            'Новомосковск местные жители сообщают об атаке и пожаре на АО «НАК Азот».',
+            "exilenova_plus",
+            "2026-10-28T03:54:32+00:00",
+            48.62893,
+            35.2589,
+        )
+        region_report = self.make_event(
+            "Новомосковск",
+            "Новомосковськ, Тульська область, атаковано хімічний завод «Азот», "
+            "після атаки на підприємстві розпочалася пожежа.",
+            "exilenova_plus",
+            "2026-10-28T04:17:20+00:00",
+            54.01098,
+            38.29084,
+        )
+        ambiguous["country"] = "UA"
+        region_report["country"] = "RU"
+        parser._correct_contextual_locations([ambiguous, region_report])
+        self.assertEqual(ambiguous["country"], "RU")
+        self.assertAlmostEqual(ambiguous["lat"], 54.01098)
+        self.assertAlmostEqual(ambiguous["lng"], 38.29084)
+        self.assertEqual(ambiguous["location_resolution"], "context_corroborated_country")
+
     def test_distinct_reports_from_different_channels_are_corroborated(self):
         first = self.make_event(
             "Новомосковск",
