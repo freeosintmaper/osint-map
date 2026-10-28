@@ -33,6 +33,9 @@ jobs:
       - name: Check Supabase Edge Function
         run: deno check supabase/functions/zone-assistant/index.ts
 
+      - name: Test event location and verification logic
+        run: python scripts/test_event_context_verification.py
+
       - name: Check inline JavaScript syntax
         run: |
           node <<'NODE'

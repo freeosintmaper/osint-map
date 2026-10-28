@@ -427,6 +427,10 @@
     #eventsPanel .evt-source { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
     .source-meta { margin: 7px 0; padding: 7px 9px; border-radius: 7px; background: var(--bg-input); font-size: 11px; }
     .source-meta .not-verified { display: inline-block; margin-top: 4px; padding: 2px 6px; border-radius: 4px; background: rgba(245, 158, 11, .15); color: #b45309; font-weight: 700; }
+    .source-meta .verified { display: inline-block; margin-top: 4px; padding: 2px 6px; border-radius: 4px; background: rgba(16, 185, 129, .13); color: #047857; font-weight: 700; }
+    .evt-verification { display: inline-block; margin-left: 5px; padding: 1px 5px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+    .evt-verification.verified { background: rgba(16, 185, 129, .13); color: #047857; }
+    .evt-verification.not-verified { background: rgba(245, 158, 11, .15); color: #b45309; }
     .cross-side-signal { margin-top: 5px; padding: 7px 9px; border-radius: 7px; background: rgba(16, 185, 129, .12); border: 1px solid rgba(16, 185, 129, .45); color: #047857; font-weight: 700; }
     body.dark .source-meta .not-verified { color: #fbbf24; }
     body.dark .cross-side-signal { color: #6ee7b7; }
@@ -1754,6 +1758,26 @@
       RVvoenkor: 'RU', dva_majors: 'RU'
     };
 
+    function getVerificationInfo(ev) {
+      var sources = Array.isArray(ev && ev.verification_sources)
+        ? ev.verification_sources.filter(Boolean) : [];
+      var corroborated = Boolean(ev && ev.verification_status === 'corroborated' && sources.length >= 2);
+      if (corroborated) {
+        return {
+          verified: true,
+          label: 'ПРОВЕРЕНО ПО ' + sources.length + ' КАНАЛАМ',
+          note: ev.verification_note || 'Автоматическая сверка сообщений разных каналов. Независимость первоисточников отдельно не установлена.'
+        };
+      }
+      return {
+        verified: false,
+        label: 'НЕ ПРОВЕРЕНО',
+        note: ev && ev.verification_note
+          ? ev.verification_note
+          : 'Не найдено достаточного количества отличающихся сообщений для автоматической сверки.'
+      };
+    }
+
     function getSourceSides(channelValue) {
       var channels = String(channelValue || '').split(',').map(function(name) { return name.trim(); }).filter(Boolean);
       var sides = { UA: false, RU: false, OSINT: false };
@@ -1793,7 +1817,9 @@
             channel: ev.channel || null,
             source_sides: Object.keys(source.sides).filter(function(side) { return source.sides[side]; }),
             cross_side_signal: Boolean(source.crossSide),
-            verification_status: 'not_verified',
+            verification_status: ev.verification_status || 'not_verified',
+            verification_sources: Array.isArray(ev.verification_sources) ? ev.verification_sources : [],
+            verification_note: ev.verification_note || 'Нет автоматического подтверждения по отличающимся сообщениям других каналов.',
             source_url: ev.url || null,
             coordinate_note: ev.coordinate_precision === 'specific_place'
               ? 'Coordinates matched to a place explicitly named in the source post; not independently verified. See methodology.html.'
@@ -1858,6 +1884,7 @@
         var countryLabel = ev.country === 'UA' ? t('countryUA') : (ev.country === 'RU' ? t('countryRU') : t('countryOSINT'));
         var countryClass = ev.country === 'UA' ? 'ua' : (ev.country === 'RU' ? 'ru' : 'osint');
         var sourceInfo = getSourceSides(ev.channel);
+        var verificationInfo = getVerificationInfo(ev);
 
         // Build popup with DOM nodes instead of concatenating untrusted Telegram fields into HTML.
         var popup = document.createElement('div');
@@ -1878,11 +1905,13 @@
         sourceMeta.appendChild(document.createTextNode('Источник: ' + String(ev.channel || 'не указан')));
         sourceMeta.appendChild(document.createElement('br'));
         sourceMeta.appendChild(document.createTextNode('Сторона источника: ' + sourceInfo.label));
-        var unverified = document.createElement('span');
-        unverified.className = 'not-verified';
-        unverified.textContent = 'НЕ ПРОВЕРЕНО';
+        var verificationInfo = getVerificationInfo(ev);
+        var verificationBadge = document.createElement('span');
+        verificationBadge.className = verificationInfo.verified ? 'verified' : 'not-verified';
+        verificationBadge.title = verificationInfo.note;
+        verificationBadge.textContent = verificationInfo.label;
         sourceMeta.appendChild(document.createElement('br'));
-        sourceMeta.appendChild(unverified);
+        sourceMeta.appendChild(verificationBadge);
         if (sourceInfo.crossSide) {
           var crossSideSignal = document.createElement('div');
           crossSideSignal.className = 'cross-side-signal';
@@ -2101,7 +2130,8 @@
                 '<span style="color:' + color + ';display:flex;align-items:center;">' + wtSvg(ev.event_type) + '</span>' + escapeHtml(label) +
                 '<span class="evt-country ' + countryClass + '">' + escapeHtml(countryLabel) + '</span></div>' +
                 '<div class="evt-loc">' + escapeHtml(ev.location || '') + ' <span style="color:var(--text-muted);">@' + escapeHtml(ev.channel || '') + '</span></div>' +
-                '<div class="evt-source">Источник: ' + escapeHtml(sourceInfo.label) + ' · НЕ ПРОВЕРЕНО' +
+                '<div class="evt-source">Источник: ' + escapeHtml(sourceInfo.label) + ' ' +
+                '<span class="evt-verification ' + (verificationInfo.verified ? 'verified' : 'not-verified') + '" title="' + escapeHtml(verificationInfo.note) + '">' + escapeHtml(verificationInfo.label) + '</span>' +
                 (sourceInfo.crossSide ? ' · UA + RU' : '') + '</div>' +
                 '<div class="evt-time">' + escapeHtml(time) + '</div></div>';
       });
