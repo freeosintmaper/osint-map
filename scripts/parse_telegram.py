@@ -1539,14 +1539,24 @@ def _correct_contextual_locations(events):
                 anchors = _shared_event_anchor_count(
                     description, candidate.get("description"), current_location
                 )
-                if anchors < 1:
+                candidate_channels = _event_channels(candidate)
+                follow_up_markers = (
+                    "кадр", "кадры", "видео", "дополнительн", "еще кадры",
+                    "еще видео", "продолжает гореть", "додаткові кадри",
+                    "ще кадри", "продовжує горіти",
+                )
+                normalized_description = _normalize_context_text(description)
+                same_source_follow_up = bool(current_channels & candidate_channels) and any(
+                    marker in normalized_description for marker in follow_up_markers
+                )
+                if anchors < 1 and not same_source_follow_up:
                     continue
                 key = candidate.get("country")
                 row = country_scores.setdefault(key, {
                     "score": 0, "event": candidate, "sources": set(),
                 })
-                row["score"] += anchors * 10
-                row["sources"].update(_event_channels(candidate))
+                row["score"] += anchors * 10 + (3 if same_source_follow_up else 0)
+                row["sources"].update(candidate_channels)
                 if len(str(candidate.get("description") or "")) > len(str(row["event"].get("description") or "")):
                     row["event"] = candidate
             ranked_countries = sorted(
