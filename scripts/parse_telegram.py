@@ -8,6 +8,7 @@ import math
 import os
 import unicodedata
 from datetime import datetime, timezone
+from difflib import SequenceMatcher
 from html import unescape
 from collections import Counter, defaultdict
 
@@ -1313,6 +1314,328 @@ def _geocode_explicit_place(place, city, country, evidence, source_text):
     return None
 
 
+
+# Context-aware settlement matching and cross-source verification.
+# These rules intentionally keep coordinates at settlement level: matching
+# several reports does not justify pinning a sensitive/attacked facility.
+_REGION_CENTER_HINTS = [
+    (r"\bтульск\w*\s+област\w*", "тула", "RU"),
+    (r"\bбрянск\w*\s+област\w*", "брянск", "RU"),
+    (r"\bбелгородск\w*\s+област\w*", "белгород", "RU"),
+    (r"\bкурск\w*\s+област\w*", "курск", "RU"),
+    (r"\bворонежск\w*\s+област\w*", "воронеж", "RU"),
+    (r"\bкалужск\w*\s+област\w*", "калуга", "RU"),
+    (r"\bрязанск\w*\s+област\w*", "рязань", "RU"),
+    (r"\bсмоленск\w*\s+област\w*", "смоленск", "RU"),
+    (r"\bлипецк\w*\s+област\w*", "липецк", "RU"),
+    (r"\bтамбовск\w*\s+област\w*", "тамбов", "RU"),
+    (r"\bпензенск\w*\s+област\w*", "пенза", "RU"),
+    (r"\bсаратовск\w*\s+област\w*", "саратов", "RU"),
+    (r"\bволгоградск\w*\s+област\w*", "волгоград", "RU"),
+    (r"\bмосковск\w*\s+област\w*", "москва", "RU"),
+    (r"\bнижегородск\w*\s+област\w*", "нижний новгород", "RU"),
+    (r"\bкраснодарск\w*\s+кра\w*", "краснодар", "RU"),
+    (r"\bставропольск\w*\s+кра\w*", "ставрополь", "RU"),
+    (r"\bхарьковск\w*\s+област\w*", "харьков", "UA"),
+    (r"\bхарківськ\w*\s+област\w*", "харьков", "UA"),
+    (r"\bодесск\w*\s+област\w*", "одесса", "UA"),
+    (r"\bодеськ\w*\s+област\w*", "одесса", "UA"),
+    (r"\bднепропетровск\w*\s+област\w*", "днепр", "UA"),
+    (r"\bдніпропетровськ\w*\s+област\w*", "днепр", "UA"),
+    (r"\bкиевск\w*\s+област\w*", "киев", "UA"),
+    (r"\bкиївськ\w*\s+област\w*", "киев", "UA"),
+    (r"\bсумск\w*\s+област\w*", "сумы", "UA"),
+    (r"\bсумськ\w*\s+област\w*", "сумы", "UA"),
+    (r"\bполтавск\w*\s+област\w*", "полтава", "UA"),
+    (r"\bполтавськ\w*\s+област\w*", "полтава", "UA"),
+    (r"\bчерниговск\w*\s+област\w*", "чернигов", "UA"),
+    (r"\bчернігівськ\w*\s+област\w*", "чернигов", "UA"),
+    (r"\bхерсонск\w*\s+област\w*", "херсон", "UA"),
+    (r"\bхерсонськ\w*\s+област\w*", "херсон", "UA"),
+    (r"\bзапорожск\w*\s+област\w*", "запорожье", "UA"),
+    (r"\bзапорізьк\w*\s+област\w*", "запорожье", "UA"),
+    (r"\bльвовск\w*\s+област\w*", "львов", "UA"),
+    (r"\bльвівськ\w*\s+област\w*", "львов", "UA"),
+]
+_VERIFICATION_STOP_WORDS = {
+    "это", "этот", "эта", "эти", "его", "ее", "их", "они", "оно", "для",
+    "при", "после", "перед", "через", "который", "которая", "которые",
+    "также", "один", "одна", "одним", "самый", "более", "менее", "были",
+    "было", "будет", "есть", "был", "была", "сообщает", "сообщают",
+    "сообщили", "сообщение", "сообщения", "местные", "жители", "сегодня",
+    "вчера", "ночью", "вночі", "утром", "вечером", "после", "атака",
+    "атаки", "атаке", "атаковали", "удар", "удара", "обстрел", "обстрела",
+    "дрон", "дроны", "дронов", "беспилотник", "беспилотники", "бпла",
+    "пожар", "пожежа", "горит", "горит", "загорелся", "возникла",
+    "возник", "поврежден", "повреждена", "попадание", "взрыв", "взрыва",
+    "россия", "россии", "российский", "российских", "украина", "украины",
+    "украинский", "украинских", "область", "области", "області", "рф",
+    "город", "городе", "населенный", "населённый", "пункт", "район",
+    "завод", "предприятие", "предприятия", "підприємство", "підприємстві",
+    "объект", "объекта", "производитель", "производителей", "производства",
+    "удобрений", "удобрения", "nitrogen", "fertilizer", "fertilizers",
+    "factory", "plant", "fire", "after", "following", "attack", "attacked",
+    "drone", "drones", "overnight", "reported", "reports", "there", "this",
+    "that", "with", "from", "into", "were", "has", "have", "for", "the",
+    "and", "but", "not", "are", "was", "its", "one", "largest", "among",
+}
+def _normalize_context_text(value):
+    value = unicodedata.normalize("NFKC", str(value or "")).casefold()
+    value = value.replace("ё", "е").replace("і", "и").replace("ї", "и")
+    value = value.replace("є", "е").replace("ґ", "г").replace("ськ", "ск")
+    value = value.replace("цьк", "цк")
+    value = re.sub(r"[^\w\s]", " ", value, flags=re.UNICODE)
+    return re.sub(r"\s+", " ", value).strip()
+
+def _primary_event_context(text):
+    """The lead paragraph is strongest evidence for where the event happened."""
+    value = str(text or "").replace("\r\n", "\n").replace("\r", "\n").strip()
+    return re.split(r"\n\s*\n", value, maxsplit=1)[0].strip()[:800]
+
+def _location_mentioned_in_context(name, text):
+    normalized_name = _normalize_context_text(name)
+    normalized_text = _normalize_context_text(text)
+    if not normalized_name or not normalized_text:
+        return False
+    # Accept declensions such as Дзержинск / в Дзержинске and common UA/RU
+    # spelling variants, but require the name to occur as a complete word.
+    pattern = r"(?<!\w)" + re.escape(normalized_name) + r"(?:[а-я]{0,6})?(?!\w)"
+    return re.search(pattern, normalized_text, flags=re.UNICODE) is not None
+
+def _resolve_settlement_center(name, country):
+    name_low = _normalize_context_text(name)
+    alias = TRANSLIT_ALIASES.get(name_low)
+    if alias and alias[3] == country:
+        return (alias[0], alias[1], alias[2], alias[3])
+    candidates = SETTLEMENTS_BY_NAME.get(name_low, [])
+    same_country = [item for item in candidates if item[2] == country]
+    candidates = same_country or candidates
+    if candidates:
+        best = max(candidates, key=lambda item: item[4])
+        return (best[0], best[1], best[3], best[2])
+    # Some centre names are stored with a slightly different spelling.
+    for key, candidate_list in SETTLEMENTS_BY_NAME.items():
+        if _normalize_context_text(key) == name_low:
+            same_country = [item for item in candidate_list if item[2] == country]
+            use = same_country or candidate_list
+            if use:
+                best = max(use, key=lambda item: item[4])
+                return (best[0], best[1], best[3], best[2])
+    return None
+
+def _region_center_from_text(text, country_hint=None):
+    normalized = _normalize_context_text(text)
+    for pattern, center_name, center_country in _REGION_CENTER_HINTS:
+        if country_hint in ("UA", "RU") and country_hint != center_country:
+            # Explicit region name outranks the source channel's presumed side.
+            pass
+        if re.search(pattern, normalized, flags=re.UNICODE):
+            center = _resolve_settlement_center(center_name, center_country)
+            if center:
+                GEOCODE_AUDIT["region_center_fallback"] += 1
+                return center
+    return None
+
+def _event_datetime(value):
+    try:
+        normalized = str(value or "").replace("Z", "+00:00")
+        parsed = datetime.fromisoformat(normalized)
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed
+    except (TypeError, ValueError):
+        return None
+
+def _event_channels(event):
+    return {part.strip() for part in str(event.get("channel") or "").split(",") if part.strip()}
+
+def _verification_tokens(text, location=None):
+    normalized = _normalize_context_text(text)
+    tokens = re.findall(r"[a-zа-я0-9]{3,}", normalized, flags=re.UNICODE)
+    place_tokens = set(_normalize_context_text(location).split())
+    return {
+        token for token in tokens
+        if token not in _VERIFICATION_STOP_WORDS
+        and token not in place_tokens
+        and len(token) >= 3
+    }
+
+def _shared_event_anchor_count(first_text, second_text, location=None):
+    first = _verification_tokens(first_text, location)
+    second = _verification_tokens(second_text, location)
+    matches = set()
+    for left in first:
+        for right in second:
+            if left == right:
+                matches.add(left)
+            elif min(len(left), len(right)) >= 5 and (
+                left.startswith(right[:5]) or right.startswith(left[:5])
+            ):
+                matches.add(left[:5])
+    return len(matches)
+
+def _reports_are_distinct(first_text, second_text):
+    first = _normalize_context_text(first_text)
+    second = _normalize_context_text(second_text)
+    if not first or not second:
+        return False
+    return SequenceMatcher(a=first, b=second).ratio() < 0.92
+
+def _correct_contextual_locations(events):
+    """Do not map a city mentioned only in a supporting paragraph as event place.
+
+    When a matching report explicitly names the event town, prefer that town's
+    centre. Without a sufficiently strong match, use the named region's centre.
+    """
+    corrections = 0
+    for event in events:
+        description = str(event.get("description") or "")
+        lead = _primary_event_context(description)
+        current_location = str(event.get("location") or "")
+        if not current_location or _location_mentioned_in_context(current_location, lead):
+            continue
+        current_time = _event_datetime(event.get("date"))
+        current_channels = _event_channels(event)
+        scored = {}
+        for candidate in events:
+            if candidate is event:
+                continue
+            if candidate.get("country") != event.get("country"):
+                continue
+            if candidate.get("event_type") != event.get("event_type"):
+                continue
+            if _normalize_context_text(candidate.get("location")) == _normalize_context_text(current_location):
+                continue
+            candidate_lead = _primary_event_context(candidate.get("description"))
+            if not _location_mentioned_in_context(candidate.get("location"), candidate_lead):
+                continue
+            candidate_channels = _event_channels(candidate)
+            if not candidate_channels or candidate_channels.issubset(current_channels):
+                continue
+            candidate_time = _event_datetime(candidate.get("date"))
+            if current_time and candidate_time:
+                if abs((candidate_time - current_time).total_seconds()) > 8 * 3600:
+                    continue
+            anchors = _shared_event_anchor_count(
+                description, candidate.get("description"), current_location
+            )
+            if anchors < 2:
+                continue
+            key = (
+                event.get("country"),
+                _normalize_context_text(candidate.get("location")),
+            )
+            row = scored.setdefault(key, {
+                "score": 0, "sources": set(), "event": candidate, "anchors": 0,
+            })
+            row["score"] += anchors * 10
+            row["anchors"] = max(row["anchors"], anchors)
+            row["sources"].update(candidate_channels)
+            if anchors > row["anchors"] or (
+                anchors == row["anchors"] and len(str(candidate.get("description") or "")) >
+                len(str(row["event"].get("description") or ""))
+            ):
+                row["event"] = candidate
+        ranked = sorted(scored.values(), key=lambda row: (row["score"], len(row["sources"])), reverse=True)
+        winner = None
+        if ranked and ranked[0]["anchors"] >= 2:
+            if len(ranked) == 1 or (
+                ranked[0]["score"] > ranked[1]["score"]
+                and ranked[0]["sources"] != ranked[1]["sources"]
+            ):
+                winner = ranked[0]["event"]
+        if winner:
+            event["location"] = winner["location"]
+            event["country"] = winner["country"]
+            event["lat"] = winner["lat"]
+            event["lng"] = winner["lng"]
+            event["coordinate_precision"] = "settlement_center"
+            event["location_resolution"] = "context_corroborated_settlement"
+            event.pop("specific_place", None)
+            event.pop("coordinate_evidence", None)
+            corrections += 1
+            continue
+        region_center = _region_center_from_text(lead, event.get("country"))
+        if region_center:
+            event["lat"], event["lng"], event["location"], event["country"] = region_center
+            event["coordinate_precision"] = "settlement_center"
+            event["location_resolution"] = "region_center_fallback"
+            event.pop("specific_place", None)
+            event.pop("coordinate_evidence", None)
+            corrections += 1
+    if corrections:
+        GEOCODE_AUDIT["contextual_location_corrections"] += corrections
+    return events
+
+def _apply_verification_status(events):
+    """Corroborate reports only when different channels use distinct wording.
+
+    This is automated cross-source consistency checking, not a claim that the
+    original sources are independent or that the event's every detail is true.
+    """
+    for event in events:
+        event["verification_status"] = "not_verified"
+        event["verification_sources"] = []
+        event["verification_note"] = (
+            "Недостаточно отличающихся сообщений для автоматической сверки."
+        )
+    for index, event in enumerate(events):
+        event_reports = list(event.get("_source_reports") or [])
+        event_time = _event_datetime(event.get("date"))
+        matching_events = [event]
+        for other_index, other in enumerate(events):
+            if other_index == index:
+                continue
+            if other.get("country") != event.get("country"):
+                continue
+            if other.get("event_type") != event.get("event_type"):
+                continue
+            if _normalize_context_text(other.get("location")) != _normalize_context_text(event.get("location")):
+                continue
+            other_time = _event_datetime(other.get("date"))
+            if event_time and other_time and abs((other_time - event_time).total_seconds()) > 8 * 3600:
+                continue
+            if _shared_event_anchor_count(
+                event.get("description"), other.get("description"), event.get("location")
+            ) < 2:
+                continue
+            matching_events.append(other)
+        reports = []
+        seen_reports = set()
+        for matched_event in matching_events:
+            source_reports = matched_event.get("_source_reports") or [{
+                "channel": channel, "description": matched_event.get("description") or ""
+            } for channel in sorted(_event_channels(matched_event))]
+            for report in source_reports:
+                channel = str(report.get("channel") or "").strip()
+                description = str(report.get("description") or "")
+                key = (channel, _normalize_context_text(description))
+                if channel and key not in seen_reports:
+                    seen_reports.add(key)
+                    reports.append({"channel": channel, "description": description})
+        verified_sources = set()
+        for i, first in enumerate(reports):
+            for second in reports[i + 1:]:
+                if first["channel"] == second["channel"]:
+                    continue
+                if _shared_event_anchor_count(
+                    first["description"], second["description"], event.get("location")
+                ) < 2:
+                    continue
+                if not _reports_are_distinct(first["description"], second["description"]):
+                    continue
+                verified_sources.add(first["channel"])
+                verified_sources.add(second["channel"])
+        if len(verified_sources) >= 2:
+            event["verification_status"] = "corroborated"
+            event["verification_sources"] = sorted(verified_sources)
+            event["verification_note"] = (
+                "Сообщения разных Telegram-каналов автоматически сверены по месту, "
+                "времени и содержанию. Независимость первоисточников и истинность "
+                "каждой детали отдельно не установлены."
+            )
+    return events
+
 def _geocode_llm_locations(llm_locations, channel_country, text=""):
     result = []
     seen = set()
@@ -1384,8 +1707,26 @@ def _geocode_llm_locations(llm_locations, channel_country, text=""):
             GEOCODE_AUDIT["rejected_unresolved_settlement_name"] += 1
             continue
 
+        # If the model selected a city that appears only in a secondary explanatory
+        # paragraph (for example a downstream factory in another region), never
+        # map that city as the event location. Prefer a city in the lead or the
+        # explicitly named region's centre; a later cross-report pass may refine it.
+        primary_context = _primary_event_context(text)
         resolved_city = coords[2]
         resolved_country = coords[3]
+        if text and not _location_mentioned_in_context(resolved_city, primary_context):
+            GEOCODE_AUDIT["llm_location_not_in_primary_context"] += 1
+            primary_locations = find_all_locations(primary_context, resolved_country or llm_country or channel_country)
+            if primary_locations:
+                for primary_loc in primary_locations:
+                    result.append((*primary_loc[:4], "settlement_center"))
+                seen.add(location_key)
+                continue
+            region_center = _region_center_from_text(primary_context, resolved_country or llm_country or channel_country)
+            if region_center:
+                result.append((*region_center, "settlement_center"))
+                seen.add(location_key)
+            continue
         if llm_country and resolved_country and llm_country != resolved_country:
             GEOCODE_AUDIT["rejected_country_mismatch_for_specific"] += 1
         else:
@@ -1582,7 +1923,12 @@ def main():
                 # precise-place suggestion from suppressing an otherwise
                 # mappable event; recovered points remain settlement centers.
                 if not locations:
-                    fallback_locations = find_all_locations(text, channel_country)
+                    primary_context = _primary_event_context(text)
+                    fallback_locations = find_all_locations(primary_context, channel_country)
+                    if not fallback_locations:
+                        region_center = _region_center_from_text(primary_context, channel_country)
+                        if region_center:
+                            fallback_locations = [(*region_center, "settlement_center")]
                     if fallback_locations:
                         locations = fallback_locations
                         GEOCODE_AUDIT["regex_fallback_after_unresolved_llm_location"] += 1
@@ -1642,6 +1988,10 @@ def main():
         print(f"  Совпало: {matched}")
         time.sleep(1)
 
+    # Fix context-only city mentions before grouping so reports about the same
+    # incident can merge on the corrected settlement rather than a supplier city.
+    _correct_contextual_locations(raw_events)
+
     groups = defaultdict(list)
     for ev in raw_events:
         date_hour = ""
@@ -1653,15 +2003,21 @@ def main():
     deduped = []
     time_dups = 0
     for key, group in groups.items():
-        if len(group) == 1:
-            deduped.append(group[0])
-            continue
-        time_dups += len(group) - 1
-        best = max(group, key=lambda e: len(e.get("description", "")))
-        best = dict(best)
-        channels = sorted(set(e["channel"] for e in group))
+        time_dups += max(0, len(group) - 1)
+        best = dict(max(group, key=lambda e: len(e.get("description", ""))))
+        channels = sorted({channel for e in group for channel in _event_channels(e)})
         best["channel"] = ",".join(channels)
+        # Keep source-level wording temporarily for the verification pass.
+        best["_source_reports"] = [
+            {"channel": channel, "description": str(e.get("description") or "")}
+            for e in group
+            for channel in sorted(_event_channels(e))
+        ]
         deduped.append(best)
+
+    _apply_verification_status(deduped)
+    for event in deduped:
+        event.pop("_source_reports", None)
 
     print(f"🔗 Дедупликация по (локация, тип, час): "
           f"{len(raw_events)} → {len(deduped)} (схлопнуто {time_dups})")
