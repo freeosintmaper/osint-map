@@ -1021,7 +1021,11 @@
       if (sbFactory) sb = sbFactory(SB_URL, SB_KEY);
     } catch (e) { console.warn('Supabase:', e.message); }
 
-    var OWL_BASE_URL = 'https://raw.githack.com/owlmaps/UAControlMapBackups/master/';
+    var OWL_BASE_URLS = [
+      'https://raw.githubusercontent.com/owlmaps/UAControlMapBackups/master/',
+      'https://cdn.jsdelivr.net/gh/owlmaps/UAControlMapBackups@master/',
+      'https://raw.githack.com/owlmaps/UAControlMapBackups/master/'
+    ];
     var OWL_KMZ_URL = null;
     var OWL_CACHE_KEY = 'owl_zones_cache_v2';
     var OWL_CACHE_DATE = 'owl_zones_cache_date';
@@ -1333,21 +1337,57 @@
     });
     userZonesLayer.addTo(map);
 
-    function loadUserZones() {
-      if (!sb) return;
-      sb.from('control_zones').select('*').then(function(res) {
-        if (res.error) { console.warn('loadUserZones:', res.error.message); return; }
-        userZonesLayer.clearLayers();
-        (res.data || []).forEach(function(row) {
-          try {
-            var geom = typeof row.geometry === 'string' ? JSON.parse(row.geometry) : row.geometry;
-            userZonesLayer.addData({ type: 'Feature', properties: { id: row.id, category: row.category }, geometry: geom });
-          } catch(e) {}
-        });
-        console.log('Зон автора загружено: ' + (res.data || []).length);
+    var USER_ZONES_CACHE_KEY = 'user_control_zones_cache_v1';
+
+    function renderUserZones(rows) {
+      userZonesLayer.clearLayers();
+      (rows || []).forEach(function(row) {
+        try {
+          var geom = typeof row.geometry === 'string' ? JSON.parse(row.geometry) : row.geometry;
+          userZonesLayer.addData({ type: 'Feature', properties: { id: row.id, category: row.category }, geometry: geom });
+        } catch(e) {}
       });
     }
-    loadUserZones();
+
+    function loadCachedUserZones() {
+      try {
+        var raw = localStorage.getItem(USER_ZONES_CACHE_KEY);
+        if (!raw) return false;
+        var rows = JSON.parse(raw);
+        if (!Array.isArray(rows)) return false;
+        renderUserZones(rows);
+        console.log('Зон автора загружено из локального кэша: ' + rows.length + ' (копия может быть устаревшей)');
+        return true;
+      } catch(e) {
+        console.warn('Локальный кэш зон автора недоступен:', e.message);
+        return false;
+      }
+    }
+
+    function loadUserZones(attempt) {
+      attempt = attempt || 0;
+      if (!sb) {
+        if (!loadCachedUserZones()) console.warn('Supabase: клиент недоступен, локального кэша зон нет');
+        return;
+      }
+      sb.from('control_zones').select('*').then(function(res) {
+        if (res.error) throw new Error(res.error.message);
+        var rows = res.data || [];
+        renderUserZones(rows);
+        try { localStorage.setItem(USER_ZONES_CACHE_KEY, JSON.stringify(rows)); }
+        catch(e) { console.warn('Кэш зон автора не сохранился:', e.message); }
+        console.log('Зон автора загружено: ' + rows.length);
+      }).catch(function(err) {
+        if (attempt < 2) {
+          console.warn('Supabase: ошибка загрузки, повтор ' + (attempt + 1) + '/2:', err.message);
+          setTimeout(function() { loadUserZones(attempt + 1); }, 1200 * (attempt + 1));
+          return;
+        }
+        console.warn('Supabase: не удалось загрузить зоны после 3 попыток:', err.message);
+        if (!loadCachedUserZones()) console.warn('Локального кэша зон автора нет');
+      });
+    }
+    loadUserZones(0);
 
     var editingLayer = null;
     var editingOriginalGeom = null;
@@ -1557,6 +1597,32 @@
     // Probe the CDN directly so every visitor does not consume the shared anonymous GitHub API quota.
     function fetchLatestOwlKmz(maxDaysBack) {
       var now = new Date();
+
+      function tryMirrors(fileName, year, mirrorIndex, failures) {
+        if (mirrorIndex >= OWL_BASE_URLS.length) {
+          if (failures.length && failures.every(function(f) { return f.status === 404; })) return Promise.resolve(null);
+          var details = failures.map(function(f) { return f.message || ('HTTP ' + f.status); }).join('; ');
+          return Promise.reject(new Error('Все источники Project Owl недоступны: ' + details));
+        }
+        var fileUrl = OWL_BASE_URLS[mirrorIndex] + year + '/' + fileName;
+        return fetch(fileUrl, { cache: 'no-store' }).then(function(response) {
+          if (response.status === 404) {
+            failures.push({ status: 404 });
+            return tryMirrors(fileName, year, mirrorIndex + 1, failures);
+          }
+          if (!response.ok) {
+            failures.push({ status: response.status });
+            return tryMirrors(fileName, year, mirrorIndex + 1, failures);
+          }
+          OWL_KMZ_URL = fileUrl;
+          console.log('📂 Свежий файл Project Owl: ' + fileName + ' (' + new URL(fileUrl).hostname + ')');
+          return response.arrayBuffer();
+        }, function(error) {
+          failures.push({ message: error.message });
+          return tryMirrors(fileName, year, mirrorIndex + 1, failures);
+        });
+      }
+
       function tryDay(offset) {
         if (offset > maxDaysBack) {
           return Promise.reject(new Error('Не найден архив Project Owl за последние ' + maxDaysBack + ' дней'));
@@ -1566,31 +1632,30 @@
         var mm = String(date.getUTCMonth() + 1).padStart(2, '0');
         var dd = String(date.getUTCDate()).padStart(2, '0');
         var fileName = yy + mm + dd + '_0601.kmz';
-        var fileUrl = OWL_BASE_URL + date.getUTCFullYear() + '/' + fileName;
-        return fetch(fileUrl, { cache: 'no-store' }).then(function(response) {
-          if (response.status === 404) return tryDay(offset + 1);
-          if (!response.ok) throw new Error('Project Owl KMZ HTTP ' + response.status + ' (' + fileName + ')');
-          OWL_KMZ_URL = fileUrl;
-          console.log('📂 Свежий файл: ' + fileName);
-          return response.arrayBuffer();
+        return tryMirrors(fileName, date.getUTCFullYear(), 0, []).then(function(buffer) {
+          return buffer || tryDay(offset + 1);
         });
       }
+
       return tryDay(0);
     }
 
     function loadOwlControl() {
       var today = new Date().toISOString().slice(0, 10);
+      var cachedCollection = null;
       try {
-        var cachedDate = localStorage.getItem(OWL_CACHE_DATE);
-        if (cachedDate === today) {
-          var raw = localStorage.getItem(OWL_CACHE_KEY);
-          if (raw) {
-            var cached = JSON.parse(raw);
-            if (cached && cached.features && cached.features.length) {
+        var raw = localStorage.getItem(OWL_CACHE_KEY);
+        if (raw) {
+          var cached = JSON.parse(raw);
+          if (cached && cached.features && cached.features.length) {
+            if (localStorage.getItem(OWL_CACHE_DATE) === today) {
               owlControlLayer.addData(cached);
-              console.log('✅ Project Owl (из кэша): ' + cached.features.length + ' зон');
+              console.log('✅ Project Owl (из кэша за сегодня): ' + cached.features.length + ' зон');
               return;
             }
+            cachedCollection = cached;
+            owlControlLayer.addData(cachedCollection);
+            console.log('⚠️ Project Owl: показана последняя сохранённая копия (' + cachedCollection.features.length + ' зон)');
           }
         }
       } catch (e) { console.warn('Кэш Project Owl недоступен:', e.message); }
@@ -1608,6 +1673,7 @@
         .then(function(kmlStrings) {
           var result = parseOwlKmlStrings(kmlStrings);
           var collection = { type: 'FeatureCollection', features: result.features };
+          owlControlLayer.clearLayers();
           owlControlLayer.addData(collection);
           console.log('📊 Категории:', result.stats);
           console.log('✅ Project Owl: ' + result.features.length + ' зон (пропущено исторических: ' + result.stats.skipped + ')');
@@ -1616,7 +1682,10 @@
             localStorage.setItem(OWL_CACHE_DATE, today);
           } catch (e) { console.warn('Кэш не сохранился:', e.message); }
         })
-        .catch(function(err) { console.warn('Project Owl:', err.message); })
+        .catch(function(err) {
+          console.warn('Project Owl:', err.message);
+          if (cachedCollection) console.warn('Project Owl: оставлена последняя сохранённая копия зон');
+        })
         .then(function() { showOwlLoader(false); });
     }
     loadOwlControl();
