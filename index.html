@@ -1021,8 +1021,7 @@
       if (sbFactory) sb = sbFactory(SB_URL, SB_KEY);
     } catch (e) { console.warn('Supabase:', e.message); }
 
-    var OWL_API_URL = 'https://api.github.com/repos/owlmaps/UAControlMapBackups/contents/2026?ref=master';
-    var OWL_BASE_URL = 'https://raw.githack.com/owlmaps/UAControlMapBackups/master/2026/';
+    var OWL_BASE_URL = 'https://raw.githack.com/owlmaps/UAControlMapBackups/master/';
     var OWL_KMZ_URL = null;
     var OWL_CACHE_KEY = 'owl_zones_cache_v2';
     var OWL_CACHE_DATE = 'owl_zones_cache_date';
@@ -1554,6 +1553,31 @@
       return { features: allFeatures, stats: stats };
     }
 
+    // Daily Project Owl archives use the YYMMDD_0601.kmz naming convention.
+    // Probe the CDN directly so every visitor does not consume the shared anonymous GitHub API quota.
+    function fetchLatestOwlKmz(maxDaysBack) {
+      var now = new Date();
+      function tryDay(offset) {
+        if (offset > maxDaysBack) {
+          return Promise.reject(new Error('Не найден архив Project Owl за последние ' + maxDaysBack + ' дней'));
+        }
+        var date = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - offset));
+        var yy = String(date.getUTCFullYear()).slice(-2);
+        var mm = String(date.getUTCMonth() + 1).padStart(2, '0');
+        var dd = String(date.getUTCDate()).padStart(2, '0');
+        var fileName = yy + mm + dd + '_0601.kmz';
+        var fileUrl = OWL_BASE_URL + date.getUTCFullYear() + '/' + fileName;
+        return fetch(fileUrl, { cache: 'no-store' }).then(function(response) {
+          if (response.status === 404) return tryDay(offset + 1);
+          if (!response.ok) throw new Error('Project Owl KMZ HTTP ' + response.status + ' (' + fileName + ')');
+          OWL_KMZ_URL = fileUrl;
+          console.log('📂 Свежий файл: ' + fileName);
+          return response.arrayBuffer();
+        });
+      }
+      return tryDay(0);
+    }
+
     function loadOwlControl() {
       var today = new Date().toISOString().slice(0, 10);
       try {
@@ -1572,20 +1596,7 @@
       } catch (e) { console.warn('Кэш Project Owl недоступен:', e.message); }
       console.log('Загрузка Project Owl...');
       showOwlLoader(true);
-      fetch(OWL_API_URL)
-        .then(function(r) { if (!r.ok) throw new Error('GitHub API HTTP ' + r.status); return r.json(); })
-        .then(function(files) {
-          if (!Array.isArray(files)) throw new Error('GitHub API вернул не массив');
-          var kmzFiles = files
-            .filter(function(f) { return f.name && f.name.toLowerCase().endsWith('.kmz'); })
-            .sort(function(a, b) { return b.name.localeCompare(a.name); });
-          if (!kmzFiles.length) throw new Error('Нет KMZ-файлов');
-          var latestFile = kmzFiles[0];
-          console.log('📂 Свежий файл: ' + latestFile.name);
-          OWL_KMZ_URL = OWL_BASE_URL + latestFile.name;
-          return fetch(OWL_KMZ_URL);
-        })
-        .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
+      fetchLatestOwlKmz(45)
         .then(function(buffer) { return JSZip.loadAsync(buffer); })
         .then(function(zip) {
           var kmlPromises = [];
