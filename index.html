@@ -2125,6 +2125,7 @@
         var countryLabel = ev.country === 'UA' ? t('countryUA') : (ev.country === 'RU' ? t('countryRU') : t('countryOSINT'));
         var countryClass = ev.country === 'UA' ? 'ua' : (ev.country === 'RU' ? 'ru' : 'osint');
         var sourceInfo = getSourceSides(ev.channel);
+        var verificationInfo = getVerificationInfo(ev);
         html += '<div class="event-item' + (sourceInfo.crossSide ? ' cross-side' : '') + '" data-lat="' + escapeHtml(ev.lat) + '" data-lng="' + escapeHtml(ev.lng) + '">' +
                 '<div class="evt-type" style="color:' + color + ';">' +
                 '<span style="color:' + color + ';display:flex;align-items:center;">' + wtSvg(ev.event_type) + '</span>' + escapeHtml(label) +
