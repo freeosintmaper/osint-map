@@ -88,6 +88,40 @@ class IntelligencePipelineTests(unittest.TestCase):
         self.assertEqual(record["current_event_count"], 12)
         self.assertEqual(manifest["days"][0]["date"], "2026-10-31")
 
+    def test_daily_history_cancels_events_added_then_removed(self):
+        event = self.make_event("temporary", "Military Strike", "Киев", "2026-10-31T11:00:00Z")
+        with tempfile.TemporaryDirectory() as directory:
+            history = Path(directory) / "event-history"
+            index = history / "index.json"
+            with mock.patch.object(intelligence, "HISTORY_DIR", history), \\
+                 mock.patch.object(intelligence, "HISTORY_INDEX", index):
+                intelligence.update_daily_history(
+                    "2026-10-31", "2026-10-31T12:00:00Z", [event], [], 1
+                )
+                intelligence.update_daily_history(
+                    "2026-10-31", "2026-10-31T12:30:00Z", [], [event], 0
+                )
+                record = json.loads((history / "2026-10-31.json").read_text(encoding="utf-8"))
+        self.assertEqual(record["events_added"], [])
+        self.assertEqual(record["events_removed"], [])
+
+    def test_daily_history_cancels_events_removed_then_restored(self):
+        event = self.make_event("restored", "Military Strike", "Киев", "2026-10-31T11:00:00Z")
+        with tempfile.TemporaryDirectory() as directory:
+            history = Path(directory) / "event-history"
+            index = history / "index.json"
+            with mock.patch.object(intelligence, "HISTORY_DIR", history), \\
+                 mock.patch.object(intelligence, "HISTORY_INDEX", index):
+                intelligence.update_daily_history(
+                    "2026-10-31", "2026-10-31T12:00:00Z", [], [event], 0
+                )
+                intelligence.update_daily_history(
+                    "2026-10-31", "2026-10-31T12:30:00Z", [event], [], 1
+                )
+                record = json.loads((history / "2026-10-31.json").read_text(encoding="utf-8"))
+        self.assertEqual(record["events_added"], [])
+        self.assertEqual(record["events_removed"], [])
+
     def test_source_statistics_keep_publishers_distinct(self):
         events = [
             dict(self.make_event("1", "Military Strike", "Киев", "2026-10-31T10:00:00Z"),
