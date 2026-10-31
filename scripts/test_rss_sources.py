@@ -82,6 +82,32 @@ class RssSourceTests(unittest.TestCase):
         self.assertNotIn("context", event)
         self.assertEqual(event["coordinate_precision"], "settlement_center")
 
+    def test_locations_in_secondary_sentence_do_not_inherit_event_context(self):
+        source = {"id": "rss_test", "publisher": "Test newsroom", "type": "rss"}
+        title = (
+            "Вибухи на Полтавщині і в Харкові. "
+            "Перебої з водою та світлом у Києві і в Дніпрі"
+        )
+        item = {
+            "title": title,
+            "context": "",
+            "url": "https://example.org/news/multi-place",
+            "date": "2026-10-31T10:00:00Z",
+        }
+        # Fixture includes inflected city forms as they appear in the headline.
+        settlements = {
+            "харкові": [(49.9935, 36.2304, "UA", "Харьков", 100000)],
+            "києві": [(50.4501, 30.5234, "UA", "Киев", 100000)],
+            "дніпрі": [(48.4647, 35.0462, "UA", "Днепр", 100000)],
+        }
+        with mock.patch.object(parser, "SETTLEMENTS_BY_NAME", settlements):
+            events = rss.map_headline(source, item)
+
+        self.assertEqual({event["location"] for event in events}, {"Полтава", "Харьков"})
+        self.assertNotIn("Киев", {event["location"] for event in events})
+        self.assertNotIn("Днепр", {event["location"] for event in events})
+        self.assertTrue(all(event["verification_status"] == "not_verified" for event in events))
+
     def test_non_event_headline_is_not_added(self):
         source = {"id": "rss_test", "publisher": "Test newsroom"}
         item = {
