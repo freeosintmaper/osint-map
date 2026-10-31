@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>История территориальных слоёв — OSINT Map</title>
+  <style>
+    :root { color-scheme: light dark; --bg:#111827; --panel:#1f2937; --line:#374151; --text:#f3f4f6; --muted:#9ca3af; --link:#93c5fd; --ok:#86efac; --warn:#fcd34d; --bad:#fca5a5; }
+    @media (prefers-color-scheme: light) {
+      :root { --bg:#f3f4f6; --panel:#fff; --line:#d1d5db; --text:#111827; --muted:#4b5563; --link:#1d4ed8; --ok:#166534; --warn:#92400e; --bad:#991b1b; }
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif; }
+    main { max-width:1000px; margin:0 auto; padding:24px 16px 56px; }
+    header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-bottom:22px; }
+    a { color:var(--link); }
+    h1 { font-size:clamp(24px,4vw,34px); line-height:1.2; margin:0 0 8px; }
+    h2 { font-size:18px; margin:0; }
+    p { margin:8px 0; }
+    .muted { color:var(--muted); }
+    .panel,.day { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px; }
+    .panel { margin:18px 0; }
+    .controls { display:flex; flex-wrap:wrap; align-items:end; gap:12px; }
+    label { display:grid; gap:5px; font-size:13px; color:var(--muted); }
+    select,input { min-height:38px; border:1px solid var(--line); border-radius:8px; padding:7px 10px; background:var(--bg); color:var(--text); }
+    .day { margin:14px 0; }
+    .day-head { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; padding-bottom:10px; border-bottom:1px solid var(--line); margin-bottom:12px; }
+    .sources { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; }
+    .source { border:1px solid var(--line); border-radius:9px; padding:12px; min-width:0; }
+    .source-head { display:flex; justify-content:space-between; gap:8px; align-items:center; }
+    .status { font-size:11px; border:1px solid currentColor; border-radius:99px; padding:2px 8px; white-space:nowrap; }
+    .changed { color:var(--warn); } .unchanged { color:var(--ok); } .baseline { color:var(--muted); } .error { color:var(--bad); }
+    .links { display:flex; flex-wrap:wrap; gap:12px; margin-top:8px; font-size:13px; }
+    code { overflow-wrap:anywhere; font-size:12px; }
+    .empty { padding:24px; text-align:center; color:var(--muted); }
+    footer { margin-top:28px; font-size:13px; color:var(--muted); }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1>История территориальных слоёв</h1>
+      <p class="muted">Закреплённые версии открытых наборов DeepState и Project Owl.</p>
+    </div>
+    <a href="./index.html">← Вернуться к карте</a>
+  </header>
+
+  <section class="panel">
+    <p><strong>Что здесь хранится.</strong> Ежедневный журнал дат, версий и ссылок на исходные архивы. Геометрии не копируются в этот репозиторий: каждая ссылка закреплена на конкретный upstream-коммит, поэтому можно открыть соответствующую версию первоисточника.</p>
+    <p class="muted">Метка «Изменился» означает изменение версии файла/коммита источника, а не автоматически доказанное изменение контроля территории. Разные источники могут использовать разные определения и методологии. Это журнал происхождения данных, не арбитр между картами.</p>
+    <div class="controls">
+      <label>Источник
+        <select id="sourceFilter">
+          <option value="all">Все источники</option>
+          <option value="deepstate">DeepState</option>
+          <option value="project_owl">Project Owl</option>
+        </select>
+      </label>
+      <label>Показывать
+        <select id="changeFilter">
+          <option value="all">Все снимки</option>
+          <option value="changed">Только изменившиеся</option>
+          <option value="errors">С ошибками сбора</option>
+        </select>
+      </label>
+      <label>Дата
+        <input id="dateFilter" type="date">
+      </label>
+    </div>
+    <p id="status" class="muted" aria-live="polite">Загружаю индекс истории…</p>
+  </section>
+
+  <section id="history" aria-live="polite"></section>
+
+  <footer>
+    Хранение журнала: последние 90 дней. Если один внешний источник недоступен, история другого источника продолжает обновляться. Доступность архива не является подтверждением его содержания.
+    <div style="margin-top:8px"><a href="./data/territory-history/index.json">Открыть исходный JSON-журнал</a> · <a href="./methodology.html">Методология карты</a></div>
+  </footer>
+</main>
+<script>
+(function() {
+  var indexData = null;
+  var sourceNames = { deepstate: 'DeepState', project_owl: 'Project Owl' };
+  var statusLabels = { changed: 'Версия изменилась', unchanged: 'Без изменений', baseline: 'Первая версия', error: 'Ошибка источника' };
+
+  function el(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined && text !== null) node.textContent = String(text);
+    return node;
+  }
+  function addLink(parent, label, href) {
+    if (!href) return;
+    var parsed;
+    try {
+      parsed = new URL(String(href));
+    } catch (_) {
+      return;
+    }
+    // The manifest contains upstream references, never executable or arbitrary URLs.
+    if (parsed.protocol !== 'https:' ||
+        ['github.com', 'raw.githubusercontent.com'].indexOf(parsed.hostname.toLowerCase()) === -1 ||
+        parsed.username || parsed.password) return;
+    var a = el('a', '', label);
+    a.href = parsed.href;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    parent.appendChild(a);
+  }
+  function formatSize(value) {
+    var n = Number(value);
+    if (!isFinite(n) || n <= 0) return '';
+    return (n / 1048576).toFixed(2) + ' MiB';
+  }
+  function formatTime(value) {
+    if (!value) return 'время не указано';
+    var d = new Date(value);
+    return isNaN(d.getTime()) ? String(value) : d.toLocaleString('ru-RU', {timeZone:'UTC'}) + ' UTC';
+  }
+  function visibleSources(day) {
+    var selected = document.getElementById('sourceFilter').value;
+    var entries = day.sources || {};
+    return Object.keys(entries).filter(function(key) {
+      return selected === 'all' || key === selected;
+    }).map(function(key) { return {id:key, item:entries[key]}; });
+  }
+  function render() {
+    if (!indexData) return;
+    var root = document.getElementById('history');
+    root.replaceChildren();
+    var selectedDate = document.getElementById('dateFilter').value;
+    var changeMode = document.getElementById('changeFilter').value;
+    var days = (indexData.snapshots || []).filter(function(day) {
+      if (selectedDate && day.date !== selectedDate) return false;
+      var sources = visibleSources(day);
+      if (!sources.length) return false;
+      if (changeMode === 'changed' && !sources.some(function(s) { return s.item.change_status === 'changed'; })) return false;
+      if (changeMode === 'errors' && !sources.some(function(s) {
+        return s.item.status === 'error' || !!s.item.last_attempt_error;
+      })) return false;
+      return true;
+    });
+    document.getElementById('status').textContent =
+      'Записей: ' + (indexData.snapshot_count || days.length) +
+      ' · Создано: ' + formatTime(indexData.generated_at) +
+      ' · Показано дней: ' + days.length;
+
+    if (!days.length) {
+      root.appendChild(el('div', 'empty', 'Для выбранных фильтров записей нет.'));
+      return;
+    }
+    days.forEach(function(day) {
+      var card = el('article', 'day');
+      var head = el('div', 'day-head');
+      head.appendChild(el('h2', '', day.date || 'Дата неизвестна'));
+      head.appendChild(el('span', 'muted', 'Журнал сформирован: ' + formatTime(day.generated_at)));
+      card.appendChild(head);
+      var list = el('div', 'sources');
+      visibleSources(day).forEach(function(source) {
+        var item = source.item || {};
+        var sourceCard = el('section', 'source');
+        var sourceHead = el('div', 'source-head');
+        sourceHead.appendChild(el('strong', '', sourceNames[source.id] || source.id));
+        var state = item.status === 'error' ? 'error' : (item.change_status || 'baseline');
+        sourceHead.appendChild(el('span', 'status ' + state, item.status === 'error' ? statusLabels.error : (statusLabels[state] || state)));
+        sourceCard.appendChild(sourceHead);
+        if (item.last_attempt_error) {
+          sourceCard.appendChild(el('p', 'muted', 'Последняя попытка обновления завершилась ошибкой: ' + item.last_attempt_error));
+        }
+        if (item.status === 'error') {
+          sourceCard.appendChild(el('p', 'muted', item.error || 'Не удалось получить версию источника.'));
+        } else {
+          sourceCard.appendChild(el('p', 'muted', 'Дата слоя: ' + (item.snapshot_date || 'не указана')));
+          sourceCard.appendChild(el('p', 'muted', 'Коммит источника: ' + formatTime(item.upstream_commit_date)));
+          if (item.archive_size_bytes) sourceCard.appendChild(el('p', 'muted', 'Размер архива: ' + formatSize(item.archive_size_bytes)));
+          if (item.revision) sourceCard.appendChild(el('p', 'muted', 'Версия: ' + item.revision));
+          var links = el('div', 'links');
+          addLink(links, item.source_path && item.source_path.endsWith('.kmz') ? 'Открыть KMZ' : 'Открыть GeoJSON.GZ', item.source_url);
+          addLink(links, 'Коммит источника', item.upstream_commit_url);
+          sourceCard.appendChild(links);
+        }
+        list.appendChild(sourceCard);
+      });
+      card.appendChild(list);
+      root.appendChild(card);
+    });
+  }
+
+  fetch('./data/territory-history/index.json', {cache:'no-store'})
+    .then(function(response) {
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      return response.json();
+    })
+    .then(function(payload) {
+      if (!payload || !Array.isArray(payload.snapshots)) throw new Error('Некорректный индекс истории');
+      indexData = payload;
+      render();
+    })
+    .catch(function(error) {
+      document.getElementById('status').textContent = 'Не удалось загрузить историю: ' + error.message;
+      document.getElementById('history').appendChild(el('div','empty','Проверьте доступность файла data/territory-history/index.json.'));
+    });
+
+  ['sourceFilter','changeFilter','dateFilter'].forEach(function(id) {
+    document.getElementById(id).addEventListener('change', render);
+  });
+})();
+</script>
+</body>
+</html>
