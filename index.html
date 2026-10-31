@@ -1354,7 +1354,7 @@
         var raw = localStorage.getItem(USER_ZONES_CACHE_KEY);
         if (!raw) return false;
         var rows = JSON.parse(raw);
-        if (!Array.isArray(rows)) return false;
+        if (!Array.isArray(rows) || !rows.length) return false;
         renderUserZones(rows);
         console.log('Зон автора загружено из локального кэша: ' + rows.length + ' (копия может быть устаревшей)');
         return true;
