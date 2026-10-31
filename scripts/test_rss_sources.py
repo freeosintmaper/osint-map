@@ -68,6 +68,35 @@ class RssSourceTests(unittest.TestCase):
         </channel></rss>"""
         self.assertEqual(rss.parse_feed_items(sample), [])
 
+    def test_current_feed_article_replaces_old_cached_locations(self):
+        url = "https://example.org/news/multi-place"
+        retained = [
+            {"url": url, "location": "Киев", "id": "old-kyiv"},
+            {"url": url, "location": "Днепр", "id": "old-dnipro"},
+            {"url": "https://example.org/news/older", "location": "Одесса", "id": "older"},
+        ]
+        mapped = [
+            {"url": url, "location": "Харьков", "id": "new-kharkiv"},
+        ]
+        events = rss.merge_feed_events(retained, mapped, {url})
+        self.assertEqual(
+            {(event["url"], event["location"]) for event in events},
+            {
+                (url, "Харьков"),
+                ("https://example.org/news/older", "Одесса"),
+            },
+        )
+        self.assertNotIn("old-kyiv", {event["id"] for event in events})
+        self.assertNotIn("old-dnipro", {event["id"] for event in events})
+
+    def test_current_feed_article_with_no_new_location_drops_old_markers(self):
+        url = "https://example.org/news/multi-place"
+        retained = [
+            {"url": url, "location": "Киев", "id": "old-kyiv"},
+            {"url": url, "location": "Днепр", "id": "old-dnipro"},
+        ]
+        self.assertEqual(rss.merge_feed_events(retained, [], {url}), [])
+
     def test_malformed_xml_raises_feed_error(self):
         with self.assertRaises(rss.FeedError):
             rss.parse_feed_items(b"<rss><channel>")
