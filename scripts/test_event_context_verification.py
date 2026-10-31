@@ -192,5 +192,57 @@ class EventContextAndVerificationTests(unittest.TestCase):
         self.assertEqual(second["verification_status"], "not_verified")
 
 
+    def test_unrelated_same_hour_reports_are_not_merged(self):
+        events = [
+            self.make_event(
+                "Днепр",
+                "В Днепре повреждена линия электропередачи после сильного ветра.",
+                "channel_one", "2026-10-31T10:05:00+00:00", 48.4647, 35.0462,
+            ),
+            self.make_event(
+                "Днепр",
+                "В Днепре открылась новая выставка современного искусства.",
+                "channel_two", "2026-10-31T10:35:00+00:00", 48.4647, 35.0462,
+            ),
+        ]
+        grouped, merged = parser.cluster_event_reports(events)
+        self.assertEqual(len(grouped), 2)
+        self.assertEqual(merged, 0)
+
+    def test_related_distinct_wording_is_grouped_with_source_provenance(self):
+        first = self.make_event(
+            "Новомосковск",
+            "В Тульской области загорелся химзавод после атаки беспилотников.",
+            "uniannet", "2026-10-31T10:05:00+00:00", 54.01098, 38.29084,
+        )
+        second = self.make_event(
+            "Новомосковск",
+            "Дроны атаковали химическое предприятие в Тульской области, возник пожар.",
+            "ukrpravda_news", "2026-10-31T10:35:00+00:00", 54.01098, 38.29084,
+        )
+        grouped, merged = parser.cluster_event_reports([first, second])
+        self.assertEqual(len(grouped), 1)
+        self.assertEqual(merged, 1)
+        self.assertEqual(grouped[0]["source_count"], 2)
+        self.assertEqual({source["channel"] for source in grouped[0]["sources"]},
+                         {"uniannet", "ukrpravda_news"})
+        self.assertEqual(grouped[0]["verification_status"], "corroborated")
+
+    def test_identical_cross_posts_are_not_independent_confirmation(self):
+        text = "В Тульской области загорелся химзавод Азот после атаки дронов."
+        first = self.make_event(
+            "Новомосковск", text, "channel_one",
+            "2026-10-31T10:05:00+00:00", 54.01098, 38.29084,
+        )
+        second = self.make_event(
+            "Новомосковск", text, "channel_two",
+            "2026-10-31T10:35:00+00:00", 54.01098, 38.29084,
+        )
+        grouped, _merged = parser.cluster_event_reports([first, second])
+        self.assertEqual(len(grouped), 1)
+        self.assertEqual(grouped[0]["verification_status"], "not_verified")
+        self.assertEqual(grouped[0]["source_count"], 2)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
