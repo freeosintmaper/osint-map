@@ -6,7 +6,7 @@
 
 **Live map:** <https://freeosintmaper.github.io/osint-map/>  
 **Repository:** <https://github.com/freeosintmaper/osint-map>  
-**Methodology:** [methodology.html](https://freeosintmaper.github.io/osint-map/methodology.html) · **Corrections:** [corrections.html](https://freeosintmaper.github.io/osint-map/corrections.html) · **Changelog:** [CHANGELOG.md](CHANGELOG.md)
+**Methodology:** [methodology.html](https://freeosintmaper.github.io/osint-map/methodology.html) · **Territorial layer history:** [territory-history.html](https://freeosintmaper.github.io/osint-map/territory-history.html) · **Corrections:** [corrections.html](https://freeosintmaper.github.io/osint-map/corrections.html) · **Changelog:** [CHANGELOG.md](CHANGELOG.md)
 
 [🇷🇺 Русский](#-русский) · [🇺🇦 Українська](#-українська) · [🇬🇧 English](#-english)
 
@@ -63,6 +63,10 @@
 Внешние геоданные: [DeepStateMap](https://deepstatemap.live/) и [его публичный набор данных](https://github.com/cyterat/deepstate-map-data), [архив Project Owl](https://github.com/owlmaps/UAControlMapBackups), [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/) и [GeoNames](https://www.geonames.org/).
 
 Источники имеют разные стандарты публикации и редакционные позиции. Их наличие на карте не означает одобрения или подтверждения со стороны проекта.
+
+### История территориальных слоёв
+
+[Открыть журнал версий](https://freeosintmaper.github.io/osint-map/territory-history.html). Журнал ежедневно фиксирует даты и закреплённые версии наборов DeepState и Project Owl. Он показывает изменение версии исходного файла, но не делает автоматического вывода об изменении контроля территории. Геометрии не копируются в этот репозиторий; ссылки ведут на закреплённые версии первоисточников.
 
 ### Обновление данных
 
@@ -214,6 +218,10 @@
 
 До парсера включено 26 публічних Telegram-каналів. Їхній актуальний список і класифікація містяться в <code>scripts/parse_telegram.py</code>. Зовнішні джерела: [DeepStateMap](https://deepstatemap.live/), [DeepState data](https://github.com/cyterat/deepstate-map-data), [Project Owl](https://github.com/owlmaps/UAControlMapBackups), [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/) та [GeoNames](https://www.geonames.org/).
 
+### Історія територіальних шарів
+
+[Відкрити журнал версій](https://freeosintmaper.github.io/osint-map/territory-history.html). Журнал зберігає дати та закріплені версії наборів DeepState і Project Owl. Він показує зміну версії вихідного файла, але не робить автоматичного висновку про зміну контролю території. Геометрії не копіюються до цього репозиторію; посилання ведуть до закріплених версій першоджерел.
+
 Розклади GitHub Actions задаються в UTC:
 
 | Дані | Cron | Частота |
@@ -284,6 +292,10 @@ By default, coordinates represent the **centre of a settlement**, not the exact 
 ### Sources and update schedule
 
 The parser currently includes 26 public Telegram channels; the maintained list and channel labels are in <code>scripts/parse_telegram.py</code>. External sources include [DeepStateMap](https://deepstatemap.live/), [its public data feed](https://github.com/cyterat/deepstate-map-data), the [Project Owl archive](https://github.com/owlmaps/UAControlMapBackups), [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/), and [GeoNames](https://www.geonames.org/).
+
+### Territorial layer history
+
+[Open the version log](https://freeosintmaper.github.io/osint-map/territory-history.html). The journal records dates and pinned versions of DeepState and Project Owl datasets. It reports upstream file-version changes; it does not automatically infer changes in territorial control. Geometries are not copied into this repository, and links point to pinned upstream versions.
 
 GitHub Actions schedules are in UTC:
 
