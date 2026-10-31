@@ -1,5 +1,5 @@
 {
-  "current_event_count": 46,
+  "current_event_count": 48,
   "date_utc": "2026-10-31",
   "events_added": [
     {
@@ -543,12 +543,134 @@
     },
     {
       "event": {
+        "channel": "operativnoZSU",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T15:54:21+00:00",
+        "description": "❗️У Києві та низці областей оголошено повітряну тривогу через загрозу БПЛА\n\nhttps://t.me/operativnoZSU/\n🤬82🙏24\n  \n  \n    4.12K viewsedited  15:54",
+        "event_type": "Air Raid Alert",
+        "id": 5,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "operativnoZSU",
+            "date": "2026-10-31T15:54:21+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/operativnoZSU/225022"
+          }
+        ],
+        "url": "https://t.me/operativnoZSU/225022",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "2f7142676a67705c499f872bf1f659636ffca95692c801e0ac5e020127c5a7e1"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "US",
+        "date": "2026-10-31T15:51:01+00:00",
+        "description": "«Надежда на устойчивый мир». Мелания Трамп прокомментировала завершение эвакуации жителей Олешек, которого она добивалась\n\n«Надежда на устойчивый мир. Олешки доказывают, что мы можем поставить человеч",
+        "event_type": "Political Development",
+        "id": 33,
+        "lat": 38.9072,
+        "lng": -77.0369,
+        "location": "Вашингтон",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-10-31T15:51:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/129870"
+          }
+        ],
+        "url": "https://t.me/astrapress/129870",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "30e48042084a4745c8ee1577840f98be2c9b10d56d39ebbfc685b60d0345b0fd"
+    },
+    {
+      "event": {
+        "channel": "rss_suspilne",
+        "confidence": "LOW",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T15:44:58Z",
+        "description": "Шестеро людей поранені у Краматорську і Слов'янську під час обстрілів 31 жовтня",
+        "event_type": "Military Strike",
+        "id": "rss-fdc8dc44ca4a4b9a80-025cb9",
+        "lat": 48.7389,
+        "lng": 37.5848,
+        "location": "Краматорск",
+        "source_count": 1,
+        "source_type": "rss",
+        "sources": [
+          {
+            "channel": "rss_suspilne",
+            "date": "2026-10-31T15:44:58Z",
+            "publisher": "Суспільне Новини",
+            "source_type": "rss",
+            "url": "https://suspilne.media/donbas/1441801-sestero-ludej-poraneni-u-kramatorsku-i-slovansku-pid-cas-obstriliv-31-zovtna/"
+          }
+        ],
+        "url": "https://suspilne.media/donbas/1441801-sestero-ludej-poraneni-u-kramatorsku-i-slovansku-pid-cas-obstriliv-31-zovtna/",
+        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "f482db68a9231d11805103694bac73369bc1d49446ed92f189f9b3c53a6e02a3"
+    },
+    {
+      "event": {
+        "channel": "rss_suspilne",
+        "confidence": "LOW",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T15:44:58Z",
+        "description": "Шестеро людей поранені у Краматорську і Слов'янську під час обстрілів 31 жовтня",
+        "event_type": "Military Strike",
+        "id": "rss-fdc8dc44ca4a4b9a80-4353e7",
+        "lat": 48.8531,
+        "lng": 37.6126,
+        "location": "Славянск",
+        "source_count": 1,
+        "source_type": "rss",
+        "sources": [
+          {
+            "channel": "rss_suspilne",
+            "date": "2026-10-31T15:44:58Z",
+            "publisher": "Суспільне Новини",
+            "source_type": "rss",
+            "url": "https://suspilne.media/donbas/1441801-sestero-ludej-poraneni-u-kramatorsku-i-slovansku-pid-cas-obstriliv-31-zovtna/"
+          }
+        ],
+        "url": "https://suspilne.media/donbas/1441801-sestero-ludej-poraneni-u-kramatorsku-i-slovansku-pid-cas-obstriliv-31-zovtna/",
+        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "7b1703b2951221fd92b4034a5b446f0d8c6f10176197df9fc8797f10cfa58063"
+    },
+    {
+      "event": {
         "channel": "boris_rozhin",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
         "country": "UA",
         "date": "2026-10-31T13:25:04+00:00",
-        "description": "Прилёт реактивного БпЛА «Герань-4» в Синельниково Днепропетровской области.\n🔥404👍148❤‍🔥13💯3🤬2\n  \n  \n    33.6K views13:25",
+        "description": "Прилёт реактивного БпЛА «Герань-4» в Синельниково Днепропетровской области.\n🔥440👍159❤‍🔥13💯3🤬2\n  \n  \n    36.8K views13:25",
         "event_type": "Military Strike",
         "id": 39,
         "lat": 48.32362,
@@ -569,7 +691,70 @@
         "verification_sources": [],
         "verification_status": "not_verified"
       },
-      "fingerprint": "26c87813ba70b715df3d6ca6f0c51ec9ad3297a7ff0e485ca92d7a3f8f773bd6"
+      "fingerprint": "3af3987b701a7709d04e8ed476ff4a50e065e00b522834e859357be63cff2c28"
+    },
+    {
+      "event": {
+        "channel": "kyivindependent_official",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T12:28:22+00:00",
+        "description": "⚡️️ Update: Evacuees from occupied Oleshky en route to Ukrainian-controlled territory after 4 planes land in Belarus.\n\nFour evacuation planes carrying residents of Russian-occupied Oleshky in Kherson ",
+        "event_type": "Political Development",
+        "id": 24,
+        "lat": 46.62553,
+        "lng": 32.72426,
+        "location": "Oleshky",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "kyivindependent_official",
+            "date": "2026-10-31T12:28:22+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/KyivIndependent_official/56578"
+          }
+        ],
+        "url": "https://t.me/KyivIndependent_official/56578",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "f462f88f0d69ff3fa113e013c3f757ae9c1acb3044ad6a3c71acc598bf5901cd"
+    },
+    {
+      "event": {
+        "channel": "lost_armour",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T04:06:56+00:00",
+        "description": "31 октября 2026 года.\n\n· 00:15 Харьков и Днепропетровск — взрывы. Герани.\n· 00:20 Донбасс — взрывы. УМПК.\n· 00:25 Киев — взрыв. Герань.\n· 00:35 Днепропетровск и Сумы — взрывы. Герани.\n· 00:45 Запорожс",
+        "event_type": "Military Strike",
+        "id": 35,
+        "lat": 48.5333,
+        "lng": 35.8667,
+        "location": "Павлоград",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "lost_armour",
+            "date": "2026-10-31T04:06:56+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/lost_armour/12017"
+          }
+        ],
+        "url": "https://t.me/lost_armour/12017",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "lost_armour"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "98db3be364e2115e3fe1a81123fc77c0eae7b633c3fea7690c24070ba421fdd3"
     }
   ],
   "events_removed": [
@@ -929,8 +1114,134 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "45854bfbf138ab2eabbcb87769c1ddcca97658e053d0223ed541a47716447f6b"
+    },
+    {
+      "event": {
+        "channel": "kyivindependent_official",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T12:28:22+00:00",
+        "description": "⚡️️ Update: Evacuees from occupied Oleshky en route to Ukrainian-controlled territory after 4 planes land in Belarus.\n\nFour evacuation planes carrying residents of Russian-occupied Oleshky in Kherson ",
+        "event_type": "Military Operation",
+        "id": 23,
+        "lat": 46.62553,
+        "lng": 32.72426,
+        "location": "Oleshky",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "kyivindependent_official",
+            "date": "2026-10-31T12:28:22+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/KyivIndependent_official/56578"
+          }
+        ],
+        "url": "https://t.me/KyivIndependent_official/56578",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "b13ffa9a055003540fb73c32999f08460558912a86b9dca50bff9f44dd41df92"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T10:03:01+00:00",
+        "description": "Прилёт в Днепропетровске, сообщают в местных группах. Взрывы также прогремели в Сумах, Харькове, Киевской и Кировоградской областях.\n\nВ Павлограде (Днепропетровская область) после ударов начались пере",
+        "event_type": "Military Strike",
+        "id": 37,
+        "lat": 49.9935,
+        "lng": 36.2304,
+        "location": "Харьков",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-10-31T10:03:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/231653"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/231653",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "boris_rozhin",
+          "lost_armour"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "924f1e81e4f63d16291cd563e8edd0b1e1c9274bec9cf59feadbd8c28457e3e6"
+    },
+    {
+      "event": {
+        "channel": "bazabazon",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-10-31T07:09:36+00:00",
+        "description": "Два человека погибли и ещё восемь пострадали в результате атак украинских БПЛА в Брянской области.\n\nПо сообщению губернатора Егора Ковальчука, 30-летняя женщина и 41-летний мужчина стали жертвами удар",
+        "event_type": "Military Strike",
+        "id": 32,
+        "lat": 53.2435,
+        "lng": 34.3639,
+        "location": "Брянск",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "bazabazon",
+            "date": "2026-10-31T07:09:36+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/bazabazon/50381"
+          }
+        ],
+        "url": "https://t.me/bazabazon/50381",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "f2c3564dc73489eba0bbad0e18e549e81ada73f4333efe73d1f983a9e0b5ef8b"
+    },
+    {
+      "event": {
+        "channel": "lost_armour",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T04:06:56+00:00",
+        "description": "31 октября 2026 года.\n\n· 00:15 Харьков и Днепропетровск — взрывы. Герани.\n· 00:20 Донбасс — взрывы. УМПК.\n· 00:25 Киев — взрыв. Герань.\n· 00:35 Днепропетровск и Сумы — взрывы. Герани.\n· 00:45 Запорожс",
+        "event_type": "Military Strike",
+        "id": 34,
+        "lat": 49.9935,
+        "lng": 36.2304,
+        "location": "Харьков",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "lost_armour",
+            "date": "2026-10-31T04:06:56+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/lost_armour/12017"
+          }
+        ],
+        "url": "https://t.me/lost_armour/12017",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "boris_rozhin",
+          "lost_armour"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "834096ce8fe3ce395316b7b04d870f85782f04a3e7898b3ceaca13618fe478c9"
     }
   ],
-  "generated_at": "2026-10-31T15:36:20Z",
+  "generated_at": "2026-10-31T16:00:58Z",
   "method_note": "Изменения показывают разницу между автоматическими выгрузками, а не доказанное изменение обстановки."
 }
