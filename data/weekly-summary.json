@@ -3,20 +3,20 @@
   "country_counts": {
     "BE": 1,
     "RU": 13,
-    "UA": 31,
+    "UA": 30,
     "US": 1
   },
-  "event_count": 46,
+  "event_count": 45,
   "event_type_counts": {
     "Air Raid Alert": 1,
     "Military Operation": 4,
     "Military Strike": 33,
-    "Political Development": 8
+    "Political Development": 7
   },
-  "generated_at": "2026-10-31T15:31:16Z",
+  "generated_at": "2026-10-31T15:36:20Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 3,
-  "not_verified_event_count": 30,
+  "new_since_previous_snapshot": 4,
+  "not_verified_event_count": 29,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
@@ -25,24 +25,22 @@
       "event_type": "Military Strike",
       "label": "Повышенная публикационная активность",
       "previous_period": 0
-    },
-    {
-      "current_period": 8,
-      "delta": 8,
-      "event_type": "Political Development",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0
     }
   ],
   "source_type_counts": {
-    "rss": 4,
-    "telegram": 42
+    "rss": 2,
+    "telegram": 43
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 7,
+      "events": 6,
       "location": "Киев"
+    },
+    {
+      "country": "RU",
+      "events": 5,
+      "location": "Москва"
     },
     {
       "country": "UA",
@@ -50,24 +48,19 @@
       "location": "Харьков"
     },
     {
-      "country": "RU",
-      "events": 4,
-      "location": "Москва"
+      "country": "UA",
+      "events": 3,
+      "location": "Павлоград"
     },
     {
       "country": "RU",
-      "events": 4,
+      "events": 3,
       "location": "Уфа"
     },
     {
       "country": "UA",
-      "events": 4,
-      "location": "Днепр"
-    },
-    {
-      "country": "UA",
       "events": 3,
-      "location": "Павлоград"
+      "location": "Днепр"
     },
     {
       "country": "UA",
@@ -81,19 +74,19 @@
     }
   ],
   "top_sources": {
-    "BBC News Україна": 4,
     "OsintFlow": 3,
     "RVvoenkor": 5,
+    "astrapress": 2,
     "boris_rozhin": 3,
     "dnepr_typical": 5,
-    "exilenova_plus": 4,
+    "exilenova_plus": 3,
     "kyivindependent_official": 5,
-    "lost_armour": 2,
+    "lost_armour": 3,
     "operativnoZSU": 4,
     "supernova_plus": 2,
     "ukrpravda_news": 2,
     "uniannet": 2
   },
-  "window_end": "2026-10-31T15:31:16Z",
-  "window_start": "2026-10-24T15:31:16Z"
+  "window_end": "2026-10-31T15:36:20Z",
+  "window_start": "2026-10-24T15:36:20Z"
 }

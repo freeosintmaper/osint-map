@@ -3,19 +3,19 @@
   "country_counts": {
     "BE": 1,
     "RU": 12,
-    "UA": 24
+    "UA": 23
   },
-  "event_count": 37,
+  "event_count": 36,
   "event_type_counts": {
     "Air Raid Alert": 1,
     "Military Operation": 4,
     "Military Strike": 27,
-    "Political Development": 5
+    "Political Development": 4
   },
-  "generated_at": "2026-10-31T15:31:16Z",
+  "generated_at": "2026-10-31T15:36:20Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 3,
-  "not_verified_event_count": 21,
+  "new_since_previous_snapshot": 4,
+  "not_verified_event_count": 20,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
@@ -27,19 +27,19 @@
     }
   ],
   "source_type_counts": {
-    "rss": 4,
-    "telegram": 33
+    "rss": 2,
+    "telegram": 34
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 6,
+      "events": 5,
       "location": "Киев"
     },
     {
       "country": "RU",
       "events": 4,
-      "location": "Уфа"
+      "location": "Москва"
     },
     {
       "country": "UA",
@@ -49,17 +49,12 @@
     {
       "country": "RU",
       "events": 3,
-      "location": "Москва"
+      "location": "Уфа"
     },
     {
       "country": "UA",
       "events": 3,
       "location": "Харьков"
-    },
-    {
-      "country": "UA",
-      "events": 3,
-      "location": "Днепр"
     },
     {
       "country": "UA",
@@ -70,22 +65,27 @@
       "country": "RU",
       "events": 2,
       "location": "Новокуйбишевськ"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Днепр"
     }
   ],
   "top_sources": {
-    "BBC News Україна": 4,
-    "OsintFlow": 1,
+    "BBC News Україна": 2,
     "RVvoenkor": 5,
-    "astrapress": 1,
+    "astrapress": 2,
     "boris_rozhin": 3,
     "dnepr_typical": 2,
-    "exilenova_plus": 4,
+    "exilenova_plus": 3,
     "kyivindependent_official": 5,
+    "lost_armour": 2,
     "operativnoZSU": 4,
     "supernova_plus": 2,
     "ukrpravda_news": 2,
     "uniannet": 2
   },
-  "window_end": "2026-10-31T15:31:16Z",
-  "window_start": "2026-10-30T15:31:16Z"
+  "window_end": "2026-10-31T15:36:20Z",
+  "window_start": "2026-10-30T15:36:20Z"
 }

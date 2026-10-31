@@ -1,5 +1,5 @@
 {
-  "current_event_count": 47,
+  "current_event_count": 46,
   "date_utc": "2026-10-31",
   "events_added": [
     {
@@ -263,68 +263,6 @@
     },
     {
       "event": {
-        "channel": "rss_bbc_ukrainian",
-        "confidence": "LOW",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-10-31T10:00:07Z",
-        "description": "Вибухи на Полтавщині і в Харкові. Перебої з водою, світлом у Києві і в Дніпрі",
-        "event_type": "Military Strike",
-        "id": "rss-30c50f511d97779d6c-9ad345",
-        "lat": 48.4647,
-        "lng": 35.0462,
-        "location": "Днепр",
-        "source_count": 1,
-        "source_type": "rss",
-        "sources": [
-          {
-            "channel": "rss_bbc_ukrainian",
-            "date": "2026-10-31T10:00:07Z",
-            "publisher": "BBC News Україна",
-            "source_type": "rss",
-            "url": "https://www.bbc.com/ukrainian/articles/crpdgpg83ye1o?at_medium=RSS&at_campaign=rss"
-          }
-        ],
-        "url": "https://www.bbc.com/ukrainian/articles/crpdgpg83ye1o?at_medium=RSS&at_campaign=rss",
-        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "7e19dcd8108e38bc658d22bc6f92e1c714ea94413b695f0e0de362c58647c712"
-    },
-    {
-      "event": {
-        "channel": "rss_bbc_ukrainian",
-        "confidence": "LOW",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-10-31T10:00:07Z",
-        "description": "Вибухи на Полтавщині і в Харкові. Перебої з водою, світлом у Києві і в Дніпрі",
-        "event_type": "Military Strike",
-        "id": "rss-30c50f511d97779d6c-524c8a",
-        "lat": 50.4501,
-        "lng": 30.5234,
-        "location": "Киев",
-        "source_count": 1,
-        "source_type": "rss",
-        "sources": [
-          {
-            "channel": "rss_bbc_ukrainian",
-            "date": "2026-10-31T10:00:07Z",
-            "publisher": "BBC News Україна",
-            "source_type": "rss",
-            "url": "https://www.bbc.com/ukrainian/articles/crpdgpg83ye1o?at_medium=RSS&at_campaign=rss"
-          }
-        ],
-        "url": "https://www.bbc.com/ukrainian/articles/crpdgpg83ye1o?at_medium=RSS&at_campaign=rss",
-        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "87888e194dec47f7c99a15bfa5626cf8b59b011ded69933e7f781ca4838bffdd"
-    },
-    {
-      "event": {
         "channel": "operativnoZSU",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
@@ -545,14 +483,74 @@
     },
     {
       "event": {
+        "channel": "lost_armour",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T15:35:02+00:00",
+        "description": "Удары телеуправляемыми геранями по локомотивам в Запорожье:\n\nНа территории ПАО \"Запорожсталь\".\n00:00 📍Геопривязка\n00:09 📍Геопривязка \n\n00:17 - на станции Запорожье-Левое.\n📍Геопривязка\n\nИсточник\n\n🔹Мы в",
+        "event_type": "Military Strike",
+        "id": 36,
+        "lat": 47.8388,
+        "lng": 35.1396,
+        "location": "Запорожье",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "lost_armour",
+            "date": "2026-10-31T15:35:02+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/lost_armour/12022"
+          }
+        ],
+        "url": "https://t.me/lost_armour/12022",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "99bbe99e8d6d7739f25641799333ea1db3f957c6938c33d2e695df038fa58539"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-10-31T15:31:07+00:00",
+        "description": "До 15 выросло число сбитых БПЛА, летевших к Москве, — Собянин  «Четыре беспилотника уничтожены средствами ПВО Минобороны. На месте падения обломков работают специалисты экстренных служб», — написал мэ",
+        "event_type": "Military Strike",
+        "id": 31,
+        "lat": 55.7558,
+        "lng": 37.6173,
+        "location": "Москва",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-10-31T15:31:07+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/129868"
+          }
+        ],
+        "url": "https://t.me/astrapress/129868",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "9433a11c4a2bfdb3c2e5c8db11425fb848288e778724ce023b90cc9ba3e4d460"
+    },
+    {
+      "event": {
         "channel": "boris_rozhin",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
         "country": "UA",
         "date": "2026-10-31T13:25:04+00:00",
-        "description": "Прилёт реактивного БпЛА «Герань-4» в Синельниково Днепропетровской области.\n🔥400👍145❤‍🔥13💯3🤬2\n  \n  \n    33.5K views13:25",
+        "description": "Прилёт реактивного БпЛА «Герань-4» в Синельниково Днепропетровской области.\n🔥404👍148❤‍🔥13💯3🤬2\n  \n  \n    33.6K views13:25",
         "event_type": "Military Strike",
-        "id": 38,
+        "id": 39,
         "lat": 48.32362,
         "lng": 35.52612,
         "location": "Синельниково",
@@ -571,67 +569,7 @@
         "verification_sources": [],
         "verification_status": "not_verified"
       },
-      "fingerprint": "8b2dd653d29d47e777c1eec2e4749b2fbd573e59ecca20928df7ea60667a0508"
-    },
-    {
-      "event": {
-        "channel": "kyivindependent_official",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-10-31T12:28:22+00:00",
-        "description": "⚡️️ Update: Evacuees from occupied Oleshky en route to Ukrainian-controlled territory after 4 planes land in Belarus.\n\nFour evacuation planes carrying residents of Russian-occupied Oleshky in Kherson ",
-        "event_type": "Political Development",
-        "id": 23,
-        "lat": 46.62553,
-        "lng": 32.72426,
-        "location": "Oleshky",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "kyivindependent_official",
-            "date": "2026-10-31T12:28:22+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/KyivIndependent_official/56578"
-          }
-        ],
-        "url": "https://t.me/KyivIndependent_official/56578",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "f462f88f0d69ff3fa113e013c3f757ae9c1acb3044ad6a3c71acc598bf5901cd"
-    },
-    {
-      "event": {
-        "channel": "exilenova_plus",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "RU",
-        "date": "2026-10-31T08:11:29+00:00",
-        "description": "Уфа. 4 точки горіння.\n\nНе виключено що 2/4 - факел. Заводи далеко. Вже будемо орієнтуватись на супутникові знімки.\n1🔥3.73K🥰281❤176👌79🤩35❤‍🔥3127🥴11🤪11🍌9💊6\n  \n  \n    94.2K views08:11",
-        "event_type": "Military Operation",
-        "id": 25,
-        "lat": 54.7388,
-        "lng": 55.9721,
-        "location": "Уфа",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "exilenova_plus",
-            "date": "2026-10-31T08:11:29+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/exilenova_plus/33783"
-          }
-        ],
-        "url": "https://t.me/exilenova_plus/33783",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "43cceb2caf361fc535156c724fcdd4a9b0676b92553ed117d5478fb9c23f9324"
+      "fingerprint": "26c87813ba70b715df3d6ca6f0c51ec9ad3297a7ff0e485ca92d7a3f8f773bd6"
     }
   ],
   "events_removed": [
@@ -991,38 +929,8 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "45854bfbf138ab2eabbcb87769c1ddcca97658e053d0223ed541a47716447f6b"
-    },
-    {
-      "event": {
-        "channel": "kyivindependent_official",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-10-31T12:28:22+00:00",
-        "description": "⚡️️ Update: Evacuees from occupied Oleshky en route to Ukrainian-controlled territory after 4 planes land in Belarus.\n\nFour evacuation planes carrying residents of Russian-occupied Oleshky in Kherson ",
-        "event_type": "Military Operation",
-        "id": 23,
-        "lat": 46.62553,
-        "lng": 32.72426,
-        "location": "Oleshky",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "kyivindependent_official",
-            "date": "2026-10-31T12:28:22+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/KyivIndependent_official/56578"
-          }
-        ],
-        "url": "https://t.me/KyivIndependent_official/56578",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "b13ffa9a055003540fb73c32999f08460558912a86b9dca50bff9f44dd41df92"
     }
   ],
-  "generated_at": "2026-10-31T15:31:16Z",
+  "generated_at": "2026-10-31T15:36:20Z",
   "method_note": "Изменения показывают разницу между автоматическими выгрузками, а не доказанное изменение обстановки."
 }
