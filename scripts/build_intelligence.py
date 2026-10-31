@@ -406,6 +406,10 @@ def main() -> int:
             for item in health_sources.values() if isinstance(item, dict)
         )
         freshness = annotate_source_freshness(health_sources, now)
+        source_health["generated_at"] = generated_at
+        source_health["sources"] = health_sources
+        source_health["freshness"] = freshness
+        atomic_json(SOURCE_HEALTH, source_health)
         health_summary = {
             "generated_at": source_health.get("generated_at") if isinstance(source_health, dict) else None,
             "total_sources": len(health_sources),
