@@ -1,46 +1,39 @@
 {
-  "corroborated_event_count": 13,
+  "corroborated_event_count": 16,
   "country_counts": {
-    "RU": 10,
-    "UA": 32,
+    "RU": 12,
+    "UA": 29,
     "US": 1
   },
-  "event_count": 43,
+  "event_count": 42,
   "event_type_counts": {
     "Air Raid Alert": 1,
-    "Military Operation": 4,
-    "Military Strike": 29,
-    "Political Development": 9
+    "Military Operation": 5,
+    "Military Strike": 30,
+    "Political Development": 6
   },
-  "generated_at": "2026-10-31T15:01:05Z",
+  "generated_at": "2026-10-31T15:12:14Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 14,
-  "not_verified_event_count": 30,
+  "new_since_previous_snapshot": 5,
+  "not_verified_event_count": 26,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
-      "current_period": 29,
-      "delta": 29,
+      "current_period": 30,
+      "delta": 30,
       "event_type": "Military Strike",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0
-    },
-    {
-      "current_period": 9,
-      "delta": 9,
-      "event_type": "Political Development",
       "label": "Повышенная публикационная активность",
       "previous_period": 0
     }
   ],
   "source_type_counts": {
     "rss": 3,
-    "telegram": 40
+    "telegram": 39
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 8,
+      "events": 7,
       "location": "Киев"
     },
     {
@@ -64,19 +57,19 @@
       "location": "Павлоград"
     },
     {
-      "country": "UA",
+      "country": "RU",
       "events": 3,
-      "location": "Херсон"
+      "location": "Уфа"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Чернигов"
+      "location": "Херсон"
     },
     {
       "country": "RU",
       "events": 2,
-      "location": "Уфа"
+      "location": "Новокуйбишевськ"
     }
   ],
   "top_sources": {
@@ -85,14 +78,14 @@
     "RVvoenkor": 5,
     "boris_rozhin": 3,
     "dnepr_typical": 5,
-    "exilenova_plus": 2,
+    "exilenova_plus": 3,
     "kyivindependent_official": 5,
     "lost_armour": 2,
     "operativnoZSU": 3,
     "supernova_plus": 2,
     "ukrpravda_news": 2,
-    "uniannet": 4
+    "uniannet": 1
   },
-  "window_end": "2026-10-31T15:01:05Z",
-  "window_start": "2026-10-24T15:01:05Z"
+  "window_end": "2026-10-31T15:12:14Z",
+  "window_start": "2026-10-24T15:12:14Z"
 }

@@ -1,40 +1,7 @@
 {
-  "current_event_count": 44,
+  "current_event_count": 43,
   "date_utc": "2026-10-31",
   "events_added": [
-    {
-      "event": {
-        "channel": "operativnoZSU",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-10-31T14:45:01+00:00",
-        "description": "❗️Внаслідок удару по Павлограду постраждали три людини. Також пошкоджено кілька багатоповерхівок, — ОВА \n\nСеред поранених – 12-річний хлопчик. \n\n🫡https://t.me/operativnoZSU/",
-        "event_type": "Military Strike",
-        "id": 3,
-        "lat": 48.5333,
-        "lng": 35.8667,
-        "location": "Павлоград",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "operativnoZSU",
-            "date": "2026-10-31T14:45:01+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/operativnoZSU/225018"
-          }
-        ],
-        "url": "https://t.me/operativnoZSU/225018",
-        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
-        "verification_sources": [
-          "RVvoenkor",
-          "operativnoZSU"
-        ],
-        "verification_status": "corroborated"
-      },
-      "fingerprint": "4a726357e86e97312dacb756efef53b2bcbbeb22f4f083009bf117b2799fe43e"
-    },
     {
       "event": {
         "channel": "ukrpravda_news",
@@ -127,96 +94,6 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "f064ef86aec6c3b5e22134026d20c1558270d3de4d25cc43b95bbea3ed9f4578"
-    },
-    {
-      "event": {
-        "channel": "boris_rozhin",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-10-31T13:25:04+00:00",
-        "description": "Прилёт реактивного БпЛА «Герань-4» в Синельниково Днепропетровской области.\n🔥352👍123❤‍🔥12💯3🤬1\n  \n  \n    28.1K views13:25",
-        "event_type": "Military Strike",
-        "id": 37,
-        "lat": 48.32362,
-        "lng": 35.52612,
-        "location": "Синельниково",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "boris_rozhin",
-            "date": "2026-10-31T13:25:04+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/boris_rozhin/231665"
-          }
-        ],
-        "url": "https://t.me/boris_rozhin/231665",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "75277a3ccc6c04d0b0f2787df7a00b6d6a379da14cd22588fa6ff9ce8b5a8547"
-    },
-    {
-      "event": {
-        "channel": "uniannet",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-10-31T13:17:27+00:00",
-        "description": "🇺🇦 Зеленский подтвердил успешное завершение гуманитарной операции по спасению жителей оккупированных Олешек на Херсонщине  «На этот момент украинские граждане из Олешек пересекли границу Украины на Че",
-        "event_type": "Political Development",
-        "id": 6,
-        "lat": 46.6354,
-        "lng": 32.6169,
-        "location": "Херсон",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "uniannet",
-            "date": "2026-10-31T13:17:27+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/uniannet/205738"
-          }
-        ],
-        "url": "https://t.me/uniannet/205738",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "4f7e4c3ba422ed049aac3a0dbbeaffe0e1f2fd2904b02ee0535667760b2c18a4"
-    },
-    {
-      "event": {
-        "channel": "uniannet",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-10-31T13:17:27+00:00",
-        "description": "🇺🇦 Зеленский подтвердил успешное завершение гуманитарной операции по спасению жителей оккупированных Олешек на Херсонщине  «На этот момент украинские граждане из Олешек пересекли границу Украины на Че",
-        "event_type": "Political Development",
-        "id": 7,
-        "lat": 51.4982,
-        "lng": 31.2893,
-        "location": "Чернигов",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "uniannet",
-            "date": "2026-10-31T13:17:27+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/uniannet/205738"
-          }
-        ],
-        "url": "https://t.me/uniannet/205738",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "3c8b285a91341ddce601da97a37034d599c1650af621b98a6390f53ef889dbdc"
     },
     {
       "event": {
@@ -445,6 +322,165 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "87888e194dec47f7c99a15bfa5626cf8b59b011ded69933e7f781ca4838bffdd"
+    },
+    {
+      "event": {
+        "channel": "operativnoZSU",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T14:45:01+00:00",
+        "description": "❗️Внаслідок удару по Павлограду постраждали три людини. Також пошкоджено кілька багатоповерхівок, — ОВА \n\nСеред поранених – 12-річний хлопчик. \n\nUpd: кількість постраждалих зросла до 8, з них троє діт",
+        "event_type": "Military Strike",
+        "id": 3,
+        "lat": 48.5333,
+        "lng": 35.8667,
+        "location": "Павлоград",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "operativnoZSU",
+            "date": "2026-10-31T14:45:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/operativnoZSU/225018"
+          }
+        ],
+        "url": "https://t.me/operativnoZSU/225018",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "operativnoZSU"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "a9cc3e04e70c934f66da0ab7a064a0df1156bfe9b87fc2195c7ef187a7e1eb4f"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T13:25:04+00:00",
+        "description": "Прилёт реактивного БпЛА «Герань-4» в Синельниково Днепропетровской области.\n🔥369👍134❤‍🔥13💯3🤬1\n  \n  \n    30.3K views13:25",
+        "event_type": "Military Strike",
+        "id": 35,
+        "lat": 48.32362,
+        "lng": 35.52612,
+        "location": "Синельниково",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-10-31T13:25:04+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/231665"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/231665",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "794b6d6ffe769746a6d4d4a86ab17b3e1114b31b6d76b453639169c90416cd6e"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-10-31T12:43:00+00:00",
+        "description": "Генштаб ВСУ заявил об ударе по военному заводу «Комбинат «Каменский» в Ростовской области   В ночь на 24 августа ВСУ ударили по «Комбинату «Каменский» в Каменск-Шахтинском Ростовской области, в резуль",
+        "event_type": "Military Strike",
+        "id": 28,
+        "lat": 53.09709,
+        "lng": 49.94001,
+        "location": "Новокуйбишевськ",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-10-31T12:43:00+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/129856"
+          }
+        ],
+        "url": "https://t.me/astrapress/129856",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "astrapress",
+          "exilenova_plus"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "29339886cd95846ebb73f1dbda1c3686370a1f375eba0cba4719ab407ed8ef6f"
+    },
+    {
+      "event": {
+        "channel": "exilenova_plus",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-10-31T08:46:44+00:00",
+        "description": "31.10.2026 року Сили оборони України нанесли ракетно-дроновий удар по ФКП «Комбінат \"Каменський\"», м. Каменськ-Шахтинський, Ростовська область.\n\nВ результаті ураження пошкоджено щонайменше 4 цехи та в",
+        "event_type": "Military Strike",
+        "id": 23,
+        "lat": 54.7388,
+        "lng": 55.9721,
+        "location": "Уфа",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "exilenova_plus",
+            "date": "2026-10-31T08:46:44+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/exilenova_plus/33784"
+          }
+        ],
+        "url": "https://t.me/exilenova_plus/33784",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "OsintFlow",
+          "exilenova_plus"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "b36b4956f84868c02d523c06f9a17e93c7ed86c26c8551a5275413dd1b7927d0"
+    },
+    {
+      "event": {
+        "channel": "OsintFlow",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-30T15:11:21+00:00",
+        "description": "💥 В окупованому Харцизьку ліквідовано колаборанта Ігоря Лебезнєва, який очолював так звану Донецьку залізницю на захопленій росіянами території.\nЛебезнєв також був депутатом Харцизької міської ради ві",
+        "event_type": "Military Operation",
+        "id": 9,
+        "lat": 48.04277,
+        "lng": 38.14025,
+        "location": "Харцизьк",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "OsintFlow",
+            "date": "2026-10-30T15:11:21+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/osintflow/17622"
+          }
+        ],
+        "url": "https://t.me/osintflow/17622",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "d6804d2312b730708ec32323f565b203f571cc2cc8fad56fb49b0fe8ffb9cc88"
     }
   ],
   "events_removed": [
@@ -744,8 +780,68 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "85a1b890fce8c2b28cada751f75c9904110c60b7016ba2b2e1a897f4bc4baa09"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T12:43:00+00:00",
+        "description": "Генштаб ВСУ заявил об ударе по военному заводу «Комбинат «Каменский» в Ростовской области   В ночь на 24 августа ВСУ ударили по «Комбинату «Каменский» в Каменск-Шахтинском Ростовской области, в резуль",
+        "event_type": "Political Development",
+        "id": 30,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-10-31T12:43:00+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/129856"
+          }
+        ],
+        "url": "https://t.me/astrapress/129856",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "10a3377962563dd723ed95cf1586162805c44734fc796f6479e04078394f4e35"
+    },
+    {
+      "event": {
+        "channel": "OsintFlow",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-30T15:11:21+00:00",
+        "description": "💥 В окупованому Харцизьку ліквідовано колаборанта Ігоря Лебезнєва, який очолював так звану Донецьку залізницю на захопленій росіянами території.\nЛебезнєв також був депутатом Харцизької міської ради ві",
+        "event_type": "Military Strike",
+        "id": 12,
+        "lat": 48.04277,
+        "lng": 38.14025,
+        "location": "Харцизьк",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "OsintFlow",
+            "date": "2026-10-30T15:11:21+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/osintflow/17622"
+          }
+        ],
+        "url": "https://t.me/osintflow/17622",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "3342ec94c814fe6e86722a1f8cc45af0ff1574039170b580ec8fc1a8a01d5167"
     }
   ],
-  "generated_at": "2026-10-31T15:01:05Z",
+  "generated_at": "2026-10-31T15:12:14Z",
   "method_note": "Изменения показывают разницу между автоматическими выгрузками, а не доказанное изменение обстановки."
 }

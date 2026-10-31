@@ -90,49 +90,49 @@
       "endpoint": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
       "events_mapped": 3,
       "items_seen": 16,
-      "last_attempt": "2026-10-31T15:00:59Z",
+      "last_attempt": "2026-10-31T15:12:09Z",
       "last_error": null,
-      "last_success": "2026-10-31T15:00:59Z",
+      "last_success": "2026-10-31T15:12:09Z",
       "status": "ok"
     },
     "rss_kyivindependent": {
       "endpoint": "https://kyivindependent.com/news-archive/rss/",
       "events_mapped": 0,
       "items_seen": 15,
-      "last_attempt": "2026-10-31T15:00:59Z",
+      "last_attempt": "2026-10-31T15:12:09Z",
       "last_error": null,
-      "last_success": "2026-10-31T15:00:59Z",
+      "last_success": "2026-10-31T15:12:09Z",
       "status": "ok"
     },
     "rss_suspilne": {
       "endpoint": "https://suspilne.media/rss/ukrnet.rss",
       "events_mapped": 0,
-      "items_seen": 0,
-      "last_attempt": "2026-10-31T15:00:59Z",
-      "last_error": "HTTP 403",
-      "last_success": null,
-      "status": "error"
+      "items_seen": 50,
+      "last_attempt": "2026-10-31T15:12:09Z",
+      "last_error": null,
+      "last_success": "2026-10-31T15:12:09Z",
+      "status": "ok"
     },
     "rss_ukrpravda": {
       "endpoint": "https://www.pravda.com.ua/rss/view_mainnews/",
       "events_mapped": 0,
       "items_seen": 20,
-      "last_attempt": "2026-10-31T15:00:59Z",
+      "last_attempt": "2026-10-31T15:12:09Z",
       "last_error": null,
-      "last_success": "2026-10-31T15:00:59Z",
+      "last_success": "2026-10-31T15:12:09Z",
       "status": "ok"
     },
     "rss_unian": {
       "endpoint": "https://rss.unian.net/site/news_ukr.rss",
       "events_mapped": 0,
       "items_seen": 100,
-      "last_attempt": "2026-10-31T15:00:59Z",
+      "last_attempt": "2026-10-31T15:12:09Z",
       "last_error": null,
-      "last_success": "2026-10-31T15:00:59Z",
+      "last_success": "2026-10-31T15:12:09Z",
       "status": "ok"
     }
   },
-  "generated_at": "2026-10-31T15:00:59Z",
+  "generated_at": "2026-10-31T15:12:09Z",
   "method_note": "RSS items are separate, unverified source records. Only the title is stored; the original publisher link is retained.",
   "window_days": 7
 }
