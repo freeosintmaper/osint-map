@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 33,
-      "delta": 33,
+      "current_period": 30,
+      "delta": 30,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -28,52 +28,52 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-10-31T04:06:56+00:00",
-      "description": "31 октября 2026 года.\n\n· 00:15 Харьков и Днепропетровск — взрывы. Герани.\n· 00:20 Донбасс — взрывы. УМПК.\n· 00:25 Киев — взрыв. Герань.\n· 00:35 Днепропетровск и Сумы — взрывы. Герани.\n· 00:45 Запорожс",
+      "date": "2026-10-31T16:04:01+00:00",
+      "description": "Восемь человек, в том числе трое детей, ранены в результате российского удара по Павлограду, — ОВА\n\n«Россияне ударили по Павлограду. Повреждены несколько многоквартирных домов», — сообщил глава Днепро",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Павлоград",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "RVvoenkor",
-        "lost_armour"
+        "astrapress",
+        "operativnoZSU"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 15,
+  "corroborated_event_count": 11,
   "country_counts": {
     "BE": 1,
     "RU": 12,
-    "UA": 32,
+    "UA": 29,
     "US": 2
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 47,
+  "event_count": 44,
   "event_type_counts": {
-    "Air Raid Alert": 2,
-    "Military Operation": 3,
-    "Military Strike": 33,
+    "Air Raid Alert": 3,
+    "Military Operation": 2,
+    "Military Strike": 30,
     "Political Development": 9
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 15,
+    "cross_source_consistent_count": 11,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 32,
+    "not_independently_corroborated_count": 33,
     "rss_reports_not_independently_corroborated_count": 4
   },
-  "generated_at": "2026-10-31T16:00:58Z",
+  "generated_at": "2026-10-31T17:34:03Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 7,
-  "not_verified_event_count": 32,
+  "new_since_previous_snapshot": 10,
+  "not_verified_event_count": 33,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 33,
-      "delta": 33,
+      "current_period": 30,
+      "delta": 30,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -95,12 +95,12 @@
   ],
   "source_type_counts": {
     "rss": 4,
-    "telegram": 43
+    "telegram": 40
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 7,
+      "events": 6,
       "location": "Киев"
     },
     {
@@ -111,6 +111,11 @@
     {
       "country": "UA",
       "events": 4,
+      "location": "Харьков"
+    },
+    {
+      "country": "UA",
+      "events": 3,
       "location": "Павлоград"
     },
     {
@@ -120,13 +125,8 @@
     },
     {
       "country": "UA",
-      "events": 3,
-      "location": "Харьков"
-    },
-    {
-      "country": "UA",
-      "events": 3,
-      "location": "Днепр"
+      "events": 2,
+      "location": "Краматорск"
     },
     {
       "country": "US",
@@ -136,23 +136,23 @@
     {
       "country": "UA",
       "events": 2,
-      "location": "Херсон"
+      "location": "Запорожье"
     }
   ],
   "top_sources": {
+    "BBC News Україна": 2,
     "OsintFlow": 3,
-    "RVvoenkor": 5,
-    "astrapress": 3,
-    "boris_rozhin": 2,
+    "RVvoenkor": 2,
+    "astrapress": 5,
+    "boris_rozhin": 3,
     "dnepr_typical": 5,
     "exilenova_plus": 3,
-    "kyivindependent_official": 5,
-    "lost_armour": 3,
+    "lost_armour": 4,
     "operativnoZSU": 5,
-    "ukrpravda_news": 2,
-    "uniannet": 2,
+    "supernova_plus": 2,
+    "ukrpravda_news": 3,
     "Суспільне Новини": 2
   },
-  "window_end": "2026-10-31T16:00:58Z",
-  "window_start": "2026-10-24T16:00:58Z"
+  "window_end": "2026-10-31T17:34:03Z",
+  "window_start": "2026-10-24T17:34:03Z"
 }
