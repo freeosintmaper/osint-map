@@ -17,46 +17,45 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-10-31T16:04:01+00:00",
-      "description": "Восемь человек, в том числе трое детей, ранены в результате российского удара по Павлограду, — ОВА\n\n«Россияне ударили по Павлограду. Повреждены несколько многоквартирных домов», — сообщил глава Днепро",
+      "date": "2026-10-31T19:01:01+00:00",
+      "description": "12-летняя девочка ранена в результате российского удара по Киеву, — КГВА\n\n«В Оболонском районе обломки упали на территории торгового центра, — сообщили в Киевской городской военной администрации, уточ",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Павлоград",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "astrapress",
-        "operativnoZSU"
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 11,
+  "corroborated_event_count": 7,
   "country_counts": {
-    "BE": 1,
-    "RU": 11,
-    "UA": 22,
-    "US": 1
+    "RU": 9,
+    "UA": 24,
+    "US": 2
   },
   "editorially_fact_checked_count": 0,
   "event_count": 35,
   "event_type_counts": {
     "Air Raid Alert": 3,
-    "Military Operation": 2,
+    "Military Operation": 3,
     "Military Strike": 24,
-    "Political Development": 6
+    "Political Development": 5
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 11,
+    "cross_source_consistent_count": 7,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 24,
-    "rss_reports_not_independently_corroborated_count": 4
+    "not_independently_corroborated_count": 28,
+    "rss_reports_not_independently_corroborated_count": 5
   },
-  "generated_at": "2026-10-31T17:34:03Z",
+  "generated_at": "2026-10-31T20:40:07Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
   "new_since_previous_snapshot": 10,
-  "not_verified_event_count": 24,
+  "not_verified_event_count": 28,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
@@ -72,18 +71,23 @@
     }
   ],
   "source_type_counts": {
-    "rss": 4,
-    "telegram": 31
+    "rss": 5,
+    "telegram": 30
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 5,
+      "events": 8,
       "location": "Киев"
     },
     {
+      "country": "UA",
+      "events": 3,
+      "location": "Краматорск"
+    },
+    {
       "country": "RU",
-      "events": 4,
+      "events": 3,
       "location": "Москва"
     },
     {
@@ -97,14 +101,9 @@
       "location": "Уфа"
     },
     {
-      "country": "UA",
+      "country": "US",
       "events": 2,
-      "location": "Краматорск"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Харьков"
+      "location": "Вашингтон"
     },
     {
       "country": "UA",
@@ -112,25 +111,25 @@
       "location": "Запорожье"
     },
     {
-      "country": "RU",
-      "events": 2,
-      "location": "Новокуйбишевськ"
+      "country": "UA",
+      "events": 1,
+      "location": "Купянск"
     }
   ],
   "top_sources": {
     "BBC News Україна": 2,
-    "RVvoenkor": 2,
-    "astrapress": 5,
-    "boris_rozhin": 3,
+    "astrapress": 6,
+    "boris_rozhin": 1,
     "dnepr_typical": 2,
     "exilenova_plus": 3,
+    "kyivindependent_official": 2,
     "lost_armour": 3,
-    "operativnoZSU": 5,
+    "operativnoZSU": 6,
     "supernova_plus": 2,
     "ukrpravda_news": 3,
-    "wargonzo": 1,
+    "uniannet": 2,
     "Суспільне Новини": 2
   },
-  "window_end": "2026-10-31T17:34:03Z",
-  "window_start": "2026-10-30T17:34:03Z"
+  "window_end": "2026-10-31T20:40:07Z",
+  "window_start": "2026-10-30T20:40:07Z"
 }

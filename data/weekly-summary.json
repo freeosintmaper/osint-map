@@ -4,20 +4,9 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 30,
-      "delta": 30,
+      "current_period": 28,
+      "delta": 28,
       "event_type": "Military Strike",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 9,
-      "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
       "previous_period": 0,
@@ -28,64 +17,52 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-10-31T16:04:01+00:00",
-      "description": "Восемь человек, в том числе трое детей, ранены в результате российского удара по Павлограду, — ОВА\n\n«Россияне ударили по Павлограду. Повреждены несколько многоквартирных домов», — сообщил глава Днепро",
+      "date": "2026-10-31T19:01:01+00:00",
+      "description": "12-летняя девочка ранена в результате российского удара по Киеву, — КГВА\n\n«В Оболонском районе обломки упали на территории торгового центра, — сообщили в Киевской городской военной администрации, уточ",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Павлоград",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "astrapress",
-        "operativnoZSU"
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 11,
+  "corroborated_event_count": 7,
   "country_counts": {
-    "BE": 1,
-    "RU": 12,
-    "UA": 29,
+    "RU": 10,
+    "UA": 30,
     "US": 2
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 44,
+  "event_count": 42,
   "event_type_counts": {
     "Air Raid Alert": 3,
-    "Military Operation": 2,
-    "Military Strike": 30,
-    "Political Development": 9
+    "Military Operation": 4,
+    "Military Strike": 28,
+    "Political Development": 7
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 11,
+    "cross_source_consistent_count": 7,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 33,
-    "rss_reports_not_independently_corroborated_count": 4
+    "not_independently_corroborated_count": 35,
+    "rss_reports_not_independently_corroborated_count": 5
   },
-  "generated_at": "2026-10-31T17:34:03Z",
+  "generated_at": "2026-10-31T20:40:07Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 10,
-  "not_verified_event_count": 33,
+  "new_since_previous_snapshot": 11,
+  "not_verified_event_count": 35,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 30,
-      "delta": 30,
+      "current_period": 28,
+      "delta": 28,
       "event_type": "Military Strike",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 9,
-      "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
       "previous_period": 0,
@@ -94,24 +71,24 @@
     }
   ],
   "source_type_counts": {
-    "rss": 4,
-    "telegram": 40
+    "rss": 5,
+    "telegram": 37
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 6,
+      "events": 9,
       "location": "Киев"
     },
     {
       "country": "RU",
-      "events": 5,
+      "events": 4,
       "location": "Москва"
     },
     {
       "country": "UA",
-      "events": 4,
-      "location": "Харьков"
+      "events": 3,
+      "location": "Краматорск"
     },
     {
       "country": "UA",
@@ -124,11 +101,6 @@
       "location": "Уфа"
     },
     {
-      "country": "UA",
-      "events": 2,
-      "location": "Краматорск"
-    },
-    {
       "country": "US",
       "events": 2,
       "location": "Вашингтон"
@@ -137,22 +109,27 @@
       "country": "UA",
       "events": 2,
       "location": "Запорожье"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Харьков"
     }
   ],
   "top_sources": {
     "BBC News Україна": 2,
     "OsintFlow": 3,
-    "RVvoenkor": 2,
-    "astrapress": 5,
-    "boris_rozhin": 3,
+    "astrapress": 6,
     "dnepr_typical": 5,
     "exilenova_plus": 3,
-    "lost_armour": 4,
-    "operativnoZSU": 5,
+    "kyivindependent_official": 2,
+    "lost_armour": 3,
+    "operativnoZSU": 6,
     "supernova_plus": 2,
     "ukrpravda_news": 3,
+    "uniannet": 2,
     "Суспільне Новини": 2
   },
-  "window_end": "2026-10-31T17:34:03Z",
-  "window_start": "2026-10-24T17:34:03Z"
+  "window_end": "2026-10-31T20:40:07Z",
+  "window_start": "2026-10-24T20:40:07Z"
 }
