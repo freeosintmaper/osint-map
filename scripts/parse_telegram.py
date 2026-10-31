@@ -2228,8 +2228,6 @@ def main():
     print(f"🔗 Дедупликация (место, тип, час + совпадение содержания): "
           f"{len(raw_events)} → {len(deduped)} (объединено {time_dups})")
     raw_events = deduped
-          f"{len(raw_events)} → {len(deduped)} (объединено {time_dups})")
-    raw_events = deduped
 
     # Preserve per-event precision: explicit place match or settlement fallback.
     precision_counts = Counter(ev.get("coordinate_precision", "settlement_center") for ev in raw_events)
