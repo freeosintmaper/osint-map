@@ -22,6 +22,20 @@ class EventContextAndVerificationTests(unittest.TestCase):
             "channel": channel,
         }
 
+    def test_general_staff_strike_report_uses_event_location_not_kyiv(self):
+        text = (
+            "Генштаб ВСУ заявил об ударе по военному заводу "
+            "«Комбинат «Каменский» в Ростовской области. "
+            "В ночь на 24 августа ВСУ ударили по предприятию "
+            "в Каменск-Шахтинском Ростовской области."
+        )
+        self.assertEqual(parser.classify_event(text), "Military Strike")
+        self.assertEqual(parser.detect_political(text), (None, None, None))
+        location = parser._region_center_from_text(text, "OSINT")
+        self.assertIsNotNone(location)
+        self.assertEqual(location[2], "Ростов-на-Дону")
+        self.assertEqual(location[3], "RU")
+
     def test_secondary_supplier_city_is_not_the_event_location(self):
         text = (
             'В Тульской области загорелся химзавод "Азот" после атаки дронов\n\n'
