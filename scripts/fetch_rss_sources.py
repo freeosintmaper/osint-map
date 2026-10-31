@@ -247,19 +247,18 @@ def _unique_city_locations(text: str) -> list[tuple[float, float, str, str]]:
 def map_headline(source: dict[str, Any], item: dict[str, str]) -> list[dict[str, Any]]:
     """Map a title only when event type and settlement context are both explicit."""
     title = str(item.get("title") or "").strip()
-    context = str(item.get("context") or "").strip()
-    classification_text = title + (("\n" + context) if context else "")
-    event_type = parser.classify_event(classification_text)
+    # Deliberately classify and geolocate from the headline alone. A broad
+    # publisher summary may mention background locations unrelated to the event.
+    event_type = parser.classify_event(title)
     if not event_type:
         return []
 
-    lead_text = title + (("\n\n" + context) if context else "")
     locations: list[tuple[float, float, str, str]] = []
-    region = _explicit_region(lead_text)
+    region = _explicit_region(title)
     if region:
         locations = [(float(region[0]), float(region[1]), str(region[2]), str(region[3]))]
     else:
-        locations = _unique_city_locations(lead_text)
+        locations = _unique_city_locations(title)
     if not locations:
         return []
 
