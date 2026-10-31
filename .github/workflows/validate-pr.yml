@@ -39,6 +39,9 @@ jobs:
       - name: Test author zones backup safety
         run: python scripts/test_backup_author_zones.py
 
+      - name: Test browser-side author zones recovery safety
+        run: node scripts/test_author_zones_frontend.js
+
       - name: Test source registry and RSS adapter
         run: python scripts/test_rss_sources.py
 
