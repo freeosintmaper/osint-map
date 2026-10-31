@@ -76,8 +76,10 @@ class IntelligencePipelineTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             history = Path(directory) / "event-history"
             index = history / "index.json"
-            with mock.patch.object(intelligence, "HISTORY_DIR", history), \
-                 mock.patch.object(intelligence, "HISTORY_INDEX", index):
+            with (
+                mock.patch.object(intelligence, "HISTORY_DIR", history),
+                mock.patch.object(intelligence, "HISTORY_INDEX", index),
+            ):
                 intelligence.update_daily_history(
                     "2026-10-31", "2026-10-31T12:00:00Z", [added], [removed], 12
                 )
@@ -93,8 +95,10 @@ class IntelligencePipelineTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             history = Path(directory) / "event-history"
             index = history / "index.json"
-            with mock.patch.object(intelligence, "HISTORY_DIR", history), \\
-                 mock.patch.object(intelligence, "HISTORY_INDEX", index):
+            with (
+                mock.patch.object(intelligence, "HISTORY_DIR", history),
+                mock.patch.object(intelligence, "HISTORY_INDEX", index),
+            ):
                 intelligence.update_daily_history(
                     "2026-10-31", "2026-10-31T12:00:00Z", [event], [], 1
                 )
@@ -110,8 +114,10 @@ class IntelligencePipelineTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             history = Path(directory) / "event-history"
             index = history / "index.json"
-            with mock.patch.object(intelligence, "HISTORY_DIR", history), \\
-                 mock.patch.object(intelligence, "HISTORY_INDEX", index):
+            with (
+                mock.patch.object(intelligence, "HISTORY_DIR", history),
+                mock.patch.object(intelligence, "HISTORY_INDEX", index),
+            ):
                 intelligence.update_daily_history(
                     "2026-10-31", "2026-10-31T12:00:00Z", [], [event], 0
                 )
