@@ -23,7 +23,7 @@ jobs:
           python-version: '3.11'
 
       - name: Check Python syntax
-        run: python -m py_compile scripts/parse_telegram.py scripts/classify_llm.py scripts/backup_author_zones.py scripts/fetch_rss_sources.py scripts/build_intelligence.py
+        run: python -m py_compile scripts/parse_telegram.py scripts/classify_llm.py scripts/backup_author_zones.py scripts/fetch_rss_sources.py scripts/build_intelligence.py scripts/snapshot_territory_layers.py
 
       - name: Set up Deno
         uses: denoland/setup-deno@v2
@@ -47,6 +47,27 @@ jobs:
 
       - name: Test intelligence reports and history
         run: python scripts/test_build_intelligence.py
+
+      - name: Test territorial source history
+        run: python scripts/test_territory_history.py
+
+      - name: Check territorial history page JavaScript
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const html = fs.readFileSync('territory-history.html', 'utf8');
+          const blocks = Array.from(html.matchAll(/<script\\b[^>]*>([\\s\\S]*?)<\\/script>/gi));
+          if (!blocks.length) throw new Error('No inline script found in territory-history.html');
+          blocks.forEach((match, index) => {
+            try {
+              new Function(match[1]);
+            } catch (error) {
+              console.error('Territorial history script #' + (index + 1) + ' failed syntax validation:', error.message);
+              process.exitCode = 1;
+            }
+          });
+          if (!process.exitCode) console.log('Checked ' + blocks.length + ' territorial history script block(s).');
+          NODE
 
       - name: Check inline JavaScript syntax
         run: |
