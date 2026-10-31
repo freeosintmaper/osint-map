@@ -217,7 +217,7 @@ class EventContextAndVerificationTests(unittest.TestCase):
         )
         second = self.make_event(
             "Новомосковск",
-            "Дроны атаковали химическое предприятие в Тульской области, возник пожар.",
+            "В Тульской области беспилотники атаковали химзавод Азот, возник пожар.",
             "ukrpravda_news", "2026-10-31T10:35:00+00:00", 54.01098, 38.29084,
         )
         grouped, merged = parser.cluster_event_reports([first, second])
