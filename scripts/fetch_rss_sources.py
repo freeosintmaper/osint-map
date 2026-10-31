@@ -186,60 +186,82 @@ def fetch_feed(url: str) -> bytes:
 
 
 def _explicit_region(text: str):
-    """Use region-centre fallback only when the region is explicitly in the lead."""
+    """Use region-centre fallback only when a region is explicit in an event sentence."""
     lead = parser._primary_event_context(text)
     return parser._region_center_from_text(lead)
 
 
-def _unique_city_locations(text: str) -> list[tuple[float, float, str, str]]:
-    """Return only unambiguous settlements; homonyms without country context are skipped."""
+def _event_headline_segments(text: str) -> list[str]:
+    """Keep only sentences that independently contain an event signal.
+
+    A title can append unrelated infrastructure or background locations after
+    the event sentence. Those place names must not inherit the first sentence's
+    event classification.
+    """
     lead = parser._primary_event_context(text)
+    sentences = re.split(r"(?<=[.!?;])\\s+", lead)
+    return [
+        sentence.strip()
+        for sentence in sentences
+        if sentence.strip() and parser.classify_event(sentence)
+    ]
+
+
+def _unique_city_locations(text: str) -> list[tuple[float, float, str, str]]:
+    """Return event-sentence locations only; skip homonyms without country context."""
     if not parser.SETTLEMENTS_BY_NAME:
         parser.load_settlements()
 
-    region = _explicit_region(lead)
-    region_country = region[3] if region else None
-    words = re.findall(r"[а-яёa-zа-їієґ0-9-]+", lead.lower())
     candidates: dict[str, tuple[float, float, str, str]] = {}
+    for segment in _event_headline_segments(text):
+        region = _explicit_region(segment)
+        region_country = region[3] if region else None
+        if region:
+            candidates[region[2]] = (
+                float(region[0]), float(region[1]), str(region[2]), str(region[3])
+            )
+        words = re.findall(r"[а-яёa-zа-їієґ0-9-]+", segment.lower())
 
-    # Check known aliases, but do not trust a default alias when a homonym exists.
-    alias_matches, _ = parser._find_alias_matches(lead, "OSINT")
-    for lat, lng, name, country in alias_matches:
-        settlement_candidates = parser.SETTLEMENTS_BY_NAME.get(parser._normalize_context_text(name), [])
-        countries = {item[2] for item in settlement_candidates}
-        if region_country and country != region_country:
-            continue
-        if len(countries) > 1 and not region_country:
-            continue
-        candidates[name] = (float(lat), float(lng), str(name), str(country))
+        # Check known aliases only inside this event sentence.
+        alias_matches, _ = parser._find_alias_matches(segment, "OSINT")
+        for lat, lng, name, country in alias_matches:
+            settlement_candidates = parser.SETTLEMENTS_BY_NAME.get(
+                parser._normalize_context_text(name), []
+            )
+            countries = {item[2] for item in settlement_candidates}
+            if region_country and country != region_country:
+                continue
+            if len(countries) > 1 and not region_country:
+                continue
+            candidates[name] = (float(lat), float(lng), str(name), str(country))
 
-    # Match multi-word settlement names, but accept a name only if its country is unique.
-    for size in (3, 2, 1):
-        for index in range(len(words) - size + 1):
-            phrase = " ".join(words[index:index + size])
-            if len(phrase) < 5 or phrase in parser.ABBREVIATIONS or phrase in parser.STOP_SETTLEMENTS:
-                continue
-            if phrase not in parser.SETTLEMENTS_BY_NAME:
-                continue
-            if parser.is_military_term_context(lead, phrase):
-                continue
-            if parser.has_source_verb_near(lead, phrase, window=60):
-                continue
-            if not parser.has_event_pattern_near(lead, phrase, window=250):
-                continue
-            matches = parser.SETTLEMENTS_BY_NAME[phrase]
-            if region_country:
-                scoped = [item for item in matches if item[2] == region_country]
-                if not scoped:
+        # Match multi-word settlement names, but accept a name only if its country is unique.
+        for size in (3, 2, 1):
+            for index in range(len(words) - size + 1):
+                phrase = " ".join(words[index:index + size])
+                if len(phrase) < 5 or phrase in parser.ABBREVIATIONS or phrase in parser.STOP_SETTLEMENTS:
                     continue
-                matches = scoped
-            countries = {item[2] for item in matches}
-            if len(countries) != 1:
-                continue
-            best = max(matches, key=lambda item: item[4])
-            lat, lng, country, name, _population = best
-            if name not in candidates:
-                candidates[name] = (float(lat), float(lng), str(name), str(country))
+                if phrase not in parser.SETTLEMENTS_BY_NAME:
+                    continue
+                if parser.is_military_term_context(segment, phrase):
+                    continue
+                if parser.has_source_verb_near(segment, phrase, window=60):
+                    continue
+                if not parser.has_event_pattern_near(segment, phrase, window=120):
+                    continue
+                matches = parser.SETTLEMENTS_BY_NAME[phrase]
+                if region_country:
+                    scoped = [item for item in matches if item[2] == region_country]
+                    if not scoped:
+                        continue
+                    matches = scoped
+                countries = {item[2] for item in matches}
+                if len(countries) != 1:
+                    continue
+                best = max(matches, key=lambda item: item[4])
+                lat, lng, country, name, _population = best
+                if name not in candidates:
+                    candidates[name] = (float(lat), float(lng), str(name), str(country))
 
     return list(candidates.values())[:parser.MAX_LOCATIONS_PER_POST]
 
@@ -253,12 +275,11 @@ def map_headline(source: dict[str, Any], item: dict[str, str]) -> list[dict[str,
     if not event_type:
         return []
 
-    locations: list[tuple[float, float, str, str]] = []
-    region = _explicit_region(title)
-    if region:
-        locations = [(float(region[0]), float(region[1]), str(region[2]), str(region[3]))]
-    else:
-        locations = _unique_city_locations(title)
+    locations: list[tuple[float, float, str, str]] = _unique_city_locations(title)
+    if not locations:
+        region = _explicit_region(title)
+        if region:
+            locations = [(float(region[0]), float(region[1]), str(region[2]), str(region[3]))]
     if not locations:
         return []
 
