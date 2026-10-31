@@ -63,7 +63,7 @@ class RssSourceTests(unittest.TestCase):
     def test_rss_event_keeps_provenance_and_is_not_verified(self):
         source = {"id": "rss_test", "publisher": "Test newsroom", "type": "rss"}
         item = {
-            "title": "Атака БПЛА на область: последствия для жителей",
+            "title": "Атака БПЛА на Тульскую область",
             "context": "",
             "url": "https://example.org/news/1",
             "date": "2026-10-31T10:00:00Z",
