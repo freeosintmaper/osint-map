@@ -1619,32 +1619,66 @@
       })
       .catch(function(err) { console.warn('DeepStateMap:', err.message); });
 
-    function categorizeOwlPolygon(name, styleUrl) {
-      if (!name) return 'unknown';
-      var n = name.toLowerCase();
-      if (n.indexOf('holding area') >= 0) return 'holding';
-      if (n.indexOf('russian ') === 0) return 'russian';
-      if (n.indexOf('russia ') === 0) return 'russian';
-      if (n.indexOf('crimea') >= 0) return 'russian';
-      if (n.indexOf("people's republic") >= 0) return 'russian';
-      if (n.indexOf('axis') >= 0) return 'russian';
-      if (n.indexOf('incursion') >= 0) return 'russian';
-      if (n.indexOf('initial invasion') >= 0) return 'russian';
-      if (n.indexOf('ukrainian ') === 0) return 'ukrainian';
-      if (n.indexOf('ukraine ') === 0) return 'ukrainian';
-      if (n.indexOf('counterattack') >= 0) return 'ukrainian';
-      if (styleUrl) {
-        if (/A52714|880E4F/i.test(styleUrl)) return 'russian';
-        if (/01579B|FFD600|0288D1/i.test(styleUrl)) return 'ukrainian';
+    function owlText(el) {
+      return el ? String(el.textContent || '').replace(/\\s+/g, ' ').trim() : '';
+    }
+    function owlAncestorNames(pm) {
+      var names = [];
+      var el = pm.parentNode;
+      while (el && el.nodeType === 1) {
+        if (String(el.localName || el.tagName).toLowerCase() === 'folder' ||
+            String(el.localName || el.tagName).toLowerCase() === 'document') {
+          var name = owlText(el.querySelector(':scope > name'));
+          if (name) names.unshift(name);
+        }
+        el = el.parentNode;
+      }
+      return names;
+    }
+    function owlResolveStyle(doc, styleUrl) {
+      if (!styleUrl) return '';
+      var id = String(styleUrl).split('#').pop();
+      if (!id) return '';
+      var styles = [];
+      var direct = doc.querySelector('Style[id="' + id + '"]');
+      if (direct) styles.push(direct);
+      var map = doc.querySelector('StyleMap[id="' + id + '"]');
+      if (map) {
+        map.querySelectorAll('Pair styleUrl').forEach(function(node) {
+          var target = owlResolveStyle(doc, owlText(node));
+          if (target) styles.push({ textContent: target });
+        });
+      }
+      return styles.map(function(style) {
+        if (style.nodeType === 1) return style.textContent || '';
+        return style.textContent || '';
+      }).join(' ');
+    }
+    function categorizeOwlFeature(name, description, folderNames, styleText) {
+      var text = [name, description].concat(folderNames || []).join(' ').toLowerCase();
+      if (/holding[ _-]?area|assembly[ _-]?area|concentration|staging[ _-]?area|мест[ао] сосредоточ|район сосредоточ/.test(text)) return 'holding';
+      if (/grey[ _-]?zone|gray[ _-]?zone|buffer[ _-]?zone|серая зона|сіра зона|буферн/.test(text)) return 'grey';
+      if (/ukrainian|ukraine|украин|україн|зсу|afu|uaf|counter.?attack|liberat/.test(text)) return 'ukrainian';
+      if (/russian|russia|россий|росій|рф|crimea|крым|крим|донецк.*народн|луганск.*народн|окупац|axis|invasion|incursion|advance/.test(text)) return 'russian';
+      var styles = String(styleText || '').toLowerCase();
+      // KML colors are AABBGGRR; inspect the resolved style as a secondary signal only.
+      if (/a?\w{6,8}/.test(styles)) {
+        if (/a52714|880e4f|0000c6|0000cc/.test(styles)) return 'russian';
+        if (/01579b|ffd600|0288d1|c60000/.test(styles)) return 'ukrainian';
+        if (/757575|808080|666666/.test(styles)) return 'grey';
+        if (/6a1b9a|800080/.test(styles)) return 'holding';
       }
       return 'unknown';
     }
     function isInHeavyFolder(pm) {
       var el = pm.parentNode;
-      while (el && el.tagName !== 'Document') {
-        if (el.tagName === 'Folder') {
-          var ne = el.querySelector(':scope > name');
-          if (ne && /archive|unit position/i.test(ne.textContent)) return true;
+      while (el && el.nodeType === 1) {
+        var tag = String(el.localName || el.tagName).toLowerCase();
+        if (tag === 'folder') {
+          var name = owlText(el.querySelector(':scope > name')).toLowerCase();
+          // Only historical/archive folders are excluded. "Unit position" contains current
+          // concentration/position features and must remain available to the map.
+          if (/\\barchive(s)?\\b|\\bhistory\\b|архив|архів/.test(name)) return true;
         }
         el = el.parentNode;
       }
@@ -1655,48 +1689,57 @@
       if (el) { if (on) el.classList.add('open'); else el.classList.remove('open'); }
     }
 
-    var OWL_SKIP_NAMES = [
-      'initial invasion', 'kyiv axis', 'kharkiv axis', 'luhansk axis',
-      'donetsk axis', 'zaporizhia and kherson axis',
-      'ukrainian kherson counterattack', 'crimea',
-      "donetsk and luhansk people", "people's republic", 'archives'
-    ];
-    function shouldSkipOwl(name) {
-      if (!name) return false;
-      var n = name.toLowerCase();
-      for (var i = 0; i < OWL_SKIP_NAMES.length; i++) {
-        if (n.indexOf(OWL_SKIP_NAMES[i]) >= 0) return true;
-      }
-      return false;
-    }
-
     function parseOwlKmlStrings(kmlStrings) {
       var allFeatures = [];
-      var stats = { russian: 0, ukrainian: 0, holding: 0, grey: 0, unknown: 0, skipped: 0 };
+      var stats = {
+        russian: 0, ukrainian: 0, holding: 0, grey: 0, unknown: 0,
+        points: 0, lines: 0, polygons: 0, skipped: 0, placemarks: 0
+      };
       kmlStrings.forEach(function(kmlString) {
         var parser = new DOMParser();
         var kmlDoc = parser.parseFromString(kmlString, 'text/xml');
+        if (kmlDoc.querySelector('parsererror')) {
+          console.warn('Project Owl: повреждённый KML-файл пропущен');
+          return;
+        }
         var placemarks = kmlDoc.querySelectorAll('Placemark');
         placemarks.forEach(function(pm) {
-          if (isInHeavyFolder(pm)) return;
-          var nameEl = pm.querySelector(':scope > name');
-          var styleEl = pm.querySelector(':scope > styleUrl');
-          var pmName = nameEl ? nameEl.textContent : '';
-          var pmStyle = styleEl ? styleEl.textContent : '';
-          if (shouldSkipOwl(pmName)) { stats.skipped++; return; }
-          var cat = categorizeOwlPolygon(pmName, pmStyle);
+          if (isInHeavyFolder(pm)) { stats.skipped++; return; }
+          stats.placemarks++;
+          var pmName = owlText(pm.querySelector(':scope > name'));
+          var pmDescription = owlText(pm.querySelector(':scope > description'));
+          var styleUrl = owlText(pm.querySelector(':scope > styleUrl'));
+          var folderNames = owlAncestorNames(pm);
+          var resolvedStyle = owlResolveStyle(kmlDoc, styleUrl);
+          var inlineStyles = Array.from(pm.querySelectorAll(':scope > Style')).map(function(s) { return s.textContent || ''; }).join(' ');
+          var cat = categorizeOwlFeature(pmName, pmDescription, folderNames, resolvedStyle + ' ' + inlineStyles);
           var wrapDoc = document.implementation.createDocument('http://www.opengis.net/kml/2.2', 'kml', null);
-          var docEl = wrapDoc.documentElement;
           var innerDoc = wrapDoc.createElement('Document');
           innerDoc.appendChild(pm.cloneNode(true));
-          docEl.appendChild(innerDoc);
+          wrapDoc.documentElement.appendChild(innerDoc);
           var gj = toGeoJSON.kml(wrapDoc);
-          if (!gj || !gj.features) return;
+          if (!gj || !Array.isArray(gj.features)) return;
           gj.features.forEach(function(f) {
-            var gt = f.geometry && f.geometry.type;
-            if (gt !== 'Polygon' && gt !== 'MultiPolygon') return;
+            if (!f.geometry || !f.geometry.type) return;
+            var gt = f.geometry.type;
+            if (gt === 'Point' || gt === 'MultiPoint') stats.points++;
+            else if (gt === 'LineString' || gt === 'MultiLineString') stats.lines++;
+            else if (gt === 'Polygon' || gt === 'MultiPolygon') stats.polygons++;
+            else if (gt === 'GeometryCollection') {
+              // Keep supported members instead of silently discarding the whole placemark.
+              (f.geometry.geometries || []).forEach(function(g) {
+                if (g.type === 'Point' || g.type === 'MultiPoint') stats.points++;
+                else if (g.type === 'LineString' || g.type === 'MultiLineString') stats.lines++;
+                else if (g.type === 'Polygon' || g.type === 'MultiPolygon') stats.polygons++;
+              });
+            } else return;
             f.properties = f.properties || {};
             f.properties._category = cat;
+            f.properties._source = 'Project Owl';
+            f.properties._folder = folderNames.join(' / ');
+            f.properties._styleUrl = styleUrl;
+            if (!f.properties.name && pmName) f.properties.name = pmName;
+            if (!f.properties.description && pmDescription) f.properties.description = pmDescription;
             allFeatures.push(f);
             stats[cat]++;
           });
