@@ -153,6 +153,29 @@ def parse_feed_items(xml_bytes: bytes) -> list[dict[str, str]]:
     return parsed
 
 
+def merge_feed_events(
+    retained: list[dict[str, Any]],
+    mapped: list[dict[str, Any]],
+    current_feed_urls: set[str],
+) -> list[dict[str, Any]]:
+    """Retain off-feed cached articles, but always rebuild mappings for live URLs.
+
+    If a publisher still exposes an article, the current geolocation rules are
+    authoritative for that article. Old cached city markers for the same URL
+    must not survive when the rules now map fewer/different locations.
+    """
+    by_url: dict[str, dict[str, Any]] = {}
+    for event in retained:
+        url = str(event.get("url") or "")
+        if url and url not in current_feed_urls:
+            by_url[url + "|" + str(event.get("location") or "")] = event
+    for event in mapped:
+        url = str(event.get("url") or "")
+        if url:
+            by_url[url + "|" + str(event.get("location") or "")] = event
+    return list(by_url.values())
+
+
 def _latest_published_at(items: list[dict[str, str]]) -> str | None:
     """Return the newest publisher timestamp represented in the fetched feed."""
     parsed_dates = []
@@ -423,13 +446,15 @@ def collect() -> dict[str, Any]:
                 if item_date < cutoff or item_date > now + timedelta(hours=12):
                     continue
                 mapped.extend(map_headline(source, item))
-            # Keep older still-relevant cached feed items if the publisher's RSS window is short.
-            by_url: dict[str, dict[str, Any]] = {}
-            for event in retained + mapped:
-                url = str(event.get("url") or "")
-                if url:
-                    by_url[url + "|" + str(event.get("location") or "")] = event
-            source_events = list(by_url.values())
+            # Preserve cached stories that have fallen out of a short feed window.
+            # For URLs still present in the current feed, rebuild locations from the
+            # latest parser rules so stale markers cannot persist for up to 7 days.
+            current_feed_urls = {
+                str(item.get("url") or "")
+                for item in items
+                if item.get("url")
+            }
+            source_events = merge_feed_events(retained, mapped, current_feed_urls)
             feed_health[source_id] = {
                 "status": "ok",
                 "endpoint": source["feed_url"],
