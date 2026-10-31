@@ -847,6 +847,12 @@ def is_ad(text):
 
 
 def detect_political(text):
+    # A named institution/speaker is not the location of the event it reports.
+    # Operational reports must pass through event classification and their
+    # own location evidence instead of inheriting the speaker's capital.
+    if classify_event(text):
+        return None, None, None
+
     tl = text.lower()[:200]
     for key, coords in SPEAKER_CAPITALS.items():
         if key in tl:
@@ -1373,6 +1379,7 @@ def _geocode_explicit_place(place, city, country, evidence, source_text):
 # These rules intentionally keep coordinates at settlement level: matching
 # several reports does not justify pinning a sensitive/attacked facility.
 _REGION_CENTER_HINTS = [
+    (r"\bростовск\w*\s+област\w*", "ростов-на-дону", "RU"),
     (r"\bтульск\w*\s+област\w*", "тула", "RU"),
     (r"\bбрянск\w*\s+област\w*", "брянск", "RU"),
     (r"\bбелгородск\w*\s+област\w*", "белгород", "RU"),
@@ -2173,6 +2180,13 @@ def main():
                 if not event_type:
                     continue
                 locations = find_all_locations(text, channel_country)
+                if not locations:
+                    # A region explicitly named in the event lead is a safe
+                    # coarse fallback when no settlement can be resolved.
+                    primary_context = _primary_event_context(text)
+                    region_center = _region_center_from_text(primary_context, channel_country)
+                    if region_center:
+                        locations = [(*region_center, "settlement_center")]
                 if not locations:
                     no_match += 1
                     continue
