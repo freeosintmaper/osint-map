@@ -199,7 +199,7 @@ def _event_headline_segments(text: str) -> list[str]:
     event classification.
     """
     lead = parser._primary_event_context(text)
-    sentences = re.split(r"(?<=[.!?;])\\s+", lead)
+    sentences = re.split(r"(?<=[.!?;])\s+", lead)
     return [
         sentence.strip()
         for sentence in sentences
