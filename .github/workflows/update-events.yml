@@ -10,7 +10,14 @@ on:
     paths:
       - 'scripts/parse_telegram.py'
       - 'scripts/classify_llm.py'
+      - 'scripts/fetch_rss_sources.py'
+      - 'scripts/build_intelligence.py'
+      - 'data/source-registry.json'
       - '.github/workflows/update-events.yml'
+
+concurrency:
+  group: update-events-pipeline
+  cancel-in-progress: false
 
 jobs:
   update:
@@ -37,6 +44,9 @@ jobs:
             wc -c data/settlements.js
           fi
 
+      - name: Preserve previous event snapshot
+        run: cp data/telegram-events.js /tmp/telegram-events.previous.js
+
       - name: Parse Telegram channels
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -45,6 +55,12 @@ jobs:
           pip install openai
           mkdir -p data
           python3 scripts/parse_telegram.py
+
+      - name: Collect RSS source headlines
+        run: python3 scripts/fetch_rss_sources.py
+
+      - name: Build unified events, summaries and history
+        run: python3 scripts/build_intelligence.py --previous /tmp/telegram-events.previous.js
 
       - name: Commit and push
         run: |

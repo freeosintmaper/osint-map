@@ -23,7 +23,7 @@ jobs:
           python-version: '3.11'
 
       - name: Check Python syntax
-        run: python -m py_compile scripts/parse_telegram.py scripts/classify_llm.py scripts/backup_author_zones.py
+        run: python -m py_compile scripts/parse_telegram.py scripts/classify_llm.py scripts/backup_author_zones.py scripts/fetch_rss_sources.py scripts/build_intelligence.py
 
       - name: Set up Deno
         uses: denoland/setup-deno@v2
@@ -38,6 +38,12 @@ jobs:
 
       - name: Test author zones backup safety
         run: python scripts/test_backup_author_zones.py
+
+      - name: Test source registry and RSS adapter
+        run: python scripts/test_rss_sources.py
+
+      - name: Test intelligence reports and history
+        run: python scripts/test_build_intelligence.py
 
       - name: Check inline JavaScript syntax
         run: |

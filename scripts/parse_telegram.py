@@ -45,6 +45,49 @@ CHANNEL_COUNTRY = {
     "dva_majors": "RU",
 }
 
+SOURCE_HEALTH_FILE = "data/source-health.json"
+SOURCE_HEALTH = {}
+
+
+def _utc_now():
+    return datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+
+
+def _load_source_health():
+    global SOURCE_HEALTH
+    try:
+        with open(SOURCE_HEALTH_FILE, "r", encoding="utf-8") as source_file:
+            payload = json.load(source_file)
+        loaded = payload.get("sources", {}) if isinstance(payload, dict) else {}
+        if isinstance(loaded, dict):
+            SOURCE_HEALTH = loaded
+    except (OSError, ValueError, TypeError):
+        SOURCE_HEALTH = {}
+
+
+def _update_source_health(source_id, **updates):
+    current = dict(SOURCE_HEALTH.get(source_id) or {})
+    current.update(updates)
+    current["id"] = source_id
+    current["type"] = "telegram"
+    current["country_hint"] = CHANNEL_COUNTRY.get(source_id, "OSINT")
+    SOURCE_HEALTH[source_id] = current
+
+
+def _write_source_health():
+    os.makedirs("data", exist_ok=True)
+    payload = {
+        "generated_at": _utc_now(),
+        "sources": SOURCE_HEALTH,
+        "method_note": "Health means endpoint fetch succeeded; it does not measure the truth or quality of published reports."
+    }
+    temporary_path = SOURCE_HEALTH_FILE + ".tmp"
+    with open(temporary_path, "w", encoding="utf-8") as source_file:
+        json.dump(payload, source_file, ensure_ascii=False, indent=2, sort_keys=True)
+        source_file.write("\n")
+    os.replace(temporary_path, SOURCE_HEALTH_FILE)
+
+
 SPEAKER_CAPITALS = {
     "зеленськ": [50.4501, 30.5234, "Киев", "UA"],
     "зеленск": [50.4501, 30.5234, "Киев", "UA"],
@@ -860,15 +903,26 @@ def load_settlements():
 
 def fetch_channel(channel):
     url = f"https://t.me/s/{channel}"
+    attempted_at = _utc_now()
     req = urllib.request.Request(url, headers={
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
         "Accept-Language": "ru-RU,ru;q=0.9,en;q=0.8",
     })
     try:
         with urllib.request.urlopen(req, timeout=30) as r:
-            return r.read().decode("utf-8", errors="ignore")
+            html = r.read().decode("utf-8", errors="ignore")
+            _update_source_health(
+                channel, status="ok", endpoint=url, last_attempt=attempted_at,
+                last_success=attempted_at, http_status=getattr(r, "status", 200),
+                last_error=None
+            )
+            return html
     except Exception as e:
         print(f"  Ошибка загрузки @{channel}: {e}", file=sys.stderr)
+        _update_source_health(
+            channel, status="error", endpoint=url, last_attempt=attempted_at,
+            last_error=str(e)[:300]
+        )
         return ""
 
 
@@ -1902,10 +1956,88 @@ def make_dedup_key(ev, source_text=None):
     ))
 
 
+def cluster_event_reports(raw_events):
+    """Cluster same-hour reports conservatively and preserve source provenance."""
+    buckets = defaultdict(list)
+    for event in raw_events:
+        date_hour = ""
+        if event.get("date"):
+            date_hour = str(event["date"])[:13]
+        bucket_key = (
+            event.get("country") or "", event.get("location") or "",
+            event.get("event_type") or "", date_hour
+        )
+        clusters = buckets[bucket_key]
+        description = str(event.get("description") or "")
+        target_cluster = None
+        for cluster in clusters:
+            reference = max(cluster, key=lambda item: len(str(item.get("description") or "")))
+            reference_text = str(reference.get("description") or "")
+            same_url = bool(event.get("url") and event.get("url") == reference.get("url"))
+            similarity = SequenceMatcher(
+                a=_normalize_context_text(description),
+                b=_normalize_context_text(reference_text)
+            ).ratio()
+            shared_anchors = _shared_event_anchor_count(
+                description, reference_text, event.get("location")
+            )
+            if same_url or similarity >= 0.88 or shared_anchors >= 2:
+                target_cluster = cluster
+                break
+        if target_cluster is None:
+            target_cluster = []
+            clusters.append(target_cluster)
+        target_cluster.append(event)
+
+    report_groups = [cluster for clusters in buckets.values() for cluster in clusters]
+    deduped = []
+    merged_count = 0
+    for group in report_groups:
+        merged_count += max(0, len(group) - 1)
+        best = dict(max(group, key=lambda event: len(str(event.get("description") or ""))))
+        source_reports = []
+        seen_source_reports = set()
+        for report in group:
+            for channel in sorted(_event_channels(report)):
+                source_url = str(report.get("url") or "")
+                source_key = (channel, source_url or _normalize_context_text(report.get("description")))
+                if source_key in seen_source_reports:
+                    continue
+                seen_source_reports.add(source_key)
+                source_reports.append({
+                    "channel": channel,
+                    "source_type": str(report.get("source_type") or "telegram"),
+                    "url": source_url or None,
+                    "date": report.get("date"),
+                    "description": str(report.get("description") or "")
+                })
+        channels = sorted({report["channel"] for report in source_reports})
+        best["channel"] = ",".join(channels)
+        best["source_type"] = "telegram"
+        best["source_count"] = len(source_reports)
+        best["sources"] = [
+            {
+                "channel": report["channel"],
+                "source_type": report["source_type"],
+                "url": report["url"],
+                "date": report["date"]
+            }
+            for report in source_reports
+        ]
+        best["_source_reports"] = source_reports
+        deduped.append(best)
+
+    _apply_verification_status(deduped)
+    for event in deduped:
+        event.pop("_source_reports", None)
+    return deduped, merged_count
+
+
 
 def main():
     _load_osm_geocode_cache()
     load_settlements()
+    _load_source_health()
     clf = LLMClassifier()
 
     llm_consecutive_errors = 0
@@ -1933,9 +2065,11 @@ def main():
         html = fetch_channel(channel)
         if not html:
             stats[channel] = 0
+            _update_source_health(channel, items_seen=0, events_matched=0)
             continue
         posts = extract_posts(html)
         print(f"  Найдено постов: {len(posts)}")
+        _update_source_health(channel, items_seen=len(posts))
         matched = 0
 
         channel_country = CHANNEL_COUNTRY.get(channel, "OSINT")
@@ -2081,6 +2215,7 @@ def main():
                 raw_events.append(ev)
 
         stats[channel] = matched
+        _update_source_health(channel, events_matched=matched)
         print(f"  Совпало: {matched}")
         time.sleep(1)
 
@@ -2088,35 +2223,10 @@ def main():
     # incident can merge on the corrected settlement rather than a supplier city.
     _correct_contextual_locations(raw_events)
 
-    groups = defaultdict(list)
-    for ev in raw_events:
-        date_hour = ""
-        if ev.get("date"):
-            date_hour = ev["date"][:13]
-        key = (ev.get("country") or "", ev["location"], ev["event_type"], date_hour)
-        groups[key].append(ev)
+    deduped, time_dups = cluster_event_reports(raw_events)
 
-    deduped = []
-    time_dups = 0
-    for key, group in groups.items():
-        time_dups += max(0, len(group) - 1)
-        best = dict(max(group, key=lambda e: len(e.get("description", ""))))
-        channels = sorted({channel for e in group for channel in _event_channels(e)})
-        best["channel"] = ",".join(channels)
-        # Keep source-level wording temporarily for the verification pass.
-        best["_source_reports"] = [
-            {"channel": channel, "description": str(e.get("description") or "")}
-            for e in group
-            for channel in sorted(_event_channels(e))
-        ]
-        deduped.append(best)
-
-    _apply_verification_status(deduped)
-    for event in deduped:
-        event.pop("_source_reports", None)
-
-    print(f"🔗 Дедупликация по (локация, тип, час): "
-          f"{len(raw_events)} → {len(deduped)} (схлопнуто {time_dups})")
+    print(f"🔗 Дедупликация (место, тип, час + совпадение содержания): "
+          f"{len(raw_events)} → {len(deduped)} (объединено {time_dups})")
     raw_events = deduped
 
     # Preserve per-event precision: explicit place match or settlement fallback.
@@ -2125,7 +2235,12 @@ def main():
     print(f"   🔎 Аудит AI-геолокации: {dict(GEOCODE_AUDIT)}")
 
     generated_at = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
-    payload = {"generated_at": generated_at, "events": raw_events}
+    payload = {
+        "generated_at": generated_at,
+        "pipeline": "telegram",
+        "source_types": {"telegram": len(raw_events)},
+        "events": raw_events
+    }
     output = "window.TG_DATA = " + json.dumps(payload, ensure_ascii=False) + ";"
     # Do not replace a complete published dataset with a degraded regex-only
     # scrape when the LLM circuit breaker trips. This avoids silently losing
@@ -2163,6 +2278,7 @@ def main():
         print("  ℹ️ telegram-events.js оставлен без изменений; кэш и аудит будут сохранены.")
 
     clf.save_cache()
+    _write_source_health()
 
     if preserve_previous_events:
         print(f"\n⚠️ Итоговый расчёт: {len(raw_events)}; опубликованный набор сохранён прежний ({previous_event_count} событий).")

@@ -1,0 +1,301 @@
+{
+  "version": 1,
+  "updated_at": "2026-10-31",
+  "description": "Registry of public source endpoints. Publisher identity/side is metadata, not evidence of event truth. All automated source checks are tracked separately.",
+  "sources": [
+    {
+      "id": "GeneralStaffZSU",
+      "type": "telegram",
+      "country_hint": "UA",
+      "kind": "official",
+      "enabled": true,
+      "page_url": "https://t.me/s/GeneralStaffZSU",
+      "role": "official statement"
+    },
+    {
+      "id": "operativnoZSU",
+      "type": "telegram",
+      "country_hint": "UA",
+      "kind": "media",
+      "enabled": true,
+      "page_url": "https://t.me/s/operativnoZSU",
+      "role": "media/commentary"
+    },
+    {
+      "id": "ukrpravda_news",
+      "type": "telegram",
+      "country_hint": "UA",
+      "kind": "media",
+      "enabled": true,
+      "page_url": "https://t.me/s/ukrpravda_news",
+      "role": "media/commentary"
+    },
+    {
+      "id": "uniannet",
+      "type": "telegram",
+      "country_hint": "UA",
+      "kind": "media",
+      "enabled": true,
+      "page_url": "https://t.me/s/uniannet",
+      "role": "media/commentary"
+    },
+    {
+      "id": "DeepStateUA",
+      "type": "telegram",
+      "country_hint": "UA",
+      "kind": "osint",
+      "enabled": true,
+      "page_url": "https://t.me/s/DeepStateUA",
+      "role": "OSINT monitoring"
+    },
+    {
+      "id": "OsintFlow",
+      "type": "telegram",
+      "country_hint": "UA",
+      "kind": "osint",
+      "enabled": true,
+      "page_url": "https://t.me/s/OsintFlow",
+      "role": "OSINT monitoring"
+    },
+    {
+      "id": "kharkiv_typical",
+      "type": "telegram",
+      "country_hint": "UA",
+      "kind": "regional",
+      "enabled": true,
+      "page_url": "https://t.me/s/kharkiv_typical",
+      "role": "regional reporting"
+    },
+    {
+      "id": "dnepr_typical",
+      "type": "telegram",
+      "country_hint": "UA",
+      "kind": "regional",
+      "enabled": true,
+      "page_url": "https://t.me/s/dnepr_typical",
+      "role": "regional reporting"
+    },
+    {
+      "id": "odesa_typical",
+      "type": "telegram",
+      "country_hint": "UA",
+      "kind": "regional",
+      "enabled": true,
+      "page_url": "https://t.me/s/odesa_typical",
+      "role": "regional reporting"
+    },
+    {
+      "id": "kherson_typical",
+      "type": "telegram",
+      "country_hint": "UA",
+      "kind": "regional",
+      "enabled": true,
+      "page_url": "https://t.me/s/kherson_typical",
+      "role": "regional reporting"
+    },
+    {
+      "id": "donbass_realii",
+      "type": "telegram",
+      "country_hint": "UA",
+      "kind": "media",
+      "enabled": true,
+      "page_url": "https://t.me/s/donbass_realii",
+      "role": "media/commentary"
+    },
+    {
+      "id": "kyivindependent_official",
+      "type": "telegram",
+      "country_hint": "UA",
+      "kind": "media",
+      "enabled": true,
+      "page_url": "https://t.me/s/kyivindependent_official",
+      "role": "media/commentary"
+    },
+    {
+      "id": "informnapalm",
+      "type": "telegram",
+      "country_hint": "OSINT",
+      "kind": "osint",
+      "enabled": true,
+      "page_url": "https://t.me/s/informnapalm",
+      "role": "OSINT monitoring"
+    },
+    {
+      "id": "exilenova_plus",
+      "type": "telegram",
+      "country_hint": "UA",
+      "kind": "osint",
+      "enabled": true,
+      "page_url": "https://t.me/s/exilenova_plus",
+      "role": "OSINT monitoring"
+    },
+    {
+      "id": "supernova_plus",
+      "type": "telegram",
+      "country_hint": "UA",
+      "kind": "osint",
+      "enabled": true,
+      "page_url": "https://t.me/s/supernova_plus",
+      "role": "OSINT monitoring"
+    },
+    {
+      "id": "astrapress",
+      "type": "telegram",
+      "country_hint": "OSINT",
+      "kind": "osint",
+      "enabled": true,
+      "page_url": "https://t.me/s/astrapress",
+      "role": "OSINT monitoring"
+    },
+    {
+      "id": "bazabazon",
+      "type": "telegram",
+      "country_hint": "OSINT",
+      "kind": "osint",
+      "enabled": true,
+      "page_url": "https://t.me/s/bazabazon",
+      "role": "OSINT monitoring"
+    },
+    {
+      "id": "rybar",
+      "type": "telegram",
+      "country_hint": "RU",
+      "kind": "media",
+      "enabled": true,
+      "page_url": "https://t.me/s/rybar",
+      "role": "media/commentary"
+    },
+    {
+      "id": "voenkorKotenok",
+      "type": "telegram",
+      "country_hint": "RU",
+      "kind": "commentary",
+      "enabled": true,
+      "page_url": "https://t.me/s/voenkorKotenok",
+      "role": "media/commentary"
+    },
+    {
+      "id": "wargonzo",
+      "type": "telegram",
+      "country_hint": "RU",
+      "kind": "commentary",
+      "enabled": true,
+      "page_url": "https://t.me/s/wargonzo",
+      "role": "media/commentary"
+    },
+    {
+      "id": "readovkanews",
+      "type": "telegram",
+      "country_hint": "RU",
+      "kind": "media",
+      "enabled": true,
+      "page_url": "https://t.me/s/readovkanews",
+      "role": "media/commentary"
+    },
+    {
+      "id": "lost_armour",
+      "type": "telegram",
+      "country_hint": "RU",
+      "kind": "osint",
+      "enabled": true,
+      "page_url": "https://t.me/s/lost_armour",
+      "role": "OSINT monitoring"
+    },
+    {
+      "id": "boris_rozhin",
+      "type": "telegram",
+      "country_hint": "RU",
+      "kind": "commentary",
+      "enabled": true,
+      "page_url": "https://t.me/s/boris_rozhin",
+      "role": "media/commentary"
+    },
+    {
+      "id": "epoddubny",
+      "type": "telegram",
+      "country_hint": "RU",
+      "kind": "commentary",
+      "enabled": true,
+      "page_url": "https://t.me/s/epoddubny",
+      "role": "media/commentary"
+    },
+    {
+      "id": "RVvoenkor",
+      "type": "telegram",
+      "country_hint": "RU",
+      "kind": "commentary",
+      "enabled": true,
+      "page_url": "https://t.me/s/RVvoenkor",
+      "role": "media/commentary"
+    },
+    {
+      "id": "dva_majors",
+      "type": "telegram",
+      "country_hint": "RU",
+      "kind": "commentary",
+      "enabled": true,
+      "page_url": "https://t.me/s/dva_majors",
+      "role": "media/commentary"
+    },
+    {
+      "id": "rss_ukrpravda",
+      "type": "rss",
+      "publisher": "Українська правда",
+      "publisher_url": "https://www.pravda.com.ua/",
+      "feed_url": "https://www.pravda.com.ua/rss/view_mainnews/",
+      "country_hint": null,
+      "kind": "media",
+      "enabled": true,
+      "attribution": "Store headline, publication time and direct link only; link to original publisher.",
+      "policy_url": "https://sos.pravda.com/rss-info/"
+    },
+    {
+      "id": "rss_unian",
+      "type": "rss",
+      "publisher": "УНІАН",
+      "publisher_url": "https://www.unian.ua/",
+      "feed_url": "https://rss.unian.net/site/news_ukr.rss",
+      "country_hint": null,
+      "kind": "media",
+      "enabled": true,
+      "attribution": "Store headline, publication time and direct link only; link to original publisher.",
+      "policy_url": "https://www.unian.ua/static/siterules"
+    },
+    {
+      "id": "rss_suspilne",
+      "type": "rss",
+      "publisher": "Суспільне Новини",
+      "publisher_url": "https://suspilne.media/",
+      "feed_url": "https://suspilne.media/rss/ukrnet.rss",
+      "country_hint": null,
+      "kind": "public_broadcaster",
+      "enabled": true,
+      "attribution": "Store headline, publication time and direct link only; link to original publisher.",
+      "policy_url": "https://suspilne.media/"
+    },
+    {
+      "id": "rss_kyivindependent",
+      "type": "rss",
+      "publisher": "The Kyiv Independent",
+      "publisher_url": "https://kyivindependent.com/",
+      "feed_url": "https://kyivindependent.com/news-archive/rss/",
+      "country_hint": null,
+      "kind": "media",
+      "enabled": true,
+      "attribution": "Store headline, publication time and direct link only; link to original publisher.",
+      "policy_url": "https://kyivindependent.com/"
+    },
+    {
+      "id": "rss_bbc_ukrainian",
+      "type": "rss",
+      "publisher": "BBC News Україна",
+      "publisher_url": "https://www.bbc.com/ukrainian",
+      "feed_url": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
+      "country_hint": null,
+      "kind": "international_media",
+      "enabled": true,
+      "attribution": "Store headline, publication time and direct link only; link to original publisher.",
+      "policy_url": "https://www.bbc.co.uk/usingthebbc/terms/"
+    }
+  ]
+}

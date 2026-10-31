@@ -942,6 +942,7 @@
     </div>
     <div class="event-tools">
       <button type="button" id="exportEventsGeoJSON">↓ GeoJSON</button>
+      <a href="./data/event-history/index.json">История событий</a>
       <a href="./methodology.html">Методология</a>
       <a href="./corrections.html">Исправления</a>
     </div>
@@ -1005,6 +1006,7 @@
 
   <script src="./lib/supabase.js"></script>
   <script src="./data/telegram-events.js"></script>
+  <script src="./data/osint-intelligence.js"></script>
   <script src="./lib/leaflet.js"></script>
   <script src="./lib/leaflet-draw.js"></script>
   <script src="./lib/leaflet.polylineDecorator.js"></script>
@@ -1927,6 +1929,56 @@
       return { channels: channels, sides: sides, crossSide: crossSide, label: labels.join(' + ') };
     }
 
+    function getEventSourceLabel(event) {
+      if (event && event.source_type === 'rss') {
+        var publishers = Array.isArray(event.sources)
+          ? event.sources.map(function(source) { return source && source.publisher; }).filter(Boolean)
+          : [];
+        return publishers.length ? publishers.join(', ') : String(event.channel || 'RSS');
+      }
+      return String(event && event.channel || 'не указан').split(',').map(function(name) {
+        return name.trim();
+      }).filter(Boolean).map(function(name) { return '@' + name; }).join(', ') || 'не указан';
+    }
+
+    function renderIntelligenceSummaryHtml() {
+      var intel = window.OSINT_INTELLIGENCE;
+      if (!intel || !intel.daily || !intel.weekly) return '';
+      var daily = intel.daily;
+      var weekly = intel.weekly;
+      var health = intel.source_health || {};
+      var healthCounts = health.status_counts || {};
+      var signals = Array.isArray(daily.publication_activity_signals)
+        ? daily.publication_activity_signals : [];
+      var html = '<div class="summary-box" style="margin:8px 10px;">' +
+        '<div class="summary-title">Автоматическая сводка</div>' +
+        '<div class="summary-line"><span>За 24 часа</span><b>' + escapeHtml(daily.event_count || 0) + '</b></div>' +
+        '<div class="summary-line"><span>За 7 дней</span><b>' + escapeHtml(weekly.event_count || 0) + '</b></div>' +
+        '<div class="summary-line"><span>Telegram / RSS за сутки</span><span>' +
+          escapeHtml((daily.source_type_counts && daily.source_type_counts.telegram) || 0) + ' / ' +
+          escapeHtml((daily.source_type_counts && daily.source_type_counts.rss) || 0) + '</span></div>' +
+        '<div class="summary-line"><span>Автоматически сверено по каналам</span><b>' +
+          escapeHtml(daily.corroborated_event_count || 0) + '</b></div>';
+      if (signals.length) {
+        html += '<div style="margin-top:7px;font-size:11px;font-weight:700;">Сигналы изменения публикационной активности</div>';
+        signals.forEach(function(signal) {
+          html += '<div style="margin-top:4px;font-size:11px;">' +
+            escapeHtml(signal.event_type) + ': ' + escapeHtml(signal.current_period) +
+            ' против ' + escapeHtml(signal.previous_period) + ' в предыдущем периоде</div>';
+        });
+      } else {
+        html += '<div style="margin-top:7px;font-size:11px;color:var(--text-muted);">Пороговые всплески числа публикаций не выявлены.</div>';
+      }
+      html += '<div style="margin-top:7px;font-size:10px;color:var(--text-muted);">' +
+        'Доступность источников: ' + escapeHtml(healthCounts.ok || 0) + ' работает, ' +
+        escapeHtml(healthCounts.error || 0) + ' с ошибками из ' +
+        escapeHtml(health.total_sources || 0) + '. ' +
+        'Это статистика публикаций и доступности лент, не измерение интенсивности боевых действий.</div>' +
+        '<div style="margin-top:5px;font-size:10px;"><a href="./data/event-history/index.json">История изменений событий (90 дней)</a></div>' +
+        '</div>';
+      return html;
+    }
+
     function downloadEventsGeoJSON() {
       var events = window.TG_DATA && Array.isArray(window.TG_DATA.events) ? window.TG_DATA.events : [];
       var features = events.filter(function(ev) {
@@ -1948,6 +2000,9 @@
             specific_place: ev.specific_place || null,
             coordinate_evidence: ev.coordinate_evidence || null,
             channel: ev.channel || null,
+            source_type: ev.source_type || 'telegram',
+            source_count: ev.source_count || 1,
+            sources: Array.isArray(ev.sources) ? ev.sources : [],
             source_sides: Object.keys(source.sides).filter(function(side) { return source.sides[side]; }),
             cross_side_signal: Boolean(source.crossSide),
             verification_status: ev.verification_status || 'not_verified',
@@ -2035,9 +2090,11 @@
 
         var sourceMeta = document.createElement('div');
         sourceMeta.className = 'source-meta';
-        sourceMeta.appendChild(document.createTextNode('Источник: ' + String(ev.channel || 'не указан')));
+        sourceMeta.appendChild(document.createTextNode('Источник: ' + getEventSourceLabel(ev)));
         sourceMeta.appendChild(document.createElement('br'));
-        sourceMeta.appendChild(document.createTextNode('Сторона источника: ' + sourceInfo.label));
+        sourceMeta.appendChild(document.createTextNode(ev.source_type === 'rss'
+          ? 'Тип источника: новостная RSS-лента'
+          : 'Сторона источника: ' + sourceInfo.label));
         var verificationInfo = getVerificationInfo(ev);
         var verificationBadge = document.createElement('span');
         verificationBadge.className = verificationInfo.verified ? 'verified' : 'not-verified';
@@ -2198,7 +2255,7 @@
         popup.appendChild(document.createElement('br'));
         var channelEl = document.createElement('small');
         channelEl.style.color = '#888';
-        channelEl.textContent = '@' + String(ev.channel || '');
+        channelEl.textContent = getEventSourceLabel(ev);
         popup.appendChild(channelEl);
         if (sourceUrl) {
           popup.appendChild(document.createElement('br'));
@@ -2220,6 +2277,7 @@
 
     function renderEventsPanel(events) {
       var body = document.getElementById('eventsListBody');
+      var intelligenceSummaryHtml = renderIntelligenceSummaryHtml();
       document.getElementById('eventsPanelTitle').textContent = t('eventsPanelTitle') + ' · ' + (events ? events.length : 0);
 
       var filterHtml = '<div class="events-filters">' +
@@ -2233,14 +2291,14 @@
         '</div>';
 
       if (!events || events.length === 0) {
-        body.innerHTML = filterHtml + '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' + t('noEvents') + '</div>';
+        body.innerHTML = filterHtml + intelligenceSummaryHtml + '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' + t('noEvents') + '</div>';
         attachEventFilters();
         return;
       }
       events.sort(function(a, b) { return (b.date ? new Date(b.date).getTime() : 0) - (a.date ? new Date(a.date).getTime() : 0); });
       var counts = {};
       events.forEach(function(ev) { counts[ev.event_type] = (counts[ev.event_type] || 0) + 1; });
-      var html = filterHtml + '<div class="summary-box">';
+      var html = filterHtml + intelligenceSummaryHtml + '<div class="summary-box">';
       var lastUpdate = getLastUpdateText();
       if (lastUpdate) {
         html += '<div class="last-update">' + t('updatedLabel') + ': ' + lastUpdate + '</div>';
@@ -2263,8 +2321,8 @@
                 '<div class="evt-type" style="color:' + color + ';">' +
                 '<span style="color:' + color + ';display:flex;align-items:center;">' + wtSvg(ev.event_type) + '</span>' + escapeHtml(label) +
                 '<span class="evt-country ' + countryClass + '">' + escapeHtml(countryLabel) + '</span></div>' +
-                '<div class="evt-loc">' + escapeHtml(ev.location || '') + ' <span style="color:var(--text-muted);">@' + escapeHtml(ev.channel || '') + '</span></div>' +
-                '<div class="evt-source">Источник: ' + escapeHtml(sourceInfo.label) + ' ' +
+                '<div class="evt-loc">' + escapeHtml(ev.location || '') + ' <span style="color:var(--text-muted);">' + escapeHtml(ev.source_type === 'rss' ? '· RSS' : getEventSourceLabel(ev)) + '</span></div>' +
+                '<div class="evt-source">Источник: ' + escapeHtml(ev.source_type === 'rss' ? 'новостная редакция / RSS' : sourceInfo.label) + ' ' +
                 '<span class="evt-verification ' + (verificationInfo.verified ? 'verified' : 'not-verified') + '" title="' + escapeHtml(verificationInfo.note) + '">' + escapeHtml(verificationInfo.label) + '</span>' +
                 (sourceInfo.crossSide ? ' · UA + RU' : '') + '</div>' +
                 '<div class="evt-time">' + escapeHtml(time) + '</div></div>';
