@@ -2,39 +2,44 @@
   "corroborated_event_count": 16,
   "country_counts": {
     "BE": 1,
-    "RU": 11,
+    "RU": 12,
     "UA": 24
   },
-  "event_count": 36,
+  "event_count": 37,
   "event_type_counts": {
     "Air Raid Alert": 1,
     "Military Operation": 4,
     "Military Strike": 27,
-    "Political Development": 4
+    "Political Development": 5
   },
-  "generated_at": "2026-10-31T15:24:23Z",
+  "generated_at": "2026-10-31T15:31:16Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 5,
-  "not_verified_event_count": 20,
+  "new_since_previous_snapshot": 3,
+  "not_verified_event_count": 21,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "current_period": 27,
-      "delta": 26,
+      "delta": 25,
       "event_type": "Military Strike",
       "label": "Повышенная публикационная активность",
-      "previous_period": 1
+      "previous_period": 2
     }
   ],
   "source_type_counts": {
     "rss": 4,
-    "telegram": 32
+    "telegram": 33
   },
   "top_locations": [
     {
       "country": "UA",
       "events": 6,
       "location": "Киев"
+    },
+    {
+      "country": "RU",
+      "events": 4,
+      "location": "Уфа"
     },
     {
       "country": "UA",
@@ -45,11 +50,6 @@
       "country": "RU",
       "events": 3,
       "location": "Москва"
-    },
-    {
-      "country": "RU",
-      "events": 3,
-      "location": "Уфа"
     },
     {
       "country": "UA",
@@ -79,13 +79,13 @@
     "astrapress": 1,
     "boris_rozhin": 3,
     "dnepr_typical": 2,
-    "exilenova_plus": 3,
+    "exilenova_plus": 4,
     "kyivindependent_official": 5,
     "operativnoZSU": 4,
     "supernova_plus": 2,
     "ukrpravda_news": 2,
     "uniannet": 2
   },
-  "window_end": "2026-10-31T15:24:23Z",
-  "window_start": "2026-10-30T15:24:23Z"
+  "window_end": "2026-10-31T15:31:16Z",
+  "window_start": "2026-10-30T15:31:16Z"
 }
