@@ -1,0 +1,54 @@
+name: Track territorial layer history
+
+on:
+  schedule:
+    - cron: '40 6 * * *'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/snapshot_territory_layers.py'
+      - 'scripts/test_territory_history.py'
+      - '.github/workflows/track-territory-history.yml'
+
+concurrency:
+  group: territorial-layer-history
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate history logic
+        run: python scripts/test_territory_history.py
+
+      - name: Record upstream layer versions
+        run: python scripts/snapshot_territory_layers.py
+
+      - name: Commit history index
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/territory-history/index.json
+          if git diff --cached --quiet; then
+            echo "Territorial source references unchanged; no commit needed."
+          else
+            git commit -m "Update territorial layer history"
+            git pull --rebase origin main
+            git push origin main
+          fi
