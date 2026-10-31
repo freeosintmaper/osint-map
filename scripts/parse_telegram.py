@@ -1380,6 +1380,7 @@ def _geocode_explicit_place(place, city, country, evidence, source_text):
 # several reports does not justify pinning a sensitive/attacked facility.
 _REGION_CENTER_HINTS = [
     (r"\bростовск\w*\s+област\w*", "ростов", "RU"),
+    (r"\bполтавщин\w*", "полтава", "UA"),
     (r"\bтульск\w*\s+област\w*", "тула", "RU"),
     (r"\bбрянск\w*\s+област\w*", "брянск", "RU"),
     (r"\bбелгородск\w*\s+област\w*", "белгород", "RU"),
