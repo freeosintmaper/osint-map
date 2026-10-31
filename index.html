@@ -2004,6 +2004,8 @@
       var weekly = intel.weekly;
       var health = intel.source_health || {};
       var healthCounts = health.status_counts || {};
+      var freshnessCounts = health.freshness_counts || {};
+      var staleSources = Array.isArray(health.stale_sources) ? health.stale_sources : [];
       var signals = Array.isArray(daily.publication_activity_signals)
         ? daily.publication_activity_signals : [];
       var html = '<div class="summary-box" style="margin:8px 10px;">' +
@@ -2029,9 +2031,27 @@
         'Доступность источников: ' + escapeHtml(healthCounts.ok || 0) + ' работает, ' +
         escapeHtml(healthCounts.error || 0) + ' с ошибками из ' +
         escapeHtml(health.total_sources || 0) + '. ' +
-        'Это статистика публикаций и доступности лент, не измерение интенсивности боевых действий.</div>' +
-        '<div style="margin-top:5px;font-size:10px;"><a href="./data/event-history/index.json">История изменений событий (90 дней)</a></div>' +
-        '</div>';
+        'Доступность адреса не гарантирует свежесть публикаций.</div>';
+      html += '<div class="summary-line"><span>Свежесть публикаций</span><span>' +
+        escapeHtml(freshnessCounts.fresh || 0) + ' свежие · ' +
+        escapeHtml(freshnessCounts.stale || 0) + ' устарели · ' +
+        escapeHtml(freshnessCounts.unknown || 0) + ' без даты</span></div>';
+      if (staleSources.length) {
+        html += '<div style="margin-top:5px;font-size:10px;color:var(--text-muted);">Последняя публикация старше порога:</div>';
+        staleSources.slice(0, 5).forEach(function(source) {
+          html += '<div style="font-size:10px;">' + escapeHtml(source.id || 'источник') +
+            ' — ' + escapeHtml(source.age_hours) + ' ч</div>';
+        });
+        if (staleSources.length > 5) {
+          html += '<div style="font-size:10px;color:var(--text-muted);">И ещё ' +
+            escapeHtml(staleSources.length - 5) + ' источников.</div>';
+        }
+      }
+      html += '<div style="margin-top:5px;font-size:10px;color:var(--text-muted);">' +
+        'Порог устаревания: Telegram — 72 ч, RSS — 96 ч. Неизвестная дата не считается сбоем.</div>' +
+        '<div style="margin-top:5px;font-size:10px;"><a href="./data/source-health.json">Состояние источников</a> · ' +
+        '<a href="./data/event-history/index.json">История изменений событий (90 дней)</a></div>';
+      html += '</div>';
       return html;
     }
 
