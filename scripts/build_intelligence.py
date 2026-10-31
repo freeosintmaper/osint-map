@@ -252,7 +252,8 @@ def _evidence_breakdown(events: list[dict[str, Any]]) -> dict[str, Any]:
     editorial_fact_checks = 0
     for event in events:
         channels = _verification_channels(event)
-        if event.get("verification_status") == "corroborated" and len(channels) >= 2:
+        is_telegram = str(event.get("source_type") or "telegram") != "rss"
+        if is_telegram and event.get("verification_status") == "corroborated" and len(channels) >= 2:
             cross_source += 1
         else:
             not_independently_corroborated += 1
