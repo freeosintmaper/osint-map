@@ -20,6 +20,18 @@ class RssSourceTests(unittest.TestCase):
         self.assertIn("rss_suspilne", registry_ids)
         self.assertIn("rss_bbc_ukrainian", registry_ids)
 
+    def test_latest_feed_publication_timestamp_is_tracked(self):
+        items = [
+            {"date": "2026-10-30T10:00:00Z"},
+            {"date": "2026-10-31T09:15:00Z"},
+            {"date": "2026-10-29T20:00:00Z"},
+        ]
+        self.assertEqual(
+            rss._latest_published_at(items),
+            "2026-10-31T09:15:00Z",
+        )
+        self.assertIsNone(rss._latest_published_at([]))
+
     def test_rss_items_are_parsed_without_publishing_full_summary(self):
         sample = """<?xml version="1.0" encoding="UTF-8"?>
         <rss version="2.0"><channel><item>
