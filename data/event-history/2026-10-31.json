@@ -1,5 +1,5 @@
 {
-  "current_event_count": 43,
+  "current_event_count": 46,
   "date_utc": "2026-10-31",
   "events_added": [
     {
@@ -358,36 +358,6 @@
     },
     {
       "event": {
-        "channel": "boris_rozhin",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-10-31T13:25:04+00:00",
-        "description": "Прилёт реактивного БпЛА «Герань-4» в Синельниково Днепропетровской области.\n🔥369👍134❤‍🔥13💯3🤬1\n  \n  \n    30.3K views13:25",
-        "event_type": "Military Strike",
-        "id": 35,
-        "lat": 48.32362,
-        "lng": 35.52612,
-        "location": "Синельниково",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "boris_rozhin",
-            "date": "2026-10-31T13:25:04+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/boris_rozhin/231665"
-          }
-        ],
-        "url": "https://t.me/boris_rozhin/231665",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "794b6d6ffe769746a6d4d4a86ab17b3e1114b31b6d76b453639169c90416cd6e"
-    },
-    {
-      "event": {
         "channel": "astrapress",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
@@ -454,33 +424,154 @@
     },
     {
       "event": {
-        "channel": "OsintFlow",
+        "channel": "uniannet",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-10-30T15:11:21+00:00",
-        "description": "💥 В окупованому Харцизьку ліквідовано колаборанта Ігоря Лебезнєва, який очолював так звану Донецьку залізницю на захопленій росіянами території.\nЛебезнєв також був депутатом Харцизької міської ради ві",
-        "event_type": "Military Operation",
-        "id": 9,
-        "lat": 48.04277,
-        "lng": 38.14025,
-        "location": "Харцизьк",
+        "country": "BE",
+        "date": "2026-10-31T15:20:44+00:00",
+        "description": "🇪🇺 ЕС подготовил механизм для выделения Украине еще €45 млрд кредита до конца 2027 года, — Reuters\n\nЕврокомиссия предложила странам ЕС согласовать оставшуюся часть кредитной программы на €90 млрд. Пол",
+        "event_type": "Political Development",
+        "id": 8,
+        "lat": 50.8503,
+        "lng": 4.3517,
+        "location": "Брюссель",
         "source_count": 1,
         "source_type": "telegram",
         "sources": [
           {
-            "channel": "OsintFlow",
-            "date": "2026-10-30T15:11:21+00:00",
+            "channel": "uniannet",
+            "date": "2026-10-31T15:20:44+00:00",
             "source_type": "telegram",
-            "url": "https://t.me/osintflow/17622"
+            "url": "https://t.me/uniannet/205764"
           }
         ],
-        "url": "https://t.me/osintflow/17622",
+        "url": "https://t.me/uniannet/205764",
         "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
         "verification_sources": [],
         "verification_status": "not_verified"
       },
-      "fingerprint": "d6804d2312b730708ec32323f565b203f571cc2cc8fad56fb49b0fe8ffb9cc88"
+      "fingerprint": "b469e24adb730411cf72bb1bb6bef84ec6e9d34d484220fd9004d30f7baac788"
+    },
+    {
+      "event": {
+        "channel": "operativnoZSU",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T15:10:27+00:00",
+        "description": "Пілоти підрозділу ⚔️SIGNUM влаштували справжній хедхант за московитами на Лиманському напрямку\n\n🫡https://t.me/operativnoZSU/",
+        "event_type": "Military Strike",
+        "id": 4,
+        "lat": 48.9833,
+        "lng": 37.8167,
+        "location": "Лиман",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "operativnoZSU",
+            "date": "2026-10-31T15:10:27+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/operativnoZSU/225020"
+          }
+        ],
+        "url": "https://t.me/operativnoZSU/225020",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "e605c062b0d6520824a3c7df48d0e5e7a83d7a5976d56ce33a1595f65014cac7"
+    },
+    {
+      "event": {
+        "channel": "operativnoZSU",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T14:27:42+00:00",
+        "description": "❗️В Києві оголошено повітряну тривогу через загрозу БПЛА \n\n🫡https://t.me/operativnoZSU/",
+        "event_type": "Air Raid Alert",
+        "id": 2,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "operativnoZSU",
+            "date": "2026-10-31T14:27:42+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/operativnoZSU/225015"
+          }
+        ],
+        "url": "https://t.me/operativnoZSU/225015",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "b732ea2447172d0e03d370d4776b5d991d04483d8163d1ef473c13ad09a98597"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T13:25:04+00:00",
+        "description": "Прилёт реактивного БпЛА «Герань-4» в Синельниково Днепропетровской области.\n🔥385👍144❤‍🔥13💯3🤬2\n  \n  \n    32.4K views13:25",
+        "event_type": "Military Strike",
+        "id": 37,
+        "lat": 48.32362,
+        "lng": 35.52612,
+        "location": "Синельниково",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-10-31T13:25:04+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/231665"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/231665",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "5e2a5edbd523d1b7468c83e750c3b9769264f40cb94ab9d8da0960c961a05887"
+    },
+    {
+      "event": {
+        "channel": "rss_bbc_ukrainian",
+        "confidence": "LOW",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T10:00:07Z",
+        "description": "Вибухи на Полтавщині і в Харкові. Перебої з водою, світлом у Києві і в Дніпрі",
+        "event_type": "Military Strike",
+        "id": "rss-30c50f511d97779d6c-c6a397",
+        "lat": 49.5883,
+        "lng": 34.5514,
+        "location": "Полтава",
+        "source_count": 1,
+        "source_type": "rss",
+        "sources": [
+          {
+            "channel": "rss_bbc_ukrainian",
+            "date": "2026-10-31T10:00:07Z",
+            "publisher": "BBC News Україна",
+            "source_type": "rss",
+            "url": "https://www.bbc.com/ukrainian/articles/crpdgpg83ye1o?at_medium=RSS&at_campaign=rss"
+          }
+        ],
+        "url": "https://www.bbc.com/ukrainian/articles/crpdgpg83ye1o?at_medium=RSS&at_campaign=rss",
+        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "d16a23a9977d6a905a801745c934c71229922fc28f799aea45d3303e9f4b9d78"
     }
   ],
   "events_removed": [
@@ -813,35 +904,35 @@
     },
     {
       "event": {
-        "channel": "OsintFlow",
+        "channel": "operativnoZSU",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
         "country": "UA",
-        "date": "2026-10-30T15:11:21+00:00",
-        "description": "💥 В окупованому Харцизьку ліквідовано колаборанта Ігоря Лебезнєва, який очолював так звану Донецьку залізницю на захопленій росіянами території.\nЛебезнєв також був депутатом Харцизької міської ради ві",
-        "event_type": "Military Strike",
-        "id": 12,
-        "lat": 48.04277,
-        "lng": 38.14025,
-        "location": "Харцизьк",
+        "date": "2026-10-31T12:54:50+00:00",
+        "description": "❗️В Києві оголошено повітряну тривогу через загрозу БПЛА \n\n🫡https://t.me/operativnoZSU/",
+        "event_type": "Air Raid Alert",
+        "id": 1,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
         "source_count": 1,
         "source_type": "telegram",
         "sources": [
           {
-            "channel": "OsintFlow",
-            "date": "2026-10-30T15:11:21+00:00",
+            "channel": "operativnoZSU",
+            "date": "2026-10-31T12:54:50+00:00",
             "source_type": "telegram",
-            "url": "https://t.me/osintflow/17622"
+            "url": "https://t.me/operativnoZSU/225000"
           }
         ],
-        "url": "https://t.me/osintflow/17622",
+        "url": "https://t.me/operativnoZSU/225000",
         "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
         "verification_sources": [],
         "verification_status": "not_verified"
       },
-      "fingerprint": "3342ec94c814fe6e86722a1f8cc45af0ff1574039170b580ec8fc1a8a01d5167"
+      "fingerprint": "45854bfbf138ab2eabbcb87769c1ddcca97658e053d0223ed541a47716447f6b"
     }
   ],
-  "generated_at": "2026-10-31T15:12:14Z",
+  "generated_at": "2026-10-31T15:24:23Z",
   "method_note": "Изменения показывают разницу между автоматическими выгрузками, а не доказанное изменение обстановки."
 }

@@ -1,33 +1,34 @@
 {
   "corroborated_event_count": 16,
   "country_counts": {
+    "BE": 1,
     "RU": 11,
-    "UA": 22
+    "UA": 24
   },
-  "event_count": 33,
+  "event_count": 36,
   "event_type_counts": {
     "Air Raid Alert": 1,
     "Military Operation": 4,
-    "Military Strike": 25,
-    "Political Development": 3
+    "Military Strike": 27,
+    "Political Development": 4
   },
-  "generated_at": "2026-10-31T15:12:14Z",
+  "generated_at": "2026-10-31T15:24:23Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 4,
-  "not_verified_event_count": 17,
+  "new_since_previous_snapshot": 5,
+  "not_verified_event_count": 20,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
-      "current_period": 25,
-      "delta": 23,
+      "current_period": 27,
+      "delta": 26,
       "event_type": "Military Strike",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2
+      "previous_period": 1
     }
   ],
   "source_type_counts": {
-    "rss": 3,
-    "telegram": 30
+    "rss": 4,
+    "telegram": 32
   },
   "top_locations": [
     {
@@ -72,7 +73,7 @@
     }
   ],
   "top_sources": {
-    "BBC News Україна": 3,
+    "BBC News Україна": 4,
     "OsintFlow": 1,
     "RVvoenkor": 5,
     "astrapress": 1,
@@ -80,11 +81,11 @@
     "dnepr_typical": 2,
     "exilenova_plus": 3,
     "kyivindependent_official": 5,
-    "operativnoZSU": 3,
+    "operativnoZSU": 4,
     "supernova_plus": 2,
     "ukrpravda_news": 2,
-    "uniannet": 1
+    "uniannet": 2
   },
-  "window_end": "2026-10-31T15:12:14Z",
-  "window_start": "2026-10-30T15:12:14Z"
+  "window_end": "2026-10-31T15:24:23Z",
+  "window_start": "2026-10-30T15:24:23Z"
 }

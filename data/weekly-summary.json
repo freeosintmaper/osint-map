@@ -1,34 +1,35 @@
 {
   "corroborated_event_count": 16,
   "country_counts": {
+    "BE": 1,
     "RU": 12,
-    "UA": 29,
+    "UA": 31,
     "US": 1
   },
-  "event_count": 42,
+  "event_count": 45,
   "event_type_counts": {
     "Air Raid Alert": 1,
-    "Military Operation": 5,
-    "Military Strike": 30,
-    "Political Development": 6
+    "Military Operation": 4,
+    "Military Strike": 33,
+    "Political Development": 7
   },
-  "generated_at": "2026-10-31T15:12:14Z",
+  "generated_at": "2026-10-31T15:24:23Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 5,
-  "not_verified_event_count": 26,
+  "new_since_previous_snapshot": 6,
+  "not_verified_event_count": 29,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
-      "current_period": 30,
-      "delta": 30,
+      "current_period": 33,
+      "delta": 33,
       "event_type": "Military Strike",
       "label": "Повышенная публикационная активность",
       "previous_period": 0
     }
   ],
   "source_type_counts": {
-    "rss": 3,
-    "telegram": 39
+    "rss": 4,
+    "telegram": 41
   },
   "top_locations": [
     {
@@ -73,7 +74,7 @@
     }
   ],
   "top_sources": {
-    "BBC News Україна": 3,
+    "BBC News Україна": 4,
     "OsintFlow": 3,
     "RVvoenkor": 5,
     "boris_rozhin": 3,
@@ -81,11 +82,11 @@
     "exilenova_plus": 3,
     "kyivindependent_official": 5,
     "lost_armour": 2,
-    "operativnoZSU": 3,
+    "operativnoZSU": 4,
     "supernova_plus": 2,
     "ukrpravda_news": 2,
-    "uniannet": 1
+    "uniannet": 2
   },
-  "window_end": "2026-10-31T15:12:14Z",
-  "window_start": "2026-10-24T15:12:14Z"
+  "window_end": "2026-10-31T15:24:23Z",
+  "window_start": "2026-10-24T15:24:23Z"
 }
