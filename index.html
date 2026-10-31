@@ -1341,22 +1341,76 @@
 
     var USER_ZONES_CACHE_KEY = 'user_control_zones_cache_v1';
 
-    function renderUserZones(rows) {
-      userZonesLayer.clearLayers();
-      (rows || []).forEach(function(row) {
-        try {
-          var geom = typeof row.geometry === 'string' ? JSON.parse(row.geometry) : row.geometry;
-          userZonesLayer.addData({ type: 'Feature', properties: { id: row.id, category: row.category }, geometry: geom });
-        } catch(e) {}
+    // Validate every row before touching the visible layer or replacing a known-good cache.
+    // Empty snapshots may be an RLS/pagination/API failure, not an intentional deletion.
+    function normalizeAuthorZoneRows(rows) {
+      if (!Array.isArray(rows) || !rows.length) {
+        throw new Error('Пустой или некорректный набор зон автора — сохранённая версия не заменяется');
+      }
+      var seen = Object.create(null);
+      function validPosition(position) {
+        if (!Array.isArray(position) || position.length < 2) return false;
+        for (var i = 0; i < 2; i++) {
+          if (position[i] === null || position[i] === '' || !isFinite(Number(position[i]))) return false;
+        }
+        var lng = Number(position[0]), lat = Number(position[1]);
+        return lng >= -180 && lng <= 180 && lat >= -90 && lat <= 90;
+      }
+      function validRing(ring) {
+        if (!Array.isArray(ring) || ring.length < 4 || !ring.every(validPosition)) return false;
+        return Number(ring[0][0]) === Number(ring[ring.length - 1][0]) &&
+          Number(ring[0][1]) === Number(ring[ring.length - 1][1]);
+      }
+      function validPolygon(rings) {
+        return Array.isArray(rings) && rings.length > 0 && rings.every(validRing);
+      }
+      return rows.map(function(row, index) {
+        if (!row || typeof row !== 'object' || Array.isArray(row)) {
+          throw new Error('Зона #' + (index + 1) + ' имеет неверный формат');
+        }
+        if ((typeof row.id !== 'string' && typeof row.id !== 'number') ||
+            String(row.id).trim() === '' || !row.category || typeof row.category !== 'string') {
+          throw new Error('Зона #' + (index + 1) + ' не содержит корректные id/category');
+        }
+        var idKey = String(row.id);
+        if (Object.prototype.hasOwnProperty.call(seen, idKey)) {
+          throw new Error('Повторяющийся id зоны: ' + row.id);
+        }
+        seen[idKey] = true;
+        var geometry = row.geometry;
+        if (typeof geometry === 'string') geometry = JSON.parse(geometry);
+        if (!geometry || typeof geometry !== 'object') {
+          throw new Error('У зоны #' + (index + 1) + ' отсутствует геометрия');
+        }
+        var valid = geometry.type === 'Polygon'
+          ? validPolygon(geometry.coordinates)
+          : geometry.type === 'MultiPolygon' &&
+            Array.isArray(geometry.coordinates) &&
+            geometry.coordinates.length > 0 &&
+            geometry.coordinates.every(validPolygon);
+        if (!valid) throw new Error('У зоны #' + (index + 1) + ' повреждена GeoJSON-геометрия');
+        return { id: row.id, category: row.category.trim(), geometry: geometry };
       });
+    }
+
+    function renderUserZones(rows) {
+      var safeRows = normalizeAuthorZoneRows(rows);
+      userZonesLayer.clearLayers();
+      safeRows.forEach(function(row) {
+        userZonesLayer.addData({
+          type: 'Feature',
+          properties: { id: row.id, category: row.category },
+          geometry: row.geometry
+        });
+      });
+      return safeRows;
     }
 
     function loadCachedUserZones() {
       try {
         var raw = localStorage.getItem(USER_ZONES_CACHE_KEY);
         if (!raw) return false;
-        var rows = JSON.parse(raw);
-        if (!Array.isArray(rows) || !rows.length) return false;
+        var rows = normalizeAuthorZoneRows(JSON.parse(raw));
         renderUserZones(rows);
         console.log('Зон автора загружено из локального кэша: ' + rows.length + ' (копия может быть устаревшей)');
         return true;
@@ -1365,7 +1419,6 @@
         return false;
       }
     }
-
 
     function loadAuthorZonesBackup() {
       fetch('./data/author-zones.geojson', { cache: 'no-store' })
@@ -1378,16 +1431,16 @@
             throw new Error('Некорректный GeoJSON FeatureCollection');
           }
           var rows = collection.features.map(function(feature) {
-            var props = feature && feature.properties ? feature.properties : {};
+            if (!feature || feature.type !== 'Feature' || !feature.properties) {
+              throw new Error('В резервной копии обнаружен некорректный Feature');
+            }
             return {
-              id: props.id,
-              category: props.category,
-              geometry: feature && feature.geometry
+              id: feature.properties.id,
+              category: feature.properties.category,
+              geometry: feature.geometry
             };
-          }).filter(function(row) {
-            return row.id !== undefined && row.id !== null && row.category && row.geometry;
           });
-          if (!rows.length) throw new Error('В резервной копии нет пригодных зон');
+          rows = normalizeAuthorZoneRows(rows);
           renderUserZones(rows);
           try { localStorage.setItem(USER_ZONES_CACHE_KEY, JSON.stringify(rows)); }
           catch(e) { console.warn('Кэш резервной копии зон не сохранился:', e.message); }
@@ -1411,9 +1464,12 @@
             rows.push({ id: id, category: category, geometry: feature.geometry });
           }
         });
+        rows = normalizeAuthorZoneRows(rows);
         localStorage.setItem(USER_ZONES_CACHE_KEY, JSON.stringify(rows));
+        return true;
       } catch(e) {
-        console.warn('Не удалось обновить локальный кэш зон автора:', e.message);
+        console.warn('Не удалось обновить локальный кэш зон автора; предыдущая копия сохранена:', e.message);
+        return false;
       }
     }
 
@@ -1425,18 +1481,18 @@
       }
       sb.from('control_zones').select('*').then(function(res) {
         if (res.error) throw new Error(res.error.message);
-        var rows = res.data || [];
+        var rows = normalizeAuthorZoneRows(res.data);
         renderUserZones(rows);
         try { localStorage.setItem(USER_ZONES_CACHE_KEY, JSON.stringify(rows)); }
         catch(e) { console.warn('Кэш зон автора не сохранился:', e.message); }
         console.log('Зон автора загружено: ' + rows.length);
       }).catch(function(err) {
         if (attempt < 2) {
-          console.warn('Supabase: ошибка загрузки, повтор ' + (attempt + 1) + '/2:', err.message);
+          console.warn('Supabase: ошибка загрузки или пустая выгрузка, повтор ' + (attempt + 1) + '/2:', err.message);
           setTimeout(function() { loadUserZones(attempt + 1); }, 1200 * (attempt + 1));
           return;
         }
-        console.warn('Supabase: не удалось загрузить зоны после 3 попыток:', err.message);
+        console.warn('Supabase: не удалось загрузить корректные зоны после 3 попыток:', err.message);
         if (!loadCachedUserZones()) loadAuthorZonesBackup();
       });
     }
