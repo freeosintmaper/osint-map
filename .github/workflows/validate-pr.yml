@@ -23,7 +23,7 @@ jobs:
           python-version: '3.11'
 
       - name: Check Python syntax
-        run: python -m py_compile scripts/parse_telegram.py scripts/classify_llm.py
+        run: python -m py_compile scripts/parse_telegram.py scripts/classify_llm.py scripts/backup_author_zones.py
 
       - name: Set up Deno
         uses: denoland/setup-deno@v2
@@ -35,6 +35,9 @@ jobs:
 
       - name: Test event location and verification logic
         run: python scripts/test_event_context_verification.py
+
+      - name: Test author zones backup safety
+        run: python scripts/test_backup_author_zones.py
 
       - name: Check inline JavaScript syntax
         run: |

@@ -1354,7 +1354,7 @@
         var raw = localStorage.getItem(USER_ZONES_CACHE_KEY);
         if (!raw) return false;
         var rows = JSON.parse(raw);
-        if (!Array.isArray(rows)) return false;
+        if (!Array.isArray(rows) || !rows.length) return false;
         renderUserZones(rows);
         console.log('Зон автора загружено из локального кэша: ' + rows.length + ' (копия может быть устаревшей)');
         return true;
@@ -1364,10 +1364,61 @@
       }
     }
 
+
+    function loadAuthorZonesBackup() {
+      fetch('./data/author-zones.geojson', { cache: 'no-store' })
+        .then(function(response) {
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          return response.json();
+        })
+        .then(function(collection) {
+          if (!collection || collection.type !== 'FeatureCollection' || !Array.isArray(collection.features)) {
+            throw new Error('Некорректный GeoJSON FeatureCollection');
+          }
+          var rows = collection.features.map(function(feature) {
+            var props = feature && feature.properties ? feature.properties : {};
+            return {
+              id: props.id,
+              category: props.category,
+              geometry: feature && feature.geometry
+            };
+          }).filter(function(row) {
+            return row.id !== undefined && row.id !== null && row.category && row.geometry;
+          });
+          if (!rows.length) throw new Error('В резервной копии нет пригодных зон');
+          renderUserZones(rows);
+          try { localStorage.setItem(USER_ZONES_CACHE_KEY, JSON.stringify(rows)); }
+          catch(e) { console.warn('Кэш резервной копии зон не сохранился:', e.message); }
+          console.warn('⚠️ Карта автора загружена из резервной копии GitHub: ' + rows.length + ' зон. Копия может быть устаревшей.');
+        })
+        .catch(function(error) {
+          console.warn('Резервная копия карты автора недоступна:', error.message);
+        });
+    }
+
+    function cacheUserZonesFromLayer() {
+      try {
+        var rows = [];
+        userZonesLayer.eachLayer(function(layer) {
+          if (!layer || typeof layer.toGeoJSON !== 'function') return;
+          var feature = layer.toGeoJSON();
+          var properties = feature.properties || {};
+          var id = layer._zoneId !== undefined ? layer._zoneId : properties.id;
+          var category = layer._zoneCategory || properties.category;
+          if (id !== undefined && id !== null && category && feature.geometry) {
+            rows.push({ id: id, category: category, geometry: feature.geometry });
+          }
+        });
+        localStorage.setItem(USER_ZONES_CACHE_KEY, JSON.stringify(rows));
+      } catch(e) {
+        console.warn('Не удалось обновить локальный кэш зон автора:', e.message);
+      }
+    }
+
     function loadUserZones(attempt) {
       attempt = attempt || 0;
       if (!sb) {
-        if (!loadCachedUserZones()) console.warn('Supabase: клиент недоступен, локального кэша зон нет');
+        if (!loadCachedUserZones()) loadAuthorZonesBackup();
         return;
       }
       sb.from('control_zones').select('*').then(function(res) {
@@ -1384,7 +1435,7 @@
           return;
         }
         console.warn('Supabase: не удалось загрузить зоны после 3 попыток:', err.message);
-        if (!loadCachedUserZones()) console.warn('Локального кэша зон автора нет');
+        if (!loadCachedUserZones()) loadAuthorZonesBackup();
       });
     }
     loadUserZones(0);
@@ -1427,6 +1478,7 @@
       if (geometry && sb) {
         sb.from('control_zones').update({ geometry: geometry }).eq('id', id).then(function(res) {
           if (res.error) { alert('Ошибка сохранения: ' + res.error.message); return; }
+          cacheUserZonesFromLayer();
           console.log('💾 Зона #' + id + ' сохранена');
         });
       }
@@ -1453,6 +1505,7 @@
       sb.from('control_zones').delete().eq('id', id).then(function(res) {
         if (res.error) { alert('Ошибка: ' + res.error.message); return; }
         userZonesLayer.removeLayer(layer);
+        cacheUserZonesFromLayer();
         map.closePopup();
       });
     }
@@ -2331,6 +2384,7 @@
       sb.from('control_zones').delete().neq('id', 0).then(function(res) {
         if (res.error) { alert('Ошибка: ' + res.error.message); return; }
         userZonesLayer.clearLayers();
+        cacheUserZonesFromLayer();
         alert('Все зоны удалены');
       });
     });
