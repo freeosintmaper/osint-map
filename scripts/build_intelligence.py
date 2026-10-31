@@ -250,15 +250,20 @@ def update_daily_history(today: str, generated_at: str, added: list[dict[str, An
         item.get("fingerprint"): item
         for item in existing_removed if isinstance(item, dict) and item.get("fingerprint")
     }
+    # Track the net change relative to the start of the UTC day. An event
+    # added and later removed (or removed and later restored) cancels out.
     for event in added:
         fp = event_fingerprint(event)
-        added_map[fp] = {"fingerprint": fp, "event": _event_summary(event)}
+        if fp in removed_map:
+            removed_map.pop(fp, None)
+        else:
+            added_map[fp] = {"fingerprint": fp, "event": _event_summary(event)}
     for event in removed:
         fp = event_fingerprint(event)
-        removed_map[fp] = {"fingerprint": fp, "event": _event_summary(event)}
-    # If a report reappears later the same day, keep the added record and clear the removal record.
-    for fp in added_map:
-        removed_map.pop(fp, None)
+        if fp in added_map:
+            added_map.pop(fp, None)
+        else:
+            removed_map[fp] = {"fingerprint": fp, "event": _event_summary(event)}
     record = {
         "date_utc": today,
         "generated_at": generated_at,
