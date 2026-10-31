@@ -60,6 +60,7 @@ class IntelligencePipelineTests(unittest.TestCase):
             self.make_event("2", "Air Raid Alert", "Харьков", "2026-10-31T10:00:00Z", "rss"),
         ]
         events[0]["verification_status"] = "corroborated"
+        events[0]["verification_sources"] = ["channel_a", "channel_b"]
         summary = intelligence.build_summary(
             events, now - timedelta(hours=24), now, [], set(), "last_24_hours"
         )
