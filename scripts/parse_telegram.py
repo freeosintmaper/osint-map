@@ -53,6 +53,25 @@ def _utc_now():
     return datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
 
 
+def _latest_post_published_at(posts):
+    """Return the newest Telegram post publication timestamp, not fetch time."""
+    parsed_dates = []
+    for post in posts:
+        value = str(post.get("date") or "").strip()
+        if not value:
+            continue
+        try:
+            parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+            if parsed.tzinfo is None:
+                parsed = parsed.replace(tzinfo=timezone.utc)
+            parsed_dates.append(parsed.astimezone(timezone.utc))
+        except (TypeError, ValueError, OverflowError):
+            continue
+    if not parsed_dates:
+        return None
+    return max(parsed_dates).isoformat(timespec="seconds").replace("+00:00", "Z")
+
+
 def _load_source_health():
     global SOURCE_HEALTH
     try:
@@ -2077,7 +2096,11 @@ def main():
             continue
         posts = extract_posts(html)
         print(f"  Найдено постов: {len(posts)}")
-        _update_source_health(channel, items_seen=len(posts))
+        health_updates = {"items_seen": len(posts)}
+        latest_item_at = _latest_post_published_at(posts)
+        if latest_item_at:
+            health_updates["latest_item_at"] = latest_item_at
+        _update_source_health(channel, **health_updates)
         matched = 0
 
         channel_country = CHANNEL_COUNTRY.get(channel, "OSINT")
