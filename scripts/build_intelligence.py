@@ -54,6 +54,61 @@ def parse_datetime(value: Any) -> datetime | None:
         return None
 
 
+CONTENT_FRESHNESS_THRESHOLDS_HOURS = {"telegram": 72, "rss": 96}
+
+
+def annotate_source_freshness(
+    sources: dict[str, Any], now: datetime
+) -> dict[str, Any]:
+    """Separate endpoint reachability from the age of the newest published item."""
+    counts: Counter[str] = Counter()
+    stale_sources: list[dict[str, Any]] = []
+    for source_id, item in sources.items():
+        if not isinstance(item, dict):
+            continue
+        source_type = str(item.get("type") or "telegram").lower()
+        threshold = float(
+            item.get("freshness_threshold_hours")
+            or CONTENT_FRESHNESS_THRESHOLDS_HOURS.get(source_type, 72)
+        )
+        latest_item = parse_datetime(item.get("latest_item_at"))
+        if latest_item is None:
+            status = "unknown"
+            age_hours = None
+        else:
+            age_hours = max(0.0, (now - latest_item).total_seconds() / 3600)
+            status = "stale" if age_hours > threshold else "fresh"
+
+        item["freshness_status"] = status
+        item["latest_item_age_hours"] = round(age_hours, 1) if age_hours is not None else None
+        item["freshness_threshold_hours"] = threshold
+        counts[status] += 1
+        if status == "stale":
+            stale_sources.append({
+                "id": source_id,
+                "type": source_type,
+                "latest_item_at": item.get("latest_item_at"),
+                "age_hours": round(age_hours, 1),
+                "threshold_hours": threshold,
+            })
+
+    stale_sources.sort(key=lambda item: item["age_hours"], reverse=True)
+    return {
+        "status_counts": {
+            "fresh": counts.get("fresh", 0),
+            "stale": counts.get("stale", 0),
+            "unknown": counts.get("unknown", 0),
+        },
+        "stale_sources": stale_sources,
+        "thresholds_hours": CONTENT_FRESHNESS_THRESHOLDS_HOURS,
+        "method_note": (
+            "Freshness measures the age of the newest publication, not the reachability "
+            "of the feed. Thresholds are conservative: Telegram 72h, RSS 96h. "
+            "Unknown means no publication timestamp was available."
+        ),
+    }
+
+
 def load_json(path: Path, default: Any) -> Any:
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -350,10 +405,15 @@ def main() -> int:
             str(item.get("status") or "unknown")
             for item in health_sources.values() if isinstance(item, dict)
         )
+        freshness = annotate_source_freshness(health_sources, now)
         health_summary = {
             "generated_at": source_health.get("generated_at") if isinstance(source_health, dict) else None,
             "total_sources": len(health_sources),
             "status_counts": dict(health_status),
+            "freshness_counts": freshness["status_counts"],
+            "stale_sources": freshness["stale_sources"],
+            "freshness_method_note": freshness["method_note"],
+            "freshness_thresholds_hours": freshness["thresholds_hours"],
             "sources": health_sources,
             "method_note": "Доступность endpoint не измеряет качество публикаций и независимость источников."
         }
