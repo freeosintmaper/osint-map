@@ -56,7 +56,7 @@ jobs:
           node <<'NODE'
           const fs = require('fs');
           const html = fs.readFileSync('territory-history.html', 'utf8');
-          const blocks = Array.from(html.matchAll(/<script\\b[^>]*>([\\s\\S]*?)<\\/script>/gi));
+          const blocks = Array.from(html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi));
           if (!blocks.length) throw new Error('No inline script found in territory-history.html');
           blocks.forEach((match, index) => new Function(match[1]));
           console.log('Checked ' + blocks.length + ' territorial history script block(s).');
