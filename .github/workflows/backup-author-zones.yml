@@ -37,11 +37,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
           git add data/author-zones.geojson data/author-zones-history/
           if git diff --cached --quiet; then
             echo "Author zones did not change; no backup commit is needed."
           else
             git commit -m "Backup author zones"
+            git pull --rebase origin main
             git push origin main
           fi
