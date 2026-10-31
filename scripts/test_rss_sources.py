@@ -21,13 +21,13 @@ class RssSourceTests(unittest.TestCase):
         self.assertIn("rss_bbc_ukrainian", registry_ids)
 
     def test_rss_items_are_parsed_without_publishing_full_summary(self):
-        sample = b"""<?xml version="1.0" encoding="UTF-8"?>
+        sample = """<?xml version="1.0" encoding="UTF-8"?>
         <rss version="2.0"><channel><item>
           <title><![CDATA[У Дніпрі повідомили про наслідки атаки БПЛА]]></title>
           <link>https://example.org/news/123?utm_source=rss#top</link>
           <pubDate>Sat, 31 Oct 2026 10:00:00 GMT</pubDate>
           <description><![CDATA[<p>Подробный текст статьи, который не должен публиковаться в данных карты.</p>]]></description>
-        </item></channel></rss>"""
+        </item></channel></rss>""".encode("utf-8")
         items = rss.parse_feed_items(sample)
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0]["title"], "У Дніпрі повідомили про наслідки атаки БПЛА")
