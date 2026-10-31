@@ -4,6 +4,13 @@ on:
   schedule:
     - cron: '23 4 * * *'
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'index.html'
+      - 'scripts/backup_author_zones.py'
+      - '.github/workflows/backup-author-zones.yml'
 
 concurrency:
   group: author-zones-backup
