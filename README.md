@@ -6,7 +6,7 @@
 
 **Live map:** <https://freeosintmaper.github.io/osint-map/>  
 **Repository:** <https://github.com/freeosintmaper/osint-map>  
-**Methodology:** [methodology.html](https://freeosintmaper.github.io/osint-map/methodology.html) · **Corrections:** [corrections.html](https://freeosintmaper.github.io/osint-map/corrections.html) · **Changelog:** [CHANGELOG.md](CHANGELOG.md)
+**Methodology:** [methodology.html](https://freeosintmaper.github.io/osint-map/methodology.html) · **Territorial layer history:** [territory-history.html](https://freeosintmaper.github.io/osint-map/territory-history.html) · **Corrections:** [corrections.html](https://freeosintmaper.github.io/osint-map/corrections.html) · **Changelog:** [CHANGELOG.md](CHANGELOG.md)
 
 [🇷🇺 Русский](#-русский) · [🇺🇦 Українська](#-українська) · [🇬🇧 English](#-english)
 
@@ -63,6 +63,10 @@
 Внешние геоданные: [DeepStateMap](https://deepstatemap.live/) и [его публичный набор данных](https://github.com/cyterat/deepstate-map-data), [архив Project Owl](https://github.com/owlmaps/UAControlMapBackups), [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/) и [GeoNames](https://www.geonames.org/).
 
 Источники имеют разные стандарты публикации и редакционные позиции. Их наличие на карте не означает одобрения или подтверждения со стороны проекта.
+
+### История территориальных слоёв
+
+[Открыть журнал версий](https://freeosintmaper.github.io/osint-map/territory-history.html). Ежедневно сохраняются дата, версия и закреплённая ссылка на актуальный набор [DeepState](https://github.com/cyterat/deepstate-map-data) и архив [Project Owl](https://github.com/owlmaps/UAControlMapBackups). Журнал показывает, изменился ли upstream-файл относительно предыдущей записи. Большие геофайлы не дублируются в нашем репозитории; ссылки ведут на версии, закреплённые по upstream commit. Это история источников данных, а не автоматический вывод об изменении контроля территории.
 
 ### Обновление данных
 
