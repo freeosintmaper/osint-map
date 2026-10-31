@@ -128,6 +128,37 @@ class IntelligencePipelineTests(unittest.TestCase):
         self.assertEqual(record["events_added"], [])
         self.assertEqual(record["events_removed"], [])
 
+    def test_source_freshness_is_separate_from_endpoint_health(self):
+        now = datetime(2026, 10, 31, 12, 0, tzinfo=timezone.utc)
+        sources = {
+            "telegram_fresh": {
+                "type": "telegram",
+                "status": "ok",
+                "latest_item_at": "2026-10-30T12:00:00Z",
+            },
+            "rss_stale": {
+                "type": "rss",
+                "status": "ok",
+                "latest_item_at": "2026-10-26T12:00:00Z",
+            },
+            "telegram_unknown": {
+                "type": "telegram",
+                "status": "error",
+                "last_success": "2026-10-31T10:00:00Z",
+            },
+        }
+        freshness = intelligence.annotate_source_freshness(sources, now)
+        self.assertEqual(
+            freshness["status_counts"],
+            {"fresh": 1, "stale": 1, "unknown": 1},
+        )
+        self.assertEqual(sources["telegram_fresh"]["freshness_status"], "fresh")
+        self.assertEqual(sources["rss_stale"]["freshness_status"], "stale")
+        self.assertEqual(sources["rss_stale"]["status"], "ok")
+        self.assertEqual(sources["telegram_unknown"]["freshness_status"], "unknown")
+        self.assertEqual(freshness["stale_sources"][0]["id"], "rss_stale")
+        self.assertEqual(freshness["stale_sources"][0]["threshold_hours"], 96)
+
     def test_source_statistics_keep_publishers_distinct(self):
         events = [
             dict(self.make_event("1", "Military Strike", "Киев", "2026-10-31T10:00:00Z"),

@@ -153,6 +153,22 @@ def parse_feed_items(xml_bytes: bytes) -> list[dict[str, str]]:
     return parsed
 
 
+def _latest_published_at(items: list[dict[str, str]]) -> str | None:
+    """Return the newest publisher timestamp represented in the fetched feed."""
+    parsed_dates = []
+    for item in items:
+        try:
+            value = datetime.fromisoformat(str(item.get("date") or "").replace("Z", "+00:00"))
+            if value.tzinfo is None:
+                value = value.replace(tzinfo=timezone.utc)
+            parsed_dates.append(value.astimezone(timezone.utc))
+        except (TypeError, ValueError, OverflowError):
+            continue
+    if not parsed_dates:
+        return None
+    return max(parsed_dates).isoformat(timespec="seconds").replace("+00:00", "Z")
+
+
 def load_registry() -> list[dict[str, Any]]:
     try:
         payload = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
@@ -397,6 +413,7 @@ def collect() -> dict[str, Any]:
         try:
             xml_bytes = fetch_feed(str(source["feed_url"]))
             items = parse_feed_items(xml_bytes)
+            latest_item_at = _latest_published_at(items)
             mapped: list[dict[str, Any]] = []
             for item in items:
                 try:
@@ -422,6 +439,8 @@ def collect() -> dict[str, Any]:
                 "items_seen": len(items),
                 "events_mapped": len(mapped),
             }
+            if latest_item_at:
+                feed_health[source_id]["latest_item_at"] = latest_item_at
             print(f"[{source_id}] fetched {len(items)} items; mapped {len(mapped)} event locations.")
         except FeedError as error:
             source_events = retained
@@ -433,6 +452,7 @@ def collect() -> dict[str, Any]:
                 "last_success": previous_health.get("last_success"),
                 "last_error": str(error)[:300],
                 "items_seen": previous_health.get("items_seen", 0),
+                "latest_item_at": previous_health.get("latest_item_at"),
                 "events_mapped": len(source_events),
             }
             print(f"[{source_id}] feed unavailable: {error}; retained {len(source_events)} cached events.", file=sys.stderr)
