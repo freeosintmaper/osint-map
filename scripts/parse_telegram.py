@@ -1956,6 +1956,83 @@ def make_dedup_key(ev, source_text=None):
     ))
 
 
+def cluster_event_reports(raw_events):
+    """Cluster same-hour reports conservatively and preserve source provenance."""
+    buckets = defaultdict(list)
+    for event in raw_events:
+        date_hour = ""
+        if event.get("date"):
+            date_hour = str(event["date"])[:13]
+        bucket_key = (
+            event.get("country") or "", event.get("location") or "",
+            event.get("event_type") or "", date_hour
+        )
+        clusters = buckets[bucket_key]
+        description = str(event.get("description") or "")
+        target_cluster = None
+        for cluster in clusters:
+            reference = max(cluster, key=lambda item: len(str(item.get("description") or "")))
+            reference_text = str(reference.get("description") or "")
+            same_url = bool(event.get("url") and event.get("url") == reference.get("url"))
+            similarity = SequenceMatcher(
+                a=_normalize_context_text(description),
+                b=_normalize_context_text(reference_text)
+            ).ratio()
+            shared_anchors = _shared_event_anchor_count(
+                description, reference_text, event.get("location")
+            )
+            if same_url or similarity >= 0.88 or shared_anchors >= 2:
+                target_cluster = cluster
+                break
+        if target_cluster is None:
+            target_cluster = []
+            clusters.append(target_cluster)
+        target_cluster.append(event)
+
+    report_groups = [cluster for clusters in buckets.values() for cluster in clusters]
+    deduped = []
+    merged_count = 0
+    for group in report_groups:
+        merged_count += max(0, len(group) - 1)
+        best = dict(max(group, key=lambda event: len(str(event.get("description") or ""))))
+        source_reports = []
+        seen_source_reports = set()
+        for report in group:
+            for channel in sorted(_event_channels(report)):
+                source_url = str(report.get("url") or "")
+                source_key = (channel, source_url or _normalize_context_text(report.get("description")))
+                if source_key in seen_source_reports:
+                    continue
+                seen_source_reports.add(source_key)
+                source_reports.append({
+                    "channel": channel,
+                    "source_type": str(report.get("source_type") or "telegram"),
+                    "url": source_url or None,
+                    "date": report.get("date"),
+                    "description": str(report.get("description") or "")
+                })
+        channels = sorted({report["channel"] for report in source_reports})
+        best["channel"] = ",".join(channels)
+        best["source_type"] = "telegram"
+        best["source_count"] = len(source_reports)
+        best["sources"] = [
+            {
+                "channel": report["channel"],
+                "source_type": report["source_type"],
+                "url": report["url"],
+                "date": report["date"]
+            }
+            for report in source_reports
+        ]
+        best["_source_reports"] = source_reports
+        deduped.append(best)
+
+    _apply_verification_status(deduped)
+    for event in deduped:
+        event.pop("_source_reports", None)
+    return deduped, merged_count
+
+
 
 def main():
     _load_osm_geocode_cache()
@@ -2146,88 +2223,11 @@ def main():
     # incident can merge on the corrected settlement rather than a supplier city.
     _correct_contextual_locations(raw_events)
 
-    # First bucket reports by coarse time/place/type, then only merge reports
-    # with a shared event anchor or near-identical wording. This prevents two
-    # unrelated incidents in one city and hour from being collapsed together.
-    buckets = defaultdict(list)
-    for ev in raw_events:
-        date_hour = ""
-        if ev.get("date"):
-            date_hour = str(ev["date"])[:13]
-        bucket_key = (
-            ev.get("country") or "", ev.get("location") or "",
-            ev.get("event_type") or "", date_hour
-        )
-        clusters = buckets[bucket_key]
-        description = str(ev.get("description") or "")
-        target_cluster = None
-        for cluster in clusters:
-            reference = max(cluster, key=lambda item: len(str(item.get("description") or "")))
-            reference_text = str(reference.get("description") or "")
-            same_url = bool(ev.get("url") and ev.get("url") == reference.get("url"))
-            similar_text = SequenceMatcher(
-                a=_normalize_context_text(description),
-                b=_normalize_context_text(reference_text)
-            ).ratio() >= 0.88
-            shared_anchors = _shared_event_anchor_count(
-                description, reference_text, ev.get("location")
-            )
-            if same_url or similar_text or shared_anchors >= 2:
-                target_cluster = cluster
-                break
-        if target_cluster is None:
-            target_cluster = []
-            clusters.append(target_cluster)
-        target_cluster.append(ev)
-
-    report_groups = [
-        cluster
-        for clusters in buckets.values()
-        for cluster in clusters
-    ]
-    deduped = []
-    time_dups = 0
-    for group in report_groups:
-        time_dups += max(0, len(group) - 1)
-        best = dict(max(group, key=lambda e: len(str(e.get("description") or ""))))
-        source_reports = []
-        seen_source_reports = set()
-        for report in group:
-            for channel in sorted(_event_channels(report)):
-                source_url = str(report.get("url") or "")
-                source_key = (channel, source_url or _normalize_context_text(report.get("description")))
-                if source_key in seen_source_reports:
-                    continue
-                seen_source_reports.add(source_key)
-                source_reports.append({
-                    "channel": channel,
-                    "source_type": "telegram",
-                    "url": source_url or None,
-                    "date": report.get("date"),
-                    "description": str(report.get("description") or "")
-                })
-        channels = sorted({report["channel"] for report in source_reports})
-        best["channel"] = ",".join(channels)
-        best["source_type"] = "telegram"
-        best["source_count"] = len(source_reports)
-        best["sources"] = [
-            {
-                "channel": report["channel"],
-                "source_type": report["source_type"],
-                "url": report["url"],
-                "date": report["date"]
-            }
-            for report in source_reports
-        ]
-        # Keep full source wording only for the automatic consistency check.
-        best["_source_reports"] = source_reports
-        deduped.append(best)
-
-    _apply_verification_status(deduped)
-    for event in deduped:
-        event.pop("_source_reports", None)
+    deduped, time_dups = cluster_event_reports(raw_events)
 
     print(f"🔗 Дедупликация (место, тип, час + совпадение содержания): "
+          f"{len(raw_events)} → {len(deduped)} (объединено {time_dups})")
+    raw_events = deduped
           f"{len(raw_events)} → {len(deduped)} (объединено {time_dups})")
     raw_events = deduped
 
