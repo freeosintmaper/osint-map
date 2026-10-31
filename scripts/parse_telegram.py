@@ -45,6 +45,49 @@ CHANNEL_COUNTRY = {
     "dva_majors": "RU",
 }
 
+SOURCE_HEALTH_FILE = "data/source-health.json"
+SOURCE_HEALTH = {}
+
+
+def _utc_now():
+    return datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+
+
+def _load_source_health():
+    global SOURCE_HEALTH
+    try:
+        with open(SOURCE_HEALTH_FILE, "r", encoding="utf-8") as source_file:
+            payload = json.load(source_file)
+        loaded = payload.get("sources", {}) if isinstance(payload, dict) else {}
+        if isinstance(loaded, dict):
+            SOURCE_HEALTH = loaded
+    except (OSError, ValueError, TypeError):
+        SOURCE_HEALTH = {}
+
+
+def _update_source_health(source_id, **updates):
+    current = dict(SOURCE_HEALTH.get(source_id) or {})
+    current.update(updates)
+    current["id"] = source_id
+    current["type"] = "telegram"
+    current["country_hint"] = CHANNEL_COUNTRY.get(source_id, "OSINT")
+    SOURCE_HEALTH[source_id] = current
+
+
+def _write_source_health():
+    os.makedirs("data", exist_ok=True)
+    payload = {
+        "generated_at": _utc_now(),
+        "sources": SOURCE_HEALTH,
+        "method_note": "Health means endpoint fetch succeeded; it does not measure the truth or quality of published reports."
+    }
+    temporary_path = SOURCE_HEALTH_FILE + ".tmp"
+    with open(temporary_path, "w", encoding="utf-8") as source_file:
+        json.dump(payload, source_file, ensure_ascii=False, indent=2, sort_keys=True)
+        source_file.write("\n")
+    os.replace(temporary_path, SOURCE_HEALTH_FILE)
+
+
 SPEAKER_CAPITALS = {
     "зеленськ": [50.4501, 30.5234, "Киев", "UA"],
     "зеленск": [50.4501, 30.5234, "Киев", "UA"],
@@ -860,15 +903,26 @@ def load_settlements():
 
 def fetch_channel(channel):
     url = f"https://t.me/s/{channel}"
+    attempted_at = _utc_now()
     req = urllib.request.Request(url, headers={
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
         "Accept-Language": "ru-RU,ru;q=0.9,en;q=0.8",
     })
     try:
         with urllib.request.urlopen(req, timeout=30) as r:
-            return r.read().decode("utf-8", errors="ignore")
+            html = r.read().decode("utf-8", errors="ignore")
+            _update_source_health(
+                channel, status="ok", endpoint=url, last_attempt=attempted_at,
+                last_success=attempted_at, http_status=getattr(r, "status", 200),
+                last_error=None
+            )
+            return html
     except Exception as e:
         print(f"  Ошибка загрузки @{channel}: {e}", file=sys.stderr)
+        _update_source_health(
+            channel, status="error", endpoint=url, last_attempt=attempted_at,
+            last_error=str(e)[:300]
+        )
         return ""
 
 
@@ -1906,6 +1960,7 @@ def make_dedup_key(ev, source_text=None):
 def main():
     _load_osm_geocode_cache()
     load_settlements()
+    _load_source_health()
     clf = LLMClassifier()
 
     llm_consecutive_errors = 0
@@ -1933,9 +1988,11 @@ def main():
         html = fetch_channel(channel)
         if not html:
             stats[channel] = 0
+            _update_source_health(channel, items_seen=0, events_matched=0)
             continue
         posts = extract_posts(html)
         print(f"  Найдено постов: {len(posts)}")
+        _update_source_health(channel, items_seen=len(posts))
         matched = 0
 
         channel_country = CHANNEL_COUNTRY.get(channel, "OSINT")
@@ -2081,6 +2138,7 @@ def main():
                 raw_events.append(ev)
 
         stats[channel] = matched
+        _update_source_health(channel, events_matched=matched)
         print(f"  Совпало: {matched}")
         time.sleep(1)
 
@@ -2163,6 +2221,7 @@ def main():
         print("  ℹ️ telegram-events.js оставлен без изменений; кэш и аудит будут сохранены.")
 
     clf.save_cache()
+    _write_source_health()
 
     if preserve_previous_events:
         print(f"\n⚠️ Итоговый расчёт: {len(raw_events)}; опубликованный набор сохранён прежний ({previous_event_count} событий).")
