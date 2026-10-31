@@ -237,6 +237,74 @@ def _source_counts(events: list[dict[str, Any]]) -> dict[str, int]:
     return dict(counts.most_common(12))
 
 
+def _verification_channels(event: dict[str, Any]) -> list[str]:
+    values = event.get("verification_sources")
+    if not isinstance(values, list):
+        return []
+    return sorted({str(value).strip() for value in values if str(value).strip()})
+
+
+def _evidence_breakdown(events: list[dict[str, Any]]) -> dict[str, Any]:
+    """Describe automated evidence levels without presenting them as verified facts."""
+    cross_source = 0
+    not_independently_corroborated = 0
+    rss_reports = 0
+    editorial_fact_checks = 0
+    for event in events:
+        channels = _verification_channels(event)
+        is_telegram = str(event.get("source_type") or "telegram") != "rss"
+        if is_telegram and event.get("verification_status") == "corroborated" and len(channels) >= 2:
+            cross_source += 1
+        else:
+            not_independently_corroborated += 1
+        if str(event.get("source_type") or "telegram") == "rss":
+            rss_reports += 1
+        if event.get("editorial_fact_check_status") == "confirmed":
+            editorial_fact_checks += 1
+    return {
+        "cross_source_consistent_count": cross_source,
+        "not_independently_corroborated_count": not_independently_corroborated,
+        "rss_reports_not_independently_corroborated_count": rss_reports,
+        "editorially_fact_checked_count": editorial_fact_checks,
+        "method_note": (
+            "Cross-source consistency means distinct wording and matching event context "
+            "across at least two Telegram channel labels. It does not establish source "
+            "independence, truth, or verification of every detail. RSS items remain unverified. "
+            "Only an explicit editorial fact-check field can count as an editorial check."
+        ),
+    }
+
+
+def _attention_candidates(
+    events: list[dict[str, Any]], added_fingerprints: set[str], limit: int = 10
+) -> list[dict[str, Any]]:
+    """Surface newly observed cross-source-consistent reports for human review only."""
+    candidates = []
+    for event in events:
+        if event_fingerprint(event) not in added_fingerprints:
+            continue
+        channels = _verification_channels(event)
+        if event.get("verification_status") != "corroborated" or len(channels) < 2:
+            continue
+        candidates.append({
+            "event_type": str(event.get("event_type") or "Unknown"),
+            "location": str(event.get("location") or ""),
+            "country": str(event.get("country") or ""),
+            "date": event.get("date"),
+            "sources": channels,
+            "source_count": len(channels),
+            "description": str(event.get("description") or "")[:220],
+            "status": "requires_human_review",
+            "fact_checked": False,
+            "reason": (
+                "Новое сообщение автоматически сопоставлено с отличающимися формулировками "
+                "как минимум двух Telegram-каналов; первоисточники и детали требуют проверки."
+            ),
+        })
+    candidates.sort(key=lambda item: str(item.get("date") or ""), reverse=True)
+    return candidates[:limit]
+
+
 def _activity_signals(current: list[dict[str, Any]], previous: list[dict[str, Any]]) -> list[dict[str, Any]]:
     current_counts = Counter(str(e.get("event_type") or "Unknown") for e in current)
     previous_counts = Counter(str(e.get("event_type") or "Unknown") for e in previous)
@@ -247,11 +315,18 @@ def _activity_signals(current: list[dict[str, Any]], previous: list[dict[str, An
         delta = now_count - previous_count
         if delta >= 5 and now_count >= max(8, previous_count * 1.5):
             signals.append({
+                "signal_type": "publication_volume_change",
+                "classification": "analytical_signal",
                 "event_type": event_type,
                 "current_period": now_count,
                 "previous_period": previous_count,
                 "delta": delta,
-                "label": "Повышенная публикационная активность"
+                "label": "Повышенная публикационная активность",
+                "requires_human_review": True,
+                "interpretation_limit": (
+                    "Изменение числа отобранных публикаций; не измеряет интенсивность "
+                    "боевых действий и может зависеть от работы источников и парсера."
+                )
             })
     return signals
 
@@ -268,8 +343,10 @@ def build_summary(
     previous_start = start - (end - start)
     previous_end = start - timedelta(seconds=1)
     previous_selected = _filter_window(previous_events, previous_start, previous_end)
-    corroborated = sum(1 for e in selected if e.get("verification_status") == "corroborated")
+    evidence = _evidence_breakdown(selected)
+    corroborated = evidence["cross_source_consistent_count"]
     source_types = Counter(str(e.get("source_type") or "telegram") for e in selected)
+    activity_signals = _activity_signals(selected, previous_selected)
     return {
         "period": name,
         "generated_at": iso(now_utc()),
@@ -286,7 +363,17 @@ def build_summary(
         "source_type_counts": dict(sorted(source_types.items())),
         "corroborated_event_count": corroborated,
         "not_verified_event_count": len(selected) - corroborated,
-        "publication_activity_signals": _activity_signals(selected, previous_selected),
+        "evidence_breakdown": evidence,
+        "editorially_fact_checked_count": evidence["editorially_fact_checked_count"],
+        "attention_candidates": _attention_candidates(selected, added_fingerprints),
+        "publication_activity_signals": activity_signals,
+        "analytical_signals": activity_signals,
+        "analytical_hypotheses": [],
+        "analytical_hypotheses_note": (
+            "Автоматические предположения о причинах событий, контроле территории или "
+            "намерениях сторон не формируются из одной статистики публикаций. "
+            "Для них нужны отдельная доказательная база и человеческая проверка."
+        ),
         "method_note": METHOD_NOTE
     }
 

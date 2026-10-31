@@ -60,6 +60,7 @@ class IntelligencePipelineTests(unittest.TestCase):
             self.make_event("2", "Air Raid Alert", "Харьков", "2026-10-31T10:00:00Z", "rss"),
         ]
         events[0]["verification_status"] = "corroborated"
+        events[0]["verification_sources"] = ["channel_a", "channel_b"]
         summary = intelligence.build_summary(
             events, now - timedelta(hours=24), now, [], set(), "last_24_hours"
         )
@@ -69,6 +70,57 @@ class IntelligencePipelineTests(unittest.TestCase):
         self.assertEqual(summary["corroborated_event_count"], 1)
         self.assertEqual(summary["not_verified_event_count"], 1)
         self.assertIn("не", summary["method_note"].lower())
+
+    def test_summary_separates_cross_source_consistency_from_fact_checking(self):
+        now = datetime(2026, 10, 31, 12, 0, tzinfo=timezone.utc)
+        corroborated = self.make_event(
+            "new-cross-source", "Military Strike", "Харьков", "2026-10-31T11:00:00Z"
+        )
+        corroborated["verification_status"] = "corroborated"
+        corroborated["verification_sources"] = ["channel_a", "channel_b"]
+        single_source = self.make_event(
+            "single", "Military Strike", "Киев", "2026-10-31T10:45:00Z"
+        )
+        rss = self.make_event(
+            "rss", "Military Strike", "Полтава", "2026-10-31T10:30:00Z", "rss"
+        )
+        events = [corroborated, single_source, rss]
+        added = {intelligence.event_fingerprint(corroborated)}
+        summary = intelligence.build_summary(
+            events, now - timedelta(hours=24), now, [], added, "last_24_hours"
+        )
+        evidence = summary["evidence_breakdown"]
+        self.assertEqual(evidence["cross_source_consistent_count"], 1)
+        self.assertEqual(evidence["not_independently_corroborated_count"], 2)
+        self.assertEqual(evidence["rss_reports_not_independently_corroborated_count"], 1)
+        self.assertEqual(evidence["editorially_fact_checked_count"], 0)
+        self.assertEqual(summary["editorially_fact_checked_count"], 0)
+        self.assertEqual(len(summary["attention_candidates"]), 1)
+        self.assertEqual(summary["attention_candidates"][0]["location"], "Харьков")
+        self.assertEqual(summary["attention_candidates"][0]["sources"], ["channel_a", "channel_b"])
+        self.assertFalse(summary["attention_candidates"][0]["fact_checked"])
+        self.assertEqual(summary["attention_candidates"][0]["status"], "requires_human_review")
+        self.assertEqual(summary["analytical_hypotheses"], [])
+
+    def test_publication_activity_signal_is_not_an_operational_fact(self):
+        now = datetime(2026, 10, 31, 12, 0, tzinfo=timezone.utc)
+        current = [
+            self.make_event(str(i), "Military Strike", "Киев",
+                            "2026-10-31T11:00:00Z")
+            for i in range(10)
+        ]
+        previous = [
+            self.make_event("previous", "Military Strike", "Киев",
+                            "2026-10-30T11:00:00Z")
+        ]
+        summary = intelligence.build_summary(
+            current, now - timedelta(hours=24), now, previous, set(), "last_24_hours"
+        )
+        signal = summary["analytical_signals"][0]
+        self.assertEqual(signal["classification"], "analytical_signal")
+        self.assertEqual(signal["signal_type"], "publication_volume_change")
+        self.assertTrue(signal["requires_human_review"])
+        self.assertIn("не измеряет интенсивность", signal["interpretation_limit"].lower())
 
     def test_history_is_versioned_and_has_added_removed_items(self):
         added = self.make_event("new", "Military Strike", "Киев", "2026-10-31T11:00:00Z")

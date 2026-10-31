@@ -2006,8 +2006,13 @@
       var healthCounts = health.status_counts || {};
       var freshnessCounts = health.freshness_counts || {};
       var staleSources = Array.isArray(health.stale_sources) ? health.stale_sources : [];
-      var signals = Array.isArray(daily.publication_activity_signals)
-        ? daily.publication_activity_signals : [];
+      var evidence = daily.evidence_breakdown || {};
+      var attentionCandidates = Array.isArray(daily.attention_candidates)
+        ? daily.attention_candidates : [];
+      var analyticalHypothesesNote = daily.analytical_hypotheses_note || '';
+      var signals = Array.isArray(daily.analytical_signals)
+        ? daily.analytical_signals : (Array.isArray(daily.publication_activity_signals)
+          ? daily.publication_activity_signals : []);
       var html = '<div class="summary-box" style="margin:8px 10px;">' +
         '<div class="summary-title">Автоматическая сводка</div>' +
         '<div class="summary-line"><span>За 24 часа</span><b>' + escapeHtml(daily.event_count || 0) + '</b></div>' +
@@ -2015,10 +2020,27 @@
         '<div class="summary-line"><span>Telegram / RSS за сутки</span><span>' +
           escapeHtml((daily.source_type_counts && daily.source_type_counts.telegram) || 0) + ' / ' +
           escapeHtml((daily.source_type_counts && daily.source_type_counts.rss) || 0) + '</span></div>' +
-        '<div class="summary-line"><span>Автоматически сверено по каналам</span><b>' +
-          escapeHtml(daily.corroborated_event_count || 0) + '</b></div>';
+        '<div class="summary-line"><span>Сверено по нескольким Telegram-каналам</span><b>' +
+          escapeHtml(evidence.cross_source_consistent_count || daily.corroborated_event_count || 0) + '</b></div>' +
+        '<div class="summary-line"><span>Без межканальной сверки</span><b>' +
+          escapeHtml(evidence.not_independently_corroborated_count || daily.not_verified_event_count || 0) + '</b></div>' +
+        '<div class="summary-line"><span>Редакционно проверено</span><b>' +
+          escapeHtml(evidence.editorially_fact_checked_count || 0) + '</b></div>';
+      if (attentionCandidates.length) {
+        html += '<div style="margin-top:8px;font-size:11px;font-weight:700;">Новые сообщения для внимания (нужна ручная проверка)</div>';
+        attentionCandidates.slice(0, 5).forEach(function(candidate) {
+          html += '<div style="margin-top:4px;font-size:11px;">' +
+            escapeHtml(candidate.location || 'Место не определено') + ' · ' +
+            escapeHtml(candidate.event_type || 'Событие') + ' · ' +
+            escapeHtml((candidate.sources || []).join(', ')) + '</div>';
+        });
+        if (attentionCandidates.length > 5) {
+          html += '<div style="font-size:10px;color:var(--text-muted);">И ещё ' +
+            escapeHtml(attentionCandidates.length - 5) + ' сообщений для проверки.</div>';
+        }
+      }
       if (signals.length) {
-        html += '<div style="margin-top:7px;font-size:11px;font-weight:700;">Сигналы изменения публикационной активности</div>';
+        html += '<div style="margin-top:8px;font-size:11px;font-weight:700;">Аналитические сигналы публикационной активности</div>';
         signals.forEach(function(signal) {
           html += '<div style="margin-top:4px;font-size:11px;">' +
             escapeHtml(signal.event_type) + ': ' + escapeHtml(signal.current_period) +
@@ -2027,6 +2049,10 @@
       } else {
         html += '<div style="margin-top:7px;font-size:11px;color:var(--text-muted);">Пороговые всплески числа публикаций не выявлены.</div>';
       }
+      html += '<div style="margin-top:6px;font-size:10px;color:var(--text-muted);">' +
+        'Сопоставление публикаций не является подтверждением факта. ' +
+        'Автоматические гипотезы о причинах событий и контроле территории не формируются.' +
+        (analyticalHypothesesNote ? ' ' + escapeHtml(analyticalHypothesesNote) : '') + '</div>';
       html += '<div style="margin-top:7px;font-size:10px;color:var(--text-muted);">' +
         'Доступность источников: ' + escapeHtml(healthCounts.ok || 0) + ' работает, ' +
         escapeHtml(healthCounts.error || 0) + ' с ошибками из ' +
