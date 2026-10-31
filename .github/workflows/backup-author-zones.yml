@@ -1,0 +1,47 @@
+name: Backup author zones
+
+on:
+  schedule:
+    - cron: '23 4 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: author-zones-backup
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate backup logic
+        run: python scripts/test_backup_author_zones.py
+
+      - name: Fetch and validate author zones
+        run: python scripts/backup_author_zones.py
+
+      - name: Commit changed snapshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+          git add data/author-zones.geojson data/author-zones-history/
+          if git diff --cached --quiet; then
+            echo "Author zones did not change; no backup commit is needed."
+          else
+            git commit -m "Backup author zones"
+            git push origin main
+          fi
