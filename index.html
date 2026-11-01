@@ -2000,7 +2000,7 @@
       if (corroborated) {
         return {
           verified: true,
-          label: 'ПРОВЕРЕНО ПО ' + sources.length + ' КАНАЛАМ',
+          label: 'АВТОСВЕРКА: ' + sources.length + ' КАНАЛОВ',
           note: ev.verification_note || 'Автоматическая сверка сообщений разных каналов. Независимость первоисточников отдельно не установлена.'
         };
       }
@@ -2039,6 +2039,148 @@
       return String(event && event.channel || 'не указан').split(',').map(function(name) {
         return name.trim();
       }).filter(Boolean).map(function(name) { return '@' + name; }).join(', ') || 'не указан';
+    }
+
+    function formatProvenanceDate(value) {
+      if (!value) return '';
+      var date = new Date(value);
+      return isFinite(date.getTime()) ? date.toLocaleString('ru-RU') : '';
+    }
+
+    function getEventSourceRecords(event) {
+      var records = Array.isArray(event && event.sources) ? event.sources.filter(Boolean) : [];
+      if (!records.length) {
+        var channels = String(event && event.channel || '').split(',').map(function(name) {
+          return name.trim();
+        }).filter(Boolean);
+        records = channels.map(function(channel, index) {
+          return {
+            channel: channel,
+            source_type: event && event.source_type || 'telegram',
+            url: channels.length === 1 ? event.url : null,
+            date: event && event.date || null
+          };
+        });
+        if (!records.length && event && event.url) {
+          records.push({ channel: event.channel || 'Источник', url: event.url, date: event.date || null });
+        }
+      }
+      return records;
+    }
+
+    function getSourceHealthRecord(channel) {
+      var snapshot = window.OSINT_INTELLIGENCE && window.OSINT_INTELLIGENCE.source_health;
+      var sources = snapshot && Array.isArray(snapshot.sources) ? snapshot.sources : [];
+      for (var i = 0; i < sources.length; i++) {
+        if (String(sources[i].id || '') === String(channel || '')) return sources[i];
+      }
+      return null;
+    }
+
+    function getEventCoordinateLabel(event) {
+      if (event && event.coordinate_precision === 'specific_place') {
+        return 'ориентир, прямо названный в публикации; совпадение с картой автоматическое';
+      }
+      if (event && event.location_resolution === 'region_center_fallback') {
+        return 'приблизительный центр региона; точное место не определено';
+      }
+      if (event && event.location_resolution === 'context_corroborated_settlement') {
+        return 'центр населённого пункта, название уточнено по контексту других сообщений';
+      }
+      if (event && event.coordinate_precision === 'settlement_center') {
+        return 'центр населённого пункта; точное место не подтверждено';
+      }
+      return 'способ геопривязки не указан в данных';
+    }
+
+    function getEditorialReviewLabel(event) {
+      var status = String(event && event.editorial_review_status || '').toLowerCase();
+      if (['fact_checked', 'human_verified', 'editorially_verified'].indexOf(status) >= 0) {
+        return 'отмечена как выполненная';
+      }
+      if (status === 'reviewed') return 'отмечено рассмотрение человеком, результат не указан';
+      return 'в данных не отмечена';
+    }
+
+    function appendProvenanceLine(parent, label, value) {
+      if (!value) return;
+      var line = document.createElement('div');
+      line.style.cssText = 'margin-top:4px;line-height:1.4;overflow-wrap:anywhere;';
+      var strong = document.createElement('b');
+      strong.textContent = label + ': ';
+      line.appendChild(strong);
+      line.appendChild(document.createTextNode(String(value)));
+      parent.appendChild(line);
+    }
+
+    function appendEventProvenancePopup(popup, event) {
+      var box = document.createElement('div');
+      box.style.cssText = 'margin-top:10px;padding:9px;border:1px solid var(--border-mid);border-radius:8px;background:var(--bg-input);font-size:11px;line-height:1.45;';
+      var heading = document.createElement('b');
+      heading.textContent = 'Происхождение и проверка';
+      box.appendChild(heading);
+
+      var records = getEventSourceRecords(event);
+      if (!records.length) {
+        appendProvenanceLine(box, 'Первоисточник', 'ссылка и название источника не сохранены');
+      }
+      records.slice(0, 8).forEach(function(record, index) {
+        var item = document.createElement('div');
+        item.style.cssText = 'margin-top:6px;padding-top:5px;border-top:1px solid var(--border-light);';
+        var channel = record.channel || record.publisher || ('Источник ' + (index + 1));
+        var title = document.createElement('b');
+        title.textContent = String(channel).charAt(0) === '@' ? String(channel) : '@' + String(channel);
+        item.appendChild(title);
+        var sourceUrl = safeHttpUrl(record.url || '');
+        if (sourceUrl) {
+          item.appendChild(document.createTextNode(' · '));
+          var link = document.createElement('a');
+          link.href = sourceUrl;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.textContent = 'первоисточник ↗';
+          item.appendChild(link);
+        } else {
+          item.appendChild(document.createTextNode(' · ссылка на отдельную публикацию не сохранена'));
+        }
+        var publishedAt = formatProvenanceDate(record.date);
+        if (publishedAt) appendProvenanceLine(item, 'Публикация', publishedAt);
+
+        var health = getSourceHealthRecord(channel);
+        if (health) {
+          var healthStatus = health.status === 'ok' ? 'страница источника успешно получена' :
+            (health.status === 'error' ? 'ошибка получения страницы источника' : 'состояние неизвестно');
+          var checkedAt = formatProvenanceDate(health.last_success || health.last_attempt);
+          if (checkedAt) healthStatus += ' · проверка ' + checkedAt;
+          appendProvenanceLine(item, 'Доступность канала', healthStatus);
+          var latestAt = formatProvenanceDate(health.latest_item_at);
+          if (latestAt) {
+            var freshness = health.freshness_status === 'stale' ? 'устаревшая лента' :
+              (health.freshness_status === 'fresh' ? 'недавняя публикация есть' : 'свежесть неизвестна');
+            appendProvenanceLine(item, 'Последняя замеченная публикация канала', latestAt + ' · ' + freshness);
+          }
+        }
+        box.appendChild(item);
+      });
+      if (records.length > 8) {
+        appendProvenanceLine(box, 'Остальные источники', 'ещё ' + (records.length - 8));
+      }
+
+      var datasetTime = formatProvenanceDate(window.TG_DATA && window.TG_DATA.generated_at);
+      if (datasetTime) appendProvenanceLine(box, 'Сборка набора событий', datasetTime);
+      var healthSnapshot = window.OSINT_INTELLIGENCE && window.OSINT_INTELLIGENCE.source_health;
+      var healthTime = formatProvenanceDate(healthSnapshot && healthSnapshot.generated_at);
+      if (healthTime) appendProvenanceLine(box, 'Снимок состояния каналов', healthTime);
+
+      appendProvenanceLine(box, 'Ручная редакционная проверка', getEditorialReviewLabel(event));
+      appendProvenanceLine(box, 'Ограничение', 'успешное получение канала, число публикаций и автоматическая сверка не подтверждают истинность сообщения или независимость первоисточников');
+
+      var methodLink = document.createElement('a');
+      methodLink.href = './methodology.html';
+      methodLink.textContent = 'Методология и ограничения';
+      methodLink.style.cssText = 'display:inline-block;margin-top:6px;';
+      box.appendChild(methodLink);
+      popup.appendChild(box);
     }
 
     function renderIntelligenceSummaryHtml() {
@@ -2155,6 +2297,23 @@
             verification_sources: Array.isArray(ev.verification_sources) ? ev.verification_sources : [],
             verification_note: ev.verification_note || 'Нет автоматического подтверждения по отличающимся сообщениям других каналов.',
             source_url: ev.url || null,
+            location_resolution: ev.location_resolution || null,
+            editorial_review_status: ev.editorial_review_status || 'not_recorded',
+            editorial_review_note: 'not_recorded means no manual editorial review record was supplied; it does not establish whether an individual source was reviewed outside this dataset.',
+            pipeline_generated_at: (window.TG_DATA && window.TG_DATA.generated_at) || null,
+            source_health_snapshot_at: (window.OSINT_INTELLIGENCE && window.OSINT_INTELLIGENCE.source_health && window.OSINT_INTELLIGENCE.source_health.generated_at) || null,
+            source_health: getEventSourceRecords(ev).map(function(source) {
+              var health = getSourceHealthRecord(source.channel);
+              return {
+                channel: source.channel || source.publisher || null,
+                publication_url: source.url || null,
+                publication_date: source.date || null,
+                fetch_status: health ? health.status : null,
+                last_success: health ? health.last_success : null,
+                latest_channel_publication: health ? health.latest_item_at : null,
+                freshness_status: health ? health.freshness_status : null
+              };
+            }),
             coordinate_note: ev.coordinate_precision === 'specific_place'
               ? 'Coordinates matched to a place explicitly named in the source post; not independently verified. See methodology.html.'
               : 'Coordinates mark the mapped settlement center, not a verified exact incident location; see methodology.html.'
@@ -2263,10 +2422,9 @@
 
         var coordinateNote = document.createElement('small');
         coordinateNote.style.cssText = 'display:block;margin-top:5px;color:var(--text-muted);line-height:1.4;';
-        coordinateNote.textContent = ev.coordinate_precision === 'specific_place'
-          ? 'Место уточнено по явно указанному в публикации ориентиру и сопоставлено с OpenStreetMap; это не независимое подтверждение события.'
-          : 'Точка привязана к центру населённого пункта; точное место события не подтверждено.';
+        coordinateNote.textContent = 'Геопривязка: ' + getEventCoordinateLabel(ev) + '. Это не подтверждение достоверности сообщения.';
         popup.appendChild(coordinateNote);
+        appendEventProvenancePopup(popup, ev);
         if (ev.coordinate_precision === 'specific_place' && ev.coordinate_evidence) {
           var evidenceNote = document.createElement('small');
           evidenceNote.style.cssText = 'display:block;margin-top:4px;line-height:1.4;white-space:normal;';
@@ -2471,7 +2629,9 @@
                 '<div class="evt-source">Источник: ' + escapeHtml(ev.source_type === 'rss' ? 'новостная редакция / RSS' : sourceInfo.label) + ' ' +
                 '<span class="evt-verification ' + (verificationInfo.verified ? 'verified' : 'not-verified') + '" title="' + escapeHtml(verificationInfo.note) + '">' + escapeHtml(verificationInfo.label) + '</span>' +
                 (sourceInfo.crossSide ? ' · UA + RU' : '') + '</div>' +
-                '<div class="evt-time">' + escapeHtml(time) + '</div></div>';
+                '<div class="evt-time">' + escapeHtml(time) + '</div>' +
+                '<div style="margin-top:3px;font-size:10px;line-height:1.35;color:var(--text-muted);">Геопривязка: ' + escapeHtml(getEventCoordinateLabel(ev)) +
+                ' · ручная проверка: ' + escapeHtml(getEditorialReviewLabel(ev)) + '</div></div>';
       });
       body.innerHTML = html;
       attachEventFilters();
