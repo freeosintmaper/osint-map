@@ -73,7 +73,7 @@ jobs:
               process.exitCode = 1;
             }
           });
-          if (!process.exitCode) console.log('Checked ' + blocks.length + ' inline script block(s).');
+          if (!process.exitCode) console.log('Checked ' + blocks.length + ' territorial history script block(s).');
           NODE
 
       - name: Check inline JavaScript syntax
@@ -90,5 +90,5 @@ jobs:
               process.exitCode = 1;
             }
           });
-          if (!process.exitCode) console.log('Checked ' + blocks.length + ' inline script block(s).');
+          if (!process.exitCode) console.log('Checked ' + blocks.length + ' inline script blocks.');
           NODE
