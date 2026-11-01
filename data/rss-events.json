@@ -1,6 +1,34 @@
 {
   "events": [
     {
+      "channel": "rss_ukrpravda",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-01T06:28:00Z",
+      "description": "У Києві запровадили екстрені відключення світла через російські обстріли – ДТЕК",
+      "event_type": "Military Strike",
+      "id": "rss-dac61df3add02729c4-524c8a",
+      "lat": 50.4501,
+      "lng": 30.5234,
+      "location": "Киев",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_ukrpravda",
+          "date": "2026-11-01T06:28:00Z",
+          "publisher": "Українська правда",
+          "source_type": "rss",
+          "url": "https://www.pravda.com.ua/news/2026/11/01/8060693/"
+        }
+      ],
+      "url": "https://www.pravda.com.ua/news/2026/11/01/8060693/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
       "channel": "rss_suspilne",
       "confidence": "LOW",
       "coordinate_precision": "settlement_center",
@@ -172,29 +200,29 @@
   "feed_health": {
     "rss_bbc_ukrainian": {
       "endpoint": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
-      "events_mapped": 2,
+      "events_mapped": 0,
       "items_seen": 16,
-      "last_attempt": "2026-11-01T04:47:37Z",
+      "last_attempt": "2026-11-01T11:45:46Z",
       "last_error": null,
-      "last_success": "2026-11-01T04:47:37Z",
-      "latest_item_at": "2026-10-31T14:52:09Z",
+      "last_success": "2026-11-01T11:45:46Z",
+      "latest_item_at": "2026-11-01T10:27:29Z",
       "status": "ok"
     },
     "rss_kyivindependent": {
       "endpoint": "https://kyivindependent.com/news-archive/rss/",
       "events_mapped": 0,
       "items_seen": 15,
-      "last_attempt": "2026-11-01T04:47:37Z",
+      "last_attempt": "2026-11-01T11:45:46Z",
       "last_error": null,
-      "last_success": "2026-11-01T04:47:37Z",
-      "latest_item_at": "2026-11-01T03:25:48Z",
+      "last_success": "2026-11-01T11:45:46Z",
+      "latest_item_at": "2026-11-01T09:30:23Z",
       "status": "ok"
     },
     "rss_suspilne": {
       "endpoint": "https://suspilne.media/rss/ukrnet.rss",
       "events_mapped": 3,
       "items_seen": 50,
-      "last_attempt": "2026-11-01T04:47:37Z",
+      "last_attempt": "2026-11-01T11:45:46Z",
       "last_error": "HTTP 403",
       "last_success": "2026-11-01T00:00:15Z",
       "latest_item_at": "2026-10-31T22:06:02Z",
@@ -202,26 +230,26 @@
     },
     "rss_ukrpravda": {
       "endpoint": "https://www.pravda.com.ua/rss/view_mainnews/",
-      "events_mapped": 1,
+      "events_mapped": 2,
       "items_seen": 20,
-      "last_attempt": "2026-11-01T04:47:37Z",
+      "last_attempt": "2026-11-01T11:45:46Z",
       "last_error": null,
-      "last_success": "2026-11-01T04:47:37Z",
-      "latest_item_at": "2026-10-31T23:48:00Z",
+      "last_success": "2026-11-01T11:45:46Z",
+      "latest_item_at": "2026-11-01T10:50:00Z",
       "status": "ok"
     },
     "rss_unian": {
       "endpoint": "https://rss.unian.net/site/news_ukr.rss",
       "events_mapped": 0,
       "items_seen": 100,
-      "last_attempt": "2026-11-01T04:47:37Z",
+      "last_attempt": "2026-11-01T11:45:46Z",
       "last_error": null,
-      "last_success": "2026-11-01T04:47:37Z",
-      "latest_item_at": "2026-11-01T03:47:00Z",
+      "last_success": "2026-11-01T11:45:46Z",
+      "latest_item_at": "2026-11-01T11:40:00Z",
       "status": "ok"
     }
   },
-  "generated_at": "2026-11-01T04:47:37Z",
+  "generated_at": "2026-11-01T11:45:46Z",
   "method_note": "RSS items are separate, unverified source records. Only the title is stored; the original publisher link is retained.",
   "window_days": 7
 }
