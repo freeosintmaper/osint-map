@@ -1656,28 +1656,28 @@
     function isOwlUnitPositionFeature(feature) {
       var folderPath = String((feature && feature.properties && feature.properties._folder) || '');
       return folderPath.split('/').some(function(part) {
-        var folder = part.trim().replace(/\\s+/g, ' ').toLowerCase();
+        var folder = part.trim().replace(/\s+/g, ' ').toLowerCase();
         return folder === 'russian unit positions' || folder === 'ukrainian unit positions';
       });
     }
 
     function classifyOwlPositionType(name) {
-      var s = String(name || '').toLowerCase().replace(/\\s+/g, ' ');
+      var s = String(name || '').toLowerCase().replace(/\s+/g, ' ');
       if (!s) return 'unit';
-      if (/\\[uav\\]|\\b(?:uav|uas|drone|drones|fpv|bpla)\\b|бпла|дрон|беспилот|безпілот/.test(s)) return 'uav';
-      if (/\\b(?:air defense|air defence|anti[- ]aircraft|antiair|sam)\\b|пво|зенит|зрк/.test(s)) return 'air_defense';
-      if (/\\b(?:aviation|aircraft|helicopter|fighter|bomber|a-50|su-\\d+|mig-\\d+|tu-\\d+|ka-\\d+|mi-\\d+)\\b|авиац|вертол|истребител|самолет|літак/.test(s)) return 'aviation';
-      if (/\\b(?:submarine|corvette|frigate|destroyer|cruiser|ship|flotilla|naval)\\b|подводн|підводн|корвет|фрегат|эсминец|есмінець|флотил|военно-мор/.test(s)) return 'naval';
-      if (/\\b(?:tank|armou?red|armor|t-64|t-72|t-80|t-90|abrams|leopard|challenger|bradley|bmp|btr)\\b|танк|бронетех|бронемаш|бмп|бтр/.test(s)) return 'armor';
-      if (/\\b(?:artillery|howitzer|howitzers|mlrs|himars|grad|uragan|smerch|msta|pion|rocket artillery)\\b|артиллер|рсзо|гаубиц|миномет|миномёт|ствольн/.test(s)) return 'artillery';
-      if (/\\b(?:missile|rocket troops|rocket forces)\\b|ракетн/.test(s)) return 'artillery';
-      if (/\\b(?:engineer|engineering|pontoon|sapper|bridge unit)\\b|инженер|сапер|сапёр|понтон/.test(s)) return 'engineer';
-      if (/\\b(?:logistic|logistics|supply|transport|railway|medical|medic)\\b|логист|снабжен|обеспеч|транспорт|медицин/.test(s)) return 'logistics';
-      if (/\\b(?:signal|communications|communication|electronic warfare|ew)\\b|связ|рэб|рэр/.test(s)) return 'signal';
-      if (/\\b(?:recon|reconnaissance|scout|surveillance|intelligence)\\b|развед/.test(s)) return 'recon';
-      if (/\\b(?:sof|sso|spetsnaz|special forces|special purpose|special operations|sbu)\\b|спецназ|ссо\\b/.test(s)) return 'special';
-      if (/\\b(?:infantry|mechanized|mechanised|motorized|motorised|rifle|air assault|airborne|assault|territorial defense|territorial defence|tdf|jager)\\b|пехот|механизирован|механізован|мотострел|мотопех|десант|стрелков|стрілець|морпех|теробор/.test(s)) return 'infantry';
-      if (/\\b(?:headquarters|command post|commandant|hq)\\b|штаб|командный пункт|командний пункт/.test(s)) return 'command';
+      if (/\[uav\]|\b(?:uav|uas|drone|drones|fpv|bpla)\b|бпла|дрон|беспилот|безпілот/.test(s)) return 'uav';
+      if (/\b(?:air defense|air defence|anti[- ]aircraft|antiair|sam)\b|пво|зенит|зрк/.test(s)) return 'air_defense';
+      if (/\b(?:aviation|aircraft|helicopter|fighter|bomber|a-50|su-\d+|mig-\d+|tu-\d+|ka-\d+|mi-\d+)\b|авиац|вертол|истребител|самолет|літак/.test(s)) return 'aviation';
+      if (/\b(?:submarine|corvette|frigate|destroyer|cruiser|ship|flotilla|naval)\b|подводн|підводн|корвет|фрегат|эсминец|есмінець|флотил|военно-мор/.test(s)) return 'naval';
+      if (/\b(?:tank|armou?red|armor|t-64|t-72|t-80|t-90|abrams|leopard|challenger|bradley|bmp|btr)\b|танк|бронетех|бронемаш|бмп|бтр/.test(s)) return 'armor';
+      if (/\b(?:artillery|howitzer|howitzers|mlrs|himars|grad|uragan|smerch|msta|pion|rocket artillery)\b|артиллер|рсзо|гаубиц|миномет|миномёт|ствольн/.test(s)) return 'artillery';
+      if (/\b(?:missile|rocket troops|rocket forces)\b|ракетн/.test(s)) return 'artillery';
+      if (/\b(?:engineer|engineering|pontoon|sapper|bridge unit)\b|инженер|сапер|сапёр|понтон/.test(s)) return 'engineer';
+      if (/\b(?:logistic|logistics|supply|transport|railway|medical|medic)\b|логист|снабжен|обеспеч|транспорт|медицин/.test(s)) return 'logistics';
+      if (/\b(?:signal|communications|communication|electronic warfare|ew)\b|связ|рэб|рэр/.test(s)) return 'signal';
+      if (/\b(?:recon|reconnaissance|scout|surveillance|intelligence)\b|развед/.test(s)) return 'recon';
+      if (/\b(?:sof|sso|spetsnaz|special forces|special purpose|special operations|sbu)\b|спецназ|ссо\b/.test(s)) return 'special';
+      if (/\b(?:infantry|mechanized|mechanised|motorized|motorised|rifle|air assault|airborne|assault|territorial defense|territorial defence|tdf|jager)\b|пехот|механизирован|механізован|мотострел|мотопех|десант|стрелков|стрілець|морпех|теробор/.test(s)) return 'infantry';
+      if (/\b(?:headquarters|command post|commandant|hq)\b|штаб|командный пункт|командний пункт/.test(s)) return 'command';
       return 'unit';
     }
 
