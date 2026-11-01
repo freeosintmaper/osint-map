@@ -1048,6 +1048,7 @@
         eventsPanelTitle: 'События', controlZones: 'Зоны контроля',
         territoryRF: 'Территория РФ (DeepStateMap)',
         owlControl: 'Project Owl',
+        owlPositions: 'Позиции Project Owl (точки)',
         owlRussian: 'Действия РФ (Project Owl)',
         owlUkrainian: 'Действия ВСУ (Project Owl)',
         owlHolding: 'Места сосредоточения (Project Owl)',
@@ -1081,6 +1082,7 @@
         eventsPanelTitle: 'Події', controlZones: 'Зони контролю',
         territoryRF: 'Територія РФ',
         owlControl: 'Project Owl',
+        owlPositions: 'Позиції Project Owl (точки)',
         owlRussian: 'Дії РФ (Project Owl)',
         owlUkrainian: 'Дії ЗСУ (Project Owl)',
         owlHolding: 'Місця зосередження (Project Owl)',
@@ -1114,6 +1116,7 @@
         eventsPanelTitle: 'Events', controlZones: 'Control Zones',
         territoryRF: 'Territory held by RF',
         owlControl: 'Project Owl',
+        owlPositions: 'Project Owl positions (points)',
         owlRussian: 'Russian actions (Project Owl)',
         owlUkrainian: 'Ukrainian actions (Project Owl)',
         owlHolding: 'Holding areas (Project Owl)',
@@ -1242,6 +1245,16 @@
         applyStyleToLayer(s, c, {
           color: c, weight: 1.8, opacity: 0.9,
           fill: !outline, fillColor: c,
+          fillOpacity: outline ? 0 : fillOpacity * 0.9
+        });
+      });
+      if (owlPositionsLayer) owlPositionsLayer.eachLayer(function(s) {
+        var cat = (s.feature && s.feature.properties && s.feature.properties._category) || 'unknown';
+        var c = owlColorFor(cat);
+        var outline = layerMode === 'outline';
+        applyStyleToLayer(s, c, {
+          color: c, weight: 1.4, opacity: 0.95,
+          fill: true, fillColor: c,
           fillOpacity: outline ? 0 : fillOpacity * 0.9
         });
       });
@@ -1592,52 +1605,102 @@
     }
     var deepStateLayer = L.geoJSON(null, { style: function() { return styleFor('#cc0000'); }, onEachFeature: deepStatePopup });
 
+    function owlFeatureStyle(f) {
+      var cat = (f.properties && f.properties._category) || 'unknown';
+      var c = owlColorFor(cat);
+      var outline = layerMode === 'outline';
+      return { color: c, weight: 1.8, opacity: 0.9, fill: !outline, fillColor: c, fillOpacity: outline ? 0 : 0.18 };
+    }
+    function owlFeaturePopup(f, layer) {
+      var cat = (f.properties && f.properties._category) || 'unknown';
+      var name = (f.properties && f.properties.name) || '';
+      var desc = (f.properties && f.properties.description) || '';
+      var props = f.properties || {};
+      var popup = document.createElement('div');
+      var heading = document.createElement('b');
+      heading.textContent = owlLabelFor(cat);
+      popup.appendChild(heading);
+      if (name) {
+        popup.appendChild(document.createElement('br'));
+        var nameEl = document.createElement('i');
+        nameEl.textContent = name;
+        popup.appendChild(nameEl);
+      }
+      if (desc) {
+        popup.appendChild(document.createElement('br'));
+        var descEl = document.createElement('small');
+        descEl.textContent = desc.substring(0, 300) + (desc.length > 300 ? '…' : '');
+        popup.appendChild(descEl);
+      }
+      var owlMeta = OWL_DATASET_META || {};
+      appendProvenanceLine(popup, 'Источник', owlMeta.source_name || 'архив Project Owl');
+      if (props._folder) appendProvenanceLine(popup, 'Папка в архиве', props._folder);
+      appendProvenanceLine(popup, 'Дата архива', owlMeta.archive_date || 'не сохранена для этой копии');
+      appendProvenanceLine(popup, 'Получено картой', formatProvenanceDate(owlMeta.fetched_at) || 'время загрузки не сохранено');
+      appendProvenanceLine(popup, 'Способ загрузки', owlMeta.displayed_from_cache ? 'локальная кэшированная копия браузера' : 'загрузка из внешнего архива в этой сессии');
+      if (owlMeta.metadata_note) appendProvenanceLine(popup, 'Примечание к происхождению', owlMeta.metadata_note);
+      appendProvenanceLine(popup, 'Классификация слоя', 'категория определена автоматическим разбором имени, описания, папки и стиля KML; это не редакционная проверка объекта');
+      var owlSourceLink = document.createElement('a');
+      owlSourceLink.href = safeHttpUrl(owlMeta.source_url) || 'https://github.com/owlmaps/UAControlMapBackups';
+      owlSourceLink.target = '_blank';
+      owlSourceLink.rel = 'noopener noreferrer';
+      owlSourceLink.textContent = 'Открыть источник Project Owl ↗';
+      owlSourceLink.style.cssText = 'display:inline-block;margin-top:6px;';
+      popup.appendChild(owlSourceLink);
+      layer.bindPopup(popup);
+    }
     var owlControlLayer = L.geoJSON(null, {
-      style: function(f) {
+      style: owlFeatureStyle,
+      onEachFeature: owlFeaturePopup
+    });
+    // Точечные объекты Project Owl сохраняются, но не смешиваются с геометрией зон.
+    // Кружки не создают стандартные Leaflet pin-иконки и включаются отдельной настройкой.
+    var owlPositionsLayer = L.geoJSON(null, {
+      pointToLayer: function(f, latlng) {
         var cat = (f.properties && f.properties._category) || 'unknown';
         var c = owlColorFor(cat);
-        var outline = layerMode === 'outline';
-        return { color: c, weight: 1.8, opacity: 0.9, fill: !outline, fillColor: c, fillOpacity: outline ? 0 : 0.18 };
+        return L.circleMarker(latlng, {
+          radius: 3, color: c, weight: 1.4, opacity: 0.95,
+          fill: true, fillColor: c,
+          fillOpacity: layerMode === 'outline' ? 0 : fillOpacity * 0.9
+        });
       },
-      onEachFeature: function(f, layer) {
-        var cat = (f.properties && f.properties._category) || 'unknown';
-        var name = (f.properties && f.properties.name) || '';
-        var desc = (f.properties && f.properties.description) || '';
-        var props = f.properties || {};
-        var popup = document.createElement('div');
-        var heading = document.createElement('b');
-        heading.textContent = owlLabelFor(cat);
-        popup.appendChild(heading);
-        if (name) {
-          popup.appendChild(document.createElement('br'));
-          var nameEl = document.createElement('i');
-          nameEl.textContent = name;
-          popup.appendChild(nameEl);
-        }
-        if (desc) {
-          popup.appendChild(document.createElement('br'));
-          var descEl = document.createElement('small');
-          descEl.textContent = desc.substring(0, 300) + (desc.length > 300 ? '…' : '');
-          popup.appendChild(descEl);
-        }
-        var owlMeta = OWL_DATASET_META || {};
-        appendProvenanceLine(popup, 'Источник', owlMeta.source_name || 'архив Project Owl');
-        if (props._folder) appendProvenanceLine(popup, 'Папка в архиве', props._folder);
-        appendProvenanceLine(popup, 'Дата архива', owlMeta.archive_date || 'не сохранена для этой копии');
-        appendProvenanceLine(popup, 'Получено картой', formatProvenanceDate(owlMeta.fetched_at) || 'время загрузки не сохранено');
-        appendProvenanceLine(popup, 'Способ загрузки', owlMeta.displayed_from_cache ? 'локальная кэшированная копия браузера' : 'загрузка из внешнего архива в этой сессии');
-        if (owlMeta.metadata_note) appendProvenanceLine(popup, 'Примечание к происхождению', owlMeta.metadata_note);
-        appendProvenanceLine(popup, 'Классификация слоя', 'категория определена автоматическим разбором имени, описания, папки и стиля KML; это не редакционная проверка объекта');
-        var owlSourceLink = document.createElement('a');
-        owlSourceLink.href = safeHttpUrl(owlMeta.source_url) || 'https://github.com/owlmaps/UAControlMapBackups';
-        owlSourceLink.target = '_blank';
-        owlSourceLink.rel = 'noopener noreferrer';
-        owlSourceLink.textContent = 'Открыть источник Project Owl ↗';
-        owlSourceLink.style.cssText = 'display:inline-block;margin-top:6px;';
-        popup.appendChild(owlSourceLink);
-        layer.bindPopup(popup);
-      }
+      onEachFeature: owlFeaturePopup
     });
+
+    function splitOwlFeatureForDisplay(feature, controlFeatures, positionFeatures) {
+      if (!feature || !feature.geometry || !feature.geometry.type) return;
+      var geometry = feature.geometry;
+      if (geometry.type === 'GeometryCollection') {
+        (geometry.geometries || []).forEach(function(member) {
+          splitOwlFeatureForDisplay({
+            type: 'Feature',
+            id: feature.id,
+            properties: feature.properties || {},
+            geometry: member
+          }, controlFeatures, positionFeatures);
+        });
+        return;
+      }
+      if (geometry.type === 'Point' || geometry.type === 'MultiPoint') {
+        positionFeatures.push(feature);
+        return;
+      }
+      if (['LineString', 'MultiLineString', 'Polygon', 'MultiPolygon'].indexOf(geometry.type) >= 0) {
+        controlFeatures.push(feature);
+      }
+    }
+
+    function addOwlCollection(collection) {
+      var controlFeatures = [];
+      var positionFeatures = [];
+      (collection && Array.isArray(collection.features) ? collection.features : []).forEach(function(feature) {
+        splitOwlFeatureForDisplay(feature, controlFeatures, positionFeatures);
+      });
+      owlControlLayer.addData({ type: 'FeatureCollection', features: controlFeatures });
+      owlPositionsLayer.addData({ type: 'FeatureCollection', features: positionFeatures });
+      return { control: controlFeatures.length, positions: positionFeatures.length };
+    }
 
     fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
       .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
@@ -1657,7 +1720,7 @@
       .catch(function(err) { console.warn('DeepStateMap:', err.message); });
 
     function owlText(el) {
-      return el ? String(el.textContent || '').replace(/\\s+/g, ' ').trim() : '';
+      return el ? String(el.textContent || '').replace(/\s+/g, ' ').trim() : '';
     }
     function owlAncestorNames(pm) {
       var names = [];
@@ -1715,7 +1778,7 @@
           var name = owlText(el.querySelector(':scope > name')).toLowerCase();
           // Only historical/archive folders are excluded. "Unit position" contains current
           // concentration/position features and must remain available to the map.
-          if (/\\barchive(s)?\\b|\\bhistory\\b|архив|архів/.test(name)) return true;
+          if (/\barchives?\b|\bhistory\b|архив|архів/.test(name)) return true;
         }
         el = el.parentNode;
       }
@@ -1849,13 +1912,13 @@
               metadata_note: 'Эта локальная копия создана до сохранения метаданных архива; дата исходного KMZ неизвестна.'
             }, { displayed_from_cache: true });
             if (localStorage.getItem(OWL_CACHE_DATE) === today) {
-              owlControlLayer.addData(cached);
-              console.log('✅ Project Owl (из кэша за сегодня): ' + cached.features.length + ' зон');
+              var cachedStats = addOwlCollection(cached);
+              console.log('✅ Project Owl (из кэша за сегодня): ' + cachedStats.control + ' зон/линий; точечных позиций отдельно: ' + cachedStats.positions);
               return;
             }
             cachedCollection = cached;
-            owlControlLayer.addData(cachedCollection);
-            console.log('⚠️ Project Owl: показана последняя сохранённая копия (' + cachedCollection.features.length + ' зон)');
+            var staleStats = addOwlCollection(cachedCollection);
+            console.log('⚠️ Project Owl: показана последняя копия — ' + staleStats.control + ' зон/линий; точечных позиций отдельно: ' + staleStats.positions);
           }
         }
       } catch (e) { console.warn('Кэш Project Owl недоступен:', e.message); }
@@ -1882,9 +1945,10 @@
           };
           var collection = { type: 'FeatureCollection', features: result.features, _provenance: OWL_DATASET_META };
           owlControlLayer.clearLayers();
-          owlControlLayer.addData(collection);
+          owlPositionsLayer.clearLayers();
+          var displayStats = addOwlCollection(collection);
           console.log('📊 Категории:', result.stats);
-          console.log('✅ Project Owl: ' + result.features.length + ' зон (пропущено исторических: ' + result.stats.skipped + ')');
+          console.log('✅ Project Owl: ' + displayStats.control + ' зон/линий; точечных позиций отдельно: ' + displayStats.positions + ' (слой позиций выключен по умолчанию; пропущено исторических: ' + result.stats.skipped + ')');
           try {
             localStorage.setItem(OWL_CACHE_KEY, JSON.stringify(collection));
             localStorage.setItem(OWL_CACHE_DATE, today);
@@ -3062,6 +3126,7 @@
       html += '<h4>' + t('controlZones') + '</h4>';
       html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
       html += '<label><input type="checkbox" id="chkOwl" checked> ' + t('owlControl') + '</label>';
+      html += '<label><input type="checkbox" id="chkOwlPositions"> ' + t('owlPositions') + '</label>';
       html += '<label><input type="checkbox" id="chkUserZones" checked> ' + t('userZones') + '</label>';
       html += '<label><input type="checkbox" id="chkFirms" checked> 🔥 Пожары (NASA FIRMS)</label>';
 
@@ -3106,6 +3171,10 @@
       var chkOwl = settingsBody.querySelector('#chkOwl');
       if (chkOwl) chkOwl.addEventListener('change', function() {
         if (this.checked) owlControlLayer.addTo(map); else map.removeLayer(owlControlLayer);
+      });
+      var chkOwlPositions = settingsBody.querySelector('#chkOwlPositions');
+      if (chkOwlPositions) chkOwlPositions.addEventListener('change', function() {
+        if (this.checked) owlPositionsLayer.addTo(map); else map.removeLayer(owlPositionsLayer);
       });
       var chkUser = settingsBody.querySelector('#chkUserZones');
       if (chkUser) chkUser.addEventListener('change', function() {
