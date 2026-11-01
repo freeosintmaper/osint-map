@@ -2205,7 +2205,10 @@
         item.style.cssText = 'margin-top:6px;padding-top:5px;border-top:1px solid var(--border-light);';
         var channel = record.channel || record.publisher || ('Источник ' + (index + 1));
         var title = document.createElement('b');
-        title.textContent = String(channel).charAt(0) === '@' ? String(channel) : '@' + String(channel);
+        var sourceType = record.source_type || event.source_type || 'telegram';
+        title.textContent = sourceType === 'telegram'
+          ? (String(channel).charAt(0) === '@' ? String(channel) : '@' + String(channel))
+          : String(channel);
         item.appendChild(title);
         var sourceUrl = safeHttpUrl(record.url || '');
         if (sourceUrl) {
