@@ -1033,7 +1033,7 @@
     var OWL_DATASET_META = null;
     var DEEPSTATE_FETCHED_AT = null;
     // Version bump invalidates the mixed Point/Line/Polygon cache from the older parser.
-    var OWL_CACHE_KEY = 'owl_zones_cache_v3';
+    var OWL_CACHE_KEY = 'owl_zones_cache_v4';
     var OWL_CACHE_DATE = 'owl_zones_cache_date';
 
     var OWL_COLORS = {
@@ -1050,6 +1050,7 @@
         territoryRF: 'Территория РФ (DeepStateMap)',
         owlControl: 'Project Owl',
         owlPositions: 'Позиции Project Owl (точки)',
+        owlFrontline: 'Линия фронта (Project Owl)',
         owlRussian: 'Действия РФ (Project Owl)',
         owlUkrainian: 'Действия ВСУ (Project Owl)',
         owlHolding: 'Места сосредоточения (Project Owl)',
@@ -1084,6 +1085,7 @@
         territoryRF: 'Територія РФ',
         owlControl: 'Project Owl',
         owlPositions: 'Позиції Project Owl (точки)',
+        owlFrontline: 'Лінія фронту (Project Owl)',
         owlRussian: 'Дії РФ (Project Owl)',
         owlUkrainian: 'Дії ЗСУ (Project Owl)',
         owlHolding: 'Місця зосередження (Project Owl)',
@@ -1118,6 +1120,7 @@
         territoryRF: 'Territory held by RF',
         owlControl: 'Project Owl',
         owlPositions: 'Project Owl positions (points)',
+        owlFrontline: 'Front line (Project Owl)',
         owlRussian: 'Russian actions (Project Owl)',
         owlUkrainian: 'Ukrainian actions (Project Owl)',
         owlHolding: 'Holding areas (Project Owl)',
@@ -1669,7 +1672,48 @@
       onEachFeature: owlFeaturePopup
     });
 
-    function splitOwlFeatureForDisplay(feature, controlFeatures, positionFeatures) {
+    // Project Owl's data processor treats the exact "Frontline" folder as a line,
+    // not as a control-zone polygon. Keep it neutral and never fill it orange.
+    var owlFrontlineLayer = L.geoJSON(null, {
+      style: function() {
+        return {
+          color: '#facc15', weight: 3, opacity: 0.98,
+          fill: false, fillOpacity: 0, dashArray: '7 5'
+        };
+      },
+      onEachFeature: function(f, layer) {
+        var popup = document.createElement('div');
+        var heading = document.createElement('b');
+        heading.textContent = t('owlFrontline');
+        popup.appendChild(heading);
+        var note = document.createElement('div');
+        note.style.cssText = 'margin-top:5px;line-height:1.4;';
+        note.textContent = 'Линейная геометрия из папки Frontline исходного архива Project Owl. Это линия, а не зона закрашенной территории и не самостоятельная проверка контроля.';
+        popup.appendChild(note);
+        var props = f.properties || {};
+        if (props._folder) appendProvenanceLine(popup, 'Папка в архиве', props._folder);
+        var meta = OWL_DATASET_META || {};
+        appendProvenanceLine(popup, 'Дата архива', meta.archive_date || 'не сохранена');
+        appendProvenanceLine(popup, 'Получено картой', formatProvenanceDate(meta.fetched_at) || 'не сохранено');
+        var link = document.createElement('a');
+        link.href = safeHttpUrl(meta.source_url) || 'https://github.com/owlmaps/UAControlMapBackups';
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = 'Источник Project Owl ↗';
+        link.style.cssText = 'display:inline-block;margin-top:6px;';
+        popup.appendChild(link);
+        layer.bindPopup(popup);
+      }
+    });
+
+    function isOwlFrontlineFeature(feature) {
+      var folderPath = String((feature && feature.properties && feature.properties._folder) || '');
+      return folderPath.split('/').some(function(part) {
+        return part.trim().toLowerCase() === 'frontline';
+      });
+    }
+
+    function splitOwlFeatureForDisplay(feature, controlFeatures, positionFeatures, frontlineFeatures) {
       if (!feature || !feature.geometry || !feature.geometry.type) return;
       var geometry = feature.geometry;
       if (geometry.type === 'GeometryCollection') {
@@ -1679,10 +1723,20 @@
             id: feature.id,
             properties: feature.properties || {},
             geometry: member
-          }, controlFeatures, positionFeatures);
+          }, controlFeatures, positionFeatures, frontlineFeatures);
         });
         return;
       }
+
+      if (isOwlFrontlineFeature(feature)) {
+        if (geometry.type === 'LineString' || geometry.type === 'MultiLineString') {
+          frontlineFeatures.push(feature);
+        }
+        // Frontline is a line layer. Ignore unexpected polygons/points in this folder
+        // rather than painting them as control zones.
+        return;
+      }
+
       if (geometry.type === 'Point' || geometry.type === 'MultiPoint') {
         positionFeatures.push(feature);
         return;
@@ -1695,12 +1749,18 @@
     function addOwlCollection(collection) {
       var controlFeatures = [];
       var positionFeatures = [];
+      var frontlineFeatures = [];
       (collection && Array.isArray(collection.features) ? collection.features : []).forEach(function(feature) {
-        splitOwlFeatureForDisplay(feature, controlFeatures, positionFeatures);
+        splitOwlFeatureForDisplay(feature, controlFeatures, positionFeatures, frontlineFeatures);
       });
       owlControlLayer.addData({ type: 'FeatureCollection', features: controlFeatures });
       owlPositionsLayer.addData({ type: 'FeatureCollection', features: positionFeatures });
-      return { control: controlFeatures.length, positions: positionFeatures.length };
+      owlFrontlineLayer.addData({ type: 'FeatureCollection', features: frontlineFeatures });
+      return {
+        control: controlFeatures.length,
+        positions: positionFeatures.length,
+        frontline: frontlineFeatures.length
+      };
     }
 
     fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
@@ -1990,7 +2050,7 @@
               unknown: result.stats.unknown
             }
           });
-          console.log('✅ Project Owl: ' + displayStats.control + ' объектов зон/линий; точечных объектов отдельно: ' + displayStats.positions + ' (слой точек выключен по умолчанию; исторических Placemark исключено: ' + result.stats.skipped + ')');
+          console.log('✅ Project Owl: ' + displayStats.control + ' объектов зон; отдельно — линий фронта: ' + displayStats.frontline + ', точечных объектов: ' + displayStats.positions + ' (слой точек выключен по умолчанию; исторических Placemark исключено: ' + result.stats.skipped + ')');
           try {
             localStorage.setItem(OWL_CACHE_KEY, JSON.stringify(collection));
             localStorage.setItem(OWL_CACHE_DATE, today);
@@ -2006,6 +2066,7 @@
 
     deepStateLayer.addTo(map);
     owlControlLayer.addTo(map);
+    owlFrontlineLayer.addTo(map);
 
     var FIRMS_URL = './data/firms-fires.json';
     var FIRMS_CACHE_KEY = 'firms_cache_v2';
@@ -3155,6 +3216,7 @@
       html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
       html += '<label><input type="checkbox" id="chkOwl" checked> ' + t('owlControl') + '</label>';
       html += '<label><input type="checkbox" id="chkOwlPositions"> ' + t('owlPositions') + '</label>';
+      html += '<label><input type="checkbox" id="chkOwlFrontline" checked> ' + t('owlFrontline') + '</label>';
       html += '<label><input type="checkbox" id="chkUserZones" checked> ' + t('userZones') + '</label>';
       html += '<label><input type="checkbox" id="chkFirms" checked> 🔥 Пожары (NASA FIRMS)</label>';
 
@@ -3203,6 +3265,10 @@
       var chkOwlPositions = settingsBody.querySelector('#chkOwlPositions');
       if (chkOwlPositions) chkOwlPositions.addEventListener('change', function() {
         if (this.checked) owlPositionsLayer.addTo(map); else map.removeLayer(owlPositionsLayer);
+      });
+      var chkOwlFrontline = settingsBody.querySelector('#chkOwlFrontline');
+      if (chkOwlFrontline) chkOwlFrontline.addEventListener('change', function() {
+        if (this.checked) owlFrontlineLayer.addTo(map); else map.removeLayer(owlFrontlineLayer);
       });
       var chkUser = settingsBody.querySelector('#chkUserZones');
       if (chkUser) chkUser.addEventListener('change', function() {
