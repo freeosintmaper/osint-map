@@ -1030,6 +1030,8 @@
       'https://raw.githack.com/owlmaps/UAControlMapBackups/master/'
     ];
     var OWL_KMZ_URL = null;
+    var OWL_DATASET_META = null;
+    var DEEPSTATE_FETCHED_AT = null;
     var OWL_CACHE_KEY = 'owl_zones_cache_v2';
     var OWL_CACHE_DATE = 'owl_zones_cache_date';
 
@@ -1569,8 +1571,26 @@
       });
     }
 
-    function polygonPopup(text) { return function(f, layer) { layer.bindPopup('<b>' + text + '</b>'); }; }
-    var deepStateLayer = L.geoJSON(null, { style: function() { return styleFor('#cc0000'); }, onEachFeature: polygonPopup(t('territoryRF')) });
+    function deepStatePopup(feature, layer) {
+      var props = feature && feature.properties || {};
+      var popup = document.createElement('div');
+      var heading = document.createElement('b');
+      heading.textContent = t('territoryRF');
+      popup.appendChild(heading);
+      appendProvenanceLine(popup, 'Источник набора', 'публичный GeoJSON-репозиторий DeepStateMap data');
+      appendProvenanceLine(popup, 'Дата в геоданных', props.date || 'не указана');
+      appendProvenanceLine(popup, 'Получено картой', formatProvenanceDate(DEEPSTATE_FETCHED_AT) || 'время получения не сохранено');
+      var sourceLink = document.createElement('a');
+      sourceLink.href = 'https://github.com/cyterat/deepstate-map-data';
+      sourceLink.target = '_blank';
+      sourceLink.rel = 'noopener noreferrer';
+      sourceLink.textContent = 'Открыть исходный набор ↗';
+      sourceLink.style.cssText = 'display:inline-block;margin-top:6px;';
+      popup.appendChild(sourceLink);
+      appendProvenanceLine(popup, 'Оговорка', 'дата набора не является независимой проверкой контроля территории');
+      layer.bindPopup(popup);
+    }
+    var deepStateLayer = L.geoJSON(null, { style: function() { return styleFor('#cc0000'); }, onEachFeature: deepStatePopup });
 
     var owlControlLayer = L.geoJSON(null, {
       style: function(f) {
@@ -1583,6 +1603,7 @@
         var cat = (f.properties && f.properties._category) || 'unknown';
         var name = (f.properties && f.properties.name) || '';
         var desc = (f.properties && f.properties.description) || '';
+        var props = f.properties || {};
         var popup = document.createElement('div');
         var heading = document.createElement('b');
         heading.textContent = owlLabelFor(cat);
@@ -1599,6 +1620,19 @@
           descEl.textContent = desc.substring(0, 300) + (desc.length > 300 ? '…' : '');
           popup.appendChild(descEl);
         }
+        var owlMeta = OWL_DATASET_META || {};
+        appendProvenanceLine(popup, 'Источник', owlMeta.source_name || 'архив Project Owl');
+        if (props._folder) appendProvenanceLine(popup, 'Папка в архиве', props._folder);
+        appendProvenanceLine(popup, 'Дата архива', owlMeta.archive_date || 'не сохранена для этой копии');
+        appendProvenanceLine(popup, 'Получено картой', formatProvenanceDate(owlMeta.fetched_at) || 'время загрузки не сохранено');
+        appendProvenanceLine(popup, 'Классификация слоя', 'категория определена автоматическим разбором имени, описания, папки и стиля KML; это не редакционная проверка объекта');
+        var owlSourceLink = document.createElement('a');
+        owlSourceLink.href = safeHttpUrl(owlMeta.source_url) || 'https://github.com/owlmaps/UAControlMapBackups';
+        owlSourceLink.target = '_blank';
+        owlSourceLink.rel = 'noopener noreferrer';
+        owlSourceLink.textContent = 'Открыть источник Project Owl ↗';
+        owlSourceLink.style.cssText = 'display:inline-block;margin-top:6px;';
+        popup.appendChild(owlSourceLink);
         layer.bindPopup(popup);
       }
     });
@@ -1611,6 +1645,7 @@
         return new Response(stream).json();
       })
       .then(function(data) {
+        DEEPSTATE_FETCHED_AT = new Date().toISOString();
         var features = data.features || [];
         if (features.length > 0) {
           features.sort(function(a, b) { return (b.properties.date || '').localeCompare(a.properties.date || ''); });
@@ -1803,6 +1838,14 @@
         if (raw) {
           var cached = JSON.parse(raw);
           if (cached && cached.features && cached.features.length) {
+            OWL_DATASET_META = cached._provenance || {
+              source_name: 'Project Owl public KMZ archive',
+              source_url: 'https://github.com/owlmaps/UAControlMapBackups',
+              archive_date: null,
+              fetched_at: null,
+              cache_date: localStorage.getItem(OWL_CACHE_DATE) || null,
+              metadata_note: 'Эта локальная копия создана до сохранения метаданных архива; дата исходного KMZ неизвестна.'
+            };
             if (localStorage.getItem(OWL_CACHE_DATE) === today) {
               owlControlLayer.addData(cached);
               console.log('✅ Project Owl (из кэша за сегодня): ' + cached.features.length + ' зон');
@@ -1827,7 +1870,15 @@
         })
         .then(function(kmlStrings) {
           var result = parseOwlKmlStrings(kmlStrings);
-          var collection = { type: 'FeatureCollection', features: result.features };
+          var archiveMatch = String(OWL_KMZ_URL || '').match(/\/(\d{2})(\d{2})(\d{2})_0601\.kmz(?:[?#]|$)/i);
+          OWL_DATASET_META = {
+            source_name: 'Project Owl public KMZ archive',
+            source_url: OWL_KMZ_URL || 'https://github.com/owlmaps/UAControlMapBackups',
+            archive_date: archiveMatch ? ('20' + archiveMatch[1] + '-' + archiveMatch[2] + '-' + archiveMatch[3]) : null,
+            fetched_at: new Date().toISOString(),
+            used_cached_copy: false
+          };
+          var collection = { type: 'FeatureCollection', features: result.features, _provenance: OWL_DATASET_META };
           owlControlLayer.clearLayers();
           owlControlLayer.addData(collection);
           console.log('📊 Категории:', result.stats);
@@ -1852,12 +1903,18 @@
     var FIRMS_CACHE_KEY = 'firms_cache_v2';
     var FIRMS_CACHE_TIME = 'firms_cache_time_v2';
     var FIRMS_CACHE_TTL = 3 * 60 * 60 * 1000;
+    var FIRMS_DATA_META = null;
     var firmsLayer = L.layerGroup();
     firmsLayer.addTo(map);
 
     function renderFirmsFires(data) {
       firmsLayer.clearLayers();
       if (!data || !data.features) return;
+      FIRMS_DATA_META = {
+        generated: data.generated || null,
+        loaded_at: new Date().toISOString(),
+        source_url: 'https://firms.modaps.eosdis.nasa.gov/'
+      };
       data.features.forEach(function(f) {
         var coords = f.geometry && f.geometry.coordinates;
         if (!coords || coords.length < 2) return;
@@ -1879,7 +1936,24 @@
         addFirmsLine('Координаты: ' + lat.toFixed(4) + ', ' + lng.toFixed(4));
         addFirmsLine('Яркость: ' + brightness + ' K');
         addFirmsLine('Спутник: ' + String((f.properties && f.properties.satellite) || '—'));
-        addFirmsLine('Дата: ' + String((f.properties && f.properties.acq_date) || '—'));
+        addFirmsLine('Дата наблюдения (UTC): ' + String((f.properties && f.properties.acq_date) || '—'));
+        var acqTime = String((f.properties && f.properties.acq_time) || '');
+        if (acqTime) addFirmsLine('Время наблюдения (UTC, формат HHMM): ' + acqTime.padStart(4, '0'));
+        addFirmsLine('Уверенность обнаружения (код NASA): ' + String((f.properties && f.properties.confidence) || 'не указана'));
+        if (FIRMS_DATA_META && FIRMS_DATA_META.generated) {
+          addFirmsLine('Сборка набора: ' + (formatProvenanceDate(FIRMS_DATA_META.generated) || FIRMS_DATA_META.generated));
+        }
+        if (FIRMS_DATA_META && FIRMS_DATA_META.loaded_at) {
+          addFirmsLine('Получено картой: ' + (formatProvenanceDate(FIRMS_DATA_META.loaded_at) || FIRMS_DATA_META.loaded_at));
+        }
+        addFirmsLine('Источник: NASA FIRMS. Тепловая аномалия сама по себе не доказывает удар или военное событие.');
+        var firmsLink = document.createElement('a');
+        firmsLink.href = 'https://firms.modaps.eosdis.nasa.gov/';
+        firmsLink.target = '_blank';
+        firmsLink.rel = 'noopener noreferrer';
+        firmsLink.textContent = 'Открыть NASA FIRMS ↗';
+        popup.appendChild(document.createElement('br'));
+        popup.appendChild(firmsLink);
         L.circle([lat, lng], {
           radius: radius, color: color, fillColor: color,
           fillOpacity: 0.35, weight: 1, opacity: 0.7
