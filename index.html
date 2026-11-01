@@ -338,6 +338,22 @@
     }
     .info.legend .legend-position-swatch--russian { color: #f05252; }
     .info.legend .legend-position-swatch--ukrainian { color: #4b9bff; }
+    .info.legend .legend-site-swatches {
+      display: inline-flex; align-items: center; gap: 3px;
+      float: left; margin: 2px 8px 0 0;
+    }
+    .info.legend .legend-site-swatch {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 15px; height: 15px; box-sizing: border-box;
+      border: 2px solid currentColor; border-radius: 4px;
+      background: rgba(18, 24, 34, 0.94);
+    }
+    .info.legend .legend-site-swatch--russian { color: #f05252; }
+    .info.legend .legend-site-swatch--ukrainian { color: #4b9bff; }
+    .info.legend .legend-site-swatch svg {
+      width: 9px; height: 9px; fill: none; stroke: currentColor;
+      stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+    }
     .info.legend .legend-freshness {
       color: var(--text-muted); font-size: 10px; line-height: 1.45;
       margin-top: 3px; overflow-wrap: anywhere;
@@ -1091,7 +1107,8 @@
         eventsPanelTitle: 'События', controlZones: 'Зоны контроля',
         territoryRF: 'Территория РФ (DeepStateMap)',
         owlControl: 'Project Owl',
-        owlPositions: 'Военные позиции Project Owl (тактические значки)',
+        owlPositions: 'Военные подразделения Project Owl',
+        owlGeolocations: 'Объекты и геолокации Project Owl',
         deepStateDataDate: 'Дата геоданных DeepState',
         owlArchiveDate: 'Дата архива Project Owl',
         legendDateUnavailable: 'дата неизвестна',
@@ -1131,7 +1148,8 @@
         eventsPanelTitle: 'Події', controlZones: 'Зони контролю',
         territoryRF: 'Територія РФ',
         owlControl: 'Project Owl',
-        owlPositions: 'Військові позиції Project Owl (тактичні позначки)',
+        owlPositions: 'Військові підрозділи Project Owl',
+        owlGeolocations: 'Об’єкти та геолокації Project Owl',
         deepStateDataDate: 'Дата геоданих DeepState',
         owlArchiveDate: 'Дата архіву Project Owl',
         legendDateUnavailable: 'дата невідома',
@@ -1171,7 +1189,8 @@
         eventsPanelTitle: 'Events', controlZones: 'Control Zones',
         territoryRF: 'Territory held by RF',
         owlControl: 'Project Owl',
-        owlPositions: 'Project Owl military positions (tactical symbols)',
+        owlPositions: 'Project Owl military units',
+        owlGeolocations: 'Project Owl objects and geolocations',
         deepStateDataDate: 'DeepState data date',
         owlArchiveDate: 'Project Owl archive date',
         legendDateUnavailable: 'date unavailable',
@@ -1689,15 +1708,30 @@
       signal: { ru: 'Связь / радиоэлектронная борьба', uk: 'Зв’язок / радіоелектронна боротьба', en: 'Signals / electronic warfare' },
       recon: { ru: 'Разведка', uk: 'Розвідка', en: 'Reconnaissance' },
       special: { ru: 'Специальные подразделения', uk: 'Спеціальні підрозділи', en: 'Special operations' },
-      command: { ru: 'Штаб / командование', uk: 'Штаб / командування', en: 'Headquarters / command' }
+      command: { ru: 'Штаб / командование', uk: 'Штаб / командування', en: 'Headquarters / command' },
+      site: { ru: 'Объект / геолокация Project Owl', uk: 'Об’єкт / геолокація Project Owl', en: 'Project Owl object / geolocation' }
     };
 
-    function isOwlUnitPositionFeature(feature) {
+    function owlPositionMarkerKind(feature) {
       var folderPath = String((feature && feature.properties && feature.properties._folder) || '');
-      return folderPath.split('/').some(function(part) {
-        var folder = part.trim().replace(/\s+/g, ' ').toLowerCase();
-        return folder === 'russian unit positions' || folder === 'ukrainian unit positions';
+      var folders = folderPath.split('/').map(function(part) {
+        return part.trim().replace(/\s+/g, ' ').toLowerCase();
       });
+      if (folders.some(function(folder) {
+        return folder === 'russian unit positions' || folder === 'ukrainian unit positions';
+      })) return 'unit';
+
+      if (folders.some(function(folder) {
+        return folder === 'russian federation & pro-russian areas geolocations' ||
+          /^russian geolocations(?:\s*\(|$)/.test(folder) ||
+          /^ukraine geolocations(?:\s*\(|$)/.test(folder);
+      })) return 'site';
+
+      return '';
+    }
+
+    function isOwlUnitPositionFeature(feature) {
+      return owlPositionMarkerKind(feature) === 'unit';
     }
 
     function classifyOwlPositionType(name) {
@@ -1739,13 +1773,15 @@
       signal: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V9m-4 11h8M12 9 8 4m4 5 4-5M6 9a8 8 0 0 1 0 8m12-8a8 8 0 0 1 0 8"/></svg>',
       recon: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/><path d="M12 12h0M4 8l-1-2m17 2 1-2"/></svg>',
       special: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.5 6 .7-4.5 4.1 1.2 6-5.2-3-5.2 3 1.2-6-4.5-4.1 6-.7z"/></svg>',
-      command: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h16M6 19V7h12v12M9 7V4h6v3M8 11h8M8 15h5"/></svg>'
+      command: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h16M6 19V7h12v12M9 7V4h6v3M8 11h8M8 15h5"/></svg>',
+      site: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6M8 10h.01M16 10h.01"/></svg>'
     };
 
-    function createOwlUnitPositionIcon(feature) {
+    function createOwlPositionIcon(feature) {
       var props = feature && feature.properties || {};
       var side = props._category === 'russian' ? 'russian' : (props._category === 'ukrainian' ? 'ukrainian' : 'unknown');
-      var type = classifyOwlPositionType(props.name || '');
+      var markerKind = owlPositionMarkerKind(feature);
+      var type = markerKind === 'site' ? 'site' : classifyOwlPositionType(props.name || '');
       var typeLabel = owlPositionTypeLabel(type);
       return L.divIcon({
         html: '<div class="owl-unit-marker owl-unit-marker--' + side + '" title="' + typeLabel + '">' + (OWL_POSITION_SVGS[type] || OWL_POSITION_SVGS.unit) + '</div>',
@@ -1765,9 +1801,13 @@
       var heading = document.createElement('b');
       heading.textContent = owlLabelFor(cat);
       popup.appendChild(heading);
-      if (isOwlUnitPositionFeature(f)) {
+      var markerKind = owlPositionMarkerKind(f);
+      if (markerKind === 'unit') {
         var typeTitle = currentLang === 'en' ? 'Unit type' : (currentLang === 'uk' ? 'Тип підрозділу' : 'Тип подразделения');
         appendProvenanceLine(popup, typeTitle, owlPositionTypeLabel(classifyOwlPositionType(name)));
+      } else if (markerKind === 'site') {
+        var siteTitle = currentLang === 'en' ? 'Marker type' : (currentLang === 'uk' ? 'Тип позначки' : 'Тип отметки');
+        appendProvenanceLine(popup, siteTitle, owlPositionTypeLabel('site'));
       }
       if (name) {
         popup.appendChild(document.createElement('br'));
@@ -1808,9 +1848,9 @@
       pointToLayer: function(f, latlng) {
         // Use tactical unit symbols only for Project Owl's explicit unit-position folders.
         // Other geolocated points remain unchanged as small dots.
-        if (isOwlUnitPositionFeature(f)) {
+        if (owlPositionMarkerKind(f)) {
           return L.marker(latlng, {
-            icon: createOwlUnitPositionIcon(f),
+            icon: createOwlPositionIcon(f),
             keyboard: true,
             riseOnHover: true
           });
@@ -3503,6 +3543,7 @@
       legendBody += '<div><i style="background:' + OWL_COLORS.unknown + ';opacity:0.6;"></i> ' + t('owlUnknown') + '</div>';
       legendBody += '<div><span class="legend-line-swatch"></span> ' + t('owlFrontline') + '</div>';
       legendBody += '<div><span class="legend-position-swatches"><span class="legend-position-swatch legend-position-swatch--russian"></span><span class="legend-position-swatch legend-position-swatch--ukrainian"></span></span> ' + t('owlPositions') + '</div>';
+      legendBody += '<div><span class="legend-site-swatches"><span class="legend-site-swatch legend-site-swatch--russian"><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6M8 10h.01M16 10h.01"/></svg></span><span class="legend-site-swatch legend-site-swatch--ukrainian"><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6M8 10h.01M16 10h.01"/></svg></span></span> ' + t('owlGeolocations') + '</div>';
       legendBody += '<div class="legend-freshness">' + t('deepStateDataDate') + ': <strong>' + deepStateDate + '</strong></div>';
       legendBody += '<div class="legend-freshness">' + t('owlArchiveDate') + ': <strong>' + owlDate + '</strong></div>';
       legendBody += '<div class="legend-caveat">' + t('legendCaveat') + '</div>';
