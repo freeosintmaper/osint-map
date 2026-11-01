@@ -1727,8 +1727,9 @@
       var names = [];
       var el = pm.parentNode;
       while (el && el.nodeType === 1) {
-        if (String(el.localName || el.tagName).toLowerCase() === 'folder' ||
-            String(el.localName || el.tagName).toLowerCase() === 'document') {
+        // Only semantic folders are classification metadata. The top-level Document
+        // commonly contains "Ukraine" in its title and is not a side label.
+        if (String(el.localName || el.tagName).toLowerCase() === 'folder') {
           var name = owlText(el.querySelector(':scope > name'));
           if (name) names.unshift(name);
         }
@@ -1736,41 +1737,65 @@
       }
       return names;
     }
-    function owlResolveStyle(doc, styleUrl) {
-      if (!styleUrl) return '';
-      var id = String(styleUrl).split('#').pop();
-      if (!id) return '';
-      var styles = [];
-      var direct = doc.querySelector('Style[id="' + id + '"]');
-      if (direct) styles.push(direct);
-      var map = doc.querySelector('StyleMap[id="' + id + '"]');
-      if (map) {
-        map.querySelectorAll('Pair styleUrl').forEach(function(node) {
-          var target = owlResolveStyle(doc, owlText(node));
-          if (target) styles.push({ textContent: target });
-        });
+
+    // Use Project Owl's documented KML hierarchy instead of guessing the side
+    // from free-form descriptions or the map-wide KML document title.
+    function categorizeOwlFeature(name, folderNames, properties) {
+      var props = properties || {};
+      var code = String(props.code || props.Code || props.side || props.Side || '').trim().toLowerCase();
+      if (code === 'ru' || code === 'russia' || code === 'russian') return 'russian';
+      if (code === 'ua' || code === 'ukraine' || code === 'ukrainian') return 'ukrainian';
+
+      var folders = (folderNames || []).map(function(value) {
+        return String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      });
+      for (var i = 0; i < folders.length; i++) {
+        var folder = folders[i];
+        if (folder === 'russian unit positions' ||
+            folder === 'russian federation & pro-russian areas geolocations' ||
+            /^russian geolocations(?:\s*\(|$)/.test(folder)) return 'russian';
+        if (folder === 'ukrainian unit positions' ||
+            /^ukraine geolocations(?:\s*\(|$)/.test(folder)) return 'ukrainian';
       }
-      return styles.map(function(style) {
-        if (style.nodeType === 1) return style.textContent || '';
-        return style.textContent || '';
-      }).join(' ');
-    }
-    function categorizeOwlFeature(name, description, folderNames, styleText) {
-      var text = [name, description].concat(folderNames || []).join(' ').toLowerCase();
-      if (/holding[ _-]?area|assembly[ _-]?area|concentration|staging[ _-]?area|мест[ао] сосредоточ|район сосредоточ/.test(text)) return 'holding';
-      if (/grey[ _-]?zone|gray[ _-]?zone|buffer[ _-]?zone|серая зона|сіра зона|буферн/.test(text)) return 'grey';
-      if (/ukrainian|ukraine|украин|україн|зсу|afu|uaf|counter.?attack|liberat/.test(text)) return 'ukrainian';
-      if (/russian|russia|россий|росій|рф|crimea|крым|крим|донецк.*народн|луганск.*народн|окупац|axis|invasion|incursion|advance/.test(text)) return 'russian';
-      var styles = String(styleText || '').toLowerCase();
-      // KML colors are AABBGGRR; inspect the resolved style as a secondary signal only.
-      if (/a?\w{6,8}/.test(styles)) {
-        if (/a52714|880e4f|0000c6|0000cc/.test(styles)) return 'russian';
-        if (/01579b|ffd600|0288d1|c60000/.test(styles)) return 'ukrainian';
-        if (/757575|808080|666666/.test(styles)) return 'grey';
-        if (/6a1b9a|800080/.test(styles)) return 'holding';
-      }
+
+      var title = String(name || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      var datedPosition = title.match(/^\[\d{1,4}\/\d{1,2}\/\d{1,2}\]\s*(ru|ua)\b/i);
+      if (datedPosition) return datedPosition[1].toLowerCase() === 'ru' ? 'russian' : 'ukrainian';
+
+      if (/^(?:russian|russia|rf|рф|россий\w*|росій\w*)\b/.test(title)) return 'russian';
+      if (/^(?:ukrainian|ukraine|ua|afu|зсу|украин\w*|україн\w*)\b/.test(title)) return 'ukrainian';
+
+      // These two current "Important Areas" labels are explicitly grouped as RF areas
+      // by Project Owl's own map-data preprocessing.
+      if (title === 'dnipropetrovsk 2' || title === 'sumy incursion 2') return 'russian';
+
+      var labelText = [title].concat(folders).join(' ').toLowerCase();
+      if (/holding[ _-]?area|assembly[ _-]?area|concentration|staging[ _-]?area|мест[ао] сосредоточ|район сосредоточ/.test(labelText)) return 'holding';
+      if (/grey[ _-]?zone|gray[ _-]?zone|buffer[ _-]?zone|серая зона|сіра зона|буферн/.test(labelText)) return 'grey';
       return 'unknown';
     }
+
+    // Legacy campaign/axis overlays are not current frontline or unit-position data.
+    var OWL_SKIP_NAMES = [
+      'initial invasion',
+      'kyiv axis',
+      'kharkiv axis',
+      'luhansk axis',
+      'donetsk axis',
+      'zaporizhia and kherson axis',
+      'ukrainian kherson counterattack',
+      'crimea',
+      'donetsk and luhansk people',
+      "people's republic"
+    ];
+
+    function shouldSkipOwlHistoricalFeature(name, folderNames) {
+      var searchable = [name].concat(folderNames || []).join(' ').toLowerCase();
+      if (OWL_SKIP_NAMES.some(function(marker) { return searchable.indexOf(marker) >= 0; })) return true;
+      if (/\b(?:russian\s+)?initial\s+invasion\b|\binvasion\s+of\s+ukraine\b|\brussian\s+actions?\s+(?:during|in)\s+(?:the\s+)?invasion\b/.test(searchable)) return true;
+      return false;
+    }
+
     function isInHeavyFolder(pm) {
       var el = pm.parentNode;
       while (el && el.nodeType === 1) {
@@ -1805,15 +1830,16 @@
         }
         var placemarks = kmlDoc.querySelectorAll('Placemark');
         placemarks.forEach(function(pm) {
-          if (isInHeavyFolder(pm)) { stats.skipped++; return; }
-          stats.placemarks++;
           var pmName = owlText(pm.querySelector(':scope > name'));
+          var folderNames = owlAncestorNames(pm);
+          if (isInHeavyFolder(pm) || shouldSkipOwlHistoricalFeature(pmName, folderNames)) {
+            stats.skipped++;
+            return;
+          }
+          stats.placemarks++;
+
           var pmDescription = owlText(pm.querySelector(':scope > description'));
           var styleUrl = owlText(pm.querySelector(':scope > styleUrl'));
-          var folderNames = owlAncestorNames(pm);
-          var resolvedStyle = owlResolveStyle(kmlDoc, styleUrl);
-          var inlineStyles = Array.from(pm.querySelectorAll(':scope > Style')).map(function(s) { return s.textContent || ''; }).join(' ');
-          var cat = categorizeOwlFeature(pmName, pmDescription, folderNames, resolvedStyle + ' ' + inlineStyles);
           var wrapDoc = document.implementation.createDocument('http://www.opengis.net/kml/2.2', 'kml', null);
           var innerDoc = wrapDoc.createElement('Document');
           innerDoc.appendChild(pm.cloneNode(true));
@@ -1827,14 +1853,15 @@
             else if (gt === 'LineString' || gt === 'MultiLineString') stats.lines++;
             else if (gt === 'Polygon' || gt === 'MultiPolygon') stats.polygons++;
             else if (gt === 'GeometryCollection') {
-              // Keep supported members instead of silently discarding the whole placemark.
               (f.geometry.geometries || []).forEach(function(g) {
                 if (g.type === 'Point' || g.type === 'MultiPoint') stats.points++;
                 else if (g.type === 'LineString' || g.type === 'MultiLineString') stats.lines++;
                 else if (g.type === 'Polygon' || g.type === 'MultiPolygon') stats.polygons++;
               });
             } else return;
+
             f.properties = f.properties || {};
+            var cat = categorizeOwlFeature(pmName, folderNames, f.properties);
             f.properties._category = cat;
             f.properties._source = 'Project Owl';
             f.properties._folder = folderNames.join(' / ');
@@ -2248,15 +2275,6 @@
       return 'способ геопривязки не указан в данных';
     }
 
-    function getEditorialReviewLabel(event) {
-      var status = String(event && event.editorial_review_status || '').toLowerCase();
-      if (['fact_checked', 'human_verified', 'editorially_verified'].indexOf(status) >= 0) {
-        return 'отмечена как выполненная';
-      }
-      if (status === 'reviewed') return 'отмечено рассмотрение человеком, результат не указан';
-      return 'в данных не отмечена';
-    }
-
     function appendProvenanceLine(parent, label, value) {
       if (!value) return;
       var line = document.createElement('div');
@@ -2330,7 +2348,6 @@
       var healthTime = formatProvenanceDate(healthSnapshot && healthSnapshot.generated_at);
       if (healthTime) appendProvenanceLine(box, 'Снимок состояния каналов', healthTime);
 
-      appendProvenanceLine(box, 'Ручная редакционная проверка', getEditorialReviewLabel(event));
       appendProvenanceLine(box, 'Ограничение', 'успешное получение канала, число публикаций и автоматическая сверка не подтверждают истинность сообщения или независимость первоисточников');
 
       var methodLink = document.createElement('a');
@@ -2367,11 +2384,9 @@
         '<div class="summary-line"><span>Сверено по нескольким Telegram-каналам</span><b>' +
           escapeHtml(evidence.cross_source_consistent_count || daily.corroborated_event_count || 0) + '</b></div>' +
         '<div class="summary-line"><span>Без межканальной сверки</span><b>' +
-          escapeHtml(evidence.not_independently_corroborated_count || daily.not_verified_event_count || 0) + '</b></div>' +
-        '<div class="summary-line"><span>Редакционно проверено</span><b>' +
-          escapeHtml(evidence.editorially_fact_checked_count || 0) + '</b></div>';
+          escapeHtml(evidence.not_independently_corroborated_count || daily.not_verified_event_count || 0) + '</b></div>';
       if (attentionCandidates.length) {
-        html += '<div style="margin-top:8px;font-size:11px;font-weight:700;">Новые сообщения для внимания (нужна ручная проверка)</div>';
+        html += '<div style="margin-top:8px;font-size:11px;font-weight:700;">Новые сообщения, требующие проверки первоисточников</div>';
         attentionCandidates.slice(0, 5).forEach(function(candidate) {
           html += '<div style="margin-top:4px;font-size:11px;">' +
             escapeHtml(candidate.location || 'Место не определено') + ' · ' +
@@ -2456,8 +2471,6 @@
             verification_note: ev.verification_note || 'Нет автоматического подтверждения по отличающимся сообщениям других каналов.',
             source_url: ev.url || null,
             location_resolution: ev.location_resolution || null,
-            editorial_review_status: ev.editorial_review_status || 'not_recorded',
-            editorial_review_note: 'not_recorded means no manual editorial review record was supplied; it does not establish whether an individual source was reviewed outside this dataset.',
             pipeline_generated_at: (window.TG_DATA && window.TG_DATA.generated_at) || null,
             source_health_snapshot_at: (window.OSINT_INTELLIGENCE && window.OSINT_INTELLIGENCE.source_health && window.OSINT_INTELLIGENCE.source_health.generated_at) || null,
             source_health: getEventSourceRecords(ev).map(function(source) {
@@ -2787,7 +2800,7 @@
                 (sourceInfo.crossSide ? ' · UA + RU' : '') + '</div>' +
                 '<div class="evt-time">' + escapeHtml(time) + '</div>' +
                 '<div style="margin-top:3px;font-size:10px;line-height:1.35;color:var(--text-muted);">Геопривязка: ' + escapeHtml(getEventCoordinateLabel(ev)) +
-                ' · ручная проверка: ' + escapeHtml(getEditorialReviewLabel(ev)) + '</div></div>';
+                '</div></div>';
       });
       body.innerHTML = html;
       attachEventFilters();
