@@ -1,4 +1,4 @@
-const CACHE_NAME = 'osint-map-v3';
+const CACHE_NAME = 'osint-map-v4';
 const SHELL = [
   './',
   './index.html',
@@ -49,8 +49,23 @@ self.addEventListener('fetch', function (event) {
   if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
   // Не перехватываем запросы к сторонним сервисам и API.
   if (url.origin !== self.location.origin) return;
-  // Данные должны обновляться из сети, а не застревать в cache-first кэше.
-  if (/\/data\/(?:telegram-events\.js|firms-fires\.json)$/.test(url.pathname)) return;
+  // Динамические наборы должны обновляться из сети; последняя копия нужна только офлайн.
+  if (/\/data\/(?:telegram-events\.js|firms-fires\.json|osint-intelligence\.js)$/.test(url.pathname)) {
+    event.respondWith(
+      fetch(request).then(function (response) {
+        if (response && response.ok && response.type !== 'opaque') {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(function (cache) {
+            return cache.put(request, copy);
+          }).catch(function () {});
+        }
+        return response;
+      }).catch(function () {
+        return caches.match(request);
+      })
+    );
+    return;
+  }
 
   const isNavigation = request.mode === 'navigate' || /\/index\.html$/.test(url.pathname);
   if (isNavigation) {
