@@ -4,12 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 23,
-      "delta": 15,
+      "current_period": 21,
+      "delta": 11,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 8,
+      "previous_period": 10,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
@@ -17,141 +17,16 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-01T11:03:55+00:00",
-      "description": "Теперь уже бывшее здание горисполкома в Краматорске после попадания ФАБа.",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Краматорск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "boris_rozhin"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-01T10:36:38+00:00",
-      "description": "В Краматорске в результате ударов ВС РФ уничтожено здание горисполкома, которое пережило российский захват в 2014 году, — власти\n\nВ Краматорске Донецкой области Украины ВС РФ  авиаударами уничтожили з",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Краматорск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "boris_rozhin",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-01T10:03:28+00:00",
-      "description": "В Днепропетровской области после российских ударов по энергетике почти 100 000 человек остались без света, — власти  По словам главы Днепропетровской ОВА Александра Ганжи, ВС РФ нанесли удары по энерг",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Днепр",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "astrapress",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-01T09:53:55+00:00",
-      "description": "🔥НПЗ «Лукойл-Нижегороднефтеоргсинтез», Кстово, Нижегородська область.  https://t.me/operativnoZSU/\n\n🤡Влада Нижегородської області після нічної атаки на НПЗ закликала місцевих заправляти автомобілі за ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Кстово",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-01T09:50:38+00:00",
-      "description": "песков уклонился от вопроса, готов ли путин говорить с Зеленским  Сначала говорящая усатая морда заявила, что путин якобы открыт к диалогу со всеми, но на уточняющий вопрос, касается ли это звонка Зел",
+      "date": "2026-11-01T17:08:24+00:00",
+      "description": "👀 Зеленский вновь предложил путину встретиться в Турции для переговоров о завершении войны\n\nПрезидент Украины рассчитывает, что Реджеп Тайип Эрдоган поможет организовать встречу благодаря своим контак",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "operativnoZSU",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-01T09:00:01+00:00",
-      "description": "‼️🇷🇺 Враг атаковал Нижегородскую область  ▪️В результате атаки беспилотников повреждения получил промышленный объект, сообщил губернатор региона. ⚠️Подписаться на RV: MAX | t.me/RVvoenkor\n\n‼️🇷🇺 В Ниже",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Кстово",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "astrapress"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-01T08:54:22+00:00",
-      "description": "Еще кадры последствий атаки беспилотников ВСУ на НПЗ — «ЛУКОЙЛ-Нижегороднефтеоргсинтез» в Кстово Нижегородской области.   📸 Прислать фото/видео/информацию: @helloastrabot  💫 Резервный канал ASTRA: htt",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Кстово",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 4,
       "sources": [
         "RVvoenkor",
-        "astrapress",
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-01T08:07:02+00:00",
-      "description": "В Сумской области из-за российских атак пострадали шесть человек, — Нацполиция Украины\n\nКак заявляют в ведомстве, за последние сутки ВС РФ обстреляли 27 населенных пунктов региона, всего было 78 ударо",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Житомир",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "operativnoZSU"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-01T08:04:41+00:00",
-      "description": "🇺🇸Трамп заявив, що запросив би Зеленського на саміт G20\n\nПеред цим рудолиций президент запросив на нього путіна.\n\n🫡https://t.me/operativnoZSU/",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
+        "epoddubny",
         "operativnoZSU",
         "uniannet"
       ],
@@ -159,61 +34,96 @@
     },
     {
       "country": "UA",
-      "date": "2026-11-01T07:56:45+00:00",
-      "description": "⚡️Внаслідок ворожої атаки на енергетичну інфраструктуру Житомирщини знеструмлено понад 650 населених пунктів, — ОВА \n\nНаразі ведуться відновлювані роботи.\n\n🫡https://t.me/operativnoZSU/",
+      "date": "2026-11-01T16:47:57+00:00",
+      "description": "Зеленський заявив, що готовий зустрітись з путіним в Туреччині та сподівається, що Ердоган допоможе організувати таку зустріч \n\nПрезидент додав, що тільки лідери двох країн можуть домовитись з тих пит",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "epoddubny",
+        "operativnoZSU",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-01T15:46:48+00:00",
+      "description": "«Хочет переговорить — пусть приезжает»: Ушаков о сигналах Зеленского\n\nВладимир Путин ответит, если *Зеленский ему позвонит, – заявил помощник президента Юрий Ушаков в интервью Павлу Зарубину для «Вест",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "epoddubny",
+        "operativnoZSU",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-01T15:44:39+00:00",
+      "description": "У Козятинській громаді на Вінниччині внаслідок російської атаки загинули чоловік і жінка, троє дітей госпіталізовані.\n\nВлучання сталося між гуртожитком та одним із навчальних закладів\n\n📰 підписатися",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Житомир",
+      "location": "Козятин",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "astrapress",
-        "operativnoZSU"
+        "operativnoZSU",
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 13,
+  "corroborated_event_count": 4,
   "country_counts": {
-    "RU": 8,
-    "UA": 21
+    "GB": 1,
+    "RU": 5,
+    "UA": 23
   },
   "editorially_fact_checked_count": 0,
   "event_count": 29,
   "event_type_counts": {
     "Air Raid Alert": 1,
     "Military Operation": 2,
-    "Military Strike": 23,
-    "Political Development": 3
+    "Military Strike": 21,
+    "Political Development": 5
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 13,
+    "cross_source_consistent_count": 4,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 16,
-    "rss_reports_not_independently_corroborated_count": 5
+    "not_independently_corroborated_count": 25,
+    "rss_reports_not_independently_corroborated_count": 3
   },
-  "generated_at": "2026-11-01T11:45:52Z",
+  "generated_at": "2026-11-01T17:45:46Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 21,
-  "not_verified_event_count": 16,
+  "new_since_previous_snapshot": 22,
+  "not_verified_event_count": 25,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 23,
-      "delta": 15,
+      "current_period": 21,
+      "delta": 11,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 8,
+      "previous_period": 10,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 5,
-    "telegram": 24
+    "rss": 3,
+    "telegram": 26
   },
   "top_locations": [
     {
@@ -222,54 +132,55 @@
       "location": "Киев"
     },
     {
-      "country": "UA",
-      "events": 5,
-      "location": "Краматорск"
-    },
-    {
       "country": "RU",
-      "events": 4,
-      "location": "Кстово"
-    },
-    {
-      "country": "UA",
       "events": 2,
-      "location": "Днепр"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Житомир"
-    },
-    {
-      "country": "RU",
-      "events": 1,
       "location": "Нижний Новгород"
     },
     {
       "country": "UA",
-      "events": 1,
-      "location": "Сумы"
+      "events": 2,
+      "location": "Хмельницкий"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Павлоград"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Винница"
     },
     {
       "country": "RU",
       "events": 1,
       "location": "Москва"
+    },
+    {
+      "country": "UA",
+      "events": 1,
+      "location": "Козятин"
+    },
+    {
+      "country": "UA",
+      "events": 1,
+      "location": "Казатин"
     }
   ],
   "top_sources": {
     "RVvoenkor": 4,
-    "astrapress": 8,
-    "boris_rozhin": 2,
+    "astrapress": 2,
+    "boris_rozhin": 4,
+    "epoddubny": 1,
     "kyivindependent_official": 2,
     "lost_armour": 2,
-    "operativnoZSU": 5,
-    "ukrpravda_news": 4,
-    "uniannet": 2,
-    "wargonzo": 1,
-    "Суспільне Новини": 3,
+    "odesa_typical": 1,
+    "operativnoZSU": 4,
+    "rybar": 3,
+    "ukrpravda_news": 2,
+    "uniannet": 3,
     "Українська правда": 2
   },
-  "window_end": "2026-11-01T11:45:52Z",
-  "window_start": "2026-10-31T11:45:52Z"
+  "window_end": "2026-11-01T17:45:46Z",
+  "window_start": "2026-10-31T17:45:46Z"
 }
