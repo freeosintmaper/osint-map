@@ -10,12 +10,19 @@ on:
       - main
   workflow_dispatch:
 
+# This workflow runs code from pull requests. It only needs to read the repository.
+permissions:
+  contents: read
+
 jobs:
   syntax:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Do not leave the read-only token in .git/config for scripts from a PR.
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@v5
