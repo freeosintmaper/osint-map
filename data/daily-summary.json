@@ -4,80 +4,64 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 24,
-      "delta": 22,
+      "current_period": 22,
+      "delta": 21,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
-  "attention_candidates": [
-    {
-      "country": "UA",
-      "date": "2026-10-31T19:01:01+00:00",
-      "description": "12-летняя девочка ранена в результате российского удара по Киеву, — КГВА\n\n«В Оболонском районе обломки упали на территории торгового центра, — сообщили в Киевской городской военной администрации, уточ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    }
-  ],
-  "corroborated_event_count": 7,
+  "attention_candidates": [],
+  "corroborated_event_count": 3,
   "country_counts": {
-    "RU": 9,
-    "UA": 24,
+    "RU": 8,
+    "UA": 22,
     "US": 2
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 35,
+  "event_count": 32,
   "event_type_counts": {
-    "Air Raid Alert": 3,
+    "Air Raid Alert": 2,
     "Military Operation": 3,
-    "Military Strike": 24,
+    "Military Strike": 22,
     "Political Development": 5
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 7,
+    "cross_source_consistent_count": 3,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 28,
-    "rss_reports_not_independently_corroborated_count": 5
+    "not_independently_corroborated_count": 29,
+    "rss_reports_not_independently_corroborated_count": 6
   },
-  "generated_at": "2026-10-31T20:40:07Z",
+  "generated_at": "2026-11-01T00:00:22Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 10,
-  "not_verified_event_count": 28,
+  "new_since_previous_snapshot": 4,
+  "not_verified_event_count": 29,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 24,
-      "delta": 22,
+      "current_period": 22,
+      "delta": 21,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 5,
-    "telegram": 30
+    "rss": 6,
+    "telegram": 26
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 8,
+      "events": 6,
       "location": "Киев"
     },
     {
@@ -91,16 +75,6 @@
       "location": "Москва"
     },
     {
-      "country": "UA",
-      "events": 3,
-      "location": "Павлоград"
-    },
-    {
-      "country": "RU",
-      "events": 3,
-      "location": "Уфа"
-    },
-    {
       "country": "US",
       "events": 2,
       "location": "Вашингтон"
@@ -108,28 +82,38 @@
     {
       "country": "UA",
       "events": 2,
+      "location": "Павлоград"
+    },
+    {
+      "country": "UA",
+      "events": 2,
       "location": "Запорожье"
+    },
+    {
+      "country": "RU",
+      "events": 2,
+      "location": "Уфа"
     },
     {
       "country": "UA",
       "events": 1,
-      "location": "Купянск"
+      "location": "Kramatorsk"
     }
   ],
   "top_sources": {
     "BBC News Україна": 2,
     "astrapress": 6,
-    "boris_rozhin": 1,
     "dnepr_typical": 2,
-    "exilenova_plus": 3,
+    "exilenova_plus": 2,
     "kyivindependent_official": 2,
     "lost_armour": 3,
-    "operativnoZSU": 6,
+    "operativnoZSU": 4,
     "supernova_plus": 2,
     "ukrpravda_news": 3,
     "uniannet": 2,
-    "Суспільне Новини": 2
+    "Суспільне Новини": 3,
+    "Українська правда": 1
   },
-  "window_end": "2026-10-31T20:40:07Z",
-  "window_start": "2026-10-30T20:40:07Z"
+  "window_end": "2026-11-01T00:00:22Z",
+  "window_start": "2026-10-31T00:00:22Z"
 }
