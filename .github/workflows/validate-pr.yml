@@ -10,12 +10,19 @@ on:
       - main
   workflow_dispatch:
 
+# This workflow runs code from pull requests. It only needs to read the repository.
+permissions:
+  contents: read
+
 jobs:
   syntax:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Do not leave the read-only token in .git/config for scripts from a PR.
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -56,7 +63,7 @@ jobs:
           node <<'NODE'
           const fs = require('fs');
           const html = fs.readFileSync('territory-history.html', 'utf8');
-          const blocks = Array.from(html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi));
+          const blocks = Array.from(html.matchAll(/<script\\b[^>]*>([\\s\\S]*?)<\\/script>/gi));
           if (!blocks.length) throw new Error('No inline script found in territory-history.html');
           blocks.forEach((match, index) => {
             try {
@@ -66,7 +73,7 @@ jobs:
               process.exitCode = 1;
             }
           });
-          if (!process.exitCode) console.log('Checked ' + blocks.length + ' territorial history script block(s).');
+          if (!process.exitCode) console.log('Checked ' + blocks.length + ' inline script block(s).');
           NODE
 
       - name: Check inline JavaScript syntax
@@ -74,7 +81,7 @@ jobs:
           node <<'NODE'
           const fs = require('fs');
           const html = fs.readFileSync('index.html', 'utf8');
-          const blocks = Array.from(html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi));
+          const blocks = Array.from(html.matchAll(/<script\\b[^>]*>([\\s\\S]*?)<\\/script>/gi));
           blocks.forEach((match, index) => {
             try {
               new Function(match[1]);
@@ -83,5 +90,5 @@ jobs:
               process.exitCode = 1;
             }
           });
-          if (!process.exitCode) console.log('Checked ' + blocks.length + ' inline script blocks.');
+          if (!process.exitCode) console.log('Checked ' + blocks.length + ' inline script block(s).');
           NODE
