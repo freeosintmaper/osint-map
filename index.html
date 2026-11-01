@@ -628,6 +628,24 @@
     .event-icon svg { width: 16px; height: 16px; fill: #fff; display: block; pointer-events: none; }
     body.dark .event-icon { border-color: #14141f; }
 
+
+    .owl-unit-marker {
+      width: 24px; height: 24px; box-sizing: border-box;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--owl-unit-color); border-radius: 5px;
+      background: rgba(18, 24, 34, 0.94); color: var(--owl-unit-color);
+      box-shadow: 0 2px 7px rgba(0, 0, 0, 0.45);
+      cursor: pointer;
+    }
+    .owl-unit-marker--russian { --owl-unit-color: #f05252; }
+    .owl-unit-marker--ukrainian { --owl-unit-color: #4b9bff; }
+    .owl-unit-marker--unknown { --owl-unit-color: #c4cbd4; }
+    .owl-unit-marker svg {
+      width: 16px; height: 16px; display: block; pointer-events: none;
+      fill: none; stroke: currentColor; stroke-width: 1.7;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+
     .measure-tooltip {
       background: linear-gradient(135deg, #ec4899 0%, #db2777 100%) !important;
       color: #fff !important; border: none !important;
@@ -1615,6 +1633,90 @@
       var outline = layerMode === 'outline';
       return { color: c, weight: 1.8, opacity: 0.9, fill: !outline, fillColor: c, fillOpacity: outline ? 0 : 0.18 };
     }
+
+    // The source's own sidc.py derives tactical symbol categories from unit names.
+    // Apply conservative name-based matching only to its two explicit unit-position folders.
+    var OWL_POSITION_TYPE_LABELS = {
+      unit: { ru: 'Подразделение (тип не указан)', uk: 'Підрозділ (тип не вказано)', en: 'Unit (type unspecified)' },
+      infantry: { ru: 'Пехота / механизированные подразделения', uk: 'Піхота / механізовані підрозділи', en: 'Infantry / mechanized units' },
+      armor: { ru: 'Танковые / бронетанковые подразделения', uk: 'Танкові / бронетанкові підрозділи', en: 'Armour units' },
+      artillery: { ru: 'Артиллерия / ракетные войска', uk: 'Артилерія / ракетні війська', en: 'Artillery / rocket forces' },
+      air_defense: { ru: 'Противовоздушная оборона', uk: 'Протиповітряна оборона', en: 'Air defence' },
+      uav: { ru: 'Беспилотные системы', uk: 'Безпілотні системи', en: 'UAV systems' },
+      aviation: { ru: 'Авиация', uk: 'Авіація', en: 'Aviation' },
+      naval: { ru: 'Военно-морские силы', uk: 'Військово-морські сили', en: 'Naval forces' },
+      engineer: { ru: 'Инженерные подразделения', uk: 'Інженерні підрозділи', en: 'Engineer units' },
+      logistics: { ru: 'Логистика / обеспечение', uk: 'Логістика / забезпечення', en: 'Logistics / sustainment' },
+      signal: { ru: 'Связь / радиоэлектронная борьба', uk: 'Зв’язок / радіоелектронна боротьба', en: 'Signals / electronic warfare' },
+      recon: { ru: 'Разведка', uk: 'Розвідка', en: 'Reconnaissance' },
+      special: { ru: 'Специальные подразделения', uk: 'Спеціальні підрозділи', en: 'Special operations' },
+      command: { ru: 'Штаб / командование', uk: 'Штаб / командування', en: 'Headquarters / command' }
+    };
+
+    function isOwlUnitPositionFeature(feature) {
+      var folderPath = String((feature && feature.properties && feature.properties._folder) || '');
+      return folderPath.split('/').some(function(part) {
+        var folder = part.trim().replace(/\s+/g, ' ').toLowerCase();
+        return folder === 'russian unit positions' || folder === 'ukrainian unit positions';
+      });
+    }
+
+    function classifyOwlPositionType(name) {
+      var s = String(name || '').toLowerCase().replace(/\s+/g, ' ');
+      if (!s) return 'unit';
+      if (/\[uav\]|\b(?:uav|uas|drone|drones|fpv|bpla)\b|бпла|дрон|беспилот|безпілот/.test(s)) return 'uav';
+      if (/\b(?:air defense|air defence|anti[- ]aircraft|antiair|sam)\b|пво|зенит|зрк/.test(s)) return 'air_defense';
+      if (/\b(?:aviation|aircraft|helicopter|fighter|bomber|a-50|su-\d+|mig-\d+|tu-\d+|ka-\d+|mi-\d+)\b|авиац|вертол|истребител|самолет|літак/.test(s)) return 'aviation';
+      if (/\b(?:submarine|corvette|frigate|destroyer|cruiser|ship|flotilla|naval)\b|подводн|підводн|корвет|фрегат|эсминец|есмінець|флотил|военно-мор/.test(s)) return 'naval';
+      if (/\b(?:tank|armou?red|armor|t-64|t-72|t-80|t-90|abrams|leopard|challenger|bradley|bmp|btr)\b|танк|бронетех|бронемаш|бмп|бтр/.test(s)) return 'armor';
+      if (/\b(?:artillery|howitzer|howitzers|mlrs|himars|grad|uragan|smerch|msta|pion|rocket artillery)\b|артиллер|рсзо|гаубиц|миномет|миномёт|ствольн/.test(s)) return 'artillery';
+      if (/\b(?:missile|rocket troops|rocket forces)\b|ракетн/.test(s)) return 'artillery';
+      if (/\b(?:engineer|engineering|pontoon|sapper|bridge unit)\b|инженер|сапер|сапёр|понтон/.test(s)) return 'engineer';
+      if (/\b(?:logistic|logistics|supply|transport|railway|medical|medic)\b|логист|снабжен|обеспеч|транспорт|медицин/.test(s)) return 'logistics';
+      if (/\b(?:signal|communications|communication|electronic warfare|ew)\b|связ|рэб|рэр/.test(s)) return 'signal';
+      if (/\b(?:recon|reconnaissance|scout|surveillance|intelligence)\b|развед/.test(s)) return 'recon';
+      if (/\b(?:sof|sso|spetsnaz|special forces|special purpose|special operations|sbu)\b|спецназ|ссо\b/.test(s)) return 'special';
+      if (/\b(?:infantry|mechanized|mechanised|motorized|motorised|rifle|air assault|airborne|assault|territorial defense|territorial defence|tdf|jager)\b|пехот|механизирован|механізован|мотострел|мотопех|десант|стрелков|стрілець|морпех|теробор/.test(s)) return 'infantry';
+      if (/\b(?:headquarters|command post|commandant|hq)\b|штаб|командный пункт|командний пункт/.test(s)) return 'command';
+      return 'unit';
+    }
+
+    function owlPositionTypeLabel(type) {
+      var labels = OWL_POSITION_TYPE_LABELS[type] || OWL_POSITION_TYPE_LABELS.unit;
+      return labels[currentLang] || labels.ru;
+    }
+
+    var OWL_POSITION_SVGS = {
+      unit: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/><circle cx="12" cy="12" r="3"/></svg>',
+      infantry: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="6" r="2.3"/><path d="M12 9v7m-5-4 5-2 5 2m-5 4-4 5m4-5 4 5"/></svg>',
+      armor: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h15l2 4H3zM8 11l2-4h5l2 4M2 16h20v3H2zM13 7l5-3"/></svg>',
+      artillery: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16M8 18a4 4 0 0 1 8 0M10 13l7-7 2 2-7 7M6 18l-2 2m14-2 2 2"/></svg>',
+      air_defense: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V9m-4 0 4-6 4 6M4 9a8 8 0 0 1 16 0M6 5l-2-2m14 2 2-2"/></svg>',
+      uav: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8v8m0-4L5 7m7 5 7-5M9 16l-4 3m10-3 4 3"/><circle cx="12" cy="12" r="2.2"/><path d="M3 6h4M17 6h4"/></svg>',
+      aviation: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.5 8 7 3v2l-7-1 .5 6-3-1-3 1 .5-6-7 1v-2l7-3z"/></svg>',
+      naval: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v14m-5-9h10M5 13l-2 4c2 2 4 3 9 3s7-1 9-3l-2-4M8 8l4-4 4 4"/></svg>',
+      engineer: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18M5 18v-5h14v5M5 13l7-7 7 7M9 9l3 3 3-3"/></svg>',
+      logistics: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h12v9H3zM15 11h4l3 3v3h-7zM7 17a2 2 0 1 0 4 0m7 0a2 2 0 1 0 4 0"/></svg>',
+      signal: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V9m-4 11h8M12 9 8 4m4 5 4-5M6 9a8 8 0 0 1 0 8m12-8a8 8 0 0 1 0 8"/></svg>',
+      recon: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/><path d="M12 12h0M4 8l-1-2m17 2 1-2"/></svg>',
+      special: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.5 6 .7-4.5 4.1 1.2 6-5.2-3-5.2 3 1.2-6-4.5-4.1 6-.7z"/></svg>',
+      command: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h16M6 19V7h12v12M9 7V4h6v3M8 11h8M8 15h5"/></svg>'
+    };
+
+    function createOwlUnitPositionIcon(feature) {
+      var props = feature && feature.properties || {};
+      var side = props._category === 'russian' ? 'russian' : (props._category === 'ukrainian' ? 'ukrainian' : 'unknown');
+      var type = classifyOwlPositionType(props.name || '');
+      var typeLabel = owlPositionTypeLabel(type);
+      return L.divIcon({
+        html: '<div class="owl-unit-marker owl-unit-marker--' + side + '" title="' + typeLabel + '">' + (OWL_POSITION_SVGS[type] || OWL_POSITION_SVGS.unit) + '</div>',
+        className: '',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12],
+        popupAnchor: [0, -12]
+      });
+    }
+
     function owlFeaturePopup(f, layer) {
       var cat = (f.properties && f.properties._category) || 'unknown';
       var name = (f.properties && f.properties.name) || '';
@@ -1624,6 +1726,10 @@
       var heading = document.createElement('b');
       heading.textContent = owlLabelFor(cat);
       popup.appendChild(heading);
+      if (isOwlUnitPositionFeature(f)) {
+        var typeTitle = currentLang === 'en' ? 'Unit type' : (currentLang === 'uk' ? 'Тип підрозділу' : 'Тип подразделения');
+        appendProvenanceLine(popup, typeTitle, owlPositionTypeLabel(classifyOwlPositionType(name)));
+      }
       if (name) {
         popup.appendChild(document.createElement('br'));
         var nameEl = document.createElement('i');
@@ -1661,6 +1767,15 @@
     // Кружки не создают стандартные Leaflet pin-иконки и включаются отдельной настройкой.
     var owlPositionsLayer = L.geoJSON(null, {
       pointToLayer: function(f, latlng) {
+        // Use tactical unit symbols only for Project Owl's explicit unit-position folders.
+        // Other geolocated points remain unchanged as small dots.
+        if (isOwlUnitPositionFeature(f)) {
+          return L.marker(latlng, {
+            icon: createOwlUnitPositionIcon(f),
+            keyboard: true,
+            riseOnHover: true
+          });
+        }
         var cat = (f.properties && f.properties._category) || 'unknown';
         var c = owlColorFor(cat);
         return L.circleMarker(latlng, {
