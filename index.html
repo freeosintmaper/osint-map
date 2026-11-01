@@ -1032,7 +1032,8 @@
     var OWL_KMZ_URL = null;
     var OWL_DATASET_META = null;
     var DEEPSTATE_FETCHED_AT = null;
-    var OWL_CACHE_KEY = 'owl_zones_cache_v2';
+    // Version bump: discard the old mixed geometry cache so historical points are re-filtered from KML.
+    var OWL_CACHE_KEY = 'owl_zones_cache_v3';
     var OWL_CACHE_DATE = 'owl_zones_cache_date';
 
     var OWL_COLORS = {
@@ -1947,8 +1948,22 @@
           owlControlLayer.clearLayers();
           owlPositionsLayer.clearLayers();
           var displayStats = addOwlCollection(collection);
-          console.log('📊 Категории:', result.stats);
-          console.log('✅ Project Owl: ' + displayStats.control + ' зон/линий; точечных позиций отдельно: ' + displayStats.positions + ' (слой позиций выключен по умолчанию; пропущено исторических: ' + result.stats.skipped + ')');
+          console.log('📊 Геометрия Project Owl:', {
+            polygons: result.stats.polygons,
+            lines: result.stats.lines,
+            pointFeatures: result.stats.points,
+            skippedHistoricalPlacemarks: result.stats.skipped,
+            parsedPlacemarks: result.stats.placemarks,
+            geoJsonFeatures: result.features.length,
+            categories: {
+              russian: result.stats.russian,
+              ukrainian: result.stats.ukrainian,
+              holding: result.stats.holding,
+              grey: result.stats.grey,
+              unknown: result.stats.unknown
+            }
+          });
+          console.log('✅ Project Owl: ' + displayStats.control + ' объектов зон/линий; точечных объектов отдельно: ' + displayStats.positions + ' (слой точек выключен по умолчанию; исторических Placemark исключено: ' + result.stats.skipped + ')');
           try {
             localStorage.setItem(OWL_CACHE_KEY, JSON.stringify(collection));
             localStorage.setItem(OWL_CACHE_DATE, today);
