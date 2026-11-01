@@ -4,59 +4,59 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 22,
-      "delta": 21,
+      "current_period": 17,
+      "delta": 13,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 1,
+      "previous_period": 4,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "attention_candidates": [],
-  "corroborated_event_count": 3,
+  "corroborated_event_count": 1,
   "country_counts": {
-    "RU": 8,
-    "UA": 22,
-    "US": 2
+    "RU": 5,
+    "UA": 20,
+    "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 32,
+  "event_count": 26,
   "event_type_counts": {
     "Air Raid Alert": 2,
     "Military Operation": 3,
-    "Military Strike": 22,
-    "Political Development": 5
+    "Military Strike": 17,
+    "Political Development": 4
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 3,
+    "cross_source_consistent_count": 1,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 29,
+    "not_independently_corroborated_count": 25,
     "rss_reports_not_independently_corroborated_count": 6
   },
-  "generated_at": "2026-11-01T00:00:22Z",
+  "generated_at": "2026-11-01T04:47:44Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 4,
-  "not_verified_event_count": 29,
+  "new_since_previous_snapshot": 6,
+  "not_verified_event_count": 25,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 22,
-      "delta": 21,
+      "current_period": 17,
+      "delta": 13,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 1,
+      "previous_period": 4,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
     "rss": 6,
-    "telegram": 26
+    "telegram": 20
   },
   "top_locations": [
     {
@@ -71,13 +71,8 @@
     },
     {
       "country": "RU",
-      "events": 3,
-      "location": "Москва"
-    },
-    {
-      "country": "US",
       "events": 2,
-      "location": "Вашингтон"
+      "location": "Москва"
     },
     {
       "country": "UA",
@@ -85,14 +80,19 @@
       "location": "Павлоград"
     },
     {
+      "country": "RU",
+      "events": 1,
+      "location": "Kstovo"
+    },
+    {
       "country": "UA",
-      "events": 2,
-      "location": "Запорожье"
+      "events": 1,
+      "location": "Красноармейск"
     },
     {
       "country": "RU",
-      "events": 2,
-      "location": "Уфа"
+      "events": 1,
+      "location": "Кстово"
     },
     {
       "country": "UA",
@@ -102,18 +102,18 @@
   ],
   "top_sources": {
     "BBC News Україна": 2,
-    "astrapress": 6,
+    "RVvoenkor": 1,
+    "astrapress": 4,
     "dnepr_typical": 2,
-    "exilenova_plus": 2,
     "kyivindependent_official": 2,
-    "lost_armour": 3,
+    "lost_armour": 1,
     "operativnoZSU": 4,
-    "supernova_plus": 2,
     "ukrpravda_news": 3,
     "uniannet": 2,
+    "wargonzo": 1,
     "Суспільне Новини": 3,
     "Українська правда": 1
   },
-  "window_end": "2026-11-01T00:00:22Z",
-  "window_start": "2026-10-31T00:00:22Z"
+  "window_end": "2026-11-01T04:47:44Z",
+  "window_start": "2026-10-31T04:47:44Z"
 }

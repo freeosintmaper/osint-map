@@ -1,5 +1,5 @@
 {
-  "current_event_count": 42,
+  "current_event_count": 37,
   "date_utc": "2026-11-01",
   "events_added": [
     {
@@ -65,12 +65,102 @@
     },
     {
       "event": {
+        "channel": "kyivindependent_official",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-01T03:29:10+00:00",
+        "description": "⚡️Russian oil refinery in Kstovo ablaze after reported overnight drone strike.\n\nA major Russian oil refinery in Kstovo, Nizhny Novgorod Oblast, was reportedly targeted in a drone attack overnight on N",
+        "event_type": "Military Strike",
+        "id": 22,
+        "lat": 56.1475,
+        "lng": 44.19865,
+        "location": "Kstovo",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "kyivindependent_official",
+            "date": "2026-11-01T03:29:10+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/KyivIndependent_official/56587"
+          }
+        ],
+        "url": "https://t.me/KyivIndependent_official/56587",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "b892816febfb425377e508abe6e53660628dfe9e938a39435032029969fa6aab"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-01T03:01:02+00:00",
+        "description": "‼️🇷🇺💥 Кадры боёв: бойцы «Центра» уничтожают пехоту и технику врага в боях за Красноармейском и на Днепропетровщине\n\n▪️Подразделения группировки войск «Центр» продолжают атаки за ранее освобожденным г.",
+        "event_type": "Military Operation",
+        "id": 32,
+        "lat": 48.28014,
+        "lng": 37.17706,
+        "location": "Красноармейск",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-01T03:01:02+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/126188"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/126188",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "8df93d08f1c7e81f8ea32c0864c948f6dbe5ede8c334b3cc41be2544c88a15dd"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-01T02:41:17+00:00",
+        "description": "В Кстово Нижегородской области сообщают о взрывах. Как пишут местные жители, предположительно, под атакой местный НПЗ — «ЛУКОЙЛ-Нижегороднефтеоргсинтез». Информация уточняется \n\n📸 Прислать фото/видео/",
+        "event_type": "Military Strike",
+        "id": 27,
+        "lat": 56.1475,
+        "lng": 44.19865,
+        "location": "Кстово",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-01T02:41:17+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/129888"
+          }
+        ],
+        "url": "https://t.me/astrapress/129888",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "948ec178fbf8dac9b4bbc61e88ec994e4340200b3802c08098a37cfb1d069c9e"
+    },
+    {
+      "event": {
         "channel": "operativnoZSU",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
         "country": "UA",
         "date": "2026-10-31T20:00:30+00:00",
-        "description": "У Деснянському районі Києва, внаслідок атаки БпЛА виникло загоряння на нежитловій території та припаркованих автомобілів, — КМВА\n\nhttps://t.me/operativnoZSU/\n🤬755🙏107😢61❤9😁2🔥1\n  \n  \n    42K views20:00",
+        "description": "У Деснянському районі Києва, внаслідок атаки БпЛА виникло загоряння на нежитловій території та припаркованих автомобілів, — КМВА\n\nhttps://t.me/operativnoZSU/\n🤬872🙏126😢76❤12🔥2😁2😱1\n  \n  \n    49.6K views",
         "event_type": "Military Strike",
         "id": 4,
         "lat": 50.4501,
@@ -91,7 +181,37 @@
         "verification_sources": [],
         "verification_status": "not_verified"
       },
-      "fingerprint": "a075152a408d66b3f837ca0707f6164b8e99b78ffb68bab03b5e3ad15af12019"
+      "fingerprint": "427d0e365d3d932b77bba1335fbb879dc0a2eeaab839e398b474ca787b4d16c4"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T16:26:52+00:00",
+        "description": "Восемь человек, в том числе трое детей, ранены в результате российского удара по Павлограду, — ОВА  «Россияне ударили по Павлограду. Повреждены несколько многоквартирных домов», — сообщил глава Днепро",
+        "event_type": "Military Strike",
+        "id": 24,
+        "lat": 48.5333,
+        "lng": 35.8667,
+        "location": "Павлоград",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-10-31T16:26:52+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/129872"
+          }
+        ],
+        "url": "https://t.me/astrapress/129872",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "093627fab66706eb6bbf1fc72228abb6139f61798b47ff8c2893792dfc10c365"
     },
     {
       "event": {
@@ -100,7 +220,7 @@
         "coordinate_precision": "settlement_center",
         "country": "UA",
         "date": "2026-10-31T15:54:21+00:00",
-        "description": "❗️У Києві та низці областей оголошено повітряну тривогу через загрозу БПЛА\n\nhttps://t.me/operativnoZSU/\n🤬906🙏152😢24❤9😱7😁3🔥1\n  \n  \n    54.7K viewsedited  15:54",
+        "description": "❗️У Києві та низці областей оголошено повітряну тривогу через загрозу БПЛА\n\nhttps://t.me/operativnoZSU/\n🤬936🙏155😢24❤9😱7😁3🔥1\n  \n  \n    56.9K viewsedited  15:54",
         "event_type": "Air Raid Alert",
         "id": 2,
         "lat": 50.4501,
@@ -121,67 +241,7 @@
         "verification_sources": [],
         "verification_status": "not_verified"
       },
-      "fingerprint": "2f55739ebe96d9eeccb2ed05734fccac9921eaff9625c7dc335f8dfd7eb1f46d"
-    },
-    {
-      "event": {
-        "channel": "OsintFlow",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-10-30T15:11:21+00:00",
-        "description": "💥 В окупованому Харцизьку ліквідовано колаборанта Ігоря Лебезнєва, який очолював так звану Донецьку залізницю на захопленій росіянами території.\nЛебезнєв також був депутатом Харцизької міської ради ві",
-        "event_type": "Military Strike",
-        "id": 12,
-        "lat": 48.04277,
-        "lng": 38.14025,
-        "location": "Харцизьк",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "OsintFlow",
-            "date": "2026-10-30T15:11:21+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/osintflow/17622"
-          }
-        ],
-        "url": "https://t.me/osintflow/17622",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "3342ec94c814fe6e86722a1f8cc45af0ff1574039170b580ec8fc1a8a01d5167"
-    },
-    {
-      "event": {
-        "channel": "dnepr_typical",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-10-21T05:25:24+00:00",
-        "description": "Дніпропетровщина\n21 жовтня\n7:30\n \nОдна людина дістала поранень. Майже 30 разів ворог атакував три райони області. Бив безпілотниками, артилерією та ракетами.\n\n▪️ У Дніпровському районі пошкоджена буді",
-        "event_type": "Military Strike",
-        "id": 15,
-        "lat": 48.2811,
-        "lng": 37.1764,
-        "location": "Покровск",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "dnepr_typical",
-            "date": "2026-10-21T05:25:24+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/dnepr_typical/5831"
-          }
-        ],
-        "url": "https://t.me/dnepr_typical/5831",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "a9ad5e2373f294fcb3173bd2aea5ed148de226621c3bd7e66523423df8aae652"
+      "fingerprint": "e75c50ec56d9559d083d9c1fa9c9f5b433acdbcb9dca9d6fbf8d8a4cd2f4148b"
     }
   ],
   "events_removed": [
@@ -373,35 +433,257 @@
     },
     {
       "event": {
-        "channel": "OsintFlow",
+        "channel": "astrapress",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
         "country": "UA",
-        "date": "2026-10-30T15:11:21+00:00",
-        "description": "💥 В окупованому Харцизьку ліквідовано колаборанта Ігоря Лебезнєва, який очолював так звану Донецьку залізницю на захопленій росіянами території.\nЛебезнєв також був депутатом Харцизької міської ради ві",
-        "event_type": "Military Operation",
-        "id": 14,
-        "lat": 48.04277,
-        "lng": 38.14025,
-        "location": "Харцизьк",
-        "source_count": 1,
+        "date": "2026-10-31T16:04:01+00:00",
+        "description": "Восемь человек, в том числе трое детей, ранены в результате российского удара по Павлограду, — ОВА\n\n«Россияне ударили по Павлограду. Повреждены несколько многоквартирных домов», — сообщил глава Днепро",
+        "event_type": "Military Strike",
+        "id": 31,
+        "lat": 48.5333,
+        "lng": 35.8667,
+        "location": "Павлоград",
+        "source_count": 2,
         "source_type": "telegram",
         "sources": [
           {
-            "channel": "OsintFlow",
-            "date": "2026-10-30T15:11:21+00:00",
+            "channel": "astrapress",
+            "date": "2026-10-31T16:04:01+00:00",
             "source_type": "telegram",
-            "url": "https://t.me/osintflow/17622"
+            "url": "https://t.me/astrapress/129871"
+          },
+          {
+            "channel": "astrapress",
+            "date": "2026-10-31T16:26:52+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/129872"
           }
         ],
-        "url": "https://t.me/osintflow/17622",
+        "url": "https://t.me/astrapress/129871",
         "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
         "verification_sources": [],
         "verification_status": "not_verified"
       },
-      "fingerprint": "d6804d2312b730708ec32323f565b203f571cc2cc8fad56fb49b0fe8ffb9cc88"
+      "fingerprint": "846c3f2f0efaa241a2975898da537563bbf5cd1c870131c376a6985c394c6072"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "US",
+        "date": "2026-10-31T15:51:01+00:00",
+        "description": "«Надежда на устойчивый мир». Мелания Трамп прокомментировала завершение эвакуации жителей Олешек, которого она добивалась\n\n«Надежда на устойчивый мир. Олешки доказывают, что мы можем поставить человеч",
+        "event_type": "Political Development",
+        "id": 30,
+        "lat": 38.9072,
+        "lng": -77.0369,
+        "location": "Вашингтон",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-10-31T15:51:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/129870"
+          }
+        ],
+        "url": "https://t.me/astrapress/129870",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "30e48042084a4745c8ee1577840f98be2c9b10d56d39ebbfc685b60d0345b0fd"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-10-31T15:31:07+00:00",
+        "description": "До 15 выросло число сбитых БПЛА, летевших к Москве, — Собянин  «Четыре беспилотника уничтожены средствами ПВО Минобороны. На месте падения обломков работают специалисты экстренных служб», — написал мэ",
+        "event_type": "Military Strike",
+        "id": 29,
+        "lat": 55.7558,
+        "lng": 37.6173,
+        "location": "Москва",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-10-31T15:31:07+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/129868"
+          }
+        ],
+        "url": "https://t.me/astrapress/129868",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "9433a11c4a2bfdb3c2e5c8db11425fb848288e778724ce023b90cc9ba3e4d460"
+    },
+    {
+      "event": {
+        "channel": "exilenova_plus",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-10-31T14:21:00+00:00",
+        "description": "У ніч на 30 жовтня Сили оборони України далекобійними БпЛА завдали ударів по Новокуйбишевському нафтопереробному заводу в Самарській області рф, який є одним із підприємств, що забезпечують паливом ро",
+        "event_type": "Military Strike",
+        "id": 26,
+        "lat": 53.09709,
+        "lng": 49.94001,
+        "location": "Новокуйбишевськ",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "exilenova_plus",
+            "date": "2026-10-31T14:21:00+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/exilenova_plus/33800"
+          }
+        ],
+        "url": "https://t.me/exilenova_plus/33800",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "f064ef86aec6c3b5e22134026d20c1558270d3de4d25cc43b95bbea3ed9f4578"
+    },
+    {
+      "event": {
+        "channel": "kyivindependent_official",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-10-31T12:28:22+00:00",
+        "description": "⚡️️ Update: Evacuees from occupied Oleshky en route to Ukrainian-controlled territory after 4 planes land in Belarus.\n\nFour evacuation planes carrying residents of Russian-occupied Oleshky in Kherson ",
+        "event_type": "Military Operation",
+        "id": 22,
+        "lat": 46.62553,
+        "lng": 32.72426,
+        "location": "Oleshky",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "kyivindependent_official",
+            "date": "2026-10-31T12:28:22+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/KyivIndependent_official/56578"
+          }
+        ],
+        "url": "https://t.me/KyivIndependent_official/56578",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "b13ffa9a055003540fb73c32999f08460558912a86b9dca50bff9f44dd41df92"
+    },
+    {
+      "event": {
+        "channel": "supernova_plus",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-10-31T12:06:46+00:00",
+        "description": "Уфа ... НПЗ под атакой",
+        "event_type": "Military Strike",
+        "id": 28,
+        "lat": 54.7388,
+        "lng": 55.9721,
+        "location": "Уфа",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "supernova_plus",
+            "date": "2026-10-31T12:06:46+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/supernova_plus/62269"
+          }
+        ],
+        "url": "https://t.me/supernova_plus/62269",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "514919cb1c0ce1214d96123c9d832f5b22786ecdad04317cc8becacb3ecc3424"
+    },
+    {
+      "event": {
+        "channel": "supernova_plus",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-10-31T11:34:31+00:00",
+        "description": "Счастливый Новомосковск .. Тульская область .. это какойто ужас\n\n\n  \nНовомосковский Азот ..повреждения  ..прикурен 28. 10. 2026  .. \n\nПредприятие специализируется на производстве аммиака, азотной кисл",
+        "event_type": "Military Strike",
+        "id": 27,
+        "lat": 54.01098,
+        "lng": 38.29084,
+        "location": "Новомосковск",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "supernova_plus",
+            "date": "2026-10-31T11:34:31+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/supernova_plus/62268"
+          }
+        ],
+        "url": "https://t.me/supernova_plus/62268",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "exilenova_plus",
+          "supernova_plus"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "5a22cca78bba547e33d829d83665e413b4a9b32961a8dde0458d30f3ddf9234d"
+    },
+    {
+      "event": {
+        "channel": "exilenova_plus",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-10-31T11:30:02+00:00",
+        "description": "Продовжується кампанія з демілітаризації російської хімічної промисловості.  Після серії ударів по підприємствах із виробництва синтетичних каучуків під удар потрапив «Новомосковський Азот» у Тульські",
+        "event_type": "Military Strike",
+        "id": 25,
+        "lat": 54.01098,
+        "lng": 38.29084,
+        "location": "Новомосковськ",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "exilenova_plus",
+            "date": "2026-10-31T11:30:02+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/exilenova_plus/33795"
+          }
+        ],
+        "url": "https://t.me/exilenova_plus/33795",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "exilenova_plus",
+          "supernova_plus"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "09dae7240b327a39fac954a0a0c558a49f461066883208e84a413a34002c8f09"
     }
   ],
-  "generated_at": "2026-11-01T00:00:22Z",
+  "generated_at": "2026-11-01T04:47:44Z",
   "method_note": "Изменения показывают разницу между автоматическими выгрузками, а не доказанное изменение обстановки."
 }

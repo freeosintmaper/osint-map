@@ -4,59 +4,59 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 28,
-      "delta": 28,
+      "current_period": 24,
+      "delta": 23,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 0,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "attention_candidates": [],
-  "corroborated_event_count": 3,
+  "corroborated_event_count": 1,
   "country_counts": {
-    "RU": 9,
+    "RU": 6,
     "UA": 29,
-    "US": 2
+    "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 40,
+  "event_count": 36,
   "event_type_counts": {
     "Air Raid Alert": 2,
-    "Military Operation": 3,
-    "Military Strike": 28,
-    "Political Development": 7
+    "Military Operation": 4,
+    "Military Strike": 24,
+    "Political Development": 6
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 3,
+    "cross_source_consistent_count": 1,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 37,
+    "not_independently_corroborated_count": 35,
     "rss_reports_not_independently_corroborated_count": 6
   },
-  "generated_at": "2026-11-01T00:00:22Z",
+  "generated_at": "2026-11-01T04:47:44Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 5,
-  "not_verified_event_count": 37,
+  "new_since_previous_snapshot": 7,
+  "not_verified_event_count": 35,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 28,
-      "delta": 28,
+      "current_period": 24,
+      "delta": 23,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 0,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
     "rss": 6,
-    "telegram": 34
+    "telegram": 30
   },
   "top_locations": [
     {
@@ -65,19 +65,14 @@
       "location": "Киев"
     },
     {
-      "country": "RU",
-      "events": 4,
-      "location": "Москва"
-    },
-    {
       "country": "UA",
       "events": 3,
       "location": "Краматорск"
     },
     {
-      "country": "US",
-      "events": 2,
-      "location": "Вашингтон"
+      "country": "RU",
+      "events": 3,
+      "location": "Москва"
     },
     {
       "country": "UA",
@@ -90,30 +85,35 @@
       "location": "Запорожье"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 2,
-      "location": "Уфа"
+      "location": "Харьков"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Харьков"
+      "location": "Днепр"
+    },
+    {
+      "country": "RU",
+      "events": 1,
+      "location": "Kstovo"
     }
   ],
   "top_sources": {
     "BBC News Україна": 2,
     "OsintFlow": 3,
-    "astrapress": 6,
+    "RVvoenkor": 1,
+    "astrapress": 4,
     "dnepr_typical": 5,
-    "exilenova_plus": 2,
     "kyivindependent_official": 3,
     "lost_armour": 3,
     "operativnoZSU": 4,
-    "supernova_plus": 2,
     "ukrpravda_news": 3,
     "uniannet": 2,
-    "Суспільне Новини": 3
+    "Суспільне Новини": 3,
+    "Українська правда": 1
   },
-  "window_end": "2026-11-01T00:00:22Z",
-  "window_start": "2026-10-25T00:00:22Z"
+  "window_end": "2026-11-01T04:47:44Z",
+  "window_start": "2026-10-25T04:47:44Z"
 }
