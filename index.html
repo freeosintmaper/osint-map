@@ -323,6 +323,29 @@
       margin-right: 8px; margin-top: 2px;
     }
     .info.legend .legend-svg svg { width: 100%; height: 100%; }
+    .info.legend .legend-line-swatch {
+      width: 18px; height: 0; float: left; margin: 10px 8px 0 0;
+      border-top: 3px dashed #facc15; display: inline-block;
+    }
+    .info.legend .legend-position-swatches {
+      display: inline-flex; align-items: center; gap: 3px;
+      float: left; margin: 3px 8px 0 0;
+    }
+    .info.legend .legend-position-swatch {
+      display: inline-block; width: 12px; height: 12px; box-sizing: border-box;
+      border: 2px solid currentColor; border-radius: 3px;
+      background: rgba(18, 24, 34, 0.94);
+    }
+    .info.legend .legend-position-swatch--russian { color: #f05252; }
+    .info.legend .legend-position-swatch--ukrainian { color: #4b9bff; }
+    .info.legend .legend-freshness {
+      color: var(--text-muted); font-size: 10px; line-height: 1.45;
+      margin-top: 3px; overflow-wrap: anywhere;
+    }
+    .info.legend .legend-caveat {
+      color: var(--text-muted); font-size: 10px; line-height: 1.45;
+      margin-top: 5px;
+    }
     .info.legend .legend-toggle {
       position: absolute; top: 8px; right: 8px;
       width: 26px; height: 26px;
@@ -1050,6 +1073,7 @@
     var OWL_KMZ_URL = null;
     var OWL_DATASET_META = null;
     var DEEPSTATE_FETCHED_AT = null;
+    var DEEPSTATE_DATA_DATE = null;
     // Version bump invalidates the mixed Point/Line/Polygon cache from the older parser.
     var OWL_CACHE_KEY = 'owl_zones_cache_v4';
     var OWL_CACHE_DATE = 'owl_zones_cache_date';
@@ -1067,7 +1091,11 @@
         eventsPanelTitle: 'События', controlZones: 'Зоны контроля',
         territoryRF: 'Территория РФ (DeepStateMap)',
         owlControl: 'Project Owl',
-        owlPositions: 'Позиции Project Owl (точки)',
+        owlPositions: 'Военные позиции Project Owl (тактические значки)',
+        deepStateDataDate: 'Дата геоданных DeepState',
+        owlArchiveDate: 'Дата архива Project Owl',
+        legendDateUnavailable: 'дата неизвестна',
+        legendCaveat: 'Даты показывают версию исходных данных, а не независимое подтверждение контроля территории.',
         owlFrontline: 'Линия фронта (Project Owl)',
         owlRussian: 'Действия РФ (Project Owl)',
         owlUkrainian: 'Действия ВСУ (Project Owl)',
@@ -1102,7 +1130,11 @@
         eventsPanelTitle: 'Події', controlZones: 'Зони контролю',
         territoryRF: 'Територія РФ',
         owlControl: 'Project Owl',
-        owlPositions: 'Позиції Project Owl (точки)',
+        owlPositions: 'Військові позиції Project Owl (тактичні позначки)',
+        deepStateDataDate: 'Дата геоданих DeepState',
+        owlArchiveDate: 'Дата архіву Project Owl',
+        legendDateUnavailable: 'дата невідома',
+        legendCaveat: 'Дати показують версію вихідних даних, а не незалежне підтвердження контролю території.',
         owlFrontline: 'Лінія фронту (Project Owl)',
         owlRussian: 'Дії РФ (Project Owl)',
         owlUkrainian: 'Дії ЗСУ (Project Owl)',
@@ -1137,7 +1169,11 @@
         eventsPanelTitle: 'Events', controlZones: 'Control Zones',
         territoryRF: 'Territory held by RF',
         owlControl: 'Project Owl',
-        owlPositions: 'Project Owl positions (points)',
+        owlPositions: 'Project Owl military positions (tactical symbols)',
+        deepStateDataDate: 'DeepState data date',
+        owlArchiveDate: 'Project Owl archive date',
+        legendDateUnavailable: 'date unavailable',
+        legendCaveat: 'Dates identify source-data versions; they are not independent confirmation of territorial control.',
         owlFrontline: 'Front line (Project Owl)',
         owlRussian: 'Russian actions (Project Owl)',
         owlUkrainian: 'Ukrainian actions (Project Owl)',
@@ -1890,8 +1926,12 @@
         var features = data.features || [];
         if (features.length > 0) {
           features.sort(function(a, b) { return (b.properties.date || '').localeCompare(a.properties.date || ''); });
+          DEEPSTATE_DATA_DATE = features[0].properties && features[0].properties.date
+            ? String(features[0].properties.date).slice(0, 10)
+            : null;
           deepStateLayer.addData(features[0]);
         }
+        updateLegend();
       })
       .catch(function(err) { console.warn('DeepStateMap:', err.message); });
 
@@ -2116,11 +2156,13 @@
             }, { displayed_from_cache: true });
             if (localStorage.getItem(OWL_CACHE_DATE) === today) {
               var cachedStats = addOwlCollection(cached);
+              updateLegend();
               console.log('✅ Project Owl (из кэша за сегодня): ' + cachedStats.control + ' зон/линий; точечных позиций отдельно: ' + cachedStats.positions);
               return;
             }
             cachedCollection = cached;
             var staleStats = addOwlCollection(cachedCollection);
+            updateLegend();
             console.log('⚠️ Project Owl: показана последняя копия — ' + staleStats.control + ' зон/линий; точечных позиций отдельно: ' + staleStats.positions);
           }
         }
@@ -2150,6 +2192,7 @@
           owlControlLayer.clearLayers();
           owlPositionsLayer.clearLayers();
           var displayStats = addOwlCollection(collection);
+          updateLegend();
           console.log('📊 Геометрия Project Owl:', {
             polygons: result.stats.polygons,
             lines: result.stats.lines,
@@ -3437,6 +3480,16 @@
 
     function updateLegend() { var div = document.querySelector('.info.legend'); if (div) updateLegendInDiv(div); }
     function updateLegendInDiv(div) {
+      var deepStateDate = /^\\d{4}-\\d{2}-\\d{2}$/.test(String(DEEPSTATE_DATA_DATE || ''))
+        ? String(DEEPSTATE_DATA_DATE)
+        : t('legendDateUnavailable');
+      var owlDateValue = OWL_DATASET_META && OWL_DATASET_META.archive_date
+        ? String(OWL_DATASET_META.archive_date).slice(0, 10)
+        : '';
+      var owlDate = /^\\d{4}-\\d{2}-\\d{2}$/.test(owlDateValue)
+        ? owlDateValue
+        : t('legendDateUnavailable');
+
       var legendBody = '<div class="legend-body">';
       legendBody += '<h4>' + t('controlZones') + '</h4>';
       legendBody += '<div><i style="background:#cc0000;"></i> ' + t('territoryRF') + '</div>';
@@ -3444,6 +3497,11 @@
       legendBody += '<div><i style="background:' + OWL_COLORS.ukrainian + ';opacity:0.6;"></i> ' + t('owlUkrainian') + '</div>';
       legendBody += '<div><i style="background:' + OWL_COLORS.holding + ';opacity:0.6;"></i> ' + t('owlHolding') + '</div>';
       legendBody += '<div><i style="background:' + OWL_COLORS.grey + ';opacity:0.6;"></i> ' + t('owlGrey') + '</div>';
+      legendBody += '<div><span class="legend-line-swatch"></span> ' + t('owlFrontline') + '</div>';
+      legendBody += '<div><span class="legend-position-swatches"><span class="legend-position-swatch legend-position-swatch--russian"></span><span class="legend-position-swatch legend-position-swatch--ukrainian"></span></span> ' + t('owlPositions') + '</div>';
+      legendBody += '<div class="legend-freshness">' + t('deepStateDataDate') + ': <strong>' + deepStateDate + '</strong></div>';
+      legendBody += '<div class="legend-freshness">' + t('owlArchiveDate') + ': <strong>' + owlDate + '</strong></div>';
+      legendBody += '<div class="legend-caveat">' + t('legendCaveat') + '</div>';
       legendBody += '<hr><h4>' + t('telegramEvents') + '</h4>';
       ['Air Raid Alert','Military Strike','Military Operation','Military Offensive','Security Incident','Political Development'].forEach(function(type) {
         legendBody += '<div><span class="legend-svg" style="color:' + wtColor(type) + ';">' + wtSvg(type) + '</span> ' + t(WT_LABELS[type]) + '</div>';
