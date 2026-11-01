@@ -3480,13 +3480,13 @@
 
     function updateLegend() { var div = document.querySelector('.info.legend'); if (div) updateLegendInDiv(div); }
     function updateLegendInDiv(div) {
-      var deepStateDate = /^\\d{4}-\\d{2}-\\d{2}$/.test(String(DEEPSTATE_DATA_DATE || ''))
+      var deepStateDate = /^\d{4}-\d{2}-\d{2}$/.test(String(DEEPSTATE_DATA_DATE || ''))
         ? String(DEEPSTATE_DATA_DATE)
         : t('legendDateUnavailable');
       var owlDateValue = OWL_DATASET_META && OWL_DATASET_META.archive_date
         ? String(OWL_DATASET_META.archive_date).slice(0, 10)
         : '';
-      var owlDate = /^\\d{4}-\\d{2}-\\d{2}$/.test(owlDateValue)
+      var owlDate = /^\d{4}-\d{2}-\d{2}$/.test(owlDateValue)
         ? owlDateValue
         : t('legendDateUnavailable');
 
