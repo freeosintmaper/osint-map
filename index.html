@@ -1625,6 +1625,8 @@
         if (props._folder) appendProvenanceLine(popup, 'Папка в архиве', props._folder);
         appendProvenanceLine(popup, 'Дата архива', owlMeta.archive_date || 'не сохранена для этой копии');
         appendProvenanceLine(popup, 'Получено картой', formatProvenanceDate(owlMeta.fetched_at) || 'время загрузки не сохранено');
+        appendProvenanceLine(popup, 'Способ загрузки', owlMeta.displayed_from_cache ? 'локальная кэшированная копия браузера' : 'загрузка из внешнего архива в этой сессии');
+        if (owlMeta.metadata_note) appendProvenanceLine(popup, 'Примечание к происхождению', owlMeta.metadata_note);
         appendProvenanceLine(popup, 'Классификация слоя', 'категория определена автоматическим разбором имени, описания, папки и стиля KML; это не редакционная проверка объекта');
         var owlSourceLink = document.createElement('a');
         owlSourceLink.href = safeHttpUrl(owlMeta.source_url) || 'https://github.com/owlmaps/UAControlMapBackups';
@@ -1838,14 +1840,14 @@
         if (raw) {
           var cached = JSON.parse(raw);
           if (cached && cached.features && cached.features.length) {
-            OWL_DATASET_META = cached._provenance || {
+            OWL_DATASET_META = Object.assign({}, cached._provenance || {
               source_name: 'Project Owl public KMZ archive',
               source_url: 'https://github.com/owlmaps/UAControlMapBackups',
               archive_date: null,
               fetched_at: null,
               cache_date: localStorage.getItem(OWL_CACHE_DATE) || null,
               metadata_note: 'Эта локальная копия создана до сохранения метаданных архива; дата исходного KMZ неизвестна.'
-            };
+            }, { displayed_from_cache: true });
             if (localStorage.getItem(OWL_CACHE_DATE) === today) {
               owlControlLayer.addData(cached);
               console.log('✅ Project Owl (из кэша за сегодня): ' + cached.features.length + ' зон');
@@ -2358,7 +2360,7 @@
             location: ev.location || null,
             event_country: ev.country || null,
             confidence: ev.confidence || null,
-            coordinate_precision: ev.coordinate_precision || 'settlement_center',
+            coordinate_precision: ev.coordinate_precision || null,
             specific_place: ev.specific_place || null,
             coordinate_evidence: ev.coordinate_evidence || null,
             channel: ev.channel || null,
@@ -2388,9 +2390,7 @@
                 freshness_status: health ? health.freshness_status : null
               };
             }),
-            coordinate_note: ev.coordinate_precision === 'specific_place'
-              ? 'Coordinates matched to a place explicitly named in the source post; not independently verified. See methodology.html.'
-              : 'Coordinates mark the mapped settlement center, not a verified exact incident location; see methodology.html.'
+            coordinate_note: getEventCoordinateLabel(ev) + '. Это не подтверждение достоверности события; см. methodology.html.'
           }
         };
       });
@@ -2502,7 +2502,7 @@
         if (ev.coordinate_precision === 'specific_place' && ev.coordinate_evidence) {
           var evidenceNote = document.createElement('small');
           evidenceNote.style.cssText = 'display:block;margin-top:4px;line-height:1.4;white-space:normal;';
-          evidenceNote.textContent = 'Подтверждающая цитата из публикации: «' + String(ev.coordinate_evidence) + '»';
+          evidenceNote.textContent = 'Цитата, по которой сопоставлено название места (не подтверждение события): «' + String(ev.coordinate_evidence) + '»';
           popup.appendChild(evidenceNote);
         }
 
