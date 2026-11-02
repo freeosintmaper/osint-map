@@ -1,0 +1,74 @@
+name: Update Telegram Events
+
+on:
+  schedule:
+    # Re-register the schedule under a fresh workflow ID.
+    # Every 10 minutes, offset from minute 0 to avoid top-of-hour contention.
+    - cron: '7,17,27,37,47,57 * * * *'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/parse_telegram.py'
+      - 'scripts/classify_llm.py'
+      - 'scripts/fetch_rss_sources.py'
+      - 'scripts/build_intelligence.py'
+      - 'data/source-registry.json'
+      - '.github/workflows/update-events-10m.yml'
+
+concurrency:
+  group: update-events-pipeline
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      - name: Build settlements database (if missing)
+        run: |
+          if [ ! -f data/settlements.js ] || [ $(stat -c%s data/settlements.js 2>/dev/null || echo 0) -lt 1000000 ]; then
+            echo "Скачиваю GeoNames и строю базу населённых пунктов..."
+            python3 scripts/build_settlements.py
+          else
+            echo "База уже есть:"
+            wc -c data/settlements.js
+          fi
+
+      - name: Preserve previous event snapshot
+        run: cp data/telegram-events.js /tmp/telegram-events.previous.js
+
+      - name: Parse Telegram channels
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          pip install openai
+          mkdir -p data
+          python3 scripts/parse_telegram.py
+
+      - name: Collect RSS source headlines
+        run: python3 scripts/fetch_rss_sources.py
+
+      - name: Build unified events, summaries and history
+        run: python3 scripts/build_intelligence.py --previous /tmp/telegram-events.previous.js
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ scripts/
+          git diff --quiet && git diff --staged --quiet || git commit -m "Обновление событий и базы НП"
+          git pull --rebase origin main
+          git push
