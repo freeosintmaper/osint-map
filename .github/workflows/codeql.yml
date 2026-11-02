@@ -48,4 +48,4 @@ jobs:
         with:
           category: "/language:${{ matrix.language }}"
           # Fork pull requests cannot upload code-scanning results with a read-only token.
-          upload: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+          upload: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository && 'never' || 'always' }}
