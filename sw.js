@@ -1,4 +1,4 @@
-const CACHE_NAME = 'osint-map-v4';
+const CACHE_NAME = 'osint-map-v5';
 const SHELL = [
   './',
   './index.html',
@@ -51,17 +51,20 @@ self.addEventListener('fetch', function (event) {
   if (url.origin !== self.location.origin) return;
   // Динамические наборы должны обновляться из сети; последняя копия нужна только офлайн.
   if (/\/data\/(?:telegram-events\.js|firms-fires\.json|osint-intelligence\.js)$/.test(url.pathname)) {
+    // Ignore browser HTTP cache for changing datasets. Keep one canonical offline copy,
+    // regardless of the cache-busting query string used by the live refresh.
+    const cacheKey = new Request(url.origin + url.pathname);
     event.respondWith(
-      fetch(request).then(function (response) {
+      fetch(request, { cache: 'no-store' }).then(function (response) {
         if (response && response.ok && response.type !== 'opaque') {
           const copy = response.clone();
           caches.open(CACHE_NAME).then(function (cache) {
-            return cache.put(request, copy);
+            return cache.put(cacheKey, copy);
           }).catch(function () {});
         }
         return response;
       }).catch(function () {
-        return caches.match(request);
+        return caches.match(cacheKey);
       })
     );
     return;
