@@ -1063,7 +1063,7 @@
   </script>
 
   <script src="./lib/supabase.js"></script>
-  <script src="./data/telegram-events.js"></script>
+  <script src="./data/telegram-events.js?v=20261102-2"></script>
   <script src="./data/osint-intelligence.js"></script>
   <script src="./lib/leaflet.js"></script>
   <script src="./lib/leaflet-draw.js"></script>
@@ -3106,23 +3106,37 @@
       this.textContent = panel.classList.contains('collapsed') ? '▶' : '◀';
     });
 
-    document.getElementById('btnRefreshEvents').addEventListener('click', function() {
-      var btn = this;
-      btn.classList.add('spinning');
+    function refreshTelegramEvents(silent) {
+      if (window.__tgRefreshInFlight) return;
+      window.__tgRefreshInFlight = true;
+      var btn = document.getElementById('btnRefreshEvents');
+      if (!silent && btn) btn.classList.add('spinning');
       var oldScript = document.querySelector('script[src*="telegram-events.js"]');
       if (oldScript) oldScript.remove();
       var newScript = document.createElement('script');
+      // Unique URL bypasses stale browser/CDN entries; the service worker also fetches this data network-first.
       newScript.src = './data/telegram-events.js?t=' + Date.now();
       newScript.onload = function() {
         loadTelegramEvents();
-        btn.classList.remove('spinning');
+        window.__tgRefreshInFlight = false;
+        if (btn) btn.classList.remove('spinning');
       };
       newScript.onerror = function() {
-        btn.classList.remove('spinning');
-        alert('Не удалось обновить данные');
+        window.__tgRefreshInFlight = false;
+        if (btn) btn.classList.remove('spinning');
+        if (!silent) alert('Не удалось обновить данные');
       };
       document.head.appendChild(newScript);
+    }
+
+    document.getElementById('btnRefreshEvents').addEventListener('click', function() {
+      refreshTelegramEvents(false);
     });
+
+    // Keep an already-open map in sync with the newest published event snapshot.
+    window.setInterval(function() {
+      refreshTelegramEvents(true);
+    }, 10 * 60 * 1000);
 
     function hideMobilePanels() {
       document.body.classList.remove('show-events', 'show-filters', 'show-tools', 'show-legend');
@@ -3572,7 +3586,7 @@
 
     // Enable the existing offline cache on GitHub Pages (and other HTTPS hosting).
     if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
-      navigator.serviceWorker.register('./sw.js').then(function(registration) {
+      navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then(function(registration) {
         console.log('Service Worker registered:', registration.scope);
       }).catch(function(error) {
         console.warn('Service Worker registration failed:', error.message);
