@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 8,
-      "delta": 8,
+      "current_period": 10,
+      "delta": 10,
       "event_type": "Military Operation",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -15,54 +15,21 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 10,
-      "delta": 9,
+      "current_period": 8,
+      "delta": 8,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 1,
+      "previous_period": 0,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "attention_candidates": [
     {
-      "country": "UA",
-      "date": "2026-11-01T20:05:00+00:00",
-      "description": "Зеленський заявив, що готовий зустрітися з Путіним та Трампом у Стамбулі для обговорення умов завершення війни.\n\nПрезидент зазначив, що зустріч на рівні технічних груп, що має відбутися в Абу-Дабі, та",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "RVvoenkor",
-        "epoddubny",
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-01T19:58:25+00:00",
-      "description": "ВС РФ нанесли удар по поселку Васищево Харьковской области, пострадали пять человек: 18-летний парень и женщины в возрасте 48, 67, 33 и 71 лет, — местные власти \n\nЗафиксировано попадание в крышу пятиэ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Харьков",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "astrapress",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
       "country": "RU",
       "date": "2026-11-01T19:22:33+00:00",
-      "description": "Польша борется у себя с тем, что поддерживала и благословляла 12 лет назад на Украине, заявила Мария Захарова .\n\nP, S. Бумеранг однажды возвращается.\n😁596💯411👍96👌22⚡6\n  \n  \n    36.4K views19:22",
+      "description": "Польша борется у себя с тем, что поддерживала и благословляла 12 лет назад на Украине, заявила Мария Захарова .\n\nP, S. Бумеранг однажды возвращается.\n😁709💯495👍108👌24⚡7\n  \n  \n    44.6K views19:22",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Москва",
@@ -73,132 +40,39 @@
         "boris_rozhin"
       ],
       "status": "requires_human_review"
-    },
-    {
-      "country": "US",
-      "date": "2026-11-01T19:02:58+00:00",
-      "description": "‼️🇺🇸 Трамп пообещал стать «Мистером вето» в случае победы демократов\n\n▪️Президент США заявил, что будет блокировать инициативы Конгресса, если демократы получат большинство на предстоящих выборах.\n➖ «",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Вашингтон",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "astrapress"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-01T18:37:58+00:00",
-      "description": "‼️🇨🇳🇺🇸🇷🇺 Си Цзиньпин не планирует обсуждать Украину с Трампом и Путиным — ZDF\n\n▪️Президент Германии Франк-Вальтер Штайнмайер после встречи с китайским лидером в Пекине сообщил, что КНР не видит предпо",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "boris_rozhin",
-        "operativnoZSU"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-01T18:10:54+00:00",
-      "description": "Внаслідок російських ударів по Глухівській громаді Сумщини \nзагинула жінка, ще п’ятеро людей постраждали.\n\nРосійський FPV-дрон вдарив по цивільній автівці, а також по житлових будинках \n\n📰 підписатися",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Глухів",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "US",
-      "date": "2026-11-01T17:55:01+00:00",
-      "description": "«Надежда на устойчивый мир». Мелания Трамп прокомментировала завершение эвакуации жителей Олешек, которого она добивалась  «Надежда на устойчивый мир. Олешки доказывают, что мы можем поставить человеч",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Вашингтон",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "astrapress"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-01T17:45:11+00:00",
-      "description": "Российская армия атаковала Сумскую область: один человек погиб, — власти\n\n«Российский FPV-дрон ударил по гражданскому автомобилю. К сожалению, одна из пассажирок – 70-летняя женщина – погибла на месте",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Глухів",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-01T17:37:58+00:00",
-      "description": "‼️🇺🇦🇷🇺🇹🇷 Зеленский вновь предложил Путину встретиться в Турции\n\n▪️Зеленский заявил о готовности провести прямые переговоры с Владимиром Путиным для обсуждения завершения конфликта.\n▪️Он рассчитывает, ",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "RVvoenkor",
-        "epoddubny",
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 12,
+  "corroborated_event_count": 10,
   "country_counts": {
-    "RU": 5,
+    "RU": 4,
     "UA": 24,
     "US": 3
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 32,
+  "event_count": 31,
   "event_type_counts": {
     "Air Raid Alert": 1,
-    "Military Operation": 8,
-    "Military Strike": 13,
-    "Political Development": 10
+    "Military Operation": 10,
+    "Military Strike": 12,
+    "Political Development": 8
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 12,
+    "cross_source_consistent_count": 10,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 20,
+    "not_independently_corroborated_count": 21,
     "rss_reports_not_independently_corroborated_count": 2
   },
-  "generated_at": "2026-11-01T21:48:55Z",
+  "generated_at": "2026-11-02T01:21:09Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 20,
-  "not_verified_event_count": 20,
+  "new_since_previous_snapshot": 8,
+  "not_verified_event_count": 21,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 8,
-      "delta": 8,
+      "current_period": 10,
+      "delta": 10,
       "event_type": "Military Operation",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -208,24 +82,24 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 10,
-      "delta": 9,
+      "current_period": 8,
+      "delta": 8,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 1,
+      "previous_period": 0,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
     "rss": 2,
-    "telegram": 30
+    "telegram": 29
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 8,
+      "events": 7,
       "location": "Киев"
     },
     {
@@ -239,19 +113,14 @@
       "location": "Донецк"
     },
     {
-      "country": "RU",
-      "events": 3,
-      "location": "Москва"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Одесса"
-    },
-    {
       "country": "UA",
       "events": 2,
       "location": "Харьков"
+    },
+    {
+      "country": "RU",
+      "events": 2,
+      "location": "Москва"
     },
     {
       "country": "UA",
@@ -261,23 +130,28 @@
     {
       "country": "UA",
       "events": 1,
-      "location": "Николаев"
+      "location": "Луганск"
+    },
+    {
+      "country": "UA",
+      "events": 1,
+      "location": "Херсон"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 6,
+    "RVvoenkor": 7,
     "astrapress": 4,
     "boris_rozhin": 2,
     "dva_majors": 2,
     "epoddubny": 1,
-    "exilenova_plus": 2,
-    "kyivindependent_official": 2,
-    "odesa_typical": 2,
-    "operativnoZSU": 3,
+    "exilenova_plus": 3,
+    "kyivindependent_official": 4,
+    "operativnoZSU": 1,
+    "rybar": 1,
     "ukrpravda_news": 4,
-    "uniannet": 3,
+    "uniannet": 1,
     "Українська правда": 2
   },
-  "window_end": "2026-11-01T21:48:55Z",
-  "window_start": "2026-10-31T21:48:55Z"
+  "window_end": "2026-11-02T01:21:09Z",
+  "window_start": "2026-11-01T01:21:09Z"
 }
