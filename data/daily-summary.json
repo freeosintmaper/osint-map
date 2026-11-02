@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 11,
-      "delta": 11,
+      "current_period": 8,
+      "delta": 8,
       "event_type": "Military Operation",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -15,8 +15,19 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 9,
+      "current_period": 18,
+      "delta": 8,
+      "event_type": "Military Strike",
+      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
+      "label": "Повышенная публикационная активность",
+      "previous_period": 10,
+      "requires_human_review": true,
+      "signal_type": "publication_volume_change"
+    },
+    {
+      "classification": "analytical_signal",
+      "current_period": 8,
+      "delta": 8,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -28,23 +39,8 @@
   "attention_candidates": [
     {
       "country": "RU",
-      "date": "2026-11-02T03:14:43+00:00",
-      "description": "МИД Ганы заявил, что Путин запретил вербовать граждан этой страны на войну с Украиной\n\nГлава МИД Ганы Сэмюэл Окудзето Аблаква заявил, что Путин и президент Ганы Джон Драмани Махама встречались в Кремл",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "boris_rozhin"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-01T19:22:33+00:00",
-      "description": "Польша борется у себя с тем, что поддерживала и благословляла 12 лет назад на Украине, заявила Мария Захарова .\n\nP, S. Бумеранг однажды возвращается.\n😁817💯576👍117👌25⚡7\n  \n  \n    51.8K views19:22",
+      "date": "2026-11-02T07:20:17+00:00",
+      "description": "‼️🇷🇺🇨🇳 Путин и Си Цзиньпин встретятся в Китае 18–19 ноября\n\n▪️Президенты России и Китая Владимир Путин и Си Цзиньпин проведут встречу на полях саммита Азиатско-Тихоокеанского экономического сотрудниче",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Москва",
@@ -53,42 +49,103 @@
       "sources": [
         "RVvoenkor",
         "astrapress",
-        "boris_rozhin"
+        "readovkanews"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-02T07:20:11+00:00",
+      "description": "Такер Карлсон — заявил, что Трамп нанесет ядерный удар по Ирану в ближайшие дни:\n\n\"Под давлением премьера Израиля Биньямина Нетаньяху администрация Трампа, возможно, находится всего в нескольких днях ",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Вашингтон",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "boris_rozhin",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-02T06:43:01+00:00",
+      "description": "Перша леді США Меланія Трамп заявила, що в рамках гуманітарної місії під час перемир’я в Олешках на Херсонщині було евакуйовано майже 800 людей.\n\n\"Від імені Америки я висловлюю вдячність Росії та Укра",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Вашингтон",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "boris_rozhin",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-02T06:40:40+00:00",
+      "description": "Белая Церковь осталась без воды\n\nИз-за попадания дрона по инфраструктурному объекту в городе будет временно приостановлено водоснабжение, сообщает Белоцерковьвода. \n\nЖителей призывают сделать запасы и",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Белая Церковь",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-02T05:32:51+00:00",
+      "description": "❗️Путин и Трамп могут встретиться в Китае на саммите АТЭС — Песков  Возможность двусторонних переговоров президентов России и США Владимира Путина и Дональда Трампа сейчас находится «на рабочем столе»",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "readovkanews"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 9,
+  "corroborated_event_count": 8,
   "country_counts": {
-    "RU": 3,
-    "UA": 25,
+    "RU": 6,
+    "UA": 27,
     "US": 3
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 31,
+  "event_count": 36,
   "event_type_counts": {
-    "Air Raid Alert": 1,
-    "Military Operation": 11,
-    "Military Strike": 10,
-    "Political Development": 9
+    "Air Raid Alert": 2,
+    "Military Operation": 8,
+    "Military Strike": 18,
+    "Political Development": 8
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 9,
+    "cross_source_consistent_count": 8,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 22,
+    "not_independently_corroborated_count": 28,
     "rss_reports_not_independently_corroborated_count": 2
   },
-  "generated_at": "2026-11-02T03:54:13Z",
+  "generated_at": "2026-11-02T08:01:58Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 7,
-  "not_verified_event_count": 22,
+  "new_since_previous_snapshot": 23,
+  "not_verified_event_count": 28,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 11,
-      "delta": 11,
+      "current_period": 8,
+      "delta": 8,
       "event_type": "Military Operation",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -98,8 +155,19 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 9,
+      "current_period": 18,
+      "delta": 8,
+      "event_type": "Military Strike",
+      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
+      "label": "Повышенная публикационная активность",
+      "previous_period": 10,
+      "requires_human_review": true,
+      "signal_type": "publication_volume_change"
+    },
+    {
+      "classification": "analytical_signal",
+      "current_period": 8,
+      "delta": 8,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -110,7 +178,7 @@
   ],
   "source_type_counts": {
     "rss": 2,
-    "telegram": 29
+    "telegram": 34
   },
   "top_locations": [
     {
@@ -130,8 +198,8 @@
     },
     {
       "country": "UA",
-      "events": 3,
-      "location": "Донецк"
+      "events": 2,
+      "location": "Одесса"
     },
     {
       "country": "UA",
@@ -141,33 +209,33 @@
     {
       "country": "UA",
       "events": 2,
-      "location": "Харьков"
+      "location": "Винница"
+    },
+    {
+      "country": "RU",
+      "events": 2,
+      "location": "Самара"
     },
     {
       "country": "UA",
       "events": 1,
-      "location": "Орехов"
-    },
-    {
-      "country": "UA",
-      "events": 1,
-      "location": "Херсон"
+      "location": "Запорожье"
     }
   ],
   "top_sources": {
     "RVvoenkor": 8,
-    "astrapress": 3,
+    "astrapress": 4,
     "boris_rozhin": 2,
-    "dva_majors": 2,
-    "epoddubny": 1,
-    "exilenova_plus": 4,
+    "exilenova_plus": 3,
     "kyivindependent_official": 3,
+    "lost_armour": 4,
     "operativnoZSU": 1,
-    "rybar": 1,
+    "readovkanews": 1,
+    "rybar": 3,
     "ukrpravda_news": 4,
-    "uniannet": 1,
-    "Українська правда": 2
+    "uniannet": 3,
+    "УНІАН": 1
   },
-  "window_end": "2026-11-02T03:54:13Z",
-  "window_start": "2026-11-01T03:54:13Z"
+  "window_end": "2026-11-02T08:01:58Z",
+  "window_start": "2026-11-01T08:01:58Z"
 }
