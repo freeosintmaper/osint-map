@@ -2,7 +2,8 @@ name: Update Telegram Events
 
 on:
   schedule:
-    - cron: '5,35 * * * *'
+    # Every 10 minutes; offset from minute 0 to reduce top-of-hour scheduling contention.
+    - cron: '3,13,23,33,43,53 * * * *'
   workflow_dispatch:
   push:
     branches:
