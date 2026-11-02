@@ -47,6 +47,19 @@ function getSupabasePublicKey(): string {
   return "";
 }
 
+function getSupabaseServiceKey(): string {
+  const legacy = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || Deno.env.get("SUPABASE_SECRET_KEY");
+  if (legacy) return legacy;
+  const raw = Deno.env.get("SUPABASE_SECRET_KEYS");
+  if (raw) {
+    try {
+      const keys = JSON.parse(raw);
+      if (keys && typeof keys.default === "string") return keys.default;
+    } catch (_) { /* Try legacy names above. */ }
+  }
+  return "";
+}
+
 function cleanText(value: unknown, maxLength: number): string {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
 }
@@ -251,7 +264,7 @@ Deno.serve(async (req: Request) => {
     if (!email || !allowedEmails.includes(email)) return respond({ error: "ИИ зон доступен только администраторам из списка разрешённых адресов." }, 403, origin);
 
     const userId = cleanText(user && user.id, 128);
-    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+    const serviceRoleKey = getSupabaseServiceKey();
     if (!userId || !serviceRoleKey) {
       console.error("zone-assistant rate limiter is not configured");
       return respond({ error: "Защита AI-функции от превышения частоты запросов не настроена. Запрос отклонён." }, 503, origin);
