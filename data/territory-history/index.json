@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-02T03:52:29Z",
+  "generated_at": "2026-11-02T16:30:37Z",
   "method_note": "Сохраняются даты и закреплённые ссылки на версии открытых картографических источников. Файлы геометрии не дублируются в этом репозитории.",
   "retention_days": 90,
   "schema_version": 1,
@@ -7,36 +7,36 @@
   "snapshots": [
     {
       "date": "2026-11-02",
-      "generated_at": "2026-11-02T03:52:29Z",
+      "generated_at": "2026-11-02T16:30:37Z",
       "method_note": "Это журнал версий и ссылок на исходные наборы, а не независимая оценка контроля территории. Геометрии остаются в репозиториях первоисточников; ссылки закреплены на конкретные версии.",
       "sources": {
         "deepstate": {
           "archive_blob_sha": null,
           "archive_size_bytes": null,
-          "change_status": "unchanged",
+          "change_status": "changed",
           "provider": "DeepState",
-          "revision": "23524080b192f251fa65524d38745540095b1091",
-          "snapshot_date": "2026-11-01",
+          "revision": "f338b030452d152e10555455c7f49b2f1b6c26b7",
+          "snapshot_date": "2026-11-02",
           "source_path": "deepstate-map-data.geojson.gz",
-          "source_url": "https://raw.githubusercontent.com/cyterat/deepstate-map-data/23524080b192f251fa65524d38745540095b1091/deepstate-map-data.geojson.gz",
+          "source_url": "https://raw.githubusercontent.com/cyterat/deepstate-map-data/f338b030452d152e10555455c7f49b2f1b6c26b7/deepstate-map-data.geojson.gz",
           "status": "ok",
-          "upstream_commit_date": "2026-11-01T10:06:03Z",
-          "upstream_commit_sha": "23524080b192f251fa65524d38745540095b1091",
-          "upstream_commit_url": "https://github.com/cyterat/deepstate-map-data/commit/23524080b192f251fa65524d38745540095b1091"
+          "upstream_commit_date": "2026-11-02T10:34:32Z",
+          "upstream_commit_sha": "f338b030452d152e10555455c7f49b2f1b6c26b7",
+          "upstream_commit_url": "https://github.com/cyterat/deepstate-map-data/commit/f338b030452d152e10555455c7f49b2f1b6c26b7"
         },
         "project_owl": {
-          "archive_blob_sha": "298143f936d6b48c46747481dea328a9b8e990dc",
-          "archive_size_bytes": 2940315,
-          "change_status": "unchanged",
+          "archive_blob_sha": "6d8b8e3c7fd9423cea718283e799205506b68e1e",
+          "archive_size_bytes": 2947100,
+          "change_status": "changed",
           "provider": "Project Owl",
-          "revision": "298143f936d6b48c46747481dea328a9b8e990dc",
-          "snapshot_date": "2026-11-01",
-          "source_path": "2026/261101_0601.kmz",
-          "source_url": "https://raw.githubusercontent.com/owlmaps/UAControlMapBackups/4cce022e09e3cee8003f84c3d459366615dbfc0e/2026/261101_0601.kmz",
+          "revision": "6d8b8e3c7fd9423cea718283e799205506b68e1e",
+          "snapshot_date": "2026-11-02",
+          "source_path": "2026/261102_0601.kmz",
+          "source_url": "https://raw.githubusercontent.com/owlmaps/UAControlMapBackups/31fde516ce5eaba93504ec1136b0438dd6ca7e5f/2026/261102_0601.kmz",
           "status": "ok",
-          "upstream_commit_date": "2026-11-01T05:01:05Z",
-          "upstream_commit_sha": "4cce022e09e3cee8003f84c3d459366615dbfc0e",
-          "upstream_commit_url": "https://github.com/owlmaps/UAControlMapBackups/commit/4cce022e09e3cee8003f84c3d459366615dbfc0e"
+          "upstream_commit_date": "2026-11-02T05:01:05Z",
+          "upstream_commit_sha": "31fde516ce5eaba93504ec1136b0438dd6ca7e5f",
+          "upstream_commit_url": "https://github.com/owlmaps/UAControlMapBackups/commit/31fde516ce5eaba93504ec1136b0438dd6ca7e5f"
         }
       }
     },
