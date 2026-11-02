@@ -18,10 +18,19 @@ function corsHeaders(origin: string | null): Record<string, string> {
   return headers;
 }
 
-function respond(body: unknown, status: number, origin: string | null): Response {
+function respond(
+  body: unknown,
+  status: number,
+  origin: string | null,
+  extraHeaders: Record<string, string> = {},
+): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { ...corsHeaders(origin), "Content-Type": "application/json; charset=utf-8" },
+    headers: {
+      ...corsHeaders(origin),
+      "Content-Type": "application/json; charset=utf-8",
+      ...extraHeaders,
+    },
   });
 }
 
@@ -40,6 +49,53 @@ function getSupabasePublicKey(): string {
 
 function cleanText(value: unknown, maxLength: number): string {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
+}
+
+async function enforceZoneAiRateLimit(
+  supabaseUrl: string,
+  serviceRoleKey: string,
+  userId: string,
+): Promise<{ allowed: boolean; retryAfterSeconds: number }> {
+  const bytes = new TextEncoder().encode("zone-ai:v1:" + userId);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  const keyHash = Array.from(new Uint8Array(digest))
+    .map((value) => value.toString(16).padStart(2, "0"))
+    .join("");
+
+  const response = await fetch(
+    supabaseUrl.replace(/\\/$/, "") + "/rest/v1/rpc/consume_zone_ai_rate_limit",
+    {
+      method: "POST",
+      headers: {
+        apikey: serviceRoleKey,
+        Authorization: "Bearer " + serviceRoleKey,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        p_key_hash: keyHash,
+        p_limit: 10,
+        p_window_seconds: 60,
+      }),
+      signal: AbortSignal.timeout(5000),
+    },
+  );
+
+  if (!response.ok) {
+    const detail = (await response.text()).slice(0, 300);
+    throw new Error("Rate-limit RPC failed with HTTP " + response.status + ": " + detail);
+  }
+
+  const rows: unknown = await response.json();
+  if (!Array.isArray(rows) || !rows[0] || typeof rows[0].allowed !== "boolean") {
+    throw new Error("Rate-limit RPC returned an invalid response");
+  }
+
+  const retryValue = Number(rows[0].retry_after_seconds);
+  const retryAfterSeconds = Number.isFinite(retryValue)
+    ? Math.max(1, Math.min(60, Math.ceil(retryValue)))
+    : 60;
+
+  return { allowed: rows[0].allowed, retryAfterSeconds };
 }
 
 function normalizeGeometry(value: unknown): { type: "Polygon"; coordinates: number[][][] } | null {
@@ -193,6 +249,30 @@ Deno.serve(async (req: Request) => {
       .split(",").map((value) => value.trim().toLowerCase()).filter(Boolean);
     if (!allowedEmails.length) return respond({ error: "Список разрешённых администраторов не настроен (ZONE_AI_ALLOWED_EMAILS)." }, 503, origin);
     if (!email || !allowedEmails.includes(email)) return respond({ error: "ИИ зон доступен только администраторам из списка разрешённых адресов." }, 403, origin);
+
+    const userId = cleanText(user && user.id, 128);
+    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+    if (!userId || !serviceRoleKey) {
+      console.error("zone-assistant rate limiter is not configured");
+      return respond({ error: "Защита AI-функции от превышения частоты запросов не настроена. Запрос отклонён." }, 503, origin);
+    }
+
+    let rateLimit: { allowed: boolean; retryAfterSeconds: number };
+    try {
+      rateLimit = await enforceZoneAiRateLimit(supabaseUrl, serviceRoleKey, userId);
+    } catch (error) {
+      console.error("zone-assistant rate-limit check failed", error instanceof Error ? error.message : String(error));
+      return respond({ error: "Не удалось проверить лимит запросов AI-функции. Запрос отклонён для защиты сервиса." }, 503, origin);
+    }
+
+    if (!rateLimit.allowed) {
+      return respond(
+        { error: "Слишком много запросов к AI-функции. Подожди немного и попробуй снова." },
+        429,
+        origin,
+        { "Retry-After": String(rateLimit.retryAfterSeconds) },
+      );
+    }
 
     const rawZones = Array.isArray(body.zones) ? body.zones.slice(0, 50) : [];
     const zones = rawZones.map(normalizeInputZone).filter((zone): zone is Record<string, unknown> => zone !== null);
