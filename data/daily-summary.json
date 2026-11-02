@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 10,
-      "delta": 10,
+      "current_period": 11,
+      "delta": 11,
       "event_type": "Military Operation",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -15,8 +15,8 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 8,
-      "delta": 8,
+      "current_period": 9,
+      "delta": 9,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -28,51 +28,67 @@
   "attention_candidates": [
     {
       "country": "RU",
-      "date": "2026-11-01T19:22:33+00:00",
-      "description": "Польша борется у себя с тем, что поддерживала и благословляла 12 лет назад на Украине, заявила Мария Захарова .\n\nP, S. Бумеранг однажды возвращается.\n😁709💯495👍108👌24⚡7\n  \n  \n    44.6K views19:22",
+      "date": "2026-11-02T03:14:43+00:00",
+      "description": "МИД Ганы заявил, что Путин запретил вербовать граждан этой страны на войну с Украиной\n\nГлава МИД Ганы Сэмюэл Окудзето Аблаква заявил, что Путин и президент Ганы Джон Драмани Махама встречались в Кремл",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Москва",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
+        "astrapress",
+        "boris_rozhin"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-01T19:22:33+00:00",
+      "description": "Польша борется у себя с тем, что поддерживала и благословляла 12 лет назад на Украине, заявила Мария Захарова .\n\nP, S. Бумеранг однажды возвращается.\n😁817💯576👍117👌25⚡7\n  \n  \n    51.8K views19:22",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
         "RVvoenkor",
+        "astrapress",
         "boris_rozhin"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 10,
+  "corroborated_event_count": 9,
   "country_counts": {
-    "RU": 4,
-    "UA": 24,
+    "RU": 3,
+    "UA": 25,
     "US": 3
   },
   "editorially_fact_checked_count": 0,
   "event_count": 31,
   "event_type_counts": {
     "Air Raid Alert": 1,
-    "Military Operation": 10,
-    "Military Strike": 12,
-    "Political Development": 8
+    "Military Operation": 11,
+    "Military Strike": 10,
+    "Political Development": 9
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 10,
+    "cross_source_consistent_count": 9,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 21,
+    "not_independently_corroborated_count": 22,
     "rss_reports_not_independently_corroborated_count": 2
   },
-  "generated_at": "2026-11-02T01:21:09Z",
+  "generated_at": "2026-11-02T03:54:13Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 8,
-  "not_verified_event_count": 21,
+  "new_since_previous_snapshot": 7,
+  "not_verified_event_count": 22,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 10,
-      "delta": 10,
+      "current_period": 11,
+      "delta": 11,
       "event_type": "Military Operation",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -82,8 +98,8 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 8,
-      "delta": 8,
+      "current_period": 9,
+      "delta": 9,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -103,6 +119,11 @@
       "location": "Киев"
     },
     {
+      "country": "RU",
+      "events": 3,
+      "location": "Москва"
+    },
+    {
       "country": "US",
       "events": 3,
       "location": "Вашингтон"
@@ -115,22 +136,17 @@
     {
       "country": "UA",
       "events": 2,
-      "location": "Харьков"
-    },
-    {
-      "country": "RU",
-      "events": 2,
-      "location": "Москва"
+      "location": "Луганск"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Глухів"
+      "location": "Харьков"
     },
     {
       "country": "UA",
       "events": 1,
-      "location": "Луганск"
+      "location": "Орехов"
     },
     {
       "country": "UA",
@@ -139,19 +155,19 @@
     }
   ],
   "top_sources": {
-    "RVvoenkor": 7,
-    "astrapress": 4,
+    "RVvoenkor": 8,
+    "astrapress": 3,
     "boris_rozhin": 2,
     "dva_majors": 2,
     "epoddubny": 1,
-    "exilenova_plus": 3,
-    "kyivindependent_official": 4,
+    "exilenova_plus": 4,
+    "kyivindependent_official": 3,
     "operativnoZSU": 1,
     "rybar": 1,
     "ukrpravda_news": 4,
     "uniannet": 1,
     "Українська правда": 2
   },
-  "window_end": "2026-11-02T01:21:09Z",
-  "window_start": "2026-11-01T01:21:09Z"
+  "window_end": "2026-11-02T03:54:13Z",
+  "window_start": "2026-11-01T03:54:13Z"
 }
