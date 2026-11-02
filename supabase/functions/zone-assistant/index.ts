@@ -63,7 +63,7 @@ async function enforceZoneAiRateLimit(
     .join("");
 
   const response = await fetch(
-    supabaseUrl.replace(/\\/$/, "") + "/rest/v1/rpc/consume_zone_ai_rate_limit",
+    supabaseUrl.replace(/\/$/, "") + "/rest/v1/rpc/consume_zone_ai_rate_limit",
     {
       method: "POST",
       headers: {
