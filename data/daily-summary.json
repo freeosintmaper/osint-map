@@ -6,28 +6,6 @@
       "classification": "analytical_signal",
       "current_period": 8,
       "delta": 8,
-      "event_type": "Military Operation",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 18,
-      "delta": 8,
-      "event_type": "Military Strike",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 10,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 8,
-      "delta": 8,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -38,132 +16,184 @@
   ],
   "attention_candidates": [
     {
-      "country": "RU",
-      "date": "2026-11-02T07:20:17+00:00",
-      "description": "‼️🇷🇺🇨🇳 Путин и Си Цзиньпин встретятся в Китае 18–19 ноября\n\n▪️Президенты России и Китая Владимир Путин и Си Цзиньпин проведут встречу на полях саммита Азиатско-Тихоокеанского экономического сотрудниче",
-      "event_type": "Political Development",
+      "country": "UA",
+      "date": "2026-11-02T13:02:02+00:00",
+      "description": "Сводка ударов по объектам за 29.10.2026 — 01.11.2026\n\nЭнергетика\n• Удар по электроподстанции \"Западная\" в Виннице\n📍 49.23, 28.40\n• Удар по электрической подстанции «Привокзальная» 150/35/6 кВ в Днепро",
+      "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Москва",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 3,
       "sources": [
         "RVvoenkor",
-        "astrapress",
-        "readovkanews"
+        "boris_rozhin",
+        "lost_armour"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "US",
-      "date": "2026-11-02T07:20:11+00:00",
-      "description": "Такер Карлсон — заявил, что Трамп нанесет ядерный удар по Ирану в ближайшие дни:\n\n\"Под давлением премьера Израиля Биньямина Нетаньяху администрация Трампа, возможно, находится всего в нескольких днях ",
-      "event_type": "Political Development",
+      "country": "UA",
+      "date": "2026-11-02T12:01:58+00:00",
+      "description": "ВСУ нанесли массированный удар беспилотниками по центру Луганска\n\nГлава ЛНР Леонид Пасечник сообщил, что в ночь на 2 ноября украинские беспилотники нанесли массированные удары по столице республики. П",
+      "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Вашингтон",
+      "location": "Луганск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "boris_rozhin",
-        "ukrpravda_news"
+        "RVvoenkor",
+        "wargonzo"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "US",
-      "date": "2026-11-02T06:43:01+00:00",
-      "description": "Перша леді США Меланія Трамп заявила, що в рамках гуманітарної місії під час перемир’я в Олешках на Херсонщині було евакуйовано майже 800 людей.\n\n\"Від імені Америки я висловлюю вдячність Росії та Укра",
+      "country": "UA",
+      "date": "2026-11-02T12:00:43+00:00",
+      "description": "‼️🇺🇦🏴‍☠️Атаки усиливаются: Киев лишился всех собственных источников генерации электроэнергии — Кличко  ▪️В украинской столице после ударов больше не осталось работающих электростанций и собственных ис",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "boris_rozhin",
+        "lost_armour"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-02T11:47:03+00:00",
+      "description": "Z-канал «Война с фейками» обвинил Украину в «недовольстве» гуманитарной миссией в Олешках, так как Генштаб ВСУ заявил, что ВС РФ использовали перемирие для укрепления своих позиций\n\nВ Кремле заявили т",
       "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Вашингтон",
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "astrapress"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-02T11:32:59+00:00",
+      "description": "окупованому Луганську, окрім будівлі «Лугакому», також уражено приміщення Луганської телефонної компанії (ЛТК)\n\n\n\n\n  \n\n\n0:21\n\n  \n    This media is not supported in your browser\n    VIEW IN TELEGRAM",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Луганск",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "exilenova_plus",
+        "operativnoZSU"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-02T10:21:02+00:00",
+      "description": "У Луганську, після нічної атаки БПЛА вигоріла будівля «Лугаком». Компанія забезпечувала рашистів мобільним зв'язком та інтернетом.  https://t.me/operativnoZSU/\n\nКацапи звітують про повторні удари та р",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Луганск",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "exilenova_plus",
+        "operativnoZSU"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-02T10:11:32+00:00",
+      "description": "Оператор FPV-дрона ВТ-40 осуществляет воздушное наблюдение и видеофиксацию результатов ударов ВКС России с применением авиабомб ФАБ по местам дислокации подразделений ВСУ в населенном пункте Гавриловк",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Луганск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "boris_rozhin",
+        "lost_armour"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-02T09:40:19+00:00",
+      "description": "‼️🇺🇦🇺🇸 Зеленский вновь выдвинул Трампу условия для прекращения ударов по российским НПЗ\n\n▪️В интервью Fox News Зеленский заявил, что Украина прекратит атаки на российские нефтеперерабатывающие заводы ",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "astrapress"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-02T08:40:37+00:00",
+      "description": "Британський канал Sky News показав відео, як російські окупанти під прикриттям режиму припинення вогню завезли в місто Олешки важку техніку та боєприпаси, укріпили свої позиції та провели ротацію збро",
+      "event_type": "Military Operation",
+      "fact_checked": false,
+      "location": "Олешки",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "GeneralStaffZSU",
         "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-02T06:40:40+00:00",
-      "description": "Белая Церковь осталась без воды\n\nИз-за попадания дрона по инфраструктурному объекту в городе будет временно приостановлено водоснабжение, сообщает Белоцерковьвода. \n\nЖителей призывают сделать запасы и",
+      "date": "2026-11-02T07:40:18+00:00",
+      "description": "‼️🇷🇺💥 Ночные удары по Одесской области: поражён энергообъект\n\n▪️Украинская энергокомпания ДТЭК сообщила об атаке на объект энергетической инфраструктуры Одесской области.\n▪️Областная военная администр",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Белая Церковь",
+      "location": "Луганск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-02T05:32:51+00:00",
-      "description": "❗️Путин и Трамп могут встретиться в Китае на саммите АТЭС — Песков  Возможность двусторонних переговоров президентов России и США Владимира Путина и Дональда Трампа сейчас находится «на рабочем столе»",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "astrapress",
-        "readovkanews"
+        "wargonzo"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 8,
+  "corroborated_event_count": 12,
   "country_counts": {
-    "RU": 6,
-    "UA": 27,
-    "US": 3
+    "RU": 5,
+    "UA": 24,
+    "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 36,
+  "event_count": 30,
   "event_type_counts": {
-    "Air Raid Alert": 2,
-    "Military Operation": 8,
-    "Military Strike": 18,
+    "Military Operation": 7,
+    "Military Strike": 15,
     "Political Development": 8
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 8,
+    "cross_source_consistent_count": 12,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 28,
-    "rss_reports_not_independently_corroborated_count": 2
+    "not_independently_corroborated_count": 18,
+    "rss_reports_not_independently_corroborated_count": 1
   },
-  "generated_at": "2026-11-02T08:01:58Z",
+  "generated_at": "2026-11-02T14:25:54Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 23,
-  "not_verified_event_count": 28,
+  "new_since_previous_snapshot": 24,
+  "not_verified_event_count": 18,
   "period": "last_24_hours",
   "publication_activity_signals": [
-    {
-      "classification": "analytical_signal",
-      "current_period": 8,
-      "delta": 8,
-      "event_type": "Military Operation",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 18,
-      "delta": 8,
-      "event_type": "Military Strike",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 10,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
     {
       "classification": "analytical_signal",
       "current_period": 8,
@@ -177,65 +207,65 @@
     }
   ],
   "source_type_counts": {
-    "rss": 2,
-    "telegram": 34
+    "rss": 1,
+    "telegram": 29
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 7,
+      "events": 8,
       "location": "Киев"
     },
     {
-      "country": "RU",
-      "events": 3,
-      "location": "Москва"
-    },
-    {
-      "country": "US",
-      "events": 3,
-      "location": "Вашингтон"
-    },
-    {
       "country": "UA",
-      "events": 2,
-      "location": "Одесса"
-    },
-    {
-      "country": "UA",
-      "events": 2,
+      "events": 5,
       "location": "Луганск"
     },
     {
-      "country": "UA",
-      "events": 2,
-      "location": "Винница"
+      "country": "RU",
+      "events": 4,
+      "location": "Москва"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 2,
-      "location": "Самара"
+      "location": "Херсон"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Олешки"
     },
     {
       "country": "UA",
       "events": 1,
-      "location": "Запорожье"
+      "location": "Бердичев"
+    },
+    {
+      "country": "US",
+      "events": 1,
+      "location": "Вашингтон"
+    },
+    {
+      "country": "UA",
+      "events": 1,
+      "location": "Краматорск"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 8,
-    "astrapress": 4,
-    "boris_rozhin": 2,
-    "exilenova_plus": 3,
+    "RVvoenkor": 4,
+    "astrapress": 2,
+    "boris_rozhin": 7,
+    "dva_majors": 2,
+    "exilenova_plus": 2,
     "kyivindependent_official": 3,
-    "lost_armour": 4,
+    "lost_armour": 2,
     "operativnoZSU": 1,
-    "readovkanews": 1,
-    "rybar": 3,
-    "ukrpravda_news": 4,
-    "uniannet": 3,
+    "ukrpravda_news": 2,
+    "uniannet": 2,
+    "wargonzo": 1,
     "УНІАН": 1
   },
-  "window_end": "2026-11-02T08:01:58Z",
-  "window_start": "2026-11-01T08:01:58Z"
+  "window_end": "2026-11-02T14:25:54Z",
+  "window_start": "2026-11-01T14:25:54Z"
 }
