@@ -2315,9 +2315,9 @@
     owlFrontlineLayer.addTo(map);
 
     var FIRMS_URL = './data/firms-fires.json';
-    var FIRMS_CACHE_KEY = 'firms_cache_v2';
-    var FIRMS_CACHE_TIME = 'firms_cache_time_v2';
-    var FIRMS_CACHE_TTL = 3 * 60 * 60 * 1000;
+    var FIRMS_CACHE_KEY = 'firms_cache_v3';
+    var FIRMS_CACHE_TIME = 'firms_cache_time_v3';
+    var FIRMS_CACHE_TTL = 15 * 60 * 1000;
     var FIRMS_DATA_META = null;
     var firmsLayer = L.layerGroup();
     firmsLayer.addTo(map);
@@ -2377,29 +2377,40 @@
       console.log('🔥 FIRMS: ' + data.features.length + ' пожаров');
     }
 
-    function loadFirmsFires() {
-      try {
-        var cachedTime = parseInt(localStorage.getItem(FIRMS_CACHE_TIME) || '0', 10);
-        var cachedRaw = localStorage.getItem(FIRMS_CACHE_KEY);
-        if (cachedRaw && (Date.now() - cachedTime < FIRMS_CACHE_TTL)) {
-          var cached = JSON.parse(cachedRaw);
-          renderFirmsFires(cached);
-          console.log('🔥 FIRMS (из кэша): ' + (cached.features ? cached.features.length : 0) + ' пожаров');
-          return;
-        }
-      } catch (e) {}
-      fetch(FIRMS_URL)
+    var firmsFetchInProgress = false;
+    function loadFirmsFires(forceNetwork) {
+      if (firmsFetchInProgress) return;
+      // Мгновенно показываем последнюю копию, но не прекращаем сетевое обновление.
+      if (!forceNetwork) {
+        try {
+          var cachedRaw = localStorage.getItem(FIRMS_CACHE_KEY);
+          if (cachedRaw) {
+            var cached = JSON.parse(cachedRaw);
+            renderFirmsFires(cached);
+            console.log('🔥 FIRMS (локальная копия): ' + (cached.features ? cached.features.length : 0) + ' точек');
+          }
+        } catch (e) {}
+      }
+      firmsFetchInProgress = true;
+      fetch(FIRMS_URL + '?_=' + Date.now(), { cache: 'no-store' })
         .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
         .then(function(data) {
+          if (!data || !Array.isArray(data.features) || !data.generated) {
+            throw new Error('Некорректный GeoJSON FIRMS');
+          }
           renderFirmsFires(data);
           try {
             localStorage.setItem(FIRMS_CACHE_KEY, JSON.stringify(data));
             localStorage.setItem(FIRMS_CACHE_TIME, Date.now().toString());
           } catch (e) {}
+          console.log('🔥 FIRMS обновлён: ' + data.features.length + ' точек; набор ' + data.generated);
         })
-        .catch(function(err) { console.warn('FIRMS:', err.message); });
+        .catch(function(err) { console.warn('FIRMS: сетевое обновление не удалось:', err.message); })
+        .finally(function() { firmsFetchInProgress = false; });
     }
-    loadFirmsFires();
+    loadFirmsFires(false);
+    // Обновляем открытые карты автоматически, не чаще раза в 15 минут.
+    window.setInterval(function() { loadFirmsFires(true); }, FIRMS_CACHE_TTL);
         var WT_COLORS = {
       'Air Raid Alert': '#e6a800', 'Military Strike': '#c62828',
       'Military Operation': '#e65100', 'Military Offensive': '#8e0000',
