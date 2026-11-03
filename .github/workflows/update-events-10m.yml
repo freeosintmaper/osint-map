@@ -2,8 +2,9 @@ name: Update Telegram Events
 
 on:
   schedule:
-    # Every 10 minutes; offset from minute 0 to reduce top-of-hour scheduling contention.
-    - cron: '3,13,23,33,43,53 * * * *'
+    # Re-register the schedule under a fresh workflow ID.
+    # Every 10 minutes, offset from minute 0 to avoid top-of-hour contention.
+    - cron: '7,17,27,37,47,57 * * * *'
   workflow_dispatch:
   push:
     branches:
@@ -14,7 +15,7 @@ on:
       - 'scripts/fetch_rss_sources.py'
       - 'scripts/build_intelligence.py'
       - 'data/source-registry.json'
-      - '.github/workflows/update-events.yml'
+      - '.github/workflows/update-events-10m.yml'
 
 concurrency:
   group: update-events-pipeline
