@@ -894,7 +894,7 @@
     }
 
   </style>
-  <link rel="stylesheet" href="./redesign-v2.css?v=1" />
+  <link rel="stylesheet" href="./redesign-v2.css?v=2" />
 </head>
 <body>
   <div id="mapBrand" aria-label="OSINT Map"><span class="brand-mark">OM</span><span class="brand-copy"><strong>OSINT MAP</strong><small>OPEN SOURCE INTELLIGENCE</small></span></div>
@@ -987,13 +987,13 @@
   </div>
 
   <div id="mobileToggle">
-    <button id="btnShowEvents" title="События">
+    <button id="btnShowEvents" type="button" title="События" aria-label="Показать события" aria-controls="eventsPanel" aria-pressed="false">
       <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
-    <button id="btnShowFilters" title="Фильтры">
+    <button id="btnShowFilters" type="button" title="Фильтры" aria-label="Открыть фильтры и настройки">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
     </button>
-    <button id="btnShowTools" title="Инструменты">
+    <button id="btnShowTools" type="button" title="Инструменты" aria-label="Показать инструменты" aria-controls="toolbar" aria-pressed="false">
       <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
     </button>
   </div>
@@ -1022,8 +1022,8 @@
 
   <div id="toolbar"></div>
 
-  <div id="settingsOverlay"></div>
-  <div id="settingsPanel">
+  <div id="settingsOverlay" aria-hidden="true"></div>
+  <div id="settingsPanel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" aria-hidden="true">
     <div class="settings-header">
       <span id="settingsTitle">Настройки</span>
       <button id="btnCloseSettings" title="Закрыть">✕</button>
@@ -3443,16 +3443,37 @@
     var settingsPanel = document.getElementById('settingsPanel');
     var settingsOverlay = document.getElementById('settingsOverlay');
 
+    var settingsCloseButton = document.getElementById('btnCloseSettings');
+    var settingsReturnFocus = null;
     function openSettings() {
+      settingsReturnFocus = document.activeElement;
       settingsPanel.classList.add('open');
       settingsOverlay.classList.add('open');
+      settingsPanel.setAttribute('aria-hidden', 'false');
+      settingsOverlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('settings-open');
+      settingsCloseButton.focus();
     }
     function closeSettings() {
       settingsPanel.classList.remove('open');
       settingsOverlay.classList.remove('open');
+      settingsPanel.setAttribute('aria-hidden', 'true');
+      settingsOverlay.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('settings-open');
+      if (settingsReturnFocus && typeof settingsReturnFocus.focus === 'function') settingsReturnFocus.focus();
     }
-    document.getElementById('btnCloseSettings').addEventListener('click', closeSettings);
+    settingsCloseButton.addEventListener('click', closeSettings);
     settingsOverlay.addEventListener('click', closeSettings);
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && settingsPanel.classList.contains('open')) closeSettings();
+      if (event.key === 'Tab' && settingsPanel.classList.contains('open')) {
+        var focusable = settingsPanel.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+        if (!focusable.length) return;
+        var first = focusable[0], last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+    });
 
     function renderSettings() {
       document.getElementById('settingsTitle').textContent = t('settingsTitle');
