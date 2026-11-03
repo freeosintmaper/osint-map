@@ -1351,6 +1351,11 @@
           fillOpacity: outline ? 0 : fillOpacity * 0.9
         });
       });
+      if (owlCategoryPointsLayer) owlCategoryPointsLayer.eachLayer(function(s) {
+        var cat = (s.feature && s.feature.properties && s.feature.properties._category) || 'unknown';
+        var c = owlColorFor(cat);
+        applyStyleToLayer(s, c, { color: c, weight: 1, opacity: 0.95, fill: true, fillColor: c, fillOpacity: Math.max(0.55, fillOpacity * 0.9) });
+      });
       if (owlPositionsLayer) owlPositionsLayer.eachLayer(function(s) {
         var cat = (s.feature && s.feature.properties && s.feature.properties._category) || 'unknown';
         var c = owlColorFor(cat);
@@ -3341,6 +3346,10 @@
       if (tool === 'measure') {
         if (lastMeasureLayer) drawingsLayer.removeLayer(lastMeasureLayer);
         if (layer.setStyle) layer.setStyle({ color: '#f59e0b', weight: 3, dashArray: '7,5' });
+        layer.feature = layer.feature || { type: 'Feature', properties: {} };
+        layer.feature.properties = layer.feature.properties || {};
+        layer.feature.properties._drawColor = '#f59e0b';
+        layer.feature.properties._drawTool = 'measure';
         var latlngs = layer.getLatLngs();
         if (latlngs.length > 0 && Array.isArray(latlngs[0])) latlngs = latlngs[0];
         var totalMeters = 0;
@@ -3354,6 +3363,10 @@
         if (ll.length > 0 && Array.isArray(ll[0])) ll = ll[0];
         if (ll.length >= 2) {
           var arrowColor = /^#[0-9a-f]{6}$/i.test(toolAccentColors.arrow || '') ? toolAccentColors.arrow : '#60a5fa';
+          layer.feature = layer.feature || { type: 'Feature', properties: {} };
+          layer.feature.properties = layer.feature.properties || {};
+          layer.feature.properties._drawColor = arrowColor;
+          layer.feature.properties._drawTool = 'arrow';
           if (layer.setStyle) layer.setStyle({ color: arrowColor, weight: 3 });
           drawingsLayer.addLayer(layer);
           var decorator = L.polylineDecorator(layer, {
