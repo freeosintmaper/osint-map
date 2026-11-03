@@ -1,7 +1,8 @@
-const CACHE_NAME = 'osint-map-v6';
+const CACHE_NAME = 'osint-map-v7';
 const SHELL = [
   './',
   './index.html',
+  './redesign-v2.css',
   './icon.svg',
   './manifest.json',
   './lib/leaflet.css',
