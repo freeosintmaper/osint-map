@@ -894,7 +894,7 @@
     }
 
   </style>
-  <link rel="stylesheet" href="./redesign-v2.css?v=2" />
+  <link rel="stylesheet" href="./redesign-v2.css?v=3" />
 </head>
 <body>
   <div id="mapBrand" aria-label="OSINT Map"><span class="brand-mark">OM</span><span class="brand-copy"><strong>OSINT MAP</strong><small>OPEN SOURCE INTELLIGENCE</small></span></div>
@@ -1123,6 +1123,7 @@
         owlControl: 'Project Owl',
         owlPositions: 'Военные подразделения Project Owl',
         owlGeolocations: 'Объекты и геолокации Project Owl',
+        owlCategoryAreas: 'Места сосредоточения / серая зона / неопределённые (Project Owl)',
         deepStateDataDate: 'Дата геоданных DeepState',
         owlArchiveDate: 'Дата архива Project Owl',
         legendDateUnavailable: 'дата неизвестна',
@@ -1164,6 +1165,7 @@
         owlControl: 'Project Owl',
         owlPositions: 'Військові підрозділи Project Owl',
         owlGeolocations: 'Об’єкти та геолокації Project Owl',
+        owlCategoryAreas: 'Місця зосередження / сіра зона / невизначені (Project Owl)',
         deepStateDataDate: 'Дата геоданих DeepState',
         owlArchiveDate: 'Дата архіву Project Owl',
         legendDateUnavailable: 'дата невідома',
@@ -1205,6 +1207,7 @@
         owlControl: 'Project Owl',
         owlPositions: 'Project Owl military units',
         owlGeolocations: 'Project Owl objects and geolocations',
+        owlCategoryAreas: 'Holding areas / grey zones / unclassified (Project Owl)',
         deepStateDataDate: 'DeepState data date',
         owlArchiveDate: 'Project Owl archive date',
         legendDateUnavailable: 'date unavailable',
@@ -1885,6 +1888,17 @@
       onEachFeature: owlFeaturePopup
     });
 
+    // Category-coded Project Owl point features are shown independently from tactical unit positions.
+    var owlCategoryPointsLayer = L.geoJSON(null, {
+      pointToLayer: function(f, latlng) {
+        var cat = (f.properties && f.properties._category) || 'unknown';
+        var color = owlColorFor(cat);
+        var radius = cat === 'holding' ? 7 : (cat === 'grey' ? 6 : 5);
+        return L.circleMarker(latlng, { radius: radius, color: color, weight: 1, opacity: 0.95, fill: true, fillColor: color, fillOpacity: 0.82 });
+      },
+      onEachFeature: owlFeaturePopup
+    });
+
     // Project Owl's data processor treats the exact "Frontline" folder as a line,
     // not as a control-zone polygon. Keep it neutral and never fill it orange.
     var owlFrontlineLayer = L.geoJSON(null, {
@@ -1926,7 +1940,7 @@
       });
     }
 
-    function splitOwlFeatureForDisplay(feature, controlFeatures, positionFeatures, frontlineFeatures) {
+    function splitOwlFeatureForDisplay(feature, controlFeatures, positionFeatures, categoryPointFeatures, frontlineFeatures) {
       if (!feature || !feature.geometry || !feature.geometry.type) return;
       var geometry = feature.geometry;
       if (geometry.type === 'GeometryCollection') {
@@ -1936,7 +1950,7 @@
             id: feature.id,
             properties: feature.properties || {},
             geometry: member
-          }, controlFeatures, positionFeatures, frontlineFeatures);
+          }, controlFeatures, positionFeatures, categoryPointFeatures, frontlineFeatures);
         });
         return;
       }
@@ -1951,7 +1965,9 @@
       }
 
       if (geometry.type === 'Point' || geometry.type === 'MultiPoint') {
-        positionFeatures.push(feature);
+        var pointCategory = (feature.properties && feature.properties._category) || 'unknown';
+        if (pointCategory === 'holding' || pointCategory === 'grey' || pointCategory === 'unknown') categoryPointFeatures.push(feature);
+        else positionFeatures.push(feature);
         return;
       }
       if (['LineString', 'MultiLineString', 'Polygon', 'MultiPolygon'].indexOf(geometry.type) >= 0) {
@@ -1962,16 +1978,19 @@
     function addOwlCollection(collection) {
       var controlFeatures = [];
       var positionFeatures = [];
+      var categoryPointFeatures = [];
       var frontlineFeatures = [];
       (collection && Array.isArray(collection.features) ? collection.features : []).forEach(function(feature) {
-        splitOwlFeatureForDisplay(feature, controlFeatures, positionFeatures, frontlineFeatures);
+        splitOwlFeatureForDisplay(feature, controlFeatures, positionFeatures, categoryPointFeatures, frontlineFeatures);
       });
       owlControlLayer.addData({ type: 'FeatureCollection', features: controlFeatures });
       owlPositionsLayer.addData({ type: 'FeatureCollection', features: positionFeatures });
+      owlCategoryPointsLayer.addData({ type: 'FeatureCollection', features: categoryPointFeatures });
       owlFrontlineLayer.addData({ type: 'FeatureCollection', features: frontlineFeatures });
       return {
         control: controlFeatures.length,
         positions: positionFeatures.length,
+        categoryPoints: categoryPointFeatures.length,
         frontline: frontlineFeatures.length
       };
     }
@@ -2253,6 +2272,7 @@
           var collection = { type: 'FeatureCollection', features: result.features, _provenance: OWL_DATASET_META };
           owlControlLayer.clearLayers();
           owlPositionsLayer.clearLayers();
+          owlCategoryPointsLayer.clearLayers();
           var displayStats = addOwlCollection(collection);
           updateLegend();
           console.log('📊 Геометрия Project Owl:', {
@@ -2286,6 +2306,7 @@
 
     deepStateLayer.addTo(map);
     owlControlLayer.addTo(map);
+    owlCategoryPointsLayer.addTo(map);
     owlFrontlineLayer.addTo(map);
 
     var FIRMS_URL = './data/firms-fires.json';
@@ -3265,14 +3286,15 @@
       if (currentTool === tool) { deactivateDrawer(); return; }
       deactivateDrawer();
       setActiveTool(tool);
-      var opts = { metric: true };
+      var drawColor = /^#[0-9a-f]{6}$/i.test(toolAccentColors[tool] || '') ? toolAccentColors[tool] : '#60a5fa';
+      var areaOptions = { color: drawColor, weight: 2.5, opacity: 0.95, fill: true, fillColor: drawColor, fillOpacity: 0.22 };
       if (tool === 'marker') currentDrawer = new L.Draw.Marker(map);
-      else if (tool === 'line') currentDrawer = new L.Draw.Polyline(map, opts);
-      else if (tool === 'arrow') currentDrawer = new L.Draw.Polyline(map, opts);
-      else if (tool === 'polygon') currentDrawer = new L.Draw.Polygon(map, { metric: true });
-      else if (tool === 'rectangle') currentDrawer = new L.Draw.Rectangle(map);
-      else if (tool === 'circle') currentDrawer = new L.Draw.Circle(map, { metric: true });
-      else if (tool === 'measure') currentDrawer = new L.Draw.Polyline(map, opts);
+      else if (tool === 'line') currentDrawer = new L.Draw.Polyline(map, { metric: true, shapeOptions: { color: drawColor, weight: 3, opacity: 0.95 } });
+      else if (tool === 'arrow') currentDrawer = new L.Draw.Polyline(map, { metric: true, shapeOptions: { color: drawColor, weight: 3, opacity: 0.95 } });
+      else if (tool === 'polygon') currentDrawer = new L.Draw.Polygon(map, { metric: true, shapeOptions: areaOptions });
+      else if (tool === 'rectangle') currentDrawer = new L.Draw.Rectangle(map, { shapeOptions: areaOptions });
+      else if (tool === 'circle') currentDrawer = new L.Draw.Circle(map, { metric: true, shapeOptions: areaOptions });
+      else if (tool === 'measure') currentDrawer = new L.Draw.Polyline(map, { metric: true, shapeOptions: { color: '#f59e0b', weight: 3, dashArray: '7,5' } });
       if (currentDrawer) currentDrawer.enable();
     }
 
@@ -3318,7 +3340,7 @@
       var layer = e.layer, type = e.layerType, tool = currentTool;
       if (tool === 'measure') {
         if (lastMeasureLayer) drawingsLayer.removeLayer(lastMeasureLayer);
-        if (layer.setStyle) layer.setStyle({ color: '#ff00aa', weight: 3, dashArray: '8,4' });
+        if (layer.setStyle) layer.setStyle({ color: '#f59e0b', weight: 3, dashArray: '7,5' });
         var latlngs = layer.getLatLngs();
         if (latlngs.length > 0 && Array.isArray(latlngs[0])) latlngs = latlngs[0];
         var totalMeters = 0;
@@ -3331,12 +3353,13 @@
         var ll = layer.getLatLngs();
         if (ll.length > 0 && Array.isArray(ll[0])) ll = ll[0];
         if (ll.length >= 2) {
-          if (layer.setStyle) layer.setStyle({ color: '#ff3366', weight: 3 });
+          var arrowColor = /^#[0-9a-f]{6}$/i.test(toolAccentColors.arrow || '') ? toolAccentColors.arrow : '#60a5fa';
+          if (layer.setStyle) layer.setStyle({ color: arrowColor, weight: 3 });
           drawingsLayer.addLayer(layer);
           var decorator = L.polylineDecorator(layer, {
             patterns: [{ offset: '100%', repeat: 0,
               symbol: L.Symbol.arrowHead({ pixelSize: 15, polygon: false,
-                pathOptions: { stroke: true, color: '#ff3366', weight: 3, fillOpacity: 1 } })
+                pathOptions: { stroke: true, color: arrowColor, weight: 3, fillOpacity: 1 } })
             }]
           });
           layer._arrowDecorator = decorator;
@@ -3344,11 +3367,16 @@
           saveDrawings(); deactivateDrawer(); return;
         }
       }
+      var savedDrawColor = /^#[0-9a-f]{6}$/i.test(toolAccentColors[tool] || '') ? toolAccentColors[tool] : '#60a5fa';
+      layer.feature = layer.feature || { type: 'Feature', properties: {} };
+      layer.feature.properties = layer.feature.properties || {};
+      layer.feature.properties._drawColor = savedDrawColor;
+      layer.feature.properties._drawTool = tool || type;
       if (layer.setStyle) {
         if (type === 'polygon' || type === 'rectangle' || type === 'circle') {
-          layer.setStyle({ color: '#9933ff', weight: 2, fill: true, fillColor: '#9933ff', fillOpacity: 0.2 });
+          layer.setStyle({ color: savedDrawColor, weight: 2.5, opacity: 0.95, fill: true, fillColor: savedDrawColor, fillOpacity: 0.22 });
         } else if (type === 'polyline' && tool !== 'measure') {
-          layer.setStyle({ color: '#ff6600', weight: 3 });
+          layer.setStyle({ color: savedDrawColor, weight: 3, opacity: 0.95 });
         }
       }
       if (type === 'marker') layer.bindPopup('Метка');
@@ -3376,10 +3404,11 @@
         drawingsLayer.clearLayers();
         L.geoJSON(geojson, {
           onEachFeature: function(feature, layer) {
-            if (feature.geometry.type === 'Point') layer.setStyle && layer.setStyle({ color: '#ff3366', weight: 2 });
-            else if (feature.geometry.type === 'Polygon') layer.setStyle && layer.setStyle({ color: '#9933ff', weight: 2, fill: true, fillColor: '#9933ff', fillOpacity: 0.2 });
+            var savedColor = /^#[0-9a-f]{6}$/i.test((feature.properties || {})._drawColor || '') ? feature.properties._drawColor : '#60a5fa';
+            if (feature.geometry.type === 'Point') layer.setStyle && layer.setStyle({ color: savedColor, weight: 2 });
+            else if (feature.geometry.type === 'Polygon') layer.setStyle && layer.setStyle({ color: savedColor, weight: 2.5, fill: true, fillColor: savedColor, fillOpacity: 0.22 });
             else if (feature.geometry.type === 'LineString') {
-              layer.setStyle && layer.setStyle({ color: '#ff3366', weight: 3 });
+              layer.setStyle && layer.setStyle({ color: savedColor, weight: 3 });
               var ll = layer.getLatLngs();
               if (ll.length > 0 && Array.isArray(ll[0])) ll = ll[0];
               var tm = 0;
@@ -3410,9 +3439,7 @@
         if (item.sep) { html += '<div class="sep"></div>'; return; }
         var cls = item.danger ? 'danger' : '';
         var tooltip = t('tool' + item.key.charAt(0).toUpperCase() + item.key.slice(1));
-        var toolColor = toolAccentColors[item.key];
-        var colorStyle = /^#[0-9a-f]{6}$/i.test(toolColor || '') ? ' style="--tool-accent:' + toolColor + '"' : '';
-        html += '<button data-tool="' + item.key + '"' + (cls ? ' class="' + cls + '"' : '') + colorStyle + ' aria-label="' + escapeHtml(tooltip) + '">' + item.svg + '<span class="tooltip">' + escapeHtml(tooltip) + '</span></button>';
+        html += '<button data-tool="' + item.key + '"' + (cls ? ' class="' + cls + '"' : '') + ' aria-label="' + escapeHtml(tooltip) + '">' + item.svg + '<span class="tooltip">' + escapeHtml(tooltip) + '</span></button>';
       });
       toolbar.innerHTML = html;
       toolbar.classList.toggle('compact',compactToolbar);
@@ -3487,6 +3514,7 @@
       html += '<h4>' + t('controlZones') + '</h4>';
       html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
       html += '<label><input type="checkbox" id="chkOwl" checked> ' + t('owlControl') + '</label>';
+      html += '<label><input type="checkbox" id="chkOwlCategoryPoints" checked> ' + t('owlCategoryAreas') + '</label>';
       html += '<label><input type="checkbox" id="chkOwlPositions"> ' + t('owlPositions') + '</label>';
       html += '<label><input type="checkbox" id="chkOwlFrontline" checked> ' + t('owlFrontline') + '</label>';
       html += '<label><input type="checkbox" id="chkUserZones" checked> ' + t('userZones') + '</label>';
@@ -3511,10 +3539,10 @@
               '<button data-theme="dark" class="' + (currentTheme === 'dark' ? 'active' : '') + '">' + t('themeDark') + '</button>' +
               '</div>';
 
-      html += '<h4>Toolbar customization</h4>';
+      html += '<h4>Map drawing colours</h4>';
       html += '<label><input type="checkbox" id="compactToolbarToggle"' + (compactToolbar?' checked':'') + '> Compact toolbar</label>';
       html += '<label><input type="checkbox" id="motionToggle"' + (motionEnabled?' checked':'') + '> Animations and transitions</label>';
-      html += '<p class="settings-hint">Choose a preset, then fine-tune each tool color.</p>';
+      html += '<p class="settings-hint">These colours are applied to lines and areas drawn on the map. Toolbar icons stay neutral.</p>';
       html += '<div class="preset-grid">' +
         ['midnight','ocean','violet','forest'].map(function(presetName) {
           var selected = uiPreset === presetName;
@@ -3549,6 +3577,10 @@
       var chkOwl = settingsBody.querySelector('#chkOwl');
       if (chkOwl) chkOwl.addEventListener('change', function() {
         if (this.checked) owlControlLayer.addTo(map); else map.removeLayer(owlControlLayer);
+      });
+      var chkOwlCategoryPoints = settingsBody.querySelector('#chkOwlCategoryPoints');
+      if (chkOwlCategoryPoints) chkOwlCategoryPoints.addEventListener('change', function() {
+        if (this.checked) owlCategoryPointsLayer.addTo(map); else map.removeLayer(owlCategoryPointsLayer);
       });
       var chkOwlPositions = settingsBody.querySelector('#chkOwlPositions');
       if (chkOwlPositions) chkOwlPositions.addEventListener('change', function() {
