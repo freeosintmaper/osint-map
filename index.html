@@ -3160,7 +3160,8 @@
     function hideMobilePanels() {
       document.body.classList.remove('show-events', 'show-filters', 'show-tools', 'show-legend');
       ['btnShowEvents', 'btnShowFilters', 'btnShowTools'].forEach(function(id) {
-        var el = document.getElementById(id); if (el) el.classList.remove('active');
+        var el = document.getElementById(id);
+        if (el) { el.classList.remove('active'); el.setAttribute('aria-pressed', 'false'); }
       });
     }
     ['Events', 'Filters', 'Tools'].forEach(function(name) {
