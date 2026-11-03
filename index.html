@@ -574,14 +574,14 @@
     }
     #toolbar button {
       width: 44px; height: 44px; flex: 0 0 auto; border: none;
-      background: transparent; color: var(--text-main); border-radius: 10px;
+      background: transparent; color: var(--tool-accent, var(--text-main)); border-radius: 10px;
       cursor: pointer; display: flex; align-items: center; justify-content: center;
       padding: 0; transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
     }
-    #toolbar button:hover { background: var(--accent); color: #fff; transform: translateY(-2px); }
+    #toolbar button:hover { background: var(--tool-accent, var(--accent)); color: #fff; transform: translateY(-2px); }
     #toolbar button.active {
-      background: var(--accent); color: #fff;
+      background: var(--tool-accent, var(--accent)); color: #fff;
       box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
     }
     #toolbar button.danger { color: #ef4444; }
@@ -604,6 +604,18 @@
       display: block; pointer-events: none;
     }
 
+    #toolbar.compact {padding:5px;gap:3px;border-radius:12px} #toolbar.compact button{width:36px;height:36px;border-radius:8px}
+    #toolbar.compact button svg{width:17px;height:17px}
+    .settings-hint{color:var(--text-muted);line-height:1.5;margin:4px 0 10px}
+    .preset-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+    .preset-grid button,.reset-ui-btn{border:1px solid var(--border-mid);background:var(--bg-input);color:var(--text-main);padding:9px;border-radius:9px;cursor:pointer;font:inherit}
+    .tool-color-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;margin-top:10px}
+    .settings-body .tool-color-item{justify-content:space-between;gap:6px;font-size:11px}
+    .tool-color-item input{width:30px;height:26px;padding:2px;border:1px solid var(--border-mid);border-radius:7px;background:transparent}
+    .reset-ui-btn{margin-top:10px;width:100%}.about-project{color:var(--text-secondary);line-height:1.6;font-size:12px}
+    .about-project p{margin:8px 0}.about-project a{color:var(--accent);text-decoration:none}
+    body.reduce-motion *,body.reduce-motion *:before,body.reduce-motion *:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+    @media(max-width:768px){#toolbar.compact button{width:43px;height:43px}#toolbar.compact button svg{width:21px;height:21px}#settingsPanel{width:min(420px,100vw);max-width:100vw}}
     /* Панель настроек */
     #settingsOverlay {
       position: fixed; inset: 0;
@@ -882,8 +894,10 @@
     }
 
   </style>
+  <link rel="stylesheet" href="./redesign-v2.css?v=2" />
 </head>
 <body>
+  <div id="mapBrand" aria-label="OSINT Map"><span class="brand-mark">OM</span><span class="brand-copy"><strong>OSINT MAP</strong><small>OPEN SOURCE INTELLIGENCE</small></span></div>
   <div id="map"></div>
   <div id="errorBox"></div>
   <div id="owlLoader">Загрузка Project Owl…</div>
@@ -973,13 +987,13 @@
   </div>
 
   <div id="mobileToggle">
-    <button id="btnShowEvents" title="События">
+    <button id="btnShowEvents" type="button" title="События" aria-label="Показать события" aria-controls="eventsPanel" aria-pressed="false">
       <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
-    <button id="btnShowFilters" title="Фильтры">
+    <button id="btnShowFilters" type="button" title="Фильтры" aria-label="Открыть фильтры и настройки">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
     </button>
-    <button id="btnShowTools" title="Инструменты">
+    <button id="btnShowTools" type="button" title="Инструменты" aria-label="Показать инструменты" aria-controls="toolbar" aria-pressed="false">
       <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
     </button>
   </div>
@@ -1008,8 +1022,8 @@
 
   <div id="toolbar"></div>
 
-  <div id="settingsOverlay"></div>
-  <div id="settingsPanel">
+  <div id="settingsOverlay" aria-hidden="true"></div>
+  <div id="settingsPanel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" aria-hidden="true">
     <div class="settings-header">
       <span id="settingsTitle">Настройки</span>
       <button id="btnCloseSettings" title="Закрыть">✕</button>
@@ -1227,8 +1241,14 @@
         appearance: 'Appearance'
       }
     };
-    var currentLang = 'ru';
-    function t(key) { return (i18n[currentLang] && i18n[currentLang][key]) || (i18n.ru[key]) || key; }
+    var UI_PREFS_KEY='osint_ui_preferences_v2';
+    function readUIPrefs(){try{var p=JSON.parse(localStorage.getItem(UI_PREFS_KEY)||'{}');return p&&typeof p==='object'&&!Array.isArray(p)?p:{};}catch(e){return {};}}
+    var uiPrefs=readUIPrefs();
+    function writeUIPrefs(){try{localStorage.setItem(UI_PREFS_KEY,JSON.stringify(uiPrefs));}catch(e){console.warn('UI preferences unavailable:',e.message);}}
+    var currentLang=['en','ru','uk'].indexOf(uiPrefs.language)>=0?uiPrefs.language:'en';
+    var toolAccentColors=uiPrefs.toolColors&&typeof uiPrefs.toolColors==='object'?uiPrefs.toolColors:{};
+    var uiPreset=uiPrefs.preset||'midnight',compactToolbar=uiPrefs.compactToolbar===true,motionEnabled=uiPrefs.motionEnabled!==false;
+    function t(key){return(i18n[currentLang]&&i18n[currentLang][key])||(i18n.en[key])||key;}
         var loginOverlay = document.getElementById('loginOverlay');
     var loginStatus = document.getElementById('loginStatus');
     var loginFormBlock = document.getElementById('loginFormBlock');
@@ -1362,7 +1382,6 @@
       clear: '<svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>',
       eraser: '<svg viewBox="0 0 24 24"><path d="M20 20H7L3 16a2 2 0 010-3l9-9a2 2 0 013 0l5 5a2 2 0 010 3l-7 7M6 13l5 5"/></svg>',
       settings: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
-      info: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
       showAll: '<svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="12" cy="12" r="2"/></svg>'
     };
 
@@ -3141,17 +3160,32 @@
     function hideMobilePanels() {
       document.body.classList.remove('show-events', 'show-filters', 'show-tools', 'show-legend');
       ['btnShowEvents', 'btnShowFilters', 'btnShowTools'].forEach(function(id) {
-        var el = document.getElementById(id); if (el) el.classList.remove('active');
+        var el = document.getElementById(id);
+        if (el) { el.classList.remove('active'); el.setAttribute('aria-pressed', 'false'); }
       });
     }
     ['Events', 'Filters', 'Tools'].forEach(function(name) {
       var btn = document.getElementById('btnShow' + name);
       if (!btn) return;
       btn.addEventListener('click', function() {
+        // The mobile Filters shortcut opens the existing settings drawer, where
+        // all map layers and event-type filters already live.
+        if (name === 'Filters') {
+          hideMobilePanels();
+          openSettings();
+          return;
+        }
         var cls = 'show-' + name.toLowerCase();
         var wasActive = document.body.classList.contains(cls);
         hideMobilePanels();
-        if (!wasActive) { document.body.classList.add(cls); this.classList.add('active'); }
+        ['btnShowEvents', 'btnShowTools'].forEach(function(id) { var control = document.getElementById(id); if (control) control.setAttribute('aria-pressed', 'false'); });
+        if (!wasActive) {
+          document.body.classList.add(cls);
+          this.classList.add('active');
+          this.setAttribute('aria-pressed', 'true');
+        } else {
+          this.setAttribute('aria-pressed', 'false');
+        }
       });
     });
     map.on('click', function() { if (isMobile()) hideMobilePanels(); });
@@ -3369,24 +3403,26 @@
         { sep: true }, { key: 'showAll', svg: TOOLBAR_SVG.showAll },
         { sep: true }, { key: 'eraser', svg: TOOLBAR_SVG.eraser },
         { key: 'clear', svg: TOOLBAR_SVG.clear, danger: true },
-        { sep: true }, { key: 'settings', svg: TOOLBAR_SVG.settings },
-        { sep: true }, { key: 'info', svg: TOOLBAR_SVG.info }
+        { sep: true }, { key: 'settings', svg: TOOLBAR_SVG.settings }
       ];
       var html = '';
       tools.forEach(function(item) {
         if (item.sep) { html += '<div class="sep"></div>'; return; }
         var cls = item.danger ? 'danger' : '';
         var tooltip = t('tool' + item.key.charAt(0).toUpperCase() + item.key.slice(1));
-        html += '<button data-tool="' + item.key + '"' + (cls ? ' class="' + cls + '"' : '') + '>' + item.svg + '<span class="tooltip">' + tooltip + '</span></button>';
+        var toolColor = toolAccentColors[item.key];
+        var colorStyle = /^#[0-9a-f]{6}$/i.test(toolColor || '') ? ' style="--tool-accent:' + toolColor + '"' : '';
+        html += '<button data-tool="' + item.key + '"' + (cls ? ' class="' + cls + '"' : '') + colorStyle + ' aria-label="' + escapeHtml(tooltip) + '">' + item.svg + '<span class="tooltip">' + escapeHtml(tooltip) + '</span></button>';
       });
       toolbar.innerHTML = html;
+      toolbar.classList.toggle('compact',compactToolbar);
+      document.body.classList.toggle('reduce-motion',!motionEnabled);
       toolbar.querySelectorAll('button[data-tool]').forEach(function(btn) {
         btn.addEventListener('click', function() {
           var tool = this.getAttribute('data-tool');
           if (tool === 'eraser') { toggleEraser(); return; }
           if (tool === 'settings') { openSettings(); return; }
           if (tool === 'clear') { if (confirm(t('clearConfirm'))) { drawingsLayer.clearLayers(); lastMeasureLayer = null; localStorage.removeItem(DRAWINGS_KEY); } return; }
-          if (tool === 'info') { alert(t('aboutText')); return; }
           if (tool === 'showAll') {
             try {
               var b = tgLayer.getBounds();
@@ -3407,16 +3443,37 @@
     var settingsPanel = document.getElementById('settingsPanel');
     var settingsOverlay = document.getElementById('settingsOverlay');
 
+    var settingsCloseButton = document.getElementById('btnCloseSettings');
+    var settingsReturnFocus = null;
     function openSettings() {
+      settingsReturnFocus = document.activeElement;
       settingsPanel.classList.add('open');
       settingsOverlay.classList.add('open');
+      settingsPanel.setAttribute('aria-hidden', 'false');
+      settingsOverlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('settings-open');
+      settingsCloseButton.focus();
     }
     function closeSettings() {
       settingsPanel.classList.remove('open');
       settingsOverlay.classList.remove('open');
+      settingsPanel.setAttribute('aria-hidden', 'true');
+      settingsOverlay.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('settings-open');
+      if (settingsReturnFocus && typeof settingsReturnFocus.focus === 'function') settingsReturnFocus.focus();
     }
-    document.getElementById('btnCloseSettings').addEventListener('click', closeSettings);
+    settingsCloseButton.addEventListener('click', closeSettings);
     settingsOverlay.addEventListener('click', closeSettings);
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && settingsPanel.classList.contains('open')) closeSettings();
+      if (event.key === 'Tab' && settingsPanel.classList.contains('open')) {
+        var focusable = settingsPanel.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+        if (!focusable.length) return;
+        var first = focusable[0], last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+    });
 
     function renderSettings() {
       document.getElementById('settingsTitle').textContent = t('settingsTitle');
@@ -3454,6 +3511,22 @@
               '<button data-theme="dark" class="' + (currentTheme === 'dark' ? 'active' : '') + '">' + t('themeDark') + '</button>' +
               '</div>';
 
+      html += '<h4>Toolbar customization</h4>';
+      html += '<label><input type="checkbox" id="compactToolbarToggle"' + (compactToolbar?' checked':'') + '> Compact toolbar</label>';
+      html += '<label><input type="checkbox" id="motionToggle"' + (motionEnabled?' checked':'') + '> Animations and transitions</label>';
+      html += '<p class="settings-hint">Choose a preset, then fine-tune each tool color.</p>';
+      html += '<div class="preset-grid">' +
+        ['midnight','ocean','violet','forest'].map(function(presetName) {
+          var selected = uiPreset === presetName;
+          return '<button type="button" data-preset="' + presetName + '"' +
+            (selected ? ' class="selected" aria-pressed="true"' : ' aria-pressed="false"') +
+            '>' + presetName.charAt(0).toUpperCase() + presetName.slice(1) + '</button>';
+        }).join('') + '</div>';
+      var toolLabels={marker:t('toolMarker'),line:t('toolLine'),arrow:t('toolArrow'),polygon:t('toolPolygon'),rectangle:t('toolRectangle'),circle:t('toolCircle'),measure:t('toolMeasure'),showAll:t('toolShowAll'),eraser:t('toolEraser'),clear:t('toolClear'),settings:t('toolSettings')};
+      html+='<div class="tool-color-grid">';
+      Object.keys(toolLabels).forEach(function(key){var c=/^#[0-9a-f]{6}$/i.test(toolAccentColors[key]||'')?toolAccentColors[key]:'#3b82f6';html+='<label class="tool-color-item"><span>'+escapeHtml(toolLabels[key])+'</span><input type="color" data-tool-color="'+key+'" value="'+c+'"></label>';});
+      html+='</div><button type="button" class="reset-ui-btn" id="resetToolColors">Reset tool colors</button>';
+      html+='<h4>About OSINT Map</h4><div class="about-project"><strong>OSINT Map</strong><p>An interactive map combining publicly available reports and geospatial datasets. Map markers are navigation aids, not independent verification of an event.</p><p>Sources include Telegram, DeepStateMap, Project Owl and NASA FIRMS. Coverage, update frequency and accuracy depend on each source.</p><p>AI-assisted geolocation is an estimate based on source context. Uncertain locations may be incomplete or incorrect; cross-source matches do not guarantee truth.</p><p><a href="https://github.com/freeosintmaper/osint-map" target="_blank" rel="noopener noreferrer">GitHub</a> · <a href="./methodology.html">Methodology</a> · <a href="./corrections.html">Corrections</a></p></div>';
       html += '<h4>' + t('opacityLabel') + '</h4>';
       html += '<div class="opacity-row"><input type="range" id="opacitySlider" min="0" max="50" step="1" value="' + Math.round(fillOpacity * 100) + '"><span class="opacity-value" id="opacityValue">' + Math.round(fillOpacity * 100) + '%</span></div>';
       html += '<div class="mode-toggle"><button data-layer-mode="fill" class="' + (layerMode === 'fill' ? 'active' : '') + '">' + t('modeFill') + '</button><button data-layer-mode="outline" class="' + (layerMode === 'outline' ? 'active' : '') + '">' + t('modeOutline') + '</button></div>';
@@ -3465,7 +3538,7 @@
     function attachSettingsHandlers() {
       settingsBody.querySelectorAll('.lang-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
-          currentLang = this.getAttribute('data-lang');
+          currentLang = this.getAttribute('data-lang'); uiPrefs.language=currentLang; writeUIPrefs();
           renderSettings(); updateLegend(); renderToolbar(); loadTelegramEvents();
         });
       });
@@ -3503,6 +3576,15 @@
           loadTelegramEvents();
         });
       });
+      var ct=settingsBody.querySelector('#compactToolbarToggle');
+      if(ct)ct.addEventListener('change',function(){compactToolbar=this.checked;uiPrefs.compactToolbar=compactToolbar;writeUIPrefs();renderToolbar();});
+      var mt=settingsBody.querySelector('#motionToggle');
+      if(mt)mt.addEventListener('change',function(){motionEnabled=this.checked;uiPrefs.motionEnabled=motionEnabled;writeUIPrefs();document.body.classList.toggle('reduce-motion',!motionEnabled);});
+      var presets={midnight:{marker:'#3b82f6',line:'#06b6d4',arrow:'#8b5cf6',polygon:'#10b981',rectangle:'#f59e0b',circle:'#ec4899',measure:'#64748b',showAll:'#0ea5e9',eraser:'#ef4444',clear:'#dc2626',settings:'#64748b'},ocean:{marker:'#0284c7',line:'#06b6d4',arrow:'#2563eb',polygon:'#0d9488',rectangle:'#0891b2',circle:'#38bdf8',measure:'#475569',showAll:'#0369a1',eraser:'#f97316',clear:'#dc2626',settings:'#0e7490'},violet:{marker:'#7c3aed',line:'#a855f7',arrow:'#6366f1',polygon:'#c026d3',rectangle:'#8b5cf6',circle:'#d946ef',measure:'#64748b',showAll:'#6d28d9',eraser:'#e11d48',clear:'#be123c',settings:'#7e22ce'},forest:{marker:'#16a34a',line:'#0d9488',arrow:'#65a30d',polygon:'#059669',rectangle:'#ca8a04',circle:'#14b8a6',measure:'#64748b',showAll:'#15803d',eraser:'#ea580c',clear:'#dc2626',settings:'#166534'}};
+      settingsBody.querySelectorAll('[data-preset]').forEach(function(b){b.addEventListener('click',function(){uiPreset=this.getAttribute('data-preset');toolAccentColors=presets[uiPreset];uiPrefs.preset=uiPreset;uiPrefs.toolColors=toolAccentColors;writeUIPrefs();renderSettings();renderToolbar();});});
+      settingsBody.querySelectorAll('[data-tool-color]').forEach(function(i){i.addEventListener('input',function(){toolAccentColors[this.getAttribute('data-tool-color')]=this.value;uiPrefs.toolColors=toolAccentColors;uiPrefs.preset='custom';uiPreset='custom';writeUIPrefs();renderToolbar();});});
+      var reset=settingsBody.querySelector('#resetToolColors');
+      if(reset)reset.addEventListener('click',function(){toolAccentColors={};uiPrefs.toolColors={};uiPrefs.preset='midnight';uiPreset='midnight';writeUIPrefs();renderSettings();renderToolbar();});
       settingsBody.querySelectorAll('[data-theme]').forEach(function(btn) {
         btn.addEventListener('click', function() {
           applyTheme(this.getAttribute('data-theme'));
