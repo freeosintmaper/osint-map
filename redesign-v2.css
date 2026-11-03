@@ -220,3 +220,56 @@ body.reduce-motion #mapBrand, body.reduce-motion #eventsPanel, body.reduce-motio
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Interaction polish and mobile-first ergonomics */
+#mobileToggle button {
+  display: grid; place-items: center; color: var(--text-main);
+  border: 1px solid var(--ui-line); cursor: pointer;
+  transition: background .18s var(--ui-ease), color .18s var(--ui-ease), transform .18s var(--ui-ease);
+}
+#mobileToggle button:hover { transform: translateY(-2px); background: var(--bg-hover); }
+#mobileToggle button.active,
+#mobileToggle button[aria-pressed="true"] {
+  color: #fff; background: var(--accent); border-color: var(--accent);
+}
+#eventsPanel, #toolbar, #settingsPanel, #zoneEditorPanel, #zoneEditBar {
+  will-change: transform;
+}
+#eventsPanel .panel-body { overscroll-behavior: contain; }
+#settingsPanel .settings-body { overscroll-behavior: contain; scrollbar-width: thin; }
+#toolbar { isolation: isolate; }
+#toolbar button:focus-visible, #mobileToggle button:focus-visible,
+#eventsPanel button:focus-visible, #settingsPanel button:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 3px;
+}
+#toolbar button.danger { color: #ef4444; }
+#toolbar button.danger:hover { color: #fff; background: #dc2626; }
+#toolbar .sep { height: 24px; margin: 0 2px; opacity: .7; }
+.preset-grid button[aria-pressed="true"] {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+@media (max-width: 768px) {
+  #mobileToggle { display: flex; align-items: center; }
+  #toolbar {
+    flex-wrap: nowrap; justify-content: flex-start;
+    overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    max-height: none; height: 60px; white-space: nowrap;
+    scroll-snap-type: x proximity;
+  }
+  #toolbar::-webkit-scrollbar { display: none; }
+  #toolbar button { scroll-snap-align: center; flex: 0 0 42px; }
+  #toolbar .sep { flex: 0 0 1px; }
+  #toolbar button .tooltip { display: none; }
+  #eventsPanel .panel-body { padding-bottom: 12px; }
+  #settingsPanel { overflow: hidden; }
+  #settingsPanel .settings-body { min-height: 0; overflow-y: auto; }
+}
+@media (max-width: 480px) {
+  #toolbar { height: 56px; }
+  #toolbar button { flex-basis: 40px; }
+}
+@media (min-width: 769px) {
+  #mobileToggle { display: none !important; }
+  #eventsPanel { transition: box-shadow .2s var(--ui-ease), border-color .2s var(--ui-ease); }
+}
