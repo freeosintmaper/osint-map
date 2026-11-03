@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 
 BBOX = "22,44,180,82"
 DAYS = 1
-SOURCE = "VIIRS_SNPP_NRT"
+SOURCES = ("VIIRS_NOAA20_NRT", "VIIRS_NOAA21_NRT", "VIIRS_SNPP_NRT")
 MAX_RECORDS = 3000
 OUTPUT_PATH = "data/firms-fires.json"
 
@@ -27,20 +27,19 @@ if not MAP_KEY:
     sys.exit(1)
 
 
-def fetch_firms():
+def fetch_firms(source):
     url = (
         "https://firms.modaps.eosdis.nasa.gov/api/area/csv/"
-        f"{MAP_KEY}/{SOURCE}/{BBOX}/{DAYS}"
+        f"{MAP_KEY}/{source}/{BBOX}/{DAYS}"
     )
-    print("Загружаю FIRMS (API key задан)")
+    print(f"Загружаю NASA FIRMS: {source}")
     req = urllib.request.Request(url, headers={"User-Agent": "OSINT-map/1.0"})
     with urllib.request.urlopen(req, timeout=60) as response:
         if response.status != 200:
-            raise RuntimeError(f"NASA FIRMS вернул HTTP {response.status}")
+            raise RuntimeError(f"{source}: NASA FIRMS вернул HTTP {response.status}")
         data = response.read().decode("utf-8-sig", errors="strict")
     if not data.strip():
-        raise ValueError("NASA FIRMS вернул пустой ответ")
-    print(f"Получено байт: {len(data.encode('utf-8'))}")
+        raise ValueError(f"{source}: NASA FIRMS вернул пустой ответ")
     return data
 
 
@@ -117,9 +116,37 @@ def write_json_atomically(path, payload):
 
 def main():
     try:
-        data = fetch_firms()
-        features = parse_firms_csv(data)
-        print(f"Найдено пожаров: {len(features)}")
+        features = []
+        successful_sources = []
+        errors = []
+        for source in SOURCES:
+            try:
+                source_features = parse_firms_csv(fetch_firms(source))
+                features.extend(source_features)
+                successful_sources.append(source)
+                print(f"{source}: {len(source_features)} точек")
+            except Exception as source_error:
+                errors.append(f"{source}: {source_error}")
+                print(f"⚠️ Источник недоступен: {source_error}", file=sys.stderr)
+
+        if not successful_sources:
+            raise RuntimeError("Не удалось получить данные ни с одного спутника. " + " | ".join(errors))
+
+        # Дедупликация по спутнику, координатам и времени наблюдения.
+        unique = {}
+        for feature in features:
+            props = feature["properties"]
+            coords = feature["geometry"]["coordinates"]
+            key = (
+                props.get("satellite"), props.get("acq_date"), props.get("acq_time"),
+                round(coords[0], 5), round(coords[1], 5)
+            )
+            unique[key] = feature
+        features = sorted(
+            unique.values(),
+            key=lambda feature: -feature["properties"]["brightness"]
+        )[:MAX_RECORDS]
+        print(f"Итого уникальных точек: {len(features)}; источники: {', '.join(successful_sources)}")
 
         if not features and os.path.exists(OUTPUT_PATH):
             with open(OUTPUT_PATH, "r", encoding="utf-8") as existing_file:
@@ -132,6 +159,8 @@ def main():
         output = {
             "type": "FeatureCollection",
             "generated": utc_timestamp(),
+            "sources": successful_sources,
+            "source_errors": errors,
             "features": features,
         }
         write_json_atomically(OUTPUT_PATH, output)
