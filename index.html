@@ -3494,7 +3494,13 @@
       html += '<label><input type="checkbox" id="compactToolbarToggle"' + (compactToolbar?' checked':'') + '> Compact toolbar</label>';
       html += '<label><input type="checkbox" id="motionToggle"' + (motionEnabled?' checked':'') + '> Animations and transitions</label>';
       html += '<p class="settings-hint">Choose a preset, then fine-tune each tool color.</p>';
-      html += '<div class="preset-grid"><button type="button" data-preset="midnight">Midnight</button><button type="button" data-preset="ocean">Ocean</button><button type="button" data-preset="violet">Violet</button><button type="button" data-preset="forest">Forest</button></div>';
+      html += '<div class="preset-grid">' +
+        ['midnight','ocean','violet','forest'].map(function(presetName) {
+          var selected = uiPreset === presetName;
+          return '<button type="button" data-preset="' + presetName + '"' +
+            (selected ? ' class="selected" aria-pressed="true"' : ' aria-pressed="false"') +
+            '>' + presetName.charAt(0).toUpperCase() + presetName.slice(1) + '</button>';
+        }).join('') + '</div>';
       var toolLabels={marker:t('toolMarker'),line:t('toolLine'),arrow:t('toolArrow'),polygon:t('toolPolygon'),rectangle:t('toolRectangle'),circle:t('toolCircle'),measure:t('toolMeasure'),showAll:t('toolShowAll'),eraser:t('toolEraser'),clear:t('toolClear'),settings:t('toolSettings')};
       html+='<div class="tool-color-grid">';
       Object.keys(toolLabels).forEach(function(key){var c=/^#[0-9a-f]{6}$/i.test(toolAccentColors[key]||'')?toolAccentColors[key]:'#3b82f6';html+='<label class="tool-color-item"><span>'+escapeHtml(toolLabels[key])+'</span><input type="color" data-tool-color="'+key+'" value="'+c+'"></label>';});
