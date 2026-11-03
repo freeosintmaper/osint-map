@@ -3167,10 +3167,24 @@
       var btn = document.getElementById('btnShow' + name);
       if (!btn) return;
       btn.addEventListener('click', function() {
+        // The mobile Filters shortcut opens the existing settings drawer, where
+        // all map layers and event-type filters already live.
+        if (name === 'Filters') {
+          hideMobilePanels();
+          openSettings();
+          return;
+        }
         var cls = 'show-' + name.toLowerCase();
         var wasActive = document.body.classList.contains(cls);
         hideMobilePanels();
-        if (!wasActive) { document.body.classList.add(cls); this.classList.add('active'); }
+        ['btnShowEvents', 'btnShowTools'].forEach(function(id) { var control = document.getElementById(id); if (control) control.setAttribute('aria-pressed', 'false'); });
+        if (!wasActive) {
+          document.body.classList.add(cls);
+          this.classList.add('active');
+          this.setAttribute('aria-pressed', 'true');
+        } else {
+          this.setAttribute('aria-pressed', 'false');
+        }
       });
     });
     map.on('click', function() { if (isMobile()) hideMobilePanels(); });
