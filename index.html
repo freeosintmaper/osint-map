@@ -3393,7 +3393,9 @@
         if (item.sep) { html += '<div class="sep"></div>'; return; }
         var cls = item.danger ? 'danger' : '';
         var tooltip = t('tool' + item.key.charAt(0).toUpperCase() + item.key.slice(1));
-        html += '<button data-tool="' + item.key + '"' + (cls ? ' class="' + cls + '"' : '') + '>' + item.svg + '<span class="tooltip">' + tooltip + '</span></button>';
+        var toolColor = toolAccentColors[item.key];
+        var colorStyle = /^#[0-9a-f]{6}$/i.test(toolColor || '') ? ' style="--tool-accent:' + toolColor + '"' : '';
+        html += '<button data-tool="' + item.key + '"' + (cls ? ' class="' + cls + '"' : '') + colorStyle + ' aria-label="' + escapeHtml(tooltip) + '">' + item.svg + '<span class="tooltip">' + escapeHtml(tooltip) + '</span></button>';
       });
       toolbar.innerHTML = html;
       toolbar.classList.toggle('compact',compactToolbar);
