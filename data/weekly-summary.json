@@ -4,12 +4,23 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 42,
-      "delta": 39,
+      "current_period": 37,
+      "delta": 34,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
       "previous_period": 3,
+      "requires_human_review": true,
+      "signal_type": "publication_volume_change"
+    },
+    {
+      "classification": "analytical_signal",
+      "current_period": 11,
+      "delta": 11,
+      "event_type": "Political Development",
+      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
+      "label": "Повышенная публикационная активность",
+      "previous_period": 0,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
@@ -17,8 +28,25 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-03T11:21:37+00:00",
-      "description": "Зеленський з командою прибув у Берлін\n\nПрезидент розповів, що під час цієї поїздки у нього заплановані зустрічі з канцлером Фрідріхом Мерцом, президентом країни Франком-Вальтером Штайнмаєром, а також ",
+      "date": "2026-11-03T15:34:16+00:00",
+      "description": "‼️🇷🇺⚡️ Киев остался без воды после ударов по энергетике\n\n▪️В украинской столице временно прекращено водоснабжение из-за последствий ударов по энергетической инфраструктуре, сообщает «Киевводоканал».\n▪",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "operativnoZSU",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-03T15:10:31+00:00",
+      "description": "‼️🇺🇦🇷🇺 Зеленский отказался приглашать Путина в Киев и разговаривать по телефону\n\n▪️Во время визита в Германию Зеленский заявил, что не намерен приглашать Владимира Путина в Киев, поскольку считает так",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Киев",
@@ -26,231 +54,252 @@
       "source_count": 3,
       "sources": [
         "RVvoenkor",
-        "operativnoZSU",
+        "dva_majors",
         "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-03T10:50:52+00:00",
-      "description": "🇩🇪🇺🇦Президент Зеленський разом із командою прибули до Берліну\n\nВ Зеленського заплановані зустрічі з Канцлером і Президентом Німеччини, Президенткою Бундестагу, а також участь у Берлінській безпековій ",
+      "date": "2026-11-03T14:50:32+00:00",
+      "description": "‼️🇷🇺💥 ВС РФ поразили военную логистику ВСУ в Бердичеве и Чёрном море\n\n▪️В Бердичеве Житомирской области российские беспилотники нанесли удар по логистическому центру «Новой почты», где, по данным Мино",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Бердичев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "astrapress"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-03T14:47:59+00:00",
+      "description": "🗣️Якщо Трамп вирішить запросити Путіна на саміт G20 у Маямі і буде йтися про Україну, то і Україна має бути на цій зустрічі, сказав канцлер ФРН Мерц на пресконференції з Зеленським у Берліні\n\n📰 підпис",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 5,
       "sources": [
         "RVvoenkor",
+        "dva_majors",
         "operativnoZSU",
-        "ukrpravda_news"
+        "ukrpravda_news",
+        "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "RU",
-      "date": "2026-11-03T10:40:33+00:00",
-      "description": "Песков сообщил, что встреча Путина, Си Цзиньпина и Трампа на саммите АТЭС уже готовиться. Таким образом встреча на троих будет (к вопросу о международной изоляции России).\n\nЕС на эту встречу даже не д",
+      "country": "UA",
+      "date": "2026-11-03T14:34:39+00:00",
+      "description": "❗️🚰 Киев временно остался без воды после российских обстрелов, - \"Киевводоканал\"  В результате вражеских атак и повреждений энергетической инфраструктуры столицы обесточены основные водопроводные объе",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "operativnoZSU",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-03T14:07:48+00:00",
+      "description": "Мелания Трамп соберёт представителей России и Украины в Белом доме\n\nПервая леди США Мелания Трамп организует встречу представителей России и Украины в Белом доме. Об этом сообщила пресс-служба америка",
       "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Москва",
+      "location": "Вашингтон",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "boris_rozhin",
-        "readovkanews"
+        "ukrpravda_news",
+        "wargonzo"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "UA",
-      "date": "2026-11-03T10:25:01+00:00",
-      "description": "Минобороны России сообщило о нанесении массированного удара по энергетическим объектам в Винницкой, Днепропетровской и Харьковской областях Украины, а также по портовой инфраструктуре Одесской области",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Харьков",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "boris_rozhin"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-03T09:19:42+00:00",
-      "description": "Один человек погиб, 17 пострадали в Днепре в результате утренней российской ракетной атаки, — местные власти \n\nНа данный момент продолжаются работы по ликвидации последствий.\n\nРанее мэр города опублик",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Днепр",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-03T08:11:27+00:00",
-      "description": "Число пострадавших в Днепре возросло до 17 после российской атаки, один человек погиб  Как сообщают в ОВА, спасатели достали из-под завалов женщину. Она выжила, сейчас медики оказывают ей необходимую ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Днепр",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-03T08:03:01+00:00",
-      "description": "Сегодня ночью Вооруженными Силами Российской Федерации нанесен массированный удар высокоточным оружием наземного, воздушного базирования и ударными беспилотными летательными аппаратами по объектам эне",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Харьков",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "boris_rozhin"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-03T07:54:01+00:00",
-      "description": "Пять человек ранены из-за утренней атаки россиян на Днепр  На месте идет поисково-спасательная операция.  В ОВА показали кадры с последствиями удара.\n\n\n\n\n  \n\n\n0:26\n\n  \n    This media is not supported ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Днепр",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-03T06:00:24+00:00",
-      "description": "Трехсторонние переговоры России, Украины и США пройдут в Абу-Даби в первой половине ноября — Песков  Стороны обсудят вопросы безопасности после достижения договоренностей об урегулировании конфликта, ",
+      "country": "US",
+      "date": "2026-11-03T13:59:01+00:00",
+      "description": "У Білому домі заявили, що перша леді США Меланія Трамп особисто організує зустріч у США між представниками Росії та України.\n\nТакож у заяві зазначили, що вона виступить із заявою щодо Олешок у четвер,",
       "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Москва",
+      "location": "Вашингтон",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "boris_rozhin",
-        "readovkanews"
+        "ukrpravda_news",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-03T13:52:10+00:00",
+      "description": "Завтра, 4 листопада, у Брюсселі відбудуться переговори України, США, Європи та НАТО, — Зеленський\n\nСторони говоритимуть про пакети відновлення, гарантії безпеки та спільні виробництва.\n\n🫡https://t.me/",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 5,
+      "sources": [
+        "RVvoenkor",
+        "dva_majors",
+        "operativnoZSU",
+        "ukrpravda_news",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-03T13:43:51+00:00",
+      "description": "❗️🚰 Киев временно остался без воды после российских обстрелов, - \"Киевводоканал\"\n\nВ результате вражеских атак и повреждений энергетической инфраструктуры столицы обесточены основные водопроводные объе",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "operativnoZSU",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-03T12:10:01+00:00",
+      "description": "Один человек пострадал в результате российской атаки в Сумской области, — ОВА\n\n«С утра российские войска интенсивно атакуют беспилотниками гражданских лиц в Великописаревской общине. Враг попал в женщ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Бердичев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "astrapress"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 9,
+  "corroborated_event_count": 14,
   "country_counts": {
-    "RU": 8,
-    "UA": 42
+    "GB": 1,
+    "RU": 7,
+    "UA": 43,
+    "US": 2
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 50,
+  "event_count": 53,
   "event_type_counts": {
-    "Air Raid Alert": 1,
-    "Military Operation": 2,
-    "Military Strike": 42,
-    "Political Development": 5
+    "Military Operation": 5,
+    "Military Strike": 37,
+    "Political Development": 11
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 9,
+    "cross_source_consistent_count": 14,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 41,
-    "rss_reports_not_independently_corroborated_count": 9
+    "not_independently_corroborated_count": 39,
+    "rss_reports_not_independently_corroborated_count": 10
   },
-  "generated_at": "2026-11-03T11:27:56Z",
+  "generated_at": "2026-11-03T16:05:29Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 26,
-  "not_verified_event_count": 41,
+  "new_since_previous_snapshot": 24,
+  "not_verified_event_count": 39,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 42,
-      "delta": 39,
+      "current_period": 37,
+      "delta": 34,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
       "previous_period": 3,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
+    },
+    {
+      "classification": "analytical_signal",
+      "current_period": 11,
+      "delta": 11,
+      "event_type": "Political Development",
+      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
+      "label": "Повышенная публикационная активность",
+      "previous_period": 0,
+      "requires_human_review": true,
+      "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 9,
-    "telegram": 41
+    "rss": 10,
+    "telegram": 43
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 10,
+      "events": 16,
       "location": "Киев"
     },
     {
       "country": "UA",
-      "events": 7,
-      "location": "Харьков"
-    },
-    {
-      "country": "UA",
-      "events": 7,
-      "location": "Днепр"
-    },
-    {
-      "country": "RU",
-      "events": 4,
-      "location": "Москва"
-    },
-    {
-      "country": "UA",
-      "events": 4,
+      "events": 5,
       "location": "Запорожье"
     },
     {
       "country": "UA",
+      "events": 4,
+      "location": "Днепр"
+    },
+    {
+      "country": "UA",
+      "events": 4,
+      "location": "Харьков"
+    },
+    {
+      "country": "RU",
       "events": 3,
-      "location": "Луганск"
+      "location": "Москва"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Бердичев"
+    },
+    {
+      "country": "US",
+      "events": 2,
+      "location": "Вашингтон"
     },
     {
       "country": "UA",
       "events": 2,
       "location": "Kharkiv"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Краматорск"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 4,
+    "RVvoenkor": 6,
     "astrapress": 3,
     "boris_rozhin": 4,
-    "exilenova_plus": 2,
-    "kyivindependent_official": 6,
+    "kyivindependent_official": 8,
     "lost_armour": 5,
     "odesa_typical": 2,
     "operativnoZSU": 2,
-    "readovkanews": 2,
-    "uniannet": 4,
+    "ukrpravda_news": 5,
+    "uniannet": 3,
     "Суспільне Новини": 3,
+    "УНІАН": 2,
     "Українська правда": 3
   },
-  "window_end": "2026-11-03T11:27:56Z",
-  "window_start": "2026-10-27T11:27:56Z"
+  "window_end": "2026-11-03T16:05:29Z",
+  "window_start": "2026-10-27T16:05:29Z"
 }
