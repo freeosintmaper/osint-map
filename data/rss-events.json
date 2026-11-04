@@ -5,6 +5,34 @@
       "confidence": "LOW",
       "coordinate_precision": "settlement_center",
       "country": "UA",
+      "date": "2026-11-04T17:01:51Z",
+      "description": "У Слов'янську внаслідок російського обстрілу пошкоджений храм",
+      "event_type": "Military Strike",
+      "id": "rss-b5a5577928977cbfb7-4353e7",
+      "lat": 48.8531,
+      "lng": 37.6126,
+      "location": "Славянск",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_suspilne",
+          "date": "2026-11-04T17:01:51Z",
+          "publisher": "Суспільне Новини",
+          "source_type": "rss",
+          "url": "https://suspilne.media/donbas/1445051-u-slovansku-vnaslidok-rosijskogo-obstrilu-poskodzenij-hram/"
+        }
+      ],
+      "url": "https://suspilne.media/donbas/1445051-u-slovansku-vnaslidok-rosijskogo-obstrilu-poskodzenij-hram/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_suspilne",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
       "date": "2026-11-04T06:38:35Z",
       "description": "У Корабельному районі Херсона дрон атакував 65-річного чоловіка",
       "event_type": "Military Strike",
@@ -398,54 +426,54 @@
       "endpoint": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
       "events_mapped": 0,
       "items_seen": 16,
-      "last_attempt": "2026-11-04T16:17:19Z",
+      "last_attempt": "2026-11-04T21:59:42Z",
       "last_error": null,
-      "last_success": "2026-11-04T16:17:19Z",
-      "latest_item_at": "2026-11-04T16:06:31Z",
+      "last_success": "2026-11-04T21:59:42Z",
+      "latest_item_at": "2026-11-04T18:17:58Z",
       "status": "ok"
     },
     "rss_kyivindependent": {
       "endpoint": "https://kyivindependent.com/news-archive/rss/",
       "events_mapped": 0,
       "items_seen": 15,
-      "last_attempt": "2026-11-04T16:17:19Z",
+      "last_attempt": "2026-11-04T21:59:42Z",
       "last_error": null,
-      "last_success": "2026-11-04T16:17:19Z",
-      "latest_item_at": "2026-11-04T14:49:08Z",
+      "last_success": "2026-11-04T21:59:42Z",
+      "latest_item_at": "2026-11-04T21:21:54Z",
       "status": "ok"
     },
     "rss_suspilne": {
       "endpoint": "https://suspilne.media/rss/ukrnet.rss",
-      "events_mapped": 6,
+      "events_mapped": 1,
       "items_seen": 50,
-      "last_attempt": "2026-11-04T16:17:19Z",
-      "last_error": "HTTP 403",
-      "last_success": "2026-11-04T08:08:01Z",
-      "latest_item_at": "2026-11-04T08:00:22Z",
-      "status": "error"
+      "last_attempt": "2026-11-04T21:59:42Z",
+      "last_error": null,
+      "last_success": "2026-11-04T21:59:42Z",
+      "latest_item_at": "2026-11-04T21:58:41Z",
+      "status": "ok"
     },
     "rss_ukrpravda": {
       "endpoint": "https://www.pravda.com.ua/rss/view_mainnews/",
       "events_mapped": 0,
       "items_seen": 20,
-      "last_attempt": "2026-11-04T16:17:19Z",
+      "last_attempt": "2026-11-04T21:59:42Z",
       "last_error": null,
-      "last_success": "2026-11-04T16:17:19Z",
-      "latest_item_at": "2026-11-04T15:31:00Z",
+      "last_success": "2026-11-04T21:59:42Z",
+      "latest_item_at": "2026-11-04T20:44:00Z",
       "status": "ok"
     },
     "rss_unian": {
       "endpoint": "https://rss.unian.net/site/news_ukr.rss",
       "events_mapped": 0,
       "items_seen": 100,
-      "last_attempt": "2026-11-04T16:17:19Z",
+      "last_attempt": "2026-11-04T21:59:42Z",
       "last_error": null,
-      "last_success": "2026-11-04T16:17:19Z",
-      "latest_item_at": "2026-11-04T16:00:00Z",
+      "last_success": "2026-11-04T21:59:42Z",
+      "latest_item_at": "2026-11-04T21:48:25Z",
       "status": "ok"
     }
   },
-  "generated_at": "2026-11-04T16:17:19Z",
+  "generated_at": "2026-11-04T21:59:42Z",
   "method_note": "RSS items are separate, unverified source records. Only the title is stored; the original publisher link is retained.",
   "window_days": 7
 }
