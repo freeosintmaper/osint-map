@@ -1,6 +1,90 @@
 {
   "events": [
     {
+      "channel": "rss_suspilne",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-04T06:38:35Z",
+      "description": "У Корабельному районі Херсона дрон атакував 65-річного чоловіка",
+      "event_type": "Military Strike",
+      "id": "rss-183ca4a99df988bea8-d82582",
+      "lat": 46.6354,
+      "lng": 32.6169,
+      "location": "Херсон",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_suspilne",
+          "date": "2026-11-04T06:38:35Z",
+          "publisher": "Суспільне Новини",
+          "source_type": "rss",
+          "url": "https://suspilne.media/kherson/1444363-u-korabelnomu-rajoni-hersona-dron-atakuvav-65-ricnogo-colovika/"
+        }
+      ],
+      "url": "https://suspilne.media/kherson/1444363-u-korabelnomu-rajoni-hersona-dron-atakuvav-65-ricnogo-colovika/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_suspilne",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-04T06:11:46Z",
+      "description": "Нічна атака РФ на Полтавщину 4 листопада: що відомо",
+      "event_type": "Military Offensive",
+      "id": "rss-bc469bbf2d1c675409-c6a397",
+      "lat": 49.5883,
+      "lng": 34.5514,
+      "location": "Полтава",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_suspilne",
+          "date": "2026-11-04T06:11:46Z",
+          "publisher": "Суспільне Новини",
+          "source_type": "rss",
+          "url": "https://suspilne.media/poltava/1444345-nicna-ataka-rf-na-poltavsinu-4-listopada-so-vidomo/"
+        }
+      ],
+      "url": "https://suspilne.media/poltava/1444345-nicna-ataka-rf-na-poltavsinu-4-listopada-so-vidomo/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_suspilne",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-04T05:59:33Z",
+      "description": "Наслідки обстрілів Сумської області: через атаки РФ поранено 69-річну жінку та зруйновано інфраструктуру в громадах",
+      "event_type": "Military Strike",
+      "id": "rss-fce11fbaee54d305d9-14abac",
+      "lat": 50.9077,
+      "lng": 34.7981,
+      "location": "Сумы",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_suspilne",
+          "date": "2026-11-04T05:59:33Z",
+          "publisher": "Суспільне Новини",
+          "source_type": "rss",
+          "url": "https://suspilne.media/sumy/1444333-naslidki-obstriliv-sumskoi-oblasti-cerez-ataki-rf-poraneno-69-ricnu-zinku-ta-zrujnovano-infrastrukturu-v-gromadah/"
+        }
+      ],
+      "url": "https://suspilne.media/sumy/1444333-naslidki-obstriliv-sumskoi-oblasti-cerez-ataki-rf-poraneno-69-ricnu-zinku-ta-zrujnovano-infrastrukturu-v-gromadah/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
       "channel": "rss_kyivindependent",
       "confidence": "LOW",
       "coordinate_precision": "settlement_center",
@@ -314,54 +398,54 @@
       "endpoint": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
       "events_mapped": 0,
       "items_seen": 16,
-      "last_attempt": "2026-11-04T01:44:01Z",
+      "last_attempt": "2026-11-04T08:08:01Z",
       "last_error": null,
-      "last_success": "2026-11-04T01:44:01Z",
-      "latest_item_at": "2026-11-03T18:03:24Z",
+      "last_success": "2026-11-04T08:08:01Z",
+      "latest_item_at": "2026-11-04T07:45:42Z",
       "status": "ok"
     },
     "rss_kyivindependent": {
       "endpoint": "https://kyivindependent.com/news-archive/rss/",
       "events_mapped": 1,
       "items_seen": 15,
-      "last_attempt": "2026-11-04T01:44:01Z",
+      "last_attempt": "2026-11-04T08:08:01Z",
       "last_error": null,
-      "last_success": "2026-11-04T01:44:01Z",
-      "latest_item_at": "2026-11-04T00:42:38Z",
+      "last_success": "2026-11-04T08:08:01Z",
+      "latest_item_at": "2026-11-04T07:42:20Z",
       "status": "ok"
     },
     "rss_suspilne": {
       "endpoint": "https://suspilne.media/rss/ukrnet.rss",
       "events_mapped": 3,
       "items_seen": 50,
-      "last_attempt": "2026-11-04T01:44:01Z",
-      "last_error": "HTTP 403",
-      "last_success": "2026-11-03T03:48:39Z",
-      "latest_item_at": "2026-11-02T22:00:55Z",
-      "status": "error"
+      "last_attempt": "2026-11-04T08:08:01Z",
+      "last_error": null,
+      "last_success": "2026-11-04T08:08:01Z",
+      "latest_item_at": "2026-11-04T08:00:22Z",
+      "status": "ok"
     },
     "rss_ukrpravda": {
       "endpoint": "https://www.pravda.com.ua/rss/view_mainnews/",
       "events_mapped": 0,
       "items_seen": 20,
-      "last_attempt": "2026-11-04T01:44:01Z",
+      "last_attempt": "2026-11-04T08:08:01Z",
       "last_error": null,
-      "last_success": "2026-11-04T01:44:01Z",
-      "latest_item_at": "2026-11-03T23:32:00Z",
+      "last_success": "2026-11-04T08:08:01Z",
+      "latest_item_at": "2026-11-04T07:57:00Z",
       "status": "ok"
     },
     "rss_unian": {
       "endpoint": "https://rss.unian.net/site/news_ukr.rss",
       "events_mapped": 1,
       "items_seen": 100,
-      "last_attempt": "2026-11-04T01:44:01Z",
+      "last_attempt": "2026-11-04T08:08:01Z",
       "last_error": null,
-      "last_success": "2026-11-04T01:44:01Z",
-      "latest_item_at": "2026-11-04T01:29:00Z",
+      "last_success": "2026-11-04T08:08:01Z",
+      "latest_item_at": "2026-11-04T08:07:00Z",
       "status": "ok"
     }
   },
-  "generated_at": "2026-11-04T01:44:01Z",
+  "generated_at": "2026-11-04T08:08:01Z",
   "method_note": "RSS items are separate, unverified source records. Only the title is stored; the original publisher link is retained.",
   "window_days": 7
 }

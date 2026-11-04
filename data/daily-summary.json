@@ -4,19 +4,19 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 28,
-      "delta": 26,
+      "current_period": 26,
+      "delta": 25,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
     {
       "classification": "analytical_signal",
-      "current_period": 8,
-      "delta": 8,
+      "current_period": 9,
+      "delta": 9,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -28,8 +28,40 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-03T22:13:44+00:00",
-      "description": "В Одессе прилет по одному из ТЦ, — местные паблики  UPD: речь о ТЦ «Семья». В ГВА подтвердили удар по объекту торговой инфраструктуры.   УНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads\n\n\n\n\n  \n\n\n0:04\n\n  \n",
+      "date": "2026-11-04T08:06:04+00:00",
+      "description": "ВСУ ударили по офису телекоммуникационной компании и жилым домам в Донецке\n\nНакануне при атаке на АЗС погиб водитель автобуса\n\nСегодня Донецк подвергся новой ночной массированной атаке вражеских беспи",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Донецк",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "exilenova_plus",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-04T07:23:15+00:00",
+      "description": "Наслідки ударів по Донецьку, де була атакована телекомунікаційна інфраструктура.",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Донецк",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "exilenova_plus",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-04T06:32:47+00:00",
+      "description": "‼️🇺🇦🔥После удара пылает крупный торговый центр в Одессе  Об этом сообщают местные СМИ. ⚠️Подписаться на RV: MAX | t.me/RVvoenkor\n\n\n  \n    \n      \n  \n  \n    \n  \n  \n0:08\n  \n    \n      This media is not ",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Одесса",
@@ -37,69 +69,164 @@
       "source_count": 2,
       "sources": [
         "RVvoenkor",
+        "dva_majors"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-04T06:25:49+00:00",
+      "description": "Трамп заявив, що республіканці програли частково через війну з Іраном, Україна Іран винен у високих цінах на бензин.\n\n📌Окремо CNN пише, що опитані ними інсайдери, звинувачують Трампа в розгромній пора",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Вашингтон",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "astrapress",
+        "exilenova_plus",
+        "operativnoZSU",
         "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-03T21:15:32+00:00",
-      "description": "‼️🇺🇦🔥После удара пылает крупный торговый центр в Одессе\n\nОб этом сообщают местные СМИ.\n⚠️Подписаться на RV: MAX | t.me/RVvoenkor\n🔥1.09K👍302❤70🫡28🤷‍♂16🤬16🤣13👎6😱5❤‍🔥3😢2\n  \n  \n    66.1K views21:15",
+      "date": "2026-11-04T05:32:56+00:00",
+      "description": "В оккупированном РФ Донецке атакован дата-центр мобильного оператора «Феникс»\n\nПо данным источников Supernova+, атакован дата-центр «Феникс» на Шахтерской улице. Жители Донецка сообщали как минимум о ",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Одесса",
+      "location": "Донецк",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "exilenova_plus",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-04T05:23:01+00:00",
+      "description": "🫠\"Тупая, как пробка\": Трамп набросился на ведущую Fox News из-за освещения выборов\n\nПрезидент США Дональд Трамп назвал ведущую Fox News Джессику Тарлоу \"тупой, как пробка\" и заявил, что не может терпе",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Вашингтон",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "astrapress",
+        "exilenova_plus",
+        "operativnoZSU",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-04T05:22:32+00:00",
+      "description": "він закликав прихильників голосувати так, ніби він сам у бюлетені, \n\n\n  \n🤡Трамп, який закликав виборців уявити, ніби він сам балотується, переклав на інших провину за результати виборів\n\n🙈У дописі в T",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Вашингтон",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "RVvoenkor",
+        "exilenova_plus",
+        "operativnoZSU"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-04T05:12:18+00:00",
+      "description": "Два человека ранены в результате российского удара по предприятию в Днепре, — ОВА\n\n«Двое человек получили ранения в результате российского удара по предприятию в Днепре. Мужчин 38 и 57 лет госпитализи",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Днепр",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-04T04:57:53+00:00",
+      "description": "Протягом усієї кампанії республіканці намагалися дистанціюватися від Трампа, рейтинг схвалення якого впав до історично низького рівня за тижні до виборів, оскільки він закликав прихильників голосувати",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Вашингтон",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "operativnoZSU"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-04T04:43:01+00:00",
+      "description": "❗️Россияне ударили по предприятию в Днепре: двое раненых, возник пожар\n\nОб этом сообщил глава Днепропетровской ОВА Александр Ганжа. Мужчин 38 и 57 лет госпитализировали с осколочными ранениями, состоя",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Днепр",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
         "uniannet"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 13,
+  "corroborated_event_count": 15,
   "country_counts": {
     "RU": 6,
-    "UA": 32,
-    "US": 4
+    "UA": 31,
+    "US": 7
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 42,
+  "event_count": 44,
   "event_type_counts": {
-    "Air Raid Alert": 2,
-    "Military Offensive": 1,
-    "Military Operation": 3,
-    "Military Strike": 28,
-    "Political Development": 8
+    "Air Raid Alert": 1,
+    "Military Offensive": 2,
+    "Military Operation": 6,
+    "Military Strike": 26,
+    "Political Development": 9
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 13,
+    "cross_source_consistent_count": 15,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
     "not_independently_corroborated_count": 29,
-    "rss_reports_not_independently_corroborated_count": 2
+    "rss_reports_not_independently_corroborated_count": 5
   },
-  "generated_at": "2026-11-04T01:44:07Z",
+  "generated_at": "2026-11-04T08:08:07Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 12,
+  "new_since_previous_snapshot": 32,
   "not_verified_event_count": 29,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 28,
-      "delta": 26,
+      "current_period": 26,
+      "delta": 25,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
     {
       "classification": "analytical_signal",
-      "current_period": 8,
-      "delta": 8,
+      "current_period": 9,
+      "delta": 9,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -109,24 +236,24 @@
     }
   ],
   "source_type_counts": {
-    "rss": 2,
-    "telegram": 40
+    "rss": 5,
+    "telegram": 39
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 11,
-      "location": "Киев"
-    },
-    {
-      "country": "UA",
-      "events": 4,
-      "location": "Одесса"
+      "events": 7,
+      "location": "Донецк"
     },
     {
       "country": "US",
-      "events": 4,
+      "events": 7,
       "location": "Вашингтон"
+    },
+    {
+      "country": "UA",
+      "events": 5,
+      "location": "Киев"
     },
     {
       "country": "UA",
@@ -136,7 +263,12 @@
     {
       "country": "UA",
       "events": 3,
-      "location": "Житомир"
+      "location": "Одесса"
+    },
+    {
+      "country": "UA",
+      "events": 3,
+      "location": "Днепр"
     },
     {
       "country": "RU",
@@ -144,30 +276,25 @@
       "location": "Краснодар"
     },
     {
-      "country": "RU",
-      "events": 2,
-      "location": "Ростов-на-Дону"
-    },
-    {
       "country": "UA",
-      "events": 2,
-      "location": "Днепр"
+      "events": 1,
+      "location": "Херсон"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 5,
-    "The Kyiv Independent": 1,
-    "astrapress": 3,
-    "boris_rozhin": 3,
-    "exilenova_plus": 2,
-    "kyivindependent_official": 6,
-    "odesa_typical": 2,
-    "operativnoZSU": 4,
-    "supernova_plus": 4,
-    "ukrpravda_news": 7,
-    "uniannet": 3,
-    "wargonzo": 2
+    "RVvoenkor": 3,
+    "astrapress": 4,
+    "boris_rozhin": 4,
+    "exilenova_plus": 4,
+    "kyivindependent_official": 4,
+    "lost_armour": 1,
+    "operativnoZSU": 6,
+    "supernova_plus": 5,
+    "ukrpravda_news": 5,
+    "uniannet": 4,
+    "wargonzo": 2,
+    "Суспільне Новини": 3
   },
-  "window_end": "2026-11-04T01:44:07Z",
-  "window_start": "2026-11-03T01:44:07Z"
+  "window_end": "2026-11-04T08:08:07Z",
+  "window_start": "2026-11-03T08:08:07Z"
 }
