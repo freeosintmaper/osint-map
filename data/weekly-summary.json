@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 38,
-      "delta": 35,
+      "current_period": 41,
+      "delta": 38,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -15,8 +15,8 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 10,
-      "delta": 10,
+      "current_period": 9,
+      "delta": 9,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -28,160 +28,67 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-03T21:26:53+00:00",
-      "description": "Російські війська увечері атакували торгівельну інфраструктуру в Одесі, інформації щодо поранених наразі не надходило, повідомив голова ОВА Кіпер.\n\nМісцеві Telegram-канали повідомляють, що постраждав ",
+      "date": "2026-11-03T22:13:44+00:00",
+      "description": "В Одессе прилет по одному из ТЦ, — местные паблики  UPD: речь о ТЦ «Семья». В ГВА подтвердили удар по объекту торговой инфраструктуры.   УНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads\n\n\n\n\n  \n\n\n0:04\n\n  \n",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Житомир",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-03T21:16:26+00:00",
-      "description": "💡 У Житомирі повністю зникло світло внаслідок російської атаки на енергетичну інфраструктуру. У міськраді заявили, що якщо до ранку електропостачання не буде відновлено, в громаді будуть розгорнуті пу",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "dva_majors",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-03T20:33:01+00:00",
-      "description": "⚡️Ввечері росіяни вдарили по енергетичній інфраструктурі Житомира, — міськрада\n\nРада повідомляє, що якщо до завтрашнього ранку не буде відновлено електропостачання, то о 9.00 в обласному центрі буде з",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Житомир",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-03T19:20:01+00:00",
-      "description": "СБУ заочно сообщила бывшему пресс-секретарю Зеленского Юлии Мендель о подозрении в госизмене\n\nСлужба безопасности Украины и Офис генерального прокурора заочно сообщили о подозрении бывшему пресс-секре",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
+      "location": "Одесса",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "astrapress"
+        "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-03T18:59:15+00:00",
-      "description": "Два человека, включая сотрудницу Запорожской АЭС, погибли в результате удара украинского дрона по автомобилю в оккупированной части Запорожской области, — «администрация ЗАЭС»\n\n«Беспилотник вооруженны",
+      "date": "2026-11-03T21:15:32+00:00",
+      "description": "‼️🇺🇦🔥После удара пылает крупный торговый центр в Одессе\n\nОб этом сообщают местные СМИ.\n⚠️Подписаться на RV: MAX | t.me/RVvoenkor\n🔥1.09K👍302❤70🫡28🤷‍♂16🤬16🤣13👎6😱5❤‍🔥3😢2\n  \n  \n    66.1K views21:15",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "astrapress",
-        "operativnoZSU"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "US",
-      "date": "2026-11-03T18:22:50+00:00",
-      "description": "Перша леді США Меланія Трамп проведе зустріч із представниками України та РФ щодо проведеної гуманітарної місії в Олешках — \"Укрінформ\" з посиланням на обізнане джерело.\n\nУкраїну під час зустрічі пред",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Вашингтон",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "ukrpravda_news",
-        "wargonzo"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-03T17:21:53+00:00",
-      "description": "‼️🇺🇦🏴‍☠️СБУ и Генпрокуратура предъявили обвинения в госизмене экс-пресс-секретарю Зеленского Юлии Мендель\n\n▪️Ей заочно сообщили о подозрении в государственной измене и \"оправдании российской агрессии\"",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
+      "location": "Одесса",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "astrapress"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-03T16:16:01+00:00",
-      "description": "❗️Ситуація з електропостачанням у Києві надзвичайно складна, — Кличко\n\n▪️В результаті триваючих ударів ворог намагається знищити єдину енергосистему України. Пошкоджено генерацію та передачу електроен",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "astrapress",
-        "operativnoZSU"
+        "uniannet"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 12,
+  "corroborated_event_count": 13,
   "country_counts": {
-    "GB": 1,
-    "RU": 8,
-    "UA": 41,
-    "US": 3
+    "RU": 9,
+    "UA": 43,
+    "US": 4
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 53,
+  "event_count": 56,
   "event_type_counts": {
     "Air Raid Alert": 2,
     "Military Offensive": 1,
-    "Military Operation": 2,
-    "Military Strike": 38,
-    "Political Development": 10
+    "Military Operation": 3,
+    "Military Strike": 41,
+    "Political Development": 9
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 12,
+    "cross_source_consistent_count": 13,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 41,
+    "not_independently_corroborated_count": 43,
     "rss_reports_not_independently_corroborated_count": 11
   },
-  "generated_at": "2026-11-03T21:45:49Z",
+  "generated_at": "2026-11-04T01:44:07Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 23,
-  "not_verified_event_count": 41,
+  "new_since_previous_snapshot": 12,
+  "not_verified_event_count": 43,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 38,
-      "delta": 35,
+      "current_period": 41,
+      "delta": 38,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -191,8 +98,8 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 10,
-      "delta": 10,
+      "current_period": 9,
+      "delta": 9,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -203,12 +110,12 @@
   ],
   "source_type_counts": {
     "rss": 11,
-    "telegram": 42
+    "telegram": 45
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 15,
+      "events": 13,
       "location": "Киев"
     },
     {
@@ -218,13 +125,18 @@
     },
     {
       "country": "UA",
-      "events": 3,
-      "location": "Житомир"
+      "events": 4,
+      "location": "Одесса"
     },
     {
       "country": "US",
-      "events": 3,
+      "events": 4,
       "location": "Вашингтон"
+    },
+    {
+      "country": "UA",
+      "events": 3,
+      "location": "Житомир"
     },
     {
       "country": "UA",
@@ -232,35 +144,30 @@
       "location": "Днепр"
     },
     {
-      "country": "UA",
+      "country": "RU",
       "events": 2,
-      "location": "Одесса"
+      "location": "Краснодар"
     },
     {
       "country": "UA",
       "events": 2,
       "location": "Славянск"
-    },
-    {
-      "country": "RU",
-      "events": 2,
-      "location": "Ростов-на-Дону"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 8,
+    "RVvoenkor": 5,
     "astrapress": 3,
-    "boris_rozhin": 2,
+    "boris_rozhin": 3,
     "exilenova_plus": 2,
     "kyivindependent_official": 6,
+    "odesa_typical": 2,
     "operativnoZSU": 4,
-    "supernova_plus": 3,
+    "supernova_plus": 4,
     "ukrpravda_news": 7,
-    "wargonzo": 2,
+    "uniannet": 3,
     "Суспільне Новини": 3,
-    "УНІАН": 2,
     "Українська правда": 3
   },
-  "window_end": "2026-11-03T21:45:49Z",
-  "window_start": "2026-10-27T21:45:49Z"
+  "window_end": "2026-11-04T01:44:07Z",
+  "window_start": "2026-10-28T01:44:07Z"
 }
