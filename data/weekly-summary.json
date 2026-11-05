@@ -4,272 +4,148 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 44,
-      "delta": 41,
+      "current_period": 36,
+      "delta": 36,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 3,
+      "previous_period": 0,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "attention_candidates": [
     {
-      "country": "UA",
-      "date": "2026-11-05T08:24:58+00:00",
-      "description": "‼️🇷🇺💥 Российские дроны поразили почтовый терминал и склад в Харьковской области\n\n▪️В результате ударов БПЛА поражены почтовый терминал и складские помещения, сообщает украинская ГСЧС.\n▪️Ранее Миноборо",
-      "event_type": "Military Strike",
+      "country": "US",
+      "date": "2026-11-05T17:00:52+00:00",
+      "description": "Глава РФПИ передал первой леди США картину от девочки из Алешек\n\nПервая леди США Мелания Трамп приняла в Белом доме представителей России и Украины. Встреча посвящена гуманитарной операции в Алешках, ",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Харьков",
+      "location": "Вашингтон",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "RVvoenkor",
-        "astrapress"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-05T07:45:04+00:00",
-      "description": "Рязань ,,  ..\n\nпомимо прикура НПЗ  .. в чатах пишут о атаке на :\n\nЗавод OpenYard - завод серверного оборудования, который создавался при участии Яндекса.\n\nПовреждении 4 блока Логистического Хаба .. \n\n",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Рязань",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "exilenova_plus",
-        "supernova_plus"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-05T07:38:49+00:00",
-      "description": "В Харьковской области российские дроны поразили почтовый терминал и склад, передает ГСЧС. РФ заявила об ударе по «Новой почте»\n\n  \n  \n    29.3K views07:38",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Харьков",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "astrapress"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-05T06:51:45+00:00",
-      "description": "Рязанская область. Губернатор:\n\nСегодня ночью Рязанская область подверглась массированной атаке БПЛА (более 200). \n\nЕсть повреждения от падения обломков. На территории промышленных объектов в Рязани п",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Рязань",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "astrapress",
-        "dva_majors"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-05T06:10:08+00:00",
-      "description": "ВС РФ атаковали логистическую инфраструктуру Киевской области. В Бучанском районе возник пожар. Пострадал один человек, — ГСЧС",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "astrapress",
+        "readovkanews",
         "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "UA",
-      "date": "2026-11-05T05:26:43+00:00",
-      "description": "В Киевской области кацапня ударила по логистическому центру\n\nПо данным ГСЧС, в результате обстрела вспыхнул пожар. На месте работают спасатели Бучанского и других районов области. К настоящему времени",
-      "event_type": "Military Strike",
+      "country": "US",
+      "date": "2026-11-05T16:17:35+00:00",
+      "description": "В Белом доме началась встреча Мелании Трамп с представителями Украины и РФ\n\nУкраину представляют глава фракции «Слуга народа» Давид Арахамия и уполномоченный Верховной Рады по правам человека Дмитрий ",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Киев",
+      "location": "Вашингтон",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 2,
       "sources": [
-        "RVvoenkor",
-        "astrapress",
+        "readovkanews",
         "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-05T05:23:52+00:00",
-      "description": "Троє людей дістали поранень. Ворог атакував безпілотниками Дніпро та Самар.\n\nУ Дніпрі зайнялися дах приватного будинку та приватні гаражі. Поранені троє людей. \n\nПожежі виникли й на об’єктах критичної",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Самар",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "dnepr_typical"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-05T04:43:49+00:00",
-      "description": "Губернатор Рязанской области подтвердил массированную атаку БПЛА на регион\n\n«Есть повреждения от падения обломков. На территории промышленных объектов в Рязани произошли возгорания. Повреждены линии э",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Рязань",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "astrapress",
-        "dva_majors"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-05T04:04:00+00:00",
-      "description": "ВС РФ атаковали Днепропетровскую область: три человека получили ранения, — ОВА\n\n«В Днепре загорелись крыша частного дома и частные гаражи. Ранены три человека. Пожар возник и на объектах критической и",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Самар",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "dnepr_typical"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-05T03:16:53+00:00",
-      "description": "Сьогодні Рязань опинилася під санкційними ударами дронів-камікадзе. Станом на зараз відомо про пожежі на місцевому НПЗ та логістичному хабі Wildberries. У місті пролунала велика кількість вибухів. (Фо",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Рязань",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "exilenova_plus",
-        "supernova_plus"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 11,
+  "corroborated_event_count": 2,
   "country_counts": {
     "RU": 11,
-    "UA": 44,
-    "US": 1
+    "UA": 33,
+    "US": 2
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 56,
+  "event_count": 46,
   "event_type_counts": {
-    "Air Raid Alert": 3,
+    "Air Raid Alert": 1,
     "Military Offensive": 2,
     "Military Operation": 4,
-    "Military Strike": 44,
+    "Military Strike": 36,
     "Political Development": 3
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 11,
+    "cross_source_consistent_count": 2,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 45,
+    "not_independently_corroborated_count": 44,
     "rss_reports_not_independently_corroborated_count": 15
   },
-  "generated_at": "2026-11-05T09:26:12Z",
+  "generated_at": "2026-11-05T17:35:36Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 30,
-  "not_verified_event_count": 45,
+  "new_since_previous_snapshot": 17,
+  "not_verified_event_count": 44,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 44,
-      "delta": 41,
+      "current_period": 36,
+      "delta": 36,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 3,
+      "previous_period": 0,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
     "rss": 15,
-    "telegram": 41
+    "telegram": 31
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 13,
+      "events": 6,
       "location": "Киев"
     },
     {
       "country": "UA",
-      "events": 4,
-      "location": "Харьков"
-    },
-    {
-      "country": "RU",
-      "events": 4,
-      "location": "Рязань"
-    },
-    {
-      "country": "UA",
-      "events": 4,
+      "events": 5,
       "location": "Краматорск"
     },
     {
       "country": "UA",
-      "events": 3,
+      "events": 4,
       "location": "Славянск"
     },
     {
       "country": "UA",
+      "events": 3,
+      "location": "Запорожье"
+    },
+    {
+      "country": "US",
       "events": 2,
-      "location": "Донецк"
+      "location": "Вашингтон"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Самар"
+      "location": "Днепр"
     },
     {
       "country": "RU",
       "events": 2,
-      "location": "Москва"
+      "location": "Рязань"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Харьков"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 10,
-    "astrapress": 4,
-    "boris_rozhin": 2,
+    "BBC News Україна": 2,
+    "astrapress": 5,
+    "boris_rozhin": 3,
     "dnepr_typical": 3,
-    "exilenova_plus": 5,
+    "exilenova_plus": 4,
     "kyivindependent_official": 2,
     "lost_armour": 6,
-    "operativnoZSU": 3,
-    "readovkanews": 2,
+    "readovkanews": 1,
     "uniannet": 2,
     "Суспільне Новини": 7,
+    "УНІАН": 2,
     "Українська правда": 3
   },
-  "window_end": "2026-11-05T09:26:12Z",
-  "window_start": "2026-10-29T09:26:12Z"
+  "window_end": "2026-11-05T17:35:36Z",
+  "window_start": "2026-10-29T17:35:36Z"
 }
