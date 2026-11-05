@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 27,
-      "delta": 24,
+      "current_period": 29,
+      "delta": 26,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -16,84 +16,53 @@
   ],
   "attention_candidates": [
     {
-      "country": "RU",
-      "date": "2026-11-04T19:18:31+00:00",
-      "description": "‼️🇷🇺☦6 мирных жителей, в том числе ребёнок, погибли от атак врага в Белгородской области\n\n➖«От полученных травм, несовместимых с жизнью, мужчина, женщина и маленький мальчик погибли на месте до приезд",
+      "country": "UA",
+      "date": "2026-11-04T22:00:01+00:00",
+      "description": "‼️🇺🇦🔥Огромный пожар под Киевом после удара\n\nПылает логистический центр после прилета «Герани».\n⚠️Подписаться на RV: MAX | t.me/RVvoenkor",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Белгород",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "astrapress"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-04T18:44:22+00:00",
-      "description": "Три человека погибли, включая 8-летнего ребенка, в результате атаки украинского дрона по автобусу в Белгородской области, — губернатор\n\n«В районе села Солдатское Ракитянского округа дрон ВСУ целенапра",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Белгород",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "astrapress"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "US",
-      "date": "2026-11-04T18:37:27+00:00",
-      "description": "Трамп заявив, що не хвилюється за імпічмент, адже це більше зашкодить демократичній партії.  \n\nТому що імпічмент без причини, за що — за те, що маємо успішну країну? — риторично запитує глава Білого д",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Вашингтон",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "operativnoZSU",
         "uniannet"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 3,
+  "corroborated_event_count": 2,
   "country_counts": {
-    "BE": 1,
     "GB": 1,
-    "RU": 7,
-    "UA": 25,
+    "RU": 6,
+    "UA": 30,
     "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 35,
+  "event_count": 38,
   "event_type_counts": {
     "Military Offensive": 2,
-    "Military Operation": 1,
-    "Military Strike": 27,
+    "Military Operation": 2,
+    "Military Strike": 29,
     "Political Development": 5
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 3,
+    "cross_source_consistent_count": 2,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 32,
+    "not_independently_corroborated_count": 36,
     "rss_reports_not_independently_corroborated_count": 15
   },
-  "generated_at": "2026-11-04T21:59:47Z",
+  "generated_at": "2026-11-05T02:05:10Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 10,
-  "not_verified_event_count": 32,
+  "new_since_previous_snapshot": 7,
+  "not_verified_event_count": 36,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 27,
-      "delta": 24,
+      "current_period": 29,
+      "delta": 26,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -104,18 +73,18 @@
   ],
   "source_type_counts": {
     "rss": 15,
-    "telegram": 20
+    "telegram": 23
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 6,
+      "events": 10,
       "location": "Киев"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 2,
-      "location": "Белгород"
+      "location": "Харьков"
     },
     {
       "country": "UA",
@@ -126,11 +95,6 @@
       "country": "RU",
       "events": 2,
       "location": "Москва"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Донецк"
     },
     {
       "country": "UA",
@@ -146,22 +110,27 @@
       "country": "UA",
       "events": 2,
       "location": "Краматорск"
+    },
+    {
+      "country": "UA",
+      "events": 1,
+      "location": "Одесса"
     }
   ],
   "top_sources": {
     "BBC News Україна": 2,
-    "RVvoenkor": 2,
-    "boris_rozhin": 1,
+    "RVvoenkor": 4,
+    "boris_rozhin": 3,
     "dnepr_typical": 2,
     "exilenova_plus": 2,
     "kyivindependent_official": 1,
     "readovkanews": 2,
-    "uniannet": 3,
+    "uniannet": 2,
     "wargonzo": 2,
     "Суспільне Новини": 7,
     "УНІАН": 2,
     "Українська правда": 3
   },
-  "window_end": "2026-11-04T21:59:47Z",
-  "window_start": "2026-10-28T21:59:47Z"
+  "window_end": "2026-11-05T02:05:10Z",
+  "window_start": "2026-10-29T02:05:10Z"
 }
