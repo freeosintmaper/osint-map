@@ -4,9 +4,20 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 36,
-      "delta": 36,
+      "current_period": 27,
+      "delta": 27,
       "event_type": "Military Strike",
+      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
+      "label": "Повышенная публикационная активность",
+      "previous_period": 0,
+      "requires_human_review": true,
+      "signal_type": "publication_volume_change"
+    },
+    {
+      "classification": "analytical_signal",
+      "current_period": 9,
+      "delta": 9,
+      "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
       "previous_period": 0,
@@ -17,8 +28,8 @@
   "attention_candidates": [
     {
       "country": "US",
-      "date": "2026-11-05T17:00:52+00:00",
-      "description": "Глава РФПИ передал первой леди США картину от девочки из Алешек\n\nПервая леди США Мелания Трамп приняла в Белом доме представителей России и Украины. Встреча посвящена гуманитарной операции в Алешках, ",
+      "date": "2026-11-05T22:36:01+00:00",
+      "description": "😱 Трамп также пригрозил уничтожением Ирана и назвал выборы в США «нечестными»\n\n«Мне бы не хотелось разрушать оставшуюся часть Ирана, но, возможно, придётся. Скоро всё узнаете», — сказал кандидат на пр",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Вашингтон",
@@ -31,54 +42,97 @@
       "status": "requires_human_review"
     },
     {
-      "country": "US",
-      "date": "2026-11-05T16:17:35+00:00",
-      "description": "В Белом доме началась встреча Мелании Трамп с представителями Украины и РФ\n\nУкраину представляют глава фракции «Слуга народа» Давид Арахамия и уполномоченный Верховной Рады по правам человека Дмитрий ",
+      "country": "UA",
+      "date": "2026-11-05T20:09:49+00:00",
+      "description": "❗️Мы можем рассмотреть возможность проведения онлайн-выборов, но парламент должен найти решение, — Зеленский\n\nПрезидент заявил, что онлайн-формат голосования возможен, однако решение должно найти парл",
       "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Вашингтон",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "readovkanews",
+        "ukrpravda_news",
         "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-05T18:17:36+00:00",
+      "description": "Перша леді США Меланія Трамп передала особисті листи президенту України Зеленському та російському лідеру Путіну.\n\nЗміст послань не розголошується. Вона також заявила, що перемир’я в Олешках стало мож",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "ukrpravda_news",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-05T18:06:36+00:00",
+      "description": "Владимир Путин призвал ужесточить контроль за подозрительными финансовыми операциями\n\nГлава государства на торжественном мероприятии в честь 25-летия Росфинмониторинга поздравил сотрудников ведомства ",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "readovkanews"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 2,
+  "corroborated_event_count": 6,
   "country_counts": {
-    "RU": 11,
-    "UA": 33,
+    "BE": 1,
+    "GB": 1,
+    "RU": 6,
+    "UA": 31,
     "US": 2
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 46,
+  "event_count": 41,
   "event_type_counts": {
-    "Air Raid Alert": 1,
+    "Air Raid Alert": 2,
     "Military Offensive": 2,
-    "Military Operation": 4,
-    "Military Strike": 36,
-    "Political Development": 3
+    "Military Operation": 1,
+    "Military Strike": 27,
+    "Political Development": 9
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 2,
+    "cross_source_consistent_count": 6,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 44,
+    "not_independently_corroborated_count": 35,
     "rss_reports_not_independently_corroborated_count": 15
   },
-  "generated_at": "2026-11-05T17:35:36Z",
+  "generated_at": "2026-11-05T22:51:51Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 17,
-  "not_verified_event_count": 44,
+  "new_since_previous_snapshot": 14,
+  "not_verified_event_count": 35,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 36,
-      "delta": 36,
+      "current_period": 27,
+      "delta": 27,
       "event_type": "Military Strike",
+      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
+      "label": "Повышенная публикационная активность",
+      "previous_period": 0,
+      "requires_human_review": true,
+      "signal_type": "publication_volume_change"
+    },
+    {
+      "classification": "analytical_signal",
+      "current_period": 9,
+      "delta": 9,
+      "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
       "previous_period": 0,
@@ -88,28 +142,28 @@
   ],
   "source_type_counts": {
     "rss": 15,
-    "telegram": 31
+    "telegram": 26
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 6,
+      "events": 10,
       "location": "Киев"
     },
     {
       "country": "UA",
-      "events": 5,
-      "location": "Краматорск"
+      "events": 4,
+      "location": "Харьков"
     },
     {
       "country": "UA",
       "events": 4,
-      "location": "Славянск"
+      "location": "Краматорск"
     },
     {
       "country": "UA",
       "events": 3,
-      "location": "Запорожье"
+      "location": "Славянск"
     },
     {
       "country": "US",
@@ -117,35 +171,35 @@
       "location": "Вашингтон"
     },
     {
-      "country": "UA",
-      "events": 2,
-      "location": "Днепр"
-    },
-    {
       "country": "RU",
       "events": 2,
-      "location": "Рязань"
+      "location": "Москва"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Харьков"
+      "location": "Полтава"
+    },
+    {
+      "country": "UA",
+      "events": 1,
+      "location": "Изюм"
     }
   ],
   "top_sources": {
     "BBC News Україна": 2,
-    "astrapress": 5,
+    "RVvoenkor": 4,
     "boris_rozhin": 3,
     "dnepr_typical": 3,
-    "exilenova_plus": 4,
-    "kyivindependent_official": 2,
-    "lost_armour": 6,
-    "readovkanews": 1,
-    "uniannet": 2,
+    "lost_armour": 5,
+    "operativnoZSU": 2,
+    "readovkanews": 2,
+    "ukrpravda_news": 2,
+    "uniannet": 5,
     "Суспільне Новини": 7,
     "УНІАН": 2,
     "Українська правда": 3
   },
-  "window_end": "2026-11-05T17:35:36Z",
-  "window_start": "2026-10-29T17:35:36Z"
+  "window_end": "2026-11-05T22:51:51Z",
+  "window_start": "2026-10-29T22:51:51Z"
 }

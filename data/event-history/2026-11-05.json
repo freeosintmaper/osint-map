@@ -1,40 +1,7 @@
 {
-  "current_event_count": 47,
+  "current_event_count": 42,
   "date_utc": "2026-11-05",
   "events_added": [
-    {
-      "event": {
-        "channel": "supernova_plus",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "RU",
-        "date": "2026-11-05T07:45:04+00:00",
-        "description": "Рязань ,,  ..\n\nпомимо прикура НПЗ  .. в чатах пишут о атаке на :\n\nЗавод OpenYard - завод серверного оборудования, который создавался при участии Яндекса.\n\nПовреждении 4 блока Логистического Хаба .. \n\n",
-        "event_type": "Military Strike",
-        "id": 19,
-        "lat": 54.6269,
-        "lng": 39.6916,
-        "location": "Рязань",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "supernova_plus",
-            "date": "2026-11-05T07:45:04+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/supernova_plus/62558"
-          }
-        ],
-        "url": "https://t.me/supernova_plus/62558",
-        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
-        "verification_sources": [
-          "exilenova_plus",
-          "supernova_plus"
-        ],
-        "verification_status": "corroborated"
-      },
-      "fingerprint": "edb0b1f5cdeba5a7ce3c654c65851220d836ae270e5047433fbfd9530599c431"
-    },
     {
       "event": {
         "channel": "lost_armour",
@@ -124,66 +91,6 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "86f24c06a99af53bf3c926729220260d080179d17fde82c0f52e2705162de08c"
-    },
-    {
-      "event": {
-        "channel": "exilenova_plus",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-05T05:59:57+00:00",
-        "description": "Окупований Донецьк сьогодні також перебував під вибухами\n\nЩонайменше пошкоджень зазнала закинута будівля, розташована за адресою Івана Ткаченко, 129 \n\nЯкщо маєте додаткову інформацію – напишіть нам у ",
-        "event_type": "Military Strike",
-        "id": 16,
-        "lat": 48.0159,
-        "lng": 37.8029,
-        "location": "Донецк",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "exilenova_plus",
-            "date": "2026-11-05T05:59:57+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/exilenova_plus/34095"
-          }
-        ],
-        "url": "https://t.me/exilenova_plus/34095",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "bfe86d9643437994d2c9aa9a5e5e17a501e5e59d564429073975d6ce871071bc"
-    },
-    {
-      "event": {
-        "channel": "kyivindependent_official",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-05T05:37:13+00:00",
-        "description": "⚡️️️️Russian drone attacks injure 4 in Dnipropetrovsk and Kyiv oblasts, spark fires at infrastructure facilities. \n\nUkraine's State Emergency Service confirmed at around 7 a.m. local time that logisti",
-        "event_type": "Military Strike",
-        "id": 12,
-        "lat": 50.4501,
-        "lng": 30.5234,
-        "location": "Киев",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "kyivindependent_official",
-            "date": "2026-11-05T05:37:13+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/KyivIndependent_official/56679"
-          }
-        ],
-        "url": "https://t.me/KyivIndependent_official/56679",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "428ac4b7bf5a68d373b4aee294924d460c65856f4becb1269a89ee684f339ad7"
     },
     {
       "event": {
@@ -280,66 +187,6 @@
     },
     {
       "event": {
-        "channel": "boris_rozhin",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-05T17:20:57+00:00",
-        "description": "Кадры от противника с центральных улиц г. Краматорск.",
-        "event_type": "Military Strike",
-        "id": 30,
-        "lat": 48.7389,
-        "lng": 37.5848,
-        "location": "Краматорск",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "boris_rozhin",
-            "date": "2026-11-05T17:20:57+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/boris_rozhin/232265"
-          }
-        ],
-        "url": "https://t.me/boris_rozhin/232265",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "60eb3cc6d5c9e21fdf09005752c8302e04b921f7dfb6e6023eaa064e78b68bd7"
-    },
-    {
-      "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "RU",
-        "date": "2026-11-05T17:19:01+00:00",
-        "description": "Два человека пострадали в результате украинских атак в Белгородской области, — оперштаб\n\nВ Шебекино FPV-дрон атаковал велосипедиста, мужчина получил осколочные ранения ног и кисти, а также перелом сто",
-        "event_type": "Military Strike",
-        "id": 20,
-        "lat": 50.5952,
-        "lng": 36.5873,
-        "location": "Белгород",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-05T17:19:01+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/130307"
-          }
-        ],
-        "url": "https://t.me/astrapress/130307",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "c65bc44d054884126d8a4330a23f51ebf74e318465cf6995df9bb3366fe6fbde"
-    },
-    {
-      "event": {
         "channel": "readovkanews",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
@@ -403,279 +250,6 @@
     },
     {
       "event": {
-        "channel": "uniannet",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "US",
-        "date": "2026-11-05T16:17:35+00:00",
-        "description": "В Белом доме началась встреча Мелании Трамп с представителями Украины и РФ\n\nУкраину представляют глава фракции «Слуга народа» Давид Арахамия и уполномоченный Верховной Рады по правам человека Дмитрий ",
-        "event_type": "Political Development",
-        "id": 3,
-        "lat": 38.9072,
-        "lng": -77.0369,
-        "location": "Вашингтон",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "uniannet",
-            "date": "2026-11-05T16:17:35+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/uniannet/206263"
-          }
-        ],
-        "url": "https://t.me/uniannet/206263",
-        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
-        "verification_sources": [
-          "readovkanews",
-          "uniannet"
-        ],
-        "verification_status": "corroborated"
-      },
-      "fingerprint": "940c8bbcb9a236943bc2d41f97952ec5b01b3cc9da42d2eef2ce6693f37abd9e"
-    },
-    {
-      "event": {
-        "channel": "boris_rozhin",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-05T15:39:57+00:00",
-        "description": "Актуализация на Славянском участке.\n\nданные: @z_arhiv",
-        "event_type": "Military Operation",
-        "id": 29,
-        "lat": 48.8531,
-        "lng": 37.6126,
-        "location": "Славянск",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "boris_rozhin",
-            "date": "2026-11-05T15:39:57+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/boris_rozhin/232255"
-          }
-        ],
-        "url": "https://t.me/boris_rozhin/232255",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "edfedccae1a96bdb9657410984957160c6a0f1d216e5484514a53ed494dcc88e"
-    },
-    {
-      "event": {
-        "channel": "uniannet",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-05T15:36:36+00:00",
-        "description": "💡В Днепре пошли экстренные отключения света применены в Днепре, сообщает ДТЭК\n\nНапомним, во время экстренных отключений графики не действуют.\n\nУНИАН в🕸Google | 👥X | 📺YouTube |🧵Threads",
-        "event_type": "Military Operation",
-        "id": 2,
-        "lat": 48.4647,
-        "lng": 35.0462,
-        "location": "Днепр",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "uniannet",
-            "date": "2026-11-05T15:36:36+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/uniannet/206261"
-          }
-        ],
-        "url": "https://t.me/uniannet/206261",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "3dffa75b5ba4d5dffdb3b2f2f3377a00dfb51c6934a59aeb36c1538bc064916c"
-    },
-    {
-      "event": {
-        "channel": "boris_rozhin",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-05T15:31:01+00:00",
-        "description": "ВС РФ атакует район мостов в Запорожье.\n🔥458👍153❤22🤣8🤬4\n  \n  \n    32.2K views15:31",
-        "event_type": "Military Strike",
-        "id": 28,
-        "lat": 47.8388,
-        "lng": 35.1396,
-        "location": "Запорожье",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "boris_rozhin",
-            "date": "2026-11-05T15:31:01+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/boris_rozhin/232254"
-          }
-        ],
-        "url": "https://t.me/boris_rozhin/232254",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "79cab8c9099d96d122e90d9ffcb9ca6238a5e269b3c1f77803ff3139ef124f31"
-    },
-    {
-      "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "RU",
-        "date": "2026-11-05T15:29:01+00:00",
-        "description": "Дым поднимается над Башкирской содовой компанией (БСК) в Стерлитамаке на фоне атаки БПЛА. Это единственное в РФ производство уникального компонента для бронематериалов, — OSINT-анализ ASTRA  Мониторин",
-        "event_type": "Military Strike",
-        "id": 19,
-        "lat": 53.63793,
-        "lng": 55.9533,
-        "location": "Стерлитамак",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-05T15:29:01+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/130297"
-          }
-        ],
-        "url": "https://t.me/astrapress/130297",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "82239e003bb6693735de70f97d52a3ae9c510f73c82150d8157c9771a1baff13"
-    },
-    {
-      "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "RU",
-        "date": "2026-11-05T14:25:18+00:00",
-        "description": "Губернатор Ростовской области заявил о приостановке работы трех портов после украинских атак: Ростова, Таганрога и Азова\n\nРабота портов Ростова-на-Дону, Таганрога и Азова фактически приостановлена, за",
-        "event_type": "Military Strike",
-        "id": 17,
-        "lat": 47.2225,
-        "lng": 39.7188,
-        "location": "Ростов-на-Дону",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-05T14:25:18+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/130295"
-          }
-        ],
-        "url": "https://t.me/astrapress/130295",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "1540e0209a34042cdbb99b56ebc142b1c336b1fa24178109dd56f81c01612ef3"
-    },
-    {
-      "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "RU",
-        "date": "2026-11-05T14:25:18+00:00",
-        "description": "Губернатор Ростовской области заявил о приостановке работы трех портов после украинских атак: Ростова, Таганрога и Азова\n\nРабота портов Ростова-на-Дону, Таганрога и Азова фактически приостановлена, за",
-        "event_type": "Military Strike",
-        "id": 18,
-        "lat": 47.2095,
-        "lng": 38.9353,
-        "location": "Таганрог",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-05T14:25:18+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/130295"
-          }
-        ],
-        "url": "https://t.me/astrapress/130295",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "482e6ce5bcb1b0198031432ac0f3ede0ef4c43607619712036874ed6bff56f59"
-    },
-    {
-      "event": {
-        "channel": "operativnoZSU",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-05T13:49:48+00:00",
-        "description": "❗️В Києві оголошено повітряну тривогу через загрозу БПЛА \n\n🫡https://t.me/operativnoZSU/",
-        "event_type": "Air Raid Alert",
-        "id": 1,
-        "lat": 50.4501,
-        "lng": 30.5234,
-        "location": "Киев",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "operativnoZSU",
-            "date": "2026-11-05T13:49:48+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/operativnoZSU/225444"
-          }
-        ],
-        "url": "https://t.me/operativnoZSU/225444",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "7d10a4e8ab46706fe3f29f38944a3e077c895dcef156884e21b8f84310862cbd"
-    },
-    {
-      "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "RU",
-        "date": "2026-11-05T12:13:34+00:00",
-        "description": "Один человек пострадал в результате атаки дрона в Брянской области, — губернатор\n\n«В результате атаки БпЛА ранена 58-летняя женщина. В поселке Кистер Погарского района БпЛА атаковал движущийся граждан",
-        "event_type": "Military Strike",
-        "id": 16,
-        "lat": 53.2435,
-        "lng": 34.3639,
-        "location": "Брянск",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-05T12:13:34+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/130289"
-          }
-        ],
-        "url": "https://t.me/astrapress/130289",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "cf57f3b7d039617b8cb98fdbd9e757e645c6111d829a782c0b0f1fc0fe6b61da"
-    },
-    {
-      "event": {
         "channel": "exilenova_plus",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
@@ -706,93 +280,453 @@
     },
     {
       "event": {
-        "channel": "dva_majors",
+        "channel": "uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "US",
+        "date": "2026-11-05T22:36:01+00:00",
+        "description": "😱 Трамп также пригрозил уничтожением Ирана и назвал выборы в США «нечестными»\n\n«Мне бы не хотелось разрушать оставшуюся часть Ирана, но, возможно, придётся. Скоро всё узнаете», — сказал кандидат на пр",
+        "event_type": "Political Development",
+        "id": 9,
+        "lat": 38.9072,
+        "lng": -77.0369,
+        "location": "Вашингтон",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-05T22:36:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/206291"
+          }
+        ],
+        "url": "https://t.me/uniannet/206291",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "readovkanews",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "723984b967c9aac5e1b1ea0f22c0e6210f579d51b7c8f3daca4f0d806562bf7a"
+    },
+    {
+      "event": {
+        "channel": "uniannet",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
         "country": "UA",
-        "date": "2026-11-05T10:44:56+00:00",
-        "description": "В Виннице точечным ударом поражена ключевая электроподстанция «Южная»\n\nДнём 5 ноября российские войска нанесли удар по Виннице. Целью стал один из ключевых объектов энергетической инфраструктуры город",
+        "date": "2026-11-05T22:10:33+00:00",
+        "description": "🤬 Два человека пострадали в результате российского авиаудара по Изюму, – ГВА\n\nКАБы упали в центральной и южной частях города; повреждены два многоквартирных и около 10 частных домов. Также часть город",
         "event_type": "Military Strike",
-        "id": 32,
-        "lat": 49.2331,
-        "lng": 28.4682,
-        "location": "Винница",
+        "id": 8,
+        "lat": 49.208,
+        "lng": 37.2757,
+        "location": "Изюм",
         "source_count": 1,
         "source_type": "telegram",
         "sources": [
           {
-            "channel": "dva_majors",
-            "date": "2026-11-05T10:44:56+00:00",
+            "channel": "uniannet",
+            "date": "2026-11-05T22:10:33+00:00",
             "source_type": "telegram",
-            "url": "https://t.me/dva_majors/101578"
+            "url": "https://t.me/uniannet/206289"
           }
         ],
-        "url": "https://t.me/dva_majors/101578",
+        "url": "https://t.me/uniannet/206289",
         "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
         "verification_sources": [],
         "verification_status": "not_verified"
       },
-      "fingerprint": "9a799ba500877fdaa3d990ca23945cf235e0e90bf1e91d14fe55fee3f09325b4"
+      "fingerprint": "763ae8023ba5c0ab67ca8a93933a7dcd7d2aff7358eac902970362f00e8d586b"
     },
     {
       "event": {
-        "channel": "exilenova_plus",
+        "channel": "uniannet",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-05T06:42:07+00:00",
-        "description": "Цілу ніч обʼєкти окупантів в Донецьку та Луганську перебували під вогневим впливом Сил оборони України. \n\nВибухи в Донецьку лунають і досі.\n🔥3.08K👍301❤129👏35👀26🤩20🍌10😁99😢88\n  \n  \n    98.8K views06:42",
-        "event_type": "Military Operation",
-        "id": 12,
-        "lat": 48.0159,
-        "lng": 37.8029,
-        "location": "Донецк",
+        "country": "GB",
+        "date": "2026-11-05T21:55:22+00:00",
+        "description": "Госсекретарь США Рубио может подать в отставку в рамках подготовки к участию в выборах президента страны, которые пройдут в 2028 году\n\nОб этом сообщила британская газета The Independent со ссылкой на ",
+        "event_type": "Political Development",
+        "id": 7,
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "location": "Лондон",
         "source_count": 1,
         "source_type": "telegram",
         "sources": [
           {
-            "channel": "exilenova_plus",
-            "date": "2026-11-05T06:42:07+00:00",
+            "channel": "uniannet",
+            "date": "2026-11-05T21:55:22+00:00",
             "source_type": "telegram",
-            "url": "https://t.me/exilenova_plus/34097"
+            "url": "https://t.me/uniannet/206282"
           }
         ],
-        "url": "https://t.me/exilenova_plus/34097",
+        "url": "https://t.me/uniannet/206282",
         "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
         "verification_sources": [],
         "verification_status": "not_verified"
       },
-      "fingerprint": "636d2af357ad4e587bfea1ed6d7cf92a8877bb54a26726ff78ce28e7d4c38287"
+      "fingerprint": "48430e530f06533dae2a259947de5079f7c5fd6b5e3560f26841597f06da9d69"
     },
     {
       "event": {
-        "channel": "exilenova_plus",
+        "channel": "RVvoenkor",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-05T06:42:07+00:00",
-        "description": "Цілу ніч обʼєкти окупантів в Донецьку та Луганську перебували під вогневим впливом Сил оборони України. \n\nВибухи в Донецьку лунають і досі.\n🔥3.08K👍301❤129👏35👀26🤩20🍌10😁99😢88\n  \n  \n    98.8K views06:42",
-        "event_type": "Military Operation",
-        "id": 13,
-        "lat": 48.574,
-        "lng": 39.3078,
-        "location": "Луганск",
+        "country": "BE",
+        "date": "2026-11-05T20:44:58+00:00",
+        "description": "‼️🇪🇺⚠️ Европейцев призвали готовиться к первым 72 часам войны без помощи государства\n\n▪️Еврокомиссия представила новые рекомендации по подготовке к масштабным кризисам. В первые трое суток граждане ЕС",
+        "event_type": "Political Development",
+        "id": 30,
+        "lat": 50.8503,
+        "lng": 4.3517,
+        "location": "Брюссель",
         "source_count": 1,
         "source_type": "telegram",
         "sources": [
           {
-            "channel": "exilenova_plus",
-            "date": "2026-11-05T06:42:07+00:00",
+            "channel": "RVvoenkor",
+            "date": "2026-11-05T20:44:58+00:00",
             "source_type": "telegram",
-            "url": "https://t.me/exilenova_plus/34097"
+            "url": "https://t.me/RVvoenkor/126553"
           }
         ],
-        "url": "https://t.me/exilenova_plus/34097",
+        "url": "https://t.me/RVvoenkor/126553",
         "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
         "verification_sources": [],
         "verification_status": "not_verified"
       },
-      "fingerprint": "fb07a3957f5cc98ea585286bc4f1016aee8f25cfcf0226307db847496954e640"
+      "fingerprint": "cd2e0f3af496eb896d9c44b50184d55052c51ae088af6786ff4e81d92b861a6a"
+    },
+    {
+      "event": {
+        "channel": "operativnoZSU",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-05T20:32:59+00:00",
+        "description": "🇪🇸🇺🇦Є новий пакет військової допомоги на €437 млн від Іспанії, — Зеленський провів успішні переговори з премʼєром Іспанії Санчесом\n \n🫡https://t.me/operativnoZSU/",
+        "event_type": "Political Development",
+        "id": 2,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "operativnoZSU",
+            "date": "2026-11-05T20:32:59+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/operativnoZSU/225472"
+          }
+        ],
+        "url": "https://t.me/operativnoZSU/225472",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "bce460026a30e48c0eb219da65fe88277141179da8663135564cb214bfad7e11"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-05T20:15:26+00:00",
+        "description": "Удары центра БПС \"Варяг\" по Харькову.\nПоражены ТЭЦ-2, подвижной состав, склады.\n👍321🔥41👏30❤‍🔥19❤8\n  \n  \n    27.7K views20:15",
+        "event_type": "Military Strike",
+        "id": 26,
+        "lat": 49.9935,
+        "lng": 36.2304,
+        "location": "Харьков",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-05T20:15:26+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/232290"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/232290",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "a84fd61874694e649b435cad1c75bd2282c54e1c71b46eb88629821c2e8fdd7b"
+    },
+    {
+      "event": {
+        "channel": "uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-05T20:09:49+00:00",
+        "description": "❗️Мы можем рассмотреть возможность проведения онлайн-выборов, но парламент должен найти решение, — Зеленский\n\nПрезидент заявил, что онлайн-формат голосования возможен, однако решение должно найти парл",
+        "event_type": "Political Development",
+        "id": 5,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-05T20:09:49+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/206275"
+          },
+          {
+            "channel": "uniannet",
+            "date": "2026-11-05T20:32:28+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/206276"
+          }
+        ],
+        "url": "https://t.me/uniannet/206275",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "ukrpravda_news",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "819e2846afc4a6f962f5057514f8f52adc0cfcbdcd091d7927dae49f6719638a"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-05T19:39:57+00:00",
+        "description": "Логистический центр в н.п Софиевская Борщаговка, Киевская область, сгорел полностью.\n\n50.4000640, 30.3249666 - тут.\n\n@divannyevoini",
+        "event_type": "Military Operation",
+        "id": 25,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-05T19:39:57+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/232286"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/232286",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "b4d02f92ba562f21e36f4617d3a42353f6b1bc169981bb512a351fb2ce9034a4"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-05T19:22:01+00:00",
+        "description": "На кадрах экипажи вертолетов Ка-52 наносят удар управляемыми ракетами по позициям и личному составу ВСУ в Харьковской области.",
+        "event_type": "Military Strike",
+        "id": 24,
+        "lat": 49.9935,
+        "lng": 36.2304,
+        "location": "Харьков",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-05T19:22:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/232283"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/232283",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "64bf210a4bd8dc6f017d63e4e2ada74610c6c1475ba2195e205cef5410e3ebc2"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-05T18:42:54+00:00",
+        "description": "‼️🇺🇦🏴‍☠️Полный блэкаут в Киеве: город погрузился во тьму\n\n▪️Критическая аварийная ситуация в энергетике усиливается.\n▪️На фоне проблем с энергоснабжением без света все улицы и дома украинской столицы.",
+        "event_type": "Air Raid Alert",
+        "id": 29,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-05T18:42:54+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/126548"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/126548",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "1ff2c2a610d8fe83fc4c436bbc314389ccbf0018e6a8c10ef594a5c40cd4aeab"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-05T18:20:15+00:00",
+        "description": "Два человека пострадали в результате российской атаки на склад в Киевской области, — КОВА\n\n«К сожалению, в результате атаки вражеских беспилотников на производственно-складской комплекс в Бучанском ра",
+        "event_type": "Military Strike",
+        "id": 16,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-05T18:20:15+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/130320"
+          }
+        ],
+        "url": "https://t.me/astrapress/130320",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "5b5024b62c8a14819d2d178908fb1c7e4a3c2da78b347228a1fa4f45ed43a355"
+    },
+    {
+      "event": {
+        "channel": "ukrpravda_news",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-05T18:17:36+00:00",
+        "description": "Перша леді США Меланія Трамп передала особисті листи президенту України Зеленському та російському лідеру Путіну.\n\nЗміст послань не розголошується. Вона також заявила, що перемир’я в Олешках стало мож",
+        "event_type": "Political Development",
+        "id": 3,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-05T18:17:36+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/86251"
+          },
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-05T18:24:28+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/86252"
+          }
+        ],
+        "url": "https://t.me/ukrpravda_news/86251",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "ukrpravda_news",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "2d08d14da12dd9496484398aaded8bcbafd126eebb56c9852144ecb6dbd149d7"
+    },
+    {
+      "event": {
+        "channel": "operativnoZSU",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-05T18:10:21+00:00",
+        "description": "❗️Київ - повітряна тривога через загрозу БПЛА \n\n🫡https://t.me/operativnoZSU/",
+        "event_type": "Air Raid Alert",
+        "id": 1,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "operativnoZSU",
+            "date": "2026-11-05T18:10:21+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/operativnoZSU/225464"
+          }
+        ],
+        "url": "https://t.me/operativnoZSU/225464",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "31a8ea808252e38f20c32664d3527fe58c871d7c5a5810e7c41b979010e69b53"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor,readovkanews",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-05T18:06:36+00:00",
+        "description": "Владимир Путин призвал ужесточить контроль за подозрительными финансовыми операциями\n\nГлава государства на торжественном мероприятии в честь 25-летия Росфинмониторинга поздравил сотрудников ведомства ",
+        "event_type": "Political Development",
+        "id": 18,
+        "lat": 55.7558,
+        "lng": 37.6173,
+        "location": "Москва",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "readovkanews",
+            "date": "2026-11-05T18:06:36+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/readovkanews/116759"
+          },
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-05T18:24:58+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/126547"
+          }
+        ],
+        "url": "https://t.me/readovkanews/116759",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "readovkanews"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "3b539c459e1e9accd6da82ce1f9a477ec981692518065912d46382169d4cd017"
     }
   ],
   "events_removed": [
@@ -1377,8 +1311,68 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "249399302a6ddddb819ebd66979a51010c5387bd8bee6311b4d5798f24018cbf"
+    },
+    {
+      "event": {
+        "channel": "kyivindependent_official",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-04T20:57:06+00:00",
+        "description": "⚡️️ Russian strikes cause Kyiv’s worst water outage of full-scale war.\n\n\"This is the most serious water outage in Kyiv since the war began. It is also expected that the situation will worsen in the wi",
+        "event_type": "Military Strike",
+        "id": 9,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "kyivindependent_official",
+            "date": "2026-11-04T20:57:06+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/KyivIndependent_official/56675"
+          }
+        ],
+        "url": "https://t.me/KyivIndependent_official/56675",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "2abb994afc1b2c3c36bf70933c1c884f88c97e96c24e335717dca586f9887ef4"
+    },
+    {
+      "event": {
+        "channel": "lost_armour",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-04T07:20:09+00:00",
+        "description": "\"Закрытая школа\"  2 ноября 2026 ВКС РФ нанесли удар по заглубленному пункту управления ВСУ в н.п. Камышеваха, Запорожской области, который располагался в помещениях \"подземной школы\", построенной в 20",
+        "event_type": "Military Strike",
+        "id": 22,
+        "lat": 47.8388,
+        "lng": 35.1396,
+        "location": "Запорожье",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "lost_armour",
+            "date": "2026-11-04T07:20:09+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/lost_armour/12079"
+          }
+        ],
+        "url": "https://t.me/lost_armour/12079",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "eec1162608898367be11ef07b45b003bdd5c62a4ded6ebeed5fb121c74003864"
     }
   ],
-  "generated_at": "2026-11-05T17:35:36Z",
+  "generated_at": "2026-11-05T22:51:51Z",
   "method_note": "Изменения показывают разницу между автоматическими выгрузками, а не доказанное изменение обстановки."
 }
