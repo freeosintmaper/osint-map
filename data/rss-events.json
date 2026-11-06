@@ -5,6 +5,62 @@
       "confidence": "LOW",
       "coordinate_precision": "settlement_center",
       "country": "UA",
+      "date": "2026-11-06T10:06:50Z",
+      "description": "У Комишанах поблизу Херсона внаслідок російського обстрілу поранені троє людей",
+      "event_type": "Military Strike",
+      "id": "rss-11ea380d41648c2d7b-d82582",
+      "lat": 46.6354,
+      "lng": 32.6169,
+      "location": "Херсон",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_suspilne",
+          "date": "2026-11-06T10:06:50Z",
+          "publisher": "Суспільне Новини",
+          "source_type": "rss",
+          "url": "https://suspilne.media/kherson/1446359-u-komisanah-poblizu-hersona-vnaslidok-rosijskogo-obstrilu-poraneni-troe-ludej/"
+        }
+      ],
+      "url": "https://suspilne.media/kherson/1446359-u-komisanah-poblizu-hersona-vnaslidok-rosijskogo-obstrilu-poraneni-troe-ludej/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_unian",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "RU",
+      "date": "2026-11-06T05:45:00Z",
+      "description": "Дрони атакували великий НПЗ у Краснодарському краї: почалася пожежа, - ЗМІ",
+      "event_type": "Military Strike",
+      "id": "rss-a5c2ce9228cc91a766-c0d3fe",
+      "lat": 45.0355,
+      "lng": 38.9753,
+      "location": "Краснодар",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_unian",
+          "date": "2026-11-06T05:45:00Z",
+          "publisher": "УНІАН",
+          "source_type": "rss",
+          "url": "https://www.unian.ua/war/droni-atakuvali-velikiy-npz-u-krasnodarskomu-kraji-pochalasya-pozhezha-zmi-13551267.html"
+        }
+      ],
+      "url": "https://www.unian.ua/war/droni-atakuvali-velikiy-npz-u-krasnodarskomu-kraji-pochalasya-pozhezha-zmi-13551267.html",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_suspilne",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
       "date": "2026-11-04T17:01:51Z",
       "description": "У Слов'янську внаслідок російського обстрілу пошкоджений храм",
       "event_type": "Military Strike",
@@ -426,54 +482,54 @@
       "endpoint": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
       "events_mapped": 0,
       "items_seen": 17,
-      "last_attempt": "2026-11-06T03:00:52Z",
+      "last_attempt": "2026-11-06T10:46:47Z",
       "last_error": null,
-      "last_success": "2026-11-06T03:00:52Z",
-      "latest_item_at": "2026-11-05T17:03:03Z",
+      "last_success": "2026-11-06T10:46:47Z",
+      "latest_item_at": "2026-11-06T10:19:10Z",
       "status": "ok"
     },
     "rss_kyivindependent": {
       "endpoint": "https://kyivindependent.com/news-archive/rss/",
       "events_mapped": 0,
       "items_seen": 15,
-      "last_attempt": "2026-11-06T03:00:52Z",
+      "last_attempt": "2026-11-06T10:46:47Z",
       "last_error": null,
-      "last_success": "2026-11-06T03:00:52Z",
-      "latest_item_at": "2026-11-06T00:15:35Z",
+      "last_success": "2026-11-06T10:46:47Z",
+      "latest_item_at": "2026-11-06T09:47:29Z",
       "status": "ok"
     },
     "rss_suspilne": {
       "endpoint": "https://suspilne.media/rss/ukrnet.rss",
-      "events_mapped": 7,
+      "events_mapped": 1,
       "items_seen": 50,
-      "last_attempt": "2026-11-06T03:00:52Z",
-      "last_error": "HTTP 403",
-      "last_success": "2026-11-04T21:59:42Z",
-      "latest_item_at": "2026-11-04T21:58:41Z",
-      "status": "error"
+      "last_attempt": "2026-11-06T10:46:47Z",
+      "last_error": null,
+      "last_success": "2026-11-06T10:46:47Z",
+      "latest_item_at": "2026-11-06T10:06:50Z",
+      "status": "ok"
     },
     "rss_ukrpravda": {
       "endpoint": "https://www.pravda.com.ua/rss/view_mainnews/",
       "events_mapped": 0,
       "items_seen": 20,
-      "last_attempt": "2026-11-06T03:00:52Z",
+      "last_attempt": "2026-11-06T10:46:47Z",
       "last_error": null,
-      "last_success": "2026-11-06T03:00:52Z",
-      "latest_item_at": "2026-11-06T02:04:00Z",
+      "last_success": "2026-11-06T10:46:47Z",
+      "latest_item_at": "2026-11-06T10:06:00Z",
       "status": "ok"
     },
     "rss_unian": {
       "endpoint": "https://rss.unian.net/site/news_ukr.rss",
-      "events_mapped": 0,
+      "events_mapped": 1,
       "items_seen": 100,
-      "last_attempt": "2026-11-06T03:00:52Z",
+      "last_attempt": "2026-11-06T10:46:47Z",
       "last_error": null,
-      "last_success": "2026-11-06T03:00:52Z",
-      "latest_item_at": "2026-11-06T02:45:00Z",
+      "last_success": "2026-11-06T10:46:47Z",
+      "latest_item_at": "2026-11-06T10:29:00Z",
       "status": "ok"
     }
   },
-  "generated_at": "2026-11-06T03:00:52Z",
+  "generated_at": "2026-11-06T10:46:47Z",
   "method_note": "RSS items are separate, unverified source records. Only the title is stored; the original publisher link is retained.",
   "window_days": 7
 }

@@ -4,12 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 10,
-      "delta": 7,
+      "current_period": 15,
+      "delta": 8,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 3,
+      "previous_period": 7,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
@@ -28,57 +28,163 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-05T23:09:03+00:00",
-      "description": "ВС РФ атаковали Изюм в Харьковской области КАБами, два человека пострадали, — ГВА\n\n«Попадания зафиксированы в центральной и южной частях города. В результате повреждены ориентировочно два многоквартир",
+      "date": "2026-11-06T10:41:23+00:00",
+      "description": "Блэкаут и протесты: Киев и четыре области — на аварийных отключениях, люди вышли на дороги\n\nВ Киеве, а также Киевской, Житомирской, Черниговской и Черкасской областях введены экстренные ограничения эл",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-06T09:55:24+00:00",
+      "description": "Глава ЛНР:\n\nВФУ продолжают наносить террористические удары по мирным жителям: шесть человек получили ранения.\n\nВ районе села Придорожное Краснодонского муниципального округа неонацисты атаковали микро",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Изюм",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "astrapress",
-        "uniannet"
+        "dva_majors"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-06T09:55:24+00:00",
+      "description": "Глава ЛНР:\n\nВФУ продолжают наносить террористические удары по мирным жителям: шесть человек получили ранения.\n\nВ районе села Придорожное Краснодонского муниципального округа неонацисты атаковали микро",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Краснодар",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "dva_majors",
+        "exilenova_plus"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-06T08:10:22+00:00",
+      "description": "‼️🇺🇦⚡️ Транспортный коллапс в Киеве: метро останавливается, город встал в огромных пробках\n\n▪️Из-за отсутствия напряжения частично приостановлено движение поездов метро, на дорогах украинской столицы ",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-06T07:13:01+00:00",
+      "description": "Три человека пострадали в результате российской атаки в Киевской области, — КОВА\n\n«К сожалению, в результате ночной вражеской атаки в Киевской области три человека получили травмы в Бориспольском райо",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "dva_majors"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-06T07:01:41+00:00",
+      "description": "Афипский НПЗ, Краснодарский край, РФ\n\nСегодня Афипский нефтеперерабатывающий завод подвергся массированной атаке беспилотников, в том числе реактивных БпЛА.\n\nНа кадрах объективного контроля зафиксиров",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Краснодар",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "exilenova_plus",
+        "supernova_plus"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-06T06:57:18+00:00",
+      "description": "Афипский НПЗ атакован в Краснодарском крае, горит резервуарный парк, — OSINT-анализ ASTRA  Резервуарный парк Афипского нефтеперерабатывающего завода (НПЗ) горит после атаки БПЛА в Краснодарском крае, ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Краснодар",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "exilenova_plus",
+        "supernova_plus"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-06T05:11:26+00:00",
+      "description": "В Краснодарі та околицях продовжує лунати тривога, на фоні палає Афіпський НПЗ та щось, ймовірно, на околицях Краснодару.",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Краснодар",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "astrapress",
+        "dva_majors",
+        "exilenova_plus",
+        "supernova_plus"
       ],
       "status": "requires_human_review"
     }
   ],
   "corroborated_event_count": 8,
   "country_counts": {
-    "BE": 1,
-    "GB": 1,
-    "RU": 3,
-    "UA": 15,
+    "RU": 8,
+    "UA": 16,
     "US": 2
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 22,
+  "event_count": 26,
   "event_type_counts": {
-    "Air Raid Alert": 2,
-    "Military Operation": 1,
-    "Military Strike": 10,
+    "Military Operation": 2,
+    "Military Strike": 15,
     "Political Development": 9
   },
   "evidence_breakdown": {
     "cross_source_consistent_count": 8,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 14,
-    "rss_reports_not_independently_corroborated_count": 0
+    "not_independently_corroborated_count": 18,
+    "rss_reports_not_independently_corroborated_count": 2
   },
-  "generated_at": "2026-11-06T03:00:56Z",
+  "generated_at": "2026-11-06T10:46:52Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 2,
-  "not_verified_event_count": 14,
+  "new_since_previous_snapshot": 24,
+  "not_verified_event_count": 18,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 10,
-      "delta": 7,
+      "current_period": 15,
+      "delta": 8,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 3,
+      "previous_period": 7,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
@@ -95,23 +201,29 @@
     }
   ],
   "source_type_counts": {
-    "telegram": 22
+    "rss": 2,
+    "telegram": 24
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 6,
+      "events": 7,
       "location": "Киев"
     },
     {
-      "country": "UA",
+      "country": "RU",
+      "events": 5,
+      "location": "Краснодар"
+    },
+    {
+      "country": "RU",
       "events": 3,
-      "location": "Харьков"
+      "location": "Москва"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Изюм"
+      "location": "Запорожье"
     },
     {
       "country": "US",
@@ -119,37 +231,35 @@
       "location": "Вашингтон"
     },
     {
-      "country": "RU",
-      "events": 2,
-      "location": "Москва"
+      "country": "UA",
+      "events": 1,
+      "location": "Житомир"
     },
     {
       "country": "UA",
-      "events": 2,
-      "location": "Краматорск"
+      "events": 1,
+      "location": "Херсон"
     },
     {
-      "country": "GB",
+      "country": "UA",
       "events": 1,
-      "location": "Лондон"
-    },
-    {
-      "country": "BE",
-      "events": 1,
-      "location": "Брюссель"
+      "location": "Донецк"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 4,
-    "astrapress": 1,
-    "boris_rozhin": 3,
-    "dnepr_typical": 1,
-    "lost_armour": 5,
+    "RVvoenkor": 1,
+    "astrapress": 3,
+    "boris_rozhin": 4,
+    "dva_majors": 2,
     "operativnoZSU": 2,
     "readovkanews": 2,
-    "ukrpravda_news": 2,
-    "uniannet": 5
+    "supernova_plus": 2,
+    "ukrpravda_news": 4,
+    "uniannet": 2,
+    "wargonzo": 1,
+    "Суспільне Новини": 1,
+    "УНІАН": 1
   },
-  "window_end": "2026-11-06T03:00:56Z",
-  "window_start": "2026-11-05T03:00:56Z"
+  "window_end": "2026-11-06T10:46:52Z",
+  "window_start": "2026-11-05T10:46:52Z"
 }
