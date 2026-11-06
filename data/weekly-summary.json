@@ -4,20 +4,9 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 37,
-      "delta": 37,
+      "current_period": 33,
+      "delta": 33,
       "event_type": "Military Strike",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 9,
-      "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
       "previous_period": 0,
@@ -27,173 +16,128 @@
   ],
   "attention_candidates": [
     {
+      "country": "RU",
+      "date": "2026-11-06T17:34:29+00:00",
+      "description": "❗️Переговоры в Абу-Даби должны состояться во вторник, 10 ноября, подтвердил Владимир Путин\n\nПрезидент России Владимир Путин подтвердил, что переговоры в Абу-Даби должны начаться во вторник, 10 ноября.",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "readovkanews"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-06T16:49:58+00:00",
+      "description": "‼️🇪🇪🇷🇺 Премьер Эстонии призвал «душить Россию санкциями» и отказаться от переговоров с Путиным\n\n▪️Кристен Михал в интервью Politico потребовал от Европы усилить экономическое давление на Москву, исклю",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "readovkanews"
+      ],
+      "status": "requires_human_review"
+    },
+    {
       "country": "UA",
-      "date": "2026-11-06T10:41:23+00:00",
-      "description": "Блэкаут и протесты: Киев и четыре области — на аварийных отключениях, люди вышли на дороги\n\nВ Киеве, а также Киевской, Житомирской, Черниговской и Черкасской областях введены экстренные ограничения эл",
+      "date": "2026-11-06T16:43:58+00:00",
+      "description": "Треба зробити тристоронню зустріч в Абу-Дабі результативною, наші пропозиції щодо реальних потенційних результатів ми передали Американській стороні, — Зеленський\n\nЦими днями було багато підготовчих к",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "RVvoenkor",
-        "wargonzo"
+        "operativnoZSU",
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-06T09:55:24+00:00",
-      "description": "Глава ЛНР:\n\nВФУ продолжают наносить террористические удары по мирным жителям: шесть человек получили ранения.\n\nВ районе села Придорожное Краснодонского муниципального округа неонацисты атаковали микро",
+      "date": "2026-11-06T14:47:01+00:00",
+      "description": "В результате удара по подземному укрытию в н.п. Камышеваха Запорожской области погиб майор ВСУ Виталий Бевза. Последние секунды его жизни попали на запись нательной камеры одного из полицейских, котор",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Киев",
+      "location": "Краматорск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "astrapress",
-        "dva_majors"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-06T09:55:24+00:00",
-      "description": "Глава ЛНР:\n\nВФУ продолжают наносить террористические удары по мирным жителям: шесть человек получили ранения.\n\nВ районе села Придорожное Краснодонского муниципального округа неонацисты атаковали микро",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Краснодар",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "dva_majors",
-        "exilenova_plus"
+        "boris_rozhin"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-06T08:10:22+00:00",
-      "description": "‼️🇺🇦⚡️ Транспортный коллапс в Киеве: метро останавливается, город встал в огромных пробках\n\n▪️Из-за отсутствия напряжения частично приостановлено движение поездов метро, на дорогах украинской столицы ",
+      "date": "2026-11-06T13:02:36+00:00",
+      "description": "Зеленський за підсумками селектору щодоенергопостачання в регіонах заявив, що найгірша ситуація в Києві і причина в тому, що міська влада невиконала рішення з підготовки міста до зими.\n\nТакож він пові",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "RVvoenkor",
-        "wargonzo"
+        "operativnoZSU",
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-06T07:13:01+00:00",
-      "description": "Три человека пострадали в результате российской атаки в Киевской области, — КОВА\n\n«К сожалению, в результате ночной вражеской атаки в Киевской области три человека получили травмы в Бориспольском райо",
+      "date": "2026-11-06T12:28:27+00:00",
+      "description": "В Краматорске Донецкой области в результате атаки российского FPV-дрона погибла женщина, — ГСЧС\n\nПоврежден легковой автомобиль, возник пожар в квартире на 3 этаже.\n\nКроме того, в Славянске в результат",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Киев",
+      "location": "Краматорск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "astrapress",
-        "dva_majors"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-06T07:01:41+00:00",
-      "description": "Афипский НПЗ, Краснодарский край, РФ\n\nСегодня Афипский нефтеперерабатывающий завод подвергся массированной атаке беспилотников, в том числе реактивных БпЛА.\n\nНа кадрах объективного контроля зафиксиров",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Краснодар",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "exilenova_plus",
-        "supernova_plus"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-06T06:57:18+00:00",
-      "description": "Афипский НПЗ атакован в Краснодарском крае, горит резервуарный парк, — OSINT-анализ ASTRA  Резервуарный парк Афипского нефтеперерабатывающего завода (НПЗ) горит после атаки БПЛА в Краснодарском крае, ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Краснодар",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "exilenova_plus",
-        "supernova_plus"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-06T05:11:26+00:00",
-      "description": "В Краснодарі та околицях продовжує лунати тривога, на фоні палає Афіпський НПЗ та щось, ймовірно, на околицях Краснодару.",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Краснодар",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "astrapress",
-        "dva_majors",
-        "exilenova_plus",
-        "supernova_plus"
+        "boris_rozhin"
       ],
       "status": "requires_human_review"
     }
   ],
   "corroborated_event_count": 8,
   "country_counts": {
-    "RU": 11,
-    "UA": 37,
-    "US": 2
+    "RU": 10,
+    "UA": 35,
+    "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 50,
+  "event_count": 46,
   "event_type_counts": {
     "Military Offensive": 2,
-    "Military Operation": 2,
-    "Military Strike": 37,
-    "Political Development": 9
+    "Military Operation": 5,
+    "Military Strike": 33,
+    "Political Development": 6
   },
   "evidence_breakdown": {
     "cross_source_consistent_count": 8,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 42,
+    "not_independently_corroborated_count": 38,
     "rss_reports_not_independently_corroborated_count": 17
   },
-  "generated_at": "2026-11-06T10:46:52Z",
+  "generated_at": "2026-11-06T17:45:35Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 24,
-  "not_verified_event_count": 42,
+  "new_since_previous_snapshot": 18,
+  "not_verified_event_count": 38,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 37,
-      "delta": 37,
+      "current_period": 33,
+      "delta": 33,
       "event_type": "Military Strike",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 9,
-      "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
       "previous_period": 0,
@@ -203,33 +147,28 @@
   ],
   "source_type_counts": {
     "rss": 17,
-    "telegram": 33
+    "telegram": 29
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 10,
+      "events": 7,
       "location": "Киев"
     },
     {
-      "country": "RU",
-      "events": 5,
-      "location": "Краснодар"
-    },
-    {
       "country": "UA",
-      "events": 4,
+      "events": 6,
       "location": "Краматорск"
     },
     {
-      "country": "RU",
-      "events": 3,
-      "location": "Москва"
-    },
-    {
       "country": "UA",
       "events": 3,
-      "location": "Запорожье"
+      "location": "Харьков"
+    },
+    {
+      "country": "RU",
+      "events": 3,
+      "location": "Краснодар"
     },
     {
       "country": "UA",
@@ -237,30 +176,35 @@
       "location": "Славянск"
     },
     {
-      "country": "UA",
+      "country": "RU",
       "events": 2,
-      "location": "Херсон"
+      "location": "Москва"
+    },
+    {
+      "country": "RU",
+      "events": 2,
+      "location": "Солнечногорск"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Днепр"
+      "location": "Лиман"
     }
   ],
   "top_sources": {
-    "astrapress": 3,
-    "boris_rozhin": 4,
+    "RVvoenkor": 2,
+    "astrapress": 2,
+    "bazabazon": 2,
+    "boris_rozhin": 3,
     "dnepr_typical": 3,
-    "dva_majors": 2,
     "lost_armour": 5,
     "operativnoZSU": 2,
     "supernova_plus": 2,
-    "ukrpravda_news": 4,
-    "uniannet": 2,
+    "uniannet": 4,
     "Суспільне Новини": 8,
     "УНІАН": 3,
     "Українська правда": 3
   },
-  "window_end": "2026-11-06T10:46:52Z",
-  "window_start": "2026-10-30T10:46:52Z"
+  "window_end": "2026-11-06T17:45:35Z",
+  "window_start": "2026-10-30T17:45:35Z"
 }
