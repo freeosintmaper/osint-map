@@ -4,12 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 11,
-      "delta": 6,
+      "current_period": 10,
+      "delta": 7,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 5,
+      "previous_period": 3,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
@@ -27,103 +27,58 @@
   ],
   "attention_candidates": [
     {
-      "country": "US",
-      "date": "2026-11-05T22:36:01+00:00",
-      "description": "😱 Трамп также пригрозил уничтожением Ирана и назвал выборы в США «нечестными»\n\n«Мне бы не хотелось разрушать оставшуюся часть Ирана, но, возможно, придётся. Скоро всё узнаете», — сказал кандидат на пр",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Вашингтон",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "readovkanews",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
       "country": "UA",
-      "date": "2026-11-05T20:09:49+00:00",
-      "description": "❗️Мы можем рассмотреть возможность проведения онлайн-выборов, но парламент должен найти решение, — Зеленский\n\nПрезидент заявил, что онлайн-формат голосования возможен, однако решение должно найти парл",
-      "event_type": "Political Development",
+      "date": "2026-11-05T23:09:03+00:00",
+      "description": "ВС РФ атаковали Изюм в Харьковской области КАБами, два человека пострадали, — ГВА\n\n«Попадания зафиксированы в центральной и южной частях города. В результате повреждены ориентировочно два многоквартир",
+      "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Киев",
+      "location": "Изюм",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "ukrpravda_news",
+        "astrapress",
         "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-05T18:17:36+00:00",
-      "description": "Перша леді США Меланія Трамп передала особисті листи президенту України Зеленському та російському лідеру Путіну.\n\nЗміст послань не розголошується. Вона також заявила, що перемир’я в Олешках стало мож",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "ukrpravda_news",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-05T18:06:36+00:00",
-      "description": "Владимир Путин призвал ужесточить контроль за подозрительными финансовыми операциями\n\nГлава государства на торжественном мероприятии в честь 25-летия Росфинмониторинга поздравил сотрудников ведомства ",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "readovkanews"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 6,
+  "corroborated_event_count": 8,
   "country_counts": {
     "BE": 1,
     "GB": 1,
-    "RU": 4,
+    "RU": 3,
     "UA": 15,
     "US": 2
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 23,
+  "event_count": 22,
   "event_type_counts": {
     "Air Raid Alert": 2,
     "Military Operation": 1,
-    "Military Strike": 11,
+    "Military Strike": 10,
     "Political Development": 9
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 6,
+    "cross_source_consistent_count": 8,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 17,
+    "not_independently_corroborated_count": 14,
     "rss_reports_not_independently_corroborated_count": 0
   },
-  "generated_at": "2026-11-05T22:51:51Z",
+  "generated_at": "2026-11-06T03:00:56Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 14,
-  "not_verified_event_count": 17,
+  "new_since_previous_snapshot": 2,
+  "not_verified_event_count": 14,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 11,
-      "delta": 6,
+      "current_period": 10,
+      "delta": 7,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 5,
+      "previous_period": 3,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
@@ -140,18 +95,23 @@
     }
   ],
   "source_type_counts": {
-    "telegram": 23
+    "telegram": 22
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 7,
+      "events": 6,
       "location": "Киев"
     },
     {
       "country": "UA",
       "events": 3,
       "location": "Харьков"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Изюм"
     },
     {
       "country": "US",
@@ -169,11 +129,6 @@
       "location": "Краматорск"
     },
     {
-      "country": "UA",
-      "events": 1,
-      "location": "Изюм"
-    },
-    {
       "country": "GB",
       "events": 1,
       "location": "Лондон"
@@ -189,13 +144,12 @@
     "astrapress": 1,
     "boris_rozhin": 3,
     "dnepr_typical": 1,
-    "exilenova_plus": 1,
     "lost_armour": 5,
     "operativnoZSU": 2,
     "readovkanews": 2,
     "ukrpravda_news": 2,
     "uniannet": 5
   },
-  "window_end": "2026-11-05T22:51:51Z",
-  "window_start": "2026-11-04T22:51:51Z"
+  "window_end": "2026-11-06T03:00:56Z",
+  "window_start": "2026-11-05T03:00:56Z"
 }
