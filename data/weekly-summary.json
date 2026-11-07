@@ -4,268 +4,123 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 39,
-      "delta": 35,
+      "current_period": 31,
+      "delta": 26,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 4,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 11,
-      "delta": 11,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
+      "previous_period": 5,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "attention_candidates": [
     {
-      "country": "RU",
-      "date": "2026-11-07T15:05:05+00:00",
-      "description": "МИД РФ также сообщил, что США очень хотят, чтобы Путин приехал на саммит G20 в Майями. Москва пока не приняла решения и сообщит о нем ближе к самому мероприятию.\n\nПодписаться на мой канал Colonelcassa",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "RVvoenkor",
-        "boris_rozhin",
-        "readovkanews",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
       "country": "UA",
-      "date": "2026-11-07T14:59:39+00:00",
-      "description": "Зеленський анонсував нові кадрові рішення в СБУ у зв’язку з операцією «Карфаген», а також затвердив законопроєкт про повернення декларування для всіх працівників СБУ.\n\nВін заявив, що «Альфа» СБУ забез",
+      "date": "2026-11-07T19:10:05+00:00",
+      "description": "Зеленский через силовиков заставил наркокартель «Химпром» платить ему процент от выручки.\n\nОб этом RT рассказал полковник МВД в отставке Сергей Пелих.\n\nПодробности:\n\n▪️основатель «Химпрома» Егор Бурки",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "astrapress",
-        "ukrpravda_news"
+        "RVvoenkor",
+        "boris_rozhin"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-07T14:49:50+00:00",
-      "description": "‼️🇷🇺🔥 Новые удары по Киеву: поражены топливная логистика ВСУ и энергетика\n\n▪️В районе Ирпеня Киевской области поражены бензовозы, задействованные в снабжении ВСУ горючим, сообщает Минобороны России.\n▪",
+      "date": "2026-11-07T18:45:06+00:00",
+      "description": "Удар корректируемым боеприпасом РСЗО \"Торнадо-С\" по позиции боевиков ВСУ в городе Середина Буда Сумской области \nГеопривязка\n\nИсточник\n👍330👏53❤25❤‍🔥5🌚1\n  \n  \n    22.8K views18:45",
       "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Сумы",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "boris_rozhin",
+        "lost_armour"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-07T16:14:58+00:00",
+      "description": "‼️🇺🇦 Зеленский анонсировал новые чистки в СБУ после коррупционного скандала и связей с наркокартелем «Химпром»\n\n▪️Украинский президент впервые прокомментировал обвинения в связях высокопоставленных со",
+      "event_type": "Political Development",
       "fact_checked": false,
       "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 3,
       "sources": [
         "RVvoenkor",
-        "rybar",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-07T14:36:31+00:00",
-      "description": "‼️🇷🇺🇺🇸 США хотят видеть Путина на саммите G20 в Майами — МИД России\n\n▪️Вашингтон заинтересован в участии президента России в предстоящем саммите «Большой двадцатки».\n▪️Москва примет окончательное реше",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "RVvoenkor",
         "boris_rozhin",
-        "readovkanews",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-07T14:27:38+00:00",
-      "description": "В Оболонському районі Києва внаслідок російської атаки сталось загоряння на великій площі складського приміщення, — Кличко\n\n🫡https://t.me/operativnoZSU/",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "operativnoZSU",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-07T13:58:02+00:00",
-      "description": "русня продолжает кошмарить Киев: в Шевченковском районе в результате атаки поврежден частный жилой дом, — Кличко\n\nУНИАН в🕸Google | 👥X | 📺YouTube |🧵Threads",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "operativnoZSU",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-07T13:45:01+00:00",
-      "description": "путину нужны переговоры, но не мир: они помогают ему удерживать Трампа от давления на россию и ослаблять поддержку Украины\n\nОб этом заявил бывший посол США в Украине Джон Гербст в статье для Atlantic ",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "RVvoenkor",
-        "boris_rozhin",
-        "readovkanews",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-07T13:20:01+00:00",
-      "description": "Усилением ударов по Украине россия пытается давить на Киев и партнеров накануне новых переговоров, — Зеленский\n\nТакже, комментируя ночные удары, президент заявил, что по одному из ключевых энергообъек",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-07T11:07:15+00:00",
-      "description": "Зеленський заявив, що досвід припинення вогню в Олешках на Херсонщині доводить можливість швидкого встановлення перемир’я без тривалої підготовки, відведення озброєнь чи створення буферних зон. На йог",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
         "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "US",
-      "date": "2026-11-07T10:10:26+00:00",
-      "description": "‼️🇪🇺🇺🇸🇷🇺 Европа опасается, что Трамп договорится с Россией без учёта интересов НАТО — Financial Times\n\n▪️Европейские столицы с тревогой восприняли заявления Трампа о масштабном мирном соглашении по Ук",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Вашингтон",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "exilenova_plus",
-        "rybar"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 18,
+  "corroborated_event_count": 5,
   "country_counts": {
-    "PL": 1,
-    "RU": 19,
-    "UA": 36,
-    "US": 3
+    "RU": 12,
+    "UA": 30,
+    "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 59,
+  "event_count": 43,
   "event_type_counts": {
-    "Air Raid Alert": 2,
+    "Air Raid Alert": 1,
     "Military Offensive": 2,
-    "Military Operation": 5,
-    "Military Strike": 39,
-    "Political Development": 11
+    "Military Operation": 2,
+    "Military Strike": 31,
+    "Political Development": 7
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 18,
+    "cross_source_consistent_count": 5,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 41,
-    "rss_reports_not_independently_corroborated_count": 18
+    "not_independently_corroborated_count": 38,
+    "rss_reports_not_independently_corroborated_count": 16
   },
-  "generated_at": "2026-11-07T15:20:58Z",
+  "generated_at": "2026-11-07T19:34:04Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 28,
-  "not_verified_event_count": 41,
+  "new_since_previous_snapshot": 13,
+  "not_verified_event_count": 38,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 39,
-      "delta": 35,
+      "current_period": 31,
+      "delta": 26,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 4,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 11,
-      "delta": 11,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
+      "previous_period": 5,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 18,
-    "telegram": 41
+    "rss": 16,
+    "telegram": 27
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 18,
+      "events": 14,
       "location": "Киев"
     },
     {
-      "country": "RU",
-      "events": 5,
-      "location": "Москва"
-    },
-    {
       "country": "UA",
-      "events": 3,
+      "events": 4,
       "location": "Сумы"
     },
     {
       "country": "UA",
       "events": 3,
       "location": "Херсон"
-    },
-    {
-      "country": "US",
-      "events": 3,
-      "location": "Вашингтон"
     },
     {
       "country": "UA",
@@ -275,28 +130,38 @@
     {
       "country": "RU",
       "events": 2,
-      "location": "Саратов"
+      "location": "Белгород"
     },
     {
       "country": "RU",
       "events": 2,
-      "location": "Ростов-на-Дону"
+      "location": "Saratov"
+    },
+    {
+      "country": "RU",
+      "events": 1,
+      "location": "Тамбов"
+    },
+    {
+      "country": "US",
+      "events": 1,
+      "location": "Вашингтон"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 5,
-    "astrapress": 3,
-    "bazabazon": 4,
-    "boris_rozhin": 3,
-    "exilenova_plus": 5,
+    "RVvoenkor": 3,
+    "The Kyiv Independent": 2,
+    "astrapress": 1,
+    "boris_rozhin": 6,
     "kyivindependent_official": 5,
-    "operativnoZSU": 3,
-    "rybar": 3,
-    "ukrpravda_news": 4,
-    "uniannet": 4,
-    "Суспільне Новини": 8,
-    "УНІАН": 5
+    "operativnoZSU": 1,
+    "rybar": 2,
+    "supernova_plus": 1,
+    "ukrpravda_news": 3,
+    "Суспільне Новини": 6,
+    "УНІАН": 6,
+    "Українська правда": 2
   },
-  "window_end": "2026-11-07T15:20:58Z",
-  "window_start": "2026-10-31T15:20:58Z"
+  "window_end": "2026-11-07T19:34:04Z",
+  "window_start": "2026-10-31T19:34:04Z"
 }
