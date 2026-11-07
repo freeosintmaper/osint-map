@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 20,
-      "delta": 18,
+      "current_period": 15,
+      "delta": 13,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -17,7 +17,23 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-07T19:10:05+00:00",
+      "date": "2026-11-07T20:31:59+00:00",
+      "description": "‼️🇺🇦🏴‍☠«Напьёмся вдрызг»: генсек НАТО рассказал о плане отметить с Зеленским конец конфликта на Украине\n\n➖«Мы сядем на вершине горы в Швейцарии и напьёмся до отвала», — заявил Рютте в эфире.\n▪️Генсек ",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "epoddubny",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-07T17:30:12+00:00",
       "description": "Зеленский через силовиков заставил наркокартель «Химпром» платить ему процент от выручки.\n\nОб этом RT рассказал полковник МВД в отставке Сергей Пелих.\n\nПодробности:\n\n▪️основатель «Химпрома» Егор Бурки",
       "event_type": "Political Development",
       "fact_checked": false,
@@ -26,73 +42,42 @@
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "boris_rozhin"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-07T18:45:06+00:00",
-      "description": "Удар корректируемым боеприпасом РСЗО \"Торнадо-С\" по позиции боевиков ВСУ в городе Середина Буда Сумской области \nГеопривязка\n\nИсточник\n👍330👏53❤25❤‍🔥5🌚1\n  \n  \n    22.8K views18:45",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Сумы",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "boris_rozhin",
-        "lost_armour"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-07T16:14:58+00:00",
-      "description": "‼️🇺🇦 Зеленский анонсировал новые чистки в СБУ после коррупционного скандала и связей с наркокартелем «Химпром»\n\n▪️Украинский президент впервые прокомментировал обвинения в связях высокопоставленных со",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "boris_rozhin",
-        "ukrpravda_news"
+        "epoddubny"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 5,
+  "corroborated_event_count": 3,
   "country_counts": {
-    "RU": 9,
-    "UA": 20,
+    "RU": 8,
+    "UA": 16,
     "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 30,
+  "event_count": 25,
   "event_type_counts": {
     "Air Raid Alert": 1,
     "Military Operation": 2,
-    "Military Strike": 20,
+    "Military Strike": 15,
     "Political Development": 7
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 5,
+    "cross_source_consistent_count": 3,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 25,
+    "not_independently_corroborated_count": 22,
     "rss_reports_not_independently_corroborated_count": 4
   },
-  "generated_at": "2026-11-07T19:34:04Z",
+  "generated_at": "2026-11-07T23:00:10Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 12,
-  "not_verified_event_count": 25,
+  "new_since_previous_snapshot": 5,
+  "not_verified_event_count": 22,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 20,
-      "delta": 18,
+      "current_period": 15,
+      "delta": 13,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -103,18 +88,13 @@
   ],
   "source_type_counts": {
     "rss": 4,
-    "telegram": 26
+    "telegram": 21
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 12,
+      "events": 11,
       "location": "Киев"
-    },
-    {
-      "country": "UA",
-      "events": 3,
-      "location": "Сумы"
     },
     {
       "country": "RU",
@@ -122,14 +102,14 @@
       "location": "Белгород"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 2,
-      "location": "Saratov"
+      "location": "Сумы"
     },
     {
       "country": "RU",
-      "events": 1,
-      "location": "Тамбов"
+      "events": 2,
+      "location": "Saratov"
     },
     {
       "country": "US",
@@ -139,28 +119,33 @@
     {
       "country": "UA",
       "events": 1,
-      "location": "Днепр"
+      "location": "Луганск"
+    },
+    {
+      "country": "RU",
+      "events": 1,
+      "location": "Тамбов"
     },
     {
       "country": "UA",
       "events": 1,
-      "location": "Запорожье"
+      "location": "Днепр"
     }
   ],
   "top_sources": {
     "RVvoenkor": 3,
     "astrapress": 1,
-    "boris_rozhin": 6,
-    "epoddubny": 1,
+    "boris_rozhin": 2,
+    "dva_majors": 1,
+    "epoddubny": 2,
     "kyivindependent_official": 5,
     "lost_armour": 1,
-    "operativnoZSU": 1,
     "readovkanews": 1,
-    "rybar": 2,
     "supernova_plus": 1,
     "ukrpravda_news": 3,
+    "wargonzo": 1,
     "УНІАН": 3
   },
-  "window_end": "2026-11-07T19:34:04Z",
-  "window_start": "2026-11-06T19:34:04Z"
+  "window_end": "2026-11-07T23:00:10Z",
+  "window_start": "2026-11-06T23:00:10Z"
 }
