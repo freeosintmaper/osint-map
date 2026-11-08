@@ -4,58 +4,140 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 15,
-      "delta": 12,
+      "current_period": 18,
+      "delta": 11,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 3,
+      "previous_period": 7,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
-  "attention_candidates": [],
-  "corroborated_event_count": 3,
+  "attention_candidates": [
+    {
+      "country": "UA",
+      "date": "2026-11-08T09:01:01+00:00",
+      "description": "‼️🇷🇺🇺🇦 После российских ударов по энергетике Киев и Днепр переходят на экстренные отключения света\n\n▪️Украинская энергетическая компания ДТЭК сообщила о введении экстренных отключений электроэнергии в",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "boris_rozhin",
+        "dva_majors",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-08T07:31:37+00:00",
+      "description": "🐽 Блэкаут в Днепропетровской области: более 600 тысяч жителей остались без света после серии ударов по энергетике, — ДТЭК.\n\n✨Масштабному отключению электричества предшествовала серия атак на электрост",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "boris_rozhin",
+        "dva_majors",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-08T05:42:20+00:00",
+      "description": "РФ ночью массированно атаковала энергетику Днепропетровской области\n\nИз-за повреждения важных энергообъектов без света остались более 600 тысяч жителей в Павлоградском, Самаровском, Каменском, Днепров",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "boris_rozhin",
+        "dva_majors",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-08T05:03:55+00:00",
+      "description": "Украинские неонацисты атакуют Ростовскую область – повреждён мост \n\nСегодня утром в результате атаки противника на 97-м километре трассы Р-280 в Неклиновском районе был поврежден мост через реку Миус,",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Ростов-на-Дону",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "dva_majors",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-08T04:30:54+00:00",
+      "description": "Ростовская область. Губернатор:\n\nСегодня утром в результате воздушной атаки и падения обломков БПЛА на 97-м километре трассы Р-280 в Неклиновском районе повреждено дорожное полотно моста через р. Миус",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Ростов-на-Дону",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "dva_majors",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    }
+  ],
+  "corroborated_event_count": 5,
   "country_counts": {
-    "RU": 8,
-    "UA": 14
+    "RU": 4,
+    "UA": 19
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 22,
+  "event_count": 23,
   "event_type_counts": {
     "Air Raid Alert": 1,
-    "Military Operation": 1,
-    "Military Strike": 15,
-    "Political Development": 5
+    "Military Operation": 2,
+    "Military Strike": 18,
+    "Political Development": 2
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 3,
+    "cross_source_consistent_count": 5,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 19,
-    "rss_reports_not_independently_corroborated_count": 4
+    "not_independently_corroborated_count": 18,
+    "rss_reports_not_independently_corroborated_count": 2
   },
-  "generated_at": "2026-11-08T02:23:03Z",
+  "generated_at": "2026-11-08T09:20:12Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 1,
-  "not_verified_event_count": 19,
+  "new_since_previous_snapshot": 14,
+  "not_verified_event_count": 18,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 15,
-      "delta": 12,
+      "current_period": 18,
+      "delta": 11,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 3,
+      "previous_period": 7,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 4,
-    "telegram": 18
+    "rss": 2,
+    "telegram": 21
   },
   "top_locations": [
     {
@@ -64,9 +146,14 @@
       "location": "Киев"
     },
     {
+      "country": "UA",
+      "events": 4,
+      "location": "Днепр"
+    },
+    {
       "country": "RU",
       "events": 2,
-      "location": "Белгород"
+      "location": "Ростов-на-Дону"
     },
     {
       "country": "UA",
@@ -74,45 +161,39 @@
       "location": "Сумы"
     },
     {
+      "country": "UA",
+      "events": 1,
+      "location": "Запорожье"
+    },
+    {
+      "country": "UA",
+      "events": 1,
+      "location": "Одесса"
+    },
+    {
+      "country": "UA",
+      "events": 1,
+      "location": "Хмельницкий"
+    },
+    {
       "country": "RU",
-      "events": 2,
-      "location": "Saratov"
-    },
-    {
-      "country": "UA",
       "events": 1,
-      "location": "Луганск"
-    },
-    {
-      "country": "RU",
-      "events": 1,
-      "location": "Тамбов"
-    },
-    {
-      "country": "UA",
-      "events": 1,
-      "location": "Днепр"
-    },
-    {
-      "country": "UA",
-      "events": 1,
-      "location": "Херсон"
+      "location": "Белгород"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 3,
-    "The Kyiv Independent": 1,
-    "astrapress": 1,
-    "dva_majors": 1,
+    "RVvoenkor": 4,
+    "boris_rozhin": 1,
+    "dva_majors": 2,
     "epoddubny": 2,
-    "kyivindependent_official": 4,
+    "kyivindependent_official": 3,
     "lost_armour": 1,
-    "readovkanews": 1,
     "supernova_plus": 1,
-    "ukrpravda_news": 3,
+    "ukrpravda_news": 1,
+    "uniannet": 6,
     "wargonzo": 1,
-    "УНІАН": 3
+    "УНІАН": 2
   },
-  "window_end": "2026-11-08T02:23:03Z",
-  "window_start": "2026-11-07T02:23:03Z"
+  "window_end": "2026-11-08T09:20:12Z",
+  "window_start": "2026-11-07T09:20:12Z"
 }

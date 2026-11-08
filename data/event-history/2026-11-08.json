@@ -1,37 +1,7 @@
 {
-  "current_event_count": 38,
+  "current_event_count": 42,
   "date_utc": "2026-11-08",
   "events_added": [
-    {
-      "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "RU",
-        "date": "2026-11-07T19:00:28+00:00",
-        "description": "В Тамбове расстреляли, предположительно, военного летчика, — The Insider\n\n6 ноября в Тамбове был обнаружен 28-летний мужчина с огнестрельным ранением. Издание The Insider пишет со ссылкой на источник,",
-        "event_type": "Military Strike",
-        "id": 14,
-        "lat": 52.7212,
-        "lng": 41.4523,
-        "location": "Тамбов",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-07T19:00:28+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/130512"
-          }
-        ],
-        "url": "https://t.me/astrapress/130512",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "016acca314355633ee65e61647a18c8a5b4ce95bab098090ab34d4674052bfe7"
-    },
     {
       "event": {
         "channel": "dnepr_typical",
@@ -61,6 +31,453 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "7acbcf8d60ba510a3b5d62b9c0c26a5e9fd4f70e3d7db16c5a90c28bd9227766"
+    },
+    {
+      "event": {
+        "channel": "uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-08T09:07:45+00:00",
+        "description": "русня атаковала дроном пригород Днепра. Там разрушен частный дом, под завалами могут быть люди, — ОВА\n\nUPD: известно об одном погибшем.\n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
+        "event_type": "Military Strike",
+        "id": 7,
+        "lat": 48.4647,
+        "lng": 35.0462,
+        "location": "Днепр",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-08T09:07:45+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/206507"
+          }
+        ],
+        "url": "https://t.me/uniannet/206507",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "eb5412d39390f35bba2448ccaa9278bb1ef0f0a43de3fb83652e16e33124dcbe"
+    },
+    {
+      "event": {
+        "channel": "kyivindependent_official",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-08T09:01:56+00:00",
+        "description": "⚡️Russian attacks kill 5, injure 10 in Ukraine over the past day, striking Zaporizhzhia Oblast over 700 times.\n\nRussian forces carried out 725 strikes on 53 settlements in the Zaporizhzhia region, inj",
+        "event_type": "Military Strike",
+        "id": 17,
+        "lat": 47.8388,
+        "lng": 35.1396,
+        "location": "Запорожье",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "kyivindependent_official",
+            "date": "2026-11-08T09:01:56+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/KyivIndependent_official/56750"
+          }
+        ],
+        "url": "https://t.me/KyivIndependent_official/56750",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "b1be31d609938e1e0c4b3f3010dd937b5e7720832a05d1189bf308f71f987161"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-08T09:01:01+00:00",
+        "description": "‼️🇷🇺🇺🇦 После российских ударов по энергетике Киев и Днепр переходят на экстренные отключения света\n\n▪️Украинская энергетическая компания ДТЭК сообщила о введении экстренных отключений электроэнергии в",
+        "event_type": "Military Strike",
+        "id": 27,
+        "lat": 48.4647,
+        "lng": 35.0462,
+        "location": "Днепр",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-08T09:01:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/126737"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/126737",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "4cf792ce7933e1a9814b6dcae97b8db64a419f61e438e2ad36d5d6c144321e46"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-08T09:01:01+00:00",
+        "description": "‼️🇷🇺🇺🇦 После российских ударов по энергетике Киев и Днепр переходят на экстренные отключения света\n\n▪️Украинская энергетическая компания ДТЭК сообщила о введении экстренных отключений электроэнергии в",
+        "event_type": "Military Strike",
+        "id": 26,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-08T09:01:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/126737"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/126737",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "boris_rozhin",
+          "dva_majors",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "f40912bfe9d408ac1590f9018a6e8f51da290887a7cbfc680add9c241772a76b"
+    },
+    {
+      "event": {
+        "channel": "uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-08T08:36:05+00:00",
+        "description": "Экстренные отключения света ввели в Киеве и области, а также в Днепре. Графики не действуют, — ДТЭК\n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
+        "event_type": "Military Operation",
+        "id": 5,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-08T08:36:05+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/206505"
+          }
+        ],
+        "url": "https://t.me/uniannet/206505",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "584aedb9ac890c80c871afc05d17fc717a88a7e7e00b2cb18a31eca4f778b908"
+    },
+    {
+      "event": {
+        "channel": "uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-08T08:36:05+00:00",
+        "description": "Экстренные отключения света ввели в Киеве и области, а также в Днепре. Графики не действуют, — ДТЭК\n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
+        "event_type": "Military Operation",
+        "id": 6,
+        "lat": 48.4647,
+        "lng": 35.0462,
+        "location": "Днепр",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-08T08:36:05+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/206505"
+          }
+        ],
+        "url": "https://t.me/uniannet/206505",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "f33026ffd96d473f1426c658f31ea2062db305212401050f166cc0f02ea3c9f7"
+    },
+    {
+      "event": {
+        "channel": "uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-08T08:23:16+00:00",
+        "description": "Северный мост в Киеве после вчерашней российской атаки\n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
+        "event_type": "Military Strike",
+        "id": 4,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-08T08:23:16+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/206504"
+          }
+        ],
+        "url": "https://t.me/uniannet/206504",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "3cf66c37c34cda94da26737ec3243588c28969af548a2488f67606afb3581c1f"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-08T07:49:58+00:00",
+        "description": "‼️🇺🇦🔥 Новые удары по Одессе: поражён продовольственный склад, вспыхнул масштабный пожар\n\n▪️Сообщают о серии ударов по объектам в Одессе. На месте одного из попаданий поднимаются густые столбы дыма.\n▪️",
+        "event_type": "Military Strike",
+        "id": 25,
+        "lat": 46.4775,
+        "lng": 30.7326,
+        "location": "Одесса",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-08T07:49:58+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/126724"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/126724",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "1dcc84d04633e8340c495ad8c2651d4ad31ee411cad01af0d8a6342d02c62af1"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin,dva_majors",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-08T07:31:37+00:00",
+        "description": "🐽 Блэкаут в Днепропетровской области: более 600 тысяч жителей остались без света после серии ударов по энергетике, — ДТЭК.\n\n✨Масштабному отключению электричества предшествовала серия атак на электрост",
+        "event_type": "Military Strike",
+        "id": 29,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-08T07:33:07+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/232631"
+          },
+          {
+            "channel": "dva_majors",
+            "date": "2026-11-08T07:31:37+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/dva_majors/101711"
+          }
+        ],
+        "url": "https://t.me/dva_majors/101711",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "boris_rozhin",
+          "dva_majors",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "1002c58441b4c9ad84e53e01091d93c40adf02b2cea16b746f1ad493127a03ea"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-08T07:03:58+00:00",
+        "description": "‼️🇷🇺⚡️ После ударов ВС РФ более 600 тысяч жителей Днепропетровской области остались без света\n\n▪️По данным ДТЭК, в результате ночной атаки повреждены ключевые объекты энергетической инфраструктуры рег",
+        "event_type": "Military Strike",
+        "id": 24,
+        "lat": 48.4647,
+        "lng": 35.0462,
+        "location": "Днепр",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-08T07:03:58+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/126721"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/126721",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "a6ac5720f9f749d8efb10fb4adc40cfcfa24c545367d9760a1e6fb7057dbf7b8"
+    },
+    {
+      "event": {
+        "channel": "uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-08T06:58:01+00:00",
+        "description": "Последствия атаки дронов на Хмельницкий публикует ГСЧС: в городе повреждены частные дома и многоэтажки\n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
+        "event_type": "Military Strike",
+        "id": 3,
+        "lat": 49.4229,
+        "lng": 26.9871,
+        "location": "Хмельницкий",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-08T06:58:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/206495"
+          }
+        ],
+        "url": "https://t.me/uniannet/206495",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "99e341b16c8e6dea22b13bcadd883d2a8e6b1b0d1451e40eafa68679c42a6db1"
+    },
+    {
+      "event": {
+        "channel": "uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-08T05:42:20+00:00",
+        "description": "РФ ночью массированно атаковала энергетику Днепропетровской области\n\nИз-за повреждения важных энергообъектов без света остались более 600 тысяч жителей в Павлоградском, Самаровском, Каменском, Днепров",
+        "event_type": "Military Strike",
+        "id": 2,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-08T05:42:20+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/206491"
+          }
+        ],
+        "url": "https://t.me/uniannet/206491",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "boris_rozhin",
+          "dva_majors",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "c280dbfd642782ab83790d3eb0a088eb452af765dec03b24f23f3f53a6c0f3a3"
+    },
+    {
+      "event": {
+        "channel": "wargonzo",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-08T05:03:55+00:00",
+        "description": "Украинские неонацисты атакуют Ростовскую область – повреждён мост \n\nСегодня утром в результате атаки противника на 97-м километре трассы Р-280 в Неклиновском районе был поврежден мост через реку Миус,",
+        "event_type": "Military Strike",
+        "id": 19,
+        "lat": 47.2225,
+        "lng": 39.7188,
+        "location": "Ростов-на-Дону",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "wargonzo",
+            "date": "2026-11-08T05:03:55+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/wargonzo/38241"
+          }
+        ],
+        "url": "https://t.me/wargonzo/38241",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "dva_majors",
+          "wargonzo"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "74547a866e8c76cf1ac7195b64ae1c9a19ad951ee32b2505ba54f9481780ea5c"
+    },
+    {
+      "event": {
+        "channel": "dva_majors",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-08T04:30:54+00:00",
+        "description": "Ростовская область. Губернатор:\n\nСегодня утром в результате воздушной атаки и падения обломков БПЛА на 97-м километре трассы Р-280 в Неклиновском районе повреждено дорожное полотно моста через р. Миус",
+        "event_type": "Military Strike",
+        "id": 28,
+        "lat": 47.2225,
+        "lng": 39.7188,
+        "location": "Ростов-на-Дону",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "dva_majors",
+            "date": "2026-11-08T04:30:54+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/dva_majors/101704"
+          }
+        ],
+        "url": "https://t.me/dva_majors/101704",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "dva_majors",
+          "wargonzo"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "978d84169a8ec32f840594983cb018384654be275843f65c82094d785f5a1b94"
     }
   ],
   "events_removed": [
@@ -183,8 +600,283 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "7917dcbdef5b0aa1439a75c3a309fc45158028f7a45149a3ece7397a19cabcf4"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-07T20:31:59+00:00",
+        "description": "‼️🇺🇦🏴‍☠«Напьёмся вдрызг»: генсек НАТО рассказал о плане отметить с Зеленским конец конфликта на Украине\n\n➖«Мы сядем на вершине горы в Швейцарии и напьёмся до отвала», — заявил Рютте в эфире.\n▪️Генсек ",
+        "event_type": "Political Development",
+        "id": 22,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-07T20:31:59+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/126702"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/126702",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "epoddubny",
+          "ukrpravda_news"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "7aec65f7664d303a81e24bb07447675eb9c85680b9a0024ea640a4e3b5aa6674"
+    },
+    {
+      "event": {
+        "channel": "dva_majors",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-07T19:49:12+00:00",
+        "description": "Более 300 тыс. абонентов южной и центральной части Луганской народной республики остались без электричества после атаки БПЛА на энергетическую инфраструктуру. Об этом сообщила пресс-служба правительст",
+        "event_type": "Military Strike",
+        "id": 23,
+        "lat": 48.574,
+        "lng": 39.3078,
+        "location": "Луганск",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "dva_majors",
+            "date": "2026-11-07T19:49:12+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/dva_majors/101692"
+          }
+        ],
+        "url": "https://t.me/dva_majors/101692",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "1f2b0330443d1e5da6d2c94b982b54a2c510d3e35407acc5396375e23cd7f991"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-07T19:21:40+00:00",
+        "description": "‼️🇺🇦🏴‍☠ Киев частично обесточен, есть проблемы с водой\n\n▪️Обесточен Оболонский район Киева.\n▪️В столице Украины перебои с водоснабжением на левом берегу: водоканал сообщил о снижении давления в сетях,",
+        "event_type": "Military Operation",
+        "id": 21,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-07T19:21:40+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/126696"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/126696",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "fd0fd4a9c9e750165be31edeb002c0c43972d2bcee341680ae8110a9c7d752fd"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-07T18:30:01+00:00",
+        "description": "‼️🇺🇦🏴‍☠В Днепре блэкаут после новых ударов по энергетике. \n\n▪️Начались отключения света. Сейчас около 60 000 абонентов (квартир и организаций) без электричества, сообщила Облвоенадминистрация.\n▪️Росси",
+        "event_type": "Military Strike",
+        "id": 20,
+        "lat": 48.4647,
+        "lng": 35.0462,
+        "location": "Днепр",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-07T18:30:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/126694"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/126694",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "0a13375c9fc280038a1d1657f1aee316d99190324aab44eb6e5bb5f6072f219e"
+    },
+    {
+      "event": {
+        "channel": "ukrpravda_news",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-07T11:07:15+00:00",
+        "description": "Зеленський заявив, що досвід припинення вогню в Олешках на Херсонщині доводить можливість швидкого встановлення перемир’я без тривалої підготовки, відведення озброєнь чи створення буферних зон. На йог",
+        "event_type": "Political Development",
+        "id": 2,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-07T11:07:15+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/86339"
+          }
+        ],
+        "url": "https://t.me/ukrpravda_news/86339",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "dd6347aa36a84d3ecf2f254b9bb43599560dae5e9c1df34d3f3f62e5f76079d6"
+    },
+    {
+      "event": {
+        "channel": "ukrpravda_news",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-07T10:05:18+00:00",
+        "description": "🔥 Генштаб: військові уразили дві пускові установки \"Искандер\" у Брянській області\n\nАтаки по обʼєктах РФ здійснили протягом 6 та у ніч на 7 листопада. Ступінь ураження установок комплексу \"Искандер\" ут",
+        "event_type": "Military Strike",
+        "id": 1,
+        "lat": 53.2435,
+        "lng": 34.3639,
+        "location": "Брянск",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-07T10:05:18+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/86338"
+          }
+        ],
+        "url": "https://t.me/ukrpravda_news/86338",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "ca4c8a5d51124289ffd9e4c4bf84d3e746fa928406eef00ede220dc7ab406069"
+    },
+    {
+      "event": {
+        "channel": "readovkanews",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-07T08:47:00+00:00",
+        "description": "❗️Переговоры в Абу-Даби должны состояться во вторник, 10 ноября, подтвердил Владимир Путин  Президент России Владимир Путин подтвердил, что переговоры в Абу-Даби должны начаться во вторник, 10 ноября.",
+        "event_type": "Political Development",
+        "id": 16,
+        "lat": 55.7558,
+        "lng": 37.6173,
+        "location": "Москва",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "readovkanews",
+            "date": "2026-11-07T08:47:00+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/readovkanews/116799"
+          }
+        ],
+        "url": "https://t.me/readovkanews/116799",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "ea663fd1630518eecc8a6b0392feb9a119b0399a8e1c056b9fafbaf874202a99"
+    },
+    {
+      "event": {
+        "channel": "wargonzo",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-07T08:16:18+00:00",
+        "description": "Мирный житель погиб во время атаки ВСУ в Белгородской области \n\nКиевские неонацисты ударили по жилому дому в Белгородской области. Мужчина получил тяжёлые травмы, несовместимые с жизнью, и скончался н",
+        "event_type": "Military Strike",
+        "id": 15,
+        "lat": 50.5952,
+        "lng": 36.5873,
+        "location": "Белгород",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "wargonzo",
+            "date": "2026-11-07T08:16:18+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/wargonzo/38229"
+          }
+        ],
+        "url": "https://t.me/wargonzo/38229",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "17e3529beb1b8c53c69349fa50762bf9aa9d0353db4e9ba61bdd4dff0085702d"
+    },
+    {
+      "event": {
+        "channel": "rss_ukrpravda",
+        "confidence": "LOW",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-01T06:28:00Z",
+        "description": "У Києві запровадили екстрені відключення світла через російські обстріли – ДТЕК",
+        "event_type": "Military Strike",
+        "id": "rss-dac61df3add02729c4-524c8a",
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "rss",
+        "sources": [
+          {
+            "channel": "rss_ukrpravda",
+            "date": "2026-11-01T06:28:00Z",
+            "publisher": "Українська правда",
+            "source_type": "rss",
+            "url": "https://www.pravda.com.ua/news/2026/11/01/8060693/"
+          }
+        ],
+        "url": "https://www.pravda.com.ua/news/2026/11/01/8060693/",
+        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "6ffcf8d280d8650db3d0ec7ca9dd37da3aae4ca24df095632b9346124d2811fb"
     }
   ],
-  "generated_at": "2026-11-08T02:23:03Z",
+  "generated_at": "2026-11-08T09:20:12Z",
   "method_note": "Изменения показывают разницу между автоматическими выгрузками, а не доказанное изменение обстановки."
 }
