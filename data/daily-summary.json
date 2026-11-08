@@ -5,95 +5,62 @@
     {
       "classification": "analytical_signal",
       "current_period": 15,
-      "delta": 13,
+      "delta": 12,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 3,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
-  "attention_candidates": [
-    {
-      "country": "UA",
-      "date": "2026-11-07T20:31:59+00:00",
-      "description": "‼️🇺🇦🏴‍☠«Напьёмся вдрызг»: генсек НАТО рассказал о плане отметить с Зеленским конец конфликта на Украине\n\n➖«Мы сядем на вершине горы в Швейцарии и напьёмся до отвала», — заявил Рютте в эфире.\n▪️Генсек ",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "epoddubny",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-07T17:30:12+00:00",
-      "description": "Зеленский через силовиков заставил наркокартель «Химпром» платить ему процент от выручки.\n\nОб этом RT рассказал полковник МВД в отставке Сергей Пелих.\n\nПодробности:\n\n▪️основатель «Химпрома» Егор Бурки",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "epoddubny"
-      ],
-      "status": "requires_human_review"
-    }
-  ],
+  "attention_candidates": [],
   "corroborated_event_count": 3,
   "country_counts": {
     "RU": 8,
-    "UA": 16,
-    "US": 1
+    "UA": 14
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 25,
+  "event_count": 22,
   "event_type_counts": {
     "Air Raid Alert": 1,
-    "Military Operation": 2,
+    "Military Operation": 1,
     "Military Strike": 15,
-    "Political Development": 7
+    "Political Development": 5
   },
   "evidence_breakdown": {
     "cross_source_consistent_count": 3,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 22,
+    "not_independently_corroborated_count": 19,
     "rss_reports_not_independently_corroborated_count": 4
   },
-  "generated_at": "2026-11-07T23:00:10Z",
+  "generated_at": "2026-11-08T02:23:03Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 5,
-  "not_verified_event_count": 22,
+  "new_since_previous_snapshot": 1,
+  "not_verified_event_count": 19,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
       "current_period": 15,
-      "delta": 13,
+      "delta": 12,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 3,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
     "rss": 4,
-    "telegram": 21
+    "telegram": 18
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 11,
+      "events": 9,
       "location": "Киев"
     },
     {
@@ -112,11 +79,6 @@
       "location": "Saratov"
     },
     {
-      "country": "US",
-      "events": 1,
-      "location": "Вашингтон"
-    },
-    {
       "country": "UA",
       "events": 1,
       "location": "Луганск"
@@ -130,15 +92,20 @@
       "country": "UA",
       "events": 1,
       "location": "Днепр"
+    },
+    {
+      "country": "UA",
+      "events": 1,
+      "location": "Херсон"
     }
   ],
   "top_sources": {
     "RVvoenkor": 3,
+    "The Kyiv Independent": 1,
     "astrapress": 1,
-    "boris_rozhin": 2,
     "dva_majors": 1,
     "epoddubny": 2,
-    "kyivindependent_official": 5,
+    "kyivindependent_official": 4,
     "lost_armour": 1,
     "readovkanews": 1,
     "supernova_plus": 1,
@@ -146,6 +113,6 @@
     "wargonzo": 1,
     "УНІАН": 3
   },
-  "window_end": "2026-11-07T23:00:10Z",
-  "window_start": "2026-11-06T23:00:10Z"
+  "window_end": "2026-11-08T02:23:03Z",
+  "window_start": "2026-11-07T02:23:03Z"
 }
