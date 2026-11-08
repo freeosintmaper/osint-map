@@ -363,34 +363,6 @@
       "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
       "verification_sources": [],
       "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_ukrpravda",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "UA",
-      "date": "2026-11-01T14:08:00Z",
-      "description": "Росіяни атакували Чернівці: пошкоджено адмінбудівлю, є поранений",
-      "event_type": "Military Strike",
-      "id": "rss-5396d3b821ce4934a3-4fb295",
-      "lat": 48.29045,
-      "lng": 25.93241,
-      "location": "Чернівці",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_ukrpravda",
-          "date": "2026-11-01T14:08:00Z",
-          "publisher": "Українська правда",
-          "source_type": "rss",
-          "url": "https://www.pravda.com.ua/news/2026/11/01/8060740/"
-        }
-      ],
-      "url": "https://www.pravda.com.ua/news/2026/11/01/8060740/",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
     }
   ],
   "feed_health": {
@@ -398,27 +370,27 @@
       "endpoint": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
       "events_mapped": 0,
       "items_seen": 18,
-      "last_attempt": "2026-11-08T09:20:07Z",
+      "last_attempt": "2026-11-08T16:11:22Z",
       "last_error": null,
-      "last_success": "2026-11-08T09:20:07Z",
-      "latest_item_at": "2026-11-08T08:55:55Z",
+      "last_success": "2026-11-08T16:11:22Z",
+      "latest_item_at": "2026-11-08T14:50:50Z",
       "status": "ok"
     },
     "rss_kyivindependent": {
       "endpoint": "https://kyivindependent.com/news-archive/rss/",
       "events_mapped": 0,
       "items_seen": 15,
-      "last_attempt": "2026-11-08T09:20:07Z",
+      "last_attempt": "2026-11-08T16:11:22Z",
       "last_error": null,
-      "last_success": "2026-11-08T09:20:07Z",
-      "latest_item_at": "2026-11-08T08:59:28Z",
+      "last_success": "2026-11-08T16:11:22Z",
+      "latest_item_at": "2026-11-08T15:01:43Z",
       "status": "ok"
     },
     "rss_suspilne": {
       "endpoint": "https://suspilne.media/rss/ukrnet.rss",
       "events_mapped": 5,
       "items_seen": 50,
-      "last_attempt": "2026-11-08T09:20:07Z",
+      "last_attempt": "2026-11-08T16:11:22Z",
       "last_error": "HTTP 403",
       "last_success": "2026-11-08T02:22:58Z",
       "latest_item_at": "2026-11-07T22:01:23Z",
@@ -428,24 +400,24 @@
       "endpoint": "https://www.pravda.com.ua/rss/view_mainnews/",
       "events_mapped": 0,
       "items_seen": 20,
-      "last_attempt": "2026-11-08T09:20:07Z",
+      "last_attempt": "2026-11-08T16:11:22Z",
       "last_error": null,
-      "last_success": "2026-11-08T09:20:07Z",
-      "latest_item_at": "2026-11-08T07:32:00Z",
+      "last_success": "2026-11-08T16:11:22Z",
+      "latest_item_at": "2026-11-08T15:45:00Z",
       "status": "ok"
     },
     "rss_unian": {
       "endpoint": "https://rss.unian.net/site/news_ukr.rss",
-      "events_mapped": 2,
+      "events_mapped": 0,
       "items_seen": 100,
-      "last_attempt": "2026-11-08T09:20:07Z",
+      "last_attempt": "2026-11-08T16:11:22Z",
       "last_error": null,
-      "last_success": "2026-11-08T09:20:07Z",
-      "latest_item_at": "2026-11-08T09:08:00Z",
+      "last_success": "2026-11-08T16:11:22Z",
+      "latest_item_at": "2026-11-08T16:00:00Z",
       "status": "ok"
     }
   },
-  "generated_at": "2026-11-08T09:20:07Z",
+  "generated_at": "2026-11-08T16:11:22Z",
   "method_note": "RSS items are separate, unverified source records. Only the title is stored; the original publisher link is retained.",
   "window_days": 7
 }
