@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 36,
-      "delta": 34,
+      "current_period": 32,
+      "delta": 30,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -16,18 +16,32 @@
   ],
   "attention_candidates": [
     {
-      "country": "RU",
-      "date": "2026-11-08T20:20:27+00:00",
-      "description": "💥 Українськими дронами уразили автомобільний міст в Ростовській області – супутниковий знімок\n\nАвтомобільний міст розташований на дорозі Р-280, яку в РФ називають \"Новоросія\". Траса сполучає російськи",
+      "country": "UA",
+      "date": "2026-11-08T21:37:26+00:00",
+      "description": "«Бл*, тупо в гостиницу». Момент прилета в Кременчуге снял один из местных жителей  По данным главы Полтавской ОВА Виталия Дякивнича, беспилотники попали в два объекта. Тяжелые ранения получил 16-летни",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Ростов-на-Дону",
+      "location": "Кременчуг",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
+      "source_count": 3,
       "sources": [
         "astrapress",
-        "exilenova_plus",
-        "ukrpravda_news",
+        "operativnoZSU",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-08T21:07:00+00:00",
+      "description": "🤷‍♂️🤷‍♂️🤷‍♂️ Коротко об успехах SMO Трампа: Иран уже восстановил около 80% нефтяных объектов и хранилищ, повреждённых в ходе войны с США и Израилем.\n\nОб этом заявил глава иранской нефтяной инженерно-с",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Вашингтон",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
         "uniannet"
       ],
       "status": "requires_human_review"
@@ -35,7 +49,7 @@
     {
       "country": "UA",
       "date": "2026-11-08T20:02:33+00:00",
-      "description": "❗️На Полтавщині, у Глобинській громаді зафіксовано влучання по території приватного підприємства. Попередньо – без постраждалих, — ОВА\n\nhttps://t.me/operativnoZSU/\n🤬431🙏111😢33❤9\n  \n  \n    15.3K views2",
+      "description": "❗️На Полтавщині, у Глобинській громаді зафіксовано влучання по території приватного підприємства. Попередньо – без постраждалих, — ОВА\n\nhttps://t.me/operativnoZSU/\n🤬923🙏172😢75❤12\n  \n  \n    38.5K views",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Кременчуг",
@@ -45,125 +59,13 @@
         "astrapress",
         "operativnoZSU",
         "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-08T19:50:01+00:00",
-      "description": "‼️🇺🇦⚡️ Удар ВС РФ по крупному энергообъекту ДТЭК оставил часть Одесской области без света\n\n▪️Российские войска нанесли удар по крупному энергетическому объекту ДТЭК на севере Одесской области.\n▪️В ком",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "boris_rozhin"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-08T19:24:54+00:00",
-      "description": "Жесть в Кременчуге: русня ударила по гостинице и жилому дому, - ОВА\n\nСообщается, что есть пострадавшие. \n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Кременчуг",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "operativnoZSU",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-08T19:16:01+00:00",
-      "description": "Движение на участке к мосту через реку Миус перекрыли после атаки БПЛА  Движение на участке трассы Р-280 «Новороссия» по пути к мосту через реку Миус перекрыли после атаки дронов. Об этом сообщил губе",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Ростов-на-Дону",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "astrapress",
-        "exilenova_plus",
-        "ukrpravda_news",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-08T18:41:01+00:00",
-      "description": "Какими ракетами Россия наносит удары по мостам через Днепр в Киеве?\n\nЗа последние две недели российские войска дважды наносили ракетные удары по мостам в украинской столице. 27 октября был поражен Южн",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "boris_rozhin"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "GB",
-      "date": "2026-11-08T18:29:01+00:00",
-      "description": "Британия формирует северный морской альянс\n\nНачальник Штаба обороны ВС Британии Ричард Найтон заявил, что королевство должно «догнать» европейских союзников в противодействии «российской угрозе». \n\n10",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Лондон",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "epoddubny"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-08T17:53:03+00:00",
-      "description": "Появилось видео удара украинских дронов FP-2 по мосту через реку Миус в Ростовской области - движение по трассе Р-280 перекрыто\n\nГубернатор Ростовской области подтвердил повреждение дорожного полотна ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Ростов-на-Дону",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 6,
-      "sources": [
-        "astrapress",
-        "dva_majors",
-        "exilenova_plus",
-        "supernova_plus",
-        "ukrpravda_news",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "GB",
-      "date": "2026-11-08T16:19:58+00:00",
-      "description": "‼️🇬🇧🇷🇺 Британия отстаёт от Европы в подготовке к противостоянию с Россией — FT\n\n▪️Глава штаба обороны Британии Ричард Найтон заявил, что Лондон уступает европейским союзникам в готовности к российской",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Лондон",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "epoddubny"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
       "date": "2026-11-08T11:07:03+00:00",
-      "description": "Ростовская область .. мост через р .Миус 97 -км трассы Р-280  перекрыт в результате ночного прикура ..\n🔥970👍155❤76🤡41💩23🤣13👎8🤮6🕊5🆒4🤷‍♂1\n  \n  \n    85.4K views11:07",
+      "description": "Ростовская область .. мост через р .Миус 97 -км трассы Р-280  перекрыт в результате ночного прикура ..\n🔥1.01K👍165❤79🤡42💩23🤣14👎8🤮6🕊5🆒4🤷‍♂1\n  \n  \n    92.6K views11:07",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Ростов-на-Дону",
@@ -179,39 +81,39 @@
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 13,
+  "corroborated_event_count": 12,
   "country_counts": {
-    "GB": 2,
-    "RU": 14,
+    "GB": 1,
+    "RU": 11,
     "UA": 29,
-    "US": 2
+    "US": 3
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 47,
+  "event_count": 44,
   "event_type_counts": {
-    "Air Raid Alert": 1,
+    "Air Raid Alert": 2,
     "Military Offensive": 2,
     "Military Operation": 3,
-    "Military Strike": 36,
+    "Military Strike": 32,
     "Political Development": 5
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 13,
+    "cross_source_consistent_count": 12,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 34,
+    "not_independently_corroborated_count": 32,
     "rss_reports_not_independently_corroborated_count": 13
   },
-  "generated_at": "2026-11-08T20:32:44Z",
+  "generated_at": "2026-11-09T00:00:56Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 22,
-  "not_verified_event_count": 34,
+  "new_since_previous_snapshot": 7,
+  "not_verified_event_count": 32,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 36,
-      "delta": 34,
+      "current_period": 32,
+      "delta": 30,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -222,18 +124,13 @@
   ],
   "source_type_counts": {
     "rss": 13,
-    "telegram": 34
+    "telegram": 31
   },
   "top_locations": [
     {
       "country": "RU",
-      "events": 7,
-      "location": "Ростов-на-Дону"
-    },
-    {
-      "country": "UA",
       "events": 6,
-      "location": "Киев"
+      "location": "Ростов-на-Дону"
     },
     {
       "country": "UA",
@@ -247,39 +144,44 @@
     },
     {
       "country": "UA",
-      "events": 3,
-      "location": "Сумы"
+      "events": 4,
+      "location": "Киев"
     },
     {
       "country": "UA",
-      "events": 2,
+      "events": 3,
       "location": "Кременчуг"
     },
     {
+      "country": "US",
+      "events": 3,
+      "location": "Вашингтон"
+    },
+    {
       "country": "UA",
-      "events": 2,
+      "events": 3,
       "location": "Кременчук"
     },
     {
-      "country": "US",
-      "events": 2,
-      "location": "Вашингтон"
+      "country": "UA",
+      "events": 3,
+      "location": "Сумы"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 4,
-    "astrapress": 5,
-    "boris_rozhin": 2,
+    "RVvoenkor": 3,
+    "astrapress": 2,
     "dva_majors": 3,
     "epoddubny": 3,
+    "kyivindependent_official": 2,
     "odesa_typical": 2,
     "operativnoZSU": 3,
     "supernova_plus": 2,
-    "ukrpravda_news": 2,
-    "uniannet": 4,
+    "ukrpravda_news": 3,
+    "uniannet": 5,
     "Суспільне Новини": 5,
     "УНІАН": 6
   },
-  "window_end": "2026-11-08T20:32:44Z",
-  "window_start": "2026-11-01T20:32:44Z"
+  "window_end": "2026-11-09T00:00:56Z",
+  "window_start": "2026-11-02T00:00:56Z"
 }
