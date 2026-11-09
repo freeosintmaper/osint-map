@@ -4,40 +4,35 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 18,
-      "delta": 12,
+      "current_period": 14,
+      "delta": 6,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 6,
+      "previous_period": 8,
+      "requires_human_review": true,
+      "signal_type": "publication_volume_change"
+    },
+    {
+      "classification": "analytical_signal",
+      "current_period": 9,
+      "delta": 8,
+      "event_type": "Political Development",
+      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
+      "label": "Повышенная публикационная активность",
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "attention_candidates": [
     {
-      "country": "RU",
-      "date": "2026-11-09T05:23:46+00:00",
-      "description": "В Ленинградской области горит Киришский НПЗ на фоне атаки БПЛА. Это ключевой поставщик топлива для Петербурга и авиационного керосина для аэропорта Пулково, — OSINT-анализ ASTRA  Примерно в 100 км к ю",
+      "country": "UA",
+      "date": "2026-11-09T15:28:21+00:00",
+      "description": "В Вышгородском районе Киевской области при российской атаке погибла 82-летняя женщина, — ОВА\n\nПри атаке российских беспилотников на Вышгородский район Киевской области погибла 82-летняя женщина, сообщ",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Кириши",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "exilenova_plus",
-        "supernova_plus"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "US",
-      "date": "2026-11-09T04:33:44+00:00",
-      "description": "Трамп намекнул на вероятное изменение территории Украины после завершения войны с РФ\n\nПрезидент США дал интервью программе 60 Minutes на CBS News, опубликованном 8 ноября 2026 года. И сделал ряд заявл",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Вашингтон",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
@@ -47,213 +42,191 @@
       "status": "requires_human_review"
     },
     {
-      "country": "RU",
-      "date": "2026-11-09T04:29:18+00:00",
-      "description": "Кириши, Ленинградская область, РФ\n\nАтака на НПЗ «Киришинефтеоргсинтез» (ООО «КИНЕФ»)\n\nПо предварительным данным, в результате атаки на нефтеперерабатывающий завод «Киришинефтеоргсинтез» в Киришах Лени",
+      "country": "UA",
+      "date": "2026-11-09T14:45:11+00:00",
+      "description": "Женщина погибла из-за российского удара по Вышгородскому району Киевщины, — полиция\n\nЕще три человека пострадали, среди них — несовершеннолетний ребенок. \n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Кириши",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 4,
       "sources": [
         "astrapress",
-        "exilenova_plus",
-        "supernova_plus"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-09T01:32:16+00:00",
-      "description": "Кириши  ...   КИНЕФ Киришинефтеоргсинтез подвергся атаке ..\n🔥936👏65🤡34🥰30😡23🤮15👎14😢9💩7🥱6🗿6\n  \n  \n    64.1K viewsedited  01:32",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Кириши",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "exilenova_plus",
-        "supernova_plus"
+        "ukrpravda_news",
+        "uniannet",
+        "wargonzo"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-09T01:04:01+00:00",
-      "description": "Американский БТР \"М-113\" не довёз украинских боевиков до позиции в Харьковской области\n\nОператоры FPV 128 омсбр группировки \"Север\" вскрыли перемещение вражеской бронетехники и нанесли по ней нескольк",
+      "date": "2026-11-09T13:02:01+00:00",
+      "description": "ВСУ ударили по центру Луганска БПЛА со шрапнелью\n\nВСУ атаковали жилой сектор в самом центре Луганска при помощи БПЛА, начиненного шрапнелью. Пасечник уточнил, что вражеские беспилотники атаковали жило",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Харьков",
+      "location": "Луганск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "RVvoenkor",
-        "boris_rozhin"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-09T00:58:58+00:00",
-      "description": "Кириши, Ленинградская область: местные жители сообщают об атаке на НПЗ «КИНЕФ» (ООО «ПО „Киришинефтеоргсинтез“»).\n1🔥2.92K❤244👍195🎉7323🤬1614👌11🙏7🫡7🍌5\n  \n  \n    75.2K views00:58",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Кириши",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "exilenova_plus",
-        "supernova_plus"
+        "lost_armour",
+        "wargonzo"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-08T20:02:33+00:00",
-      "description": "❗️На Полтавщині, у Глобинській громаді зафіксовано влучання по території приватного підприємства. Попередньо – без постраждалих, — ОВА\n\nhttps://t.me/operativnoZSU/\n🤬1.21K🙏228😢109❤15🔥1\n  \n  \n    56K vi",
+      "date": "2026-11-09T11:53:22+00:00",
+      "description": "У Деснянському районі Києва уламки російського безпілотника впали поблизу навчальних закладів, ніхто не постраждав\n\n📰 підписатися",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Кременчуг",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "operativnoZSU",
+        "ukrpravda_news",
         "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-08T19:50:01+00:00",
-      "description": "‼️🇺🇦⚡️ Удар ВС РФ по крупному энергообъекту ДТЭК оставил часть Одесской области без света\n\n▪️Российские войска нанесли удар по крупному энергетическому объекту ДТЭК на севере Одесской области.\n▪️В ком",
+      "date": "2026-11-09T11:01:01+00:00",
+      "description": "Три человека погибли из-за атак ВСУ в Запорожской области \n\nПротивник продолжает целенаправленно быть по мирному населению Запорожской области. За сутки от рук украинских неонацистов погибли три челов",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Харьков",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "RVvoenkor",
-        "boris_rozhin"
+        "uniannet",
+        "wargonzo"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "RU",
-      "date": "2026-11-08T11:07:03+00:00",
-      "description": "Ростовская область .. мост через р .Миус 97 -км трассы Р-280  перекрыт в результате ночного прикура ..\n🔥1.09K👍174❤83🤡46💩24🤣15👎9🤮7🕊5🆒4🤷‍♂1\n  \n  \n    109K views11:07",
+      "country": "UA",
+      "date": "2026-11-09T07:00:26+00:00",
+      "description": "Сводка ударов по объектам за 05.11.2026 — 08.11.2026\n\nИнфраструктура\n• Последствия удара БПЛА-камикадзе \"Герань\" по ПВД ВСУ в здании Центральной районной больницы в Изюме Харьковской области\n📍 49.19, ",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Ростов-на-Дону",
+      "location": "Луганск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 2,
       "sources": [
-        "dva_majors",
-        "exilenova_plus",
-        "supernova_plus"
+        "lost_armour",
+        "wargonzo"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 16,
+  "corroborated_event_count": 6,
   "country_counts": {
     "GB": 1,
-    "RU": 11,
-    "UA": 13,
-    "US": 4
+    "RU": 5,
+    "UA": 17,
+    "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 29,
+  "event_count": 24,
   "event_type_counts": {
-    "Air Raid Alert": 1,
-    "Military Operation": 4,
-    "Military Strike": 18,
-    "Political Development": 6
+    "Military Operation": 1,
+    "Military Strike": 14,
+    "Political Development": 9
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 16,
+    "cross_source_consistent_count": 6,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 13,
+    "not_independently_corroborated_count": 18,
     "rss_reports_not_independently_corroborated_count": 0
   },
-  "generated_at": "2026-11-09T06:09:28Z",
+  "generated_at": "2026-11-09T16:12:12Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 13,
-  "not_verified_event_count": 13,
+  "new_since_previous_snapshot": 22,
+  "not_verified_event_count": 18,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 18,
-      "delta": 12,
+      "current_period": 14,
+      "delta": 6,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 6,
+      "previous_period": 8,
+      "requires_human_review": true,
+      "signal_type": "publication_volume_change"
+    },
+    {
+      "classification": "analytical_signal",
+      "current_period": 9,
+      "delta": 8,
+      "event_type": "Political Development",
+      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
+      "label": "Повышенная публикационная активность",
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "telegram": 29
+    "telegram": 24
   },
   "top_locations": [
     {
+      "country": "UA",
+      "events": 8,
+      "location": "Киев"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Луганск"
+    },
+    {
       "country": "RU",
-      "events": 4,
-      "location": "Кириши"
+      "events": 2,
+      "location": "Москва"
     },
     {
       "country": "US",
-      "events": 4,
+      "events": 1,
       "location": "Вашингтон"
     },
     {
-      "country": "RU",
-      "events": 4,
-      "location": "Ростов-на-Дону"
-    },
-    {
-      "country": "RU",
-      "events": 2,
-      "location": "Санкт-Петербург"
+      "country": "UA",
+      "events": 1,
+      "location": "Краматорск"
     },
     {
       "country": "UA",
-      "events": 2,
-      "location": "Харьков"
+      "events": 1,
+      "location": "Славянск"
     },
     {
       "country": "UA",
-      "events": 2,
-      "location": "Кременчук"
+      "events": 1,
+      "location": "Краматорска"
     },
     {
       "country": "UA",
-      "events": 2,
-      "location": "Кременчуг"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Запорожье"
+      "events": 1,
+      "location": "Донецк"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 3,
-    "astrapress": 4,
-    "boris_rozhin": 1,
-    "dva_majors": 3,
-    "epoddubny": 1,
-    "exilenova_plus": 2,
-    "kyivindependent_official": 2,
-    "odesa_typical": 2,
-    "operativnoZSU": 2,
-    "supernova_plus": 3,
-    "ukrpravda_news": 3,
-    "uniannet": 4
+    "GeneralStaffZSU": 1,
+    "RVvoenkor": 1,
+    "astrapress": 2,
+    "boris_rozhin": 3,
+    "epoddubny": 3,
+    "lost_armour": 2,
+    "operativnoZSU": 1,
+    "supernova_plus": 2,
+    "ukrpravda_news": 6,
+    "uniannet": 2,
+    "wargonzo": 2
   },
-  "window_end": "2026-11-09T06:09:28Z",
-  "window_start": "2026-11-08T06:09:28Z"
+  "window_end": "2026-11-09T16:12:12Z",
+  "window_start": "2026-11-08T16:12:12Z"
 }
