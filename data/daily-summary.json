@@ -4,23 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 14,
-      "delta": 6,
+      "current_period": 23,
+      "delta": 23,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 8,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 8,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 1,
+      "previous_period": 0,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
@@ -28,58 +17,11 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-09T15:28:21+00:00",
-      "description": "В Вышгородском районе Киевской области при российской атаке погибла 82-летняя женщина, — ОВА\n\nПри атаке российских беспилотников на Вышгородский район Киевской области погибла 82-летняя женщина, сообщ",
-      "event_type": "Military Strike",
+      "date": "2026-11-09T21:07:36+00:00",
+      "description": "Зеленський за підсумками Ставки повідомив, що українські військові зараз посилюють переговорні позиції.\n\n«Завтра – перша зустріч. Будуть також партнери з Європи, і з ними – окремі формати будуть, які ",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-09T14:45:11+00:00",
-      "description": "Женщина погибла из-за российского удара по Вышгородскому району Киевщины, — полиция\n\nЕще три человека пострадали, среди них — несовершеннолетний ребенок. \n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "astrapress",
-        "ukrpravda_news",
-        "uniannet",
-        "wargonzo"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-09T13:02:01+00:00",
-      "description": "ВСУ ударили по центру Луганска БПЛА со шрапнелью\n\nВСУ атаковали жилой сектор в самом центре Луганска при помощи БПЛА, начиненного шрапнелью. Пасечник уточнил, что вражеские беспилотники атаковали жило",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Луганск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "lost_armour",
-        "wargonzo"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-09T11:53:22+00:00",
-      "description": "У Деснянському районі Києва уламки російського безпілотника впали поблизу навчальних закладів, ніхто не постраждав\n\n📰 підписатися",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
+      "location": "Днепр",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
@@ -90,143 +32,178 @@
     },
     {
       "country": "UA",
-      "date": "2026-11-09T11:01:01+00:00",
-      "description": "Три человека погибли из-за атак ВСУ в Запорожской области \n\nПротивник продолжает целенаправленно быть по мирному населению Запорожской области. За сутки от рук украинских неонацистов погибли три челов",
+      "date": "2026-11-09T21:03:08+00:00",
+      "description": "‼️🇺🇦💥Атакованы объекты энергетики в Кировоградской, Черкасской и Николаевских областях\n\n▪️Атакованы объекты энергетической инфраструктуры в Уманском и Звенигородском районах Черкасской области, — сооб",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Киев",
+      "location": "Николаев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "uniannet",
-        "wargonzo"
+        "RVvoenkor",
+        "boris_rozhin"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-09T07:00:26+00:00",
+      "date": "2026-11-09T20:19:00+00:00",
+      "description": "россия пытается разделить Украину по Днепру и максимально усложнить жизнь людям, — Зеленский об ударах по мостам и энергетике\n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Днепр",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "ukrpravda_news",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-09T19:39:57+00:00",
       "description": "Сводка ударов по объектам за 05.11.2026 — 08.11.2026\n\nИнфраструктура\n• Последствия удара БПЛА-камикадзе \"Герань\" по ПВД ВСУ в здании Центральной районной больницы в Изюме Харьковской области\n📍 49.19, ",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Луганск",
+      "location": "Николаев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "lost_armour",
-        "wargonzo"
+        "RVvoenkor",
+        "boris_rozhin"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-09T19:05:27+00:00",
+      "description": "Украинские медиа сообщают о взрывах в Донецке. Видео зарева публикует мониторинговый канал Exilenova. Что именно стало целью удара, неизвестно\n\nЗа час до удара донецкие паблики предупреждали об угрозе",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Донецк",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "exilenova_plus"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-09T17:53:01+00:00",
+      "description": "Донецьк перебуває під ракетним обстрілом.\n\n@Exilenova_Bot місцеві, як ви там? Треба обстановку.\n\n\nАпдейт 20:10\nВ окупованому Донецьку було більше 4-х вибухів, також вибухи чула і Ростовщина.\nЗбиття чи",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Донецк",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "exilenova_plus"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 6,
+  "corroborated_event_count": 8,
   "country_counts": {
-    "GB": 1,
-    "RU": 5,
-    "UA": 17,
-    "US": 1
+    "RU": 7,
+    "UA": 25
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 24,
+  "event_count": 32,
   "event_type_counts": {
+    "Air Raid Alert": 1,
     "Military Operation": 1,
-    "Military Strike": 14,
-    "Political Development": 9
+    "Military Strike": 23,
+    "Political Development": 7
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 6,
+    "cross_source_consistent_count": 8,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 18,
-    "rss_reports_not_independently_corroborated_count": 0
+    "not_independently_corroborated_count": 24,
+    "rss_reports_not_independently_corroborated_count": 1
   },
-  "generated_at": "2026-11-09T16:12:12Z",
+  "generated_at": "2026-11-10T00:20:08Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 22,
-  "not_verified_event_count": 18,
+  "new_since_previous_snapshot": 25,
+  "not_verified_event_count": 24,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 14,
-      "delta": 6,
+      "current_period": 23,
+      "delta": 23,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 8,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 8,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 1,
+      "previous_period": 0,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "telegram": 24
+    "rss": 1,
+    "telegram": 31
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 8,
+      "events": 5,
+      "location": "Донецк"
+    },
+    {
+      "country": "RU",
+      "events": 4,
+      "location": "Москва"
+    },
+    {
+      "country": "UA",
+      "events": 3,
+      "location": "Днепр"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Запорожье"
+    },
+    {
+      "country": "UA",
+      "events": 2,
       "location": "Киев"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Луганск"
+      "location": "Николаев"
     },
     {
       "country": "RU",
       "events": 2,
-      "location": "Москва"
-    },
-    {
-      "country": "US",
-      "events": 1,
-      "location": "Вашингтон"
+      "location": "Белгород"
     },
     {
       "country": "UA",
-      "events": 1,
-      "location": "Краматорск"
-    },
-    {
-      "country": "UA",
-      "events": 1,
-      "location": "Славянск"
-    },
-    {
-      "country": "UA",
-      "events": 1,
-      "location": "Краматорска"
-    },
-    {
-      "country": "UA",
-      "events": 1,
-      "location": "Донецк"
+      "events": 2,
+      "location": "Бердянськ"
     }
   ],
   "top_sources": {
-    "GeneralStaffZSU": 1,
-    "RVvoenkor": 1,
-    "astrapress": 2,
+    "RVvoenkor": 3,
+    "astrapress": 3,
     "boris_rozhin": 3,
-    "epoddubny": 3,
+    "epoddubny": 2,
+    "exilenova_plus": 5,
+    "kyivindependent_official": 1,
     "lost_armour": 2,
-    "operativnoZSU": 1,
+    "operativnoZSU": 3,
     "supernova_plus": 2,
-    "ukrpravda_news": 6,
-    "uniannet": 2,
+    "ukrpravda_news": 2,
+    "voenkorKotenok": 1,
     "wargonzo": 2
   },
-  "window_end": "2026-11-09T16:12:12Z",
-  "window_start": "2026-11-08T16:12:12Z"
+  "window_end": "2026-11-10T00:20:08Z",
+  "window_start": "2026-11-09T00:20:08Z"
 }
