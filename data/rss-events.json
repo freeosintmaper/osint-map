@@ -1,6 +1,34 @@
 {
   "events": [
     {
+      "channel": "rss_bbc_ukrainian",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-10T08:22:02Z",
+      "description": "Удари по Київщині, Вінниці, Епіцентру в Кропивницькому - російські обстріли у день перемовин",
+      "event_type": "Military Strike",
+      "id": "rss-776606cc8b64b6e368-631759",
+      "lat": 49.2331,
+      "lng": 28.4682,
+      "location": "Винница",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_bbc_ukrainian",
+          "date": "2026-11-10T08:22:02Z",
+          "publisher": "BBC News Україна",
+          "source_type": "rss",
+          "url": "https://www.bbc.com/ukrainian/articles/cqr7y7pr0d22o?at_medium=RSS&at_campaign=rss"
+        }
+      ],
+      "url": "https://www.bbc.com/ukrainian/articles/cqr7y7pr0d22o?at_medium=RSS&at_campaign=rss",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
       "channel": "rss_suspilne",
       "confidence": "LOW",
       "coordinate_precision": "settlement_center",
@@ -335,62 +363,34 @@
       "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
       "verification_sources": [],
       "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_unian",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "UA",
-      "date": "2026-11-03T15:18:00Z",
-      "description": "На Запоріжжі нацгвардійці знищили понад 10 тисяч ворожих дронів від початку року",
-      "event_type": "Military Strike",
-      "id": "rss-02f48ed50e5770f1ac-fe13d6",
-      "lat": 47.8388,
-      "lng": 35.1396,
-      "location": "Запорожье",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_unian",
-          "date": "2026-11-03T15:18:00Z",
-          "publisher": "УНІАН",
-          "source_type": "rss",
-          "url": "https://www.unian.ua/war/na-zaporizhzhi-nacgvardiyci-znishchili-ponad-10-tisyach-vorozhih-droniv-vid-pochatku-roku-13548666.html"
-        }
-      ],
-      "url": "https://www.unian.ua/war/na-zaporizhzhi-nacgvardiyci-znishchili-ponad-10-tisyach-vorozhih-droniv-vid-pochatku-roku-13548666.html",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
     }
   ],
   "feed_health": {
     "rss_bbc_ukrainian": {
       "endpoint": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
-      "events_mapped": 0,
+      "events_mapped": 1,
       "items_seen": 19,
-      "last_attempt": "2026-11-10T07:32:32Z",
+      "last_attempt": "2026-11-10T15:49:46Z",
       "last_error": null,
-      "last_success": "2026-11-10T07:32:32Z",
-      "latest_item_at": "2026-11-10T06:35:57Z",
+      "last_success": "2026-11-10T15:49:46Z",
+      "latest_item_at": "2026-11-10T15:49:02Z",
       "status": "ok"
     },
     "rss_kyivindependent": {
       "endpoint": "https://kyivindependent.com/news-archive/rss/",
       "events_mapped": 0,
       "items_seen": 15,
-      "last_attempt": "2026-11-10T07:32:32Z",
+      "last_attempt": "2026-11-10T15:49:46Z",
       "last_error": null,
-      "last_success": "2026-11-10T07:32:32Z",
-      "latest_item_at": "2026-11-10T05:31:02Z",
+      "last_success": "2026-11-10T15:49:46Z",
+      "latest_item_at": "2026-11-10T15:09:23Z",
       "status": "ok"
     },
     "rss_suspilne": {
       "endpoint": "https://suspilne.media/rss/ukrnet.rss",
       "events_mapped": 6,
       "items_seen": 50,
-      "last_attempt": "2026-11-10T07:32:32Z",
+      "last_attempt": "2026-11-10T15:49:46Z",
       "last_error": "HTTP 403",
       "last_success": "2026-11-10T00:20:00Z",
       "latest_item_at": "2026-11-09T23:47:53Z",
@@ -400,24 +400,24 @@
       "endpoint": "https://www.pravda.com.ua/rss/view_mainnews/",
       "events_mapped": 0,
       "items_seen": 20,
-      "last_attempt": "2026-11-10T07:32:32Z",
+      "last_attempt": "2026-11-10T15:49:46Z",
       "last_error": null,
-      "last_success": "2026-11-10T07:32:32Z",
-      "latest_item_at": "2026-11-10T05:56:00Z",
+      "last_success": "2026-11-10T15:49:46Z",
+      "latest_item_at": "2026-11-10T15:07:00Z",
       "status": "ok"
     },
     "rss_unian": {
       "endpoint": "https://rss.unian.net/site/news_ukr.rss",
       "events_mapped": 0,
       "items_seen": 100,
-      "last_attempt": "2026-11-10T07:32:32Z",
+      "last_attempt": "2026-11-10T15:49:46Z",
       "last_error": null,
-      "last_success": "2026-11-10T07:32:32Z",
-      "latest_item_at": "2026-11-10T07:31:00Z",
+      "last_success": "2026-11-10T15:49:46Z",
+      "latest_item_at": "2026-11-10T15:44:00Z",
       "status": "ok"
     }
   },
-  "generated_at": "2026-11-10T07:32:32Z",
+  "generated_at": "2026-11-10T15:49:46Z",
   "method_note": "RSS items are separate, unverified source records. Only the title is stored; the original publisher link is retained.",
   "window_days": 7
 }

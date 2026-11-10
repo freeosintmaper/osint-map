@@ -4,128 +4,205 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 17,
-      "delta": 15,
+      "current_period": 15,
+      "delta": 10,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 5,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
     {
       "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 8,
+      "current_period": 10,
+      "delta": 7,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 1,
+      "previous_period": 3,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "attention_candidates": [
     {
-      "country": "US",
-      "date": "2026-11-10T05:15:06+00:00",
-      "description": "Граница другой формы  Накануне трехсторонних переговоров России, США и Украины в Абу-Даби Дональд Трамп заявил, что Москва и Киев близки к мирному соглашению. После завершения конфликта Украина «будет",
+      "country": "UA",
+      "date": "2026-11-10T15:31:51+00:00",
+      "description": "🗣️Зеленський назвав переговори в Абу-Дабі \"конструктивними та доволі змістовними\" за підсумками звіту від української переговорної команди.\n\n\"Встигли обговорити необхідність та можливі параметри гуман",
       "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Вашингтон",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "readovkanews"
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-10T14:35:15+00:00",
+      "description": "Зеленского не будут штрафовать за русский язык во время интервью ABC News, несмотря на поступившую жалобу. Более того, его решили даже не проверять\n\nНа президента поступила жалоба после того, как во в",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "ukrpravda_news",
+        "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-10T05:14:32+00:00",
-      "description": "\"Президент Украины готов встретиться с Путиным при первой же возможности - во Флориде в декабре на полях саммита G20 или в любом другом месте мира, если потребуется, даже в Антарктиде - где угодно, но",
+      "date": "2026-11-10T14:04:55+00:00",
+      "description": "🇺🇸🇷🇺🇺🇦 Переговоры России и Украины были «очень продуктивными», - глава Госдепа США\n\n▪️Трёхсторонняя встреча продолжится завтра, отметил Рубио.\n▪️Подготовка встречи Путина,  Трампа и Си Цзиньпина идет,",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Москва",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "uniannet",
-        "voenkorKotenok"
+        "RVvoenkor",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-10T13:57:17+00:00",
+      "description": "Зеленський коротко обговорив з українською делегацією перебіг тристоронніх переговорів в Абу-Дабі.\n\nРадник президента зазначив, що пізніше він планує детальніше обговорити результати перемовин\n\n📰 підп",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "ukrpravda_news",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-10T12:30:01+00:00",
+      "description": "путин готов к миру \"при надлежащих условиях\", - Кушнер\n \nСпецпредставитель США, выступая перед прессой во время трехсторонних переговоров в Абу-Даби, заявил:\n\n\"Большинство вопросов европейцев касаются",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "epoddubny",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-10T11:53:52+00:00",
+      "description": "‼️🇺🇦🏴‍☠️Пока идут переговоры в ОАЭ, Зеленский заявил об отказе от уступок территорий ради мира и от любых гарантий безопасности, кроме НАТО.\n\n➖«Мы останавливаемся там, где находимся, прекращаем огонь ",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-10T09:41:23+00:00",
+      "description": "Кремль не станет обнародовать детали переговоров в Абу-Даби пока они не будут завершены, – заявил пресс-секретарь президента Дмитрий Песков. \n\nРоссийская делегация определит порядок дальнейших действи",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "epoddubny",
+        "uniannet"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 4,
+  "corroborated_event_count": 7,
   "country_counts": {
-    "RU": 7,
-    "UA": 20,
+    "RU": 4,
+    "UA": 24,
     "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 28,
+  "event_count": 29,
   "event_type_counts": {
     "Air Raid Alert": 1,
-    "Military Operation": 1,
-    "Military Strike": 17,
-    "Political Development": 9
+    "Military Operation": 3,
+    "Military Strike": 15,
+    "Political Development": 10
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 4,
+    "cross_source_consistent_count": 7,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 24,
-    "rss_reports_not_independently_corroborated_count": 1
+    "not_independently_corroborated_count": 22,
+    "rss_reports_not_independently_corroborated_count": 2
   },
-  "generated_at": "2026-11-10T07:32:39Z",
+  "generated_at": "2026-11-10T15:49:52Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 9,
-  "not_verified_event_count": 24,
+  "new_since_previous_snapshot": 26,
+  "not_verified_event_count": 22,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 17,
-      "delta": 15,
+      "current_period": 15,
+      "delta": 10,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 5,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
     {
       "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 8,
+      "current_period": 10,
+      "delta": 7,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 1,
+      "previous_period": 3,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 1,
+    "rss": 2,
     "telegram": 27
   },
   "top_locations": [
     {
-      "country": "RU",
+      "country": "UA",
       "events": 6,
+      "location": "Киев"
+    },
+    {
+      "country": "RU",
+      "events": 4,
       "location": "Москва"
     },
     {
       "country": "UA",
-      "events": 4,
-      "location": "Донецк"
-    },
-    {
-      "country": "UA",
-      "events": 3,
-      "location": "Киев"
+      "events": 2,
+      "location": "Днепр"
     },
     {
       "country": "UA",
@@ -134,39 +211,39 @@
     },
     {
       "country": "UA",
-      "events": 2,
-      "location": "Запорожье"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Бердянськ"
+      "events": 1,
+      "location": "Черноморск"
     },
     {
       "country": "UA",
       "events": 1,
-      "location": "Херсон"
+      "location": "Одесса"
     },
     {
-      "country": "US",
+      "country": "UA",
       "events": 1,
-      "location": "Вашингтон"
+      "location": "Кропивницкий"
+    },
+    {
+      "country": "UA",
+      "events": 1,
+      "location": "Лиман"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 4,
-    "astrapress": 3,
+    "RVvoenkor": 5,
     "boris_rozhin": 1,
-    "epoddubny": 2,
-    "exilenova_plus": 5,
-    "kyivindependent_official": 1,
+    "dva_majors": 2,
+    "epoddubny": 1,
+    "exilenova_plus": 2,
+    "informnapalm": 1,
+    "lost_armour": 3,
+    "odesa_typical": 2,
     "operativnoZSU": 2,
-    "readovkanews": 1,
-    "supernova_plus": 2,
-    "ukrpravda_news": 2,
-    "uniannet": 1,
-    "wargonzo": 2
+    "rybar": 1,
+    "ukrpravda_news": 3,
+    "uniannet": 3
   },
-  "window_end": "2026-11-10T07:32:39Z",
-  "window_start": "2026-11-09T07:32:39Z"
+  "window_end": "2026-11-10T15:49:52Z",
+  "window_start": "2026-11-09T15:49:52Z"
 }
