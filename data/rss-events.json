@@ -1,6 +1,118 @@
 {
   "events": [
     {
+      "channel": "rss_ukrpravda",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-11T15:29:00Z",
+      "description": "Росіяни дронами атакували Яготин: є загиблий і поранені, пошкоджені дитячі садки",
+      "event_type": "Military Strike",
+      "id": "rss-ab0c402485b86a8306-9c5d3b",
+      "lat": 50.27535,
+      "lng": 31.76343,
+      "location": "Яготин",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_ukrpravda",
+          "date": "2026-11-11T15:29:00Z",
+          "publisher": "Українська правда",
+          "source_type": "rss",
+          "url": "https://www.pravda.com.ua/news/2026/11/11/8062380/"
+        }
+      ],
+      "url": "https://www.pravda.com.ua/news/2026/11/11/8062380/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_suspilne",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-11T14:42:26Z",
+      "description": "Генерал РФ Сергій Кузовльов віддавав накази на обстріл Покровська — СБУ",
+      "event_type": "Military Strike",
+      "id": "rss-b588025532f25f1571-98f6e9",
+      "lat": 48.2811,
+      "lng": 37.1764,
+      "location": "Покровск",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_suspilne",
+          "date": "2026-11-11T14:42:26Z",
+          "publisher": "Суспільне Новини",
+          "source_type": "rss",
+          "url": "https://suspilne.media/donbas/1450467-general-rf-sergij-kuzovlov-viddavav-nakazi-na-obstril-pokrovska-sbu/"
+        }
+      ],
+      "url": "https://suspilne.media/donbas/1450467-general-rf-sergij-kuzovlov-viddavav-nakazi-na-obstril-pokrovska-sbu/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_kyivindependent",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-11T13:16:30Z",
+      "description": "Russian strike on crowded market in Odesa Oblast kills at least 3, injures 8",
+      "event_type": "Military Strike",
+      "id": "rss-005d8bf6e86969a900-bf1f87",
+      "lat": 46.4775,
+      "lng": 30.7326,
+      "location": "Одесса",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_kyivindependent",
+          "date": "2026-11-11T13:16:30Z",
+          "publisher": "The Kyiv Independent",
+          "source_type": "rss",
+          "url": "https://kyivindependent.com/russian-strike-on-crowded-market-in-odesa-oblast-kills-at-least-3-injures-8/"
+        }
+      ],
+      "url": "https://kyivindependent.com/russian-strike-on-crowded-market-in-odesa-oblast-kills-at-least-3-injures-8/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_kyivindependent",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-11T13:16:30Z",
+      "description": "Russian strike on crowded market in Odesa Oblast kills at least 3, injures 8",
+      "event_type": "Military Strike",
+      "id": "rss-005d8bf6e86969a900-840adb",
+      "lat": 46.48572,
+      "lng": 30.74383,
+      "location": "Odesa",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_kyivindependent",
+          "date": "2026-11-11T13:16:30Z",
+          "publisher": "The Kyiv Independent",
+          "source_type": "rss",
+          "url": "https://kyivindependent.com/russian-strike-on-crowded-market-in-odesa-oblast-kills-at-least-3-injures-8/"
+        }
+      ],
+      "url": "https://kyivindependent.com/russian-strike-on-crowded-market-in-odesa-oblast-kills-at-least-3-injures-8/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
       "channel": "rss_bbc_ukrainian",
       "confidence": "LOW",
       "coordinate_precision": "settlement_center",
@@ -258,54 +370,54 @@
       "endpoint": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
       "events_mapped": 0,
       "items_seen": 19,
-      "last_attempt": "2026-11-11T08:23:51Z",
+      "last_attempt": "2026-11-11T16:29:22Z",
       "last_error": null,
-      "last_success": "2026-11-11T08:23:51Z",
-      "latest_item_at": "2026-11-11T07:39:03Z",
+      "last_success": "2026-11-11T16:29:22Z",
+      "latest_item_at": "2026-11-11T15:32:57Z",
       "status": "ok"
     },
     "rss_kyivindependent": {
       "endpoint": "https://kyivindependent.com/news-archive/rss/",
-      "events_mapped": 0,
+      "events_mapped": 2,
       "items_seen": 15,
-      "last_attempt": "2026-11-11T08:23:51Z",
+      "last_attempt": "2026-11-11T16:29:22Z",
       "last_error": null,
-      "last_success": "2026-11-11T08:23:51Z",
-      "latest_item_at": "2026-11-11T07:35:00Z",
+      "last_success": "2026-11-11T16:29:22Z",
+      "latest_item_at": "2026-11-11T15:56:40Z",
       "status": "ok"
     },
     "rss_suspilne": {
       "endpoint": "https://suspilne.media/rss/ukrnet.rss",
-      "events_mapped": 3,
+      "events_mapped": 1,
       "items_seen": 50,
-      "last_attempt": "2026-11-11T08:23:51Z",
-      "last_error": "HTTP 403",
-      "last_success": "2026-11-10T00:20:00Z",
-      "latest_item_at": "2026-11-09T23:47:53Z",
-      "status": "error"
+      "last_attempt": "2026-11-11T16:29:22Z",
+      "last_error": null,
+      "last_success": "2026-11-11T16:29:22Z",
+      "latest_item_at": "2026-11-11T16:26:35Z",
+      "status": "ok"
     },
     "rss_ukrpravda": {
       "endpoint": "https://www.pravda.com.ua/rss/view_mainnews/",
-      "events_mapped": 0,
+      "events_mapped": 1,
       "items_seen": 20,
-      "last_attempt": "2026-11-11T08:23:51Z",
+      "last_attempt": "2026-11-11T16:29:22Z",
       "last_error": null,
-      "last_success": "2026-11-11T08:23:51Z",
-      "latest_item_at": "2026-11-11T06:49:00Z",
+      "last_success": "2026-11-11T16:29:22Z",
+      "latest_item_at": "2026-11-11T15:29:00Z",
       "status": "ok"
     },
     "rss_unian": {
       "endpoint": "https://rss.unian.net/site/news_ukr.rss",
       "events_mapped": 0,
       "items_seen": 100,
-      "last_attempt": "2026-11-11T08:23:51Z",
+      "last_attempt": "2026-11-11T16:29:22Z",
       "last_error": null,
-      "last_success": "2026-11-11T08:23:51Z",
-      "latest_item_at": "2026-11-11T08:15:00Z",
+      "last_success": "2026-11-11T16:29:22Z",
+      "latest_item_at": "2026-11-11T16:27:45Z",
       "status": "ok"
     }
   },
-  "generated_at": "2026-11-11T08:23:51Z",
+  "generated_at": "2026-11-11T16:29:22Z",
   "method_note": "RSS items are separate, unverified source records. Only the title is stored; the original publisher link is retained.",
   "window_days": 7
 }
