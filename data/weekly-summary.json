@@ -5,18 +5,18 @@
     {
       "classification": "analytical_signal",
       "current_period": 35,
-      "delta": 33,
+      "delta": 32,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 3,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
     {
       "classification": "analytical_signal",
-      "current_period": 10,
-      "delta": 10,
+      "current_period": 14,
+      "delta": 14,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -28,48 +28,102 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-11T16:01:33+00:00",
-      "description": "‼️🇺🇦🇺🇸🇩🇰 Зеленский высмеял территориальные претензии Трампа на Гренландию в парламенте Дании\n\n▪️Выступая перед датскими депутатами, президент Украины иронично прокомментировал интерес американского ли",
+      "date": "2026-11-11T22:00:52+00:00",
+      "description": "🗣️Зеленський заявив, що після переговорів в Абу-Дабі спецпредставники президента США вирушили до Путіна з конкретикою, і він розраховує, що після перемовин із ним вони прибудуть на зустріч до Дубліна ",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 6,
       "sources": [
         "RVvoenkor",
+        "dva_majors",
+        "operativnoZSU",
+        "ukrpravda_news",
+        "uniannet",
+        "voenkorKotenok"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-11T20:14:18+00:00",
+      "description": "\"Мужчины мобилизационного возраста должны быть в Украине\", - Зеленский, который прилетел в Дублин, где у него пройдут переговоры с Уиткоффом и Кушнером\n\n✨Интересно, когда уже европейская полиция начне",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 5,
+      "sources": [
+        "RVvoenkor",
+        "dva_majors",
+        "operativnoZSU",
         "ukrpravda_news",
         "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "RU",
-      "date": "2026-11-11T16:00:32+00:00",
-      "description": "💥️️️️️️ Безпілотники атакували Омський НПЗ — найбільше нафтопереробне підприємство в РФ. Він розташований на відстані близько 2,5 тисячі кілометрів від кордону з Україною.\n\nЗа офіційними даними, НПЗ з",
-      "event_type": "Military Strike",
+      "country": "UA",
+      "date": "2026-11-11T20:04:50+00:00",
+      "description": "‼️🇺🇸🇺🇦🇷🇺 США требуют вывода ВСУ из Донбасса для завершения конфликта — Зеленский\n\n▪️Зеленский заявил, что Вашингтон рассматривает вывод украинских войск из Донбасса как условие завершения боевых дейст",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Омськ",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 4,
       "sources": [
-        "OsintFlow",
-        "exilenova_plus",
+        "RVvoenkor",
+        "ukrpravda_news",
+        "uniannet",
+        "voenkorKotenok"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-11T19:39:39+00:00",
+      "description": "Мужчины мобилизационного возраста должны быть в Украине, - Зеленский призвал украинцев, выехавших за границу, возвращаться домой\n\n«Кто-то защищает жизнь и страну, а кто-то - нет. Это несправедливо, но",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "dva_majors",
+        "ukrpravda_news",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-11T19:13:39+00:00",
+      "description": "Прекращения огня, похоже, не будет: российская делегация в Абу-Даби заявила, что якобы не уполномочена обсуждать перемирие, - Зеленский\n\nПо словам президента, Украина предложила прекратить удары по эн",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 5,
+      "sources": [
+        "RVvoenkor",
         "operativnoZSU",
-        "ukrpravda_news"
+        "ukrpravda_news",
+        "uniannet",
+        "voenkorKotenok"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-11T15:41:19+00:00",
-      "description": "🙀 З 30 жовтня по 11 листопада Сили оборони атакували вже дев'ять російських нафтопереробних заводів. Їхня сукупна номінальна потужність — близько 120,25 млн тонн на рік.\n\nХронологія ударів:\n▪️ 30 жовт",
+      "date": "2026-11-11T18:21:18+00:00",
+      "description": "🛳️💥 СБУ уразила російський корабель \"Наро-Фоминск\", який може запускати ракети \"Калибр\"\n\nУдар по військовому кораблю завдали у межах операції Сил оборони, під час якої атакували нафтову інфраструктуру",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Омськ",
+      "location": "Наро-Фоминск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 2,
       "sources": [
-        "OsintFlow",
         "exilenova_plus",
         "ukrpravda_news"
       ],
@@ -77,161 +131,111 @@
     },
     {
       "country": "UA",
-      "date": "2026-11-11T15:25:03+00:00",
-      "description": "В Полтавской области количество раненых в результате российского обстрела увеличилось до 5 человек, — ГСЧС",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Черноморск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-11T15:14:58+00:00",
-      "description": "Зеленского не будут штрафовать за русский язык во время интервью ABC News, несмотря на поступившую жалобу. Более того, его решили даже не проверять  На президента поступила жалоба после того, как во в",
+      "date": "2026-11-11T17:31:25+00:00",
+      "description": "🇮🇪Зеленський разом з командою прибув до Дубліна, Ірландія - там пройде IX саміт Європейської політичної спільноти\n\nУ президента в найближчі два дні запланована низка дво- та багатосторонніх зустрічей.",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 6,
       "sources": [
         "RVvoenkor",
+        "dva_majors",
+        "operativnoZSU",
         "ukrpravda_news",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-11T15:10:29+00:00",
-      "description": "‼️🇷🇺🇺🇸 Путин проведёт переговоры с Уиткоффом и Кушнером в четверг — Ушаков\n\n▪️Встреча президента России Владимира Путина с американскими представителями Стивом Уиткоффом и Джаредом Кушнером состоится ",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "RVvoenkor",
-        "boris_rozhin",
-        "epoddubny",
+        "uniannet",
         "voenkorKotenok"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-11T14:40:56+00:00",
-      "description": "Масштабна пожежа на Омському НПЗ.\n\n\n  \n⚠️ Ударники СОУ подолали близько 3000 км та уразили найбільший за потужністю нафтопереробний завод Росії – Омський НПЗ\n\nПідприємство входить до структури «Газпро",
+      "date": "2026-11-11T17:00:54+00:00",
+      "description": "Омський НПЗ перебуває під атакою вже сьому годину.\nВ місті досі лунають вибухи.\n4🔥4.19K🍾613❤202👍99🥰38❤‍🔥29🤩21😍1918🤬13😢6\n  \n  \n    96.4K views17:00",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Омськ",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 5,
+      "source_count": 2,
       "sources": [
-        "OsintFlow",
-        "astrapress",
         "exilenova_plus",
-        "operativnoZSU",
         "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-11T14:38:39+00:00",
-      "description": "❗️Армению лишили права голоса в ОДКБ, сообщил Песков\n\nРешение принято, руководствуясь уставом организации, в связи с тем, что Армения не выполняла свои обязательства уже несколько лет. Страна также не",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 5,
-      "sources": [
-        "RVvoenkor",
-        "boris_rozhin",
-        "epoddubny",
-        "readovkanews",
-        "voenkorKotenok"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-11T14:35:31+00:00",
-      "description": "В Омске в районе НПЗ после налета беспилотников виднеется зарево, — OSINT-эксперт ASTRA\n\nЖители пишут о пожаре около НПЗ, который возник после атаки. \n\nРанее губернатор Омской области Виталий Хоценко ",
+      "date": "2026-11-11T16:54:42+00:00",
+      "description": "Також у межах спецоперації СБУ спланувала та реалізувала ураження малого ракетного корабля проєкту «Буян-М» «Наро-Фомінськ». Це судно є носієм крилатих ракет «Калібр» та «Онікс». Його було спущено на ",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Омск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "exilenova_plus"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-11T14:30:55+00:00",
-      "description": "В рф продолжается полный гойдец: в Омске полыхает нефтеперерабатывающий завод\n\nМестные паблики публикуют кадры масштабного пожара. \n\nОмский НПЗ \"Газпром нефти\" - крупнейший нефтеперерабатывающий завод",
-      "event_type": "Military Operation",
-      "fact_checked": false,
-      "location": "Омск",
+      "location": "Наро-Фомінськ",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "exilenova_plus",
-        "uniannet"
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-11T16:28:07+00:00",
+      "description": "Російські загарбники ударними безпілотниками атакували Яготин Бориспільського району Київщини, внаслідок чого є загиблий, поранені, пошкоджено цивільну інфраструктуру.\n\nУ будівлях двох дитячих садків ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Яготин",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "OsintFlow",
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 19,
+  "corroborated_event_count": 18,
   "country_counts": {
     "GB": 1,
-    "RU": 15,
-    "UA": 35
+    "RU": 16,
+    "UA": 34
   },
   "editorially_fact_checked_count": 0,
   "event_count": 51,
   "event_type_counts": {
-    "Air Raid Alert": 2,
-    "Military Operation": 4,
+    "Air Raid Alert": 1,
+    "Military Operation": 1,
     "Military Strike": 35,
-    "Political Development": 10
+    "Political Development": 14
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 19,
+    "cross_source_consistent_count": 18,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 32,
-    "rss_reports_not_independently_corroborated_count": 13
+    "not_independently_corroborated_count": 33,
+    "rss_reports_not_independently_corroborated_count": 12
   },
-  "generated_at": "2026-11-11T16:29:38Z",
+  "generated_at": "2026-11-11T22:58:18Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 35,
-  "not_verified_event_count": 32,
+  "new_since_previous_snapshot": 28,
+  "not_verified_event_count": 33,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
       "current_period": 35,
-      "delta": 33,
+      "delta": 32,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 3,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
     {
       "classification": "analytical_signal",
-      "current_period": 10,
-      "delta": 10,
+      "current_period": 14,
+      "delta": 14,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -241,19 +245,14 @@
     }
   ],
   "source_type_counts": {
-    "rss": 13,
-    "telegram": 38
+    "rss": 12,
+    "telegram": 39
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 8,
+      "events": 12,
       "location": "Киев"
-    },
-    {
-      "country": "RU",
-      "events": 7,
-      "location": "Омськ"
     },
     {
       "country": "RU",
@@ -268,11 +267,6 @@
     {
       "country": "UA",
       "events": 3,
-      "location": "Харьков"
-    },
-    {
-      "country": "UA",
-      "events": 2,
       "location": "Яготин"
     },
     {
@@ -281,25 +275,35 @@
       "location": "Черноморск"
     },
     {
-      "country": "UA",
+      "country": "RU",
       "events": 2,
-      "location": "Покровск"
+      "location": "Омск"
+    },
+    {
+      "country": "RU",
+      "events": 2,
+      "location": "Орел"
+    },
+    {
+      "country": "RU",
+      "events": 2,
+      "location": "Омськ"
     }
   ],
   "top_sources": {
-    "GeneralStaffZSU": 2,
-    "OsintFlow": 2,
-    "RVvoenkor": 4,
+    "OsintFlow": 3,
+    "RVvoenkor": 5,
     "The Kyiv Independent": 3,
-    "astrapress": 3,
+    "dva_majors": 2,
     "exilenova_plus": 3,
-    "kyivindependent_official": 5,
-    "operativnoZSU": 5,
-    "ukrpravda_news": 6,
-    "uniannet": 4,
-    "Суспільне Новини": 4,
+    "lost_armour": 2,
+    "operativnoZSU": 2,
+    "ukrpravda_news": 7,
+    "uniannet": 3,
+    "voenkorKotenok": 3,
+    "Суспільне Новини": 3,
     "УНІАН": 4
   },
-  "window_end": "2026-11-11T16:29:38Z",
-  "window_start": "2026-11-04T16:29:38Z"
+  "window_end": "2026-11-11T22:58:18Z",
+  "window_start": "2026-11-04T22:58:18Z"
 }
