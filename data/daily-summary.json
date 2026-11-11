@@ -4,23 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 20,
-      "delta": 18,
+      "current_period": 25,
+      "delta": 22,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 8,
-      "delta": 8,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
+      "previous_period": 3,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
@@ -28,23 +17,38 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-10T23:57:48+00:00",
-      "description": "ВС РФ массированно атаковали Кривой Рог дронами. Город частично остался без света и отопления\n\nО последствиях обстрела Днепропетровской области сообщил глава Совета обороны Кривого Рога Александр Вилк",
+      "date": "2026-11-11T06:26:31+00:00",
+      "description": "Кривой Рог частично в блекауте после удара РФ по подстанции\n\nКак сообщил глава Совета обороны города Вилкул, воду и канализацию в отключенных районах переводят на генераторы, с отоплением ситуация сло",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Кривой Рог",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "astrapress",
+        "dva_majors",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-11T05:35:11+00:00",
+      "description": "В результате удара по Харькову ранен один человек\n\nПо данным ГСЧС, ночью враг нанес ракетные удары по Салтовскому району города. В результате одного из попаданий по территории гаражного кооператива во",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Харьков",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
         "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-10T23:17:29+00:00",
-      "description": "В Ярцево Смоленской области горит квартира на фоне атаки БПЛА, — OSINT-анализ ASTRA\n\nВ области была объявлена беспилотная опасность, сообщалось о большом количестве дронов по направлению к Ленинградск",
+      "date": "2026-11-11T05:20:24+00:00",
+      "description": "Два человека погибли в Смоленской области, ещё трое пострадали в Ленинградской после массированных ночных атак беспилотников — на фоне налётов воздушное пространство ограничили в Финляндии, а в Литве ",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Смоленск",
@@ -52,121 +56,129 @@
       "source_count": 3,
       "sources": [
         "RVvoenkor",
-        "astrapress",
+        "bazabazon",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-11T02:25:53+00:00",
+      "description": "‼️🇺🇦🔥Двойной ракетный удар нанесён по  Индустриальному и Салтовскому районам Харькова, - власти \n\nПоследствия уточняются, сообщил мэр Терехов. \n⚠️Подписаться на RV: MAX | t.me/RVvoenkor\n👍1.61K🔥490❤70🫡",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Харьков",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
         "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "RU",
-      "date": "2026-11-10T22:11:41+00:00",
-      "description": "‼️🇷🇺🏴‍☠️Враг пытается прорваться к Петербургу, атакует Смоленск и Тверь\n\n▪️Вражеские БПЛА попали по домам в смоленском Ярцево (на видео) и в Твери.\n▪️Опасность БПЛА сначала объявили в воздушном простр",
+      "country": "UA",
+      "date": "2026-11-11T01:26:01+00:00",
+      "description": "❗️всрф нанесли двойной ракетный удар по Харькову, – мэр Терехов\n\nПредварительно, удары пришлись по Индустриальному и Салтовскому районам. Последствия уточняются.\n👍1.49K🤬1.24K😢176😁131❤89🙏69😱19🕊12👎10🤮6👀",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Смоленск",
+      "location": "Харьков",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "astrapress"
+        "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "GB",
-      "date": "2026-11-10T21:31:45+00:00",
-      "description": "🇬🇧🇺🇸 У Британії заарештували військовослужбовця армії США за підозрою у шпигунстві для Росії; деталей розслідування поки не розголошують.\n\nДиректор ФБР Кеш Патель заявив, що це важливе затримання \"пов",
-      "event_type": "Political Development",
+      "country": "UA",
+      "date": "2026-11-10T16:12:39+00:00",
+      "description": "Російські окупанти атакували підприємство критичної інфраструктури у Дніпрі, вбивши двох людей і поранивши щонайменше чотирьох, повідомив голова ОВА Ганжа\n\n📰 підписатися",
+      "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Лондон",
+      "location": "Бердянськ",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "DeepStateUA",
+        "informnapalm",
         "ukrpravda_news"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 10,
+  "corroborated_event_count": 9,
   "country_counts": {
     "GB": 2,
-    "RU": 8,
-    "UA": 21
+    "RU": 4,
+    "UA": 28
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 31,
+  "event_count": 34,
   "event_type_counts": {
     "Air Raid Alert": 1,
-    "Military Operation": 2,
-    "Military Strike": 20,
-    "Political Development": 8
+    "Military Operation": 1,
+    "Military Strike": 25,
+    "Political Development": 7
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 10,
+    "cross_source_consistent_count": 9,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 21,
-    "rss_reports_not_independently_corroborated_count": 1
+    "not_independently_corroborated_count": 25,
+    "rss_reports_not_independently_corroborated_count": 0
   },
-  "generated_at": "2026-11-11T01:30:28Z",
+  "generated_at": "2026-11-11T08:24:05Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 16,
-  "not_verified_event_count": 21,
+  "new_since_previous_snapshot": 22,
+  "not_verified_event_count": 25,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 20,
-      "delta": 18,
+      "current_period": 25,
+      "delta": 22,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 8,
-      "delta": 8,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
+      "previous_period": 3,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 1,
-    "telegram": 30
+    "telegram": 34
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 4,
+      "events": 5,
       "location": "Киев"
-    },
-    {
-      "country": "UA",
-      "events": 3,
-      "location": "Кривой Рог"
     },
     {
       "country": "RU",
       "events": 3,
-      "location": "Смоленск"
+      "location": "Москва"
     },
     {
       "country": "UA",
       "events": 3,
-      "location": "Днепр"
+      "location": "Харьков"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Харьков"
+      "location": "Донецк"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Кривой Рог"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Днепр"
     },
     {
       "country": "GB",
@@ -174,30 +186,25 @@
       "location": "Лондон"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 2,
-      "location": "Москва"
-    },
-    {
-      "country": "RU",
-      "events": 1,
-      "location": "Санкт-Петербург"
+      "location": "Бердянськ"
     }
   ],
   "top_sources": {
-    "DeepStateUA": 1,
-    "RVvoenkor": 3,
-    "astrapress": 3,
-    "boris_rozhin": 4,
-    "kyivindependent_official": 2,
+    "RVvoenkor": 4,
+    "astrapress": 4,
+    "bazabazon": 1,
+    "dva_majors": 1,
+    "exilenova_plus": 1,
+    "kyivindependent_official": 3,
     "lost_armour": 3,
-    "odesa_typical": 2,
-    "operativnoZSU": 1,
-    "rybar": 1,
-    "ukrpravda_news": 5,
-    "uniannet": 5,
-    "voenkorKotenok": 1
+    "odesa_typical": 4,
+    "operativnoZSU": 3,
+    "ukrpravda_news": 3,
+    "uniannet": 4,
+    "wargonzo": 2
   },
-  "window_end": "2026-11-11T01:30:28Z",
-  "window_start": "2026-11-10T01:30:28Z"
+  "window_end": "2026-11-11T08:24:05Z",
+  "window_start": "2026-11-10T08:24:05Z"
 }
