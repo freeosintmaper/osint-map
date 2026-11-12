@@ -4,275 +4,316 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 43,
-      "delta": 40,
+      "current_period": 36,
+      "delta": 33,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
       "previous_period": 3,
+      "requires_human_review": true,
+      "signal_type": "publication_volume_change"
+    },
+    {
+      "classification": "analytical_signal",
+      "current_period": 22,
+      "delta": 22,
+      "event_type": "Political Development",
+      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
+      "label": "Повышенная публикационная активность",
+      "previous_period": 0,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "attention_candidates": [
     {
-      "country": "RU",
-      "date": "2026-11-12T11:34:50+00:00",
-      "description": "Предполагаемой жертвой взрыва в Петербурге мог быть главный штурман 6-й армии ВВС и ПВО Лободин  Взрывом в Шушарах Санкт-Петербурга мог быть убит главный штурман 6-й армии ВВС и ПВО ВС РФ Дмитрий Лобо",
-      "event_type": "Military Strike",
+      "country": "US",
+      "date": "2026-11-12T18:45:34+00:00",
+      "description": "‼️🇺🇸 Демократы намерены пересмотреть военные планы Трампа на $1,5 трлн — WSJ\n\n▪️Представители Демократической партии США планируют пересмотреть ключевые оборонные инициативы Трампа, включая создание л",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Санкт-Петербург",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "bazabazon",
-        "wargonzo"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-12T11:19:01+00:00",
-      "description": "Сотрудниками ФСБ задержаны четыре агента украинских спецслужб в Донецке, Омске и Майкопе.\n\nТрое россиян и один иностранец сотрудничали с украинскими кураторами, которые обещали им крупные денежные воз",
-      "event_type": "Military Operation",
-      "fact_checked": false,
-      "location": "Донецк",
+      "location": "Вашингтон",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "boris_rozhin"
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-12T11:19:01+00:00",
-      "description": "Сотрудниками ФСБ задержаны четыре агента украинских спецслужб в Донецке, Омске и Майкопе.\n\nТрое россиян и один иностранец сотрудничали с украинскими кураторами, которые обещали им крупные денежные воз",
-      "event_type": "Military Operation",
-      "fact_checked": false,
-      "location": "Омск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "boris_rozhin"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-12T11:19:01+00:00",
-      "description": "Сотрудниками ФСБ задержаны четыре агента украинских спецслужб в Донецке, Омске и Майкопе.\n\nТрое россиян и один иностранец сотрудничали с украинскими кураторами, которые обещали им крупные денежные воз",
-      "event_type": "Military Operation",
-      "fact_checked": false,
-      "location": "Майкоп",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "boris_rozhin"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-12T11:13:51+00:00",
-      "description": "В Киеве российский дрон упал и взорвался на дороге, загорелись автомобиль и автобус, — мэр  «В Шевченковском районе, в результате падения беспилотного летательного аппарата на проезжую часть дороги, п",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "astrapress",
-        "operativnoZSU",
-        "ukrpravda_news",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-12T10:50:48+00:00",
-      "description": "У Шевченківському районі Києва, внаслідок падіння БпЛА на проїжджу частину дороги, сталося загоряння легкового авто. Та, за попередньою інформацією, автобуса, — Кличко \n\nUPD. Одна особа постраждала\n\nh",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "astrapress",
-        "operativnoZSU",
-        "ukrpravda_news",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-12T10:50:46+00:00",
-      "description": "В Киеве прилет на правом берегу  Огромный столб дыма виден из нескольких районов.  УНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads\n\n\n\n\n  \n\n\n0:12\n\n  \n    This media is not supported in your browser\n    VI",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-12T10:35:01+00:00",
-      "description": "Ушаков сообщил, что провел со спецпосланниками США Уиткоффом и Кушнером предварительные консультации перед их встречей с Путиным  Ранее помощника Путина Юрия Ушакова заметили в отеле Four Seasons в Мо",
+      "date": "2026-11-12T18:42:01+00:00",
+      "description": "Путин предложил организовать гуманитарную миссию в Константиновке в Донецкой области, как это было в Олешках  Мол, именно армия РФ в настоящее время контролирует Константиновку и \"готова обеспечить бе",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Москва",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
+      "source_count": 5,
       "sources": [
-        "RVvoenkor",
         "astrapress",
-        "dva_majors",
-        "epoddubny"
+        "bazabazon",
+        "readovkanews",
+        "ukrpravda_news",
+        "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "UA",
-      "date": "2026-11-12T10:18:31+00:00",
-      "description": "В Одесі, через масовану дронову атаку зафіксовано влучання у багатоповерховий житловий будинок. Також пошкоджено приватне гаражне приміщення, — ОВА \n\nUPD. На фото наслідки повторної атаки\n\nhttps://t.m",
-      "event_type": "Military Strike",
+      "country": "US",
+      "date": "2026-11-12T18:28:53+00:00",
+      "description": "🇷🇺🇺🇸Поговорили в Москве. Верховный и трамписты\n\nВстреча Верховного с Уиткоффом и Кушнером продолжалась более двух часов. Американцы приехали в Москву сразу после переговоров с российской и украинской ",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Одесса",
+      "location": "Вашингтон",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "astrapress",
-        "operativnoZSU"
+        "dva_majors",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-12T17:27:39+00:00",
+      "description": "🔴 У новому випуску «УП. Чат» обговорюємо переговори України, США та Росії в Абу-Дабі. Чим небезпечні російські вимоги, чи є шанси на завершення війни та чи використовує адміністрація Трампа обмеження ",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Вашингтон",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "dva_majors",
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-12T09:59:01+00:00",
-      "description": "Следственный комитет подтвердил информации о гибели российского военнослужащего при взрыве авто под Петербургом. Возбуждено уголовное дело об убийстве.   На кадрах, предположительно, автомобиль погибш",
-      "event_type": "Military Strike",
+      "date": "2026-11-12T17:23:55+00:00",
+      "description": "На встрече с путиным согласовали новый раунд трехсторонних переговоров, — Уиткофф  Он также заявил о достигнутом прогрессе. Кушнер назвал прошедшие переговоры «насыщенными и подробными».   Все-таки по",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Санкт-Петербург",
+      "location": "Москва",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 8,
       "sources": [
+        "RVvoenkor",
         "astrapress",
         "bazabazon",
-        "wargonzo"
+        "epoddubny",
+        "readovkanews",
+        "rybar",
+        "ukrpravda_news",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-12T16:51:27+00:00",
+      "description": "путін і Трамп особисто продовжать обговорення завершення війни на запланованій двосторонній зустрічі на саміті АТЕС, — ушаков\n\nросія та Україна узгоджують параметри наймасштабнішого обміну полоненими,",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 5,
+      "sources": [
+        "RVvoenkor",
+        "operativnoZSU",
+        "readovkanews",
+        "ukrpravda_news",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-12T16:35:11+00:00",
+      "description": "Путин предложил провести гуманитарную миссию в Константиновке, заявив о контроле над городом  Владимир Путин предложил организовать эвакуацию из Константиновки Донецкой области по примеру Олешек. С та",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 8,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "bazabazon",
+        "epoddubny",
+        "readovkanews",
+        "rybar",
+        "ukrpravda_news",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-12T16:20:34+00:00",
+      "description": "🇺🇸 Трамп заявив, що США більше не потрібна угода з Іраном, і наказав віцепрезиденту Джей Ді Венсу \"зосередити всю свою увагу на масштабній корупції та злочинності\".\n\n\"Блакитні\" штати, такі як Міннесот",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Вашингтон",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-12T15:58:39+00:00",
+      "description": "На встрече с путиным согласовали новый раунд трехсторонних переговоров, — Уиткофф\n\nОн также заявил о достигнутом прогрессе. Кушнер назвал прошедшие переговоры «насыщенными и подробными». \n\nВсе-таки по",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 8,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "bazabazon",
+        "epoddubny",
+        "readovkanews",
+        "rybar",
+        "ukrpravda_news",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-12T15:05:11+00:00",
+      "description": "‼️🇺🇦🇷🇺 «Путин разгневан и намерен продолжать удары» — Зеленский об итогах переговоров с Россией\n\n▪️Выступая на саммите европейских лидеров, Зеленский заявил, что российская делегация отказалась обсужд",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Херсон",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "operativnoZSU"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 21,
+  "corroborated_event_count": 18,
   "country_counts": {
+    "FR": 1,
     "GB": 1,
-    "RU": 20,
-    "UA": 36
+    "RU": 21,
+    "UA": 34,
+    "US": 4
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 57,
+  "event_count": 61,
   "event_type_counts": {
-    "Air Raid Alert": 1,
-    "Military Operation": 6,
-    "Military Strike": 43,
-    "Political Development": 7
+    "Air Raid Alert": 2,
+    "Military Operation": 1,
+    "Military Strike": 36,
+    "Political Development": 22
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 21,
+    "cross_source_consistent_count": 18,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 36,
+    "not_independently_corroborated_count": 43,
     "rss_reports_not_independently_corroborated_count": 19
   },
-  "generated_at": "2026-11-12T11:57:13Z",
+  "generated_at": "2026-11-12T19:30:40Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 36,
-  "not_verified_event_count": 36,
+  "new_since_previous_snapshot": 33,
+  "not_verified_event_count": 43,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 43,
-      "delta": 40,
+      "current_period": 36,
+      "delta": 33,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
       "previous_period": 3,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
+    },
+    {
+      "classification": "analytical_signal",
+      "current_period": 22,
+      "delta": 22,
+      "event_type": "Political Development",
+      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
+      "label": "Повышенная публикационная активность",
+      "previous_period": 0,
+      "requires_human_review": true,
+      "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
     "rss": 19,
-    "telegram": 38
+    "telegram": 42
   },
   "top_locations": [
     {
-      "country": "UA",
-      "events": 13,
-      "location": "Киев"
-    },
-    {
       "country": "RU",
-      "events": 5,
+      "events": 11,
       "location": "Москва"
     },
     {
-      "country": "RU",
+      "country": "UA",
+      "events": 9,
+      "location": "Киев"
+    },
+    {
+      "country": "UA",
+      "events": 7,
+      "location": "Херсон"
+    },
+    {
+      "country": "US",
       "events": 4,
+      "location": "Вашингтон"
+    },
+    {
+      "country": "RU",
+      "events": 2,
+      "location": "Белгород"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Полтава"
+    },
+    {
+      "country": "RU",
+      "events": 2,
       "location": "Санкт-Петербург"
     },
     {
       "country": "UA",
-      "events": 4,
-      "location": "Херсон"
-    },
-    {
-      "country": "UA",
       "events": 2,
-      "location": "Донецк"
-    },
-    {
-      "country": "RU",
-      "events": 2,
-      "location": "Омск"
-    },
-    {
-      "country": "RU",
-      "events": 2,
-      "location": "Майкоп"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Одесса"
+      "location": "Запорожье"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 6,
+    "OsintFlow": 3,
+    "RVvoenkor": 10,
     "The Kyiv Independent": 3,
-    "astrapress": 10,
-    "boris_rozhin": 4,
-    "epoddubny": 2,
+    "astrapress": 7,
+    "epoddubny": 3,
     "lost_armour": 4,
-    "operativnoZSU": 4,
-    "ukrpravda_news": 5,
-    "uniannet": 3,
+    "readovkanews": 3,
+    "ukrpravda_news": 4,
+    "uniannet": 4,
     "Суспільне Новини": 6,
     "УНІАН": 6,
     "Українська правда": 3
   },
-  "window_end": "2026-11-12T11:57:13Z",
-  "window_start": "2026-11-05T11:57:13Z"
+  "window_end": "2026-11-12T19:30:40Z",
+  "window_start": "2026-11-05T19:30:40Z"
 }
