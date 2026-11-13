@@ -1,6 +1,62 @@
 {
   "events": [
     {
+      "channel": "rss_kyivindependent",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "RU",
+      "date": "2026-11-12T23:32:58Z",
+      "description": "Mass drone attack on Moscow grounds flights at region's airports",
+      "event_type": "Military Strike",
+      "id": "rss-a9c46c16e1e9bb68fe-eb63f7",
+      "lat": 55.7558,
+      "lng": 37.6173,
+      "location": "Москва",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_kyivindependent",
+          "date": "2026-11-12T23:32:58Z",
+          "publisher": "The Kyiv Independent",
+          "source_type": "rss",
+          "url": "https://kyivindependent.com/mass-drone-attack-on-moscow-grounds-flights-at-regions-airports/"
+        }
+      ],
+      "url": "https://kyivindependent.com/mass-drone-attack-on-moscow-grounds-flights-at-regions-airports/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_kyivindependent",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "RU",
+      "date": "2026-11-12T23:32:58Z",
+      "description": "Mass drone attack on Moscow grounds flights at region's airports",
+      "event_type": "Military Strike",
+      "id": "rss-a9c46c16e1e9bb68fe-4661bd",
+      "lat": 55.75204,
+      "lng": 37.61781,
+      "location": "Moscow",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_kyivindependent",
+          "date": "2026-11-12T23:32:58Z",
+          "publisher": "The Kyiv Independent",
+          "source_type": "rss",
+          "url": "https://kyivindependent.com/mass-drone-attack-on-moscow-grounds-flights-at-regions-airports/"
+        }
+      ],
+      "url": "https://kyivindependent.com/mass-drone-attack-on-moscow-grounds-flights-at-regions-airports/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
       "channel": "rss_unian",
       "confidence": "LOW",
       "coordinate_precision": "settlement_center",
@@ -538,27 +594,27 @@
       "endpoint": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
       "events_mapped": 0,
       "items_seen": 19,
-      "last_attempt": "2026-11-12T19:30:36Z",
+      "last_attempt": "2026-11-13T00:43:46Z",
       "last_error": null,
-      "last_success": "2026-11-12T19:30:36Z",
-      "latest_item_at": "2026-11-12T17:28:06Z",
+      "last_success": "2026-11-13T00:43:46Z",
+      "latest_item_at": "2026-11-12T21:31:34Z",
       "status": "ok"
     },
     "rss_kyivindependent": {
       "endpoint": "https://kyivindependent.com/news-archive/rss/",
-      "events_mapped": 0,
+      "events_mapped": 2,
       "items_seen": 15,
-      "last_attempt": "2026-11-12T19:30:36Z",
+      "last_attempt": "2026-11-13T00:43:46Z",
       "last_error": null,
-      "last_success": "2026-11-12T19:30:36Z",
-      "latest_item_at": "2026-11-12T18:58:32Z",
+      "last_success": "2026-11-13T00:43:46Z",
+      "latest_item_at": "2026-11-12T23:32:58Z",
       "status": "ok"
     },
     "rss_suspilne": {
       "endpoint": "https://suspilne.media/rss/ukrnet.rss",
       "events_mapped": 6,
       "items_seen": 50,
-      "last_attempt": "2026-11-12T19:30:36Z",
+      "last_attempt": "2026-11-13T00:43:46Z",
       "last_error": "HTTP 403",
       "last_success": "2026-11-12T11:56:59Z",
       "latest_item_at": "2026-11-12T11:50:28Z",
@@ -568,24 +624,24 @@
       "endpoint": "https://www.pravda.com.ua/rss/view_mainnews/",
       "events_mapped": 0,
       "items_seen": 20,
-      "last_attempt": "2026-11-12T19:30:36Z",
+      "last_attempt": "2026-11-13T00:43:46Z",
       "last_error": null,
-      "last_success": "2026-11-12T19:30:36Z",
-      "latest_item_at": "2026-11-12T18:51:00Z",
+      "last_success": "2026-11-13T00:43:46Z",
+      "latest_item_at": "2026-11-12T23:36:00Z",
       "status": "ok"
     },
     "rss_unian": {
       "endpoint": "https://rss.unian.net/site/news_ukr.rss",
-      "events_mapped": 1,
+      "events_mapped": 0,
       "items_seen": 100,
-      "last_attempt": "2026-11-12T19:30:36Z",
+      "last_attempt": "2026-11-13T00:43:46Z",
       "last_error": null,
-      "last_success": "2026-11-12T19:30:36Z",
-      "latest_item_at": "2026-11-12T19:17:00Z",
+      "last_success": "2026-11-13T00:43:46Z",
+      "latest_item_at": "2026-11-13T00:35:24Z",
       "status": "ok"
     }
   },
-  "generated_at": "2026-11-12T19:30:36Z",
+  "generated_at": "2026-11-13T00:43:46Z",
   "method_note": "RSS items are separate, unverified source records. Only the title is stored; the original publisher link is retained.",
   "window_days": 7
 }

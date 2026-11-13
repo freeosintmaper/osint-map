@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 36,
-      "delta": 33,
+      "current_period": 42,
+      "delta": 39,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -15,8 +15,8 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 22,
-      "delta": 22,
+      "current_period": 17,
+      "delta": 17,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -27,214 +27,200 @@
   ],
   "attention_candidates": [
     {
-      "country": "US",
-      "date": "2026-11-12T18:45:34+00:00",
-      "description": "‼️🇺🇸 Демократы намерены пересмотреть военные планы Трампа на $1,5 трлн — WSJ\n\n▪️Представители Демократической партии США планируют пересмотреть ключевые оборонные инициативы Трампа, включая создание л",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Вашингтон",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
       "country": "RU",
-      "date": "2026-11-12T18:42:01+00:00",
-      "description": "Путин предложил организовать гуманитарную миссию в Константиновке в Донецкой области, как это было в Олешках  Мол, именно армия РФ в настоящее время контролирует Константиновку и \"готова обеспечить бе",
-      "event_type": "Political Development",
+      "date": "2026-11-13T00:33:27+00:00",
+      "description": "В Волгограде горит один из крупнейших НПЗ России после атаки БПЛА, — OSINT-анализ ASTRA  Волгоградский НПЗ (ООО «ЛУКОЙЛ-Волгограднефтепереработка») загорелся после массированной атаки дронов. Жители г",
+      "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Москва",
+      "location": "Волгоград",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 5,
+      "source_count": 4,
       "sources": [
         "astrapress",
         "bazabazon",
-        "readovkanews",
-        "ukrpravda_news",
+        "exilenova_plus",
         "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "US",
-      "date": "2026-11-12T18:28:53+00:00",
-      "description": "🇷🇺🇺🇸Поговорили в Москве. Верховный и трамписты\n\nВстреча Верховного с Уиткоффом и Кушнером продолжалась более двух часов. Американцы приехали в Москву сразу после переговоров с российской и украинской ",
-      "event_type": "Political Development",
+      "country": "RU",
+      "date": "2026-11-13T00:31:01+00:00",
+      "description": "‼️🇷🇺🏴‍☠️Враг атакует Ростовскую область\n\n▪️В Ростове-на-Дону и в Аксайском районе Ростовской области возникли возгорания из-за атак БПЛА, сообщил губернатор Ю. Слюсарь.\n▪️Произошли возгорания склада н",
+      "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Вашингтон",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "dva_majors",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "US",
-      "date": "2026-11-12T17:27:39+00:00",
-      "description": "🔴 У новому випуску «УП. Чат» обговорюємо переговори України, США та Росії в Абу-Дабі. Чим небезпечні російські вимоги, чи є шанси на завершення війни та чи використовує адміністрація Трампа обмеження ",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Вашингтон",
+      "location": "Волгоград",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 3,
       "sources": [
         "RVvoenkor",
-        "dva_majors",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-12T17:23:55+00:00",
-      "description": "На встрече с путиным согласовали новый раунд трехсторонних переговоров, — Уиткофф  Он также заявил о достигнутом прогрессе. Кушнер назвал прошедшие переговоры «насыщенными и подробными».   Все-таки по",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 8,
-      "sources": [
-        "RVvoenkor",
         "astrapress",
-        "bazabazon",
-        "epoddubny",
-        "readovkanews",
-        "rybar",
-        "ukrpravda_news",
-        "uniannet"
+        "bazabazon"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "RU",
-      "date": "2026-11-12T16:51:27+00:00",
-      "description": "путін і Трамп особисто продовжать обговорення завершення війни на запланованій двосторонній зустрічі на саміті АТЕС, — ушаков\n\nросія та Україна узгоджують параметри наймасштабнішого обміну полоненими,",
-      "event_type": "Political Development",
+      "country": "UA",
+      "date": "2026-11-12T23:20:01+00:00",
+      "description": "😢 В Одесской области как минимум четыре пострадавших в результате вечернего удара рф, – ОВА\n\nЛюди получили ожоги разной степени тяжести, двоих пострадавших госпитализировали. \n\nТакже после прилета нач",
+      "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 5,
-      "sources": [
-        "RVvoenkor",
-        "operativnoZSU",
-        "readovkanews",
-        "ukrpravda_news",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-12T16:35:11+00:00",
-      "description": "Путин предложил провести гуманитарную миссию в Константиновке, заявив о контроле над городом  Владимир Путин предложил организовать эвакуацию из Константиновки Донецкой области по примеру Олешек. С та",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 8,
-      "sources": [
-        "RVvoenkor",
-        "astrapress",
-        "bazabazon",
-        "epoddubny",
-        "readovkanews",
-        "rybar",
-        "ukrpravda_news",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "US",
-      "date": "2026-11-12T16:20:34+00:00",
-      "description": "🇺🇸 Трамп заявив, що США більше не потрібна угода з Іраном, і наказав віцепрезиденту Джей Ді Венсу \"зосередити всю свою увагу на масштабній корупції та злочинності\".\n\n\"Блакитні\" штати, такі як Міннесот",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Вашингтон",
+      "location": "Ровно",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "RVvoenkor",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-12T15:58:39+00:00",
-      "description": "На встрече с путиным согласовали новый раунд трехсторонних переговоров, — Уиткофф\n\nОн также заявил о достигнутом прогрессе. Кушнер назвал прошедшие переговоры «насыщенными и подробными». \n\nВсе-таки по",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 8,
-      "sources": [
-        "RVvoenkor",
         "astrapress",
-        "bazabazon",
-        "epoddubny",
-        "readovkanews",
-        "rybar",
-        "ukrpravda_news",
         "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-12T15:05:11+00:00",
-      "description": "‼️🇺🇦🇷🇺 «Путин разгневан и намерен продолжать удары» — Зеленский об итогах переговоров с Россией\n\n▪️Выступая на саммите европейских лидеров, Зеленский заявил, что российская делегация отказалась обсужд",
+      "date": "2026-11-12T22:56:19+00:00",
+      "description": "‼️🇺🇸🇺🇦США и Украина сделали заявления после переговоров в Дублине\n\n▪️Переговоры Зеленского с представителями Трампа в Ирландии длились чуть более часа.\n▪️США и Украина достигли значительного прогресса",
       "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Херсон",
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "operativnoZSU",
+        "ukrpravda_news",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-12T22:07:57+00:00",
+      "description": "Волгоград атакуют БПЛА. Губернатор сообщил о возгорании в южной промышленной зоне Волгограда\n\nПо словам губернатора Волгоградской области «подразделения ПВО Министерства обороны России отражают массир",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Волгоград",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "bazabazon"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-12T21:55:15+00:00",
+      "description": "‼️🇺🇸🇨🇺 Трамп намерен «решить кубинский вопрос» до окончания своего президентского срока\n\n▪️Президент США Дональд Трамп заявил, что рассчитывает урегулировать ситуацию вокруг Кубы до завершения своего ",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Вашингтон",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "operativnoZSU"
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-12T21:54:30+00:00",
+      "description": "Витек и зятек уже в Дублине. Вскоре должны начаться переговоры с Зеленским и европейцами  UPD: встреча стартовала.   УНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads\n\nЗеленский завершил переговоры с Уитко",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "operativnoZSU",
+        "ukrpravda_news",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-12T21:39:53+00:00",
+      "description": "Триває атака на Волгоградський НПЗ.\n\n\n  \nВолгоградський НПЗ було уражено ударними БПЛА. \n\nНа території промзони пожежа.\n2🔥2.91K❤276🍾216👍58👌22🤗12✍8🤬6💊6😱4🙈3\n  \n  \n    64.6K views21:39",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Волгоград",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "exilenova_plus",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-12T21:31:06+00:00",
+      "description": "‼️🇷🇺🏴‍☠️Массированная атака на Москву продолжается  ▪️Силы ПВО отражают масштабную атаку беспилотников на российскую столицу. Сергей Собянин сообщил, что за последние полтора часа уничтожено более 50 ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Волгоград",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "bazabazon"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-12T20:47:44+00:00",
+      "description": "Витек и зятек уже в Дублине. Вскоре должны начаться переговоры с Зеленским и европейцами\n\nUPD: встреча стартовала. \n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "operativnoZSU",
+        "ukrpravda_news",
+        "uniannet"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 18,
+  "corroborated_event_count": 20,
   "country_counts": {
-    "FR": 1,
     "GB": 1,
-    "RU": 21,
-    "UA": 34,
+    "RU": 27,
+    "UA": 32,
     "US": 4
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 61,
+  "event_count": 64,
   "event_type_counts": {
-    "Air Raid Alert": 2,
-    "Military Operation": 1,
-    "Military Strike": 36,
-    "Political Development": 22
+    "Air Raid Alert": 1,
+    "Military Operation": 4,
+    "Military Strike": 42,
+    "Political Development": 17
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 18,
+    "cross_source_consistent_count": 20,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 43,
-    "rss_reports_not_independently_corroborated_count": 19
+    "not_independently_corroborated_count": 44,
+    "rss_reports_not_independently_corroborated_count": 21
   },
-  "generated_at": "2026-11-12T19:30:40Z",
+  "generated_at": "2026-11-13T00:44:05Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 33,
-  "not_verified_event_count": 43,
+  "new_since_previous_snapshot": 25,
+  "not_verified_event_count": 44,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 36,
-      "delta": 33,
+      "current_period": 42,
+      "delta": 39,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -244,8 +230,8 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 22,
-      "delta": 22,
+      "current_period": 17,
+      "delta": 17,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -255,23 +241,28 @@
     }
   ],
   "source_type_counts": {
-    "rss": 19,
-    "telegram": 42
+    "rss": 21,
+    "telegram": 43
   },
   "top_locations": [
     {
       "country": "RU",
-      "events": 11,
+      "events": 10,
       "location": "Москва"
     },
     {
       "country": "UA",
-      "events": 9,
+      "events": 10,
       "location": "Киев"
     },
     {
+      "country": "RU",
+      "events": 6,
+      "location": "Волгоград"
+    },
+    {
       "country": "UA",
-      "events": 7,
+      "events": 5,
       "location": "Херсон"
     },
     {
@@ -282,38 +273,33 @@
     {
       "country": "RU",
       "events": 2,
-      "location": "Белгород"
+      "location": "Moscow"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Полтава"
-    },
-    {
-      "country": "RU",
-      "events": 2,
-      "location": "Санкт-Петербург"
+      "location": "Винница"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Запорожье"
+      "location": "Днепр"
     }
   ],
   "top_sources": {
-    "OsintFlow": 3,
-    "RVvoenkor": 10,
-    "The Kyiv Independent": 3,
+    "RVvoenkor": 6,
+    "The Kyiv Independent": 5,
     "astrapress": 7,
-    "epoddubny": 3,
+    "kyivindependent_official": 3,
     "lost_armour": 4,
+    "operativnoZSU": 4,
     "readovkanews": 3,
-    "ukrpravda_news": 4,
-    "uniannet": 4,
+    "ukrpravda_news": 3,
+    "uniannet": 6,
     "Суспільне Новини": 6,
     "УНІАН": 6,
     "Українська правда": 3
   },
-  "window_end": "2026-11-12T19:30:40Z",
-  "window_start": "2026-11-05T19:30:40Z"
+  "window_end": "2026-11-13T00:44:05Z",
+  "window_start": "2026-11-06T00:44:05Z"
 }
