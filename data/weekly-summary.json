@@ -4,92 +4,54 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 54,
-      "delta": 50,
+      "current_period": 44,
+      "delta": 41,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 4,
+      "previous_period": 3,
+      "requires_human_review": true,
+      "signal_type": "publication_volume_change"
+    },
+    {
+      "classification": "analytical_signal",
+      "current_period": 8,
+      "delta": 8,
+      "event_type": "Political Development",
+      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
+      "label": "Повышенная публикационная активность",
+      "previous_period": 0,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "attention_candidates": [
     {
-      "country": "RU",
-      "date": "2026-11-13T13:36:55+00:00",
-      "description": "Один человек пострадал в Ростовской области в результате украинской атаки в ночь на 13 ноября, — губернатор  «В результате ночной воздушной атаки в Ростове-на-Дону ранен мужчина. Он был госпитализиров",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Волгоград",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "GeneralStaffZSU",
-        "astrapress",
-        "wargonzo"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-13T13:10:31+00:00",
-      "description": "🏃‍♂️🔥 Бег набирает обороты — Петр Фрадков рассказал Владимиру Путину о развитии бесплатных беговых центров ВФЛА\n\n🏅 На заседании Совета по развитию физической культуры и спорта председатель Всероссийск",
+      "country": "UA",
+      "date": "2026-11-13T18:49:00+00:00",
+      "description": "Он не знал: Зеленский фактически заявил, что его обманули во время отчетов по отключениям света в Белой Церкви и Броварах\n\nОб этом он заявил во время своего очередного видеообращения. \n\n\"Был сегодня ж",
       "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "readovkanews"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-13T13:07:07+00:00",
-      "description": "🔥Волгоградський НПЗ - ваш дизель належить нам  🫡https://t.me/operativnoZSU/\n\n\n  \nВ ніч на 13 листопада підрозділи Сил оборони України уразили нафтопереробний завод «Лукойл-Волгограднефтепереработка», ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Волгоград",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "GeneralStaffZSU",
-        "astrapress",
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-13T12:59:01+00:00",
-      "description": "Пальне для війни горить у Волгограді: уражено один із найбільших НПЗ росії\n\nВолгоградський нафтопереробний завод — одна з ключових «бензоколонок» російської армії на півдні. Звідси пальне йде на фронт",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Волгоград",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 3,
       "sources": [
-        "GeneralStaffZSU",
-        "astrapress",
-        "operativnoZSU"
+        "RVvoenkor",
+        "supernova_plus",
+        "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "RU",
-      "date": "2026-11-13T12:49:34+00:00",
-      "description": "🔥 Військові уразили \"Нептунами\" виробництво, склад і сервісний центр дронів у Ростові\n\nУ ніч на 13 листопада Військово-морські сили ЗСУ завдали ударів ракетами \"Нептун\" по трьох об'єктах у Ростові-на-",
+      "country": "UA",
+      "date": "2026-11-13T18:02:02+00:00",
+      "description": "Число пострадавших в результате российского удара по Запорожью достигло 50, — власти  В результате российского удара по пятиэтажке в Запорожье пострадали 50 человек, среди них 8 детей. Об этом сообщил",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Волгоград",
+      "location": "Запорожье",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
+      "source_count": 3,
       "sources": [
-        "GeneralStaffZSU",
         "astrapress",
         "operativnoZSU",
         "ukrpravda_news"
@@ -98,60 +60,14 @@
     },
     {
       "country": "UA",
-      "date": "2026-11-13T12:14:00+00:00",
-      "description": "Один человек погиб в результате российского удара по Запорожью, — ОВА  Мужчина погиб в результате атаки ВС РФ по промышленному объекту в Космическом районе Запорожья, после удара он оказался под завал",
+      "date": "2026-11-13T16:46:00+00:00",
+      "description": "Кількість поранених внаслідок удару російських загарбників по промисловому об'єкту та п'ятиповерхівці в Космічному районі Запоріжжя зросла до 50 людей, серед них — вісім дітей\n\n📰 підписатися",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Херсон",
+      "location": "Запорожье",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
+      "source_count": 3,
       "sources": [
-        "astrapress",
-        "dva_majors"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-13T12:00:54+00:00",
-      "description": "🔥У Ростові-на-Дону підрозділи ВМС ЗСУ ракетами «Нептун» уразили виробництво, склад і сервісний центр БпЛА, — Генштаб\n\nПід удари потрапили виробництво ударних БпЛА тактичного рівня — ТОВ «Іонос» —  і м",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Ростов-на-Дону",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "exilenova_plus",
-        "operativnoZSU"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-13T11:59:50+00:00",
-      "description": "В одному з районів Ростова пролунали вибухи та щось горить. Збиття чи прильот - поки невідомо.  В Ростові ракетна небезпека.\n\n\n\n\n  \n\n\n0:21\n\n  \n    This media is not supported in your browser\n    VIEW ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Ростов-на-Дону",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "exilenova_plus",
-        "operativnoZSU"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-13T11:59:01+00:00",
-      "description": "«Нептуни» прилетіли: у Ростові-на-Дону ВМС ЗСУ уразили виробництво, склад і сервісний центр БпЛА\n\nЩоночі російські дрони летять на українські міста, позиції та енергетику. Частина з них виробляється, ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Волгоград",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "GeneralStaffZSU",
         "astrapress",
         "operativnoZSU",
         "ukrpravda_news"
@@ -159,120 +75,150 @@
       "status": "requires_human_review"
     },
     {
-      "country": "RU",
-      "date": "2026-11-13T10:43:20+00:00",
-      "description": "Переговоры Путина с Уиткоффом и Кушнером завершились: они длились 2,5 часа  В Москве завершилась встреча президента России Владимира Путина со спецпосланником президента США Стивом Уиткоффом и зятем а",
+      "country": "UA",
+      "date": "2026-11-13T16:23:21+00:00",
+      "description": "Пабло Дука-Эскобар под аплодисменты картеля выходит из СИЗО ..\n\nЗаявил что Зеленский прикрывал сотрудников НАБУ ... и у него есть доказательства ...",
       "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Москва",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
+      "source_count": 3,
       "sources": [
         "RVvoenkor",
-        "readovkanews"
+        "supernova_plus",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-13T15:57:16+00:00",
+      "description": "❗️Сьогодні ворог завдав удару по пʼятиповерхівці в Космічному районі Запоріжжя. Внаслідок удару постраждали 50 осіб, 8 з яких - діти, — ОВА\n\n🫡https://t.me/operativnoZSU/",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Запорожье",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "operativnoZSU",
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 12,
+  "corroborated_event_count": 5,
   "country_counts": {
+    "FR": 1,
     "GB": 1,
-    "RU": 24,
-    "UA": 39
+    "PL": 1,
+    "RU": 14,
+    "UA": 37
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 64,
+  "event_count": 54,
   "event_type_counts": {
     "Air Raid Alert": 1,
-    "Military Operation": 3,
-    "Military Strike": 54,
-    "Political Development": 6
+    "Military Operation": 1,
+    "Military Strike": 44,
+    "Political Development": 8
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 12,
+    "cross_source_consistent_count": 5,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 52,
-    "rss_reports_not_independently_corroborated_count": 24
+    "not_independently_corroborated_count": 49,
+    "rss_reports_not_independently_corroborated_count": 22
   },
-  "generated_at": "2026-11-13T15:36:47Z",
+  "generated_at": "2026-11-13T21:38:53Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 24,
-  "not_verified_event_count": 52,
+  "new_since_previous_snapshot": 16,
+  "not_verified_event_count": 49,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 54,
-      "delta": 50,
+      "current_period": 44,
+      "delta": 41,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 4,
+      "previous_period": 3,
+      "requires_human_review": true,
+      "signal_type": "publication_volume_change"
+    },
+    {
+      "classification": "analytical_signal",
+      "current_period": 8,
+      "delta": 8,
+      "event_type": "Political Development",
+      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
+      "label": "Повышенная публикационная активность",
+      "previous_period": 0,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 24,
-    "telegram": 40
+    "rss": 22,
+    "telegram": 32
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 12,
+      "events": 15,
       "location": "Киев"
     },
     {
-      "country": "RU",
-      "events": 7,
-      "location": "Волгоград"
-    },
-    {
-      "country": "RU",
-      "events": 5,
-      "location": "Москва"
-    },
-    {
       "country": "UA",
-      "events": 4,
+      "events": 6,
       "location": "Запорожье"
     },
     {
-      "country": "UA",
-      "events": 4,
-      "location": "Херсон"
+      "country": "RU",
+      "events": 3,
+      "location": "Москва"
+    },
+    {
+      "country": "RU",
+      "events": 3,
+      "location": "Волгоград"
     },
     {
       "country": "UA",
       "events": 3,
-      "location": "Харьков"
+      "location": "Херсон"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 2,
-      "location": "Ростов-на-Дону"
+      "location": "Одесса"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 2,
-      "location": "Белгород"
+      "location": "Винница"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Полтава"
     }
   ],
   "top_sources": {
     "OsintFlow": 3,
-    "RVvoenkor": 3,
+    "RVvoenkor": 2,
     "The Kyiv Independent": 5,
-    "astrapress": 6,
-    "boris_rozhin": 2,
-    "kyivindependent_official": 5,
-    "lost_armour": 5,
-    "readovkanews": 3,
-    "ukrpravda_news": 3,
-    "Суспільне Новини": 8,
+    "astrapress": 3,
+    "kyivindependent_official": 6,
+    "operativnoZSU": 3,
+    "readovkanews": 2,
+    "supernova_plus": 2,
+    "ukrpravda_news": 2,
+    "Суспільне Новини": 6,
     "УНІАН": 5,
     "Українська правда": 5
   },
-  "window_end": "2026-11-13T15:36:47Z",
-  "window_start": "2026-11-06T15:36:47Z"
+  "window_end": "2026-11-13T21:38:53Z",
+  "window_start": "2026-11-06T21:38:53Z"
 }
