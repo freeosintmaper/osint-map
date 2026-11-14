@@ -1,133 +1,7 @@
 {
-  "current_event_count": 54,
+  "current_event_count": 53,
   "date_utc": "2026-11-14",
   "events_added": [
-    {
-      "event": {
-        "channel": "ukrpravda_news",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "US",
-        "date": "2026-11-14T06:40:11+00:00",
-        "description": "🇺🇸 Федеральне авіаційне управління США (FAA) скасувало загальнонаціональну заборону на авіарейси, водночас Трамп звинуватив у масштабному збої системи застаріле обладнання FAA і заявив, що не вірить в",
-        "event_type": "Political Development",
-        "id": 7,
-        "lat": 38.9072,
-        "lng": -77.0369,
-        "location": "Вашингтон",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "ukrpravda_news",
-            "date": "2026-11-14T06:40:11+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/ukrpravda_news/86623"
-          }
-        ],
-        "url": "https://t.me/ukrpravda_news/86623",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "3be5e2419e52cc562a420cc908ef3093a9f797084f07f5c5f98a646fcd6a9d52"
-    },
-    {
-      "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-14T14:54:22+00:00",
-        "description": "Семь человек, в том числе грудной ребенок, пострадали при атаках на Запорожье, — власти    В Хортицком и Вознесенском районах Запорожья в результате атак повреждены многоквартирные жилые дома. Пострад",
-        "event_type": "Military Strike",
-        "id": 35,
-        "lat": 47.8388,
-        "lng": 35.1396,
-        "location": "Запорожье",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-14T14:54:22+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/131102"
-          }
-        ],
-        "url": "https://t.me/astrapress/131102",
-        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
-        "verification_sources": [
-          "astrapress",
-          "ukrpravda_news"
-        ],
-        "verification_status": "corroborated"
-      },
-      "fingerprint": "a74c47d62ed6a76f044010b33b167a5133f02928c92280d55ca6f2aad02ec294"
-    },
-    {
-      "event": {
-        "channel": "operativnoZSU",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-14T14:16:50+00:00",
-        "description": "У Глобинській громаді Кременчуцького району зафіксовано влучання ворожого БпЛА по аграрному підприємству. Також атакують Кременчук,— Полтавська ОВА\n\nТроє людей поранені через атаку росіян на Павлоград",
-        "event_type": "Military Strike",
-        "id": 5,
-        "lat": 48.24056,
-        "lng": 28.28141,
-        "location": "Кременчук",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "operativnoZSU",
-            "date": "2026-11-14T14:16:50+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/operativnoZSU/226115"
-          }
-        ],
-        "url": "https://t.me/operativnoZSU/226115",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "e3cd1f966e11bdcd35215a420a96e12fc2381bfe931cc3a720b451aa7ab116c7"
-    },
-    {
-      "event": {
-        "channel": "uniannet",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-14T13:59:38+00:00",
-        "description": "русня ударила по территории медицинского учреждения в Харькове, — мэр Терехов\n\nНа месте сильный пожар. По предварительной информации, пострадавших нет.\n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
-        "event_type": "Military Strike",
-        "id": 11,
-        "lat": 49.9935,
-        "lng": 36.2304,
-        "location": "Харьков",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "uniannet",
-            "date": "2026-11-14T13:59:38+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/uniannet/207063"
-          }
-        ],
-        "url": "https://t.me/uniannet/207063",
-        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
-        "verification_sources": [
-          "astrapress",
-          "uniannet"
-        ],
-        "verification_status": "corroborated"
-      },
-      "fingerprint": "ec6e7f57895ed77ef90316c7e509e4825be2fce397f3ea794d1095f2b0ebe7ae"
-    },
     {
       "event": {
         "channel": "kyivindependent_official",
@@ -250,99 +124,6 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "c871bc4ad435298965b1e2597db4c962d4358767fb1acf473164cfb936e844be"
-    },
-    {
-      "event": {
-        "channel": "uniannet",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-14T19:40:48+00:00",
-        "description": "Масштабное ДТП на трассе Харьков - Киев возле Яготина: автомобили охвачены огнём, движение полностью заблокировано, - местные паблики\n\nПо словам очевидцев, после столкновения загорелись несколько авто",
-        "event_type": "Military Operation",
-        "id": 14,
-        "lat": 50.27535,
-        "lng": 31.76343,
-        "location": "Яготин",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "uniannet",
-            "date": "2026-11-14T19:40:48+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/uniannet/207079"
-          }
-        ],
-        "url": "https://t.me/uniannet/207079",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "78b82c8b8b3e09a6a5f2fd68c8a435ea18833690857b8844d5ba9f3d83d32fdf"
-    },
-    {
-      "event": {
-        "channel": "boris_rozhin",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-14T18:35:10+00:00",
-        "description": "НПЗ в Кременчуге Полтавской области после прилета\n👍352🔥150👌23🤩12🤣5\n  \n  \n    26.1K views18:35",
-        "event_type": "Military Strike",
-        "id": 36,
-        "lat": 49.0637,
-        "lng": 33.4206,
-        "location": "Кременчуг",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "boris_rozhin",
-            "date": "2026-11-14T18:35:10+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/boris_rozhin/233389"
-          }
-        ],
-        "url": "https://t.me/boris_rozhin/233389",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "02419d168c0bcf7b63a5cbcd0530a6a5db6c870952946d89fad26def87775b11"
-    },
-    {
-      "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-14T18:22:46+00:00",
-        "description": "ВС РФ ударили по Сумской области — пострадали три человека, — ГСЧС\n\nПо данным украинских спасателей, российские беспилотники атаковали населенные пункты Сумского, Ахтырского и Шосткинского районов. В ",
-        "event_type": "Military Strike",
-        "id": 33,
-        "lat": 49.9935,
-        "lng": 36.2304,
-        "location": "Харьков",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-14T18:22:46+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/131111"
-          }
-        ],
-        "url": "https://t.me/astrapress/131111",
-        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
-        "verification_sources": [
-          "astrapress",
-          "uniannet"
-        ],
-        "verification_status": "corroborated"
-      },
-      "fingerprint": "6ad3162f5b86d88c63aa485a3adf548612540ba501f7d8a3bd80b56cb56aa138"
     },
     {
       "event": {
@@ -499,36 +280,6 @@
     },
     {
       "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-14T16:38:06+00:00",
-        "description": "Девятилетний мальчик пострадал при атаке РФ на Глухов в Сумской области   Утром 14 ноября российские войска атаковали город Глухов в Сумской области. Ранения получили женщина и ее 9-летний внук. Мальч",
-        "event_type": "Military Strike",
-        "id": 32,
-        "lat": 51.67982,
-        "lng": 33.91682,
-        "location": "Глухов",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-14T16:38:06+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/131108"
-          }
-        ],
-        "url": "https://t.me/astrapress/131108",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "decd07a901fd30bdd975945cf19b9e58d1e44d2e4c3280042dfb30837c1651bd"
-    },
-    {
-      "event": {
         "channel": "RVvoenkor",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
@@ -642,33 +393,282 @@
     },
     {
       "event": {
+        "channel": "supernova_plus",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-14T22:46:35+00:00",
+        "description": "Ахтубинск .. Астраханская область .. атакован 929-й Государственный лётно-испытательный центр Министерства обороны РФ имени В. П. Чкалова (ГЛИЦ). на территории пожар  ..\n🔥475👍64❤‍🔥31❤25🤡12👎10😢6🆒6😁3😱1🌚",
+        "event_type": "Military Strike",
+        "id": 28,
+        "lat": 48.282,
+        "lng": 46.1741,
+        "location": "Ахтубинск",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "supernova_plus",
+            "date": "2026-11-14T22:46:35+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/supernova_plus/63006"
+          }
+        ],
+        "url": "https://t.me/supernova_plus/63006",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "6da5679d2a6f1a62aed9b34af68e9be7995ec1a9ed267699b60656a8e723299a"
+    },
+    {
+      "event": {
+        "channel": "exilenova_plus",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-14T21:46:04+00:00",
+        "description": "В окупованому Луганську після серії вибухів спалахнула пожежа на автостоянці транспортних засобів.\n1🔥1.45K👍149❤80🎉49🤔19🍓12🤡9😱8😇6💅5🙉1\n  \n  \n    45.2K views21:46",
+        "event_type": "Military Operation",
+        "id": 26,
+        "lat": 48.574,
+        "lng": 39.3078,
+        "location": "Луганск",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "exilenova_plus",
+            "date": "2026-11-14T21:46:04+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/exilenova_plus/34623"
+          }
+        ],
+        "url": "https://t.me/exilenova_plus/34623",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "b443294a87bfa6b0249dbbfbe478369f0661e94122e41ee0ea24e6afe7fcf965"
+    },
+    {
+      "event": {
         "channel": "operativnoZSU",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
         "country": "UA",
-        "date": "2026-11-14T15:04:41+00:00",
-        "description": "Цього тижня атаки на інфраструктуру Нафтогазу відбуваються практично щодня: вдень росія атакувала дронами один із об’єктів на Полтавщині, виникла масштабна пожежа.\n\nhttps://t.me/operativnoZSU/\n🤬1.44K😢",
-        "event_type": "Military Strike",
-        "id": 3,
-        "lat": 49.5883,
-        "lng": 34.5514,
-        "location": "Полтава",
+        "date": "2026-11-14T20:36:38+00:00",
+        "description": "❗️Після тристоронніх зустрічей і подальших обговорень з путіним та Зеленським продовжуємо тісні консультації з росією, Україною та європейськими партнерами щодо подальших кроків, — Кушнер  Зараз ми зо",
+        "event_type": "Political Development",
+        "id": 2,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
         "source_count": 1,
         "source_type": "telegram",
         "sources": [
           {
             "channel": "operativnoZSU",
-            "date": "2026-11-14T15:04:41+00:00",
+            "date": "2026-11-14T20:36:38+00:00",
             "source_type": "telegram",
-            "url": "https://t.me/operativnoZSU/226116"
+            "url": "https://t.me/operativnoZSU/226132"
           }
         ],
-        "url": "https://t.me/operativnoZSU/226116",
+        "url": "https://t.me/operativnoZSU/226132",
         "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
         "verification_sources": [],
         "verification_status": "not_verified"
       },
-      "fingerprint": "0d58580366a5c734bf3b05ca29d6068333422a1d1d4ec235acdb0e56e7e43674"
+      "fingerprint": "a58c321ec32ead4b41bdd9c38ea5f3b5a74116f8f09b676f3aba90b007bca550"
+    },
+    {
+      "event": {
+        "channel": "lost_armour",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-14T20:36:17+00:00",
+        "description": "В Днепропетровской области ударом барражирующего боеприпаса \"Ланцет\" уничтожена ББМ ВСУ. \n\nСтатистика \"Ланцетов\": https://lostarmour.info/tags/lancet\n\n📍Геопривязка\n\n🔹Мы в MAX",
+        "event_type": "Military Strike",
+        "id": 32,
+        "lat": 48.4647,
+        "lng": 35.0462,
+        "location": "Днепр",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "lost_armour",
+            "date": "2026-11-14T20:36:17+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/lost_armour/12231"
+          }
+        ],
+        "url": "https://t.me/lost_armour/12231",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "3246d19c668b66bdc9cae235447f7408be6312457515047babf111c283a484e3"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-14T20:35:22+00:00",
+        "description": "‼️🇷🇺🇺🇦 Удар по транспортной логистике врага: пылает трасса Харьков — Киев \n\n▪️На участке трассы Харьков — Киев перед Яготином сильный пожар. Горят автомобили, движение по автомагистрали парализовано.\n",
+        "event_type": "Military Strike",
+        "id": 37,
+        "lat": 49.9935,
+        "lng": 36.2304,
+        "location": "Харьков",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-14T20:35:22+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/127207"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/127207",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "da455b6deb91343abec4fccc6848672d857fbee4c0fe4a17acd2cc79e981081b"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-14T20:35:22+00:00",
+        "description": "‼️🇷🇺🇺🇦 Удар по транспортной логистике врага: пылает трасса Харьков — Киев \n\n▪️На участке трассы Харьков — Киев перед Яготином сильный пожар. Горят автомобили, движение по автомагистрали парализовано.\n",
+        "event_type": "Military Strike",
+        "id": 38,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-14T20:35:22+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/127207"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/127207",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "ecffbfeadefc64ab60b5a8720ba0095c8b79f87982b9a42d7082b60531b3afca"
+    },
+    {
+      "event": {
+        "channel": "operativnoZSU,uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-14T19:58:19+00:00",
+        "description": "😱На трасі Київ — Харків поблизу Яготина перекинулася та загорілася вантажівка, яка перевозила газовий конденсат, — ОВА\n\n Рух перекрито в обох напрямках. За попередньою інформацією, на 115-му кілометрі",
+        "event_type": "Military Operation",
+        "id": 1,
+        "lat": 50.27535,
+        "lng": 31.76343,
+        "location": "Яготин",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "operativnoZSU",
+            "date": "2026-11-14T19:58:19+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/operativnoZSU/226129"
+          },
+          {
+            "channel": "uniannet",
+            "date": "2026-11-14T19:40:48+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/207079"
+          }
+        ],
+        "url": "https://t.me/operativnoZSU/226129",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "operativnoZSU",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "be78f97388f108d99b256f5e093e52030ac87f71d930a0a82623525f9282903b"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-14T19:35:05+00:00",
+        "description": "РФ модернизировала ракеты «Искандер» для ударов по мостам Киева — The Telegraph\n\nОбновлённые ракеты стали точнее и сложнее для противодействия системами ПВО. Цель — разделить энергосистему Украины на ",
+        "event_type": "Military Strike",
+        "id": 33,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-14T19:35:05+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/233394"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/233394",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "ef2dcf05af9603a1c5f794763df635f37c192760c217dfcc055722499fbda155"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-14T18:22:46+00:00",
+        "description": "ВС РФ ударили по Сумской области — пострадали три человека, — ГСЧС\n\nПо данным украинских спасателей, российские беспилотники атаковали населенные пункты Сумского, Ахтырского и Шосткинского районов. В ",
+        "event_type": "Military Strike",
+        "id": 29,
+        "lat": 50.9077,
+        "lng": 34.7981,
+        "location": "Сумы",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-14T18:22:46+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/131111"
+          }
+        ],
+        "url": "https://t.me/astrapress/131111",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "6bdf52c5f7bc88dd75d45928272b9ed690d38a1b8692d42c72c0c63aa0df917f"
     },
     {
       "event": {
@@ -679,10 +679,10 @@
         "date": "2026-11-14T13:54:20+00:00",
         "description": "Унаслідок російського удару по Вознесенівському району Запоріжжя постраждали 17 людей, серед яких двоє дітей.\n\nВнаслідок удару пошкоджені житловий будинок та вікна навчального закладу\n\n📰 підписатися",
         "event_type": "Military Strike",
-        "id": 7,
-        "lat": 48.24056,
-        "lng": 28.28141,
-        "location": "Кременчук",
+        "id": 5,
+        "lat": 47.8388,
+        "lng": 35.1396,
+        "location": "Запорожье",
         "source_count": 1,
         "source_type": "telegram",
         "sources": [
@@ -694,14 +694,11 @@
           }
         ],
         "url": "https://t.me/ukrpravda_news/86635",
-        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
-        "verification_sources": [
-          "operativnoZSU",
-          "ukrpravda_news"
-        ],
-        "verification_status": "corroborated"
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
       },
-      "fingerprint": "89f42a9f354383fc56e5fd94832207aaa75592ce8a7eb15c6984e12f96039646"
+      "fingerprint": "7b2bdb9a5f711fb8962d6824ca89882ac4a6907c1aee9788f15018bd2f719216"
     },
     {
       "event": {
@@ -710,9 +707,9 @@
         "coordinate_precision": "settlement_center",
         "country": "UA",
         "date": "2026-11-14T12:58:43+00:00",
-        "description": "Поблизу Сорокине вже знову щось горить.\n\nТам проходить важлива дорога та кордон з ростовською республікою.\n1🔥3.13K👍332🍾96😁56👀37🥰28🕊14🙈8😇6😈5🙉5\n  \n  \n    86.7K viewsedited  12:58",
+        "description": "Поблизу Сорокине вже знову щось горить.\n\nТам проходить важлива дорога та кордон з ростовською республікою.\n1🔥3.46K👍359🍾124😁56👀37🥰34🕊15🙈8😇7😈5🙉5\n  \n  \n    101K viewsedited  12:58",
         "event_type": "Military Operation",
-        "id": 27,
+        "id": 24,
         "lat": 48.29329,
         "lng": 39.7332,
         "location": "Сорокине",
@@ -731,7 +728,7 @@
         "verification_sources": [],
         "verification_status": "not_verified"
       },
-      "fingerprint": "c6633070737b72da7b9aa64268f386f291a1095739dc76584e573103761907e7"
+      "fingerprint": "cd1ccfe7c43ebf2996e7d1d6e2c85dae34a5976cd4ce56034e004eabdac94635"
     }
   ],
   "events_removed": [
@@ -1565,8 +1562,38 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "e34ce0fa60660903ed5565b8362bd6304403be0883d579c36d94274eca72c564"
+    },
+    {
+      "event": {
+        "channel": "GeneralStaffZSU",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-13T12:59:01+00:00",
+        "description": "Пальне для війни горить у Волгограді: уражено один із найбільших НПЗ росії\n\nВолгоградський нафтопереробний завод — одна з ключових «бензоколонок» російської армії на півдні. Звідси пальне йде на фронт",
+        "event_type": "Military Strike",
+        "id": 1,
+        "lat": 48.708,
+        "lng": 44.5133,
+        "location": "Волгоград",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "GeneralStaffZSU",
+            "date": "2026-11-13T12:59:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/GeneralStaffZSU/42886"
+          }
+        ],
+        "url": "https://t.me/GeneralStaffZSU/42886",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "ff40a86e3ea1510c69f15cc79b6bb7941a8507b9e9a875671793a192a0bc070b"
     }
   ],
-  "generated_at": "2026-11-14T19:55:27Z",
+  "generated_at": "2026-11-14T23:36:11Z",
   "method_note": "Изменения показывают разницу между автоматическими выгрузками, а не доказанное изменение обстановки."
 }

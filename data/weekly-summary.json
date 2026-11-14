@@ -4,12 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 38,
-      "delta": 36,
+      "current_period": 36,
+      "delta": 35,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
@@ -28,102 +28,54 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-14T18:22:46+00:00",
-      "description": "ВС РФ ударили по Сумской области — пострадали три человека, — ГСЧС\n\nПо данным украинских спасателей, российские беспилотники атаковали населенные пункты Сумского, Ахтырского и Шосткинского районов. В ",
-      "event_type": "Military Strike",
+      "date": "2026-11-14T19:58:19+00:00",
+      "description": "😱На трасі Київ — Харків поблизу Яготина перекинулася та загорілася вантажівка, яка перевозила газовий конденсат, — ОВА\n\n Рух перекрито в обох напрямках. За попередньою інформацією, на 115-му кілометрі",
+      "event_type": "Military Operation",
       "fact_checked": false,
-      "location": "Харьков",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-14T18:10:26+00:00",
-      "description": "‼️🇷🇺🇺🇦 Россия планирует нарастить производство реактивных «Гераней» и увеличить масштаб ударов — Зеленский\n\n▪️Зеленский заявил, что Россия намерена значительно увеличить выпуск реактивных беспилотнико",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-14T15:20:01+00:00",
-      "description": "🤔 путин и Трамп увязли в собственных войнах, а Си Цзиньпин оказался в положении человека, от которого оба ждут помощи, - The Guardian\n\nВ преддверии трёхстороннего саммита в Китае складывается необычна",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "astrapress",
-        "epoddubny",
-        "readovkanews",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-14T13:54:20+00:00",
-      "description": "Унаслідок російського удару по Вознесенівському району Запоріжжя постраждали 17 людей, серед яких двоє дітей.\n\nВнаслідок удару пошкоджені житловий будинок та вікна навчального закладу\n\n📰 підписатися",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Кременчук",
+      "location": "Яготин",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "operativnoZSU",
-        "ukrpravda_news"
+        "uniannet"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 7,
+  "corroborated_event_count": 4,
   "country_counts": {
     "GB": 1,
     "RU": 9,
-    "UA": 39,
-    "US": 1
+    "UA": 39
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 50,
+  "event_count": 49,
   "event_type_counts": {
-    "Military Operation": 3,
-    "Military Strike": 38,
+    "Military Operation": 4,
+    "Military Strike": 36,
     "Political Development": 9
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 7,
+    "cross_source_consistent_count": 4,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 43,
+    "not_independently_corroborated_count": 45,
     "rss_reports_not_independently_corroborated_count": 18
   },
-  "generated_at": "2026-11-14T19:55:27Z",
+  "generated_at": "2026-11-14T23:36:11Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 15,
-  "not_verified_event_count": 43,
+  "new_since_previous_snapshot": 11,
+  "not_verified_event_count": 45,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 38,
-      "delta": 36,
+      "current_period": 36,
+      "delta": 35,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
@@ -141,12 +93,12 @@
   ],
   "source_type_counts": {
     "rss": 18,
-    "telegram": 32
+    "telegram": 31
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 10,
+      "events": 13,
       "location": "Киев"
     },
     {
@@ -157,17 +109,17 @@
     {
       "country": "UA",
       "events": 3,
-      "location": "Харьков"
-    },
-    {
-      "country": "UA",
-      "events": 3,
-      "location": "Полтава"
-    },
-    {
-      "country": "UA",
-      "events": 3,
       "location": "Запорожье"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Днепр"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Харьков"
     },
     {
       "country": "UA",
@@ -182,23 +134,23 @@
     {
       "country": "UA",
       "events": 2,
-      "location": "Кременчук"
+      "location": "Одесса"
     }
   ],
   "top_sources": {
     "OsintFlow": 3,
-    "RVvoenkor": 2,
+    "RVvoenkor": 4,
     "The Kyiv Independent": 4,
-    "astrapress": 4,
-    "exilenova_plus": 2,
-    "informnapalm": 2,
+    "exilenova_plus": 3,
     "kyivindependent_official": 2,
+    "lost_armour": 2,
     "operativnoZSU": 2,
-    "ukrpravda_news": 7,
-    "uniannet": 4,
+    "supernova_plus": 2,
+    "ukrpravda_news": 6,
+    "uniannet": 3,
     "Суспільне Новини": 6,
     "Українська правда": 5
   },
-  "window_end": "2026-11-14T19:55:27Z",
-  "window_start": "2026-11-07T19:55:27Z"
+  "window_end": "2026-11-14T23:36:11Z",
+  "window_start": "2026-11-07T23:36:11Z"
 }
