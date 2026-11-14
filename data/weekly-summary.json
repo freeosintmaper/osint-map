@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 44,
-      "delta": 41,
+      "current_period": 40,
+      "delta": 37,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -28,118 +28,53 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-13T18:49:00+00:00",
-      "description": "Он не знал: Зеленский фактически заявил, что его обманули во время отчетов по отключениям света в Белой Церкви и Броварах\n\nОб этом он заявил во время своего очередного видеообращения. \n\n\"Был сегодня ж",
+      "date": "2026-11-13T18:50:32+00:00",
+      "description": "‼️🇺🇦 Зеленский обвинил местные власти во лжи о восстановлении энергетики после ударов\n\n▪️Зеленский выразил недовольство медленными темпами восстановления энергетической инфраструктуры Украины и заявил",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "supernova_plus",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-13T18:02:02+00:00",
-      "description": "Число пострадавших в результате российского удара по Запорожью достигло 50, — власти  В результате российского удара по пятиэтажке в Запорожье пострадали 50 человек, среди них 8 детей. Об этом сообщил",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Запорожье",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-13T16:46:00+00:00",
-      "description": "Кількість поранених внаслідок удару російських загарбників по промисловому об'єкту та п'ятиповерхівці в Космічному районі Запоріжжя зросла до 50 людей, серед них — вісім дітей\n\n📰 підписатися",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Запорожье",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-13T16:23:21+00:00",
-      "description": "Пабло Дука-Эскобар под аплодисменты картеля выходит из СИЗО ..\n\nЗаявил что Зеленский прикрывал сотрудников НАБУ ... и у него есть доказательства ...",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "supernova_plus",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-13T15:57:16+00:00",
-      "description": "❗️Сьогодні ворог завдав удару по пʼятиповерхівці в Космічному районі Запоріжжя. Внаслідок удару постраждали 50 осіб, 8 з яких - діти, — ОВА\n\n🫡https://t.me/operativnoZSU/",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Запорожье",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "operativnoZSU",
-        "ukrpravda_news"
+        "supernova_plus"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 5,
+  "corroborated_event_count": 4,
   "country_counts": {
     "FR": 1,
     "GB": 1,
     "PL": 1,
     "RU": 14,
-    "UA": 37
+    "UA": 34
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 54,
+  "event_count": 51,
   "event_type_counts": {
     "Air Raid Alert": 1,
-    "Military Operation": 1,
-    "Military Strike": 44,
+    "Military Operation": 2,
+    "Military Strike": 40,
     "Political Development": 8
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 5,
+    "cross_source_consistent_count": 4,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 49,
+    "not_independently_corroborated_count": 47,
     "rss_reports_not_independently_corroborated_count": 22
   },
-  "generated_at": "2026-11-13T21:38:53Z",
+  "generated_at": "2026-11-14T01:47:25Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 16,
-  "not_verified_event_count": 49,
+  "new_since_previous_snapshot": 5,
+  "not_verified_event_count": 47,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 44,
-      "delta": 41,
+      "current_period": 40,
+      "delta": 37,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -161,7 +96,7 @@
   ],
   "source_type_counts": {
     "rss": 22,
-    "telegram": 32
+    "telegram": 29
   },
   "top_locations": [
     {
@@ -171,7 +106,7 @@
     },
     {
       "country": "UA",
-      "events": 6,
+      "events": 4,
       "location": "Запорожье"
     },
     {
@@ -190,6 +125,11 @@
       "location": "Херсон"
     },
     {
+      "country": "RU",
+      "events": 2,
+      "location": "Белгород"
+    },
+    {
       "country": "UA",
       "events": 2,
       "location": "Одесса"
@@ -198,20 +138,15 @@
       "country": "UA",
       "events": 2,
       "location": "Винница"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Полтава"
     }
   ],
   "top_sources": {
+    "GeneralStaffZSU": 2,
     "OsintFlow": 3,
     "RVvoenkor": 2,
     "The Kyiv Independent": 5,
-    "astrapress": 3,
-    "kyivindependent_official": 6,
-    "operativnoZSU": 3,
+    "kyivindependent_official": 4,
+    "operativnoZSU": 2,
     "readovkanews": 2,
     "supernova_plus": 2,
     "ukrpravda_news": 2,
@@ -219,6 +154,6 @@
     "УНІАН": 5,
     "Українська правда": 5
   },
-  "window_end": "2026-11-13T21:38:53Z",
-  "window_start": "2026-11-06T21:38:53Z"
+  "window_end": "2026-11-14T01:47:25Z",
+  "window_start": "2026-11-07T01:47:25Z"
 }

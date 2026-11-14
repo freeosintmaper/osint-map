@@ -4,12 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 23,
-      "delta": 11,
+      "current_period": 17,
+      "delta": 7,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 12,
+      "previous_period": 10,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
@@ -17,127 +17,62 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-13T18:49:00+00:00",
-      "description": "Он не знал: Зеленский фактически заявил, что его обманули во время отчетов по отключениям света в Белой Церкви и Броварах\n\nОб этом он заявил во время своего очередного видеообращения. \n\n\"Был сегодня ж",
+      "date": "2026-11-13T18:50:32+00:00",
+      "description": "‼️🇺🇦 Зеленский обвинил местные власти во лжи о восстановлении энергетики после ударов\n\n▪️Зеленский выразил недовольство медленными темпами восстановления энергетической инфраструктуры Украины и заявил",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "supernova_plus",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-13T18:02:02+00:00",
-      "description": "Число пострадавших в результате российского удара по Запорожью достигло 50, — власти  В результате российского удара по пятиэтажке в Запорожье пострадали 50 человек, среди них 8 детей. Об этом сообщил",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Запорожье",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-13T16:46:00+00:00",
-      "description": "Кількість поранених внаслідок удару російських загарбників по промисловому об'єкту та п'ятиповерхівці в Космічному районі Запоріжжя зросла до 50 людей, серед них — вісім дітей\n\n📰 підписатися",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Запорожье",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-13T16:23:21+00:00",
-      "description": "Пабло Дука-Эскобар под аплодисменты картеля выходит из СИЗО ..\n\nЗаявил что Зеленский прикрывал сотрудников НАБУ ... и у него есть доказательства ...",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "supernova_plus",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-13T15:57:16+00:00",
-      "description": "❗️Сьогодні ворог завдав удару по пʼятиповерхівці в Космічному районі Запоріжжя. Внаслідок удару постраждали 50 осіб, 8 з яких - діти, — ОВА\n\n🫡https://t.me/operativnoZSU/",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Запорожье",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "operativnoZSU",
-        "ukrpravda_news"
+        "supernova_plus"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 5,
+  "corroborated_event_count": 4,
   "country_counts": {
     "FR": 1,
     "PL": 1,
-    "RU": 10,
-    "UA": 19
+    "RU": 8,
+    "UA": 16
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 31,
+  "event_count": 26,
   "event_type_counts": {
-    "Military Operation": 1,
-    "Military Strike": 23,
+    "Military Operation": 2,
+    "Military Strike": 17,
     "Political Development": 7
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 5,
+    "cross_source_consistent_count": 4,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 26,
-    "rss_reports_not_independently_corroborated_count": 5
+    "not_independently_corroborated_count": 22,
+    "rss_reports_not_independently_corroborated_count": 3
   },
-  "generated_at": "2026-11-13T21:38:53Z",
+  "generated_at": "2026-11-14T01:47:25Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 15,
-  "not_verified_event_count": 26,
+  "new_since_previous_snapshot": 5,
+  "not_verified_event_count": 22,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 23,
-      "delta": 11,
+      "current_period": 17,
+      "delta": 7,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 12,
+      "previous_period": 10,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 5,
-    "telegram": 26
+    "rss": 3,
+    "telegram": 23
   },
   "top_locations": [
     {
@@ -147,18 +82,23 @@
     },
     {
       "country": "UA",
-      "events": 6,
+      "events": 4,
       "location": "Запорожье"
     },
     {
       "country": "RU",
       "events": 3,
-      "location": "Москва"
+      "location": "Волгоград"
     },
     {
       "country": "RU",
-      "events": 3,
-      "location": "Волгоград"
+      "events": 2,
+      "location": "Белгород"
+    },
+    {
+      "country": "RU",
+      "events": 2,
+      "location": "Москва"
     },
     {
       "country": "PL",
@@ -171,11 +111,6 @@
       "location": "Париж"
     },
     {
-      "country": "UA",
-      "events": 1,
-      "location": "Сумы"
-    },
-    {
       "country": "RU",
       "events": 1,
       "location": "Ростов-на-Дону"
@@ -184,17 +119,17 @@
   "top_sources": {
     "GeneralStaffZSU": 2,
     "RVvoenkor": 2,
-    "The Kyiv Independent": 2,
-    "astrapress": 3,
-    "kyivindependent_official": 6,
+    "exilenova_plus": 1,
+    "kyivindependent_official": 4,
     "lost_armour": 2,
-    "operativnoZSU": 3,
+    "operativnoZSU": 2,
     "readovkanews": 2,
     "supernova_plus": 2,
     "ukrpravda_news": 2,
+    "uniannet": 1,
     "voenkorKotenok": 1,
     "Українська правда": 2
   },
-  "window_end": "2026-11-13T21:38:53Z",
-  "window_start": "2026-11-12T21:38:53Z"
+  "window_end": "2026-11-14T01:47:25Z",
+  "window_start": "2026-11-13T01:47:25Z"
 }
