@@ -1,65 +1,12 @@
 {
   "analytical_hypotheses": [],
   "analytical_hypotheses_note": "Автоматические предположения о причинах событий, контроле территории или намерениях сторон не формируются из одной статистики публикаций. Для них нужны отдельная доказательная база и человеческая проверка.",
-  "analytical_signals": [
-    {
-      "classification": "analytical_signal",
-      "current_period": 22,
-      "delta": 9,
-      "event_type": "Military Strike",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 13,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 10,
-      "delta": 8,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 2,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    }
-  ],
+  "analytical_signals": [],
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-14T14:54:22+00:00",
-      "description": "Семь человек, в том числе грудной ребенок, пострадали при атаках на Запорожье, — власти    В Хортицком и Вознесенском районах Запорожья в результате атак повреждены многоквартирные жилые дома. Пострад",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Запорожье",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-14T14:50:29+00:00",
-      "description": "‼️🇷🇺🇺🇦 Новый удар по объекту «Нафтогаза» в Полтавской области\n\n▪️В Полтавской области под удар попал объект украинской нефтегазовой компании «Нафтогаз». В результате атаки на территории предприятия во",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Полтава",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "boris_rozhin"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-14T13:59:38+00:00",
-      "description": "русня ударила по территории медицинского учреждения в Харькове, — мэр Терехов\n\nНа месте сильный пожар. По предварительной информации, пострадавших нет.\n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
+      "date": "2026-11-14T18:22:46+00:00",
+      "description": "ВС РФ ударили по Сумской области — пострадали три человека, — ГСЧС\n\nПо данным украинских спасателей, российские беспилотники атаковали населенные пункты Сумского, Ахтырского и Шосткинского районов. В ",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Харьков",
@@ -73,16 +20,33 @@
     },
     {
       "country": "UA",
-      "date": "2026-11-14T13:59:01+00:00",
-      "description": "«Нафтогаз» заявил что в Полтавской области масштабный пожар после прилёта по одному из энергетических объектов компании.\n👍292🔥118👌15❤‍🔥9🌚4\n  \n  \n    20.5K views13:59",
-      "event_type": "Military Strike",
+      "date": "2026-11-14T18:10:26+00:00",
+      "description": "‼️🇷🇺🇺🇦 Россия планирует нарастить производство реактивных «Гераней» и увеличить масштаб ударов — Зеленский\n\n▪️Зеленский заявил, что Россия намерена значительно увеличить выпуск реактивных беспилотнико",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Полтава",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "boris_rozhin"
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-14T15:20:01+00:00",
+      "description": "🤔 путин и Трамп увязли в собственных войнах, а Си Цзиньпин оказался в положении человека, от которого оба ждут помощи, - The Guardian\n\nВ преддверии трёхстороннего саммита в Китае складывается необычна",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "astrapress",
+        "epoddubny",
+        "readovkanews",
+        "uniannet"
       ],
       "status": "requires_human_review"
     },
@@ -92,180 +56,80 @@
       "description": "Унаслідок російського удару по Вознесенівському району Запоріжжя постраждали 17 людей, серед яких двоє дітей.\n\nВнаслідок удару пошкоджені житловий будинок та вікна навчального закладу\n\n📰 підписатися",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Запорожье",
+      "location": "Кременчук",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "astrapress",
+        "operativnoZSU",
         "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-14T11:36:53+00:00",
-      "description": "Брянская область. Губернатор: \n\n▪️В п. Щербиничи Злынковского района дрон-камикадзе атаковал рейсовый автобус на остановке.\n\nПо предварительной информации, никто из семи пассажиров не пострадал. Автоб",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Брянск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "dva_majors"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-14T11:07:56+00:00",
-      "description": "Зеленський заявив, що на переговорах американська сторона поставила перед Україною питання, чи готова вона вивести війська з підконтрольної частини Донбасу в обмін на членство у НАТО.\n\n“Я неодноразово",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-14T11:01:29+00:00",
-      "description": "Хотелось бы верить в эти хорошие новости!\n\nВ телеге и уже в СМИ обсуждается возможная отмена негласного запрета на ликвидацию Зеленского и руководства ВСУ.\n\nПишут, что такое решение могли принять на з",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "dva_majors"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-14T10:38:03+00:00",
-      "description": "Четверо детей пострадали при атаке российского дрона по городу Дергачи Харьковской области, — ОВА \n\nПовреждены 6 частных жилых домов, 4 хозпостройки и автомобили. Пострадали две женщины, мужчина и чет",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Харьков",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-14T10:08:17+00:00",
-      "description": "В Брянской области дрон убил 76-летнего жителя села Чуровичи, который в момент атаки ехал на электровелосипеде, — губернатор\n\n  \n  \n    35.7K views10:08",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Брянск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "dva_majors"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 11,
+  "corroborated_event_count": 7,
   "country_counts": {
-    "GB": 1,
-    "PL": 1,
-    "RU": 7,
-    "UA": 25,
+    "RU": 3,
+    "UA": 19,
     "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 35,
+  "event_count": 23,
   "event_type_counts": {
     "Military Operation": 3,
-    "Military Strike": 22,
-    "Political Development": 10
+    "Military Strike": 13,
+    "Political Development": 7
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 11,
+    "cross_source_consistent_count": 7,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 24,
+    "not_independently_corroborated_count": 16,
     "rss_reports_not_independently_corroborated_count": 0
   },
-  "generated_at": "2026-11-14T15:03:07Z",
+  "generated_at": "2026-11-14T19:55:27Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 30,
-  "not_verified_event_count": 24,
+  "new_since_previous_snapshot": 15,
+  "not_verified_event_count": 16,
   "period": "last_24_hours",
-  "publication_activity_signals": [
-    {
-      "classification": "analytical_signal",
-      "current_period": 22,
-      "delta": 9,
-      "event_type": "Military Strike",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 13,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 10,
-      "delta": 8,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 2,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    }
-  ],
+  "publication_activity_signals": [],
   "source_type_counts": {
-    "telegram": 35
+    "telegram": 23
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 7,
-      "location": "Запорожье"
-    },
-    {
-      "country": "UA",
-      "events": 6,
+      "events": 3,
       "location": "Киев"
     },
     {
-      "country": "UA",
+      "country": "RU",
       "events": 3,
+      "location": "Москва"
+    },
+    {
+      "country": "UA",
+      "events": 2,
       "location": "Харьков"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Полтава"
+      "location": "Сорокине"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 2,
-      "location": "Москва"
+      "location": "Запорожье"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 2,
-      "location": "Брянск"
+      "location": "Кременчук"
     },
     {
       "country": "UA",
       "events": 1,
-      "location": "Кременчук"
+      "location": "Яготин"
     },
     {
       "country": "UA",
@@ -274,19 +138,18 @@
     }
   ],
   "top_sources": {
-    "RVvoenkor": 6,
-    "astrapress": 7,
-    "boris_rozhin": 4,
-    "dva_majors": 2,
+    "RVvoenkor": 2,
+    "astrapress": 4,
+    "boris_rozhin": 1,
+    "epoddubny": 1,
     "exilenova_plus": 2,
-    "kyivindependent_official": 2,
+    "kyivindependent_official": 1,
     "lost_armour": 1,
-    "operativnoZSU": 3,
-    "supernova_plus": 1,
-    "ukrpravda_news": 5,
-    "uniannet": 1,
-    "voenkorKotenok": 1
+    "operativnoZSU": 2,
+    "readovkanews": 1,
+    "ukrpravda_news": 7,
+    "uniannet": 4
   },
-  "window_end": "2026-11-14T15:03:07Z",
-  "window_start": "2026-11-13T15:03:07Z"
+  "window_end": "2026-11-14T19:55:27Z",
+  "window_start": "2026-11-13T19:55:27Z"
 }
