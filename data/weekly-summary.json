@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 36,
-      "delta": 35,
+      "current_period": 40,
+      "delta": 39,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -15,8 +15,8 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 9,
+      "current_period": 8,
+      "delta": 8,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -25,53 +25,38 @@
       "signal_type": "publication_volume_change"
     }
   ],
-  "attention_candidates": [
-    {
-      "country": "UA",
-      "date": "2026-11-14T19:58:19+00:00",
-      "description": "😱На трасі Київ — Харків поблизу Яготина перекинулася та загорілася вантажівка, яка перевозила газовий конденсат, — ОВА\n\n Рух перекрито в обох напрямках. За попередньою інформацією, на 115-му кілометрі",
-      "event_type": "Military Operation",
-      "fact_checked": false,
-      "location": "Яготин",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "operativnoZSU",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    }
-  ],
+  "attention_candidates": [],
   "corroborated_event_count": 4,
   "country_counts": {
     "GB": 1,
-    "RU": 9,
-    "UA": 39
+    "RU": 14,
+    "UA": 37
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 49,
+  "event_count": 52,
   "event_type_counts": {
-    "Military Operation": 4,
-    "Military Strike": 36,
-    "Political Development": 9
+    "Air Raid Alert": 1,
+    "Military Operation": 3,
+    "Military Strike": 40,
+    "Political Development": 8
   },
   "evidence_breakdown": {
     "cross_source_consistent_count": 4,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 45,
+    "not_independently_corroborated_count": 48,
     "rss_reports_not_independently_corroborated_count": 18
   },
-  "generated_at": "2026-11-14T23:36:11Z",
+  "generated_at": "2026-11-15T03:04:37Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 11,
-  "not_verified_event_count": 45,
+  "new_since_previous_snapshot": 9,
+  "not_verified_event_count": 48,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 36,
-      "delta": 35,
+      "current_period": 40,
+      "delta": 39,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -81,8 +66,8 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 9,
+      "current_period": 8,
+      "delta": 8,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -93,18 +78,28 @@
   ],
   "source_type_counts": {
     "rss": 18,
-    "telegram": 31
+    "telegram": 34
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 13,
+      "events": 11,
       "location": "Киев"
     },
     {
       "country": "RU",
       "events": 4,
+      "location": "Таганрог"
+    },
+    {
+      "country": "RU",
+      "events": 4,
       "location": "Москва"
+    },
+    {
+      "country": "UA",
+      "events": 3,
+      "location": "Одесса"
     },
     {
       "country": "UA",
@@ -125,25 +120,15 @@
       "country": "UA",
       "events": 2,
       "location": "Яготин"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Сорокине"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Одесса"
     }
   ],
   "top_sources": {
     "OsintFlow": 3,
     "RVvoenkor": 4,
     "The Kyiv Independent": 4,
-    "exilenova_plus": 3,
-    "kyivindependent_official": 2,
-    "lost_armour": 2,
+    "astrapress": 2,
+    "exilenova_plus": 4,
+    "odesa_typical": 2,
     "operativnoZSU": 2,
     "supernova_plus": 2,
     "ukrpravda_news": 6,
@@ -151,6 +136,6 @@
     "Суспільне Новини": 6,
     "Українська правда": 5
   },
-  "window_end": "2026-11-14T23:36:11Z",
-  "window_start": "2026-11-07T23:36:11Z"
+  "window_end": "2026-11-15T03:04:37Z",
+  "window_start": "2026-11-08T03:04:37Z"
 }
