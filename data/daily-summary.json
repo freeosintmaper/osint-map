@@ -4,292 +4,214 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 36,
-      "delta": 34,
+      "current_period": 25,
+      "delta": 23,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
       "previous_period": 2,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 8,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "attention_candidates": [
     {
-      "country": "RU",
-      "date": "2026-11-15T10:40:36+00:00",
-      "description": "Три человека ранены в результате атаки БПЛА в Нижнекамске, — власти  «Сегодня утром в Нижнекамском районе произошла атака БПЛА. Пострадало три человека. Они получили ранения средней степени тяжести», ",
+      "country": "UA",
+      "date": "2026-11-15T16:42:43+00:00",
+      "description": "В результате новых атак ВС РФ по Запорожью пострадали три человека. Ранее из-за российских атак в регионе начались перебои со светом\n\nГлава Запорожской ОВА Михаил Семикин сообщил, что в результате нов",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Нижнекамск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "astrapress",
-        "dva_majors"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "FR",
-      "date": "2026-11-15T10:10:01+00:00",
-      "description": "‼️🇫🇷🇷🇺🇪🇺 Макрон заявил о готовности обсуждать с Россией новую архитектуру безопасности Европы после завершения конфликта на Украине\n\n▪️Президент Франции Эммануэль Макрон выступил за переговоры с Москв",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Париж",
+      "location": "Запорожье",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "ukrpravda_news"
+        "astrapress"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "RU",
-      "date": "2026-11-15T09:44:28+00:00",
-      "description": "Міністр закордонних справ Сибіга заявив, що максимум, про що наразі може домовлятися Путін, – це справедливе припинення вогню вздовж поточної лінії зіткнення, а не розподіл сфер впливу в Європі.\n\nЗа й",
-      "event_type": "Political Development",
+      "country": "UA",
+      "date": "2026-11-15T15:35:01+00:00",
+      "description": "Повторный удар по Кременчугскому НПЗ: завод горит\n\nКременчугский нефтеперерабатывающий завод в Полтавской области снова подвергся атаке — на территории вспыхнул сильный пожар. Предыдущий удар по объек",
+      "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Москва",
+      "location": "Кременчуг",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
+      "source_count": 4,
       "sources": [
+        "RVvoenkor",
         "boris_rozhin",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-15T08:50:48+00:00",
-      "description": "Риши Сунак и Арктика:\n\n«Долг Великобритании - доказать, что Путин не может управлять Арктикой.\" Также Риши Сунак заявил, что Лондону необходимо усилить военное сдерживание России в Арктике. Он назвал ",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "boris_rozhin",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-15T08:43:17+00:00",
-      "description": "🔥Тем временем приходят хорошие новости о ночной гойде на болотах — в Астраханской области атаковали военный аэродром «Ахтубинск»\n\nНа территории прогремело не менее 30 взрывов.\n\nПредварительно, под уда",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Ахтубинск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "supernova_plus",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-15T08:35:01+00:00",
-      "description": "🔥Сьогодні вночі Сили добра завдали масованого удару по нафтохімічному підприємству «Нижнекамскнефтехим» в Нижньокамську, Татарстан   В результаті атаки на місці видніється значна пожежа.  🫡https://t.m",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Нижньокамськ",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-15T08:33:04+00:00",
-      "description": "До пяти человек выросло число раненых в Ростовской области в результате атаки БПЛА, — губернатор  «Сегодня утром еще один мужчина получил ранение в селе Троицкое Неклиновского района в результате паде",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Таганрог",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
         "dva_majors",
-        "exilenova_plus"
+        "lost_armour"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "RU",
-      "date": "2026-11-15T07:58:58+00:00",
-      "description": "Нижнекамск в Татарстане подвергся массированной атаке БПЛА. Есть пострадавшие среди населения.\n\nВСУ снова били по заводу «Нижнекамскнефтехим».\n\nВ прошлый раз атака на Нижнекамск унесла жизни 8 человек",
+      "country": "UA",
+      "date": "2026-11-15T15:17:41+00:00",
+      "description": "ВС РФ ударили по салону Mercedes-Benz в Одессе, — власти\n\nВ Одессе горит автосалон Mercedes-Benz после прилета. Как сообщил глава ОВА, разрушено здание автосалона, складские помещения, в том числе для",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Нижнекамск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "astrapress",
-        "dva_majors"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "FR",
-      "date": "2026-11-15T07:32:58+00:00",
-      "description": "Президент Франції Макрон заявив, що ті, хто прагнуть обмежити допомогу Україні та нав’язати їй несправедливий мир, роблять вразливою всю Європу, оскільки це шлях до нової війни, а також – що українськ",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Париж",
+      "location": "Одесса",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "ukrpravda_news"
+        "astrapress"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "RU",
-      "date": "2026-11-15T07:20:20+00:00",
-      "description": "‼️🇬🇧😂🇷🇺 «Лавров заставил меня выпить огромное количество водки»: Борис Джонсон пожаловался на неудачную поездку в Россию\n\n▪️Бывший премьер-министр Великобритании Борис Джонсон рассказал о своей попытк",
-      "event_type": "Political Development",
+      "country": "UA",
+      "date": "2026-11-15T14:10:27+00:00",
+      "description": "‼️🇷🇺🇺🇦 Новый удар по Кременчугскому НПЗ\n\n▪️В Полтавской области на месте удара вспыхнул мощный пожар. \n⚠️Подписаться на RV: MAX | t.me/RVvoenkor",
+      "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Москва",
+      "location": "Кременчуг",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "boris_rozhin",
+        "dva_majors",
+        "lost_armour"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-15T13:36:15+00:00",
+      "description": "Возгорание на Кременчугском НПЗ после ударов БПЛА.\n\n💥Мониторинг поражений объектов на территории Украины\n\n🔹Мы в MAX",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Кременчуг",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "boris_rozhin",
+        "dva_majors",
+        "lost_armour"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-15T12:20:23+00:00",
+      "description": "‼️🇷🇺🇺🇦 Днепропетровская и Запорожская области почти полностью остались без света, воды и отопления\n\n▪️В результате российских ударов без электроснабжения остались населённые пункты Днепровского и Каме",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Запорожье",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "boris_rozhin"
+        "astrapress"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 19,
+  "corroborated_event_count": 6,
   "country_counts": {
-    "FR": 2,
-    "GB": 1,
-    "RU": 20,
-    "UA": 23
+    "RU": 11,
+    "UA": 23,
+    "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 46,
+  "event_count": 35,
   "event_type_counts": {
-    "Air Raid Alert": 1,
-    "Military Strike": 36,
-    "Political Development": 9
+    "Air Raid Alert": 2,
+    "Military Offensive": 1,
+    "Military Operation": 5,
+    "Military Strike": 25,
+    "Political Development": 2
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 19,
+    "cross_source_consistent_count": 6,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 27,
-    "rss_reports_not_independently_corroborated_count": 4
+    "not_independently_corroborated_count": 29,
+    "rss_reports_not_independently_corroborated_count": 5
   },
-  "generated_at": "2026-11-15T10:45:04Z",
+  "generated_at": "2026-11-15T17:29:23Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 41,
-  "not_verified_event_count": 27,
+  "new_since_previous_snapshot": 25,
+  "not_verified_event_count": 29,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 36,
-      "delta": 34,
+      "current_period": 25,
+      "delta": 23,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
       "previous_period": 2,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 8,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 1,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 4,
-    "telegram": 42
+    "rss": 5,
+    "telegram": 30
   },
   "top_locations": [
     {
-      "country": "RU",
-      "events": 6,
-      "location": "Таганрог"
+      "country": "UA",
+      "events": 3,
+      "location": "Кременчуг"
+    },
+    {
+      "country": "UA",
+      "events": 3,
+      "location": "Одесса"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Харьков"
     },
     {
       "country": "RU",
-      "events": 5,
+      "events": 2,
       "location": "Москва"
     },
     {
       "country": "UA",
-      "events": 4,
-      "location": "Киев"
-    },
-    {
-      "country": "RU",
-      "events": 3,
-      "location": "Нижнекамск"
-    },
-    {
-      "country": "UA",
-      "events": 3,
+      "events": 2,
       "location": "Запорожье"
     },
     {
       "country": "UA",
-      "events": 3,
-      "location": "Черноморск"
+      "events": 2,
+      "location": "Киев"
     },
     {
       "country": "RU",
-      "events": 3,
-      "location": "Нижньокамськ"
+      "events": 2,
+      "location": "Ростов-на-Дону"
     },
     {
-      "country": "FR",
-      "events": 2,
-      "location": "Париж"
+      "country": "RU",
+      "events": 1,
+      "location": "Нижньокамськ"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 8,
-    "astrapress": 4,
-    "boris_rozhin": 3,
-    "dva_majors": 2,
+    "RVvoenkor": 3,
+    "astrapress": 5,
+    "boris_rozhin": 4,
+    "dva_majors": 1,
     "exilenova_plus": 2,
-    "kyivindependent_official": 3,
-    "odesa_typical": 2,
+    "kyivindependent_official": 2,
+    "lost_armour": 2,
     "operativnoZSU": 6,
-    "supernova_plus": 3,
-    "ukrpravda_news": 5,
-    "uniannet": 5,
-    "Суспільне Новини": 3
+    "rybar": 3,
+    "supernova_plus": 2,
+    "ukrpravda_news": 2,
+    "Суспільне Новини": 4
   },
-  "window_end": "2026-11-15T10:45:04Z",
-  "window_start": "2026-11-14T10:45:04Z"
+  "window_end": "2026-11-15T17:29:23Z",
+  "window_start": "2026-11-14T17:29:23Z"
 }
