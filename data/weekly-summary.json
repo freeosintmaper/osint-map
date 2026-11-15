@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 40,
-      "delta": 39,
+      "current_period": 60,
+      "delta": 59,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -15,8 +15,8 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 8,
-      "delta": 8,
+      "current_period": 10,
+      "delta": 10,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -25,38 +25,192 @@
       "signal_type": "publication_volume_change"
     }
   ],
-  "attention_candidates": [],
-  "corroborated_event_count": 4,
+  "attention_candidates": [
+    {
+      "country": "RU",
+      "date": "2026-11-15T10:40:36+00:00",
+      "description": "Три человека ранены в результате атаки БПЛА в Нижнекамске, — власти  «Сегодня утром в Нижнекамском районе произошла атака БПЛА. Пострадало три человека. Они получили ранения средней степени тяжести», ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Нижнекамск",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "dva_majors"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "FR",
+      "date": "2026-11-15T10:10:01+00:00",
+      "description": "‼️🇫🇷🇷🇺🇪🇺 Макрон заявил о готовности обсуждать с Россией новую архитектуру безопасности Европы после завершения конфликта на Украине\n\n▪️Президент Франции Эммануэль Макрон выступил за переговоры с Москв",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Париж",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-15T09:44:28+00:00",
+      "description": "Міністр закордонних справ Сибіга заявив, що максимум, про що наразі може домовлятися Путін, – це справедливе припинення вогню вздовж поточної лінії зіткнення, а не розподіл сфер впливу в Європі.\n\nЗа й",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "boris_rozhin",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-15T08:50:48+00:00",
+      "description": "Риши Сунак и Арктика:\n\n«Долг Великобритании - доказать, что Путин не может управлять Арктикой.\" Также Риши Сунак заявил, что Лондону необходимо усилить военное сдерживание России в Арктике. Он назвал ",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "boris_rozhin",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-15T08:43:17+00:00",
+      "description": "🔥Тем временем приходят хорошие новости о ночной гойде на болотах — в Астраханской области атаковали военный аэродром «Ахтубинск»\n\nНа территории прогремело не менее 30 взрывов.\n\nПредварительно, под уда",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Ахтубинск",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "supernova_plus",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-15T08:35:01+00:00",
+      "description": "🔥Сьогодні вночі Сили добра завдали масованого удару по нафтохімічному підприємству «Нижнекамскнефтехим» в Нижньокамську, Татарстан   В результаті атаки на місці видніється значна пожежа.  🫡https://t.m",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Нижньокамськ",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "operativnoZSU",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-15T08:33:04+00:00",
+      "description": "До пяти человек выросло число раненых в Ростовской области в результате атаки БПЛА, — губернатор  «Сегодня утром еще один мужчина получил ранение в селе Троицкое Неклиновского района в результате паде",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Таганрог",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "dva_majors",
+        "exilenova_plus"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-15T07:58:58+00:00",
+      "description": "Нижнекамск в Татарстане подвергся массированной атаке БПЛА. Есть пострадавшие среди населения.\n\nВСУ снова били по заводу «Нижнекамскнефтехим».\n\nВ прошлый раз атака на Нижнекамск унесла жизни 8 человек",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Нижнекамск",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "dva_majors"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "FR",
+      "date": "2026-11-15T07:32:58+00:00",
+      "description": "Президент Франції Макрон заявив, що ті, хто прагнуть обмежити допомогу Україні та нав’язати їй несправедливий мир, роблять вразливою всю Європу, оскільки це шлях до нової війни, а також – що українськ",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Париж",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-15T07:20:20+00:00",
+      "description": "‼️🇬🇧😂🇷🇺 «Лавров заставил меня выпить огромное количество водки»: Борис Джонсон пожаловался на неудачную поездку в Россию\n\n▪️Бывший премьер-министр Великобритании Борис Джонсон рассказал о своей попытк",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "boris_rozhin"
+      ],
+      "status": "requires_human_review"
+    }
+  ],
+  "corroborated_event_count": 19,
   "country_counts": {
-    "GB": 1,
-    "RU": 14,
-    "UA": 37
+    "FR": 2,
+    "GB": 2,
+    "RU": 25,
+    "UA": 42
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 52,
+  "event_count": 71,
   "event_type_counts": {
     "Air Raid Alert": 1,
-    "Military Operation": 3,
-    "Military Strike": 40,
-    "Political Development": 8
+    "Military Strike": 60,
+    "Political Development": 10
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 4,
+    "cross_source_consistent_count": 19,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 48,
-    "rss_reports_not_independently_corroborated_count": 18
+    "not_independently_corroborated_count": 52,
+    "rss_reports_not_independently_corroborated_count": 22
   },
-  "generated_at": "2026-11-15T03:04:37Z",
+  "generated_at": "2026-11-15T10:45:04Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 9,
-  "not_verified_event_count": 48,
+  "new_since_previous_snapshot": 41,
+  "not_verified_event_count": 52,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 40,
-      "delta": 39,
+      "current_period": 60,
+      "delta": 59,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -66,8 +220,8 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 8,
-      "delta": 8,
+      "current_period": 10,
+      "delta": 10,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -77,29 +231,34 @@
     }
   ],
   "source_type_counts": {
-    "rss": 18,
-    "telegram": 34
+    "rss": 22,
+    "telegram": 49
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 11,
+      "events": 10,
       "location": "Киев"
     },
     {
       "country": "RU",
-      "events": 4,
-      "location": "Таганрог"
-    },
-    {
-      "country": "RU",
-      "events": 4,
+      "events": 6,
       "location": "Москва"
     },
     {
+      "country": "RU",
+      "events": 6,
+      "location": "Таганрог"
+    },
+    {
       "country": "UA",
-      "events": 3,
+      "events": 4,
       "location": "Одесса"
+    },
+    {
+      "country": "RU",
+      "events": 3,
+      "location": "Нижнекамск"
     },
     {
       "country": "UA",
@@ -108,34 +267,29 @@
     },
     {
       "country": "UA",
-      "events": 2,
-      "location": "Днепр"
+      "events": 3,
+      "location": "Черноморск"
     },
     {
-      "country": "UA",
-      "events": 2,
-      "location": "Харьков"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Яготин"
+      "country": "RU",
+      "events": 3,
+      "location": "Нижньокамськ"
     }
   ],
   "top_sources": {
-    "OsintFlow": 3,
-    "RVvoenkor": 4,
+    "RVvoenkor": 8,
     "The Kyiv Independent": 4,
-    "astrapress": 2,
-    "exilenova_plus": 4,
-    "odesa_typical": 2,
-    "operativnoZSU": 2,
-    "supernova_plus": 2,
-    "ukrpravda_news": 6,
-    "uniannet": 3,
-    "Суспільне Новини": 6,
+    "astrapress": 4,
+    "boris_rozhin": 3,
+    "kyivindependent_official": 3,
+    "operativnoZSU": 6,
+    "supernova_plus": 3,
+    "ukrpravda_news": 5,
+    "uniannet": 5,
+    "Суспільне Новини": 9,
+    "УНІАН": 3,
     "Українська правда": 5
   },
-  "window_end": "2026-11-15T03:04:37Z",
-  "window_start": "2026-11-08T03:04:37Z"
+  "window_end": "2026-11-15T10:45:04Z",
+  "window_start": "2026-11-08T10:45:04Z"
 }
