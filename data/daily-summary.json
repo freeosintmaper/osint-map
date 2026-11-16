@@ -4,12 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 25,
+      "current_period": 24,
       "delta": 23,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
@@ -17,37 +17,21 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-15T21:23:11+00:00",
-      "description": "Идет ФАБизация пригородов Запорожья.  Удары наносятся по выявленным военным целям и объектам энергоструктуры.  Ранее в вечернем выступлении наркотическая мразь сообщила украинцам о смене тактики русск",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Запорожье",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "voenkorKotenok"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-15T19:01:06+00:00",
-      "description": "Ещё кадры после прилёта по НПЗ в Кременчуге",
+      "date": "2026-11-15T20:10:27+00:00",
+      "description": "‼️🇷🇺🇺🇦 Днепропетровская область стала главной целью ударов по энергетике Украины — Зеленский\n\n▪️По словам Зеленского, с начала сентября на энергетические объекты Днепропетровской области пришлось 131 ",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Кременчуг",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 2,
       "sources": [
-        "boris_rozhin",
-        "dva_majors",
+        "RVvoenkor",
         "lost_armour"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 5,
+  "corroborated_event_count": 3,
   "country_counts": {
     "RU": 9,
     "UA": 24
@@ -55,55 +39,50 @@
   "editorially_fact_checked_count": 0,
   "event_count": 33,
   "event_type_counts": {
-    "Air Raid Alert": 2,
-    "Military Operation": 4,
-    "Military Strike": 25,
+    "Air Raid Alert": 5,
+    "Military Operation": 2,
+    "Military Strike": 24,
     "Political Development": 2
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 5,
+    "cross_source_consistent_count": 3,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 28,
-    "rss_reports_not_independently_corroborated_count": 7
+    "not_independently_corroborated_count": 30,
+    "rss_reports_not_independently_corroborated_count": 8
   },
-  "generated_at": "2026-11-15T22:02:40Z",
+  "generated_at": "2026-11-16T01:56:30Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 18,
-  "not_verified_event_count": 28,
+  "new_since_previous_snapshot": 7,
+  "not_verified_event_count": 30,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 25,
+      "current_period": 24,
       "delta": 23,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 7,
-    "telegram": 26
+    "rss": 8,
+    "telegram": 25
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 3,
-      "location": "Запорожье"
-    },
-    {
-      "country": "UA",
-      "events": 3,
+      "events": 6,
       "location": "Киев"
     },
     {
-      "country": "UA",
-      "events": 3,
-      "location": "Харьков"
+      "country": "RU",
+      "events": 4,
+      "location": "Москва"
     },
     {
       "country": "UA",
@@ -111,14 +90,14 @@
       "location": "Кременчуг"
     },
     {
-      "country": "RU",
-      "events": 3,
-      "location": "Москва"
+      "country": "UA",
+      "events": 2,
+      "location": "Запорожье"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 2,
-      "location": "Нижнекамск"
+      "location": "Харьков"
     },
     {
       "country": "UA",
@@ -129,22 +108,27 @@
       "country": "UA",
       "events": 2,
       "location": "Одесса"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Odesa"
     }
   ],
   "top_sources": {
     "RVvoenkor": 2,
     "The Kyiv Independent": 2,
-    "astrapress": 5,
-    "boris_rozhin": 3,
-    "epoddubny": 1,
+    "astrapress": 4,
+    "boris_rozhin": 1,
     "kyivindependent_official": 2,
     "operativnoZSU": 2,
     "rybar": 3,
     "ukrpravda_news": 1,
-    "uniannet": 1,
+    "uniannet": 4,
     "voenkorKotenok": 1,
-    "Суспільне Новини": 4
+    "Суспільне Новини": 4,
+    "Українська правда": 1
   },
-  "window_end": "2026-11-15T22:02:40Z",
-  "window_start": "2026-11-14T22:02:40Z"
+  "window_end": "2026-11-16T01:56:30Z",
+  "window_start": "2026-11-15T01:56:30Z"
 }

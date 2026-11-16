@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 49,
-      "delta": 48,
+      "current_period": 48,
+      "delta": 47,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -17,37 +17,21 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-15T21:23:11+00:00",
-      "description": "Идет ФАБизация пригородов Запорожья.  Удары наносятся по выявленным военным целям и объектам энергоструктуры.  Ранее в вечернем выступлении наркотическая мразь сообщила украинцам о смене тактики русск",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Запорожье",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "voenkorKotenok"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-15T19:01:06+00:00",
-      "description": "Ещё кадры после прилёта по НПЗ в Кременчуге",
+      "date": "2026-11-15T20:10:27+00:00",
+      "description": "‼️🇷🇺🇺🇦 Днепропетровская область стала главной целью ударов по энергетике Украины — Зеленский\n\n▪️По словам Зеленского, с начала сентября на энергетические объекты Днепропетровской области пришлось 131 ",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Кременчуг",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 2,
       "sources": [
-        "boris_rozhin",
-        "dva_majors",
+        "RVvoenkor",
         "lost_armour"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 5,
+  "corroborated_event_count": 3,
   "country_counts": {
     "GB": 1,
     "RU": 15,
@@ -56,28 +40,28 @@
   "editorially_fact_checked_count": 0,
   "event_count": 59,
   "event_type_counts": {
-    "Air Raid Alert": 2,
-    "Military Operation": 4,
-    "Military Strike": 49,
+    "Air Raid Alert": 5,
+    "Military Operation": 2,
+    "Military Strike": 48,
     "Political Development": 4
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 5,
+    "cross_source_consistent_count": 3,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 54,
-    "rss_reports_not_independently_corroborated_count": 25
+    "not_independently_corroborated_count": 56,
+    "rss_reports_not_independently_corroborated_count": 26
   },
-  "generated_at": "2026-11-15T22:02:40Z",
+  "generated_at": "2026-11-16T01:56:30Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 18,
-  "not_verified_event_count": 54,
+  "new_since_previous_snapshot": 7,
+  "not_verified_event_count": 56,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 49,
-      "delta": 48,
+      "current_period": 48,
+      "delta": 47,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -87,24 +71,19 @@
     }
   ],
   "source_type_counts": {
-    "rss": 25,
-    "telegram": 34
+    "rss": 26,
+    "telegram": 33
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 9,
+      "events": 12,
       "location": "Киев"
     },
     {
       "country": "RU",
-      "events": 5,
+      "events": 6,
       "location": "Москва"
-    },
-    {
-      "country": "UA",
-      "events": 4,
-      "location": "Харьков"
     },
     {
       "country": "UA",
@@ -114,12 +93,12 @@
     {
       "country": "UA",
       "events": 3,
-      "location": "Запорожье"
+      "location": "Кременчуг"
     },
     {
       "country": "UA",
       "events": 3,
-      "location": "Кременчуг"
+      "location": "Харьков"
     },
     {
       "country": "UA",
@@ -129,23 +108,28 @@
     {
       "country": "UA",
       "events": 2,
-      "location": "Днепр"
+      "location": "Запорожье"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Донецк"
     }
   ],
   "top_sources": {
     "OsintFlow": 3,
     "RVvoenkor": 2,
     "The Kyiv Independent": 6,
-    "astrapress": 5,
-    "boris_rozhin": 3,
+    "astrapress": 4,
     "epoddubny": 2,
     "lost_armour": 2,
     "operativnoZSU": 2,
     "rybar": 3,
+    "uniannet": 4,
     "Суспільне Новини": 10,
     "УНІАН": 3,
-    "Українська правда": 5
+    "Українська правда": 6
   },
-  "window_end": "2026-11-15T22:02:40Z",
-  "window_start": "2026-11-08T22:02:40Z"
+  "window_end": "2026-11-16T01:56:30Z",
+  "window_start": "2026-11-09T01:56:30Z"
 }
