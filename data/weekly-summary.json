@@ -4,23 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 91,
-      "delta": 88,
+      "current_period": 68,
+      "delta": 67,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 3,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 9,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
@@ -28,8 +17,24 @@
   "attention_candidates": [
     {
       "country": "RU",
-      "date": "2026-11-17T10:59:01+00:00",
-      "description": "Лавров о трёхсторонних контактах, Европе и экспансии НАТО\n\nГлава МИД России Сергей Лавров прокомментировал перспективы трёхстороннего диалога с участием России, КНР и США. По словам министра, встреча ",
+      "date": "2026-11-17T19:00:01+00:00",
+      "description": "В Fire Point заявили, что арку Крымского моста обрушила их ракета «Фламинго»\n\nУкраинская оборонная компания Fire Point опубликовала визуализацию удара по Крымскому мосту в ночь на 17 ноября и заявила,",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Крым",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "supernova_plus",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-17T18:23:17+00:00",
+      "description": "🗣Українські далекобійні удари по об’єктах цивільної інфраструктури Росії могли посилити рішучість російського суспільства та готовність Кремля до ескалації, заявив заступник міністра оборони США Елбрі",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Москва",
@@ -37,237 +42,186 @@
       "source_count": 2,
       "sources": [
         "epoddubny",
-        "readovkanews"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-17T10:46:47+00:00",
-      "description": "Дві людини загинули та ще одна постраждала внаслідок російського удару по Києву. Зазначається, що на місці удару пошкоджена нежитлова будівля\n\n📰 підписатися",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "operativnoZSU",
         "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
+      "country": "RU",
+      "date": "2026-11-17T18:21:00+00:00",
+      "description": "Путин прибыл в Шэньчжэнь на саммит АТЭС.\n\nУ президента в программе первая в истории трехсторонняя встреча лидеров России, Китая и США, а также ряд двусторонних переговоров.\n1👍692🤣119👌57🤬34😁14\n  \n  \n  ",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "boris_rozhin",
+        "epoddubny"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-17T17:54:16+00:00",
+      "description": "\"Внимание: на Крымский мост в направлении железнодорожной арки движутся 5–8 ракет \"Фламинго\" и 2–3 ПКР \"Нептун\"\n\nУ росмониторов приступы легкой паники уже 😁\n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threa",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Крым",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-17T15:09:51+00:00",
+      "description": "первые кадры крымского моста.. так.. вот одна арка стоит ... аа, ну понятно ...",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Крым",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 5,
+      "sources": [
+        "astrapress",
+        "rybar",
+        "supernova_plus",
+        "voenkorKotenok",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
       "country": "UA",
-      "date": "2026-11-17T10:40:31+00:00",
-      "description": "‼️🇷🇺🇺🇦 После ночного удара по Северному мосту киевляне пешком добираются на правый берег\n\n▪️Жители Киева вынуждены пересекать Северный мост пешком после ночной атаки и введённых ограничений движения.\n",
+      "date": "2026-11-17T12:49:30+00:00",
+      "description": "Киев\n\nВ результате ночных ударов повреждены тепловые магистрали Северного и Южного мостов, из-за чего часть потребителей Дарницкого, Оболонского и Подольского районов переключают на резервное теплосна",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "bazabazon",
+        "dva_majors",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-17T11:12:31+00:00",
+      "description": "Сразу в нескольких районах Днепра и Киева вспыхнули крупные пожары после массированной атаки. Под удар также попали Черкассы, Павлоград и Запорожье.  В Киеве атаковали в том числе Северный и Южный мос",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 4,
       "sources": [
-        "RVvoenkor",
-        "astrapress",
-        "uniannet",
+        "bazabazon",
+        "dva_majors",
+        "rybar",
         "wargonzo"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "UA",
-      "date": "2026-11-17T10:22:16+00:00",
-      "description": "Одночасно з ураженням тимчасової переправи під назвою «Кримський міст» було уражено ще один міст, дорога через який веде до сухопутного коридору нашого півострова.\n\nСподіваємось, «Хорнетів» вистачить ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Кримський",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "DeepStateUA",
-        "exilenova_plus"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-17T10:21:01+00:00",
-      "description": "Боевая работа операторов барражирующих боеприпасов \"Ланцет\" по технике ВСУ в Днепропетровской области.\n👍151👏25❤7🥰5👌2\n  \n  \n    26.9K views10:21",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Днепр",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "boris_rozhin",
-        "lost_armour"
-      ],
-      "status": "requires_human_review"
-    },
-    {
       "country": "RU",
-      "date": "2026-11-17T10:20:26+00:00",
-      "description": "Движение автомобилей и поездов по Крымскому мосту временно приостановили после повторной атаки БПЛА за сутки, сообщили в Минтрансе.  По предварительным данным, обошлось без пострадавших. Специалисты у",
+      "date": "2026-11-17T09:53:15+00:00",
+      "description": "В результате ударов обрушилась арка автомобильной части Крымского моста. Автомобильный мост полностью выведен из строя. Состояние железнодорожной части моста неизвестно. Судоходный фарватер завален об",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Крым",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 8,
+      "source_count": 4,
       "sources": [
-        "RVvoenkor",
-        "astrapress",
-        "bazabazon",
-        "boris_rozhin",
-        "dva_majors",
         "rybar",
         "supernova_plus",
+        "voenkorKotenok",
         "wargonzo"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-17T10:20:25+00:00",
-      "description": "‼️🇷🇺🇨🇳 \"Где появлялась НАТО, там никогда ничего хорошего не происходило\"— Лавров\n\n▪️Глава МИД России Сергей Лавров заявил, что западные страны пытаются разрушить сложившуюся вокруг АСЕАН систему регио",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Курск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "astrapress"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-17T10:07:46+00:00",
-      "description": "📝Не бежать впереди паровоза📝  Ночью летело не только по Крымскому мосту, но и по переправам через Днепр в Киеве. На основании кадров от мэра города, в отечественном сегменте даже начали писать об обры",
+      "date": "2026-11-17T08:01:01+00:00",
+      "description": "Крымский мост: повреждения есть, катастрофы не будет\n\nПоявились снимки, подтверждающие факт и масштабы повреждения Крымского моста. Ракетам и дронам противника действительно удалось обрушить одну из а",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Киев",
+      "location": "Крым",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 4,
       "sources": [
-        "astrapress",
         "rybar",
+        "supernova_plus",
+        "voenkorKotenok",
         "wargonzo"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-17T10:00:01+00:00",
-      "description": "Сили оборони влучили у Кримський міст: проліт упав, автошлях до окупованого Криму зупинено\n\nУ ніч на 17 листопада Сили оборони України завдали удару по Керченському мосту. Росія роками будувала довкол",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Кримський",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "DeepStateUA",
-        "GeneralStaffZSU",
-        "operativnoZSU"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-17T09:59:01+00:00",
-      "description": "Дві людини загинули та ще 18 постраждали внаслідок російських ударів по промислових об’єктах у Запоріжжі вранці. \n\nТакож пошкоджено вантажівки та виникла пожежа\n\n📰 підписатися",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "operativnoZSU",
-        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 34,
+  "corroborated_event_count": 17,
   "country_counts": {
     "GB": 1,
-    "RU": 35,
-    "UA": 71,
-    "US": 1
+    "RU": 22,
+    "UA": 56
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 108,
+  "event_count": 79,
   "event_type_counts": {
-    "Military Offensive": 1,
-    "Military Operation": 7,
-    "Military Strike": 91,
-    "Political Development": 9
+    "Air Raid Alert": 1,
+    "Military Offensive": 2,
+    "Military Operation": 2,
+    "Military Strike": 68,
+    "Political Development": 6
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 34,
+    "cross_source_consistent_count": 17,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 74,
-    "rss_reports_not_independently_corroborated_count": 37
+    "not_independently_corroborated_count": 62,
+    "rss_reports_not_independently_corroborated_count": 39
   },
-  "generated_at": "2026-11-17T11:11:15Z",
+  "generated_at": "2026-11-17T19:52:46Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 56,
-  "not_verified_event_count": 74,
+  "new_since_previous_snapshot": 28,
+  "not_verified_event_count": 62,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 91,
-      "delta": 88,
+      "current_period": 68,
+      "delta": 67,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 3,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 9,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 37,
-    "telegram": 71
+    "rss": 39,
+    "telegram": 40
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 26,
+      "events": 21,
       "location": "Киев"
     },
     {
       "country": "RU",
-      "events": 11,
+      "events": 8,
       "location": "Крым"
     },
     {
-      "country": "UA",
-      "events": 8,
-      "location": "Днепр"
-    },
-    {
       "country": "RU",
-      "events": 7,
+      "events": 5,
       "location": "Москва"
-    },
-    {
-      "country": "UA",
-      "events": 6,
-      "location": "Запорожье"
     },
     {
       "country": "UA",
@@ -275,30 +229,40 @@
       "location": "Кримський"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 4,
-      "location": "Ростов-на-Дону"
+      "location": "Одесса"
     },
     {
       "country": "UA",
-      "events": 4,
+      "events": 3,
+      "location": "Днепр"
+    },
+    {
+      "country": "UA",
+      "events": 3,
       "location": "Харьков"
+    },
+    {
+      "country": "RU",
+      "events": 3,
+      "location": "Ростов-на-Дону"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 7,
+    "OsintFlow": 3,
+    "RVvoenkor": 2,
     "The Kyiv Independent": 7,
-    "astrapress": 13,
-    "bazabazon": 8,
-    "epoddubny": 5,
-    "lost_armour": 9,
-    "operativnoZSU": 5,
+    "astrapress": 2,
+    "bazabazon": 3,
+    "boris_rozhin": 4,
+    "lost_armour": 2,
     "ukrpravda_news": 5,
-    "wargonzo": 6,
+    "wargonzo": 4,
     "Суспільне Новини": 14,
-    "УНІАН": 5,
+    "УНІАН": 6,
     "Українська правда": 11
   },
-  "window_end": "2026-11-17T11:11:15Z",
-  "window_start": "2026-11-10T11:11:15Z"
+  "window_end": "2026-11-17T19:52:46Z",
+  "window_start": "2026-11-10T19:52:46Z"
 }
