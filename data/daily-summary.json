@@ -4,12 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 33,
-      "delta": 26,
+      "current_period": 29,
+      "delta": 10,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 7,
+      "previous_period": 19,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
@@ -17,85 +17,74 @@
   "attention_candidates": [
     {
       "country": "RU",
-      "date": "2026-11-17T23:19:01+00:00",
-      "description": "Другой ракурс ударов по Крымскому мосту ... работает ПВО\n🔥495❤46❤‍🔥27😁14🤬12🤡12☃10💊6👎4🤗3🤮1\n  \n  \n    28K views23:19",
-      "event_type": "Military Strike",
+      "date": "2026-11-18T10:02:58+00:00",
+      "description": "📝От переговоров к образованию📝\nПоездка Владимира Путина в Китай продолжается\n\nСледующей остановкой во время визита российского президента в китайский Шэньчжэнь стало образовательное учреждение, которо",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Крым",
+      "location": "Москва",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "supernova_plus",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-17T22:25:45+00:00",
-      "description": "Во время удара ВС РФ по Днепру пострадало почетное консульство Австрии\n\nОб этом сообщило Посольство Австрии в Киеве в Х, показав фото помещения, заваленного разбитым стеклом. В посте указано, что пост",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Днепр",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-17T21:14:39+00:00",
-      "description": "🇦🇹 Посольство Австрії в Україні повідомило, що російська атака на Дніпро пошкодила почесне консульство країни в місті.\n\n\"Напади на цивільне населення та цивільну інфраструктуру заборонені міжнародним ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Днепр",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-17T21:02:28+00:00",
-      "description": "‼️ россия планирует нанести удары баллистическими ракетами по северному, южному и дарницкому железнодорожно-автомобильным мостам, а также по мостам \"Метро\" и Патона — \"красный\" уровень угрозы для Киев",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
+      "source_count": 5,
       "sources": [
         "RVvoenkor",
+        "astrapress",
+        "bazabazon",
+        "epoddubny",
+        "rybar"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-18T09:48:01+00:00",
+      "description": "🇺🇸🇨🇳 Трамп прилетів до китайського міста Шеньчжень для участі у саміті лідерів Азійсько-Тихоокеанського економічного співробітництва (АТЕС) — його зустрів лідер КНР Сі Цзіньпін.\n\nОсобиста зустріч Трам",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Вашингтон",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "ukrpravda_news",
         "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-17T20:00:47+00:00",
-      "description": "Момент падения Крымского моста. \n\nЕсли смотреть только с первого ракурса, то прилетело минимум 7 раз точно в  арку. Если предположить, что с дальнего - это не повтор, а продолжение, то суммарно будет ",
+      "date": "2026-11-18T09:11:20+00:00",
+      "description": "В Шэньчжэне Путин и Си Цзиньпин проводят российско-китайские переговоры   Владимир Путин и Си Цзиньпин обсудили развитие двусторонних отношений, торговлю, экономическое и гуманитарное сотрудничество, ",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 5,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "bazabazon",
+        "epoddubny",
+        "rybar"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-18T09:05:08+00:00",
+      "description": "Три человека пострадали в результате российской атаки в Павлограде Днепропетровской области, — ОВА\n\n«Утром российские войска нанесли удар беспилотником по частному сектору. Повреждены несколько домов.",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Крым",
+      "location": "Павлоград",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 2,
       "sources": [
         "astrapress",
-        "supernova_plus",
-        "uniannet"
+        "dnepr_typical"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-17T18:39:15+00:00",
-      "description": "‼️🇷🇺🇨🇳Путин прибыл в Китай, где встретится с Трампом и Си\n\n▪️С 18 по 19 ноября в Шэньчжэне пройдёт саммит Азиатско-Тихоокеанского экономического сотрудничества (АТЭС) и трёхсторонняя встреча, на котор",
+      "date": "2026-11-18T08:55:11+00:00",
+      "description": "В Минобороны РФ заявили, что план по набору контрактников на 2026 год выполнен на 89%, а в беспилотные войска — почти на 99%\n\n«На сегодняшний день план по отбору на военную службу по контракту на 2026",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Москва",
@@ -103,110 +92,192 @@
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "epoddubny"
+        "astrapress"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-18T08:28:18+00:00",
+      "description": "‼️Троє людей постраждали через ворожий удар по Павлограду.\n\nЗранку росіяни поцілили безпілотником по приватному сектору. Понівечені декілька осель.\n\nДвом чоловікам та жінці медики надали допомогу на м",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Павлоград",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "dnepr_typical"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-18T07:25:57+00:00",
+      "description": "Восемь пострадавших и три пожара: последствия атаки ВСУ на Краснодарский край \n\nМинувшей ночью Краснодарский край и Республика Адыгея подверглись атаке противника. По сообщениям оперштаба, враг нанёс ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Краснодар",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "dva_majors",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-18T07:13:39+00:00",
+      "description": "Встреча Владимира Путина и Си Цзиньпина в Шэньчжэне стала важным элементом подготовки к саммиту АТЭС и одновременно площадкой для предметного обсуждения ключевых направлений российско‑китайского сотру",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 5,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "bazabazon",
+        "epoddubny",
+        "rybar"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-18T06:20:27+00:00",
+      "description": "‼️🇷🇺🏴‍☠Враг атаковал Краснодарский край, есть разрушения и раненые \n\n▪️4 человека пострадали при атаке БПЛА на Кубань, сообщает оперштаб региона.\n▪️Из-за атаки дронов произошли возгорания на двух пред",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Краснодар",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "dva_majors",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-18T05:39:51+00:00",
+      "description": "Краснодарский край. Оперштаб:\n\nВ Северском районе при атаке БПЛА пострадали четыре человека\n\nИм оказывают необходимую медицинскую помощь.\n\nИз-за падения обломков беспилотников произошли возгорания на ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Краснодар",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "dva_majors",
+        "wargonzo"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 18,
+  "corroborated_event_count": 11,
   "country_counts": {
     "GB": 1,
-    "RU": 12,
-    "UA": 29
+    "RU": 16,
+    "UA": 23,
+    "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 42,
+  "event_count": 41,
   "event_type_counts": {
-    "Air Raid Alert": 1,
-    "Military Offensive": 2,
-    "Military Strike": 33,
-    "Political Development": 6
+    "Military Offensive": 1,
+    "Military Operation": 4,
+    "Military Strike": 29,
+    "Political Development": 7
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 18,
+    "cross_source_consistent_count": 11,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 24,
-    "rss_reports_not_independently_corroborated_count": 9
+    "not_independently_corroborated_count": 30,
+    "rss_reports_not_independently_corroborated_count": 7
   },
-  "generated_at": "2026-11-18T02:01:01Z",
+  "generated_at": "2026-11-18T10:05:49Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 11,
-  "not_verified_event_count": 24,
+  "new_since_previous_snapshot": 34,
+  "not_verified_event_count": 30,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 33,
-      "delta": 26,
+      "current_period": 29,
+      "delta": 10,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 7,
+      "previous_period": 19,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 9,
-    "telegram": 33
+    "rss": 7,
+    "telegram": 34
   },
   "top_locations": [
     {
-      "country": "UA",
-      "events": 9,
-      "location": "Киев"
-    },
-    {
       "country": "RU",
-      "events": 8,
-      "location": "Крым"
-    },
-    {
-      "country": "UA",
       "events": 5,
-      "location": "Днепр"
-    },
-    {
-      "country": "UA",
-      "events": 5,
-      "location": "Кримський"
-    },
-    {
-      "country": "RU",
-      "events": 4,
       "location": "Москва"
     },
     {
+      "country": "RU",
+      "events": 5,
+      "location": "Краснодар"
+    },
+    {
       "country": "UA",
-      "events": 2,
-      "location": "Дніпро"
+      "events": 4,
+      "location": "Одесса"
+    },
+    {
+      "country": "UA",
+      "events": 4,
+      "location": "Харьков"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Винница"
+      "location": "Kharkiv"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Мукачево"
+      "location": "Киев"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Павлоград"
+    },
+    {
+      "country": "RU",
+      "events": 2,
+      "location": "Крым"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 4,
-    "astrapress": 3,
-    "bazabazon": 3,
-    "exilenova_plus": 2,
-    "lost_armour": 2,
-    "rybar": 2,
-    "supernova_plus": 1,
+    "RVvoenkor": 5,
+    "The Kyiv Independent": 3,
+    "astrapress": 10,
+    "boris_rozhin": 3,
+    "dnepr_typical": 1,
+    "exilenova_plus": 1,
+    "kyivindependent_official": 3,
+    "odesa_typical": 1,
+    "rybar": 1,
     "ukrpravda_news": 6,
     "uniannet": 2,
-    "wargonzo": 4,
-    "Суспільне Новини": 3,
-    "Українська правда": 4
+    "wargonzo": 1
   },
-  "window_end": "2026-11-18T02:01:01Z",
-  "window_start": "2026-11-17T02:01:01Z"
+  "window_end": "2026-11-18T10:05:49Z",
+  "window_start": "2026-11-17T10:05:49Z"
 }
