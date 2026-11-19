@@ -1,6 +1,90 @@
 {
   "events": [
     {
+      "channel": "rss_ukrpravda",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-19T15:23:00Z",
+      "description": "У Києві уламки російського дрона впали на території МЗС",
+      "event_type": "Military Strike",
+      "id": "rss-30852a91dbba61ab23-524c8a",
+      "lat": 50.4501,
+      "lng": 30.5234,
+      "location": "Киев",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_ukrpravda",
+          "date": "2026-11-19T15:23:00Z",
+          "publisher": "Українська правда",
+          "source_type": "rss",
+          "url": "https://www.pravda.com.ua/news/2026/11/19/8063656/"
+        }
+      ],
+      "url": "https://www.pravda.com.ua/news/2026/11/19/8063656/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_suspilne",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-19T13:41:26Z",
+      "description": "У Вінниці ще 47 власників пошкодженого обстрілами житла отримають грошову допомогу",
+      "event_type": "Military Strike",
+      "id": "rss-4b4eacb5520a0b9ce6-631759",
+      "lat": 49.2331,
+      "lng": 28.4682,
+      "location": "Винница",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_suspilne",
+          "date": "2026-11-19T13:41:26Z",
+          "publisher": "Суспільне Новини",
+          "source_type": "rss",
+          "url": "https://suspilne.media/vinnytsia/1455041-u-vinnici-se-47-vlasnikiv-poskodzenogo-obstrilami-zitla-otrimaut-grosovu-dopomogu/"
+        }
+      ],
+      "url": "https://suspilne.media/vinnytsia/1455041-u-vinnici-se-47-vlasnikiv-poskodzenogo-obstrilami-zitla-otrimaut-grosovu-dopomogu/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_kyivindependent",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-19T13:05:54Z",
+      "description": "Dutch Embassy damaged in massive, ongoing Russian drone strike on Kyiv",
+      "event_type": "Military Strike",
+      "id": "rss-e7e5766ccbbe623d78-524c8a",
+      "lat": 50.4501,
+      "lng": 30.5234,
+      "location": "Киев",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_kyivindependent",
+          "date": "2026-11-19T13:05:54Z",
+          "publisher": "The Kyiv Independent",
+          "source_type": "rss",
+          "url": "https://kyivindependent.com/breaking-dutch-embassy-damaged-in-russian-drone-strike-on-kyiv/"
+        }
+      ],
+      "url": "https://kyivindependent.com/breaking-dutch-embassy-damaged-in-russian-drone-strike-on-kyiv/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
       "channel": "rss_suspilne",
       "confidence": "LOW",
       "coordinate_precision": "settlement_center",
@@ -979,62 +1063,6 @@
       "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
       "verification_sources": [],
       "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_unian",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "UA",
-      "date": "2026-11-12T11:42:00Z",
-      "description": "У центрі Києва російський дрон впав посеред дороги, є постраждалий",
-      "event_type": "Military Strike",
-      "id": "rss-9e9c4652751a971115-524c8a",
-      "lat": 50.4501,
-      "lng": 30.5234,
-      "location": "Киев",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_unian",
-          "date": "2026-11-12T11:42:00Z",
-          "publisher": "УНІАН",
-          "source_type": "rss",
-          "url": "https://www.unian.ua/war/u-kiyevi-dron-vpav-na-dorogu-shcho-vidomo-novini-kiyeva-13557576.html"
-        }
-      ],
-      "url": "https://www.unian.ua/war/u-kiyevi-dron-vpav-na-dorogu-shcho-vidomo-novini-kiyeva-13557576.html",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_suspilne",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "UA",
-      "date": "2026-11-12T09:35:00Z",
-      "description": "На Полтавщині внаслідок обстрілу РФ травмовані четверо енергетиків",
-      "event_type": "Military Strike",
-      "id": "rss-34887f3ab175064f17-c6a397",
-      "lat": 49.5883,
-      "lng": 34.5514,
-      "location": "Полтава",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_suspilne",
-          "date": "2026-11-12T09:35:00Z",
-          "publisher": "Суспільне Новини",
-          "source_type": "rss",
-          "url": "https://suspilne.media/poltava/1451023-na-poltavsini-vnaslidok-obstrilu-rf-travmovani-cetvero-energetikiv/"
-        }
-      ],
-      "url": "https://suspilne.media/poltava/1451023-na-poltavsini-vnaslidok-obstrilu-rf-travmovani-cetvero-energetikiv/",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
     }
   ],
   "feed_health": {
@@ -1042,54 +1070,54 @@
       "endpoint": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
       "events_mapped": 0,
       "items_seen": 18,
-      "last_attempt": "2026-11-19T08:15:01Z",
+      "last_attempt": "2026-11-19T17:28:12Z",
       "last_error": null,
-      "last_success": "2026-11-19T08:15:01Z",
-      "latest_item_at": "2026-11-19T07:55:26Z",
+      "last_success": "2026-11-19T17:28:12Z",
+      "latest_item_at": "2026-11-19T17:06:41Z",
       "status": "ok"
     },
     "rss_kyivindependent": {
       "endpoint": "https://kyivindependent.com/news-archive/rss/",
-      "events_mapped": 0,
+      "events_mapped": 1,
       "items_seen": 15,
-      "last_attempt": "2026-11-19T08:15:01Z",
+      "last_attempt": "2026-11-19T17:28:12Z",
       "last_error": null,
-      "last_success": "2026-11-19T08:15:01Z",
-      "latest_item_at": "2026-11-19T07:27:50Z",
+      "last_success": "2026-11-19T17:28:12Z",
+      "latest_item_at": "2026-11-19T17:13:45Z",
       "status": "ok"
     },
     "rss_suspilne": {
       "endpoint": "https://suspilne.media/rss/ukrnet.rss",
-      "events_mapped": 13,
+      "events_mapped": 1,
       "items_seen": 50,
-      "last_attempt": "2026-11-19T08:15:01Z",
-      "last_error": "HTTP 403",
-      "last_success": "2026-11-19T00:54:37Z",
-      "latest_item_at": "2026-11-18T21:32:57Z",
-      "status": "error"
+      "last_attempt": "2026-11-19T17:28:12Z",
+      "last_error": null,
+      "last_success": "2026-11-19T17:28:12Z",
+      "latest_item_at": "2026-11-19T17:26:53Z",
+      "status": "ok"
     },
     "rss_ukrpravda": {
       "endpoint": "https://www.pravda.com.ua/rss/view_mainnews/",
       "events_mapped": 1,
       "items_seen": 20,
-      "last_attempt": "2026-11-19T08:15:01Z",
+      "last_attempt": "2026-11-19T17:28:12Z",
       "last_error": null,
-      "last_success": "2026-11-19T08:15:01Z",
-      "latest_item_at": "2026-11-19T07:17:00Z",
+      "last_success": "2026-11-19T17:28:12Z",
+      "latest_item_at": "2026-11-19T16:56:00Z",
       "status": "ok"
     },
     "rss_unian": {
       "endpoint": "https://rss.unian.net/site/news_ukr.rss",
       "events_mapped": 0,
       "items_seen": 100,
-      "last_attempt": "2026-11-19T08:15:01Z",
+      "last_attempt": "2026-11-19T17:28:12Z",
       "last_error": null,
-      "last_success": "2026-11-19T08:15:01Z",
-      "latest_item_at": "2026-11-19T08:11:25Z",
+      "last_success": "2026-11-19T17:28:12Z",
+      "latest_item_at": "2026-11-19T17:22:00Z",
       "status": "ok"
     }
   },
-  "generated_at": "2026-11-19T08:15:01Z",
+  "generated_at": "2026-11-19T17:28:12Z",
   "method_note": "RSS items are separate, unverified source records. Only the title is stored; the original publisher link is retained.",
   "window_days": 7
 }
