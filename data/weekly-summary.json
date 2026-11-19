@@ -4,19 +4,19 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 67,
-      "delta": 63,
+      "current_period": 63,
+      "delta": 58,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 4,
+      "previous_period": 5,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
     {
       "classification": "analytical_signal",
-      "current_period": 12,
-      "delta": 12,
+      "current_period": 25,
+      "delta": 25,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -27,125 +27,78 @@
   ],
   "attention_candidates": [
     {
-      "country": "UA",
-      "date": "2026-11-18T23:41:53+00:00",
-      "description": "Два человека получили ранения в результате атаки ВС РФ на Запорожье, — ОВА \n\nВ результате ударов БПЛА загорелись три частных дома и автомобиль. Сначала в Запорожской военной администрации сообщили о п",
-      "event_type": "Military Strike",
+      "country": "US",
+      "date": "2026-11-19T08:10:25+00:00",
+      "description": "‼️🇺🇸🤭 Сонный Дональд: Трамп решил подремать на саммите АТЭС\n\n▪️Пока Си Цзиньпин выступал, американский президент, судя по кадрам, задремал.\n⚠️Подписаться на RV: MAX | t.me/RVvoenkor\n🤣169👍11🤷‍♂7😢4🤯3❤2👎",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Запорожье",
+      "location": "Вашингтон",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-18T22:54:51+00:00",
-      "description": "🤬 Два человека пострадали в результате прилета по частному дому в Запорожье, – ОВА\n\nПредварительно, ранения получили жильцы дома – мужчина и женщина.\n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Запорожье",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "dva_majors",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-18T22:41:28+00:00",
-      "description": "Крымский мост в третий раз за неделю подвергся атаке БПЛА. После этого движение по переправе временно перекрыли.\n\nГлава Крыма Сергей Аксёнов сообщил, что на месте работают ответственные службы. Сейчас",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Крым",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 4,
       "sources": [
         "RVvoenkor",
-        "bazabazon",
+        "boris_rozhin",
+        "exilenova_plus",
         "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-18T21:49:42+00:00",
-      "description": "Тройнічок Сі — Трамп — путін розпочнеться о 8:30 за київським часом.\n\n​На сьогоднішній ранковій зустрічі діди вже провели коротку репетицію «голландського штурвалу»: перевірили хватку, синхронізували ",
+      "date": "2026-11-19T08:03:00+00:00",
+      "description": "Появились первые кадры из зала, где в ближайшее время начнется встреча Си, Трампа и Путина \n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Москва",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 7,
       "sources": [
+        "RVvoenkor",
         "bazabazon",
+        "boris_rozhin",
+        "epoddubny",
         "operativnoZSU",
-        "readovkanews"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-18T21:22:19+00:00",
-      "description": "#ЭпохаПутина\n\n«Произошёл, без преувеличения, тектонический сдвиг. Сегодня Азиатско-Тихоокеанский регион стал центром глобальной экономики», — сказал Владимир Путин на деловом саммите АТЭС в Шэньчжэне.",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 6,
-      "sources": [
-        "RVvoenkor",
-        "bazabazon",
-        "epoddubny",
-        "readovkanews",
-        "rybar",
-        "voenkorKotenok"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-18T18:59:22+00:00",
-      "description": "▶Итоги 18 ноября\nвидеосводка от руководителя проекта @rybar Михаила Звинчука специально для @SolovievLive\n\nВладимир Путин прилетел в Китай, и внимание к визиту огромное. Одни рассуждают о встрече в фо",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 6,
-      "sources": [
-        "RVvoenkor",
-        "bazabazon",
-        "epoddubny",
-        "readovkanews",
-        "rybar",
-        "voenkorKotenok"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-18T15:59:48+00:00",
-      "description": "🇺🇦Последствия прилета по подстанции в Одесской области\n\nДва майора\nДва майора в МАХ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Запорожье",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "dva_majors",
+        "ukrpravda_news",
         "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-18T15:44:48+00:00",
-      "description": "Путин и Трамп проведут двустороннюю встречу на саммите АТЭС\n\nПереговоры президентов России и США планируются после пленарного заседания саммита АТЭС, сообщил помощник российского лидера Юрий Ушаков.\n\n",
+      "date": "2026-11-19T07:57:56+00:00",
+      "description": "Сообщается о массовых прилетах в центре Курска\n\nПосле атаки беспилотников задымилось здание в центре города. Местные жители насчитали не менее восьми взрывов. \n\nГубернатор Хинштейн сообщил о поврежден",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Курск",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "exilenova_plus",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-19T07:33:28+00:00",
+      "description": "‼️🇺🇸🇺🇦 Зеленский вновь пожаловался, что Трампу проще давить на Киев, чем на Москву — NBC\n\n▪️В интервью американскому телеканалу Зеленский заявил, что Трамп выбрал более мягкий подход к диалогу с Путин",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "dva_majors",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-19T07:21:01+00:00",
+      "description": "🗣️Помічник Путіна Юрій Ушаков заявив, що російський лідер та президент США під час двосторонньої зустрічі в Китаї у четвер обговорювали Україну.\n\nНа уточнювальне запитання про те, чи була тема України",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Москва",
@@ -154,58 +107,136 @@
       "sources": [
         "RVvoenkor",
         "bazabazon",
+        "boris_rozhin",
         "epoddubny",
-        "exilenova_plus",
         "operativnoZSU",
         "readovkanews",
-        "rybar",
-        "voenkorKotenok"
+        "ukrpravda_news",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-19T07:13:40+00:00",
+      "description": "ВС РФ атаковали энергетическую и промышленную инфраструктуру Одесской области. В Минобороны России заявили о поражении двух электроподстанций и порта Черноморск \n\n«Ночью Россия нанесла массированный к",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Черноморск",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "lost_armour"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-19T07:05:48+00:00",
+      "description": "Курск .. взрыв в центре\n🔥774🥰83🎉78👍33😁26💩17🤮11🤡11🤷‍♀7😘4🥱3\n  \n  \n    48.7K views07:05",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Курск",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "exilenova_plus",
+        "supernova_plus"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-19T07:02:38+00:00",
+      "description": "У Курську пролунали вибухи в центральній частині міста.\n1🔥3.17K🎉472❤146🥰41✍30👀21🕊20🤗17😱10🌚5🙏4\n  \n  \n    76K views07:02",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Курськ",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "astrapress",
+        "exilenova_plus",
+        "supernova_plus",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-19T06:58:44+00:00",
+      "description": "Беспилотники атаковали Курск, есть задымление в здании в центре города, повреждены еще шесть многоквартирных домов, — губернатор\n\n«Над городом сработала наша система ПВО. Предварительно, есть задымлен",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Курск",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-19T06:57:17+00:00",
+      "description": "Рыжий бедняга не выдержал и заснул прямо за столом на саммите АТЭС в Китае 😁  УНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads\n\n\n  \nСамое забавное, но Трамп решил вздремнуть именно в тот момент, когда пре",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Вашингтон",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "exilenova_plus",
+        "uniannet"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 17,
+  "corroborated_event_count": 33,
   "country_counts": {
-    "RU": 21,
-    "UA": 62,
-    "US": 1
+    "RU": 38,
+    "UA": 49,
+    "US": 5
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 84,
+  "event_count": 92,
   "event_type_counts": {
     "Military Offensive": 3,
-    "Military Operation": 2,
-    "Military Strike": 67,
-    "Political Development": 12
+    "Military Operation": 1,
+    "Military Strike": 63,
+    "Political Development": 25
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 17,
+    "cross_source_consistent_count": 33,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 67,
-    "rss_reports_not_independently_corroborated_count": 42
+    "not_independently_corroborated_count": 59,
+    "rss_reports_not_independently_corroborated_count": 37
   },
-  "generated_at": "2026-11-19T00:54:59Z",
+  "generated_at": "2026-11-19T08:15:08Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 24,
-  "not_verified_event_count": 67,
+  "new_since_previous_snapshot": 36,
+  "not_verified_event_count": 59,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 67,
-      "delta": 63,
+      "current_period": 63,
+      "delta": 58,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 4,
+      "previous_period": 5,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
     {
       "classification": "analytical_signal",
-      "current_period": 12,
-      "delta": 12,
+      "current_period": 25,
+      "delta": 25,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -215,34 +246,39 @@
     }
   ],
   "source_type_counts": {
-    "rss": 42,
-    "telegram": 42
+    "rss": 37,
+    "telegram": 55
   },
   "top_locations": [
     {
-      "country": "UA",
-      "events": 20,
-      "location": "Киев"
-    },
-    {
       "country": "RU",
-      "events": 12,
+      "events": 19,
       "location": "Москва"
     },
     {
       "country": "UA",
-      "events": 7,
+      "events": 16,
+      "location": "Киев"
+    },
+    {
+      "country": "UA",
+      "events": 8,
       "location": "Кримський"
     },
     {
-      "country": "UA",
-      "events": 4,
-      "location": "Запорожье"
+      "country": "RU",
+      "events": 6,
+      "location": "Крым"
     },
     {
-      "country": "UA",
+      "country": "US",
+      "events": 5,
+      "location": "Вашингтон"
+    },
+    {
+      "country": "RU",
       "events": 4,
-      "location": "Одесса"
+      "location": "Курск"
     },
     {
       "country": "UA",
@@ -252,28 +288,23 @@
     {
       "country": "UA",
       "events": 3,
-      "location": "Днепр"
-    },
-    {
-      "country": "RU",
-      "events": 2,
-      "location": "Крым"
+      "location": "Одесса"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 6,
+    "RVvoenkor": 4,
     "The Kyiv Independent": 8,
-    "astrapress": 2,
-    "bazabazon": 2,
-    "epoddubny": 3,
-    "exilenova_plus": 5,
-    "kyivindependent_official": 5,
-    "operativnoZSU": 5,
-    "uniannet": 3,
-    "Суспільне Новини": 15,
-    "УНІАН": 6,
-    "Українська правда": 12
+    "astrapress": 6,
+    "bazabazon": 6,
+    "boris_rozhin": 4,
+    "dva_majors": 4,
+    "exilenova_plus": 6,
+    "ukrpravda_news": 5,
+    "uniannet": 5,
+    "Суспільне Новини": 13,
+    "УНІАН": 5,
+    "Українська правда": 10
   },
-  "window_end": "2026-11-19T00:54:59Z",
-  "window_start": "2026-11-12T00:54:59Z"
+  "window_end": "2026-11-19T08:15:08Z",
+  "window_start": "2026-11-12T08:15:08Z"
 }
