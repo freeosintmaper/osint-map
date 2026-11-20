@@ -4,12 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 58,
-      "delta": 56,
+      "current_period": 64,
+      "delta": 64,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 0,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
@@ -27,203 +27,185 @@
   ],
   "attention_candidates": [
     {
+      "country": "UA",
+      "date": "2026-11-20T04:05:54+00:00",
+      "description": "🤬 БпЛА ударили по медицинскому заведению в Шевченковском районе Харькова, – мэр Терехов  Предварительно, есть пострадавшие.  Также о взрывах на фоне атаки КАБов сообщают в Запорожье.  УНИАН в 🕸Google ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Харьков",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-20T02:24:26+00:00",
+      "description": "🤬 БпЛА ударили по медицинскому заведению в Шевченковском районе Харькова, – мэр Терехов\n\nПредварительно, есть пострадавшие.\n\nТакже о взрывах на фоне атаки КАБов сообщают в Запорожье.\n\nУНИАН в 🕸Google ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Харьков",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-20T01:41:15+00:00",
+      "description": "❗️Удары баллистикой этой ночью были по четырём мостам в Киеве:\n\n- Дарницкому;\n- Подольскому;\n- мосту Патона;\n- Южному.\n\nТакже в небе сейчас активны около 11-12 стратегических бомбардировщиков – они мо",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-20T01:10:17+00:00",
+      "description": "💥 Спуски на левый берег / мосты  Есть еще цели...  UPD: еще 2 ракеты на столицу. Как же они...😢  💥 Уже более 10 ракет упали на Киев за последний час; мониторы пишут, что у русни еще около 25 ракет в з",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-20T00:54:56+00:00",
+      "description": "ВС РФ нанесли массированный ракетно-дроновый удар по объектам энергетики, промышленности и транспортной инфраструктуры Украины. Атаки затронули Киев и несколько других регионов страны.\n\nПо украинской ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "bazabazon",
+        "odesa_typical"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-20T00:11:15+00:00",
+      "description": "💥 Спуски на Киев – 2 ракеты  Угроза сохраняется.\n\n❗️ Предварительно, два здания повреждены в Киеве после спусков баллистики – в Оболонском и Подольском районах, – КГВА\n\nСогласно мониторинговым каналам",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-19T23:57:58+00:00",
+      "description": "‼️🇫🇮🇷🇺 Мира не достичь, если Зеленский и Путин не встретятся — Стубб\n\n▪️Президент Финляндии заявил о необходимости личной встречи российского и украинского лидеров по итогам саммита «коалиции желающих",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "operativnoZSU",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
       "country": "RU",
-      "date": "2026-11-19T23:39:29+00:00",
-      "description": "В Смоленской области атакован завод ПАО «Дорогобуж», крупный производитель компонентов для промышленных взрывчатых веществ, — OSINT-анализ ASTRA\n\nОпасность БПЛА в регионе была объявлена около полуночи",
+      "date": "2026-11-19T22:22:50+00:00",
+      "description": "Дорогобуж, Смоленська область\n\nУдарними БпЛА СОУ атаковано ПАТ «Дорогобуж»  виробника азотної хімії та компонентів для промислових вибухових речовин, пов’язаного з хімічною галуззю російського ВПК\n\nНа",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Смоленск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
+      "source_count": 3,
       "sources": [
         "astrapress",
         "exilenova_plus",
-        "operativnoZSU",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-19T23:38:54+00:00",
-      "description": "💥 Новые взрывы в Киеве – может быть еще несколько волн  UPD: пока что новых целей нет 🙏\n\n\n  \n😰 Вот так сейчас выглядит небо над столицей после ударов баллистикой, – местные каналы\n\nО новых пусках пока",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "odesa_typical",
-        "uniannet"
+        "operativnoZSU"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-19T22:55:08+00:00",
-      "description": "🔥 Дроны атаковали предприятие, изготовляющее взрывчатые вещества в Смоленской области, – osint-каналы\n\nБпЛА ударили по ПАО «Дорогобуж» – производителю азотной химии и компонентов для промышленных взры",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Смоленск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "astrapress",
-        "exilenova_plus",
-        "operativnoZSU",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-19T21:45:11+00:00",
-      "description": "Зеленський провів зустріч зі Стівом Віткоффом, Джаредом Кушнером та європейськими радниками з питань національної безпеки.\n\nВін розраховує, що Американська сторона допоможе якомога швидше організувати",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-19T20:55:26+00:00",
-      "description": "Заряжайтесь на ночь.\nЕсть угроза ударов по Одесской ТЭЦ, а также других целей по территории Украины и Одесской области. \n\nК удару по Украине готовы 7х бортов Ту-95МС, 3х Ту-160, до 16 КРМБ Калибр, до ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "odesa_typical",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-19T20:44:00+00:00",
-      "description": "Президент Зеленський провів зустріч з американськими посланцями та європейськими радниками з питань національної безпеки\n\nПід час зустрічі сторони приділили увагу дієвим гарантіям безпеки для стримува",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-19T20:28:09+00:00",
-      "description": "‼️🇺🇦🥶 Украину ждёт самая тяжёлая зима, - Зеленский\n\n▪️Зеленский после саммита \"Коалиции желающих\" начал ныть о том, что украинцы каждый день борются за выживание.\n➖Если бы Украина хотела отдать свои т",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-19T19:46:32+00:00",
-      "description": "В Днепропетровской области один человек погиб в результате российской атаки, — власти \n\nБолее 20 раз ВС РФ атаковали два района. Обстреливали беспилотниками и артиллерией, написал глава ОВА Александр ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "astrapress"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-19T19:31:36+00:00",
-      "description": "Зеленський після засідання «коаліції охочих» заявив, що Європа буде брати участь у перемовинах із Росією щодо завершення війни.\n\n«Це важливо. Саме Україна найбільш активно просувала цей підхід, що Євр",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-19T19:08:27+00:00",
-      "description": "Politico: Трамп поставив під сумнів доцільність подальших витрат на військову підтримку України\n\nЯк стверджують співрозмовники, через кілька годин після завершення зустрічі з главою Кремля Володимиром",
+      "date": "2026-11-19T17:35:01+00:00",
+      "description": "‼️🇺🇸🇪🇺 «Путин хочет мира»: Трамп раскритиковал планы Европы выделить Украине ещё €70 млрд — Die Welt\n\n▪️После саммита в Шэньчжэне президент США провёл телефонный разговор с европейскими лидерами, в хо",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Москва",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 5,
+      "source_count": 6,
       "sources": [
         "RVvoenkor",
-        "astrapress",
         "bazabazon",
         "exilenova_plus",
-        "ukrpravda_news"
+        "readovkanews",
+        "ukrpravda_news",
+        "wargonzo"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 27,
+  "corroborated_event_count": 30,
   "country_counts": {
     "FR": 1,
     "GB": 1,
-    "RU": 23,
-    "UA": 62,
+    "RU": 21,
+    "UA": 69,
     "US": 2
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 89,
+  "event_count": 94,
   "event_type_counts": {
+    "Air Raid Alert": 1,
     "Military Offensive": 3,
-    "Military Operation": 2,
-    "Military Strike": 58,
+    "Military Strike": 64,
     "Political Development": 26
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 27,
+    "cross_source_consistent_count": 30,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 62,
-    "rss_reports_not_independently_corroborated_count": 36
+    "not_independently_corroborated_count": 64,
+    "rss_reports_not_independently_corroborated_count": 37
   },
-  "generated_at": "2026-11-19T23:44:28Z",
+  "generated_at": "2026-11-20T04:23:34Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 31,
-  "not_verified_event_count": 62,
+  "new_since_previous_snapshot": 18,
+  "not_verified_event_count": 64,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 58,
-      "delta": 56,
+      "current_period": 64,
+      "delta": 64,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
+      "previous_period": 0,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     },
@@ -240,23 +222,23 @@
     }
   ],
   "source_type_counts": {
-    "rss": 36,
-    "telegram": 53
+    "rss": 37,
+    "telegram": 57
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 27,
+      "events": 33,
       "location": "Киев"
     },
     {
       "country": "RU",
-      "events": 16,
+      "events": 15,
       "location": "Москва"
     },
     {
       "country": "UA",
-      "events": 7,
+      "events": 9,
       "location": "Харьков"
     },
     {
@@ -286,19 +268,19 @@
     }
   ],
   "top_sources": {
-    "RVvoenkor": 5,
+    "RVvoenkor": 7,
     "The Kyiv Independent": 7,
     "astrapress": 6,
     "bazabazon": 7,
+    "kyivindependent_official": 4,
     "lost_armour": 4,
     "operativnoZSU": 5,
     "readovkanews": 4,
     "ukrpravda_news": 9,
-    "uniannet": 4,
+    "uniannet": 12,
     "Суспільне Новини": 13,
-    "УНІАН": 4,
-    "Українська правда": 11
+    "Українська правда": 12
   },
-  "window_end": "2026-11-19T23:44:28Z",
-  "window_start": "2026-11-12T23:44:28Z"
+  "window_end": "2026-11-20T04:23:34Z",
+  "window_start": "2026-11-13T04:23:34Z"
 }
