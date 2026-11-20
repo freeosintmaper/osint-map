@@ -1,12 +1,68 @@
 {
   "events": [
     {
+      "channel": "rss_unian",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-20T08:53:00Z",
+      "description": "Росія масовано атакувала Львів: пошкоджено енергообʼєкт, є жертви",
+      "event_type": "Military Strike",
+      "id": "rss-6b25c8b6feb1bdc29c-785210",
+      "lat": 49.8397,
+      "lng": 24.0297,
+      "location": "Львов",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_unian",
+          "date": "2026-11-20T08:53:00Z",
+          "publisher": "УНІАН",
+          "source_type": "rss",
+          "url": "https://www.unian.ua/war/rosiya-atakuvala-lviv-shcho-vidomo-pro-naslidki-novini-lvova-13565472.html"
+        }
+      ],
+      "url": "https://www.unian.ua/war/rosiya-atakuvala-lviv-shcho-vidomo-pro-naslidki-novini-lvova-13565472.html",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_unian",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-20T08:49:00Z",
+      "description": "РФ масовано атакувала Україну ракетами і дронами: кількість загиблих у Києві зросла",
+      "event_type": "Military Strike",
+      "id": "rss-5b61b015e29935e4fe-524c8a",
+      "lat": 50.4501,
+      "lng": 30.5234,
+      "location": "Киев",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_unian",
+          "date": "2026-11-20T08:49:00Z",
+          "publisher": "УНІАН",
+          "source_type": "rss",
+          "url": "https://www.unian.ua/war/ataka-na-kijiv-harkiv-lviv-rf-masovano-b-ye-po-mistah-ukrajini-novini-kiyeva-13565436.html"
+        }
+      ],
+      "url": "https://www.unian.ua/war/ataka-na-kijiv-harkiv-lviv-rf-masovano-b-ye-po-mistah-ukrajini-novini-kiyeva-13565436.html",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
       "channel": "rss_ukrpravda",
       "confidence": "LOW",
       "coordinate_precision": "settlement_center",
       "country": "UA",
       "date": "2026-11-20T00:13:00Z",
-      "description": "Росіяни обстрілюють Київ балістикою: влучили біля мосту, в трьох районах виникли пожежі",
+      "description": "Росіяни обстріляли Київ балістикою: влучили біля мосту, в трьох районах виникли пожежі",
       "event_type": "Military Strike",
       "id": "rss-ef95b9796858802bbc-524c8a",
       "lat": 50.4501,
@@ -24,6 +80,34 @@
         }
       ],
       "url": "https://www.pravda.com.ua/news/2026/11/20/8063717/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_kyivindependent",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-19T23:41:36Z",
+      "description": "3 Kyiv bridges struck in massive Russian aerial assault on Ukraine, at least 9 dead",
+      "event_type": "Military Strike",
+      "id": "rss-263877276daa2f5d26-524c8a",
+      "lat": 50.4501,
+      "lng": 30.5234,
+      "location": "Киев",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_kyivindependent",
+          "date": "2026-11-19T23:41:36Z",
+          "publisher": "The Kyiv Independent",
+          "source_type": "rss",
+          "url": "https://kyivindependent.com/russia-launches-mass-missile-attack-against-ukraine-after-putin-vows-revenge/"
+        }
+      ],
+      "url": "https://kyivindependent.com/russia-launches-mass-missile-attack-against-ukraine-after-putin-vows-revenge/",
       "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
       "verification_sources": [],
       "verification_status": "not_verified"
@@ -951,90 +1035,6 @@
       "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
       "verification_sources": [],
       "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_suspilne",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "UA",
-      "date": "2026-11-13T06:48:11Z",
-      "description": "Нічна атака на Київ: у лікарні спалахнула пожежа, є постраждалий",
-      "event_type": "Military Strike",
-      "id": "rss-d5ef155a7c27d50080-524c8a",
-      "lat": 50.4501,
-      "lng": 30.5234,
-      "location": "Киев",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_suspilne",
-          "date": "2026-11-13T06:48:11Z",
-          "publisher": "Суспільне Новини",
-          "source_type": "rss",
-          "url": "https://suspilne.media/kyiv/1451475-nicna-ataka-na-kiiv-u-likarni-spalahnula-pozeza-e-postrazdalij/"
-        }
-      ],
-      "url": "https://suspilne.media/kyiv/1451475-nicna-ataka-na-kiiv-u-likarni-spalahnula-pozeza-e-postrazdalij/",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_ukrpravda",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "UA",
-      "date": "2026-11-13T06:48:00Z",
-      "description": "Росіяни вдарили по Одесі реактивними дронами: двоє людей загинули, п’ятеро поранені",
-      "event_type": "Military Strike",
-      "id": "rss-3c20f5318340795e32-bf1f87",
-      "lat": 46.4775,
-      "lng": 30.7326,
-      "location": "Одесса",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_ukrpravda",
-          "date": "2026-11-13T06:48:00Z",
-          "publisher": "Українська правда",
-          "source_type": "rss",
-          "url": "https://www.pravda.com.ua/news/2026/11/13/8062647/"
-        }
-      ],
-      "url": "https://www.pravda.com.ua/news/2026/11/13/8062647/",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_ukrpravda",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "UA",
-      "date": "2026-11-13T05:12:00Z",
-      "description": "Росіяни атакували лікарню в Києві: є постраждалий, спалахнула пожежа – ДСНС",
-      "event_type": "Military Strike",
-      "id": "rss-5ba2f3e10e9c23b821-524c8a",
-      "lat": 50.4501,
-      "lng": 30.5234,
-      "location": "Киев",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_ukrpravda",
-          "date": "2026-11-13T05:12:00Z",
-          "publisher": "Українська правда",
-          "source_type": "rss",
-          "url": "https://www.pravda.com.ua/news/2026/11/13/8062642/"
-        }
-      ],
-      "url": "https://www.pravda.com.ua/news/2026/11/13/8062642/",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
     }
   ],
   "feed_health": {
@@ -1042,27 +1042,27 @@
       "endpoint": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
       "events_mapped": 0,
       "items_seen": 18,
-      "last_attempt": "2026-11-20T04:23:29Z",
+      "last_attempt": "2026-11-20T13:25:12Z",
       "last_error": null,
-      "last_success": "2026-11-20T04:23:29Z",
-      "latest_item_at": "2026-11-19T18:23:42Z",
+      "last_success": "2026-11-20T13:25:12Z",
+      "latest_item_at": "2026-11-20T13:03:01Z",
       "status": "ok"
     },
     "rss_kyivindependent": {
       "endpoint": "https://kyivindependent.com/news-archive/rss/",
       "events_mapped": 1,
       "items_seen": 15,
-      "last_attempt": "2026-11-20T04:23:29Z",
+      "last_attempt": "2026-11-20T13:25:12Z",
       "last_error": null,
-      "last_success": "2026-11-20T04:23:29Z",
-      "latest_item_at": "2026-11-20T02:59:39Z",
+      "last_success": "2026-11-20T13:25:12Z",
+      "latest_item_at": "2026-11-20T12:23:20Z",
       "status": "ok"
     },
     "rss_suspilne": {
       "endpoint": "https://suspilne.media/rss/ukrnet.rss",
-      "events_mapped": 13,
+      "events_mapped": 12,
       "items_seen": 50,
-      "last_attempt": "2026-11-20T04:23:29Z",
+      "last_attempt": "2026-11-20T13:25:12Z",
       "last_error": "HTTP 403",
       "last_success": "2026-11-19T17:28:12Z",
       "latest_item_at": "2026-11-19T17:26:53Z",
@@ -1070,26 +1070,26 @@
     },
     "rss_ukrpravda": {
       "endpoint": "https://www.pravda.com.ua/rss/view_mainnews/",
-      "events_mapped": 2,
+      "events_mapped": 1,
       "items_seen": 20,
-      "last_attempt": "2026-11-20T04:23:29Z",
+      "last_attempt": "2026-11-20T13:25:12Z",
       "last_error": null,
-      "last_success": "2026-11-20T04:23:29Z",
-      "latest_item_at": "2026-11-20T03:25:00Z",
+      "last_success": "2026-11-20T13:25:12Z",
+      "latest_item_at": "2026-11-20T12:02:00Z",
       "status": "ok"
     },
     "rss_unian": {
       "endpoint": "https://rss.unian.net/site/news_ukr.rss",
-      "events_mapped": 0,
+      "events_mapped": 2,
       "items_seen": 100,
-      "last_attempt": "2026-11-20T04:23:29Z",
+      "last_attempt": "2026-11-20T13:25:12Z",
       "last_error": null,
-      "last_success": "2026-11-20T04:23:29Z",
-      "latest_item_at": "2026-11-20T04:13:00Z",
+      "last_success": "2026-11-20T13:25:12Z",
+      "latest_item_at": "2026-11-20T13:21:00Z",
       "status": "ok"
     }
   },
-  "generated_at": "2026-11-20T04:23:29Z",
+  "generated_at": "2026-11-20T13:25:12Z",
   "method_note": "RSS items are separate, unverified source records. Only the title is stored; the original publisher link is retained.",
   "window_days": 7
 }
