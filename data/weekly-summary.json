@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 64,
-      "delta": 64,
+      "current_period": 55,
+      "delta": 55,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -15,8 +15,8 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 13,
-      "delta": 13,
+      "current_period": 8,
+      "delta": 8,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -28,193 +28,184 @@
   "attention_candidates": [
     {
       "country": "RU",
-      "date": "2026-11-21T10:14:41+00:00",
-      "description": "В водах Фінської затоки невідомими дронами було атаковано грузове судно всрф московського режиму, яке доставляло військовий вантаж в калінінград.\n🔥200👍64❤372👀1💅1\n  \n  \n    4.18K views10:14",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Калінінград",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "exilenova_plus"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-21T10:12:25+00:00",
-      "description": "В Финском заливе два дрона атаковали грузовое судно, которое шло в Калининград, — губернатор Ленобласти\n\n«В нейтральных водах Финского залива, в трех морских милях от границы Российской Федерации, про",
-      "event_type": "Military Strike",
+      "date": "2026-11-21T17:38:43+00:00",
+      "description": "В Калининграде взвыли сирены. Жителей просят спуститься в безопасные места\n\nТакже людям пришла рассылка от операторов о том, что «мобильный интернет может быть временно ограничен в целях безопасности»",
+      "event_type": "Air Raid Alert",
       "fact_checked": false,
       "location": "Калининград",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "astrapress",
-        "exilenova_plus"
+        "bazabazon"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-21T17:26:30+00:00",
+      "description": "Внезапно: в российском Калининграде завыли сирены, жителей просят спуститься в безопасные места, - сообщают росСМИ\n\nНапомним, сегодня два беспилотника атаковали грузовое судно, следовавшее в Калинингр",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Калининград",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "dva_majors",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-21T16:59:47+00:00",
+      "description": "🇺🇸Трамп заявив про підготовку масштабного перемир'я між Україною та рф\n\nПрезидент США заявив, що Вашингтон працює над розширенням гуманітарних домовленостей після успішної евакуації людей з Олешок.\n\n🫡",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Вашингтон",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "operativnoZSU"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-21T10:10:01+00:00",
-      "description": "‼️Боевая часть российской баллистической ракеты упала во дворе жилого дома в Киеве и не сдетонировала\n\nСаперы ГСЧС изъяли ее в Подольском районе столицы.\n\nНасколько повезло людям, объяснять, думаем, н",
+      "date": "2026-11-21T14:40:35+00:00",
+      "description": "‼️🇺🇦🇺🇸 Зеленский раскритиковал Трампа и потребовал гарантий безопасности на десятилетия, а не на 2 года его президентства\n\n▪️Зеленский заявил, что пока «не видит на бумаге» конкретных механизмов предо",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "operativnoZSU",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "US",
+      "date": "2026-11-21T14:15:11+00:00",
+      "description": "Мелания Трамп заявила, что ведет переговоры с Россией и Украиной о новом перемирии до католического Рождества  Первая леди США Мелания Трамп в эфире Fox News заявила, что уже ведет переговоры с предст",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Вашингтон",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "operativnoZSU"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-21T14:11:38+00:00",
+      "description": "‼️🇷🇺🏴‍☠️ Атаковано судно, следовавшее в Калининград  ▪️2 беспилотника атаковали грузовое судно, направлявшееся в Калининград, сообщил губернатор Ленинградской области А. Дрозденко. ▪️Нападение произош",
       "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Калининград",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "dva_majors",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-21T13:57:38+00:00",
+      "description": "Губернатор Калининградской области подтвердил атаку двух беспилотников на грузовое судно в Финском заливе  «В нейтральных водах Финского залива атаковано грузовое судно, которое шло в Калининград. По ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Калининград",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "dva_majors",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-21T12:50:23+00:00",
+      "description": "Губернатор Калининградской области подтвердил атаку двух беспилотников на грузовое судно в Финском заливе\n\n«В нейтральных водах Финского залива атаковано грузовое судно, которое шло в Калининград. По ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Калининград",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "dva_majors",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-21T12:29:19+00:00",
+      "description": "Питання членства в НАТО України обговорюється із союзниками, включно зі США, але конкретні терміни залежатимуть від того, коли і як завершиться війна, — Зеленський \n\nПрезидент наголошує, що вступ до Н",
+      "event_type": "Political Development",
       "fact_checked": false,
       "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "astrapress",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-21T09:35:03+00:00",
-      "description": "В Харьковской области перекрыли движение по Печенежской дамбе\n\nОколо 01:00 21 ноября российские войска нанесли ракетный удар по участку дороги Т-21-11 Чугуев — Печенеги — Великий Бурлук. Дамба поврежд",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Харьков",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "boris_rozhin",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-21T09:25:05+00:00",
-      "description": "Меланья Трампа заявила, что до Рождества возможно еще одно локальное прекращения огня на Украине.\nРанее Путин сообщил, что не против проведения локального перемирия в Константиновке по образцу локальн",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "boris_rozhin",
-        "ukrpravda_news",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "US",
-      "date": "2026-11-21T09:25:01+00:00",
-      "description": "👀 Трамп хочет добиться мирного соглашения между Украиной и рф к началу января, пока Конгресс не перешёл под контроль демократов, - Financial Times  Как пишет издание, администрация США сообщила об это",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Вашингтон",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
         "RVvoenkor",
-        "astrapress",
-        "operativnoZSU",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-21T09:20:24+00:00",
-      "description": "‼️🇷🇺🇺🇦 Юго-Восток и большая часть центральной Украины, включая Киев, — исконно русские земли, заявил Лавров\n\n▪️«Юго-Восток Украины, и, конечно же, большая часть центральной Украины, включая Киев, — эт",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-21T09:09:03+00:00",
-      "description": "Криворожская ТЭС и сухогруз у Одессы попали под удар ВС РФ \n\nМинувшей ночью армия России нанесла серию ударов по теплоэлектростанции, электроподстанциям и сухогрузу в районе Одессы. Минобороны РФ сооб",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Чернигов",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "wargonzo"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "US",
-      "date": "2026-11-21T08:38:31+00:00",
-      "description": "Мелания Трамп заявила, что ведет переговоры с Россией и Украиной о новом перемирии до католического Рождества\n\nПервая леди США Мелания Трамп в эфире Fox News заявила, что уже ведет переговоры с предст",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Вашингтон",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "RVvoenkor",
-        "astrapress",
-        "operativnoZSU",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-21T08:30:57+00:00",
-      "description": "🔴 Зустріч Трампа, Сі Цзіньпіна і Путіна: друга Ялта чи провал для Росії. Про це та не тільки в новому випуску \"УП-2\" поговорили антизірка всесвітньої журналістики Роман Романюк та політичний оглядач У",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "boris_rozhin",
-        "ukrpravda_news"
+        "operativnoZSU"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 21,
+  "corroborated_event_count": 10,
   "country_counts": {
-    "GB": 2,
-    "RU": 21,
-    "UA": 57,
-    "US": 3
+    "GB": 1,
+    "RU": 17,
+    "UA": 50,
+    "US": 2
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 83,
+  "event_count": 70,
   "event_type_counts": {
     "Air Raid Alert": 1,
     "Military Offensive": 3,
-    "Military Operation": 2,
-    "Military Strike": 64,
-    "Political Development": 13
+    "Military Operation": 3,
+    "Military Strike": 55,
+    "Political Development": 8
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 21,
+    "cross_source_consistent_count": 10,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 62,
-    "rss_reports_not_independently_corroborated_count": 42
+    "not_independently_corroborated_count": 60,
+    "rss_reports_not_independently_corroborated_count": 43
   },
-  "generated_at": "2026-11-21T10:18:45Z",
+  "generated_at": "2026-11-21T17:42:08Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 32,
-  "not_verified_event_count": 62,
+  "new_since_previous_snapshot": 19,
+  "not_verified_event_count": 60,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 64,
-      "delta": 64,
+      "current_period": 55,
+      "delta": 55,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -224,8 +215,8 @@
     },
     {
       "classification": "analytical_signal",
-      "current_period": 13,
-      "delta": 13,
+      "current_period": 8,
+      "delta": 8,
       "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -235,29 +226,24 @@
     }
   ],
   "source_type_counts": {
-    "rss": 42,
-    "telegram": 41
+    "rss": 43,
+    "telegram": 27
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 23,
+      "events": 20,
       "location": "Киев"
     },
     {
       "country": "RU",
-      "events": 8,
-      "location": "Москва"
+      "events": 5,
+      "location": "Калининград"
     },
     {
       "country": "UA",
-      "events": 7,
+      "events": 4,
       "location": "Харьков"
-    },
-    {
-      "country": "US",
-      "events": 3,
-      "location": "Вашингтон"
     },
     {
       "country": "UA",
@@ -265,35 +251,40 @@
       "location": "Винница"
     },
     {
+      "country": "RU",
+      "events": 3,
+      "location": "Москва"
+    },
+    {
       "country": "UA",
       "events": 3,
       "location": "Кримський"
     },
     {
-      "country": "UA",
+      "country": "US",
       "events": 2,
-      "location": "Днепр"
+      "location": "Вашингтон"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Дніпро"
+      "location": "Николаев"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 6,
+    "DeepStateUA": 2,
+    "RVvoenkor": 3,
     "The Kyiv Independent": 8,
-    "astrapress": 7,
-    "boris_rozhin": 3,
-    "exilenova_plus": 2,
+    "astrapress": 5,
+    "bazabazon": 2,
     "operativnoZSU": 3,
-    "ukrpravda_news": 2,
-    "uniannet": 6,
-    "wargonzo": 4,
-    "Суспільне Новини": 16,
+    "ukrpravda_news": 3,
+    "uniannet": 1,
+    "wargonzo": 2,
+    "Суспільне Новини": 17,
     "УНІАН": 7,
     "Українська правда": 10
   },
-  "window_end": "2026-11-21T10:18:45Z",
-  "window_start": "2026-11-14T10:18:45Z"
+  "window_end": "2026-11-21T17:42:08Z",
+  "window_start": "2026-11-14T17:42:08Z"
 }
