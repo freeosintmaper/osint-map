@@ -5,6 +5,90 @@
       "confidence": "LOW",
       "coordinate_precision": "settlement_center",
       "country": "UA",
+      "date": "2026-11-21T08:22:53Z",
+      "description": "Постраждали дві людини: вночі та зранку РФ атакувала Київ дронами та балістикою",
+      "event_type": "Military Strike",
+      "id": "rss-364688e958660a2066-524c8a",
+      "lat": 50.4501,
+      "lng": 30.5234,
+      "location": "Киев",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_suspilne",
+          "date": "2026-11-21T08:22:53Z",
+          "publisher": "Суспільне Новини",
+          "source_type": "rss",
+          "url": "https://suspilne.media/kyiv/1455702-postrazdali-dvi-ludini-vnoci-ta-zranku-rf-atakuvala-kiiv-dronami-ta-balistikou/"
+        }
+      ],
+      "url": "https://suspilne.media/kyiv/1455702-postrazdali-dvi-ludini-vnoci-ta-zranku-rf-atakuvala-kiiv-dronami-ta-balistikou/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_suspilne",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-21T05:55:55Z",
+      "description": "Майже 10 разів війська РФ обстріляли Дніпро та область: двоє загиблих, ще понад 60 — поранені",
+      "event_type": "Military Strike",
+      "id": "rss-165b478f700977afb4-9ad345",
+      "lat": 48.4647,
+      "lng": 35.0462,
+      "location": "Днепр",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_suspilne",
+          "date": "2026-11-21T05:55:55Z",
+          "publisher": "Суспільне Новини",
+          "source_type": "rss",
+          "url": "https://suspilne.media/dnipro/1455715-majze-10-raziv-vijska-rf-obstrilali-dnipro-ta-oblast-dvoe-zagiblih-se-55-poraneni/"
+        }
+      ],
+      "url": "https://suspilne.media/dnipro/1455715-majze-10-raziv-vijska-rf-obstrilali-dnipro-ta-oblast-dvoe-zagiblih-se-55-poraneni/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_suspilne",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-21T05:55:55Z",
+      "description": "Майже 10 разів війська РФ обстріляли Дніпро та область: двоє загиблих, ще понад 60 — поранені",
+      "event_type": "Military Strike",
+      "id": "rss-165b478f700977afb4-cfdef2",
+      "lat": 48.46664,
+      "lng": 35.04066,
+      "location": "Дніпро",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_suspilne",
+          "date": "2026-11-21T05:55:55Z",
+          "publisher": "Суспільне Новини",
+          "source_type": "rss",
+          "url": "https://suspilne.media/dnipro/1455715-majze-10-raziv-vijska-rf-obstrilali-dnipro-ta-oblast-dvoe-zagiblih-se-55-poraneni/"
+        }
+      ],
+      "url": "https://suspilne.media/dnipro/1455715-majze-10-raziv-vijska-rf-obstrilali-dnipro-ta-oblast-dvoe-zagiblih-se-55-poraneni/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
+      "channel": "rss_suspilne",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
       "date": "2026-11-20T16:20:01Z",
       "description": "«Усе завалене, усе впало»: подробиці ракетного удару в селі Варварівка на Полтавщині 20 листопада",
       "event_type": "Military Strike",
@@ -1098,54 +1182,54 @@
       "endpoint": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
       "events_mapped": 0,
       "items_seen": 17,
-      "last_attempt": "2026-11-21T02:42:32Z",
+      "last_attempt": "2026-11-21T10:18:09Z",
       "last_error": null,
-      "last_success": "2026-11-21T02:42:32Z",
-      "latest_item_at": "2026-11-20T15:43:54Z",
+      "last_success": "2026-11-21T10:18:09Z",
+      "latest_item_at": "2026-11-21T09:45:24Z",
       "status": "ok"
     },
     "rss_kyivindependent": {
       "endpoint": "https://kyivindependent.com/news-archive/rss/",
       "events_mapped": 1,
       "items_seen": 15,
-      "last_attempt": "2026-11-21T02:42:32Z",
+      "last_attempt": "2026-11-21T10:18:09Z",
       "last_error": null,
-      "last_success": "2026-11-21T02:42:32Z",
-      "latest_item_at": "2026-11-21T00:59:45Z",
+      "last_success": "2026-11-21T10:18:09Z",
+      "latest_item_at": "2026-11-21T08:58:01Z",
       "status": "ok"
     },
     "rss_suspilne": {
       "endpoint": "https://suspilne.media/rss/ukrnet.rss",
-      "events_mapped": 1,
+      "events_mapped": 3,
       "items_seen": 50,
-      "last_attempt": "2026-11-21T02:42:32Z",
+      "last_attempt": "2026-11-21T10:18:09Z",
       "last_error": null,
-      "last_success": "2026-11-21T02:42:32Z",
-      "latest_item_at": "2026-11-20T21:30:55Z",
+      "last_success": "2026-11-21T10:18:09Z",
+      "latest_item_at": "2026-11-21T10:10:58Z",
       "status": "ok"
     },
     "rss_ukrpravda": {
       "endpoint": "https://www.pravda.com.ua/rss/view_mainnews/",
       "events_mapped": 0,
       "items_seen": 20,
-      "last_attempt": "2026-11-21T02:42:32Z",
+      "last_attempt": "2026-11-21T10:18:09Z",
       "last_error": null,
-      "last_success": "2026-11-21T02:42:32Z",
-      "latest_item_at": "2026-11-21T01:15:00Z",
+      "last_success": "2026-11-21T10:18:09Z",
+      "latest_item_at": "2026-11-21T10:03:00Z",
       "status": "ok"
     },
     "rss_unian": {
       "endpoint": "https://rss.unian.net/site/news_ukr.rss",
       "events_mapped": 0,
       "items_seen": 100,
-      "last_attempt": "2026-11-21T02:42:32Z",
+      "last_attempt": "2026-11-21T10:18:09Z",
       "last_error": null,
-      "last_success": "2026-11-21T02:42:32Z",
-      "latest_item_at": "2026-11-21T02:17:00Z",
+      "last_success": "2026-11-21T10:18:09Z",
+      "latest_item_at": "2026-11-21T10:12:00Z",
       "status": "ok"
     }
   },
-  "generated_at": "2026-11-21T02:42:32Z",
+  "generated_at": "2026-11-21T10:18:09Z",
   "method_note": "RSS items are separate, unverified source records. Only the title is stored; the original publisher link is retained.",
   "window_days": 7
 }
