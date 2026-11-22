@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 23,
-      "delta": 16,
+      "current_period": 17,
+      "delta": 10,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -16,42 +16,27 @@
   ],
   "attention_candidates": [
     {
-      "country": "RU",
-      "date": "2026-11-22T02:03:29+00:00",
-      "description": "Еще кадры с задымлением в Краснодаре после ночной украинской атаки. Местные жители сообщают о запахе гари.  📸 Прислать фото/видео/информацию: @helloastrabot  ☮️ Сайт издания ASTRA на английском и русс",
-      "event_type": "Military Strike",
+      "country": "UA",
+      "date": "2026-11-22T09:34:48+00:00",
+      "description": "За минулу добу внаслідок російських атак у Сумській області постраждали 9 людей. Під вогнем російських окупантів опинилися 22 населені пункти області.\n\nТакож протягом внаслідок російських обстрілів До",
+      "event_type": "Military Operation",
       "fact_checked": false,
-      "location": "Краснодар",
+      "location": "Харьков",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "astrapress"
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "RU",
-      "date": "2026-11-21T23:43:05+00:00",
-      "description": "🇺🇸🇷🇺🇨🇳 Трамп о Ялте 2.0: «Великие державы в 1945/2026». \n\nПрезидент США сравнил саммит с Путиным и Си в Шэньчжэне с Ялтинской конференцией 1945 года, на которой лидеры СССР, Британии и США собрались, ",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "voenkorKotenok"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-21T22:45:33+00:00",
-      "description": "‼️🇷🇺🏴‍☠️ Враг атакует Краснодар\n\n▪️Около полуночи начался налёт на Кубань. О фиксации БпЛА над Краснодарским  краем сообщили власти разных районов.\n▪️В самом Краснодаре прогремели взрывы, виден дым.\n➖",
+      "country": "UA",
+      "date": "2026-11-22T07:35:38+00:00",
+      "description": "Один человек пострадал в результате ударов ВС РФ по Харьковской области, — ГСЧС\n\n«В результате российской атаки на Лозовую возникли пожары, пострадала женщина. Ночью российские войска атаковали реакти",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Краснодар",
+      "location": "Харьков",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
@@ -61,36 +46,36 @@
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 9,
+  "corroborated_event_count": 2,
   "country_counts": {
-    "RU": 18,
-    "UA": 14
+    "RU": 11,
+    "UA": 18
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 32,
+  "event_count": 29,
   "event_type_counts": {
-    "Air Raid Alert": 3,
-    "Military Operation": 2,
-    "Military Strike": 23,
-    "Political Development": 4
+    "Air Raid Alert": 2,
+    "Military Operation": 7,
+    "Military Strike": 17,
+    "Political Development": 3
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 9,
+    "cross_source_consistent_count": 2,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 23,
-    "rss_reports_not_independently_corroborated_count": 6
+    "not_independently_corroborated_count": 27,
+    "rss_reports_not_independently_corroborated_count": 3
   },
-  "generated_at": "2026-11-22T02:33:53Z",
+  "generated_at": "2026-11-22T10:16:05Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 9,
-  "not_verified_event_count": 23,
+  "new_since_previous_snapshot": 20,
+  "not_verified_event_count": 27,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 23,
-      "delta": 16,
+      "current_period": 17,
+      "delta": 10,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -100,65 +85,65 @@
     }
   ],
   "source_type_counts": {
-    "rss": 6,
+    "rss": 3,
     "telegram": 26
   },
   "top_locations": [
     {
-      "country": "RU",
+      "country": "UA",
       "events": 6,
-      "location": "Краснодар"
-    },
-    {
-      "country": "RU",
-      "events": 5,
-      "location": "Калининград"
-    },
-    {
-      "country": "UA",
-      "events": 3,
-      "location": "Запорожье"
-    },
-    {
-      "country": "UA",
-      "events": 3,
       "location": "Киев"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 3,
+      "location": "Харьков"
+    },
+    {
+      "country": "RU",
+      "events": 2,
       "location": "Москва"
     },
     {
-      "country": "UA",
+      "country": "RU",
       "events": 2,
-      "location": "Славянск"
+      "location": "Краснодар"
+    },
+    {
+      "country": "UA",
+      "events": 1,
+      "location": "Днепр"
+    },
+    {
+      "country": "UA",
+      "events": 1,
+      "location": "Івано-Франківськ"
     },
     {
       "country": "RU",
       "events": 1,
-      "location": "Севастополь"
+      "location": "Брянск"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 1,
-      "location": "Kaliningrad"
+      "location": "Львов"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 5,
+    "RVvoenkor": 4,
     "astrapress": 4,
-    "bazabazon": 2,
+    "bazabazon": 1,
     "boris_rozhin": 2,
-    "exilenova_plus": 2,
-    "informnapalm": 1,
-    "kyivindependent_official": 2,
+    "exilenova_plus": 1,
+    "kyivindependent_official": 5,
+    "lost_armour": 1,
     "supernova_plus": 1,
-    "ukrpravda_news": 3,
+    "ukrpravda_news": 4,
     "uniannet": 2,
     "voenkorKotenok": 1,
-    "Суспільне Новини": 6
+    "Суспільне Новини": 3
   },
-  "window_end": "2026-11-22T02:33:53Z",
-  "window_start": "2026-11-21T02:33:53Z"
+  "window_end": "2026-11-22T10:16:05Z",
+  "window_start": "2026-11-21T10:16:05Z"
 }

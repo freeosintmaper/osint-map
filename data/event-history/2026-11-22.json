@@ -1,130 +1,7 @@
 {
-  "current_event_count": 78,
+  "current_event_count": 74,
   "date_utc": "2026-11-22",
   "events_added": [
-    {
-      "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "RU",
-        "date": "2026-11-22T02:03:29+00:00",
-        "description": "Еще кадры с задымлением в Краснодаре после ночной украинской атаки. Местные жители сообщают о запахе гари.  📸 Прислать фото/видео/информацию: @helloastrabot  ☮️ Сайт издания ASTRA на английском и русс",
-        "event_type": "Military Strike",
-        "id": 21,
-        "lat": 45.0355,
-        "lng": 38.9753,
-        "location": "Краснодар",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-22T02:03:29+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/131837"
-          }
-        ],
-        "url": "https://t.me/astrapress/131837",
-        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
-        "verification_sources": [
-          "RVvoenkor",
-          "astrapress"
-        ],
-        "verification_status": "corroborated"
-      },
-      "fingerprint": "bd8912c333230ccf7e2620a6dace94e57a3ca160d0872f62eac1ed2c175c00b1"
-    },
-    {
-      "event": {
-        "channel": "RVvoenkor",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-22T01:50:11+00:00",
-        "description": "‼️🇺🇦💥По Запорожью ударили 20 авиабомб за час: власти перекрыли все мосты и плотину ДнепроГЭС\n\n▪️После серии авиаударов движение транспорта по мостам и плотине ДнепроГЭС было полностью перекрыто, сообщ",
-        "event_type": "Military Strike",
-        "id": 34,
-        "lat": 47.8388,
-        "lng": 35.1396,
-        "location": "Запорожье",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "RVvoenkor",
-            "date": "2026-11-22T01:50:11+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/RVvoenkor/127712"
-          }
-        ],
-        "url": "https://t.me/RVvoenkor/127712",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "8c6ef15a5a2a97ba971392eae6425823d767bc97eca97229399faf258ad95e92"
-    },
-    {
-      "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "RU",
-        "date": "2026-11-22T01:21:16+00:00",
-        "description": "Очевидцы из Краснодара публикуют видео с задымлением после украинской ночной атаки  Кадры не подтверждены OSINT-аналитиком ASTRA.   В ночь на 22 ноября в аэропорту Краснодара введены временные огранич",
-        "event_type": "Military Strike",
-        "id": 20,
-        "lat": 45.0355,
-        "lng": 38.9753,
-        "location": "Краснодар",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-22T01:21:16+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/131834"
-          }
-        ],
-        "url": "https://t.me/astrapress/131834",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "44b61d70094e026f6f4e95958fb8877cf48401c3b8c7ff605b52338f454ede3c"
-    },
-    {
-      "event": {
-        "channel": "boris_rozhin",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-22T01:03:01+00:00",
-        "description": "Уничтожение автомобилей ВСУ севернее г. Славянск.\n\n48.879749526785126, 37.673623751837525\n48.868832688655424, 37.6709975814531\n\n@ukrainian_guide\n👍59🔥19🏆6⚡1\n  \n  \n    8.01K views01:03",
-        "event_type": "Military Strike",
-        "id": 28,
-        "lat": 48.8531,
-        "lng": 37.6126,
-        "location": "Славянск",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "boris_rozhin",
-            "date": "2026-11-22T01:03:01+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/boris_rozhin/234285"
-          }
-        ],
-        "url": "https://t.me/boris_rozhin/234285",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "44ab6bd767b14dfc968f2b0882841f0750d304c4340a0727e6bc09c73f4c3bd8"
-    },
     {
       "event": {
         "channel": "kyivindependent_official",
@@ -157,36 +34,222 @@
     },
     {
       "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-22T09:40:16+00:00",
+        "description": "ВС РФ освободили населённым пункт Сосновый Бор в Харьковской области\n🙏239👍65❤24🔥16⚡2\n  \n  \n    15.1K views09:40",
+        "event_type": "Military Operation",
+        "id": 30,
+        "lat": 49.9935,
+        "lng": 36.2304,
+        "location": "Харьков",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-22T09:40:16+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/234323"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/234323",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "cc200acb5a23bff0874ba39abe0509aa867835747026a2cea2ea0259d585e5c0"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor,ukrpravda_news",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-22T09:34:48+00:00",
+        "description": "За минулу добу внаслідок російських атак у Сумській області постраждали 9 людей. Під вогнем російських окупантів опинилися 22 населені пункти області.\n\nТакож протягом внаслідок російських обстрілів До",
+        "event_type": "Military Operation",
+        "id": 5,
+        "lat": 49.9935,
+        "lng": 36.2304,
+        "location": "Харьков",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-22T09:34:48+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/86974"
+          },
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-22T09:10:46+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/127743"
+          }
+        ],
+        "url": "https://t.me/ukrpravda_news/86974",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "ukrpravda_news"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "7b8ed9c14ae017af26aa46cf60f8c87be7d44469a899d317459ca84f6c1e5a9d"
+    },
+    {
+      "event": {
+        "channel": "uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-22T09:25:22+00:00",
+        "description": "🤯В Днепре дрон упал прямо на крышу жилого дома\n\nМестные паблики пишут, что пострадал технический этаж и одна из квартир.\n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
+        "event_type": "Military Strike",
+        "id": 7,
+        "lat": 48.4647,
+        "lng": 35.0462,
+        "location": "Днепр",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-22T09:25:22+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/207797"
+          }
+        ],
+        "url": "https://t.me/uniannet/207797",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "292da4363947434b724f00bd17f24750f2e456800e2e5fb9159b78e9dfe332ce"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-22T08:52:08+00:00",
+        "description": "Семь человек могут находиться под завалами многоквартирного жилого дома в Киевской области, разрушенного в результате удара ВС РФ, — ГСЧС  «Спасатели эвакуировали 9 человек, среди них 1 ребенка. Еще о",
+        "event_type": "Military Strike",
+        "id": 24,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-22T08:52:08+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/131877"
+          }
+        ],
+        "url": "https://t.me/astrapress/131877",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "43dbedc0325233d49c3ca36a94b12f5b8bd1338c6dca75dafcbed8966b43ce69"
+    },
+    {
+      "event": {
+        "channel": "kyivindependent_official",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-22T08:50:39+00:00",
+        "description": "⚡️️Update: 14 feared trapped after Russian drone hits apartment building near Kyiv, injuring 2.\n\n“People may still be trapped under the rubble,” President Volodymyr Zelensky said.\n🤬31🤯2🙏2💔1🖕1\n  \n  \n  ",
+        "event_type": "Military Strike",
+        "id": 17,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "kyivindependent_official",
+            "date": "2026-11-22T08:50:39+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/KyivIndependent_official/57104"
+          }
+        ],
+        "url": "https://t.me/KyivIndependent_official/57104",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "073c8d2d527a67d33000d7d240992675da2e74473cbd8b6047b23e010001043a"
+    },
+    {
+      "event": {
         "channel": "RVvoenkor",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
-        "country": "RU",
-        "date": "2026-11-21T23:43:05+00:00",
-        "description": "🇺🇸🇷🇺🇨🇳 Трамп о Ялте 2.0: «Великие державы в 1945/2026». \n\nПрезидент США сравнил саммит с Путиным и Си в Шэньчжэне с Ялтинской конференцией 1945 года, на которой лидеры СССР, Британии и США собрались, ",
-        "event_type": "Political Development",
-        "id": 33,
-        "lat": 55.7558,
-        "lng": 37.6173,
-        "location": "Москва",
+        "country": "UA",
+        "date": "2026-11-22T08:40:18+00:00",
+        "description": "‼️🇷🇺🇺🇦 Правый берег Киева третьи сутки испытывает перебои с водой после ударов\n\n▪️Жители жалуются на отсутствие водоснабжения уже более двух суток.\n▪️«Киевводоканал» сообщил о серьёзном повреждении од",
+        "event_type": "Military Strike",
+        "id": 34,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
         "source_count": 1,
         "source_type": "telegram",
         "sources": [
           {
             "channel": "RVvoenkor",
-            "date": "2026-11-21T23:43:05+00:00",
+            "date": "2026-11-22T08:40:18+00:00",
             "source_type": "telegram",
-            "url": "https://t.me/RVvoenkor/127711"
+            "url": "https://t.me/RVvoenkor/127737"
           }
         ],
-        "url": "https://t.me/RVvoenkor/127711",
-        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
-        "verification_sources": [
-          "RVvoenkor",
-          "voenkorKotenok"
-        ],
-        "verification_status": "corroborated"
+        "url": "https://t.me/RVvoenkor/127737",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
       },
-      "fingerprint": "599e744258da338e4524838686d96d3556ecb9def6f56b24a5a4bbaffc97e316"
+      "fingerprint": "c406ab3041134a9c0fc40519ec859cd8e5a61ce59af824c583cfc43fa077fc30"
+    },
+    {
+      "event": {
+        "channel": "ukrpravda_news",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-22T08:40:12+00:00",
+        "description": "Увечері 21 листопада в центрі Івано-Франківська біля одного з кафе на пішохідній частині вулиці Незалежності між трьома чоловіками виник конфлікт зі стріляниною. Один із них отримав поранення ноги\n\n📰 ",
+        "event_type": "Military Operation",
+        "id": 4,
+        "lat": 48.92312,
+        "lng": 24.71248,
+        "location": "Івано-Франківськ",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-22T08:40:12+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/86973"
+          }
+        ],
+        "url": "https://t.me/ukrpravda_news/86973",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "dcb14d988a5c74d6a6e411a6bbd8195b40d192caafe45d7bfc3eeedee96c550e"
     },
     {
       "event": {
@@ -194,54 +257,210 @@
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
         "country": "RU",
-        "date": "2026-11-21T23:41:14+00:00",
-        "description": "Очевидцы из Краснодара публикуют видео с задымлением после украинской ночной атаки\n\nКадры не подтверждены OSINT-аналитиком ASTRA. \n\nВ ночь на 22 ноября в аэропорту Краснодара введены временные огранич",
+        "date": "2026-11-22T08:28:01+00:00",
+        "description": "Украинский дрон ранил велосипедиста в Брянской области, — власти\n\n«В селе Чуровичи Климовского района украинский дрон атаковал велосипедиста. 39-летний мужчина доставлен в больницу. Ему оказывается не",
         "event_type": "Military Strike",
-        "id": 19,
-        "lat": 45.0355,
-        "lng": 38.9753,
-        "location": "Краснодар",
+        "id": 23,
+        "lat": 53.2435,
+        "lng": 34.3639,
+        "location": "Брянск",
         "source_count": 1,
         "source_type": "telegram",
         "sources": [
           {
             "channel": "astrapress",
-            "date": "2026-11-21T23:41:14+00:00",
+            "date": "2026-11-22T08:28:01+00:00",
             "source_type": "telegram",
-            "url": "https://t.me/astrapress/131833"
+            "url": "https://t.me/astrapress/131876"
           }
         ],
-        "url": "https://t.me/astrapress/131833",
+        "url": "https://t.me/astrapress/131876",
         "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
         "verification_sources": [],
         "verification_status": "not_verified"
       },
-      "fingerprint": "3df39aa1ebf7a443d34585e96f6755b69a74e878c70dd6cf09e6d71f391eee74"
+      "fingerprint": "ca8c04f409e3ce2e68cb6aa71ca414564c85a0090be18f122d41ca592deb2d48"
     },
     {
       "event": {
         "channel": "RVvoenkor",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
-        "country": "RU",
-        "date": "2026-11-21T22:45:33+00:00",
-        "description": "‼️🇷🇺🏴‍☠️ Враг атакует Краснодар\n\n▪️Около полуночи начался налёт на Кубань. О фиксации БпЛА над Краснодарским  краем сообщили власти разных районов.\n▪️В самом Краснодаре прогремели взрывы, виден дым.\n➖",
+        "country": "UA",
+        "date": "2026-11-22T08:20:17+00:00",
+        "description": "‼️🏴‍☠️🇺🇦 Удары по Львову: повреждены объекты энергетики и ж/д инфраструктуры  ▪️Во Львовской области после удара по объекту энергетики введены аварийные отключения электроэнергии. ▪️Во Львове атакован",
         "event_type": "Military Strike",
-        "id": 32,
-        "lat": 45.0355,
-        "lng": 38.9753,
-        "location": "Краснодар",
+        "id": 33,
+        "lat": 49.8397,
+        "lng": 24.0297,
+        "location": "Львов",
         "source_count": 1,
         "source_type": "telegram",
         "sources": [
           {
             "channel": "RVvoenkor",
-            "date": "2026-11-21T22:45:33+00:00",
+            "date": "2026-11-22T08:20:17+00:00",
             "source_type": "telegram",
-            "url": "https://t.me/RVvoenkor/127708"
+            "url": "https://t.me/RVvoenkor/127733"
           }
         ],
-        "url": "https://t.me/RVvoenkor/127708",
+        "url": "https://t.me/RVvoenkor/127733",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "95488b09e475eb855aad554a7a2495e78572c9f22b1a8830a10d7e8c9ca910a7"
+    },
+    {
+      "event": {
+        "channel": "lost_armour",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-22T08:09:15+00:00",
+        "description": "Бойцы ГВ \"Запад\" контролируют территорию локомотивного депо в Купянске.\n\n📍Геопривязка\n\nВидео: https://t.me/kcaebirds/4086\n\n🔹Мы в MAX",
+        "event_type": "Military Operation",
+        "id": 28,
+        "lat": 49.7103,
+        "lng": 37.6156,
+        "location": "Купянск",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "lost_armour",
+            "date": "2026-11-22T08:09:15+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/lost_armour/12337"
+          }
+        ],
+        "url": "https://t.me/lost_armour/12337",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "2bff91cf59c53b6e19f3594a42c5c336cd3c8252d13075fbd3782ab0cf04c26d"
+    },
+    {
+      "event": {
+        "channel": "exilenova_plus",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-22T08:03:38+00:00",
+        "description": "У російському Томську агентура підпалила штаб організації яка забезпечує підрозділи окупаційної армії рф ресурсами з тилу для підтримки штурмових дій на фронті.\n\n\nШукають слід.",
+        "event_type": "Military Operation",
+        "id": 19,
+        "lat": 56.50049,
+        "lng": 84.98216,
+        "location": "Томськ",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "exilenova_plus",
+            "date": "2026-11-22T08:03:38+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/exilenova_plus/35028"
+          }
+        ],
+        "url": "https://t.me/exilenova_plus/35028",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "703e432897d9d5fdb6c5be4bd27a01969ed65af89cd54337ffc0dba7a84a0fea"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-22T08:02:49+00:00",
+        "description": "1. Орехов - Новоданиловка\nПозиционные боевые действия в районе Орехова.\nАртобстрел со стороны ВС РФ позиций ВСУ на северных подступах к Новоданиловке. ВСУ Увеличили зону контроля более 900 метров.\n\n2.",
+        "event_type": "Military Operation",
+        "id": 29,
+        "lat": 47.5667,
+        "lng": 35.7833,
+        "location": "Орехов",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-22T08:02:49+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/234313"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/234313",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "317e332d03aca89f7a1158ba5de1b77d1b96d4a4e14a36d2b05e814a4bf9f822"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-22T07:54:01+00:00",
+        "description": "Три человека ранены в результате украинских ударов в Курской области, — власти\n\n«В результате атак ранены три человека. В деревне Щекино Рыльского района ранены 46-летний мужчина и 55-летняя женщина. ",
+        "event_type": "Military Strike",
+        "id": 22,
+        "lat": 51.7304,
+        "lng": 36.1926,
+        "location": "Курск",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-22T07:54:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/131874"
+          }
+        ],
+        "url": "https://t.me/astrapress/131874",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "2e2d101c8a57f6708d23fe827786b605300291255027842545743872a0511465"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor,astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-22T07:35:38+00:00",
+        "description": "Один человек пострадал в результате ударов ВС РФ по Харьковской области, — ГСЧС\n\n«В результате российской атаки на Лозовую возникли пожары, пострадала женщина. Ночью российские войска атаковали реакти",
+        "event_type": "Military Strike",
+        "id": 21,
+        "lat": 49.9935,
+        "lng": 36.2304,
+        "location": "Харьков",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-22T07:35:38+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/131868"
+          },
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-22T07:20:18+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/127728"
+          }
+        ],
+        "url": "https://t.me/astrapress/131868",
         "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
         "verification_sources": [
           "RVvoenkor",
@@ -249,7 +468,127 @@
         ],
         "verification_status": "corroborated"
       },
-      "fingerprint": "74425459cd0179273120cd7c8ce189994e5b6b3864773ebda94556096ca53cbf"
+      "fingerprint": "d0c8a91d6b15e3d6355b133e41dda62d263a676cb2b8ab32375d9ee2fa28458d"
+    },
+    {
+      "event": {
+        "channel": "ukrpravda_news",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-22T06:48:04+00:00",
+        "description": "Трамп у своїй соцмережі опублікував світлину з Путіним із підписом “мій друг”.\n\nТрамп не вперше називає Путіна своїм “другом”.\n\nПід час двосторонньої зустрічі у китайському Шеньчжені 19 листопада, поб",
+        "event_type": "Political Development",
+        "id": 3,
+        "lat": 55.7558,
+        "lng": 37.6173,
+        "location": "Москва",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-22T06:48:04+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/86960"
+          }
+        ],
+        "url": "https://t.me/ukrpravda_news/86960",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "0612ae2fb1a84adbc0872c9d8d5f8a9dfb582ba4b0cb6e8b86ba16fb761e2255"
+    },
+    {
+      "event": {
+        "channel": "uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-22T06:45:06+00:00",
+        "description": "Этой ночью гойда посетила болота – в Краснодаре горело Главное управление Росгвардии\n\nМестные сообщали о запахе гари и публиковали кадры сильного задымления. Власти заявили об отражении атаки БПЛА, од",
+        "event_type": "Military Strike",
+        "id": 6,
+        "lat": 45.0355,
+        "lng": 38.9753,
+        "location": "Краснодар",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-22T06:45:06+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/207779"
+          }
+        ],
+        "url": "https://t.me/uniannet/207779",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "90cad429c7e7110de2c4f3e6c4c396143a357c94e32c7dc5ba9fb58b64da3495"
+    },
+    {
+      "event": {
+        "channel": "kyivindependent_official",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-22T04:55:16+00:00",
+        "description": "⚡️Apartment building 'destroyed' in Kyiv Oblast following Russian drone attack.\n\nRussia launched yet another drone attack on Ukraine's national capital region overnight on Nov. 22, damaging an apartme",
+        "event_type": "Military Strike",
+        "id": 16,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "kyivindependent_official",
+            "date": "2026-11-22T04:55:16+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/KyivIndependent_official/57103"
+          }
+        ],
+        "url": "https://t.me/KyivIndependent_official/57103",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "f6f70a90c1c1a16d30ed7e4d3de2242f20c49283ab5d0c1d96eea35be3b1598c"
+    },
+    {
+      "event": {
+        "channel": "kyivindependent_official",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-22T03:40:25+00:00",
+        "description": "⚡️Ukrainian drones reportedly strike Russian National Guard facility in Krasnodar.\n\nUkraine's military reportedly struck a regional headquarters of the Russian National Guard in the Russian city of Kr",
+        "event_type": "Military Strike",
+        "id": 15,
+        "lat": 45.04534,
+        "lng": 38.98178,
+        "location": "Krasnodar",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "kyivindependent_official",
+            "date": "2026-11-22T03:40:25+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/KyivIndependent_official/57102"
+          }
+        ],
+        "url": "https://t.me/KyivIndependent_official/57102",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "48384e74f1448b573285bafb81fc53bd8961cd0842cf9d1cfc6ec493f3ba1e4c"
     },
     {
       "event": {
@@ -258,9 +597,9 @@
         "coordinate_precision": "settlement_center",
         "country": "RU",
         "date": "2026-11-21T22:08:08+00:00",
-        "description": "Краснодар ... сообщают от атаке на афипский нпз\n1🔥761👍93❤52🤬26🤡15😁8👻7🎃6🤩5🤣2🥱1\n  \n  \n    50.6K views22:08",
+        "description": "Краснодар ... сообщают от атаке на афипский нпз\n1🔥1.27K👍162❤91🤬45🤡25👻15😁13🤩11🎃9🤣5🥱2\n  \n  \n    110K views22:08",
         "event_type": "Military Strike",
-        "id": 17,
+        "id": 20,
         "lat": 45.0355,
         "lng": 38.9753,
         "location": "Краснодар",
@@ -279,7 +618,37 @@
         "verification_sources": [],
         "verification_status": "not_verified"
       },
-      "fingerprint": "cc19bb5059eb062543ac2d7d90a874ae80596b73a36134dc2a4949df862e559c"
+      "fingerprint": "01ff0740826a6c4b432c3d92cc197f8f7600447d5f9cb504f38836ef3253fc09"
+    },
+    {
+      "event": {
+        "channel": "bazabazon",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-21T17:35:45+00:00",
+        "description": "В Калининграде звучат сирены. Жители нескольких районов сообщают о сигналах, которые раздались около 15 минут назад.\n\nВ аэропорту Храброво ввели временные ограничения на прилёт и вылет. Около 20 рейсо",
+        "event_type": "Air Raid Alert",
+        "id": 25,
+        "lat": 54.7104,
+        "lng": 20.4522,
+        "location": "Калининград",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "bazabazon",
+            "date": "2026-11-21T17:35:45+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/bazabazon/50995"
+          }
+        ],
+        "url": "https://t.me/bazabazon/50995",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "8dbc4403689c591988a9013cfc59533fc8e006206c33295d35519c86e3070ad3"
     }
   ],
   "events_removed": [
@@ -372,8 +741,524 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "c1f915f94dc5af9959336193b92fb202a8c9d84c895efc7a931097661fa1fdaa"
+    },
+    {
+      "event": {
+        "channel": "exilenova_plus",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-21T22:04:26+00:00",
+        "description": "Краснодар, місцеві повідомляють про задимлення (не облака) після численних вибухів\n\nУ місті досі лунає сигнал повітряної тривоги, атака триває.",
+        "event_type": "Military Strike",
+        "id": 15,
+        "lat": 45.0355,
+        "lng": 38.9753,
+        "location": "Краснодар",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "exilenova_plus",
+            "date": "2026-11-21T22:04:26+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/exilenova_plus/35011"
+          },
+          {
+            "channel": "exilenova_plus",
+            "date": "2026-11-21T22:25:17+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/exilenova_plus/35013"
+          }
+        ],
+        "url": "https://t.me/exilenova_plus/35011",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "3b132041bf667ecee8fb69ced74ce22a2719898df23c5c8c0ba8b39ca8279184"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-21T21:25:07+00:00",
+        "description": "Запорожье - серия мощных взрывов! Прилетает порция ФАБ! По сообщениям местных СМИ - удары наносятся в районе мостов.",
+        "event_type": "Military Strike",
+        "id": 27,
+        "lat": 47.8388,
+        "lng": 35.1396,
+        "location": "Запорожье",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-21T21:25:07+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/234265"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/234265",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "9f8df782a7beaad4a773086ed942bb28cf577af69c0491544c5d95d933dcb2a9"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-21T20:12:21+00:00",
+        "description": "В Калининграде взвыли сирены. Жителей просят спуститься в безопасные места  Также людям пришла рассылка от операторов о том, что «мобильный интернет может быть временно ограничен в целях безопасности»",
+        "event_type": "Air Raid Alert",
+        "id": 18,
+        "lat": 54.7104,
+        "lng": 20.4522,
+        "location": "Калининград",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-21T20:12:21+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/131822"
+          }
+        ],
+        "url": "https://t.me/astrapress/131822",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "astrapress",
+          "bazabazon",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "b244175356e8ebdc5537f64c452dd86268b20f0a4806dd61cb33d3946b8a738f"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-21T19:43:01+00:00",
+        "description": "‼️🇷🇺🏴‍☠Враг атакует Севастополь\n\n▪️Власти объявили тревогу в 22:00 и заявили об уничтожении трех дронов.\n➖Наши военные, ПВО и мобильные огневые группы продолжают отражать атаку ВСУ на Севастополь. Ней",
+        "event_type": "Military Strike",
+        "id": 31,
+        "lat": 44.6166,
+        "lng": 33.5254,
+        "location": "Севастополь",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-21T19:43:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/127701"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/127701",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "861d9138179dab8239c58ca7207b97f04cd0ca669baf40b113299970650fee29"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-21T18:27:47+00:00",
+        "description": "‼️🇷🇺 Атакованный в Финском заливе российский сухогруз продолжит путь в Калининград  ▪️К судну, подвергшемуся атаке беспилотников в международных водах Финского залива, подошло российское спасательное ",
+        "event_type": "Military Strike",
+        "id": 30,
+        "lat": 54.7104,
+        "lng": 20.4522,
+        "location": "Калининград",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-21T18:27:47+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/127696"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/127696",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "dva_majors",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "9e9cdeb5a4c7e58a79d2304483c02bd8e3970d850ec42ead75ea86543524facc"
+    },
+    {
+      "event": {
+        "channel": "bazabazon,uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-21T17:49:45+00:00",
+        "description": "Внезапно: в российском Калининграде завыли сирены, жителей просят спуститься в безопасные места, - сообщают росСМИ  Напомним, сегодня два беспилотника атаковали грузовое судно, следовавшее в Калинингр",
+        "event_type": "Air Raid Alert",
+        "id": 6,
+        "lat": 54.7104,
+        "lng": 20.4522,
+        "location": "Калининград",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-21T17:49:45+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/207756"
+          },
+          {
+            "channel": "bazabazon",
+            "date": "2026-11-21T17:35:45+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/bazabazon/50995"
+          }
+        ],
+        "url": "https://t.me/uniannet/207756",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "astrapress",
+          "bazabazon",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "c844a1c3cb74e8dedd7548f9e3ec14cdc3d97e299e7fe182e8501b092b433820"
+    },
+    {
+      "event": {
+        "channel": "uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-21T17:26:30+00:00",
+        "description": "Внезапно: в российском Калининграде завыли сирены, жителей просят спуститься в безопасные места, - сообщают росСМИ\n\nНапомним, сегодня два беспилотника атаковали грузовое судно, следовавшее в Калинингр",
+        "event_type": "Military Strike",
+        "id": 5,
+        "lat": 54.7104,
+        "lng": 20.4522,
+        "location": "Калининград",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-21T17:26:30+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/207755"
+          }
+        ],
+        "url": "https://t.me/uniannet/207755",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "dva_majors",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "432053956ba701eea695075584d1c4a83af3fe3e16c9011bb8d242adfb24eee9"
+    },
+    {
+      "event": {
+        "channel": "ukrpravda_news",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-21T13:30:50+00:00",
+        "description": "Протягом 20 листопада та в ніч на 21 листопада Сили оборони України уразили склад боєприпасів у тимчасово окупованому Криму, два пункти управління російських військ у Запорізькій та Донецькій областях",
+        "event_type": "Military Strike",
+        "id": 3,
+        "lat": 48.0159,
+        "lng": 37.8029,
+        "location": "Донецк",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-21T13:30:50+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/86951"
+          }
+        ],
+        "url": "https://t.me/ukrpravda_news/86951",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "80aa66c3d1fe693ab9d43105d4433dd725e809e138466de25ece2d15ab9ef8af"
+    },
+    {
+      "event": {
+        "channel": "bazabazon",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-21T12:19:58+00:00",
+        "description": "Один человек погиб и двое ранены в результате взрыва газа в жилой многоэтажке во Владикавказе — данные «Базы».\n\nОдин из пострадавших находится в крайне тяжёлом состоянии. Очаг взрыва был на шестом эта",
+        "event_type": "Military Operation",
+        "id": 22,
+        "lat": 43.0367,
+        "lng": 44.6678,
+        "location": "Владикавказ",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "bazabazon",
+            "date": "2026-11-21T12:19:58+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/bazabazon/50989"
+          }
+        ],
+        "url": "https://t.me/bazabazon/50989",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "5f6ff92596b74421bec5367665ed0655d056154827feb6fad42e9d84b2fda18a"
+    },
+    {
+      "event": {
+        "channel": "dva_majors",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-21T12:02:35+00:00",
+        "description": "🚢🔥В Финском заливе дронами атаковано судно, шедшее в Калининградскую область\n\nГубернатор Ленинградской области Александр Дрозденко сообщил, два беспилотника атаковали грузовое судно, направлявшееся в ",
+        "event_type": "Military Strike",
+        "id": 35,
+        "lat": 54.7104,
+        "lng": 20.4522,
+        "location": "Калининград",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "dva_majors",
+            "date": "2026-11-21T12:02:35+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/dva_majors/102334"
+          }
+        ],
+        "url": "https://t.me/dva_majors/102334",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "dva_majors",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "f8fb97b8f3179aff3babc199a9aa5a05d560067e69ec2c4ed67fe91186b9f806"
+    },
+    {
+      "event": {
+        "channel": "ukrpravda_news",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-21T08:30:57+00:00",
+        "description": "🔴 Зустріч Трампа, Сі Цзіньпіна і Путіна: друга Ялта чи провал для Росії. Про це та не тільки в новому випуску \"УП-2\" поговорили антизірка всесвітньої журналістики Роман Романюк та політичний оглядач У",
+        "event_type": "Political Development",
+        "id": 2,
+        "lat": 55.7558,
+        "lng": 37.6173,
+        "location": "Москва",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-21T08:30:57+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/86945"
+          }
+        ],
+        "url": "https://t.me/ukrpravda_news/86945",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "e27203ae0106e0a3384a4c7aa985c93bac85511b9cd8cc85ee9a1a32c57d2a3a"
+    },
+    {
+      "event": {
+        "channel": "wargonzo",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-20T16:14:01+00:00",
+        "description": "Ответ Москвы: четыре опасных сценария\n\nВчера Владимир Путин пообещал, что ответ на удар по Крымскому мосту будет для Киева гораздо болезненнее. Одновременно он заявил, что вариант ограниченного прекра",
+        "event_type": "Political Development",
+        "id": 25,
+        "lat": 55.7558,
+        "lng": 37.6173,
+        "location": "Москва",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "wargonzo",
+            "date": "2026-11-20T16:14:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/wargonzo/38535"
+          }
+        ],
+        "url": "https://t.me/wargonzo/38535",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "9779d05a22be7b87798bf0dd12cde7ef9eeeef841843101a532f38a82ba1db49"
+    },
+    {
+      "event": {
+        "channel": "rss_unian",
+        "confidence": "LOW",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-15T08:36:00Z",
+        "description": "Українські БпЛА перебили важливу логістичну артерію окупантів у Ростовській області",
+        "event_type": "Military Strike",
+        "id": "rss-ea28380623c15a1530-0a13dd",
+        "lat": 47.2225,
+        "lng": 39.7188,
+        "location": "Ростов-на-Дону",
+        "source_count": 1,
+        "source_type": "rss",
+        "sources": [
+          {
+            "channel": "rss_unian",
+            "date": "2026-11-15T08:36:00Z",
+            "publisher": "УНІАН",
+            "source_type": "rss",
+            "url": "https://www.unian.ua/war/udar-po-mostu-v-rostovskiy-oblasti-droni-perebili-vazhlivu-arteriyu-okupantiv-13560165.html"
+          }
+        ],
+        "url": "https://www.unian.ua/war/udar-po-mostu-v-rostovskiy-oblasti-droni-perebili-vazhlivu-arteriyu-okupantiv-13560165.html",
+        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "d0aac272e2b6b1c374ca25107dd4b26b240e16260f0e42945a8e7aae3d63335b"
+    },
+    {
+      "event": {
+        "channel": "rss_suspilne",
+        "confidence": "LOW",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-15T07:29:24Z",
+        "description": "РФ атакувала Харків та 13 населених пунктів області ракетами й БпЛА: пошкоджені будинки, медзаклади та залізниця",
+        "event_type": "Military Strike",
+        "id": "rss-06c41db51aeffc6132-7ef15f",
+        "lat": 49.9935,
+        "lng": 36.2304,
+        "location": "Харьков",
+        "source_count": 1,
+        "source_type": "rss",
+        "sources": [
+          {
+            "channel": "rss_suspilne",
+            "date": "2026-11-15T07:29:24Z",
+            "publisher": "Суспільне Новини",
+            "source_type": "rss",
+            "url": "https://suspilne.media/kharkiv/1453188-rf-atakuvala-harkiv-ta-13-naselenih-punktiv-oblasti-raketami-j-bpla-poskodzeni-budinki-medzakladi-ta-zaliznica/"
+          }
+        ],
+        "url": "https://suspilne.media/kharkiv/1453188-rf-atakuvala-harkiv-ta-13-naselenih-punktiv-oblasti-raketami-j-bpla-poskodzeni-budinki-medzakladi-ta-zaliznica/",
+        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "c9e3e4b552ca9c4c215d630df83f624eb39abc33bd39a75954a5e696464915e8"
+    },
+    {
+      "event": {
+        "channel": "rss_suspilne",
+        "confidence": "LOW",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-15T07:29:24Z",
+        "description": "РФ атакувала Харків та 13 населених пунктів області ракетами й БпЛА: пошкоджені будинки, медзаклади та залізниця",
+        "event_type": "Military Strike",
+        "id": "rss-06c41db51aeffc6132-96cfbe",
+        "lat": 49.98177,
+        "lng": 36.25475,
+        "location": "Харків",
+        "source_count": 1,
+        "source_type": "rss",
+        "sources": [
+          {
+            "channel": "rss_suspilne",
+            "date": "2026-11-15T07:29:24Z",
+            "publisher": "Суспільне Новини",
+            "source_type": "rss",
+            "url": "https://suspilne.media/kharkiv/1453188-rf-atakuvala-harkiv-ta-13-naselenih-punktiv-oblasti-raketami-j-bpla-poskodzeni-budinki-medzakladi-ta-zaliznica/"
+          }
+        ],
+        "url": "https://suspilne.media/kharkiv/1453188-rf-atakuvala-harkiv-ta-13-naselenih-punktiv-oblasti-raketami-j-bpla-poskodzeni-budinki-medzakladi-ta-zaliznica/",
+        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "7303926ac9b24cf485fe817e32bf5542e54bc4810bea799b2dd43617913c3d2f"
+    },
+    {
+      "event": {
+        "channel": "rss_suspilne",
+        "confidence": "LOW",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-15T05:34:30Z",
+        "description": "У Миколаєві внаслідок обстрілу пошкоджено будівлю підприємства",
+        "event_type": "Military Strike",
+        "id": "rss-440645ca2f92da60c8-4fe800",
+        "lat": 46.975,
+        "lng": 31.9946,
+        "location": "Николаев",
+        "source_count": 1,
+        "source_type": "rss",
+        "sources": [
+          {
+            "channel": "rss_suspilne",
+            "date": "2026-11-15T05:34:30Z",
+            "publisher": "Суспільне Новини",
+            "source_type": "rss",
+            "url": "https://suspilne.media/mykolaiv/1453165-u-mikolaevi-vnaslidok-obstrilu-poskodzeno-budivlu-pidpriemstva/"
+          }
+        ],
+        "url": "https://suspilne.media/mykolaiv/1453165-u-mikolaevi-vnaslidok-obstrilu-poskodzeno-budivlu-pidpriemstva/",
+        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "5e7c31d6ae908976b5dde6e732266694787492328a3dd9c4d9362fb1a0de3aae"
     }
   ],
-  "generated_at": "2026-11-22T02:33:53Z",
+  "generated_at": "2026-11-22T10:16:05Z",
   "method_note": "Изменения показывают разницу между автоматическими выгрузками, а не доказанное изменение обстановки."
 }
