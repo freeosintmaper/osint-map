@@ -4,12 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 57,
-      "delta": 53,
+      "current_period": 62,
+      "delta": 61,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 4,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
@@ -17,94 +17,160 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-22T09:34:48+00:00",
-      "description": "За минулу добу внаслідок російських атак у Сумській області постраждали 9 людей. Під вогнем російських окупантів опинилися 22 населені пункти області.\n\nТакож протягом внаслідок російських обстрілів До",
-      "event_type": "Military Operation",
+      "date": "2026-11-22T17:21:02+00:00",
+      "description": "Поражённая ударом Герани сегодня в Днепропетровской области путевая ремонтная дрезина. Геолокация: 48.5534227, 34.3739693\n\n@geranium_chronicles\n🔥216👍109🤣17🏆5🤬4\n  \n  \n    17.5K views17:21",
+      "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Харьков",
+      "location": "Днепр",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
+      "source_count": 4,
       "sources": [
         "RVvoenkor",
-        "ukrpravda_news"
+        "astrapress",
+        "boris_rozhin",
+        "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-22T07:35:38+00:00",
-      "description": "Один человек пострадал в результате ударов ВС РФ по Харьковской области, — ГСЧС\n\n«В результате российской атаки на Лозовую возникли пожары, пострадала женщина. Ночью российские войска атаковали реакти",
+      "date": "2026-11-22T17:00:43+00:00",
+      "description": "В Дымере Киевской области спасатели достали живого ребёнка из-под завалов после российского удара, - Киевская ОВА\n\nТем временем в Вишнёвом число погибших в результате российской атаки выросло до двух ",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Харьков",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
+        "astrapress",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-22T16:34:08+00:00",
+      "description": "В Днепре и Одессе блэкаут после российских ударов, — украинские СМИ   В Запорожской области введены специальные аварийные отключения электроэнергии.  В МО РФ заявили, что атаковали электроподстанцию 3",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Днепр",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
         "RVvoenkor",
-        "astrapress"
+        "astrapress",
+        "boris_rozhin",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-22T16:05:52+00:00",
+      "description": "Тело еще одного погибшего извлекли из-под завалов разрушенной российским ударом жилого дома в Дымере Киевской области, 11 человек не выходят на связь, — ГСЧС Украины   Среди погибших — 18-летний молод",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-22T15:52:17+00:00",
+      "description": "Также сообщается о блэкауте в Днепре после российских ударов\n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Днепр",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "boris_rozhin",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-22T15:38:30+00:00",
+      "description": "Дрон ударил по торговому центру в Вишневом Киевской области, сообщают украинские каналы\n\nUPD. Один человек погиб, еще трое ранены, — ОВА",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "uniannet"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 2,
+  "corroborated_event_count": 6,
   "country_counts": {
     "GB": 1,
-    "RU": 15,
-    "UA": 57
+    "RU": 12,
+    "UA": 62
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 73,
+  "event_count": 75,
   "event_type_counts": {
-    "Air Raid Alert": 2,
+    "Air Raid Alert": 1,
     "Military Offensive": 3,
-    "Military Operation": 7,
-    "Military Strike": 57,
+    "Military Operation": 5,
+    "Military Strike": 62,
     "Political Development": 4
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 2,
+    "cross_source_consistent_count": 6,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 71,
-    "rss_reports_not_independently_corroborated_count": 41
+    "not_independently_corroborated_count": 69,
+    "rss_reports_not_independently_corroborated_count": 42
   },
-  "generated_at": "2026-11-22T10:16:05Z",
+  "generated_at": "2026-11-22T17:55:06Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 20,
-  "not_verified_event_count": 71,
+  "new_since_previous_snapshot": 21,
+  "not_verified_event_count": 69,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 57,
-      "delta": 53,
+      "current_period": 62,
+      "delta": 61,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 4,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 41,
-    "telegram": 32
+    "rss": 42,
+    "telegram": 33
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 22,
+      "events": 25,
       "location": "Киев"
     },
     {
       "country": "UA",
-      "events": 6,
-      "location": "Харьков"
+      "events": 5,
+      "location": "Днепр"
     },
     {
       "country": "UA",
-      "events": 3,
-      "location": "Днепр"
+      "events": 4,
+      "location": "Харьков"
     },
     {
       "country": "RU",
@@ -112,9 +178,9 @@
       "location": "Москва"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 3,
-      "location": "Краснодар"
+      "location": "Полтава"
     },
     {
       "country": "UA",
@@ -124,28 +190,28 @@
     {
       "country": "UA",
       "events": 2,
-      "location": "Львов"
+      "location": "Сумы"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 2,
-      "location": "Krasnodar"
+      "location": "Одесса"
     }
   ],
   "top_sources": {
     "DeepStateUA": 2,
-    "RVvoenkor": 4,
+    "RVvoenkor": 2,
     "The Kyiv Independent": 8,
-    "astrapress": 4,
+    "astrapress": 5,
     "boris_rozhin": 2,
-    "kyivindependent_official": 5,
-    "lost_armour": 1,
-    "ukrpravda_news": 4,
+    "exilenova_plus": 2,
+    "kyivindependent_official": 9,
+    "ukrpravda_news": 2,
     "uniannet": 2,
-    "Суспільне Новини": 16,
+    "Суспільне Новини": 17,
     "УНІАН": 6,
     "Українська правда": 10
   },
-  "window_end": "2026-11-22T10:16:05Z",
-  "window_start": "2026-11-15T10:16:05Z"
+  "window_end": "2026-11-22T17:55:06Z",
+  "window_start": "2026-11-15T17:55:06Z"
 }
