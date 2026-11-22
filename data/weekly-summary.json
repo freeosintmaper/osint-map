@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 59,
-      "delta": 59,
+      "current_period": 63,
+      "delta": 63,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -17,101 +17,82 @@
   "attention_candidates": [
     {
       "country": "RU",
-      "date": "2026-11-21T20:12:21+00:00",
-      "description": "В Калининграде взвыли сирены. Жителей просят спуститься в безопасные места  Также людям пришла рассылка от операторов о том, что «мобильный интернет может быть временно ограничен в целях безопасности»",
-      "event_type": "Air Raid Alert",
-      "fact_checked": false,
-      "location": "Калининград",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "bazabazon",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-21T18:27:47+00:00",
-      "description": "‼️🇷🇺 Атакованный в Финском заливе российский сухогруз продолжит путь в Калининград  ▪️К судну, подвергшемуся атаке беспилотников в международных водах Финского залива, подошло российское спасательное ",
+      "date": "2026-11-22T02:03:29+00:00",
+      "description": "Еще кадры с задымлением в Краснодаре после ночной украинской атаки. Местные жители сообщают о запахе гари.  📸 Прислать фото/видео/информацию: @helloastrabot  ☮️ Сайт издания ASTRA на английском и русс",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Калининград",
+      "location": "Краснодар",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "dva_majors",
-        "uniannet"
+        "astrapress"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-21T17:49:45+00:00",
-      "description": "Внезапно: в российском Калининграде завыли сирены, жителей просят спуститься в безопасные места, - сообщают росСМИ  Напомним, сегодня два беспилотника атаковали грузовое судно, следовавшее в Калинингр",
-      "event_type": "Air Raid Alert",
+      "date": "2026-11-21T23:43:05+00:00",
+      "description": "🇺🇸🇷🇺🇨🇳 Трамп о Ялте 2.0: «Великие державы в 1945/2026». \n\nПрезидент США сравнил саммит с Путиным и Си в Шэньчжэне с Ялтинской конференцией 1945 года, на которой лидеры СССР, Британии и США собрались, ",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Калининград",
+      "location": "Москва",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 2,
       "sources": [
-        "astrapress",
-        "bazabazon",
-        "uniannet"
+        "RVvoenkor",
+        "voenkorKotenok"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-21T12:02:35+00:00",
-      "description": "🚢🔥В Финском заливе дронами атаковано судно, шедшее в Калининградскую область\n\nГубернатор Ленинградской области Александр Дрозденко сообщил, два беспилотника атаковали грузовое судно, направлявшееся в ",
+      "date": "2026-11-21T22:45:33+00:00",
+      "description": "‼️🇷🇺🏴‍☠️ Враг атакует Краснодар\n\n▪️Около полуночи начался налёт на Кубань. О фиксации БпЛА над Краснодарским  краем сообщили власти разных районов.\n▪️В самом Краснодаре прогремели взрывы, виден дым.\n➖",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Калининград",
+      "location": "Краснодар",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "dva_majors",
-        "uniannet"
+        "astrapress"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 5,
+  "corroborated_event_count": 9,
   "country_counts": {
     "GB": 1,
-    "RU": 18,
+    "RU": 24,
     "UA": 52
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 71,
+  "event_count": 77,
   "event_type_counts": {
-    "Air Raid Alert": 2,
+    "Air Raid Alert": 3,
     "Military Offensive": 3,
     "Military Operation": 2,
-    "Military Strike": 59,
-    "Political Development": 5
+    "Military Strike": 63,
+    "Political Development": 6
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 5,
+    "cross_source_consistent_count": 9,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 66,
+    "not_independently_corroborated_count": 68,
     "rss_reports_not_independently_corroborated_count": 45
   },
-  "generated_at": "2026-11-21T22:28:51Z",
+  "generated_at": "2026-11-22T02:33:53Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 14,
-  "not_verified_event_count": 66,
+  "new_since_previous_snapshot": 9,
+  "not_verified_event_count": 68,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 59,
-      "delta": 59,
+      "current_period": 63,
+      "delta": 63,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -122,7 +103,7 @@
   ],
   "source_type_counts": {
     "rss": 45,
-    "telegram": 26
+    "telegram": 32
   },
   "top_locations": [
     {
@@ -132,13 +113,18 @@
     },
     {
       "country": "RU",
-      "events": 5,
-      "location": "Калининград"
+      "events": 7,
+      "location": "Краснодар"
     },
     {
       "country": "RU",
-      "events": 4,
+      "events": 5,
       "location": "Москва"
+    },
+    {
+      "country": "RU",
+      "events": 5,
+      "location": "Калининград"
     },
     {
       "country": "UA",
@@ -148,7 +134,7 @@
     {
       "country": "UA",
       "events": 3,
-      "location": "Днепр"
+      "location": "Запорожье"
     },
     {
       "country": "UA",
@@ -156,20 +142,15 @@
       "location": "Кримський"
     },
     {
-      "country": "RU",
-      "events": 2,
-      "location": "Краснодар"
-    },
-    {
       "country": "UA",
       "events": 2,
-      "location": "Запорожье"
+      "location": "Славянск"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 2,
+    "RVvoenkor": 5,
     "The Kyiv Independent": 8,
-    "astrapress": 3,
+    "astrapress": 4,
     "bazabazon": 2,
     "boris_rozhin": 2,
     "exilenova_plus": 2,
@@ -180,6 +161,6 @@
     "УНІАН": 7,
     "Українська правда": 10
   },
-  "window_end": "2026-11-21T22:28:51Z",
-  "window_start": "2026-11-14T22:28:51Z"
+  "window_end": "2026-11-22T02:33:53Z",
+  "window_start": "2026-11-15T02:33:53Z"
 }
