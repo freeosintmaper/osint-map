@@ -4,129 +4,214 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 24,
-      "delta": 16,
+      "current_period": 19,
+      "delta": 10,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 8,
+      "previous_period": 9,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "attention_candidates": [
     {
-      "country": "RU",
-      "date": "2026-11-23T03:29:09+00:00",
-      "description": "В городе Альметьевске, Республика Татарстан, Силы Обороны атаковали один из ключевых объектов нефтетранспортной инфраструктуры рф., нефтеперекачивающую станцию «Калейкино».\n\nСтанция играет стратегичес",
+      "country": "UA",
+      "date": "2026-11-23T13:40:18+00:00",
+      "description": "Россия атаковала железную дорогу и энергетику в 12 областях Украины: погибли шесть человек, в Днепропетровской области без света 353 тысячи домов\n\nС вечера 22 ноября российские войска атакуют железнод",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Альметьевск",
+      "location": "Измаил",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "astrapress",
-        "exilenova_plus"
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-23T13:30:01+00:00",
+      "description": "❗️У Голосіївському районі Києва внаслідок падіння уламків БПЛА сталось загоряння автівок на території обʼєкту критичної інфраструктури, — Кличко\n\nКрім цього, в Шевченківському районі внаслідок падіння",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "operativnoZSU",
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-23T01:05:05+00:00",
-      "description": "В Новошахтинске Ростовской области сообщают о пожаре на НЗНП на фоне атаки БПЛА  Местные жители сообщают, что Новошахтинск под массированной атакой БПЛА, в городе слышат многочисленные взрывы и работу",
+      "date": "2026-11-23T12:46:10+00:00",
+      "description": "СБУ спільно з ГУР уразила Новошахтинський НПЗ у Ростовській області рф\n\nСлужба безпеки України спільно з Головним управлінням розвідки Міноборони України уразила виробничі потужності Новошахтинського ",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Новошахтинск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "exilenova_plus",
+        "operativnoZSU"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-23T11:21:01+00:00",
+      "description": "Російські окупанти вдарили по будівлі приватної клініки, яка не працювала, у Вознесенівському районі Запоріжжя — троє людей загинули, ще одна людина зазнала поранень.\n\nЗгодом росіяни завдали повторног",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Запорожье",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "astrapress",
-        "exilenova_plus"
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-23T00:12:52+00:00",
-      "description": "В Новошахтинске Ростовской области сообщают о пожаре на НЗНП на фоне атаки БПЛА\n\nМестные жители сообщают, что Новошахтинск под массированной атакой БПЛА, в городе слышат многочисленные взрывы и работу",
+      "date": "2026-11-23T11:10:10+00:00",
+      "description": "Появились кадры результата удара ВСУ по Новошахтинскому заводу нефтепродуктов (НЗНП) в Ростовской области — над городом поднялся черный дым.  📸 Прислать фото/видео/информацию: @helloastrabot  💥 Для пр",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Новошахтинск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "exilenova_plus",
+        "operativnoZSU"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-23T11:06:02+00:00",
+      "description": "ВС РФ поразили подстанцию в Днепропетровске, порт Измаил и железнодорожные объекты Украины\n\nРоссийская армия нанесла удары по энергетической, железнодорожной и портовой инфраструктуре Украины. Основны",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Измаил",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "lost_armour",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-23T10:41:10+00:00",
+      "description": "В результате удара ВС РФ по Запорожью погибли три человека, — власти\n\nОб этом сообщил и. о. главы ОВА Михаил Семикин. Он утверждает, что ВС РФ попали в здание неработающей частной клиники. На третьем ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Запорожье",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "astrapress",
-        "exilenova_plus"
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-22T23:15:56+00:00",
-      "description": "Ударники Сил оборони України щойно відпрацювали по Новошахтинському НПЗ у Ростовській області. Після атаки на території підприємства спалахнула пожежа. Атака триває   Дивно що він ще взагалі існує 😳\n\n",
+      "date": "2026-11-23T10:37:24+00:00",
+      "description": "Губер Ростовської області повідомляє що після комбінованої атаки Новошахтинський НПЗ зупинив роботу.\n\n\n  \n    \n      \n  \n  \n    \n  \n  \n0:28\n  \n    \n      This media is not supported in your browser\n  ",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Новошахтинск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
+      "source_count": 3,
       "sources": [
         "astrapress",
-        "exilenova_plus"
+        "exilenova_plus",
+        "operativnoZSU"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-23T07:05:00+00:00",
+      "description": "Сводка ударов по объектам за 19.11.2026 — 22.11.2026\nЧасть 1\n\nИнфраструктура\n• Удар по троллейбусному депо № 2 в Днепропетровске\n 48.43, 35.02\n• Последствия удара ОТРК \"Искандер\" по месту отдыха боеви",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Измаил",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "lost_armour",
+        "wargonzo"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 10,
+  "corroborated_event_count": 9,
   "country_counts": {
-    "RU": 8,
-    "UA": 22
+    "RU": 4,
+    "UA": 16,
+    "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 30,
+  "event_count": 21,
   "event_type_counts": {
-    "Military Operation": 5,
-    "Military Strike": 24,
+    "Military Operation": 1,
+    "Military Strike": 19,
     "Political Development": 1
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 10,
+    "cross_source_consistent_count": 9,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 20,
-    "rss_reports_not_independently_corroborated_count": 2
+    "not_independently_corroborated_count": 12,
+    "rss_reports_not_independently_corroborated_count": 1
   },
-  "generated_at": "2026-11-23T03:43:25Z",
+  "generated_at": "2026-11-23T13:45:50Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 8,
-  "not_verified_event_count": 20,
+  "new_since_previous_snapshot": 18,
+  "not_verified_event_count": 12,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 24,
-      "delta": 16,
+      "current_period": 19,
+      "delta": 10,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 8,
+      "previous_period": 9,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 2,
-    "telegram": 28
+    "rss": 1,
+    "telegram": 20
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 8,
-      "location": "Киев"
+      "events": 4,
+      "location": "Запорожье"
     },
     {
       "country": "UA",
-      "events": 4,
-      "location": "Купянск"
+      "events": 3,
+      "location": "Измаил"
+    },
+    {
+      "country": "UA",
+      "events": 3,
+      "location": "Киев"
     },
     {
       "country": "RU",
@@ -135,43 +220,39 @@
     },
     {
       "country": "UA",
-      "events": 3,
+      "events": 2,
       "location": "Харьков"
     },
     {
-      "country": "RU",
-      "events": 2,
-      "location": "Альметьевск"
+      "country": "UA",
+      "events": 1,
+      "location": "Бердянськ"
     },
     {
       "country": "UA",
-      "events": 2,
-      "location": "Одесса"
+      "events": 1,
+      "location": "Краматорск"
     },
     {
-      "country": "RU",
+      "country": "UA",
       "events": 1,
-      "location": "Novoshakhtinsk"
-    },
-    {
-      "country": "RU",
-      "events": 1,
-      "location": "Москва"
+      "location": "Днепр"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 1,
+    "BBC News Україна": 1,
+    "GeneralStaffZSU": 1,
+    "RVvoenkor": 2,
     "astrapress": 5,
-    "boris_rozhin": 4,
-    "exilenova_plus": 5,
-    "kyivindependent_official": 8,
+    "exilenova_plus": 1,
+    "kyivindependent_official": 2,
     "lost_armour": 1,
+    "operativnoZSU": 6,
     "rybar": 1,
-    "supernova_plus": 2,
     "ukrpravda_news": 2,
-    "uniannet": 5,
-    "Суспільне Новини": 2
+    "uniannet": 1,
+    "wargonzo": 1
   },
-  "window_end": "2026-11-23T03:43:25Z",
-  "window_start": "2026-11-22T03:43:25Z"
+  "window_end": "2026-11-23T13:45:50Z",
+  "window_start": "2026-11-22T13:45:50Z"
 }

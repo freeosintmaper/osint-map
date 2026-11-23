@@ -1,6 +1,34 @@
 {
   "events": [
     {
+      "channel": "rss_bbc_ukrainian",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-23T13:37:43Z",
+      "description": "Російський дрон вдарив по центру Києва: на Хрещатику пожежа, пошкоджені школи",
+      "event_type": "Military Strike",
+      "id": "rss-d0738e4f20b9a35200-524c8a",
+      "lat": 50.4501,
+      "lng": 30.5234,
+      "location": "Киев",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_bbc_ukrainian",
+          "date": "2026-11-23T13:37:43Z",
+          "publisher": "BBC News Україна",
+          "source_type": "rss",
+          "url": "https://www.bbc.com/ukrainian/articles/cxm2m6v04edvo?at_medium=RSS&at_campaign=rss"
+        }
+      ],
+      "url": "https://www.bbc.com/ukrainian/articles/cxm2m6v04edvo?at_medium=RSS&at_campaign=rss",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
       "channel": "rss_suspilne",
       "confidence": "LOW",
       "coordinate_precision": "settlement_center",
@@ -1063,89 +1091,61 @@
       "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
       "verification_sources": [],
       "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_unian",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "RU",
-      "date": "2026-11-16T06:18:00Z",
-      "description": "Після атаки дронів палає нафтобаза у Ростовській області РФ, - ЗМІ",
-      "event_type": "Military Strike",
-      "id": "rss-50ab98aa663fffb4bb-0a13dd",
-      "lat": 47.2225,
-      "lng": 39.7188,
-      "location": "Ростов-на-Дону",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_unian",
-          "date": "2026-11-16T06:18:00Z",
-          "publisher": "УНІАН",
-          "source_type": "rss",
-          "url": "https://www.unian.ua/war/pislya-ataki-droniv-palaye-naftobaza-u-rostovskiy-oblasti-rf-zmi-13560873.html"
-        }
-      ],
-      "url": "https://www.unian.ua/war/pislya-ataki-droniv-palaye-naftobaza-u-rostovskiy-oblasti-rf-zmi-13560873.html",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
     }
   ],
   "feed_health": {
     "rss_bbc_ukrainian": {
       "endpoint": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
-      "events_mapped": 0,
+      "events_mapped": 1,
       "items_seen": 17,
-      "last_attempt": "2026-11-23T03:43:20Z",
+      "last_attempt": "2026-11-23T13:45:44Z",
       "last_error": null,
-      "last_success": "2026-11-23T03:43:20Z",
-      "latest_item_at": "2026-11-22T17:58:31Z",
+      "last_success": "2026-11-23T13:45:44Z",
+      "latest_item_at": "2026-11-23T13:37:43Z",
       "status": "ok"
     },
     "rss_kyivindependent": {
       "endpoint": "https://kyivindependent.com/news-archive/rss/",
       "events_mapped": 0,
       "items_seen": 15,
-      "last_attempt": "2026-11-23T03:43:20Z",
+      "last_attempt": "2026-11-23T13:45:44Z",
       "last_error": null,
-      "last_success": "2026-11-23T03:43:20Z",
-      "latest_item_at": "2026-11-23T01:18:52Z",
+      "last_success": "2026-11-23T13:45:44Z",
+      "latest_item_at": "2026-11-23T13:34:14Z",
       "status": "ok"
     },
     "rss_suspilne": {
       "endpoint": "https://suspilne.media/rss/ukrnet.rss",
-      "events_mapped": 1,
+      "events_mapped": 0,
       "items_seen": 50,
-      "last_attempt": "2026-11-23T03:43:20Z",
+      "last_attempt": "2026-11-23T13:45:44Z",
       "last_error": null,
-      "last_success": "2026-11-23T03:43:20Z",
-      "latest_item_at": "2026-11-22T21:29:13Z",
+      "last_success": "2026-11-23T13:45:44Z",
+      "latest_item_at": "2026-11-23T13:25:09Z",
       "status": "ok"
     },
     "rss_ukrpravda": {
       "endpoint": "https://www.pravda.com.ua/rss/view_mainnews/",
       "events_mapped": 0,
       "items_seen": 20,
-      "last_attempt": "2026-11-23T03:43:20Z",
+      "last_attempt": "2026-11-23T13:45:44Z",
       "last_error": null,
-      "last_success": "2026-11-23T03:43:20Z",
-      "latest_item_at": "2026-11-23T02:50:00Z",
+      "last_success": "2026-11-23T13:45:44Z",
+      "latest_item_at": "2026-11-23T13:12:00Z",
       "status": "ok"
     },
     "rss_unian": {
       "endpoint": "https://rss.unian.net/site/news_ukr.rss",
       "events_mapped": 0,
       "items_seen": 100,
-      "last_attempt": "2026-11-23T03:43:20Z",
+      "last_attempt": "2026-11-23T13:45:44Z",
       "last_error": null,
-      "last_success": "2026-11-23T03:43:20Z",
-      "latest_item_at": "2026-11-23T03:34:00Z",
+      "last_success": "2026-11-23T13:45:44Z",
+      "latest_item_at": "2026-11-23T13:35:43Z",
       "status": "ok"
     }
   },
-  "generated_at": "2026-11-23T03:43:20Z",
+  "generated_at": "2026-11-23T13:45:44Z",
   "method_note": "RSS items are separate, unverified source records. Only the title is stored; the original publisher link is retained.",
   "window_days": 7
 }
