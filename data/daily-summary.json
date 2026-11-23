@@ -4,141 +4,123 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 20,
-      "delta": 11,
+      "current_period": 24,
+      "delta": 16,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 9,
+      "previous_period": 8,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "attention_candidates": [
     {
-      "country": "UA",
-      "date": "2026-11-22T21:40:31+00:00",
-      "description": "В Харькове ВС РФ атаковали реактивными «шахедами» детский сад и отель, пострадали пять человек, — мэр\n\nИгорь Терехов сообщил, что атака произошла в двух районах города: в Немышлянском районе в результ",
+      "country": "RU",
+      "date": "2026-11-23T03:29:09+00:00",
+      "description": "В городе Альметьевске, Республика Татарстан, Силы Обороны атаковали один из ключевых объектов нефтетранспортной инфраструктуры рф., нефтеперекачивающую станцию «Калейкино».\n\nСтанция играет стратегичес",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Харьков",
+      "location": "Альметьевск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "astrapress",
-        "uniannet"
+        "exilenova_plus"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "UA",
-      "date": "2026-11-22T21:24:41+00:00",
-      "description": "Число погибших при ударе по многоэтажке в киевском Дымере выросло до четырех, еще 10 человек до сих пор ищут, — Зеленский   «В этот дом попал российский \"шахед\" – фактически разрушен подъезд. Спасател",
+      "country": "RU",
+      "date": "2026-11-23T01:05:05+00:00",
+      "description": "В Новошахтинске Ростовской области сообщают о пожаре на НЗНП на фоне атаки БПЛА  Местные жители сообщают, что Новошахтинск под массированной атакой БПЛА, в городе слышат многочисленные взрывы и работу",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Киев",
+      "location": "Новошахтинск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "astrapress",
-        "uniannet"
+        "exilenova_plus"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "UA",
-      "date": "2026-11-22T20:02:24+00:00",
-      "description": "Русня также ударила по железнодорожному вокзалу в Люботине Харьковской области. На месте начался пожар\n\nСообщается, что удар был нанесён реактивным дроном \"Герань-5\". Перрон охвачен огнём, горит поезд",
+      "country": "RU",
+      "date": "2026-11-23T00:12:52+00:00",
+      "description": "В Новошахтинске Ростовской области сообщают о пожаре на НЗНП на фоне атаки БПЛА\n\nМестные жители сообщают, что Новошахтинск под массированной атакой БПЛА, в городе слышат многочисленные взрывы и работу",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Люботин",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "RVvoenkor",
-        "boris_rozhin",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-22T19:14:53+00:00",
-      "description": "🙏 «Я Давид, не спешите, со мной всё хорошо!» - так 7-летний мальчик встретил спасателей, которые достали его из-под завалов дома в Дымере Киевской области.\n\nРебёнок провёл под обломками почти 14 часов",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
+      "location": "Новошахтинск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "astrapress",
-        "uniannet"
+        "exilenova_plus"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "UA",
-      "date": "2026-11-22T19:00:06+00:00",
-      "description": "Русня ударила дроном по детскому саду в Харькове, последствия уточняются, - Терехов\n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
+      "country": "RU",
+      "date": "2026-11-22T23:15:56+00:00",
+      "description": "Ударники Сил оборони України щойно відпрацювали по Новошахтинському НПЗ у Ростовській області. Після атаки на території підприємства спалахнула пожежа. Атака триває   Дивно що він ще взагалі існує 😳\n\n",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Харьков",
+      "location": "Новошахтинск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "astrapress",
-        "uniannet"
+        "exilenova_plus"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 6,
+  "corroborated_event_count": 10,
   "country_counts": {
-    "FR": 1,
-    "RU": 3,
-    "UA": 24
+    "RU": 8,
+    "UA": 22
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 28,
+  "event_count": 30,
   "event_type_counts": {
-    "Air Raid Alert": 1,
     "Military Operation": 5,
-    "Military Strike": 20,
-    "Political Development": 2
+    "Military Strike": 24,
+    "Political Development": 1
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 6,
+    "cross_source_consistent_count": 10,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 22,
+    "not_independently_corroborated_count": 20,
     "rss_reports_not_independently_corroborated_count": 2
   },
-  "generated_at": "2026-11-22T23:02:52Z",
+  "generated_at": "2026-11-23T03:43:25Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 16,
-  "not_verified_event_count": 22,
+  "new_since_previous_snapshot": 8,
+  "not_verified_event_count": 20,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 20,
-      "delta": 11,
+      "current_period": 24,
+      "delta": 16,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 9,
+      "previous_period": 8,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
     "rss": 2,
-    "telegram": 26
+    "telegram": 28
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 9,
+      "events": 8,
       "location": "Киев"
     },
     {
@@ -147,9 +129,19 @@
       "location": "Купянск"
     },
     {
+      "country": "RU",
+      "events": 3,
+      "location": "Новошахтинск"
+    },
+    {
       "country": "UA",
       "events": 3,
       "location": "Харьков"
+    },
+    {
+      "country": "RU",
+      "events": 2,
+      "location": "Альметьевск"
     },
     {
       "country": "UA",
@@ -159,36 +151,27 @@
     {
       "country": "RU",
       "events": 1,
-      "location": "Москва"
-    },
-    {
-      "country": "UA",
-      "events": 1,
-      "location": "Слов'янськ"
-    },
-    {
-      "country": "UA",
-      "events": 1,
-      "location": "Люботин"
+      "location": "Novoshakhtinsk"
     },
     {
       "country": "RU",
       "events": 1,
-      "location": "Рославль"
+      "location": "Москва"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 2,
-    "astrapress": 3,
+    "RVvoenkor": 1,
+    "astrapress": 5,
     "boris_rozhin": 4,
-    "kyivindependent_official": 9,
+    "exilenova_plus": 5,
+    "kyivindependent_official": 8,
     "lost_armour": 1,
     "rybar": 1,
-    "supernova_plus": 1,
+    "supernova_plus": 2,
     "ukrpravda_news": 2,
     "uniannet": 5,
     "Суспільне Новини": 2
   },
-  "window_end": "2026-11-22T23:02:52Z",
-  "window_start": "2026-11-21T23:02:52Z"
+  "window_end": "2026-11-23T03:43:25Z",
+  "window_start": "2026-11-22T03:43:25Z"
 }
