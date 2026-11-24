@@ -4,12 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 16,
-      "delta": 13,
-      "event_type": "Military Strike",
+      "current_period": 8,
+      "delta": 7,
+      "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 3,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
@@ -17,201 +17,226 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-24T08:17:21+00:00",
-      "description": "В результате российского удара по Виннице пострадали четыре человека, — ОВА",
-      "event_type": "Military Strike",
+      "date": "2026-11-24T20:51:20+00:00",
+      "description": "🙈Бульбопюрер готовий виступити гарантом безпеки та супроводжувати Зеленського до москви на переговори з путіним.\n\nНехай лукашенко візьме путіна і прилетить до Києва. Ми гарантуємо їм безпечний прийом.",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Винница",
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 6,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "operativnoZSU",
+        "ukrpravda_news",
+        "uniannet",
+        "voenkorKotenok"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-24T20:29:56+00:00",
+      "description": "🇭🇺🇺🇦 Зеленський назвав свою зустріч з Мадяром \"предметною\", а також додав, що вони обговорили багато тем.\n\n\"Є багато сфер, у яких наші країни можуть працювати разом і посилювати одна одну. Енергетика,",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "ukrpravda_news",
+        "voenkorKotenok"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-24T20:01:46+00:00",
+      "description": "Для Украины не существует ускоренного вступления в ЕС, заявил премьер Венгрии на совместной пресс-конференции с Зеленским.\n\nПолучив обязательства от Украины восстановить все права венгерской общины За",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-24T19:00:01+00:00",
+      "description": "Лукашенко предложил Зеленскому прилететь к Путину на переговоры к Москву и стать «гарантом безопасности» \n\n«Если он [Зеленский] не согласится, пусть тогда отправляется на фронт. Война идет, ее надо ос",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 6,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "operativnoZSU",
+        "ukrpravda_news",
+        "uniannet",
+        "voenkorKotenok"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-24T18:57:01+00:00",
+      "description": "‼️🇺🇦🇷🇺\"Отступать с Донбасса — значит проиграть эту войну\", — Зеленский \n\n▪️Украинский президент заявил, что не намерен соглашаться на вывод войск с территории Донбасса в рамках возможного мирного согл",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 3,
       "sources": [
         "RVvoenkor",
         "astrapress",
-        "operativnoZSU"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-24T07:50:30+00:00",
-      "description": "🔥В московській області реактивні дрони атакували об'єкт відповідальний за дальнє виявлення ракетних загроз для москви 💥\n\nЧекаємо підтвердження від ГШ чи супутникові знімки.\n\nhttps://t.me/operativnoZSU",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "dva_majors",
-        "operativnoZSU"
+        "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-24T07:00:01+00:00",
-      "description": "ВСУ ударили по автовокзалу в центре Донецка\n\nУкраинские беспилотники атаковали автовокзал «Южный» в центре Донецка, сообщил мэр города Алексей Кулемзин. В результате удара пострадали семь мирных жител",
-      "event_type": "Military Strike",
+      "date": "2026-11-24T18:10:08+00:00",
+      "description": "Лукашенко запропонував Зеленському стати його \"гарантом безпеки\" й разом полетіти до Москви.\n\nНа думку глави Білорусі, вони б утрьох швидше домовилися про закінчення війни, ніж з європейцями.\n\n\"Ми – т",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Донецк",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
+      "source_count": 6,
       "sources": [
         "RVvoenkor",
         "astrapress",
-        "dva_majors",
-        "wargonzo"
+        "operativnoZSU",
+        "ukrpravda_news",
+        "uniannet",
+        "voenkorKotenok"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-24T06:49:38+00:00",
-      "description": "4 постраждалих: у Вінниці внаслідок ворожої атаки пошкоджено цивільне підприємство та об’єкт енергетичної інфраструктури, — ОВА \n\nТакож пошкоджено дві зупинки громадського транспорту, чотири автомобіл",
-      "event_type": "Military Strike",
+      "date": "2026-11-24T17:52:28+00:00",
+      "description": "🙈Бульбопюрер готовий виступити гарантом безпеки та супроводжувати Зеленського до москви на переговори з путіним.\n\n🫣Ще вусатий тарган впевнений, що у спецоперації \"Кієв за трі дня\" хуйло перемагає\n\nhtt",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Винница",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 6,
       "sources": [
         "RVvoenkor",
         "astrapress",
-        "operativnoZSU"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-24T06:31:03+00:00",
-      "description": "В результате российского удара по Запорожью погибли два человека, количество пострадавших возросло, — ОВА  «Два человека погибли, еще 22 получили ранения. Среди раненых – двое детей 6 и 16 лет», — соо",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Донецк",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
-      "sources": [
-        "RVvoenkor",
-        "astrapress",
-        "dva_majors",
-        "wargonzo"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-24T06:19:49+00:00",
-      "description": "Ночью:\n▪️Сбито 699 украинских БПЛА дальнего действия.\n▪️С23:00 23 ноября по 8:00 24 ноября в сторону Московского региона летели 355 БПЛА. Большая часть нейтрализована силами на дальних подступах. 63 б",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "dva_majors",
-        "operativnoZSU"
+        "operativnoZSU",
+        "ukrpravda_news",
+        "uniannet",
+        "voenkorKotenok"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 6,
+  "corroborated_event_count": 7,
   "country_counts": {
-    "BE": 2,
-    "RU": 6,
-    "UA": 18,
-    "US": 1
+    "GB": 1,
+    "RU": 1,
+    "UA": 17
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 27,
+  "event_count": 19,
   "event_type_counts": {
     "Military Offensive": 1,
-    "Military Operation": 6,
-    "Military Strike": 16,
-    "Political Development": 4
+    "Military Operation": 1,
+    "Military Strike": 9,
+    "Political Development": 8
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 6,
+    "cross_source_consistent_count": 7,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 21,
-    "rss_reports_not_independently_corroborated_count": 3
+    "not_independently_corroborated_count": 12,
+    "rss_reports_not_independently_corroborated_count": 2
   },
-  "generated_at": "2026-11-24T11:06:58Z",
+  "generated_at": "2026-11-24T21:10:07Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 21,
-  "not_verified_event_count": 21,
+  "new_since_previous_snapshot": 17,
+  "not_verified_event_count": 12,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 16,
-      "delta": 13,
-      "event_type": "Military Strike",
+      "current_period": 8,
+      "delta": 7,
+      "event_type": "Political Development",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 3,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 3,
-    "telegram": 24
+    "rss": 2,
+    "telegram": 17
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 6,
+      "events": 9,
+      "location": "Киев"
+    },
+    {
+      "country": "UA",
+      "events": 3,
       "location": "Запорожье"
     },
     {
       "country": "UA",
-      "events": 3,
-      "location": "Киев"
-    },
-    {
-      "country": "RU",
-      "events": 3,
-      "location": "Москва"
+      "events": 2,
+      "location": "Днепр"
     },
     {
       "country": "UA",
-      "events": 2,
-      "location": "Винница"
+      "events": 1,
+      "location": "Арциз"
     },
     {
       "country": "UA",
-      "events": 2,
-      "location": "Донецк"
-    },
-    {
-      "country": "BE",
-      "events": 2,
-      "location": "Брюссель"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Бердянськ"
+      "events": 1,
+      "location": "Львов"
     },
     {
       "country": "RU",
       "events": 1,
-      "location": "Кисловодск"
+      "location": "Воткинск"
+    },
+    {
+      "country": "GB",
+      "events": 1,
+      "location": "Лондон"
+    },
+    {
+      "country": "UA",
+      "events": 1,
+      "location": "Донецк"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 3,
+    "RVvoenkor": 4,
     "The Kyiv Independent": 1,
     "astrapress": 4,
-    "boris_rozhin": 1,
-    "dva_majors": 4,
-    "exilenova_plus": 3,
     "kyivindependent_official": 1,
-    "lost_armour": 1,
-    "operativnoZSU": 4,
-    "ukrpravda_news": 1,
+    "odesa_typical": 1,
+    "operativnoZSU": 3,
+    "ukrpravda_news": 2,
     "uniannet": 3,
-    "wargonzo": 1
+    "voenkorKotenok": 1,
+    "wargonzo": 1,
+    "Українська правда": 1
   },
-  "window_end": "2026-11-24T11:06:58Z",
-  "window_start": "2026-11-23T11:06:58Z"
+  "window_end": "2026-11-24T21:10:07Z",
+  "window_start": "2026-11-23T21:10:07Z"
 }
