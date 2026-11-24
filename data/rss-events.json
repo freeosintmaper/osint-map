@@ -1,6 +1,34 @@
 {
   "events": [
     {
+      "channel": "rss_kyivindependent",
+      "confidence": "LOW",
+      "coordinate_precision": "settlement_center",
+      "country": "UA",
+      "date": "2026-11-24T04:19:44Z",
+      "description": "2 killed, 44 injured in Russian attack on residential building in Zaporizhzhia",
+      "event_type": "Military Offensive",
+      "id": "rss-3aca34bb0f765d4c55-fe13d6",
+      "lat": 47.8388,
+      "lng": 35.1396,
+      "location": "Запорожье",
+      "source_count": 1,
+      "source_type": "rss",
+      "sources": [
+        {
+          "channel": "rss_kyivindependent",
+          "date": "2026-11-24T04:19:44Z",
+          "publisher": "The Kyiv Independent",
+          "source_type": "rss",
+          "url": "https://kyivindependent.com/2-killed-22-injured-in-russian-attack-on-residential-building-in-zaporizhzhia/"
+        }
+      ],
+      "url": "https://kyivindependent.com/2-killed-22-injured-in-russian-attack-on-residential-building-in-zaporizhzhia/",
+      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+      "verification_sources": [],
+      "verification_status": "not_verified"
+    },
+    {
       "channel": "rss_bbc_ukrainian",
       "confidence": "LOW",
       "coordinate_precision": "settlement_center",
@@ -783,202 +811,6 @@
       "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
       "verification_sources": [],
       "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_suspilne",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "UA",
-      "date": "2026-11-17T10:27:40Z",
-      "description": "«Це прицільний удар по рятувальниках»: росіяни застосовують тактику подвійних ударів FPV-дронами у Харкові",
-      "event_type": "Military Strike",
-      "id": "rss-36a31ab2c6f0ff351c-7ef15f",
-      "lat": 49.9935,
-      "lng": 36.2304,
-      "location": "Харьков",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_suspilne",
-          "date": "2026-11-17T10:27:40Z",
-          "publisher": "Суспільне Новини",
-          "source_type": "rss",
-          "url": "https://suspilne.media/kharkiv/1454000-ce-pricilnij-udar-po-ratuvalnikah-rosiani-zastosovuut-taktiku-podvijnih-udariv-fpv-dronami-u-harkovi/"
-        }
-      ],
-      "url": "https://suspilne.media/kharkiv/1454000-ce-pricilnij-udar-po-ratuvalnikah-rosiani-zastosovuut-taktiku-podvijnih-udariv-fpv-dronami-u-harkovi/",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_ukrpravda",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "UA",
-      "date": "2026-11-17T09:35:00Z",
-      "description": "Зеленський перерахував, чим Сили оборони уразили Кримський міст",
-      "event_type": "Military Strike",
-      "id": "rss-687d45ac43676d4a8c-afb45b",
-      "lat": 45.05418,
-      "lng": 35.37374,
-      "location": "Кримський",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_ukrpravda",
-          "date": "2026-11-17T09:35:00Z",
-          "publisher": "Українська правда",
-          "source_type": "rss",
-          "url": "https://www.pravda.com.ua/news/2026/11/17/8063242/"
-        }
-      ],
-      "url": "https://www.pravda.com.ua/news/2026/11/17/8063242/",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_ukrpravda",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "UA",
-      "date": "2026-11-17T09:09:00Z",
-      "description": "Росіяни поцілили в автостоянку у Вінниці: палали авто, є загибла і поранена",
-      "event_type": "Military Strike",
-      "id": "rss-19885a32f60106a553-631759",
-      "lat": 49.2331,
-      "lng": 28.4682,
-      "location": "Винница",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_ukrpravda",
-          "date": "2026-11-17T09:09:00Z",
-          "publisher": "Українська правда",
-          "source_type": "rss",
-          "url": "https://www.pravda.com.ua/news/2026/11/17/8063235/"
-        }
-      ],
-      "url": "https://www.pravda.com.ua/news/2026/11/17/8063235/",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_ukrpravda",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "UA",
-      "date": "2026-11-17T07:13:00Z",
-      "description": "Нічна атака на Київ: Кличко показав пошкоджений Північний міст",
-      "event_type": "Military Offensive",
-      "id": "rss-50af68c57e59739589-524c8a",
-      "lat": 50.4501,
-      "lng": 30.5234,
-      "location": "Киев",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_ukrpravda",
-          "date": "2026-11-17T07:13:00Z",
-          "publisher": "Українська правда",
-          "source_type": "rss",
-          "url": "https://www.pravda.com.ua/news/2026/11/17/8063208/"
-        }
-      ],
-      "url": "https://www.pravda.com.ua/news/2026/11/17/8063208/",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_ukrpravda",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "UA",
-      "date": "2026-11-17T06:19:00Z",
-      "description": "Нічна атака на Київ: пошкоджено інфраструктуру, мости, є перебої з водою та теплом, один постраждалий",
-      "event_type": "Military Strike",
-      "id": "rss-8ec17364786718d257-524c8a",
-      "lat": 50.4501,
-      "lng": 30.5234,
-      "location": "Киев",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_ukrpravda",
-          "date": "2026-11-17T06:19:00Z",
-          "publisher": "Українська правда",
-          "source_type": "rss",
-          "url": "https://www.pravda.com.ua/news/2026/11/17/8063203/"
-        }
-      ],
-      "url": "https://www.pravda.com.ua/news/2026/11/17/8063203/",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_suspilne",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "UA",
-      "date": "2026-11-17T05:47:20Z",
-      "description": "Били безпілотниками та ракетами: війська РФ майже 20 разів атакували Дніпро та область протягом ночі",
-      "event_type": "Military Strike",
-      "id": "rss-5f56ae66792beb4274-9ad345",
-      "lat": 48.4647,
-      "lng": 35.0462,
-      "location": "Днепр",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_suspilne",
-          "date": "2026-11-17T05:47:20Z",
-          "publisher": "Суспільне Новини",
-          "source_type": "rss",
-          "url": "https://suspilne.media/dnipro/1453878-bili-bezpilotniami-ta-raketami-vijska-rf-majze-20-raziv-atakuvali-dnipro-ta-oblast-protagom-noci/"
-        }
-      ],
-      "url": "https://suspilne.media/dnipro/1453878-bili-bezpilotniami-ta-raketami-vijska-rf-majze-20-raziv-atakuvali-dnipro-ta-oblast-protagom-noci/",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
-    },
-    {
-      "channel": "rss_suspilne",
-      "confidence": "LOW",
-      "coordinate_precision": "settlement_center",
-      "country": "UA",
-      "date": "2026-11-17T05:47:20Z",
-      "description": "Били безпілотниками та ракетами: війська РФ майже 20 разів атакували Дніпро та область протягом ночі",
-      "event_type": "Military Strike",
-      "id": "rss-5f56ae66792beb4274-cfdef2",
-      "lat": 48.46664,
-      "lng": 35.04066,
-      "location": "Дніпро",
-      "source_count": 1,
-      "source_type": "rss",
-      "sources": [
-        {
-          "channel": "rss_suspilne",
-          "date": "2026-11-17T05:47:20Z",
-          "publisher": "Суспільне Новини",
-          "source_type": "rss",
-          "url": "https://suspilne.media/dnipro/1453878-bili-bezpilotniami-ta-raketami-vijska-rf-majze-20-raziv-atakuvali-dnipro-ta-oblast-protagom-noci/"
-        }
-      ],
-      "url": "https://suspilne.media/dnipro/1453878-bili-bezpilotniami-ta-raketami-vijska-rf-majze-20-raziv-atakuvali-dnipro-ta-oblast-protagom-noci/",
-      "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
-      "verification_sources": [],
-      "verification_status": "not_verified"
     }
   ],
   "feed_health": {
@@ -986,27 +818,27 @@
       "endpoint": "https://feeds.bbci.co.uk/ukrainian/rss.xml",
       "events_mapped": 1,
       "items_seen": 17,
-      "last_attempt": "2026-11-24T01:17:31Z",
+      "last_attempt": "2026-11-24T11:06:48Z",
       "last_error": null,
-      "last_success": "2026-11-24T01:17:31Z",
-      "latest_item_at": "2026-11-23T17:45:49Z",
+      "last_success": "2026-11-24T11:06:48Z",
+      "latest_item_at": "2026-11-24T10:28:54Z",
       "status": "ok"
     },
     "rss_kyivindependent": {
       "endpoint": "https://kyivindependent.com/news-archive/rss/",
-      "events_mapped": 0,
+      "events_mapped": 1,
       "items_seen": 15,
-      "last_attempt": "2026-11-24T01:17:31Z",
+      "last_attempt": "2026-11-24T11:06:48Z",
       "last_error": null,
-      "last_success": "2026-11-24T01:17:31Z",
-      "latest_item_at": "2026-11-24T00:48:51Z",
+      "last_success": "2026-11-24T11:06:48Z",
+      "latest_item_at": "2026-11-24T10:56:53Z",
       "status": "ok"
     },
     "rss_suspilne": {
       "endpoint": "https://suspilne.media/rss/ukrnet.rss",
-      "events_mapped": 15,
+      "events_mapped": 12,
       "items_seen": 50,
-      "last_attempt": "2026-11-24T01:17:31Z",
+      "last_attempt": "2026-11-24T11:06:48Z",
       "last_error": "HTTP 403",
       "last_success": "2026-11-23T13:45:44Z",
       "latest_item_at": "2026-11-23T13:25:09Z",
@@ -1016,24 +848,24 @@
       "endpoint": "https://www.pravda.com.ua/rss/view_mainnews/",
       "events_mapped": 0,
       "items_seen": 20,
-      "last_attempt": "2026-11-24T01:17:31Z",
+      "last_attempt": "2026-11-24T11:06:48Z",
       "last_error": null,
-      "last_success": "2026-11-24T01:17:31Z",
-      "latest_item_at": "2026-11-23T21:04:00Z",
+      "last_success": "2026-11-24T11:06:48Z",
+      "latest_item_at": "2026-11-24T10:27:00Z",
       "status": "ok"
     },
     "rss_unian": {
       "endpoint": "https://rss.unian.net/site/news_ukr.rss",
-      "events_mapped": 1,
+      "events_mapped": 0,
       "items_seen": 100,
-      "last_attempt": "2026-11-24T01:17:31Z",
+      "last_attempt": "2026-11-24T11:06:48Z",
       "last_error": null,
-      "last_success": "2026-11-24T01:17:31Z",
-      "latest_item_at": "2026-11-24T01:15:00Z",
+      "last_success": "2026-11-24T11:06:48Z",
+      "latest_item_at": "2026-11-24T11:02:03Z",
       "status": "ok"
     }
   },
-  "generated_at": "2026-11-24T01:17:31Z",
+  "generated_at": "2026-11-24T11:06:48Z",
   "method_note": "RSS items are separate, unverified source records. Only the title is stored; the original publisher link is retained.",
   "window_days": 7
 }

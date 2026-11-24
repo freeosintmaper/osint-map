@@ -4,76 +4,179 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 43,
-      "delta": 38,
+      "current_period": 44,
+      "delta": 37,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 5,
+      "previous_period": 7,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
-  "attention_candidates": [],
-  "corroborated_event_count": 2,
+  "attention_candidates": [
+    {
+      "country": "UA",
+      "date": "2026-11-24T08:17:21+00:00",
+      "description": "В результате российского удара по Виннице пострадали четыре человека, — ОВА",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Винница",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "operativnoZSU"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-24T07:50:30+00:00",
+      "description": "🔥В московській області реактивні дрони атакували об'єкт відповідальний за дальнє виявлення ракетних загроз для москви 💥\n\nЧекаємо підтвердження від ГШ чи супутникові знімки.\n\nhttps://t.me/operativnoZSU",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "dva_majors",
+        "operativnoZSU"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-24T07:00:01+00:00",
+      "description": "ВСУ ударили по автовокзалу в центре Донецка\n\nУкраинские беспилотники атаковали автовокзал «Южный» в центре Донецка, сообщил мэр города Алексей Кулемзин. В результате удара пострадали семь мирных жител",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Донецк",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "dva_majors",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-24T06:49:38+00:00",
+      "description": "4 постраждалих: у Вінниці внаслідок ворожої атаки пошкоджено цивільне підприємство та об’єкт енергетичної інфраструктури, — ОВА \n\nТакож пошкоджено дві зупинки громадського транспорту, чотири автомобіл",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Винница",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "operativnoZSU"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-24T06:31:03+00:00",
+      "description": "В результате российского удара по Запорожью погибли два человека, количество пострадавших возросло, — ОВА  «Два человека погибли, еще 22 получили ранения. Среди раненых – двое детей 6 и 16 лет», — соо",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Донецк",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 4,
+      "sources": [
+        "RVvoenkor",
+        "astrapress",
+        "dva_majors",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-24T06:19:49+00:00",
+      "description": "Ночью:\n▪️Сбито 699 украинских БПЛА дальнего действия.\n▪️С23:00 23 ноября по 8:00 24 ноября в сторону Московского региона летели 355 БПЛА. Большая часть нейтрализована силами на дальних подступах. 63 б",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "dva_majors",
+        "operativnoZSU"
+      ],
+      "status": "requires_human_review"
+    }
+  ],
+  "corroborated_event_count": 8,
   "country_counts": {
-    "BE": 1,
+    "BE": 2,
     "GB": 1,
-    "RU": 6,
-    "UA": 44
+    "RU": 9,
+    "UA": 45,
+    "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 52,
+  "event_count": 58,
   "event_type_counts": {
     "Military Offensive": 3,
-    "Military Operation": 1,
-    "Military Strike": 43,
+    "Military Operation": 6,
+    "Military Strike": 44,
     "Political Development": 5
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 2,
+    "cross_source_consistent_count": 8,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
     "not_independently_corroborated_count": 50,
-    "rss_reports_not_independently_corroborated_count": 35
+    "rss_reports_not_independently_corroborated_count": 29
   },
-  "generated_at": "2026-11-24T01:17:39Z",
+  "generated_at": "2026-11-24T11:06:58Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 12,
+  "new_since_previous_snapshot": 21,
   "not_verified_event_count": 50,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 43,
-      "delta": 38,
+      "current_period": 44,
+      "delta": 37,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 5,
+      "previous_period": 7,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 35,
-    "telegram": 17
+    "rss": 29,
+    "telegram": 29
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 17,
+      "events": 12,
       "location": "Киев"
     },
     {
       "country": "UA",
+      "events": 7,
+      "location": "Запорожье"
+    },
+    {
+      "country": "RU",
       "events": 3,
-      "location": "Днепр"
+      "location": "Москва"
     },
     {
       "country": "UA",
       "events": 3,
-      "location": "Харьков"
+      "location": "Винница"
     },
     {
       "country": "UA",
@@ -82,39 +185,34 @@
     },
     {
       "country": "UA",
-      "events": 3,
-      "location": "Кримський"
+      "events": 2,
+      "location": "Донецк"
+    },
+    {
+      "country": "BE",
+      "events": 2,
+      "location": "Брюссель"
     },
     {
       "country": "UA",
       "events": 2,
       "location": "Бердянськ"
-    },
-    {
-      "country": "RU",
-      "events": 2,
-      "location": "Санкт-Петербург"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Измаил"
     }
   ],
   "top_sources": {
-    "BBC News Україна": 2,
-    "DeepStateUA": 2,
-    "RVvoenkor": 2,
-    "The Kyiv Independent": 5,
-    "boris_rozhin": 1,
-    "exilenova_plus": 1,
+    "RVvoenkor": 3,
+    "The Kyiv Independent": 6,
+    "astrapress": 4,
+    "dva_majors": 4,
+    "exilenova_plus": 3,
     "lost_armour": 2,
-    "ukrpravda_news": 2,
-    "uniannet": 1,
-    "Суспільне Новини": 15,
+    "operativnoZSU": 4,
+    "uniannet": 3,
+    "wargonzo": 2,
+    "Суспільне Новини": 12,
     "УНІАН": 5,
-    "Українська правда": 8
+    "Українська правда": 4
   },
-  "window_end": "2026-11-24T01:17:39Z",
-  "window_start": "2026-11-17T01:17:39Z"
+  "window_end": "2026-11-24T11:06:58Z",
+  "window_start": "2026-11-17T11:06:58Z"
 }
