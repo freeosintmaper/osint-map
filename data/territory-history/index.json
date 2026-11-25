@@ -1,10 +1,45 @@
 {
-  "generated_at": "2026-11-24T18:16:00Z",
+  "generated_at": "2026-11-25T17:36:13Z",
   "method_note": "Сохраняются даты и закреплённые ссылки на версии открытых картографических источников. Файлы геометрии не дублируются в этом репозитории.",
   "retention_days": 90,
   "schema_version": 1,
-  "snapshot_count": 24,
+  "snapshot_count": 25,
   "snapshots": [
+    {
+      "date": "2026-11-25",
+      "generated_at": "2026-11-25T17:36:13Z",
+      "method_note": "Это журнал версий и ссылок на исходные наборы, а не независимая оценка контроля территории. Геометрии остаются в репозиториях первоисточников; ссылки закреплены на конкретные версии.",
+      "sources": {
+        "deepstate": {
+          "archive_blob_sha": null,
+          "archive_size_bytes": null,
+          "change_status": "changed",
+          "provider": "DeepState",
+          "revision": "4bfbc5492fcaa6be9c0aac43ca0beb2ad49c98d6",
+          "snapshot_date": "2026-11-25",
+          "source_path": "deepstate-map-data.geojson.gz",
+          "source_url": "https://raw.githubusercontent.com/cyterat/deepstate-map-data/4bfbc5492fcaa6be9c0aac43ca0beb2ad49c98d6/deepstate-map-data.geojson.gz",
+          "status": "ok",
+          "upstream_commit_date": "2026-11-25T12:09:23Z",
+          "upstream_commit_sha": "4bfbc5492fcaa6be9c0aac43ca0beb2ad49c98d6",
+          "upstream_commit_url": "https://github.com/cyterat/deepstate-map-data/commit/4bfbc5492fcaa6be9c0aac43ca0beb2ad49c98d6"
+        },
+        "project_owl": {
+          "archive_blob_sha": "3de308c8af63c5a6cc3c4bd82a5b8f9b49100d81",
+          "archive_size_bytes": 3025324,
+          "change_status": "changed",
+          "provider": "Project Owl",
+          "revision": "3de308c8af63c5a6cc3c4bd82a5b8f9b49100d81",
+          "snapshot_date": "2026-11-25",
+          "source_path": "2026/261125_0601.kmz",
+          "source_url": "https://raw.githubusercontent.com/owlmaps/UAControlMapBackups/17d837df65c6b2b8bc1d54059c3519879a6556ca/2026/261125_0601.kmz",
+          "status": "ok",
+          "upstream_commit_date": "2026-11-25T05:01:06Z",
+          "upstream_commit_sha": "17d837df65c6b2b8bc1d54059c3519879a6556ca",
+          "upstream_commit_url": "https://github.com/owlmaps/UAControlMapBackups/commit/17d837df65c6b2b8bc1d54059c3519879a6556ca"
+        }
+      }
+    },
     {
       "date": "2026-11-24",
       "generated_at": "2026-11-24T18:16:00Z",
