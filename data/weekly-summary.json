@@ -4,23 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 42,
-      "delta": 41,
+      "current_period": 45,
+      "delta": 38,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 1,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 8,
-      "delta": 8,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
+      "previous_period": 7,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
@@ -28,30 +17,15 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-24T22:15:11+00:00",
-      "description": "😢 В Одессе и области двое погибших, в Харькове и Киеве – пятеро раненых после вечерних ударов рф\n\nВ Одесской области погибли 41-летний мужчина и 17-летний юноша, еще трое человек получили ранения, сре",
+      "date": "2026-11-25T14:04:54+00:00",
+      "description": "‼️🇷🇺🇺🇦 В Запорожье прилет ФАБа по объекту энергетической инфраструктуры \n\n▪️ Запорожская областная военная администрация подтвердила частичное обесточивание региона после попадания по объекту энергети",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-24T21:59:54+00:00",
-      "description": "Два человека получили ранения в результате атаки российского БПЛА в Киеве, — ГСЧС\n\nДрон взорвался во дворе шестнадцатиэтажного жилого дома в Шевченковском районе украинской столицы вечером 24 ноября. ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
+      "location": "Запорожье",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 3,
       "sources": [
-        "astrapress",
+        "RVvoenkor",
         "operativnoZSU",
         "uniannet"
       ],
@@ -59,34 +33,137 @@
     },
     {
       "country": "UA",
-      "date": "2026-11-24T21:15:57+00:00",
-      "description": "‼️🇺🇦🇧🇾«Я ему что, чемодан?!» – Зеленский обиделся на предложение Лукашенко лететь вместе в Москву на переговоры.\n\n➖«Он предлагает меня взять и с ним поехать в Москву. Я ему что, чемодан, что ли?» – но",
-      "event_type": "Political Development",
+      "date": "2026-11-25T13:58:01+00:00",
+      "description": "В Запорожье прилет КАБа\n\nПосле удара пошли сообщения о частичном обесточивании области.\n\nКак уточнили в ОВА, был прилет по энергетике. \n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
+      "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Киев",
+      "location": "Запорожье",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 5,
+      "source_count": 2,
       "sources": [
         "RVvoenkor",
-        "operativnoZSU",
-        "ukrpravda_news",
-        "uniannet",
-        "voenkorKotenok"
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-25T13:31:26+00:00",
+      "description": "‼️🇷🇺🇧🇳 Россия предложила Брунею сотрудничество в нефтегазовой отрасли, энергетике и сфере безопасности — Путин\n\n▪️ Президент России Владимир Путин по итогам переговоров с султаном Брунея заявил о гото",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "epoddubny"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-24T20:27:25+00:00",
-      "description": "У Шевченківському районі Києва  влучання уламків БпЛА та пожежа на 1-2 поверхах 16-поверхового житлового будинку. А також — у дворі будинку— Кличко\n\nhttps://t.me/operativnoZSU/\n🤬1.04K🙏162😢146❤14😱9🔥3\n ",
+      "date": "2026-11-25T12:34:56+00:00",
+      "description": "‼️🇷🇺🇺🇦 Одесса частично осталась без света после российских ударов по энергетической инфраструктуре\n\n▪️ Компания ДТЭК сообщила о частичном обесточивании Одессы в результате очередной атаки на объекты э",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Киев",
+      "location": "Одесса",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "astrapress",
-        "operativnoZSU"
+        "RVvoenkor",
+        "astrapress"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-25T11:42:22+00:00",
+      "description": "Ворог завдав масованого удару БПЛА по Одесі та передмістю. Атаковано об’єкти цивільної та енергетичної інфраструктури, — ОВА \n\n▪️В Одесі пошкоджено ЖК, поранено двох жінок.\n\n▪️У передмісті пошкоджено ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Ковель",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "operativnoZSU",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-25T11:30:10+00:00",
+      "description": "Вночі ворог завдав нового удару по енергетиці: атаковано електричну та газову інфраструктуру. Є руйнування в Запорізькій, Одеській, Дніпропетровській і Полтавській областях, — Корецький\n\nНайскладніша ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Запорожье",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "RVvoenkor",
+        "operativnoZSU",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-25T11:29:25+00:00",
+      "description": "Россия готова к диалогу с европейскими странами, но не намерена принимать формат переговоров который ей навязывают, – заявил министр иностранных дел Сергей Лавров. \n\nГлава МИД напомнил, что российская",
+      "event_type": "Political Development",
+      "fact_checked": false,
+      "location": "Москва",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "epoddubny"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-25T10:02:01+00:00",
+      "description": "Дрон ВСУ ударил по машине медиков в Запорожской области\n\nБеспилотник противника атаковал бригаду скорой медицинской помощи, которая ехала на вызов к пострадавшим в результате предыдущей атаки БПЛА.\n\nМ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Запорожье",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "operativnoZSU",
+        "wargonzo"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-25T08:52:08+00:00",
+      "description": "Значительная часть Запорожья и области осталась без света в результате российских ударов по объектам энергоинфраструктуры, — власти  «В результате повреждения энергетической инфраструктуры в ходе росс",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Одесса",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "astrapress"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-25T08:47:28+00:00",
+      "description": "Росіяни завдали удару по Ковельській громаді Волинської області увечері 24 листопада — п'ятеро людей постраждали, горіли цивільна будівля та автомобілі. Зазначається, що всі пожежі оперативно загасили",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Ковель",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "operativnoZSU",
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     }
@@ -94,113 +171,103 @@
   "corroborated_event_count": 10,
   "country_counts": {
     "GB": 1,
-    "RU": 3,
-    "UA": 51
+    "PL": 1,
+    "RU": 6,
+    "UA": 45
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 55,
+  "event_count": 53,
   "event_type_counts": {
-    "Military Offensive": 2,
-    "Military Operation": 3,
-    "Military Strike": 42,
-    "Political Development": 8
+    "Air Raid Alert": 1,
+    "Military Offensive": 1,
+    "Military Strike": 45,
+    "Political Development": 6
   },
   "evidence_breakdown": {
     "cross_source_consistent_count": 10,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 45,
-    "rss_reports_not_independently_corroborated_count": 28
+    "not_independently_corroborated_count": 43,
+    "rss_reports_not_independently_corroborated_count": 24
   },
-  "generated_at": "2026-11-25T04:11:47Z",
+  "generated_at": "2026-11-25T14:30:29Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 12,
-  "not_verified_event_count": 45,
+  "new_since_previous_snapshot": 25,
+  "not_verified_event_count": 43,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 42,
-      "delta": 41,
+      "current_period": 45,
+      "delta": 38,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 1,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 8,
-      "delta": 8,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
+      "previous_period": 7,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 28,
-    "telegram": 27
+    "rss": 24,
+    "telegram": 29
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 23,
+      "events": 14,
       "location": "Киев"
     },
     {
       "country": "UA",
-      "events": 4,
+      "events": 7,
       "location": "Запорожье"
     },
     {
       "country": "UA",
-      "events": 3,
-      "location": "Харьков"
-    },
-    {
-      "country": "UA",
-      "events": 3,
+      "events": 4,
       "location": "Полтава"
     },
     {
       "country": "UA",
-      "events": 2,
+      "events": 3,
       "location": "Одесса"
     },
     {
       "country": "UA",
+      "events": 3,
+      "location": "Ковель"
+    },
+    {
+      "country": "UA",
       "events": 2,
-      "location": "Львов"
+      "location": "Черноморск"
+    },
+    {
+      "country": "RU",
+      "events": 2,
+      "location": "Москва"
     },
     {
       "country": "UA",
       "events": 2,
       "location": "Днепр"
-    },
-    {
-      "country": "UA",
-      "events": 1,
-      "location": "Красноармейск"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 4,
-    "The Kyiv Independent": 6,
-    "astrapress": 2,
+    "RVvoenkor": 6,
+    "The Kyiv Independent": 3,
+    "astrapress": 3,
+    "boris_rozhin": 2,
     "kyivindependent_official": 4,
-    "odesa_typical": 1,
-    "operativnoZSU": 3,
-    "ukrpravda_news": 2,
-    "uniannet": 5,
-    "wargonzo": 2,
-    "Суспільне Новини": 12,
+    "odesa_typical": 2,
+    "operativnoZSU": 2,
+    "supernova_plus": 2,
+    "ukrpravda_news": 3,
+    "Суспільне Новини": 13,
     "УНІАН": 4,
-    "Українська правда": 5
+    "Українська правда": 3
   },
-  "window_end": "2026-11-25T04:11:47Z",
-  "window_start": "2026-11-18T04:11:47Z"
+  "window_end": "2026-11-25T14:30:29Z",
+  "window_start": "2026-11-18T14:30:29Z"
 }
