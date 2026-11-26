@@ -4,23 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 43,
-      "delta": 41,
+      "current_period": 52,
+      "delta": 51,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 9,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
@@ -28,8 +17,23 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-25T22:15:13+00:00",
-      "description": "🇷🇺💥🇺🇦Мощный удар по Киеву: в городе масштабные пожары\n\n▪️В первой волне несколько ударов ракет нанесены по промышленному объекту и еще одному нежилому зданию в Деснянском районе Киева, сообщил мэр Кли",
+      "date": "2026-11-26T04:58:04+00:00",
+      "description": "❗️Дрон попал по многоэтажке в Харькове, – мэр Терехов  Предварительно, прилет был в Холодногорском районе. Также сообщается о падении БпЛА в Новобаварском районе. Последствия уточняются.  UPD: в Новоб",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Харьков",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-26T04:44:11+00:00",
+      "description": "🤬 Появились первые кадры с места прилета в Деснянском районе Киева, – Новини۔LIVE  Предварительно, удар пришёлся по нежилому помещению. О пострадавших информация не поступала.  УНИАН в 🕸Google | 👥 X |",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Киев",
@@ -45,27 +49,12 @@
       "status": "requires_human_review"
     },
     {
-      "country": "UA",
-      "date": "2026-11-25T22:04:46+00:00",
-      "description": "В Киеве начался сильный пожар после ударов баллистикой  Пишут, что снова был удар по ТРК «Проспект».  УНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads\n\n\n  \n    \n      \n  \n  \n    \n  \n  \n0:06\n  \n    \n      ",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
       "country": "RU",
-      "date": "2026-11-25T22:02:39+00:00",
-      "description": "В Валуйках Белгородской области дрон попал в супермаркет «Пятерочка» и магазин пиротехники, — СМИ\n\n«После удара БПЛА в Валуйках горит супермаркет «Пятерочка».  Предварительно, при ударе БПЛА по ТЦ «За",
+      "date": "2026-11-26T04:12:35+00:00",
+      "description": "Промзона Невинномысска под атакой БПЛА. Там находится завод, который поставляет компоненты для взрывчатки на предприятия РФ, — власти  «Силы ПВО отражают налет вражеских беспилотников, направленный на",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Белгород",
+      "location": "Невинномысск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
@@ -75,24 +64,55 @@
       "status": "requires_human_review"
     },
     {
-      "country": "UA",
-      "date": "2026-11-25T21:10:13+00:00",
-      "description": "‼️🇷🇺🇺🇦 Киев под ударом: сообщается о взрывах и попадании по объекту энергетики\n\n▪️ В украинской столице прогремела серия взрывов. Мэр Киева Виталий Кличко сообщил об атаке с применением баллистических",
+      "country": "RU",
+      "date": "2026-11-26T03:24:59+00:00",
+      "description": "Невинномысск .. сообщается об атаке на азот и грэс\n🔥522🎉66👏44❤16🤬16👍13💩12🆒4😡4🤡3👎2\n  \n  \n    38.1K views03:24",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Киев",
+      "location": "Невинномысск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "RVvoenkor",
-        "uniannet"
+        "exilenova_plus",
+        "supernova_plus"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-25T21:06:58+00:00",
-      "description": "❗️В Києві пролунало кілька вибухів  Моніторингові канали заявляють, що в атаці було задіяно 4 ракети.  https://t.me/operativnoZSU/\n\nВ Деснянському районі Києва сталось влучання в будівлю у промзоні, —",
+      "date": "2026-11-26T03:21:31+00:00",
+      "description": "❗️Дрон попал по многоэтажке в Харькове, – мэр Терехов\n\nПредварительно, прилет был в Холодногорском районе. Также сообщается о падении БпЛА в Новобаварском районе. Последствия уточняются.\n\nUPD: в Новоб",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Харьков",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-26T02:43:05+00:00",
+      "description": "Невинномысск. Местные жители всю ночь сообщали об атаке на промзону. В городе находится химическое предприятие АО «Невинномысский Азот».\n\nТакже местные сообщали о взрывах в районе Невинномысской ГРЭС.",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Невинномысск",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "exilenova_plus",
+        "supernova_plus"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-26T02:20:10+00:00",
+      "description": "🤬 Появились первые кадры с места прилета в Деснянском районе Киева, – Новини۔LIVE\n\nПредварительно, удар пришёлся по нежилому помещению. О пострадавших информация не поступала.\n\nУНИАН в 🕸Google | 👥 X |",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Киев",
@@ -108,27 +128,12 @@
       "status": "requires_human_review"
     },
     {
-      "country": "UA",
-      "date": "2026-11-25T20:44:59+00:00",
-      "description": "❗️Баллистика на Киев, - мониторы\n\nUPD: Чисто, прозвучали взрывы.\n\nУНИАН в 🕸Google | 👥 X | 📺 YouTube |🧵 Threads",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "uniannet"
-      ],
-      "status": "requires_human_review"
-    },
-    {
       "country": "RU",
-      "date": "2026-11-25T19:50:02+00:00",
-      "description": "Валуйки, Бєлгородська область. Ударниками СОУ щойно було уражено ТЦ \"Заря\", який мав подвійне призначення",
+      "date": "2026-11-26T00:31:08+00:00",
+      "description": "Промзона Невинномысска под атакой БПЛА. Там находится завод, который поставляет компоненты для взрывчатки на предприятия РФ, — власти\n\n«Силы ПВО отражают налет вражеских беспилотников, направленный на",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Бєлгород",
+      "location": "Невинномысск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
@@ -139,90 +144,84 @@
     },
     {
       "country": "RU",
-      "date": "2026-11-25T18:50:17+00:00",
-      "description": "Генеральний секретар НАТО Рютте захистив підхід Трампа до Путіна, заявивши, що той піддає господаря Кремля випробуванням. \n\nРютте зазначив, що Трамп ставить запитання: «Чи готовий він сісти за стіл пе",
+      "date": "2026-11-25T23:31:36+00:00",
+      "description": "‼️🇫🇮🇳🇴🇷🇺 Финляндия и Норвегия тайно убеждали Путина, что НАТО не планирует морскую блокаду России на Балтике — WSJ\n\n▪️ По данным The Wall Street Journal, президент Финляндии Александр Стубб и премьер-",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Москва",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "epoddubny",
+        "RVvoenkor",
         "ukrpravda_news"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 9,
+  "corroborated_event_count": 16,
   "country_counts": {
     "GB": 1,
-    "RU": 9,
-    "UA": 43,
-    "US": 2
+    "RU": 16,
+    "UA": 44
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 55,
+  "event_count": 61,
   "event_type_counts": {
+    "Air Raid Alert": 1,
     "Military Offensive": 1,
     "Military Operation": 2,
-    "Military Strike": 43,
-    "Political Development": 9
+    "Military Strike": 52,
+    "Political Development": 5
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 9,
+    "cross_source_consistent_count": 16,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 46,
-    "rss_reports_not_independently_corroborated_count": 24
+    "not_independently_corroborated_count": 45,
+    "rss_reports_not_independently_corroborated_count": 25
   },
-  "generated_at": "2026-11-25T23:17:17Z",
+  "generated_at": "2026-11-26T05:11:36Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 26,
-  "not_verified_event_count": 46,
+  "new_since_previous_snapshot": 20,
+  "not_verified_event_count": 45,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 43,
-      "delta": 41,
+      "current_period": 52,
+      "delta": 51,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 2,
-      "requires_human_review": true,
-      "signal_type": "publication_volume_change"
-    },
-    {
-      "classification": "analytical_signal",
-      "current_period": 9,
-      "delta": 9,
-      "event_type": "Political Development",
-      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
-      "label": "Повышенная публикационная активность",
-      "previous_period": 0,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 24,
-    "telegram": 31
+    "rss": 25,
+    "telegram": 36
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 19,
+      "events": 20,
       "location": "Киев"
     },
     {
       "country": "UA",
-      "events": 7,
+      "events": 5,
       "location": "Запорожье"
+    },
+    {
+      "country": "UA",
+      "events": 4,
+      "location": "Харьков"
     },
     {
       "country": "RU",
       "events": 4,
-      "location": "Москва"
+      "location": "Невинномысск"
     },
     {
       "country": "UA",
@@ -230,40 +229,35 @@
       "location": "Полтава"
     },
     {
-      "country": "US",
-      "events": 2,
-      "location": "Вашингтон"
+      "country": "RU",
+      "events": 3,
+      "location": "Москва"
     },
     {
-      "country": "UA",
+      "country": "RU",
       "events": 2,
-      "location": "Славянск"
+      "location": "Нижний Новгород"
     },
     {
       "country": "UA",
       "events": 2,
       "location": "Черноморск"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Харьков"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 5,
+    "RVvoenkor": 3,
     "The Kyiv Independent": 3,
-    "astrapress": 5,
-    "boris_rozhin": 2,
-    "dva_majors": 2,
-    "odesa_typical": 2,
-    "operativnoZSU": 2,
+    "astrapress": 8,
+    "exilenova_plus": 3,
+    "kyivindependent_official": 2,
+    "odesa_typical": 3,
+    "supernova_plus": 5,
     "ukrpravda_news": 3,
-    "uniannet": 8,
+    "uniannet": 6,
     "Суспільне Новини": 12,
     "УНІАН": 4,
-    "Українська правда": 4
+    "Українська правда": 5
   },
-  "window_end": "2026-11-25T23:17:17Z",
-  "window_start": "2026-11-18T23:17:17Z"
+  "window_end": "2026-11-26T05:11:36Z",
+  "window_start": "2026-11-19T05:11:36Z"
 }
