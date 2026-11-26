@@ -1,0 +1,2718 @@
+
+    var SB_URL = 'https://zojqbhnwsycqhaiqpgxh.supabase.co';
+    var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvanFiaG53c3ljcWhhaXFwZ3hoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MjY2NzMsImV4cCI6MjEwNjAwMjY3M30.OwU-cwkvk0Z1a28xgKpwMl9p-h-gFObYJ6_PHhFeIHE';
+    var sb = null;
+    try {
+      var sbFactory = window.supabase && window.supabase.createClient;
+      if (sbFactory) sb = sbFactory(SB_URL, SB_KEY);
+    } catch (e) { console.warn('Supabase:', e.message); }
+
+    var OWL_BASE_URLS = [
+      'https://raw.githubusercontent.com/owlmaps/UAControlMapBackups/master/',
+      'https://cdn.jsdelivr.net/gh/owlmaps/UAControlMapBackups@master/',
+      'https://raw.githack.com/owlmaps/UAControlMapBackups/master/'
+    ];
+    var OWL_KMZ_URL = null;
+    var OWL_DATASET_META = null;
+    var DEEPSTATE_FETCHED_AT = null;
+    var DEEPSTATE_DATA_DATE = null;
+    // Version bump invalidates the mixed Point/Line/Polygon cache from the older parser.
+    var OWL_CACHE_KEY = 'owl_zones_cache_v4';
+    var OWL_CACHE_DATE = 'owl_zones_cache_date';
+
+    var OWL_COLORS = {
+      russian:   '#c62828',
+      ukrainian: '#1565c0',
+      holding:   '#6a1b9a',
+      grey:      '#757575',
+      unknown:   '#ef6c00'
+    };
+
+    var i18n = {
+      ru: {
+        eventsPanelTitle: 'События', controlZones: 'Зоны контроля',
+        territoryRF: 'Территория РФ (DeepStateMap)',
+        owlControl: 'Project Owl',
+        owlPositions: 'Военные подразделения Project Owl',
+        owlGeolocations: 'Объекты и геолокации Project Owl',
+        owlCategoryAreas: 'Места сосредоточения / серая зона / неопределённые (Project Owl)',
+        deepStateDataDate: 'Дата геоданных DeepState',
+        owlArchiveDate: 'Дата архива Project Owl',
+        legendDateUnavailable: 'дата неизвестна',
+        legendCaveat: 'Даты показывают версию исходных данных, а не независимое подтверждение контроля территории.',
+        owlFrontline: 'Линия фронта (Project Owl)',
+        owlRussian: 'Действия РФ (Project Owl)',
+        owlUkrainian: 'Действия ВСУ (Project Owl)',
+        owlHolding: 'Места сосредоточения (Project Owl)',
+        owlGrey: 'Серая зона (Project Owl)',
+        owlUnknown: 'Неопределённая категория (Project Owl)',
+        userZones: 'Карта автора',
+        telegramEvents: 'События из Telegram',
+        raidAlert: 'Воздушная тревога', strike: 'Удар', operation: 'Операция',
+        offensive: 'Наступление', incident: 'Инцидент', politics: 'Политика',
+        summaryTitle: 'Сводка', eventsCount: 'событий',
+        noEvents: 'Нет событий', source: 'Источник',
+        toolMarker: 'Метка', toolLine: 'Линия', toolArrow: 'Стрелка',
+        toolPolygon: 'Зона', toolRectangle: 'Прямоугольник', toolCircle: 'Круг',
+        toolMeasure: 'Измерить расстояние', toolClear: 'Очистить всё',
+        toolEraser: 'Ластик — удалять по одной',
+        toolSettings: 'Настройки',
+        toolTheme: 'Тема', toolInfo: 'О проекте',
+        toolShowAll: 'Показать все события',
+        clearConfirm: 'Удалить все рисунки?', total: 'Всего',
+        countryUA: 'Украина', countryRU: 'РФ', countryOSINT: 'OSINT',
+        opacityLabel: 'Прозрачность', modeFill: 'Заливка', modeOutline: 'Контуры',
+        aboutText: 'Карта агрегирует открытые данные из Telegram.\n\nМы не проводим собственный анализ.',
+        time6h: '6ч', time24h: '24ч', time3d: '3д', time7d: '7д', timeAll: 'Всё',
+        updatedJustNow: 'только что', updatedMinutes: 'мин назад',
+        updatedHours: 'ч назад', updatedDays: 'дн назад', updatedLabel: 'Обновлено',
+        refreshTitle: 'Обновить сейчас',
+        settingsTitle: 'Настройки',
+        themeLight: '☀️ Светлая', themeDark: '🌙 Тёмная',
+        appearance: 'Оформление'
+      },
+      uk: {
+        eventsPanelTitle: 'Події', controlZones: 'Зони контролю',
+        territoryRF: 'Територія РФ',
+        owlControl: 'Project Owl',
+        owlPositions: 'Військові підрозділи Project Owl',
+        owlGeolocations: 'Об’єкти та геолокації Project Owl',
+        owlCategoryAreas: 'Місця зосередження / сіра зона / невизначені (Project Owl)',
+        deepStateDataDate: 'Дата геоданих DeepState',
+        owlArchiveDate: 'Дата архіву Project Owl',
+        legendDateUnavailable: 'дата невідома',
+        legendCaveat: 'Дати показують версію вихідних даних, а не незалежне підтвердження контролю території.',
+        owlFrontline: 'Лінія фронту (Project Owl)',
+        owlRussian: 'Дії РФ (Project Owl)',
+        owlUkrainian: 'Дії ЗСУ (Project Owl)',
+        owlHolding: 'Місця зосередження (Project Owl)',
+        owlGrey: 'Сіра зона (Project Owl)',
+        owlUnknown: 'Невизначена категорія (Project Owl)',
+        userZones: 'Карта автора',
+        telegramEvents: 'Події з Telegram',
+        raidAlert: 'Повітряна тривога', strike: 'Удар', operation: 'Операція',
+        offensive: 'Наступ', incident: 'Інцидент', politics: 'Політика',
+        summaryTitle: 'Зведення', eventsCount: 'подій', noEvents: 'Немає',
+        source: 'Джерело', toolMarker: 'Мітка', toolLine: 'Лінія', toolArrow: 'Стрілка',
+        toolPolygon: 'Зона', toolRectangle: 'Прямокутник', toolCircle: 'Коло',
+        toolMeasure: 'Виміряти', toolClear: 'Очистити все',
+        toolEraser: 'Ластик — видаляти по одній',
+        toolSettings: 'Налаштування',
+        toolTheme: 'Тема',
+        toolInfo: 'Про проект',
+        toolShowAll: 'Показати всі події',
+        clearConfirm: 'Видалити всі малюнки?', total: 'Всього',
+        countryUA: 'Україна', countryRU: 'РФ', countryOSINT: 'OSINT',
+        opacityLabel: 'Прозорість', modeFill: 'Заливка', modeOutline: 'Контури',
+        aboutText: 'Карта агрегує відкриті дані.',
+        time6h: '6г', time24h: '24г', time3d: '3д', time7d: '7д', timeAll: 'Все',
+        updatedJustNow: 'щойно', updatedMinutes: 'хв тому',
+        updatedHours: 'г тому', updatedDays: 'дн тому', updatedLabel: 'Оновлено',
+        refreshTitle: 'Оновити зараз',
+        settingsTitle: 'Налаштування',
+        themeLight: '☀️ Світла', themeDark: '🌙 Темна',
+        appearance: 'Оформлення'
+      },
+      en: {
+        eventsPanelTitle: 'Events', controlZones: 'Control Zones',
+        territoryRF: 'Territory held by RF',
+        owlControl: 'Project Owl',
+        owlPositions: 'Project Owl military units',
+        owlGeolocations: 'Project Owl objects and geolocations',
+        owlCategoryAreas: 'Holding areas / grey zones / unclassified (Project Owl)',
+        deepStateDataDate: 'DeepState data date',
+        owlArchiveDate: 'Project Owl archive date',
+        legendDateUnavailable: 'date unavailable',
+        legendCaveat: 'Dates identify source-data versions; they are not independent confirmation of territorial control.',
+        owlFrontline: 'Front line (Project Owl)',
+        owlRussian: 'Russian actions (Project Owl)',
+        owlUkrainian: 'Ukrainian actions (Project Owl)',
+        owlHolding: 'Holding areas (Project Owl)',
+        owlGrey: 'Grey zone (Project Owl)',
+        owlUnknown: 'Unclassified areas (Project Owl)',
+        userZones: "Author's map",
+        telegramEvents: 'Telegram Events',
+        raidAlert: 'Air Raid Alert', strike: 'Strike', operation: 'Operation',
+        offensive: 'Offensive', incident: 'Incident', politics: 'Politics',
+        summaryTitle: 'Summary', eventsCount: 'events', noEvents: 'No events',
+        source: 'Source', toolMarker: 'Marker', toolLine: 'Line', toolArrow: 'Arrow',
+        toolPolygon: 'Polygon', toolRectangle: 'Rectangle', toolCircle: 'Circle',
+        toolMeasure: 'Measure', toolClear: 'Clear all',
+        toolEraser: 'Eraser — delete one by one',
+        toolSettings: 'Settings',
+        toolTheme: 'Theme',
+        toolInfo: 'About',
+        toolShowAll: 'Show all events',
+        clearConfirm: 'Delete all drawings?', total: 'Total',
+        countryUA: 'Ukraine', countryRU: 'RF', countryOSINT: 'OSINT',
+        opacityLabel: 'Opacity', modeFill: 'Fill', modeOutline: 'Outline',
+        aboutText: 'This map aggregates open data.',
+        time6h: '6h', time24h: '24h', time3d: '3d', time7d: '7d', timeAll: 'All',
+        updatedJustNow: 'just now', updatedMinutes: 'min ago',
+        updatedHours: 'h ago', updatedDays: 'd ago', updatedLabel: 'Updated',
+        refreshTitle: 'Refresh now',
+        settingsTitle: 'Settings',
+        themeLight: '☀️ Light', themeDark: '🌙 Dark',
+        appearance: 'Appearance'
+      }
+    };
+    var UI_PREFS_KEY='osint_ui_preferences_v2';
+    function readUIPrefs(){try{var p=JSON.parse(localStorage.getItem(UI_PREFS_KEY)||'{}');return p&&typeof p==='object'&&!Array.isArray(p)?p:{};}catch(e){return {};}}
+    var uiPrefs=readUIPrefs();
+    function writeUIPrefs(){try{localStorage.setItem(UI_PREFS_KEY,JSON.stringify(uiPrefs));}catch(e){console.warn('UI preferences unavailable:',e.message);}}
+    var currentLang=['en','ru','uk'].indexOf(uiPrefs.language)>=0?uiPrefs.language:'en';
+    var toolAccentColors=uiPrefs.toolColors&&typeof uiPrefs.toolColors==='object'?uiPrefs.toolColors:{};
+    var uiPreset=uiPrefs.preset||'midnight',compactToolbar=uiPrefs.compactToolbar===true,motionEnabled=uiPrefs.motionEnabled!==false;
+    function t(key){return(i18n[currentLang]&&i18n[currentLang][key])||(i18n.en[key])||key;}
+        var loginOverlay = document.getElementById('loginOverlay');
+    var loginStatus = document.getElementById('loginStatus');
+    var loginFormBlock = document.getElementById('loginFormBlock');
+    var loginAdminBlock = document.getElementById('loginAdminBlock');
+    var userBtn = document.getElementById('userBtn');
+
+    function checkAdminAccess() {
+      if (!sb) {
+        userBtn.classList.remove('logged-in');
+        return Promise.resolve(false);
+      }
+      return sb.auth.getSession().then(function(res) {
+        if (res.error || !res.data || !res.data.session) {
+          userBtn.classList.remove('logged-in');
+          return false;
+        }
+        return sb.rpc('is_osint_map_admin').then(function(check) {
+          var allowed = !check.error && check.data === true;
+          userBtn.classList.toggle('logged-in', allowed);
+          if (check.error) console.warn('Admin access check failed:', check.error.message);
+          return allowed;
+        });
+      }).catch(function(error) {
+        console.warn('Admin access check failed:', error && error.message ? error.message : 'unknown error');
+        userBtn.classList.remove('logged-in');
+        return false;
+      });
+    }
+
+    function openLoginModal() {
+      loginOverlay.classList.add('open');
+      checkAdminAccess().then(function(isAdmin) {
+        if (isAdmin) showAdminView();
+        else showFormView();
+      });
+    }
+    function closeLoginModal() {
+      loginOverlay.classList.remove('open');
+      loginStatus.style.display = 'none';
+    }
+    function showFormView() {
+      loginFormBlock.style.display = 'block';
+      loginAdminBlock.style.display = 'none';
+      userBtn.classList.remove('logged-in');
+      document.getElementById('loginModalTitle').textContent = 'Вход для админа';
+    }
+    function showAdminView() {
+      loginFormBlock.style.display = 'none';
+      loginAdminBlock.style.display = 'block';
+      document.getElementById('loginModalTitle').textContent = 'Админ-панель';
+      userBtn.classList.add('logged-in');
+    }
+    function logout() {
+      if (!sb) return;
+      sb.auth.signOut().then(function() {
+        userBtn.classList.remove('logged-in');
+        var editorPanel = document.getElementById('zoneEditorPanel');
+        if (editorPanel) editorPanel.classList.remove('open');
+        closeLoginModal();
+      }).catch(function(error) {
+        loginStatus.style.display = 'block';
+        loginStatus.className = 'status err';
+        loginStatus.textContent = 'Не удалось завершить сеанс. Попробуй ещё раз.';
+        console.warn('Logout failed:', error && error.message ? error.message : 'unknown error');
+      });
+    }
+    function submitLogin() {
+      var email = document.getElementById('loginEmail').value.trim();
+      var password = document.getElementById('loginPassword').value;
+      loginStatus.style.display = 'block';
+      loginStatus.className = 'status err';
+      if (!email || !password) {
+        loginStatus.textContent = 'Введите email и пароль';
+        return;
+      }
+      if (!sb) {
+        loginStatus.textContent = 'Нет подключения к базе';
+        return;
+      }
+      sb.auth.signInWithPassword({ email: email, password: password }).then(function(res) {
+        if (res.error) {
+          loginStatus.textContent = 'Не удалось войти. Проверь email и пароль.';
+          return;
+        }
+        return checkAdminAccess().then(function(isAdmin) {
+          if (!isAdmin) {
+            return sb.auth.signOut().then(function() {
+              showFormView();
+              loginStatus.style.display = 'block';
+              loginStatus.className = 'status err';
+              loginStatus.textContent = 'У этой учётной записи нет прав администратора.';
+            });
+          }
+          loginStatus.className = 'status ok';
+          loginStatus.textContent = '✅ Вход выполнен';
+          window.setTimeout(function() {
+            loginStatus.style.display = 'none';
+            showAdminView();
+          }, 600);
+        });
+      }).catch(function(error) {
+        loginStatus.style.display = 'block';
+        loginStatus.className = 'status err';
+        loginStatus.textContent = 'Не удалось проверить права доступа. Попробуй снова.';
+        console.warn('Login or admin check failed:', error && error.message ? error.message : 'unknown error');
+      });
+    }
+    userBtn.addEventListener('click', openLoginModal);
+    document.getElementById('btnLoginCancel').addEventListener('click', closeLoginModal);
+    document.getElementById('btnLoginSubmit').addEventListener('click', submitLogin);
+    document.getElementById('btnLogout').addEventListener('click', logout);
+    loginOverlay.addEventListener('click', function(e) {
+      if (e.target === loginOverlay) closeLoginModal();
+    });
+    if (sb) {
+      checkAdminAccess();
+      sb.auth.onAuthStateChange(function(event, session) {
+        if (!session) {
+          userBtn.classList.remove('logged-in');
+        } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+          window.setTimeout(function() { checkAdminAccess(); }, 0);
+        }
+      });
+    }
+
+    var OPACITY_KEY = 'osint_opacity';
+    var MODE_KEY = 'osint_mode';
+    var THEME_KEY = 'osint_theme';
+    var fillOpacity = parseFloat(localStorage.getItem(OPACITY_KEY) || '0.15');
+    var layerMode = localStorage.getItem(MODE_KEY) || 'fill';
+    var savedTheme = localStorage.getItem(THEME_KEY);
+    var systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+
+    function saveSettings() {
+      localStorage.setItem(OPACITY_KEY, fillOpacity.toString());
+      localStorage.setItem(MODE_KEY, layerMode);
+    }
+    function styleFor(baseColor) {
+      if (layerMode === 'outline') return { color: baseColor, weight: 1.8, opacity: 0.9, fill: false, fillColor: baseColor, fillOpacity: 0 };
+      return { color: baseColor, weight: 1.2, opacity: 0.9, fill: true, fillColor: baseColor, fillOpacity: fillOpacity };
+    }
+    function applyStyleToLayer(layer, baseColor, styleObj) {
+      if (!layer) return;
+      if (layer.setStyle) layer.setStyle(styleObj);
+      if (layer.options) {
+        layer.options.fill = styleObj.fill; layer.options.fillColor = styleObj.fillColor;
+        layer.options.fillOpacity = styleObj.fillOpacity; layer.options.color = styleObj.color;
+        layer.options.weight = styleObj.weight; layer.options.opacity = styleObj.opacity;
+      }
+      if (layer.redraw) layer.redraw();
+    }
+    function owlColorFor(cat) { return OWL_COLORS[cat] || OWL_COLORS.unknown; }
+    function owlLabelFor(cat) {
+      if (cat === 'russian') return t('owlRussian');
+      if (cat === 'ukrainian') return t('owlUkrainian');
+      if (cat === 'holding') return t('owlHolding');
+      if (cat === 'grey') return t('owlGrey');
+      return t('owlControl');
+    }
+    function refreshAllStyles() {
+      if (deepStateLayer) deepStateLayer.eachLayer(function(s) { applyStyleToLayer(s, '#cc0000', styleFor('#cc0000')); });
+      if (owlControlLayer) owlControlLayer.eachLayer(function(s) {
+        var cat = (s.feature && s.feature.properties && s.feature.properties._category) || 'unknown';
+        var c = owlColorFor(cat);
+        var outline = layerMode === 'outline';
+        applyStyleToLayer(s, c, {
+          color: c, weight: 1.8, opacity: 0.9,
+          fill: !outline, fillColor: c,
+          fillOpacity: outline ? 0 : fillOpacity * 0.9
+        });
+      });
+      if (owlCategoryPointsLayer) owlCategoryPointsLayer.eachLayer(function(s) {
+        var cat = (s.feature && s.feature.properties && s.feature.properties._category) || 'unknown';
+        var c = owlColorFor(cat);
+        applyStyleToLayer(s, c, { color: c, weight: 1, opacity: 0.95, fill: true, fillColor: c, fillOpacity: Math.max(0.55, fillOpacity * 0.9) });
+      });
+      if (owlPositionsLayer) owlPositionsLayer.eachLayer(function(s) {
+        var cat = (s.feature && s.feature.properties && s.feature.properties._category) || 'unknown';
+        var c = owlColorFor(cat);
+        var outline = layerMode === 'outline';
+        applyStyleToLayer(s, c, {
+          color: c, weight: 1.4, opacity: 0.95,
+          fill: true, fillColor: c,
+          fillOpacity: outline ? 0 : fillOpacity * 0.9
+        });
+      });
+      if (userZonesLayer) userZonesLayer.eachLayer(function(s) {
+        var cat = (s.feature && s.feature.properties && s.feature.properties.category) || 'russia';
+        var c = zoneColors[cat] || zoneColors.russia;
+        var outline = layerMode === 'outline';
+        applyStyleToLayer(s, c.color, {
+          color: c.color, weight: 2, opacity: 0.9,
+          fill: !outline, fillColor: c.fillColor,
+          fillOpacity: outline ? 0 : fillOpacity,
+          dashArray: c.dashArray || null
+        });
+      });
+    }
+
+    var TOOLBAR_SVG = {
+      marker: '<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>',
+      line: '<svg viewBox="0 0 24 24"><path d="M4 19L20 5"/></svg>',
+      arrow: '<svg viewBox="0 0 24 24"><path d="M4 12h13M12 6l6 6-6 6"/></svg>',
+      polygon: '<svg viewBox="0 0 24 24"><path d="M12 2l9 7-3.5 11h-11L3 9z"/></svg>',
+      rectangle: '<svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1"/></svg>',
+      circle: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>',
+      measure: '<svg viewBox="0 0 24 24"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg>',
+      clear: '<svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>',
+      eraser: '<svg viewBox="0 0 24 24"><path d="M20 20H7L3 16a2 2 0 010-3l9-9a2 2 0 013 0l5 5a2 2 0 010 3l-7 7M6 13l5 5"/></svg>',
+      settings: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
+      showAll: '<svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="12" cy="12" r="2"/></svg>'
+    };
+
+    function applyTheme(theme) {
+      currentTheme = theme;
+      localStorage.setItem(THEME_KEY, theme);
+      if (theme === 'dark') {
+        document.body.classList.add('dark', 'dark-tiles');
+      } else {
+        document.body.classList.remove('dark', 'dark-tiles');
+      }
+    }
+
+    var map = L.map('map', { zoomControl: false, tap: true }).setView([48.5, 37.5], 7);
+    if (!isMobile()) L.control.zoom({ position: 'bottomleft' }).addTo(map);
+
+    var lightTile = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri', maxZoom: 19 });
+        lightTile.addTo(map);
+    if (currentTheme === 'dark') {
+      document.body.classList.add('dark', 'dark-tiles');
+    }
+
+    var zoneColors = {
+      'russia': { color: '#cc0000', fillColor: '#cc0000', fillOpacity: 0.25, label: 'Территория РФ' },
+      'ukraine': { color: '#0055cc', fillColor: '#0055cc', fillOpacity: 0.25, label: 'Территория Украины' },
+      'grey': { color: '#666666', fillColor: '#888888', fillOpacity: 0.30, label: 'Серая зона', dashArray: '6,4' }
+    };
+
+    var userZonesLayer = L.geoJSON(null, {
+      style: function(f) {
+        var cat = (f.properties && f.properties.category) || 'russia';
+        var c = zoneColors[cat] || zoneColors.russia;
+        var outline = layerMode === 'outline';
+        return {
+          color: c.color, weight: 2, opacity: 0.9,
+          fill: !outline, fillColor: c.fillColor,
+          fillOpacity: outline ? 0 : fillOpacity,
+          dashArray: c.dashArray || null
+        };
+      },
+      onEachFeature: function(f, layer) {
+        var cat = (f.properties && f.properties.category) || 'russia';
+        var c = zoneColors[cat] || zoneColors.russia;
+        var zoneId = f.properties && f.properties.id;
+        layer._zoneId = zoneId;
+        layer._zoneCategory = cat;
+
+        var popupHtml = '<b>' + c.label + '</b>';
+        var adminActionsHtml = '';
+        if (zoneId) {
+          adminActionsHtml =
+            '<div class="zone-admin-actions" style="margin-top:10px;display:none;gap:8px;">' +
+            '<button class="zone-btn-edit" style="flex:1;padding:8px 12px;border:1px solid #3b82f6;background:#eff6ff;color:#2563eb;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;">✏️ Изменить</button>' +
+            '<button class="zone-btn-delete" style="flex:1;padding:8px 12px;border:1px solid #ef4444;background:#fef2f2;color:#dc2626;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;">🗑️ Удалить</button>' +
+            '</div>';
+        }
+        layer.bindPopup(popupHtml + adminActionsHtml);
+        layer.on('popupopen', function(e) {
+          var popup = e.popup.getElement();
+          if (!popup) return;
+          var isLoggedIn = userBtn.classList.contains('logged-in');
+          var actions = popup.querySelector('.zone-admin-actions');
+          if (actions) actions.style.display = isLoggedIn ? 'flex' : 'none';
+          var editBtn = popup.querySelector('.zone-btn-edit');
+          var delBtn = popup.querySelector('.zone-btn-delete');
+          if (editBtn) editBtn.onclick = function(ev) { ev.stopPropagation(); startEditZone(layer); map.closePopup(); };
+          if (delBtn) delBtn.onclick = function(ev) { ev.stopPropagation(); deleteZoneById(zoneId, layer); };
+        });
+      }
+    });
+    userZonesLayer.addTo(map);
+
+    var USER_ZONES_CACHE_KEY = 'user_control_zones_cache_v1';
+
+    // Validate every row before touching the visible layer or replacing a known-good cache.
+    // Empty snapshots may be an RLS/pagination/API failure, not an intentional deletion.
+    function normalizeAuthorZoneRows(rows) {
+      if (!Array.isArray(rows) || !rows.length) {
+        throw new Error('Пустой или некорректный набор зон автора — сохранённая версия не заменяется');
+      }
+      var seen = Object.create(null);
+      function validPosition(position) {
+        if (!Array.isArray(position) || position.length < 2) return false;
+        for (var i = 0; i < 2; i++) {
+          if (position[i] === null || position[i] === '' || !isFinite(Number(position[i]))) return false;
+        }
+        var lng = Number(position[0]), lat = Number(position[1]);
+        return lng >= -180 && lng <= 180 && lat >= -90 && lat <= 90;
+      }
+      function validRing(ring) {
+        if (!Array.isArray(ring) || ring.length < 4 || !ring.every(validPosition)) return false;
+        return Number(ring[0][0]) === Number(ring[ring.length - 1][0]) &&
+          Number(ring[0][1]) === Number(ring[ring.length - 1][1]);
+      }
+      function validPolygon(rings) {
+        return Array.isArray(rings) && rings.length > 0 && rings.every(validRing);
+      }
+      return rows.map(function(row, index) {
+        if (!row || typeof row !== 'object' || Array.isArray(row)) {
+          throw new Error('Зона #' + (index + 1) + ' имеет неверный формат');
+        }
+        if ((typeof row.id !== 'string' && typeof row.id !== 'number') ||
+            String(row.id).trim() === '' || !row.category || typeof row.category !== 'string') {
+          throw new Error('Зона #' + (index + 1) + ' не содержит корректные id/category');
+        }
+        var idKey = String(row.id);
+        if (Object.prototype.hasOwnProperty.call(seen, idKey)) {
+          throw new Error('Повторяющийся id зоны: ' + row.id);
+        }
+        seen[idKey] = true;
+        var geometry = row.geometry;
+        if (typeof geometry === 'string') geometry = JSON.parse(geometry);
+        if (!geometry || typeof geometry !== 'object') {
+          throw new Error('У зоны #' + (index + 1) + ' отсутствует геометрия');
+        }
+        var valid = geometry.type === 'Polygon'
+          ? validPolygon(geometry.coordinates)
+          : geometry.type === 'MultiPolygon' &&
+            Array.isArray(geometry.coordinates) &&
+            geometry.coordinates.length > 0 &&
+            geometry.coordinates.every(validPolygon);
+        if (!valid) throw new Error('У зоны #' + (index + 1) + ' повреждена GeoJSON-геометрия');
+        return { id: row.id, category: row.category.trim(), geometry: geometry };
+      });
+    }
+
+    function renderUserZones(rows) {
+      var safeRows = normalizeAuthorZoneRows(rows);
+      userZonesLayer.clearLayers();
+      safeRows.forEach(function(row) {
+        userZonesLayer.addData({
+          type: 'Feature',
+          properties: { id: row.id, category: row.category },
+          geometry: row.geometry
+        });
+      });
+      return safeRows;
+    }
+
+    function loadCachedUserZones() {
+      try {
+        var raw = localStorage.getItem(USER_ZONES_CACHE_KEY);
+        if (!raw) return false;
+        var rows = normalizeAuthorZoneRows(JSON.parse(raw));
+        renderUserZones(rows);
+        console.log('Зон автора загружено из локального кэша: ' + rows.length + ' (копия может быть устаревшей)');
+        return true;
+      } catch(e) {
+        console.warn('Локальный кэш зон автора недоступен:', e.message);
+        return false;
+      }
+    }
+
+    function loadAuthorZonesBackup() {
+      fetch('./data/author-zones.geojson', { cache: 'no-store' })
+        .then(function(response) {
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          return response.json();
+        })
+        .then(function(collection) {
+          if (!collection || collection.type !== 'FeatureCollection' || !Array.isArray(collection.features)) {
+            throw new Error('Некорректный GeoJSON FeatureCollection');
+          }
+          var rows = collection.features.map(function(feature) {
+            if (!feature || feature.type !== 'Feature' || !feature.properties) {
+              throw new Error('В резервной копии обнаружен некорректный Feature');
+            }
+            return {
+              id: feature.properties.id,
+              category: feature.properties.category,
+              geometry: feature.geometry
+            };
+          });
+          rows = normalizeAuthorZoneRows(rows);
+          renderUserZones(rows);
+          try { localStorage.setItem(USER_ZONES_CACHE_KEY, JSON.stringify(rows)); }
+          catch(e) { console.warn('Кэш резервной копии зон не сохранился:', e.message); }
+          console.warn('⚠️ Карта автора загружена из резервной копии GitHub: ' + rows.length + ' зон. Копия может быть устаревшей.');
+        })
+        .catch(function(error) {
+          console.warn('Резервная копия карты автора недоступна:', error.message);
+        });
+    }
+
+    function cacheUserZonesFromLayer() {
+      try {
+        var rows = [];
+        userZonesLayer.eachLayer(function(layer) {
+          if (!layer || typeof layer.toGeoJSON !== 'function') return;
+          var feature = layer.toGeoJSON();
+          var properties = feature.properties || {};
+          var id = layer._zoneId !== undefined ? layer._zoneId : properties.id;
+          var category = layer._zoneCategory || properties.category;
+          if (id !== undefined && id !== null && category && feature.geometry) {
+            rows.push({ id: id, category: category, geometry: feature.geometry });
+          }
+        });
+        rows = normalizeAuthorZoneRows(rows);
+        localStorage.setItem(USER_ZONES_CACHE_KEY, JSON.stringify(rows));
+        return true;
+      } catch(e) {
+        console.warn('Не удалось обновить локальный кэш зон автора; предыдущая копия сохранена:', e.message);
+        return false;
+      }
+    }
+
+    function loadUserZones(attempt) {
+      attempt = attempt || 0;
+      if (!sb) {
+        if (!loadCachedUserZones()) loadAuthorZonesBackup();
+        return;
+      }
+      sb.from('control_zones').select('*').then(function(res) {
+        if (res.error) throw new Error(res.error.message);
+        var rows = normalizeAuthorZoneRows(res.data);
+        renderUserZones(rows);
+        try { localStorage.setItem(USER_ZONES_CACHE_KEY, JSON.stringify(rows)); }
+        catch(e) { console.warn('Кэш зон автора не сохранился:', e.message); }
+        console.log('Зон автора загружено: ' + rows.length);
+      }).catch(function(err) {
+        if (attempt < 2) {
+          console.warn('Supabase: ошибка загрузки или пустая выгрузка, повтор ' + (attempt + 1) + '/2:', err.message);
+          setTimeout(function() { loadUserZones(attempt + 1); }, 1200 * (attempt + 1));
+          return;
+        }
+        console.warn('Supabase: не удалось загрузить корректные зоны после 3 попыток:', err.message);
+        if (!loadCachedUserZones()) loadAuthorZonesBackup();
+      });
+    }
+    loadUserZones(0);
+
+    var editingLayer = null;
+    var editingOriginalGeom = null;
+    var zoneEditBar = document.getElementById('zoneEditBar');
+
+    function startEditZone(layer) {
+      if (editingLayer && editingLayer !== layer) cancelEditZone();
+      try { editingOriginalGeom = JSON.parse(JSON.stringify(layer.toGeoJSON().geometry)); }
+      catch(e) { editingOriginalGeom = null; }
+      editingLayer = layer;
+      if (layer.editing) layer.editing.enable();
+      zoneEditBar.classList.add('open');
+    }
+    function cancelEditZone() {
+      if (!editingLayer) { zoneEditBar.classList.remove('open'); return; }
+      if (editingLayer.editing) { try { editingLayer.editing.disable(); } catch(e) {} }
+      if (editingOriginalGeom) {
+        try {
+          var latlngs = reverseLatLngs(editingOriginalGeom);
+          if (latlngs && latlngs.length) {
+            editingLayer.setLatLngs(latlngs);
+            if (editingLayer.redraw) editingLayer.redraw();
+          }
+        } catch(e) { console.warn('Не удалось откатить форму:', e); }
+      }
+      editingLayer = null;
+      editingOriginalGeom = null;
+      zoneEditBar.classList.remove('open');
+    }
+    function saveEditZone() {
+      if (!editingLayer) { zoneEditBar.classList.remove('open'); return; }
+      var id = editingLayer._zoneId;
+      if (!id || !sb) { alert('Не удалось сохранить: зона не привязана к базе'); return; }
+      var geometry = null;
+      try { geometry = editingLayer.toGeoJSON().geometry; } catch(e) {}
+      if (editingLayer.editing) { try { editingLayer.editing.disable(); } catch(e) {} }
+      if (geometry && sb) {
+        sb.from('control_zones').update({ geometry: geometry }).eq('id', id).then(function(res) {
+          if (res.error) { alert('Ошибка сохранения: ' + res.error.message); return; }
+          cacheUserZonesFromLayer();
+          console.log('💾 Зона #' + id + ' сохранена');
+        });
+      }
+      editingLayer = null;
+      editingOriginalGeom = null;
+      zoneEditBar.classList.remove('open');
+    }
+    function reverseLatLngs(geometry) {
+      if (!geometry) return [];
+      if (geometry.type === 'Polygon') {
+        return geometry.coordinates.map(function(ring) {
+          return ring.map(function(c) { return [c[1], c[0]]; });
+        });
+      }
+      return [];
+    }
+    document.getElementById('btnZoneSave').addEventListener('click', saveEditZone);
+    document.getElementById('btnZoneCancel').addEventListener('click', cancelEditZone);
+
+    function deleteZoneById(id, layer) {
+      if (!id) return;
+      if (!confirm('Удалить эту зону?')) return;
+      if (!sb) { userZonesLayer.removeLayer(layer); map.closePopup(); return; }
+      sb.from('control_zones').delete().eq('id', id).then(function(res) {
+        if (res.error) { alert('Ошибка: ' + res.error.message); return; }
+        userZonesLayer.removeLayer(layer);
+        cacheUserZonesFromLayer();
+        map.closePopup();
+      });
+    }
+
+    function deepStatePopup(feature, layer) {
+      var props = feature && feature.properties || {};
+      var popup = document.createElement('div');
+      var heading = document.createElement('b');
+      heading.textContent = t('territoryRF');
+      popup.appendChild(heading);
+      appendProvenanceLine(popup, 'Источник набора', 'публичный GeoJSON-репозиторий DeepStateMap data');
+      appendProvenanceLine(popup, 'Дата в геоданных', props.date || 'не указана');
+      appendProvenanceLine(popup, 'Получено картой', formatProvenanceDate(DEEPSTATE_FETCHED_AT) || 'время получения не сохранено');
+      var sourceLink = document.createElement('a');
+      sourceLink.href = 'https://github.com/cyterat/deepstate-map-data';
+      sourceLink.target = '_blank';
+      sourceLink.rel = 'noopener noreferrer';
+      sourceLink.textContent = 'Открыть исходный набор ↗';
+      sourceLink.style.cssText = 'display:inline-block;margin-top:6px;';
+      popup.appendChild(sourceLink);
+      appendProvenanceLine(popup, 'Оговорка', 'дата набора не является независимой проверкой контроля территории');
+      layer.bindPopup(popup);
+    }
+    var deepStateLayer = L.geoJSON(null, { style: function() { return styleFor('#cc0000'); }, onEachFeature: deepStatePopup });
+
+    function owlFeatureStyle(f) {
+      var cat = (f.properties && f.properties._category) || 'unknown';
+      var c = owlColorFor(cat);
+      var outline = layerMode === 'outline';
+      return { color: c, weight: 1.8, opacity: 0.9, fill: !outline, fillColor: c, fillOpacity: outline ? 0 : 0.18 };
+    }
+
+    // The source's own sidc.py derives tactical symbol categories from unit names.
+    // Apply conservative name-based matching only to its two explicit unit-position folders.
+    var OWL_POSITION_TYPE_LABELS = {
+      unit: { ru: 'Подразделение (тип не указан)', uk: 'Підрозділ (тип не вказано)', en: 'Unit (type unspecified)' },
+      infantry: { ru: 'Пехота / механизированные подразделения', uk: 'Піхота / механізовані підрозділи', en: 'Infantry / mechanized units' },
+      armor: { ru: 'Танковые / бронетанковые подразделения', uk: 'Танкові / бронетанкові підрозділи', en: 'Armour units' },
+      artillery: { ru: 'Артиллерия / ракетные войска', uk: 'Артилерія / ракетні війська', en: 'Artillery / rocket forces' },
+      air_defense: { ru: 'Противовоздушная оборона', uk: 'Протиповітряна оборона', en: 'Air defence' },
+      uav: { ru: 'Беспилотные системы', uk: 'Безпілотні системи', en: 'UAV systems' },
+      aviation: { ru: 'Авиация', uk: 'Авіація', en: 'Aviation' },
+      naval: { ru: 'Военно-морские силы', uk: 'Військово-морські сили', en: 'Naval forces' },
+      engineer: { ru: 'Инженерные подразделения', uk: 'Інженерні підрозділи', en: 'Engineer units' },
+      logistics: { ru: 'Логистика / обеспечение', uk: 'Логістика / забезпечення', en: 'Logistics / sustainment' },
+      signal: { ru: 'Связь / радиоэлектронная борьба', uk: 'Зв’язок / радіоелектронна боротьба', en: 'Signals / electronic warfare' },
+      recon: { ru: 'Разведка', uk: 'Розвідка', en: 'Reconnaissance' },
+      special: { ru: 'Специальные подразделения', uk: 'Спеціальні підрозділи', en: 'Special operations' },
+      command: { ru: 'Штаб / командование', uk: 'Штаб / командування', en: 'Headquarters / command' },
+      site: { ru: 'Объект / геолокация Project Owl', uk: 'Об’єкт / геолокація Project Owl', en: 'Project Owl object / geolocation' }
+    };
+
+    function owlPositionMarkerKind(feature) {
+      var folderPath = String((feature && feature.properties && feature.properties._folder) || '');
+      var folders = folderPath.split('/').map(function(part) {
+        return part.trim().replace(/\s+/g, ' ').toLowerCase();
+      });
+      if (folders.some(function(folder) {
+        return folder === 'russian unit positions' || folder === 'ukrainian unit positions';
+      })) return 'unit';
+
+      if (folders.some(function(folder) {
+        return folder === 'russian federation & pro-russian areas geolocations' ||
+          /^russian geolocations(?:\s*\(|$)/.test(folder) ||
+          /^ukraine geolocations(?:\s*\(|$)/.test(folder);
+      })) return 'site';
+
+      return '';
+    }
+
+    function isOwlUnitPositionFeature(feature) {
+      return owlPositionMarkerKind(feature) === 'unit';
+    }
+
+    function classifyOwlPositionType(name) {
+      var s = String(name || '').toLowerCase().replace(/\s+/g, ' ');
+      if (!s) return 'unit';
+      if (/\[uav\]|\b(?:uav|uas|drone|drones|fpv|bpla)\b|бпла|дрон|беспилот|безпілот/.test(s)) return 'uav';
+      if (/\b(?:air defense|air defence|anti[- ]aircraft|antiair|sam)\b|пво|зенит|зрк/.test(s)) return 'air_defense';
+      if (/\b(?:aviation|aircraft|helicopter|fighter|bomber|a-50|su-\d+|mig-\d+|tu-\d+|ka-\d+|mi-\d+)\b|авиац|вертол|истребител|самолет|літак/.test(s)) return 'aviation';
+      if (/\b(?:submarine|corvette|frigate|destroyer|cruiser|ship|flotilla|naval)\b|подводн|підводн|корвет|фрегат|эсминец|есмінець|флотил|военно-мор/.test(s)) return 'naval';
+      if (/\b(?:tank|armou?red|armor|t-64|t-72|t-80|t-90|abrams|leopard|challenger|bradley|bmp|btr)\b|танк|бронетех|бронемаш|бмп|бтр/.test(s)) return 'armor';
+      if (/\b(?:artillery|howitzer|howitzers|mlrs|himars|grad|uragan|smerch|msta|pion|rocket artillery)\b|артиллер|рсзо|гаубиц|миномет|миномёт|ствольн/.test(s)) return 'artillery';
+      if (/\b(?:missile|rocket troops|rocket forces)\b|ракетн/.test(s)) return 'artillery';
+      if (/\b(?:engineer|engineering|pontoon|sapper|bridge unit)\b|инженер|сапер|сапёр|понтон/.test(s)) return 'engineer';
+      if (/\b(?:logistic|logistics|supply|transport|railway|medical|medic)\b|логист|снабжен|обеспеч|транспорт|медицин/.test(s)) return 'logistics';
+      if (/\b(?:signal|communications|communication|electronic warfare|ew)\b|связ|рэб|рэр/.test(s)) return 'signal';
+      if (/\b(?:recon|reconnaissance|scout|surveillance|intelligence)\b|развед/.test(s)) return 'recon';
+      if (/\b(?:sof|sso|spetsnaz|special forces|special purpose|special operations|sbu)\b|спецназ|ссо\b/.test(s)) return 'special';
+      if (/\b(?:infantry|mechanized|mechanised|motorized|motorised|rifle|air assault|airborne|assault|territorial defense|territorial defence|tdf|jager)\b|пехот|механизирован|механізован|мотострел|мотопех|десант|стрелков|стрілець|морпех|теробор/.test(s)) return 'infantry';
+      if (/\b(?:headquarters|command post|commandant|hq)\b|штаб|командный пункт|командний пункт/.test(s)) return 'command';
+      return 'unit';
+    }
+
+    function owlPositionTypeLabel(type) {
+      var labels = OWL_POSITION_TYPE_LABELS[type] || OWL_POSITION_TYPE_LABELS.unit;
+      return labels[currentLang] || labels.ru;
+    }
+
+    var OWL_POSITION_SVGS = {
+      unit: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/><circle cx="12" cy="12" r="3"/></svg>',
+      infantry: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="6" r="2.3"/><path d="M12 9v7m-5-4 5-2 5 2m-5 4-4 5m4-5 4 5"/></svg>',
+      armor: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h15l2 4H3zM8 11l2-4h5l2 4M2 16h20v3H2zM13 7l5-3"/></svg>',
+      artillery: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16M8 18a4 4 0 0 1 8 0M10 13l7-7 2 2-7 7M6 18l-2 2m14-2 2 2"/></svg>',
+      air_defense: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V9m-4 0 4-6 4 6M4 9a8 8 0 0 1 16 0M6 5l-2-2m14 2 2-2"/></svg>',
+      uav: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8v8m0-4L5 7m7 5 7-5M9 16l-4 3m10-3 4 3"/><circle cx="12" cy="12" r="2.2"/><path d="M3 6h4M17 6h4"/></svg>',
+      aviation: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.5 8 7 3v2l-7-1 .5 6-3-1-3 1 .5-6-7 1v-2l7-3z"/></svg>',
+      naval: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v14m-5-9h10M5 13l-2 4c2 2 4 3 9 3s7-1 9-3l-2-4M8 8l4-4 4 4"/></svg>',
+      engineer: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18M5 18v-5h14v5M5 13l7-7 7 7M9 9l3 3 3-3"/></svg>',
+      logistics: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h12v9H3zM15 11h4l3 3v3h-7zM7 17a2 2 0 1 0 4 0m7 0a2 2 0 1 0 4 0"/></svg>',
+      signal: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V9m-4 11h8M12 9 8 4m4 5 4-5M6 9a8 8 0 0 1 0 8m12-8a8 8 0 0 1 0 8"/></svg>',
+      recon: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/><path d="M12 12h0M4 8l-1-2m17 2 1-2"/></svg>',
+      special: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.5 6 .7-4.5 4.1 1.2 6-5.2-3-5.2 3 1.2-6-4.5-4.1 6-.7z"/></svg>',
+      command: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h16M6 19V7h12v12M9 7V4h6v3M8 11h8M8 15h5"/></svg>',
+      site: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6M8 10h.01M16 10h.01"/></svg>'
+    };
+
+    function createOwlPositionIcon(feature) {
+      var props = feature && feature.properties || {};
+      var side = props._category === 'russian' ? 'russian' : (props._category === 'ukrainian' ? 'ukrainian' : 'unknown');
+      var markerKind = owlPositionMarkerKind(feature);
+      var type = markerKind === 'site' ? 'site' : classifyOwlPositionType(props.name || '');
+      var typeLabel = owlPositionTypeLabel(type);
+      return L.divIcon({
+        html: '<div class="owl-unit-marker owl-unit-marker--' + side + '" title="' + typeLabel + '">' + (OWL_POSITION_SVGS[type] || OWL_POSITION_SVGS.unit) + '</div>',
+        className: '',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12],
+        popupAnchor: [0, -12]
+      });
+    }
+
+    function owlFeaturePopup(f, layer) {
+      var cat = (f.properties && f.properties._category) || 'unknown';
+      var name = (f.properties && f.properties.name) || '';
+      var desc = (f.properties && f.properties.description) || '';
+      var props = f.properties || {};
+      var popup = document.createElement('div');
+      var heading = document.createElement('b');
+      heading.textContent = owlLabelFor(cat);
+      popup.appendChild(heading);
+      var markerKind = owlPositionMarkerKind(f);
+      if (markerKind === 'unit') {
+        var typeTitle = currentLang === 'en' ? 'Unit type' : (currentLang === 'uk' ? 'Тип підрозділу' : 'Тип подразделения');
+        appendProvenanceLine(popup, typeTitle, owlPositionTypeLabel(classifyOwlPositionType(name)));
+      } else if (markerKind === 'site') {
+        var siteTitle = currentLang === 'en' ? 'Marker type' : (currentLang === 'uk' ? 'Тип позначки' : 'Тип отметки');
+        appendProvenanceLine(popup, siteTitle, owlPositionTypeLabel('site'));
+      }
+      if (name) {
+        popup.appendChild(document.createElement('br'));
+        var nameEl = document.createElement('i');
+        nameEl.textContent = name;
+        popup.appendChild(nameEl);
+      }
+      if (desc) {
+        popup.appendChild(document.createElement('br'));
+        var descEl = document.createElement('small');
+        descEl.textContent = desc.substring(0, 300) + (desc.length > 300 ? '…' : '');
+        popup.appendChild(descEl);
+      }
+      var owlMeta = OWL_DATASET_META || {};
+      appendProvenanceLine(popup, 'Источник', owlMeta.source_name || 'архив Project Owl');
+      if (props._folder) appendProvenanceLine(popup, 'Папка в архиве', props._folder);
+      appendProvenanceLine(popup, 'Дата архива', owlMeta.archive_date || 'не сохранена для этой копии');
+      appendProvenanceLine(popup, 'Получено картой', formatProvenanceDate(owlMeta.fetched_at) || 'время загрузки не сохранено');
+      appendProvenanceLine(popup, 'Способ загрузки', owlMeta.displayed_from_cache ? 'локальная кэшированная копия браузера' : 'загрузка из внешнего архива в этой сессии');
+      if (owlMeta.metadata_note) appendProvenanceLine(popup, 'Примечание к происхождению', owlMeta.metadata_note);
+      appendProvenanceLine(popup, 'Классификация слоя', 'категория определена автоматическим разбором имени, описания, папки и стиля KML; это не редакционная проверка объекта');
+      var owlSourceLink = document.createElement('a');
+      owlSourceLink.href = safeHttpUrl(owlMeta.source_url) || 'https://github.com/owlmaps/UAControlMapBackups';
+      owlSourceLink.target = '_blank';
+      owlSourceLink.rel = 'noopener noreferrer';
+      owlSourceLink.textContent = 'Открыть источник Project Owl ↗';
+      owlSourceLink.style.cssText = 'display:inline-block;margin-top:6px;';
+      popup.appendChild(owlSourceLink);
+      layer.bindPopup(popup);
+    }
+    var owlControlLayer = L.geoJSON(null, {
+      style: owlFeatureStyle,
+      onEachFeature: owlFeaturePopup
+    });
+    // Точечные объекты Project Owl сохраняются, но не смешиваются с геометрией зон.
+    // Кружки не создают стандартные Leaflet pin-иконки и включаются отдельной настройкой.
+    var owlPositionsLayer = L.geoJSON(null, {
+      pointToLayer: function(f, latlng) {
+        // Use tactical unit symbols only for Project Owl's explicit unit-position folders.
+        // Other geolocated points remain unchanged as small dots.
+        if (owlPositionMarkerKind(f)) {
+          return L.marker(latlng, {
+            icon: createOwlPositionIcon(f),
+            keyboard: true,
+            riseOnHover: true
+          });
+        }
+        var cat = (f.properties && f.properties._category) || 'unknown';
+        var c = owlColorFor(cat);
+        return L.circleMarker(latlng, {
+          radius: 3, color: c, weight: 1.4, opacity: 0.95,
+          fill: true, fillColor: c,
+          fillOpacity: layerMode === 'outline' ? 0 : fillOpacity * 0.9
+        });
+      },
+      onEachFeature: owlFeaturePopup
+    });
+
+    // Category-coded Project Owl point features are shown independently from tactical unit positions.
+    var owlCategoryPointsLayer = L.geoJSON(null, {
+      pointToLayer: function(f, latlng) {
+        var cat = (f.properties && f.properties._category) || 'unknown';
+        var color = owlColorFor(cat);
+        var radius = cat === 'holding' ? 7 : (cat === 'grey' ? 6 : 5);
+        return L.circleMarker(latlng, { radius: radius, color: color, weight: 1, opacity: 0.95, fill: true, fillColor: color, fillOpacity: 0.82 });
+      },
+      onEachFeature: owlFeaturePopup
+    });
+
+    // Project Owl's data processor treats the exact "Frontline" folder as a line,
+    // not as a control-zone polygon. Keep it neutral and never fill it orange.
+    var owlFrontlineLayer = L.geoJSON(null, {
+      style: function() {
+        return {
+          color: '#facc15', weight: 3, opacity: 0.98,
+          fill: false, fillOpacity: 0, dashArray: '7 5'
+        };
+      },
+      onEachFeature: function(f, layer) {
+        var popup = document.createElement('div');
+        var heading = document.createElement('b');
+        heading.textContent = t('owlFrontline');
+        popup.appendChild(heading);
+        var note = document.createElement('div');
+        note.style.cssText = 'margin-top:5px;line-height:1.4;';
+        note.textContent = 'Линейная геометрия из папки Frontline исходного архива Project Owl. Это линия, а не зона закрашенной территории и не самостоятельная проверка контроля.';
+        popup.appendChild(note);
+        var props = f.properties || {};
+        if (props._folder) appendProvenanceLine(popup, 'Папка в архиве', props._folder);
+        var meta = OWL_DATASET_META || {};
+        appendProvenanceLine(popup, 'Дата архива', meta.archive_date || 'не сохранена');
+        appendProvenanceLine(popup, 'Получено картой', formatProvenanceDate(meta.fetched_at) || 'не сохранено');
+        var link = document.createElement('a');
+        link.href = safeHttpUrl(meta.source_url) || 'https://github.com/owlmaps/UAControlMapBackups';
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = 'Источник Project Owl ↗';
+        link.style.cssText = 'display:inline-block;margin-top:6px;';
+        popup.appendChild(link);
+        layer.bindPopup(popup);
+      }
+    });
+
+    function isOwlFrontlineFeature(feature) {
+      var folderPath = String((feature && feature.properties && feature.properties._folder) || '');
+      return folderPath.split('/').some(function(part) {
+        return part.trim().toLowerCase() === 'frontline';
+      });
+    }
+
+    function splitOwlFeatureForDisplay(feature, controlFeatures, positionFeatures, categoryPointFeatures, frontlineFeatures) {
+      if (!feature || !feature.geometry || !feature.geometry.type) return;
+      var geometry = feature.geometry;
+      if (geometry.type === 'GeometryCollection') {
+        (geometry.geometries || []).forEach(function(member) {
+          splitOwlFeatureForDisplay({
+            type: 'Feature',
+            id: feature.id,
+            properties: feature.properties || {},
+            geometry: member
+          }, controlFeatures, positionFeatures, categoryPointFeatures, frontlineFeatures);
+        });
+        return;
+      }
+
+      if (isOwlFrontlineFeature(feature)) {
+        if (geometry.type === 'LineString' || geometry.type === 'MultiLineString') {
+          frontlineFeatures.push(feature);
+        }
+        // Frontline is a line layer. Ignore unexpected polygons/points in this folder
+        // rather than painting them as control zones.
+        return;
+      }
+
+      if (geometry.type === 'Point' || geometry.type === 'MultiPoint') {
+        var pointCategory = (feature.properties && feature.properties._category) || 'unknown';
+        if (pointCategory === 'holding' || pointCategory === 'grey' || pointCategory === 'unknown') categoryPointFeatures.push(feature);
+        else positionFeatures.push(feature);
+        return;
+      }
+      if (['LineString', 'MultiLineString', 'Polygon', 'MultiPolygon'].indexOf(geometry.type) >= 0) {
+        controlFeatures.push(feature);
+      }
+    }
+
+    function addOwlCollection(collection) {
+      var controlFeatures = [];
+      var positionFeatures = [];
+      var categoryPointFeatures = [];
+      var frontlineFeatures = [];
+      (collection && Array.isArray(collection.features) ? collection.features : []).forEach(function(feature) {
+        splitOwlFeatureForDisplay(feature, controlFeatures, positionFeatures, categoryPointFeatures, frontlineFeatures);
+      });
+      owlControlLayer.addData({ type: 'FeatureCollection', features: controlFeatures });
+      owlPositionsLayer.addData({ type: 'FeatureCollection', features: positionFeatures });
+      owlCategoryPointsLayer.addData({ type: 'FeatureCollection', features: categoryPointFeatures });
+      owlFrontlineLayer.addData({ type: 'FeatureCollection', features: frontlineFeatures });
+      return {
+        control: controlFeatures.length,
+        positions: positionFeatures.length,
+        categoryPoints: categoryPointFeatures.length,
+        frontline: frontlineFeatures.length
+      };
+    }
+
+    fetch('https://raw.githubusercontent.com/cyterat/deepstate-map-data/main/deepstate-map-data.geojson.gz')
+      .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
+      .then(function(buffer) {
+        var ds = new DecompressionStream('gzip');
+        var stream = new Blob([buffer]).stream().pipeThrough(ds);
+        return new Response(stream).json();
+      })
+      .then(function(data) {
+        DEEPSTATE_FETCHED_AT = new Date().toISOString();
+        var features = data.features || [];
+        if (features.length > 0) {
+          features.sort(function(a, b) { return (b.properties.date || '').localeCompare(a.properties.date || ''); });
+          DEEPSTATE_DATA_DATE = features[0].properties && features[0].properties.date
+            ? String(features[0].properties.date).slice(0, 10)
+            : null;
+          deepStateLayer.addData(features[0]);
+        }
+        updateLegend();
+      })
+      .catch(function(err) { console.warn('DeepStateMap:', err.message); });
+
+    function owlText(el) {
+      return el ? String(el.textContent || '').replace(/\s+/g, ' ').trim() : '';
+    }
+    function owlAncestorNames(pm) {
+      var names = [];
+      var el = pm.parentNode;
+      while (el && el.nodeType === 1) {
+        // Only semantic folders are classification metadata. The top-level Document
+        // commonly contains "Ukraine" in its title and is not a side label.
+        if (String(el.localName || el.tagName).toLowerCase() === 'folder') {
+          var name = owlText(el.querySelector(':scope > name'));
+          if (name) names.unshift(name);
+        }
+        el = el.parentNode;
+      }
+      return names;
+    }
+
+    // Use Project Owl's documented KML hierarchy instead of guessing the side
+    // from free-form descriptions or the map-wide KML document title.
+    function categorizeOwlFeature(name, folderNames, properties) {
+      var props = properties || {};
+      var code = String(props.code || props.Code || props.side || props.Side || '').trim().toLowerCase();
+      if (code === 'ru' || code === 'russia' || code === 'russian') return 'russian';
+      if (code === 'ua' || code === 'ukraine' || code === 'ukrainian') return 'ukrainian';
+
+      var folders = (folderNames || []).map(function(value) {
+        return String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      });
+      for (var i = 0; i < folders.length; i++) {
+        var folder = folders[i];
+        if (folder === 'russian unit positions' ||
+            folder === 'russian federation & pro-russian areas geolocations' ||
+            /^russian geolocations(?:\s*\(|$)/.test(folder)) return 'russian';
+        if (folder === 'ukrainian unit positions' ||
+            /^ukraine geolocations(?:\s*\(|$)/.test(folder)) return 'ukrainian';
+      }
+
+      var title = String(name || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      var datedPosition = title.match(/^\[\d{1,4}\/\d{1,2}\/\d{1,2}\]\s*(ru|ua)\b/i);
+      if (datedPosition) return datedPosition[1].toLowerCase() === 'ru' ? 'russian' : 'ukrainian';
+
+      if (/^(?:russian|russia|rf|рф|россий\w*|росій\w*)\b/.test(title)) return 'russian';
+      if (/^(?:ukrainian|ukraine|ua|afu|зсу|украин\w*|україн\w*)\b/.test(title)) return 'ukrainian';
+
+      // These two current "Important Areas" labels are explicitly grouped as RF areas
+      // by Project Owl's own map-data preprocessing.
+      if (title === 'dnipropetrovsk 2' || title === 'sumy incursion 2') return 'russian';
+
+      var labelText = [title].concat(folders).join(' ').toLowerCase();
+      if (/holding[ _-]?area|assembly[ _-]?area|concentration|staging[ _-]?area|мест[ао] сосредоточ|район сосредоточ/.test(labelText)) return 'holding';
+      if (/grey[ _-]?zone|gray[ _-]?zone|buffer[ _-]?zone|серая зона|сіра зона|буферн/.test(labelText)) return 'grey';
+      return 'unknown';
+    }
+
+    // Legacy campaign/axis overlays are not current frontline or unit-position data.
+    var OWL_SKIP_NAMES = [
+      'initial invasion',
+      'kyiv axis',
+      'kharkiv axis',
+      'luhansk axis',
+      'donetsk axis',
+      'zaporizhia and kherson axis',
+      'ukrainian kherson counterattack',
+      'crimea',
+      'donetsk and luhansk people',
+      "people's republic"
+    ];
+
+    function shouldSkipOwlHistoricalFeature(name, folderNames) {
+      var searchable = [name].concat(folderNames || []).join(' ').toLowerCase();
+      if (OWL_SKIP_NAMES.some(function(marker) { return searchable.indexOf(marker) >= 0; })) return true;
+      if (/\b(?:russian\s+)?initial\s+invasion\b|\binvasion\s+of\s+ukraine\b|\brussian\s+actions?\s+(?:during|in)\s+(?:the\s+)?invasion\b/.test(searchable)) return true;
+      return false;
+    }
+
+    function isInHeavyFolder(pm) {
+      var el = pm.parentNode;
+      while (el && el.nodeType === 1) {
+        var tag = String(el.localName || el.tagName).toLowerCase();
+        if (tag === 'folder') {
+          var name = owlText(el.querySelector(':scope > name')).toLowerCase();
+          // Only historical/archive folders are excluded. "Unit position" contains current
+          // concentration/position features and must remain available to the map.
+          if (/\barchives?\b|\bhistory\b|архив|архів/.test(name)) return true;
+        }
+        el = el.parentNode;
+      }
+      return false;
+    }
+    function showOwlLoader(on) {
+      var el = document.getElementById('owlLoader');
+      if (el) { if (on) el.classList.add('open'); else el.classList.remove('open'); }
+    }
+
+    function parseOwlKmlStrings(kmlStrings) {
+      var allFeatures = [];
+      var stats = {
+        russian: 0, ukrainian: 0, holding: 0, grey: 0, unknown: 0,
+        points: 0, lines: 0, polygons: 0, skipped: 0, placemarks: 0
+      };
+      kmlStrings.forEach(function(kmlString) {
+        var parser = new DOMParser();
+        var kmlDoc = parser.parseFromString(kmlString, 'text/xml');
+        if (kmlDoc.querySelector('parsererror')) {
+          console.warn('Project Owl: повреждённый KML-файл пропущен');
+          return;
+        }
+        var placemarks = kmlDoc.querySelectorAll('Placemark');
+        placemarks.forEach(function(pm) {
+          var pmName = owlText(pm.querySelector(':scope > name'));
+          var folderNames = owlAncestorNames(pm);
+          if (isInHeavyFolder(pm) || shouldSkipOwlHistoricalFeature(pmName, folderNames)) {
+            stats.skipped++;
+            return;
+          }
+          stats.placemarks++;
+
+          var pmDescription = owlText(pm.querySelector(':scope > description'));
+          var styleUrl = owlText(pm.querySelector(':scope > styleUrl'));
+          var wrapDoc = document.implementation.createDocument('http://www.opengis.net/kml/2.2', 'kml', null);
+          var innerDoc = wrapDoc.createElement('Document');
+          innerDoc.appendChild(pm.cloneNode(true));
+          wrapDoc.documentElement.appendChild(innerDoc);
+          var gj = toGeoJSON.kml(wrapDoc);
+          if (!gj || !Array.isArray(gj.features)) return;
+          gj.features.forEach(function(f) {
+            if (!f.geometry || !f.geometry.type) return;
+            var gt = f.geometry.type;
+            if (gt === 'Point' || gt === 'MultiPoint') stats.points++;
+            else if (gt === 'LineString' || gt === 'MultiLineString') stats.lines++;
+            else if (gt === 'Polygon' || gt === 'MultiPolygon') stats.polygons++;
+            else if (gt === 'GeometryCollection') {
+              (f.geometry.geometries || []).forEach(function(g) {
+                if (g.type === 'Point' || g.type === 'MultiPoint') stats.points++;
+                else if (g.type === 'LineString' || g.type === 'MultiLineString') stats.lines++;
+                else if (g.type === 'Polygon' || g.type === 'MultiPolygon') stats.polygons++;
+              });
+            } else return;
+
+            f.properties = f.properties || {};
+            var cat = categorizeOwlFeature(pmName, folderNames, f.properties);
+            f.properties._category = cat;
+            f.properties._source = 'Project Owl';
+            f.properties._folder = folderNames.join(' / ');
+            f.properties._styleUrl = styleUrl;
+            if (!f.properties.name && pmName) f.properties.name = pmName;
+            if (!f.properties.description && pmDescription) f.properties.description = pmDescription;
+            allFeatures.push(f);
+            stats[cat]++;
+          });
+        });
+      });
+      return { features: allFeatures, stats: stats };
+    }
+
+    // Daily Project Owl archives use the YYMMDD_0601.kmz naming convention.
+    // Probe the CDN directly so every visitor does not consume the shared anonymous GitHub API quota.
+    function fetchLatestOwlKmz(maxDaysBack) {
+      var now = new Date();
+
+      function tryMirrors(fileName, year, mirrorIndex, failures) {
+        if (mirrorIndex >= OWL_BASE_URLS.length) {
+          if (failures.length && failures.every(function(f) { return f.status === 404; })) return Promise.resolve(null);
+          var details = failures.map(function(f) { return f.message || ('HTTP ' + f.status); }).join('; ');
+          return Promise.reject(new Error('Все источники Project Owl недоступны: ' + details));
+        }
+        var fileUrl = OWL_BASE_URLS[mirrorIndex] + year + '/' + fileName;
+        return fetch(fileUrl, { cache: 'no-store' }).then(function(response) {
+          if (response.status === 404) {
+            failures.push({ status: 404 });
+            return tryMirrors(fileName, year, mirrorIndex + 1, failures);
+          }
+          if (!response.ok) {
+            failures.push({ status: response.status });
+            return tryMirrors(fileName, year, mirrorIndex + 1, failures);
+          }
+          OWL_KMZ_URL = fileUrl;
+          console.log('📂 Свежий файл Project Owl: ' + fileName + ' (' + new URL(fileUrl).hostname + ')');
+          return response.arrayBuffer();
+        }, function(error) {
+          failures.push({ message: error.message });
+          return tryMirrors(fileName, year, mirrorIndex + 1, failures);
+        });
+      }
+
+      function tryDay(offset) {
+        if (offset > maxDaysBack) {
+          return Promise.reject(new Error('Не найден архив Project Owl за последние ' + maxDaysBack + ' дней'));
+        }
+        var date = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - offset));
+        var yy = String(date.getUTCFullYear()).slice(-2);
+        var mm = String(date.getUTCMonth() + 1).padStart(2, '0');
+        var dd = String(date.getUTCDate()).padStart(2, '0');
+        var fileName = yy + mm + dd + '_0601.kmz';
+        return tryMirrors(fileName, date.getUTCFullYear(), 0, []).then(function(buffer) {
+          return buffer || tryDay(offset + 1);
+        });
+      }
+
+      return tryDay(0);
+    }
+
+    function loadOwlControl() {
+      var today = new Date().toISOString().slice(0, 10);
+      var cachedCollection = null;
+      try {
+        var raw = localStorage.getItem(OWL_CACHE_KEY);
+        if (raw) {
+          var cached = JSON.parse(raw);
+          if (cached && cached.features && cached.features.length) {
+            OWL_DATASET_META = Object.assign({}, cached._provenance || {
+              source_name: 'Project Owl public KMZ archive',
+              source_url: 'https://github.com/owlmaps/UAControlMapBackups',
+              archive_date: null,
+              fetched_at: null,
+              cache_date: localStorage.getItem(OWL_CACHE_DATE) || null,
+              metadata_note: 'Эта локальная копия создана до сохранения метаданных архива; дата исходного KMZ неизвестна.'
+            }, { displayed_from_cache: true });
+            if (localStorage.getItem(OWL_CACHE_DATE) === today) {
+              var cachedStats = addOwlCollection(cached);
+              updateLegend();
+              console.log('✅ Project Owl (из кэша за сегодня): ' + cachedStats.control + ' зон/линий; точечных позиций отдельно: ' + cachedStats.positions);
+              return;
+            }
+            cachedCollection = cached;
+            var staleStats = addOwlCollection(cachedCollection);
+            updateLegend();
+            console.log('⚠️ Project Owl: показана последняя копия — ' + staleStats.control + ' зон/линий; точечных позиций отдельно: ' + staleStats.positions);
+          }
+        }
+      } catch (e) { console.warn('Кэш Project Owl недоступен:', e.message); }
+      console.log('Загрузка Project Owl...');
+      showOwlLoader(true);
+      fetchLatestOwlKmz(45)
+        .then(function(buffer) { return JSZip.loadAsync(buffer); })
+        .then(function(zip) {
+          var kmlPromises = [];
+          zip.forEach(function(relativePath, file) {
+            if (relativePath.endsWith('.kml')) kmlPromises.push(file.async('string'));
+          });
+          return Promise.all(kmlPromises);
+        })
+        .then(function(kmlStrings) {
+          var result = parseOwlKmlStrings(kmlStrings);
+          var archiveMatch = String(OWL_KMZ_URL || '').match(/\/(\d{2})(\d{2})(\d{2})_0601\.kmz(?:[?#]|$)/i);
+          OWL_DATASET_META = {
+            source_name: 'Project Owl public KMZ archive',
+            source_url: OWL_KMZ_URL || 'https://github.com/owlmaps/UAControlMapBackups',
+            archive_date: archiveMatch ? ('20' + archiveMatch[1] + '-' + archiveMatch[2] + '-' + archiveMatch[3]) : null,
+            fetched_at: new Date().toISOString(),
+            used_cached_copy: false
+          };
+          var collection = { type: 'FeatureCollection', features: result.features, _provenance: OWL_DATASET_META };
+          owlControlLayer.clearLayers();
+          owlPositionsLayer.clearLayers();
+          owlCategoryPointsLayer.clearLayers();
+          var displayStats = addOwlCollection(collection);
+          updateLegend();
+          console.log('📊 Геометрия Project Owl:', {
+            polygons: result.stats.polygons,
+            lines: result.stats.lines,
+            pointFeatures: result.stats.points,
+            skippedHistoricalPlacemarks: result.stats.skipped,
+            parsedPlacemarks: result.stats.placemarks,
+            geoJsonFeatures: result.features.length,
+            categories: {
+              russian: result.stats.russian,
+              ukrainian: result.stats.ukrainian,
+              holding: result.stats.holding,
+              grey: result.stats.grey,
+              unknown: result.stats.unknown
+            }
+          });
+          console.log('✅ Project Owl: ' + displayStats.control + ' объектов зон; отдельно — линий фронта: ' + displayStats.frontline + ', точечных объектов: ' + displayStats.positions + ' (слой точек выключен по умолчанию; исторических Placemark исключено: ' + result.stats.skipped + ')');
+          try {
+            localStorage.setItem(OWL_CACHE_KEY, JSON.stringify(collection));
+            localStorage.setItem(OWL_CACHE_DATE, today);
+          } catch (e) { console.warn('Кэш не сохранился:', e.message); }
+        })
+        .catch(function(err) {
+          console.warn('Project Owl:', err.message);
+          if (cachedCollection) console.warn('Project Owl: оставлена последняя сохранённая копия зон');
+        })
+        .then(function() { showOwlLoader(false); });
+    }
+    loadOwlControl();
+
+    deepStateLayer.addTo(map);
+    owlControlLayer.addTo(map);
+    owlCategoryPointsLayer.addTo(map);
+    owlFrontlineLayer.addTo(map);
+
+    var FIRMS_URL = './data/firms-fires.json';
+    var FIRMS_CACHE_KEY = 'firms_cache_v3';
+    var FIRMS_CACHE_TIME = 'firms_cache_time_v3';
+    var FIRMS_CACHE_TTL = 15 * 60 * 1000;
+    var FIRMS_DATA_META = null;
+    var firmsLayer = L.layerGroup();
+    firmsLayer.addTo(map);
+
+    function renderFirmsFires(data) {
+      firmsLayer.clearLayers();
+      if (!data || !data.features) return;
+      FIRMS_DATA_META = {
+        generated: data.generated || null,
+        loaded_at: new Date().toISOString(),
+        source_url: 'https://firms.modaps.eosdis.nasa.gov/'
+      };
+      data.features.forEach(function(f) {
+        var coords = f.geometry && f.geometry.coordinates;
+        if (!coords || coords.length < 2) return;
+        var lng = Number(coords[0]);
+        var lat = Number(coords[1]);
+        if (!isFinite(lat) || !isFinite(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) return;
+        var rawBrightness = Number(f.properties && f.properties.brightness);
+        var brightness = isFinite(rawBrightness) ? rawBrightness : 300;
+        var color = brightness > 360 ? '#ff1744' : (brightness > 330 ? '#ff6d00' : '#ffab00');
+        var radius = brightness > 360 ? 8000 : (brightness > 330 ? 6000 : 4000);
+        var popup = document.createElement('div');
+        var popupTitle = document.createElement('b');
+        popupTitle.textContent = '🔥 Тепловая аномалия';
+        popup.appendChild(popupTitle);
+        function addFirmsLine(text) {
+          popup.appendChild(document.createElement('br'));
+          popup.appendChild(document.createTextNode(text));
+        }
+        addFirmsLine('Координаты: ' + lat.toFixed(4) + ', ' + lng.toFixed(4));
+        addFirmsLine('Яркость: ' + brightness + ' K');
+        addFirmsLine('Спутник: ' + String((f.properties && f.properties.satellite) || '—'));
+        addFirmsLine('Дата наблюдения (UTC): ' + String((f.properties && f.properties.acq_date) || '—'));
+        var acqTime = String((f.properties && f.properties.acq_time) || '');
+        if (acqTime) addFirmsLine('Время наблюдения (UTC, формат HHMM): ' + acqTime.padStart(4, '0'));
+        addFirmsLine('Уверенность обнаружения (код NASA): ' + String((f.properties && f.properties.confidence) || 'не указана'));
+        if (FIRMS_DATA_META && FIRMS_DATA_META.generated) {
+          addFirmsLine('Сборка набора: ' + (formatProvenanceDate(FIRMS_DATA_META.generated) || FIRMS_DATA_META.generated));
+        }
+        if (FIRMS_DATA_META && FIRMS_DATA_META.loaded_at) {
+          addFirmsLine('Получено картой: ' + (formatProvenanceDate(FIRMS_DATA_META.loaded_at) || FIRMS_DATA_META.loaded_at));
+        }
+        addFirmsLine('Источник: NASA FIRMS. Тепловая аномалия сама по себе не доказывает удар или военное событие.');
+        var firmsLink = document.createElement('a');
+        firmsLink.href = 'https://firms.modaps.eosdis.nasa.gov/';
+        firmsLink.target = '_blank';
+        firmsLink.rel = 'noopener noreferrer';
+        firmsLink.textContent = 'Открыть NASA FIRMS ↗';
+        popup.appendChild(document.createElement('br'));
+        popup.appendChild(firmsLink);
+        L.circle([lat, lng], {
+          radius: radius, color: color, fillColor: color,
+          fillOpacity: 0.35, weight: 1, opacity: 0.7
+        }).bindPopup(popup).addTo(firmsLayer);
+      });
+      console.log('🔥 FIRMS: ' + data.features.length + ' пожаров');
+    }
+
+    var firmsFetchInProgress = false;
+    function loadFirmsFires(forceNetwork) {
+      if (firmsFetchInProgress) return;
+      // Мгновенно показываем последнюю копию, но не прекращаем сетевое обновление.
+      if (!forceNetwork) {
+        try {
+          var cachedRaw = localStorage.getItem(FIRMS_CACHE_KEY);
+          if (cachedRaw) {
+            var cached = JSON.parse(cachedRaw);
+            renderFirmsFires(cached);
+            console.log('🔥 FIRMS (локальная копия): ' + (cached.features ? cached.features.length : 0) + ' точек');
+          }
+        } catch (e) {}
+      }
+      firmsFetchInProgress = true;
+      fetch(FIRMS_URL + '?_=' + Date.now(), { cache: 'no-store' })
+        .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(function(data) {
+          if (!data || !Array.isArray(data.features) || !data.generated) {
+            throw new Error('Некорректный GeoJSON FIRMS');
+          }
+          renderFirmsFires(data);
+          try {
+            localStorage.setItem(FIRMS_CACHE_KEY, JSON.stringify(data));
+            localStorage.setItem(FIRMS_CACHE_TIME, Date.now().toString());
+          } catch (e) {}
+          console.log('🔥 FIRMS обновлён: ' + data.features.length + ' точек; набор ' + data.generated);
+        })
+        .catch(function(err) { console.warn('FIRMS: сетевое обновление не удалось:', err.message); })
+        .finally(function() { firmsFetchInProgress = false; });
+    }
+    loadFirmsFires(false);
+    // Обновляем открытые карты автоматически, не чаще раза в 15 минут.
+    window.setInterval(function() { loadFirmsFires(true); }, FIRMS_CACHE_TTL);
+        var WT_COLORS = {
+      'Air Raid Alert': '#e6a800', 'Military Strike': '#c62828',
+      'Military Operation': '#e65100', 'Military Offensive': '#8e0000',
+      'Security Incident': '#5a5a5a', 'Political Development': '#6a1b9a'
+    };
+    var WT_LABELS = {
+      'Air Raid Alert': 'raidAlert', 'Military Strike': 'strike',
+      'Military Operation': 'operation', 'Military Offensive': 'offensive',
+      'Security Incident': 'incident', 'Political Development': 'politics'
+    };
+    var WT_SVG = {
+      'Air Raid Alert': '<svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>',
+      'Military Strike': '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/></svg>',
+      'Military Operation': '<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>',
+      'Military Offensive': '<svg viewBox="0 0 24 24"><path d="M4 4l8 8-8 8V4zm9 0l8 8-8 8V4z"/></svg>',
+      'Security Incident': '<svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 4l7 13H5l7-13zm-1 4v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>',
+      'Political Development': '<svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>'
+    };
+    function wtColor(type) { return WT_COLORS[type] || '#9933cc'; }
+    function wtSvg(type) { return WT_SVG[type] || WT_SVG['Security Incident']; }
+    function createEventIcon(eventType) {
+      return L.divIcon({
+        html: '<div class="event-icon" style="background:' + wtColor(eventType) + ';">' + wtSvg(eventType) + '</div>',
+        className: '', iconSize: [32, 32], iconAnchor: [16, 16], popupAnchor: [0, -16]
+      });
+    }
+    var activeEventTypes = {
+      'Air Raid Alert': true, 'Military Strike': true, 'Military Operation': true,
+      'Military Offensive': true, 'Security Incident': true, 'Political Development': true
+    };
+    var eventDateFilter = '24h';
+    var eventSearchQuery = '';
+
+    var tgLayer = L.markerClusterGroup({
+      showCoverageOnHover: false, maxClusterRadius: 60, spiderfyOnMaxZoom: true,
+      spiderfyDistanceMultiplier: 5, zoomToBoundsOnClick: true,
+      iconCreateFunction: function(cluster) {
+        var count = cluster.getChildCount();
+        var size = count < 10 ? 44 : count < 100 ? 54 : 64;
+        return L.divIcon({
+          html: '<div style="width:' + size + 'px;height:' + size + 'px;background:linear-gradient(135deg,#3b82f6,#2563eb);border:3px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;box-shadow:0 4px 12px rgba(59,130,246,0.5);">' + count + '</div>',
+          className: '', iconSize: [size, size], iconAnchor: [size/2, size/2]
+        });
+      }
+    });
+    map.addLayer(tgLayer);
+
+    function getLastUpdateText() {
+      var data = window.TG_DATA || {};
+      var list = data.events || [];
+      var maxDate = data.generated_at ? new Date(data.generated_at).getTime() : 0;
+      if (!isFinite(maxDate)) maxDate = 0;
+      if (!maxDate) {
+        list.forEach(function(ev) {
+          if (ev.date) {
+            var ts = new Date(ev.date).getTime();
+            if (ts > maxDate) maxDate = ts;
+          }
+        });
+      }
+      if (!maxDate) return '';
+      var diffMin = Math.floor((Date.now() - maxDate) / 60000);
+      if (diffMin < 1) return t('updatedJustNow');
+      if (diffMin < 60) return diffMin + ' ' + t('updatedMinutes');
+      var diffH = Math.floor(diffMin / 60);
+      if (diffH < 24) return diffH + ' ' + t('updatedHours');
+      var diffD = Math.floor(diffH / 24);
+      return diffD + ' ' + t('updatedDays');
+    }
+
+    var SOURCE_SIDE_BY_CHANNEL = {
+      GeneralStaffZSU: 'UA', operativnoZSU: 'UA', ukrpravda_news: 'UA',
+      uniannet: 'UA', DeepStateUA: 'UA', OsintFlow: 'UA',
+      kharkiv_typical: 'UA', dnepr_typical: 'UA', odesa_typical: 'UA',
+      kherson_typical: 'UA', donbass_realii: 'UA', kyivindependent_official: 'UA',
+      exilenova_plus: 'UA', supernova_plus: 'UA',
+      informnapalm: 'OSINT', astrapress: 'OSINT', bazabazon: 'OSINT',
+      rybar: 'RU', voenkorKotenok: 'RU', wargonzo: 'RU', readovkanews: 'RU',
+      lost_armour: 'RU', boris_rozhin: 'RU', epoddubny: 'RU',
+      RVvoenkor: 'RU', dva_majors: 'RU'
+    };
+
+    function getVerificationInfo(ev) {
+      var sources = Array.isArray(ev && ev.verification_sources)
+        ? ev.verification_sources.filter(Boolean) : [];
+      var corroborated = Boolean(ev && ev.verification_status === 'corroborated' && sources.length >= 2);
+      if (corroborated) {
+        return {
+          verified: true,
+          label: 'АВТОСВЕРКА: ' + sources.length + ' КАНАЛОВ',
+          note: ev.verification_note || 'Автоматическая сверка сообщений разных каналов. Независимость первоисточников отдельно не установлена.'
+        };
+      }
+      return {
+        verified: false,
+        label: 'НЕ ПРОВЕРЕНО',
+        note: ev && ev.verification_note
+          ? ev.verification_note
+          : 'Не найдено достаточного количества отличающихся сообщений для автоматической сверки.'
+      };
+    }
+
+    function getSourceSides(channelValue) {
+      var channels = String(channelValue || '').split(',').map(function(name) { return name.trim(); }).filter(Boolean);
+      var sides = { UA: false, RU: false, OSINT: false };
+      channels.forEach(function(name) {
+        var side = SOURCE_SIDE_BY_CHANNEL[name];
+        if (side) sides[side] = true;
+      });
+      var crossSide = sides.UA && sides.RU;
+      var labels = [];
+      if (sides.UA) labels.push('украинские каналы');
+      if (sides.RU) labels.push('российские каналы');
+      if (sides.OSINT) labels.push('OSINT-каналы');
+      if (!labels.length) labels.push('сторона источника не определена');
+      return { channels: channels, sides: sides, crossSide: crossSide, label: labels.join(' + ') };
+    }
+
+    function getEventSourceLabel(event) {
+      if (event && event.source_type === 'rss') {
+        var publishers = Array.isArray(event.sources)
+          ? event.sources.map(function(source) { return source && source.publisher; }).filter(Boolean)
+          : [];
+        return publishers.length ? publishers.join(', ') : String(event.channel || 'RSS');
+      }
+      return String(event && event.channel || 'не указан').split(',').map(function(name) {
+        return name.trim();
+      }).filter(Boolean).map(function(name) { return '@' + name; }).join(', ') || 'не указан';
+    }
+
+    function formatProvenanceDate(value) {
+      if (!value) return '';
+      var date = new Date(value);
+      return isFinite(date.getTime()) ? date.toLocaleString('ru-RU') : '';
+    }
+
+    function getEventSourceRecords(event) {
+      var records = Array.isArray(event && event.sources) ? event.sources.filter(Boolean) : [];
+      if (!records.length) {
+        var channels = String(event && event.channel || '').split(',').map(function(name) {
+          return name.trim();
+        }).filter(Boolean);
+        records = channels.map(function(channel, index) {
+          return {
+            channel: channel,
+            source_type: event && event.source_type || 'telegram',
+            url: channels.length === 1 ? event.url : null,
+            date: event && event.date || null
+          };
+        });
+        if (!records.length && event && event.url) {
+          records.push({ channel: event.channel || 'Источник', url: event.url, date: event.date || null });
+        }
+      }
+      return records;
+    }
+
+    function getSourceHealthRecord(channel) {
+      var snapshot = window.OSINT_INTELLIGENCE && window.OSINT_INTELLIGENCE.source_health;
+      var sources = snapshot && Array.isArray(snapshot.sources) ? snapshot.sources : [];
+      for (var i = 0; i < sources.length; i++) {
+        if (String(sources[i].id || '') === String(channel || '')) return sources[i];
+      }
+      return null;
+    }
+
+    function getEventCoordinateLabel(event) {
+      if (event && event.coordinate_precision === 'specific_place') {
+        return 'ориентир, прямо названный в публикации; совпадение с картой автоматическое';
+      }
+      if (event && event.location_resolution === 'region_center_fallback') {
+        return 'приблизительный центр региона; точное место не определено';
+      }
+      if (event && event.location_resolution === 'context_corroborated_settlement') {
+        return 'центр населённого пункта, название уточнено по контексту других сообщений';
+      }
+      if (event && event.coordinate_precision === 'settlement_center') {
+        return 'центр населённого пункта; точное место не подтверждено';
+      }
+      return 'способ геопривязки не указан в данных';
+    }
+
+    function appendProvenanceLine(parent, label, value) {
+      if (!value) return;
+      var line = document.createElement('div');
+      line.style.cssText = 'margin-top:4px;line-height:1.4;overflow-wrap:anywhere;';
+      var strong = document.createElement('b');
+      strong.textContent = label + ': ';
+      line.appendChild(strong);
+      line.appendChild(document.createTextNode(String(value)));
+      parent.appendChild(line);
+    }
+
+    function appendEventProvenancePopup(popup, event) {
+      var box = document.createElement('div');
+      box.style.cssText = 'margin-top:10px;padding:9px;border:1px solid var(--border-mid);border-radius:8px;background:var(--bg-input);font-size:11px;line-height:1.45;';
+      var heading = document.createElement('b');
+      heading.textContent = 'Происхождение и проверка';
+      box.appendChild(heading);
+
+      var records = getEventSourceRecords(event);
+      if (!records.length) {
+        appendProvenanceLine(box, 'Первоисточник', 'ссылка и название источника не сохранены');
+      }
+      records.slice(0, 8).forEach(function(record, index) {
+        var item = document.createElement('div');
+        item.style.cssText = 'margin-top:6px;padding-top:5px;border-top:1px solid var(--border-light);';
+        var channel = record.channel || record.publisher || ('Источник ' + (index + 1));
+        var title = document.createElement('b');
+        var sourceType = record.source_type || event.source_type || 'telegram';
+        title.textContent = sourceType === 'telegram'
+          ? (String(channel).charAt(0) === '@' ? String(channel) : '@' + String(channel))
+          : String(channel);
+        item.appendChild(title);
+        var sourceUrl = safeHttpUrl(record.url || '');
+        if (sourceUrl) {
+          item.appendChild(document.createTextNode(' · '));
+          var link = document.createElement('a');
+          link.href = sourceUrl;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.textContent = 'первоисточник ↗';
+          item.appendChild(link);
+        } else {
+          item.appendChild(document.createTextNode(' · ссылка на отдельную публикацию не сохранена'));
+        }
+        var publishedAt = formatProvenanceDate(record.date);
+        if (publishedAt) appendProvenanceLine(item, 'Публикация', publishedAt);
+
+        var health = getSourceHealthRecord(channel);
+        if (health) {
+          var healthStatus = health.status === 'ok' ? 'страница источника успешно получена' :
+            (health.status === 'error' ? 'ошибка получения страницы источника' : 'состояние неизвестно');
+          var checkedAt = formatProvenanceDate(health.last_success || health.last_attempt);
+          if (checkedAt) healthStatus += ' · проверка ' + checkedAt;
+          appendProvenanceLine(item, 'Доступность канала', healthStatus);
+          var latestAt = formatProvenanceDate(health.latest_item_at);
+          if (latestAt) {
+            var freshness = health.freshness_status === 'stale' ? 'устаревшая лента' :
+              (health.freshness_status === 'fresh' ? 'недавняя публикация есть' : 'свежесть неизвестна');
+            appendProvenanceLine(item, 'Последняя замеченная публикация канала', latestAt + ' · ' + freshness);
+          }
+        }
+        box.appendChild(item);
+      });
+      if (records.length > 8) {
+        appendProvenanceLine(box, 'Остальные источники', 'ещё ' + (records.length - 8));
+      }
+
+      var datasetTime = formatProvenanceDate(window.TG_DATA && window.TG_DATA.generated_at);
+      if (datasetTime) appendProvenanceLine(box, 'Сборка набора событий', datasetTime);
+      var healthSnapshot = window.OSINT_INTELLIGENCE && window.OSINT_INTELLIGENCE.source_health;
+      var healthTime = formatProvenanceDate(healthSnapshot && healthSnapshot.generated_at);
+      if (healthTime) appendProvenanceLine(box, 'Снимок состояния каналов', healthTime);
+
+      appendProvenanceLine(box, 'Ограничение', 'успешное получение канала, число публикаций и автоматическая сверка не подтверждают истинность сообщения или независимость первоисточников');
+
+      var methodLink = document.createElement('a');
+      methodLink.href = './methodology.html';
+      methodLink.textContent = 'Методология и ограничения';
+      methodLink.style.cssText = 'display:inline-block;margin-top:6px;';
+      box.appendChild(methodLink);
+      popup.appendChild(box);
+    }
+
+    function renderIntelligenceSummaryHtml() {
+      var intel = window.OSINT_INTELLIGENCE;
+      if (!intel || !intel.daily || !intel.weekly) return '';
+      var daily = intel.daily;
+      var weekly = intel.weekly;
+      var health = intel.source_health || {};
+      var healthCounts = health.status_counts || {};
+      var freshnessCounts = health.freshness_counts || {};
+      var staleSources = Array.isArray(health.stale_sources) ? health.stale_sources : [];
+      var evidence = daily.evidence_breakdown || {};
+      var attentionCandidates = Array.isArray(daily.attention_candidates)
+        ? daily.attention_candidates : [];
+      var analyticalHypothesesNote = daily.analytical_hypotheses_note || '';
+      var signals = Array.isArray(daily.analytical_signals)
+        ? daily.analytical_signals : (Array.isArray(daily.publication_activity_signals)
+          ? daily.publication_activity_signals : []);
+      var html = '<div class="summary-box" style="margin:8px 10px;">' +
+        '<div class="summary-title">Автоматическая сводка</div>' +
+        '<div class="summary-line"><span>За 24 часа</span><b>' + escapeHtml(daily.event_count || 0) + '</b></div>' +
+        '<div class="summary-line"><span>За 7 дней</span><b>' + escapeHtml(weekly.event_count || 0) + '</b></div>' +
+        '<div class="summary-line"><span>Telegram / RSS за сутки</span><span>' +
+          escapeHtml((daily.source_type_counts && daily.source_type_counts.telegram) || 0) + ' / ' +
+          escapeHtml((daily.source_type_counts && daily.source_type_counts.rss) || 0) + '</span></div>' +
+        '<div class="summary-line"><span>Сверено по нескольким Telegram-каналам</span><b>' +
+          escapeHtml(evidence.cross_source_consistent_count || daily.corroborated_event_count || 0) + '</b></div>' +
+        '<div class="summary-line"><span>Без межканальной сверки</span><b>' +
+          escapeHtml(evidence.not_independently_corroborated_count || daily.not_verified_event_count || 0) + '</b></div>';
+      if (attentionCandidates.length) {
+        html += '<div style="margin-top:8px;font-size:11px;font-weight:700;">Новые сообщения, требующие проверки первоисточников</div>';
+        attentionCandidates.slice(0, 5).forEach(function(candidate) {
+          html += '<div style="margin-top:4px;font-size:11px;">' +
+            escapeHtml(candidate.location || 'Место не определено') + ' · ' +
+            escapeHtml(candidate.event_type || 'Событие') + ' · ' +
+            escapeHtml((candidate.sources || []).join(', ')) + '</div>';
+        });
+        if (attentionCandidates.length > 5) {
+          html += '<div style="font-size:10px;color:var(--text-muted);">И ещё ' +
+            escapeHtml(attentionCandidates.length - 5) + ' сообщений для проверки.</div>';
+        }
+      }
+      if (signals.length) {
+        html += '<div style="margin-top:8px;font-size:11px;font-weight:700;">Аналитические сигналы публикационной активности</div>';
+        signals.forEach(function(signal) {
+          html += '<div style="margin-top:4px;font-size:11px;">' +
+            escapeHtml(signal.event_type) + ': ' + escapeHtml(signal.current_period) +
+            ' против ' + escapeHtml(signal.previous_period) + ' в предыдущем периоде</div>';
+        });
+      } else {
+        html += '<div style="margin-top:7px;font-size:11px;color:var(--text-muted);">Пороговые всплески числа публикаций не выявлены.</div>';
+      }
+      html += '<div style="margin-top:6px;font-size:10px;color:var(--text-muted);">' +
+        'Сопоставление публикаций не является подтверждением факта. ' +
+        'Автоматические гипотезы о причинах событий и контроле территории не формируются.' +
+        (analyticalHypothesesNote ? ' ' + escapeHtml(analyticalHypothesesNote) : '') + '</div>';
+      html += '<div style="margin-top:7px;font-size:10px;color:var(--text-muted);">' +
+        'Доступность источников: ' + escapeHtml(healthCounts.ok || 0) + ' работает, ' +
+        escapeHtml(healthCounts.error || 0) + ' с ошибками из ' +
+        escapeHtml(health.total_sources || 0) + '. ' +
+        'Доступность адреса не гарантирует свежесть публикаций.</div>';
+      html += '<div class="summary-line"><span>Свежесть публикаций</span><span>' +
+        escapeHtml(freshnessCounts.fresh || 0) + ' свежие · ' +
+        escapeHtml(freshnessCounts.stale || 0) + ' устарели · ' +
+        escapeHtml(freshnessCounts.unknown || 0) + ' без даты</span></div>';
+      if (staleSources.length) {
+        html += '<div style="margin-top:5px;font-size:10px;color:var(--text-muted);">Последняя публикация старше порога:</div>';
+        staleSources.slice(0, 5).forEach(function(source) {
+          html += '<div style="font-size:10px;">' + escapeHtml(source.id || 'источник') +
+            ' — ' + escapeHtml(source.age_hours) + ' ч</div>';
+        });
+        if (staleSources.length > 5) {
+          html += '<div style="font-size:10px;color:var(--text-muted);">И ещё ' +
+            escapeHtml(staleSources.length - 5) + ' источников.</div>';
+        }
+      }
+      html += '<div style="margin-top:5px;font-size:10px;color:var(--text-muted);">' +
+        'Порог устаревания: Telegram — 72 ч, RSS — 96 ч. Неизвестная дата не считается сбоем.</div>' +
+        '<div style="margin-top:5px;font-size:10px;"><a href="./data/source-health.json">Состояние источников</a> · ' +
+        '<a href="./data/event-history/index.json">История изменений событий (90 дней)</a></div>';
+      html += '</div>';
+      return html;
+    }
+
+    function downloadEventsGeoJSON() {
+      var events = window.TG_DATA && Array.isArray(window.TG_DATA.events) ? window.TG_DATA.events : [];
+      var features = events.filter(function(ev) {
+        var lat = Number(ev.lat), lng = Number(ev.lng);
+        return isFinite(lat) && isFinite(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
+      }).map(function(ev) {
+        var source = getSourceSides(ev.channel);
+        return {
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: [Number(ev.lng), Number(ev.lat)] },
+          properties: {
+            id: ev.id == null ? null : ev.id,
+            date: ev.date || null,
+            event_type: ev.event_type || null,
+            location: ev.location || null,
+            event_country: ev.country || null,
+            confidence: ev.confidence || null,
+            coordinate_precision: ev.coordinate_precision || null,
+            specific_place: ev.specific_place || null,
+            coordinate_evidence: ev.coordinate_evidence || null,
+            channel: ev.channel || null,
+            source_type: ev.source_type || 'telegram',
+            source_count: ev.source_count || 1,
+            sources: Array.isArray(ev.sources) ? ev.sources : [],
+            source_sides: Object.keys(source.sides).filter(function(side) { return source.sides[side]; }),
+            cross_side_signal: Boolean(source.crossSide),
+            verification_status: ev.verification_status || 'not_verified',
+            verification_sources: Array.isArray(ev.verification_sources) ? ev.verification_sources : [],
+            verification_note: ev.verification_note || 'Нет автоматического подтверждения по отличающимся сообщениям других каналов.',
+            source_url: ev.url || null,
+            location_resolution: ev.location_resolution || null,
+            pipeline_generated_at: (window.TG_DATA && window.TG_DATA.generated_at) || null,
+            source_health_snapshot_at: (window.OSINT_INTELLIGENCE && window.OSINT_INTELLIGENCE.source_health && window.OSINT_INTELLIGENCE.source_health.generated_at) || null,
+            source_health: getEventSourceRecords(ev).map(function(source) {
+              var health = getSourceHealthRecord(source.channel);
+              return {
+                channel: source.channel || source.publisher || null,
+                publication_url: source.url || null,
+                publication_date: source.date || null,
+                fetch_status: health ? health.status : null,
+                last_success: health ? health.last_success : null,
+                latest_channel_publication: health ? health.latest_item_at : null,
+                freshness_status: health ? health.freshness_status : null
+              };
+            }),
+            coordinate_note: getEventCoordinateLabel(ev) + '. Это не подтверждение достоверности события; см. methodology.html.'
+          }
+        };
+      });
+      var collection = {
+        type: 'FeatureCollection',
+        name: 'OSINT Map public event metadata',
+        generated_at: (window.TG_DATA && window.TG_DATA.generated_at) || null,
+        license: 'CC-BY-4.0',
+        license_url: 'https://creativecommons.org/licenses/by/4.0/',
+        license_note: 'CC BY 4.0 applies to the project compilation and original metadata to the extent rights are held by the project. Source posts and media remain subject to their original rights and terms.',
+        methodology_url: 'https://freeosintmaper.github.io/osint-map/methodology.html',
+        features: features
+      };
+      var blob = new Blob([JSON.stringify(collection, null, 2)], { type: 'application/geo+json;charset=utf-8' });
+      var objectUrl = URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = objectUrl;
+      link.download = 'osint-map-events.geojson';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(function() { URL.revokeObjectURL(objectUrl); }, 1000);
+    }
+
+    function loadTelegramEvents() {
+      if (!window.TG_DATA) {
+        document.getElementById('eventsListBody').innerHTML =
+          '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">Данные не подгрузились.</div>';
+        return;
+      }
+      tgLayer.clearLayers();
+      var list = (window.TG_DATA && window.TG_DATA.events) || [];
+      var added = 0, panelEvents = [];
+      list.forEach(function(ev) {
+        var eventLat = Number(ev.lat), eventLng = Number(ev.lng);
+        if (!isFinite(eventLat) || !isFinite(eventLng) || eventLat < -90 || eventLat > 90 || eventLng < -180 || eventLng > 180) return;
+        if (!Object.prototype.hasOwnProperty.call(activeEventTypes, ev.event_type)) return;
+        if (eventDateFilter !== 'all') {
+          var cutoff = 0;
+          if (eventDateFilter === '6h') cutoff = Date.now() - 6 * 60 * 60 * 1000;
+          else if (eventDateFilter === '24h') cutoff = Date.now() - 24 * 60 * 60 * 1000;
+          else if (eventDateFilter === '3d') cutoff = Date.now() - 3 * 24 * 60 * 60 * 1000;
+          else if (eventDateFilter === '7d') cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+          if (cutoff && ev.date && new Date(ev.date).getTime() < cutoff) return;
+        }
+        if (eventSearchQuery) {
+          var q = eventSearchQuery.toLowerCase();
+          var hay = ((ev.location || '') + ' ' + (ev.channel || '') + ' ' + (ev.description || '')).toLowerCase();
+          if (hay.indexOf(q) < 0) return;
+        }
+        var marker = L.marker([eventLat, eventLng], { icon: createEventIcon(ev.event_type), riseOnHover: true });
+        var label = t(WT_LABELS[ev.event_type] || ev.event_type);
+        var dateStr = '';
+        try {
+          var eventDate = new Date(ev.date);
+          if (isFinite(eventDate.getTime())) dateStr = eventDate.toLocaleString('ru-RU');
+        } catch(e) {}
+        var countryLabel = ev.country === 'UA' ? t('countryUA') : (ev.country === 'RU' ? t('countryRU') : t('countryOSINT'));
+        var countryClass = ev.country === 'UA' ? 'ua' : (ev.country === 'RU' ? 'ru' : 'osint');
+        var sourceInfo = getSourceSides(ev.channel);
+        var verificationInfo = getVerificationInfo(ev);
+
+        // Build popup with DOM nodes instead of concatenating untrusted Telegram fields into HTML.
+        var popup = document.createElement('div');
+        var heading = document.createElement('div');
+        var title = document.createElement('b');
+        title.textContent = label;
+        heading.appendChild(title);
+        heading.appendChild(document.createTextNode(' '));
+        var badge = document.createElement('span');
+        badge.className = 'evt-country ' + countryClass;
+        badge.style.cssText = 'display:inline-block;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:700;';
+        badge.textContent = countryLabel;
+        heading.appendChild(badge);
+        popup.appendChild(heading);
+
+        var sourceMeta = document.createElement('div');
+        sourceMeta.className = 'source-meta';
+        sourceMeta.appendChild(document.createTextNode('Источник: ' + getEventSourceLabel(ev)));
+        sourceMeta.appendChild(document.createElement('br'));
+        sourceMeta.appendChild(document.createTextNode(ev.source_type === 'rss'
+          ? 'Тип источника: новостная RSS-лента'
+          : 'Сторона источника: ' + sourceInfo.label));
+        var verificationInfo = getVerificationInfo(ev);
+        var verificationBadge = document.createElement('span');
+        verificationBadge.className = verificationInfo.verified ? 'verified' : 'not-verified';
+        verificationBadge.title = verificationInfo.note;
+        verificationBadge.textContent = verificationInfo.label;
+        sourceMeta.appendChild(document.createElement('br'));
+        sourceMeta.appendChild(verificationBadge);
+        if (sourceInfo.crossSide) {
+          var crossSideSignal = document.createElement('div');
+          crossSideSignal.className = 'cross-side-signal';
+          crossSideSignal.textContent = 'Есть сообщения каналов UA и RU — сильный сигнал, но не независимое подтверждение';
+          sourceMeta.appendChild(crossSideSignal);
+        }
+        popup.appendChild(sourceMeta);
+
+        popup.appendChild(document.createElement('br'));
+        var locationText = document.createElement('i');
+        locationText.textContent = String(ev.location || '');
+        popup.appendChild(locationText);
+
+        var coordinateNote = document.createElement('small');
+        coordinateNote.style.cssText = 'display:block;margin-top:5px;color:var(--text-muted);line-height:1.4;';
+        coordinateNote.textContent = 'Геопривязка: ' + getEventCoordinateLabel(ev) + '. Это не подтверждение достоверности сообщения.';
+        popup.appendChild(coordinateNote);
+        appendEventProvenancePopup(popup, ev);
+        if (ev.coordinate_precision === 'specific_place' && ev.coordinate_evidence) {
+          var evidenceNote = document.createElement('small');
+          evidenceNote.style.cssText = 'display:block;margin-top:4px;line-height:1.4;white-space:normal;';
+          evidenceNote.textContent = 'Цитата, по которой сопоставлено название места (не подтверждение события): «' + String(ev.coordinate_evidence) + '»';
+          popup.appendChild(evidenceNote);
+        }
+
+        var photoUrl = safeHttpUrl(ev.photo_url);
+        var videoUrl = safeHttpUrl(ev.video_url);
+        var sourceUrl = safeHttpUrl(ev.url);
+        if (photoUrl || videoUrl) {
+          var media = document.createElement('div');
+          media.style.cssText = 'margin:10px 0;display:grid;gap:8px;';
+
+          if (videoUrl && isDirectVideoFile(videoUrl)) {
+            var video = document.createElement('video');
+            video.controls = true;
+            video.playsInline = true;
+            video.preload = 'metadata';
+            video.style.cssText = 'width:100%;max-width:100%;max-height:300px;background:#000;border-radius:8px;display:block;';
+            video.src = videoUrl;
+            if (photoUrl) video.poster = photoUrl;
+            video.setAttribute('aria-label', 'Видео к событию');
+            media.appendChild(video);
+          } else if (photoUrl || videoUrl) {
+            var previewUrl = photoUrl || videoUrl;
+            var telegramUrl = telegramEmbedUrl(sourceUrl);
+            var previewLink = document.createElement('a');
+            previewLink.href = sourceUrl || previewUrl;
+            previewLink.target = '_blank';
+            previewLink.rel = 'noopener noreferrer';
+            var preview = document.createElement('img');
+            preview.alt = videoUrl ? 'Превью медиа к событию' : 'Фото к событию';
+            // Карточка открывается по действию пользователя, поэтому не откладываем загрузку картинки.
+            preview.loading = 'eager';
+            preview.decoding = 'async';
+            // Некоторые CDN не отдают медиа при передаче Referer с другого сайта.
+            preview.referrerPolicy = 'no-referrer';
+            preview.style.cssText = 'width:100%;max-width:100%;max-height:260px;object-fit:contain;background:rgba(0,0,0,.04);border-radius:8px;display:block;';
+            preview.onerror = function() {
+              preview.onerror = null;
+              if (telegramUrl) {
+                // Если прямая ссылка на файл устарела или CDN недоступен, пробуем медиа из исходной публикации.
+                var fallbackWrap = document.createElement('div');
+                fallbackWrap.style.cssText = 'display:grid;gap:8px;';
+                var fallbackFrame = document.createElement('iframe');
+                fallbackFrame.src = telegramUrl;
+                fallbackFrame.title = 'Публикация Telegram с фотографией или видео';
+                fallbackFrame.loading = 'lazy';
+                fallbackFrame.referrerPolicy = 'strict-origin-when-cross-origin';
+                fallbackFrame.allow = 'fullscreen; picture-in-picture';
+                fallbackFrame.allowFullscreen = true;
+                fallbackFrame.style.cssText = 'width:100%;height:380px;max-height:55vh;border:0;border-radius:8px;background:var(--bg-input);';
+                fallbackWrap.appendChild(fallbackFrame);
+                if (sourceUrl) {
+                  var fallbackLink = document.createElement('a');
+                  fallbackLink.href = sourceUrl;
+                  fallbackLink.target = '_blank';
+                  fallbackLink.rel = 'noopener noreferrer';
+                  fallbackLink.textContent = 'Открыть исходную публикацию в Telegram ↗';
+                  fallbackLink.style.cssText = 'font-size:12px;font-weight:600;color:var(--accent);text-decoration:none;';
+                  fallbackWrap.appendChild(fallbackLink);
+                }
+                media.replaceChildren(fallbackWrap);
+              } else {
+                var failedMedia = document.createElement('div');
+                failedMedia.style.cssText = 'padding:10px;border-radius:8px;background:var(--bg-input);font-size:12px;color:var(--text-secondary);';
+                failedMedia.textContent = 'Не удалось загрузить изображение с внешнего сервера.';
+                if (sourceUrl) {
+                  var openSource = document.createElement('a');
+                  openSource.href = sourceUrl;
+                  openSource.target = '_blank';
+                  openSource.rel = 'noopener noreferrer';
+                  openSource.textContent = 'Открыть публикацию источника ↗';
+                  openSource.style.cssText = 'display:block;margin-top:6px;font-weight:600;color:var(--accent);text-decoration:none;';
+                  failedMedia.appendChild(openSource);
+                }
+                media.replaceChildren(failedMedia);
+              }
+            };
+            preview.src = previewUrl;
+            previewLink.appendChild(preview);
+            media.appendChild(previewLink);
+
+            if (videoUrl && telegramUrl) {
+              var embedButton = document.createElement('button');
+              embedButton.type = 'button';
+              embedButton.textContent = '▶ Смотреть видео в Telegram';
+              embedButton.style.cssText = 'width:100%;padding:10px 12px;border:1px solid var(--border-mid);border-radius:9px;background:var(--bg-input);color:var(--text-main);font:inherit;font-size:12px;font-weight:600;cursor:pointer;';
+              embedButton.addEventListener('click', function() {
+                if (embedButton.disabled) return;
+                embedButton.disabled = true;
+                embedButton.textContent = 'Загружаем плеер Telegram…';
+                var frame = document.createElement('iframe');
+                frame.src = telegramUrl;
+                frame.title = 'Публикация Telegram с видео';
+                frame.loading = 'lazy';
+                frame.referrerPolicy = 'strict-origin-when-cross-origin';
+                frame.allow = 'fullscreen; picture-in-picture';
+                frame.allowFullscreen = true;
+                frame.style.cssText = 'width:100%;height:380px;max-height:55vh;border:0;border-radius:8px;background:var(--bg-input);';
+                frame.addEventListener('error', function() {
+                  embedButton.disabled = false;
+                  embedButton.textContent = 'Не удалось встроить. Открыть Telegram';
+                });
+                media.replaceChildren(frame);
+              });
+              media.appendChild(embedButton);
+            } else if (videoUrl && sourceUrl) {
+              var openVideo = document.createElement('a');
+              openVideo.href = sourceUrl;
+              openVideo.target = '_blank';
+              openVideo.rel = 'noopener noreferrer';
+              openVideo.textContent = 'Открыть видео в источнике ↗';
+              openVideo.style.cssText = 'font-size:12px;font-weight:600;color:var(--accent);text-decoration:none;';
+              media.appendChild(openVideo);
+            }
+          }
+          popup.appendChild(media);
+        }
+
+        var description = document.createElement('div');
+        description.style.cssText = 'margin-top:8px;white-space:pre-wrap;overflow-wrap:anywhere;';
+        var fullDescription = String(ev.description || '');
+        description.textContent = fullDescription.length > 500 ? fullDescription.slice(0, 500).trimEnd() + '…' : fullDescription;
+        popup.appendChild(description);
+
+        popup.appendChild(document.createElement('br'));
+        var dateEl = document.createElement('small');
+        dateEl.textContent = dateStr;
+        popup.appendChild(dateEl);
+        popup.appendChild(document.createElement('br'));
+        var channelEl = document.createElement('small');
+        channelEl.style.color = '#888';
+        channelEl.textContent = getEventSourceLabel(ev);
+        popup.appendChild(channelEl);
+        if (sourceUrl) {
+          popup.appendChild(document.createElement('br'));
+          var sourceLink = document.createElement('a');
+          sourceLink.href = sourceUrl;
+          sourceLink.target = '_blank';
+          sourceLink.rel = 'noopener noreferrer';
+          sourceLink.textContent = t('source') + ' →';
+          popup.appendChild(sourceLink);
+        }
+        marker.bindPopup(popup, { minWidth: 240, maxWidth: 360, autoPanPadding: [24, 24] });
+        tgLayer.addLayer(marker);
+        added++;
+        panelEvents.push(ev);
+      });
+      document.title = panelEvents.length ? '(' + panelEvents.length + ') OSINT-карта' : 'OSINT-карта';
+      renderEventsPanel(panelEvents);
+    }
+
+    function renderEventsPanel(events) {
+      var body = document.getElementById('eventsListBody');
+      var intelligenceSummaryHtml = renderIntelligenceSummaryHtml();
+      document.getElementById('eventsPanelTitle').textContent = t('eventsPanelTitle') + ' · ' + (events ? events.length : 0);
+
+      var filterHtml = '<div class="events-filters">' +
+        '<input type="text" id="eventSearch" placeholder="Поиск: город, канал, текст" value="' + escapeHtml(eventSearchQuery || '') + '">' +
+        '<div class="time-chips">' +
+          ['6h', '24h', '3d', '7d', 'all'].map(function(v) {
+            var labels = { '6h': t('time6h'), '24h': t('time24h'), '3d': t('time3d'), '7d': t('time7d'), 'all': t('timeAll') };
+            return '<button class="time-chip' + (eventDateFilter === v ? ' active' : '') + '" data-date="' + v + '">' + labels[v] + '</button>';
+          }).join('') +
+        '</div>' +
+        '</div>';
+
+      if (!events || events.length === 0) {
+        body.innerHTML = filterHtml + intelligenceSummaryHtml + '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' + t('noEvents') + '</div>';
+        attachEventFilters();
+        return;
+      }
+      events.sort(function(a, b) { return (b.date ? new Date(b.date).getTime() : 0) - (a.date ? new Date(a.date).getTime() : 0); });
+      var counts = {};
+      events.forEach(function(ev) { counts[ev.event_type] = (counts[ev.event_type] || 0) + 1; });
+      var html = filterHtml + intelligenceSummaryHtml + '<div class="summary-box">';
+      var lastUpdate = getLastUpdateText();
+      if (lastUpdate) {
+        html += '<div class="last-update">' + t('updatedLabel') + ': ' + lastUpdate + '</div>';
+      }
+      html += '<div class="summary-title">' + t('summaryTitle') + '</div>';
+      Object.keys(counts).forEach(function(type) {
+        html += '<div class="summary-line"><span style="display:flex;align-items:center;"><span style="color:' + wtColor(type) + ';display:flex;align-items:center;margin-right:8px;">' + wtSvg(type) + '</span>' + t(WT_LABELS[type] || type) + '</span><span>' + counts[type] + '</span></div>';
+      });
+      html += '<div class="summary-line" style="margin-top:6px;font-weight:700;"><span>' + t('total') + '</span><span>' + events.length + ' ' + t('eventsCount') + '</span></div></div>';
+      events.slice(0, 100).forEach(function(ev) {
+        var label = t(WT_LABELS[ev.event_type] || ev.event_type);
+        var color = wtColor(ev.event_type);
+        var time = '';
+        try { time = new Date(ev.date).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); } catch(e) {}
+        var countryLabel = ev.country === 'UA' ? t('countryUA') : (ev.country === 'RU' ? t('countryRU') : t('countryOSINT'));
+        var countryClass = ev.country === 'UA' ? 'ua' : (ev.country === 'RU' ? 'ru' : 'osint');
+        var sourceInfo = getSourceSides(ev.channel);
+        var verificationInfo = getVerificationInfo(ev);
+        html += '<div class="event-item' + (sourceInfo.crossSide ? ' cross-side' : '') + '" data-lat="' + escapeHtml(ev.lat) + '" data-lng="' + escapeHtml(ev.lng) + '">' +
+                '<div class="evt-type" style="color:' + color + ';">' +
+                '<span style="color:' + color + ';display:flex;align-items:center;">' + wtSvg(ev.event_type) + '</span>' + escapeHtml(label) +
+                '<span class="evt-country ' + countryClass + '">' + escapeHtml(countryLabel) + '</span></div>' +
+                '<div class="evt-loc">' + escapeHtml(ev.location || '') + ' <span style="color:var(--text-muted);">' + escapeHtml(ev.source_type === 'rss' ? '· RSS' : getEventSourceLabel(ev)) + '</span></div>' +
+                '<div class="evt-source">Источник: ' + escapeHtml(ev.source_type === 'rss' ? 'новостная редакция / RSS' : sourceInfo.label) + ' ' +
+                '<span class="evt-verification ' + (verificationInfo.verified ? 'verified' : 'not-verified') + '" title="' + escapeHtml(verificationInfo.note) + '">' + escapeHtml(verificationInfo.label) + '</span>' +
+                (sourceInfo.crossSide ? ' · UA + RU' : '') + '</div>' +
+                '<div class="evt-time">' + escapeHtml(time) + '</div>' +
+                '<div style="margin-top:3px;font-size:10px;line-height:1.35;color:var(--text-muted);">Геопривязка: ' + escapeHtml(getEventCoordinateLabel(ev)) +
+                '</div></div>';
+      });
+      body.innerHTML = html;
+      attachEventFilters();
+      body.querySelectorAll('.event-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+          var lat = parseFloat(this.getAttribute('data-lat'));
+          var lng = parseFloat(this.getAttribute('data-lng'));
+          if (!isNaN(lat) && !isNaN(lng)) { map.setView([lat, lng], 13); if (isMobile()) hideMobilePanels(); }
+        });
+      });
+    }
+
+    function attachEventFilters() {
+      var searchEl = document.getElementById('eventSearch');
+      if (searchEl) {
+        searchEl.addEventListener('input', function() {
+          eventSearchQuery = this.value;
+          var cursorPos = searchEl.selectionStart;
+          clearTimeout(window._searchTimer);
+          window._searchTimer = setTimeout(function() {
+            loadTelegramEvents();
+            var newEl = document.getElementById('eventSearch');
+            if (newEl) { newEl.focus(); newEl.setSelectionRange(cursorPos, cursorPos); }
+          }, 300);
+        });
+      }
+      document.querySelectorAll('.time-chip').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          eventDateFilter = this.getAttribute('data-date');
+          loadTelegramEvents();
+        });
+      });
+    }
+
+    var geoJSONButton = document.getElementById('exportEventsGeoJSON');
+    if (geoJSONButton) geoJSONButton.addEventListener('click', downloadEventsGeoJSON);
+
+    document.getElementById('toggleEventsPanel').addEventListener('click', function() {
+      var panel = document.getElementById('eventsPanel');
+      panel.classList.toggle('collapsed');
+      this.textContent = panel.classList.contains('collapsed') ? '▶' : '◀';
+    });
+
+    function refreshTelegramEvents(silent) {
+      if (window.__tgRefreshInFlight) return;
+      window.__tgRefreshInFlight = true;
+      var btn = document.getElementById('btnRefreshEvents');
+      if (!silent && btn) btn.classList.add('spinning');
+      var oldScript = document.querySelector('script[src*="telegram-events.js"]');
+      if (oldScript) oldScript.remove();
+      var newScript = document.createElement('script');
+      // Unique URL bypasses stale browser/CDN entries; the service worker also fetches this data network-first.
+      newScript.src = './data/telegram-events.js?t=' + Date.now();
+      newScript.onload = function() {
+        loadTelegramEvents();
+        window.__tgRefreshInFlight = false;
+        if (btn) btn.classList.remove('spinning');
+      };
+      newScript.onerror = function() {
+        window.__tgRefreshInFlight = false;
+        if (btn) btn.classList.remove('spinning');
+        if (!silent) alert('Не удалось обновить данные');
+      };
+      document.head.appendChild(newScript);
+    }
+
+    document.getElementById('btnRefreshEvents').addEventListener('click', function() {
+      refreshTelegramEvents(false);
+    });
+
+    // Keep an already-open map in sync with the newest published event snapshot.
+    window.setInterval(function() {
+      refreshTelegramEvents(true);
+    }, 10 * 60 * 1000);
+
+    function hideMobilePanels() {
+      document.body.classList.remove('show-events', 'show-filters', 'show-tools', 'show-legend');
+      ['btnShowEvents', 'btnShowFilters', 'btnShowTools'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) { el.classList.remove('active'); el.setAttribute('aria-pressed', 'false'); }
+      });
+    }
+    ['Events', 'Filters', 'Tools'].forEach(function(name) {
+      var btn = document.getElementById('btnShow' + name);
+      if (!btn) return;
+      btn.addEventListener('click', function() {
+        // The mobile Filters shortcut opens the existing settings drawer, where
+        // all map layers and event-type filters already live.
+        if (name === 'Filters') {
+          hideMobilePanels();
+          openSettings();
+          return;
+        }
+        var cls = 'show-' + name.toLowerCase();
+        var wasActive = document.body.classList.contains(cls);
+        hideMobilePanels();
+        ['btnShowEvents', 'btnShowTools'].forEach(function(id) { var control = document.getElementById(id); if (control) control.setAttribute('aria-pressed', 'false'); });
+        if (!wasActive) {
+          document.body.classList.add(cls);
+          this.classList.add('active');
+          this.setAttribute('aria-pressed', 'true');
+        } else {
+          this.setAttribute('aria-pressed', 'false');
+        }
+      });
+    });
+    map.on('click', function() { if (isMobile()) hideMobilePanels(); });
+
+    var currentZoneCategory = 'russia';
+    var zoneDrawer = null;
+    var zoneEditorPanel = document.getElementById('zoneEditorPanel');
+
+    document.getElementById('btnOpenZoneEditor').addEventListener('click', function() {
+      closeLoginModal();
+      zoneEditorPanel.classList.add('open');
+    });
+    document.querySelectorAll('#zoneEditorPanel .cat-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('#zoneEditorPanel .cat-btn').forEach(function(el) { el.classList.remove('active'); });
+        this.classList.add('active');
+        currentZoneCategory = this.getAttribute('data-cat');
+      });
+    });
+    document.getElementById('btnDrawZone').addEventListener('click', function() {
+      if (zoneDrawer) { try { zoneDrawer.disable(); } catch(e) {} zoneDrawer = null; }
+      zoneDrawer = new L.Draw.Polygon(map, {
+        allowIntersection: false,
+        shapeOptions: { color: zoneColors[currentZoneCategory].color, fillColor: zoneColors[currentZoneCategory].fillColor, fillOpacity: 0.3, weight: 2 }
+      });
+      zoneDrawer.enable();
+    });
+    document.getElementById('btnFinishZones').addEventListener('click', function() {
+      if (zoneDrawer) { try { zoneDrawer.disable(); } catch(e) {} zoneDrawer = null; }
+      zoneEditorPanel.classList.remove('open');
+    });
+    document.getElementById('btnStopEditing').addEventListener('click', function() {
+      cancelEditZone();
+      alert('Режим редактирования выключен');
+    });
+    document.getElementById('btnClearAllZones').addEventListener('click', function() {
+      if (!confirm('Удалить ВСЕ зоны контроля из базы?')) return;
+      if (!sb) return;
+      sb.from('control_zones').delete().neq('id', 0).then(function(res) {
+        if (res.error) { alert('Ошибка: ' + res.error.message); return; }
+        userZonesLayer.clearLayers();
+        cacheUserZonesFromLayer();
+        alert('Все зоны удалены');
+      });
+    });
+
+    map.on(L.Draw.Event.CREATED, function(e) {
+      if (!zoneEditorPanel.classList.contains('open')) return;
+      var geometry = e.layer.toGeoJSON().geometry;
+      if (sb) {
+        sb.from('control_zones').insert({ category: currentZoneCategory, geometry: geometry }).then(function(res) {
+          if (res.error) { alert('Ошибка: ' + res.error.message); return; }
+          loadUserZones();
+        });
+      } else {
+        userZonesLayer.addData({ type: 'Feature', properties: { category: currentZoneCategory }, geometry: geometry });
+      }
+      if (zoneDrawer) { try { zoneDrawer.disable(); } catch(e) {} zoneDrawer = null; }
+    });
+
+    var drawingsLayer = new L.FeatureGroup();
+    map.addLayer(drawingsLayer);
+    var currentDrawer = null, currentTool = null, lastMeasureLayer = null;
+    var eraserActive = false;
+
+    function setActiveTool(tool) {
+      currentTool = tool;
+      document.querySelectorAll('#toolbar button[data-tool]').forEach(function(btn) {
+        if (btn.getAttribute('data-tool') === tool) btn.classList.add('active'); else btn.classList.remove('active');
+      });
+    }
+    function deactivateDrawer() {
+      if (currentDrawer) { try { currentDrawer.disable(); } catch(e) {} currentDrawer = null; }
+      setActiveTool(null);
+    }
+    function activateTool(tool) {
+      if (currentTool === tool) { deactivateDrawer(); return; }
+      deactivateDrawer();
+      setActiveTool(tool);
+      var drawColor = /^#[0-9a-f]{6}$/i.test(toolAccentColors[tool] || '') ? toolAccentColors[tool] : '#60a5fa';
+      var areaOptions = { color: drawColor, weight: 2.5, opacity: 0.95, fill: true, fillColor: drawColor, fillOpacity: 0.22 };
+      if (tool === 'marker') currentDrawer = new L.Draw.Marker(map);
+      else if (tool === 'line') currentDrawer = new L.Draw.Polyline(map, { metric: true, shapeOptions: { color: drawColor, weight: 3, opacity: 0.95 } });
+      else if (tool === 'arrow') currentDrawer = new L.Draw.Polyline(map, { metric: true, shapeOptions: { color: drawColor, weight: 3, opacity: 0.95 } });
+      else if (tool === 'polygon') currentDrawer = new L.Draw.Polygon(map, { metric: true, shapeOptions: areaOptions });
+      else if (tool === 'rectangle') currentDrawer = new L.Draw.Rectangle(map, { shapeOptions: areaOptions });
+      else if (tool === 'circle') currentDrawer = new L.Draw.Circle(map, { metric: true, shapeOptions: areaOptions });
+      else if (tool === 'measure') currentDrawer = new L.Draw.Polyline(map, { metric: true, shapeOptions: { color: '#f59e0b', weight: 3, dashArray: '7,5' } });
+      if (currentDrawer) currentDrawer.enable();
+    }
+
+    function toggleEraser() {
+      eraserActive = !eraserActive;
+      if (eraserActive) {
+        if (currentDrawer) { try { currentDrawer.disable(); } catch(e) {} currentDrawer = null; }
+        setActiveTool('eraser');
+        map.getContainer().style.cursor = 'crosshair';
+        attachEraserHandlers();
+      } else {
+        setActiveTool(null);
+        map.getContainer().style.cursor = '';
+        detachEraserHandlers();
+      }
+    }
+    function attachEraserHandlers() {
+      drawingsLayer.eachLayer(function(layer) {
+        if (layer._eraserHandler) return;
+        layer._eraserHandler = function(e) {
+          if (!eraserActive) return;
+          L.DomEvent.stopPropagation(e);
+          if (layer._arrowDecorator) drawingsLayer.removeLayer(layer._arrowDecorator);
+          drawingsLayer.removeLayer(layer);
+          saveDrawings();
+        };
+        layer.on('click', layer._eraserHandler);
+        if (layer._path) layer._path.style.cursor = 'crosshair';
+      });
+    }
+    function detachEraserHandlers() {
+      drawingsLayer.eachLayer(function(layer) {
+        if (layer._eraserHandler) {
+          layer.off('click', layer._eraserHandler);
+          delete layer._eraserHandler;
+        }
+        if (layer._path) layer._path.style.cursor = '';
+      });
+    }
+
+    map.on(L.Draw.Event.CREATED, function(e) {
+      if (zoneEditorPanel.classList.contains('open')) return;
+      var layer = e.layer, type = e.layerType, tool = currentTool;
+      if (tool === 'measure') {
+        if (lastMeasureLayer) drawingsLayer.removeLayer(lastMeasureLayer);
+        if (layer.setStyle) layer.setStyle({ color: '#f59e0b', weight: 3, dashArray: '7,5' });
+        layer.feature = layer.feature || { type: 'Feature', properties: {} };
+        layer.feature.properties = layer.feature.properties || {};
+        layer.feature.properties._drawColor = '#f59e0b';
+        layer.feature.properties._drawTool = 'measure';
+        var latlngs = layer.getLatLngs();
+        if (latlngs.length > 0 && Array.isArray(latlngs[0])) latlngs = latlngs[0];
+        var totalMeters = 0;
+        for (var i = 1; i < latlngs.length; i++) totalMeters += latlngs[i-1].distanceTo(latlngs[i]);
+        var text = totalMeters >= 1000 ? (totalMeters / 1000).toFixed(2) + ' км' : Math.round(totalMeters) + ' м';
+        layer.bindTooltip(text, { permanent: true, direction: 'center', className: 'measure-tooltip' }).openTooltip();
+        drawingsLayer.addLayer(layer); lastMeasureLayer = layer; saveDrawings(); deactivateDrawer(); return;
+      }
+      if (tool === 'arrow' && type === 'polyline') {
+        var ll = layer.getLatLngs();
+        if (ll.length > 0 && Array.isArray(ll[0])) ll = ll[0];
+        if (ll.length >= 2) {
+          var arrowColor = /^#[0-9a-f]{6}$/i.test(toolAccentColors.arrow || '') ? toolAccentColors.arrow : '#60a5fa';
+          layer.feature = layer.feature || { type: 'Feature', properties: {} };
+          layer.feature.properties = layer.feature.properties || {};
+          layer.feature.properties._drawColor = arrowColor;
+          layer.feature.properties._drawTool = 'arrow';
+          if (layer.setStyle) layer.setStyle({ color: arrowColor, weight: 3 });
+          drawingsLayer.addLayer(layer);
+          var decorator = L.polylineDecorator(layer, {
+            patterns: [{ offset: '100%', repeat: 0,
+              symbol: L.Symbol.arrowHead({ pixelSize: 15, polygon: false,
+                pathOptions: { stroke: true, color: arrowColor, weight: 3, fillOpacity: 1 } })
+            }]
+          });
+          layer._arrowDecorator = decorator;
+          drawingsLayer.addLayer(decorator);
+          saveDrawings(); deactivateDrawer(); return;
+        }
+      }
+      var savedDrawColor = /^#[0-9a-f]{6}$/i.test(toolAccentColors[tool] || '') ? toolAccentColors[tool] : '#60a5fa';
+      layer.feature = layer.feature || { type: 'Feature', properties: {} };
+      layer.feature.properties = layer.feature.properties || {};
+      layer.feature.properties._drawColor = savedDrawColor;
+      layer.feature.properties._drawTool = tool || type;
+      if (layer.setStyle) {
+        if (type === 'polygon' || type === 'rectangle' || type === 'circle') {
+          layer.setStyle({ color: savedDrawColor, weight: 2.5, opacity: 0.95, fill: true, fillColor: savedDrawColor, fillOpacity: 0.22 });
+        } else if (type === 'polyline' && tool !== 'measure') {
+          layer.setStyle({ color: savedDrawColor, weight: 3, opacity: 0.95 });
+        }
+      }
+      if (type === 'marker') layer.bindPopup('Метка');
+      drawingsLayer.addLayer(layer);
+      if (eraserActive) {
+        layer._eraserHandler = function(e) {
+          if (!eraserActive) return;
+          L.DomEvent.stopPropagation(e);
+          if (layer._arrowDecorator) drawingsLayer.removeLayer(layer._arrowDecorator);
+          drawingsLayer.removeLayer(layer);
+          saveDrawings();
+        };
+        layer.on('click', layer._eraserHandler);
+      }
+      saveDrawings(); deactivateDrawer();
+    });
+
+    var DRAWINGS_KEY = 'osint_user_drawings';
+    function saveDrawings() { try { localStorage.setItem(DRAWINGS_KEY, JSON.stringify(drawingsLayer.toGeoJSON())); } catch(e) {} }
+    function loadDrawings() {
+      try {
+        var raw = localStorage.getItem(DRAWINGS_KEY);
+        if (!raw) return;
+        var geojson = JSON.parse(raw);
+        drawingsLayer.clearLayers();
+        L.geoJSON(geojson, {
+          onEachFeature: function(feature, layer) {
+            var savedColor = /^#[0-9a-f]{6}$/i.test((feature.properties || {})._drawColor || '') ? feature.properties._drawColor : '#60a5fa';
+            if (feature.geometry.type === 'Point') layer.setStyle && layer.setStyle({ color: savedColor, weight: 2 });
+            else if (feature.geometry.type === 'Polygon') layer.setStyle && layer.setStyle({ color: savedColor, weight: 2.5, fill: true, fillColor: savedColor, fillOpacity: 0.22 });
+            else if (feature.geometry.type === 'LineString') {
+              layer.setStyle && layer.setStyle({ color: savedColor, weight: 3 });
+              var ll = layer.getLatLngs();
+              if (ll.length > 0 && Array.isArray(ll[0])) ll = ll[0];
+              var tm = 0;
+              for (var i = 1; i < ll.length; i++) tm += ll[i-1].distanceTo(ll[i]);
+              var t2 = tm >= 1000 ? (tm / 1000).toFixed(2) + ' км' : Math.round(tm) + ' м';
+              layer.bindTooltip(t2, { permanent: true, direction: 'center', className: 'measure-tooltip' }).openTooltip();
+            }
+            drawingsLayer.addLayer(layer);
+          }
+        });
+      } catch(e) {}
+    }
+
+    function renderToolbar() {
+      var toolbar = document.getElementById('toolbar');
+      var tools = [
+        { key: 'marker', svg: TOOLBAR_SVG.marker }, { key: 'line', svg: TOOLBAR_SVG.line },
+        { key: 'arrow', svg: TOOLBAR_SVG.arrow }, { key: 'polygon', svg: TOOLBAR_SVG.polygon },
+        { key: 'rectangle', svg: TOOLBAR_SVG.rectangle }, { key: 'circle', svg: TOOLBAR_SVG.circle },
+        { sep: true }, { key: 'measure', svg: TOOLBAR_SVG.measure },
+        { sep: true }, { key: 'showAll', svg: TOOLBAR_SVG.showAll },
+        { sep: true }, { key: 'eraser', svg: TOOLBAR_SVG.eraser },
+        { key: 'clear', svg: TOOLBAR_SVG.clear, danger: true },
+        { sep: true }, { key: 'settings', svg: TOOLBAR_SVG.settings }
+      ];
+      var html = '';
+      tools.forEach(function(item) {
+        if (item.sep) { html += '<div class="sep"></div>'; return; }
+        var cls = item.danger ? 'danger' : '';
+        var tooltip = t('tool' + item.key.charAt(0).toUpperCase() + item.key.slice(1));
+        html += '<button data-tool="' + item.key + '"' + (cls ? ' class="' + cls + '"' : '') + ' aria-label="' + escapeHtml(tooltip) + '">' + item.svg + '<span class="tooltip">' + escapeHtml(tooltip) + '</span></button>';
+      });
+      toolbar.innerHTML = html;
+      toolbar.classList.toggle('compact',compactToolbar);
+      document.body.classList.toggle('reduce-motion',!motionEnabled);
+      toolbar.querySelectorAll('button[data-tool]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var tool = this.getAttribute('data-tool');
+          if (tool === 'eraser') { toggleEraser(); return; }
+          if (tool === 'settings') { openSettings(); return; }
+          if (tool === 'clear') { if (confirm(t('clearConfirm'))) { drawingsLayer.clearLayers(); lastMeasureLayer = null; localStorage.removeItem(DRAWINGS_KEY); } return; }
+          if (tool === 'showAll') {
+            try {
+              var b = tgLayer.getBounds();
+              if (b && b.isValid()) map.fitBounds(b, { padding: [50, 50] });
+            } catch(e) {}
+            return;
+          }
+          activateTool(tool);
+        });
+      });
+    }
+    renderToolbar();
+    applyTheme(currentTheme);
+    loadDrawings();
+
+    // Настройки
+    var settingsBody = document.getElementById('settingsBody');
+    var settingsPanel = document.getElementById('settingsPanel');
+    var settingsOverlay = document.getElementById('settingsOverlay');
+
+    var settingsCloseButton = document.getElementById('btnCloseSettings');
+    var settingsReturnFocus = null;
+    function openSettings() {
+      settingsReturnFocus = document.activeElement;
+      settingsPanel.classList.add('open');
+      settingsOverlay.classList.add('open');
+      settingsPanel.setAttribute('aria-hidden', 'false');
+      settingsOverlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('settings-open');
+      settingsCloseButton.focus();
+    }
+    function closeSettings() {
+      settingsPanel.classList.remove('open');
+      settingsOverlay.classList.remove('open');
+      settingsPanel.setAttribute('aria-hidden', 'true');
+      settingsOverlay.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('settings-open');
+      if (settingsReturnFocus && typeof settingsReturnFocus.focus === 'function') settingsReturnFocus.focus();
+    }
+    settingsCloseButton.addEventListener('click', closeSettings);
+    settingsOverlay.addEventListener('click', closeSettings);
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && settingsPanel.classList.contains('open')) closeSettings();
+      if (event.key === 'Tab' && settingsPanel.classList.contains('open')) {
+        var focusable = settingsPanel.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+        if (!focusable.length) return;
+        var first = focusable[0], last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+    });
+
+    function renderSettings() {
+      document.getElementById('settingsTitle').textContent = t('settingsTitle');
+      var html = '';
+      html += '<h4>Язык</h4>';
+      html += '<div class="lang-switch">' +
+              '<button class="lang-btn' + (currentLang === 'ru' ? ' active' : '') + '" data-lang="ru">RU</button>' +
+              '<button class="lang-btn' + (currentLang === 'uk' ? ' active' : '') + '" data-lang="uk">UA</button>' +
+              '<button class="lang-btn' + (currentLang === 'en' ? ' active' : '') + '" data-lang="en">EN</button></div>';
+
+      html += '<h4>' + t('controlZones') + '</h4>';
+      html += '<label><input type="checkbox" id="chkZone" checked> ' + t('territoryRF') + '</label>';
+      html += '<label><input type="checkbox" id="chkOwl" checked> ' + t('owlControl') + '</label>';
+      html += '<label><input type="checkbox" id="chkOwlCategoryPoints" checked> ' + t('owlCategoryAreas') + '</label>';
+      html += '<label><input type="checkbox" id="chkOwlPositions"> ' + t('owlPositions') + '</label>';
+      html += '<label><input type="checkbox" id="chkOwlFrontline" checked> ' + t('owlFrontline') + '</label>';
+      html += '<label><input type="checkbox" id="chkUserZones" checked> ' + t('userZones') + '</label>';
+      html += '<label><input type="checkbox" id="chkFirms" checked> 🔥 Пожары (NASA FIRMS)</label>';
+
+      html += '<h4>' + t('telegramEvents') + '</h4>';
+      html += '<label><input type="checkbox" id="chkTg" checked> ' + t('eventsPanelTitle') + '</label>';
+      [
+        { key: 'Air Raid Alert', label: t('raidAlert') },
+        { key: 'Military Strike', label: t('strike') },
+        { key: 'Military Operation', label: t('operation') },
+        { key: 'Military Offensive', label: t('offensive') },
+        { key: 'Security Incident', label: t('incident') },
+        { key: 'Political Development', label: t('politics') }
+      ].forEach(function(item) {
+        html += '<label><input type="checkbox" class="wt-filter" data-type="' + item.key + '"' + (activeEventTypes[item.key] ? ' checked' : '') + '> <span style="color:' + wtColor(item.key) + ';display:inline-flex;align-items:center;width:16px;height:16px;">' + wtSvg(item.key) + '</span> ' + item.label + '</label>';
+      });
+
+      html += '<h4>' + t('appearance') + '</h4>';
+      html += '<div class="mode-toggle" style="margin-bottom:10px;">' +
+              '<button data-theme="light" class="' + (currentTheme === 'light' ? 'active' : '') + '">' + t('themeLight') + '</button>' +
+              '<button data-theme="dark" class="' + (currentTheme === 'dark' ? 'active' : '') + '">' + t('themeDark') + '</button>' +
+              '</div>';
+
+      html += '<h4>Map drawing colours</h4>';
+      html += '<label><input type="checkbox" id="compactToolbarToggle"' + (compactToolbar?' checked':'') + '> Compact toolbar</label>';
+      html += '<label><input type="checkbox" id="motionToggle"' + (motionEnabled?' checked':'') + '> Animations and transitions</label>';
+      html += '<p class="settings-hint">These colours are applied to lines and areas drawn on the map. Toolbar icons stay neutral.</p>';
+      html += '<div class="preset-grid">' +
+        ['midnight','ocean','violet','forest'].map(function(presetName) {
+          var selected = uiPreset === presetName;
+          return '<button type="button" data-preset="' + presetName + '"' +
+            (selected ? ' class="selected" aria-pressed="true"' : ' aria-pressed="false"') +
+            '>' + presetName.charAt(0).toUpperCase() + presetName.slice(1) + '</button>';
+        }).join('') + '</div>';
+      var toolLabels={marker:t('toolMarker'),line:t('toolLine'),arrow:t('toolArrow'),polygon:t('toolPolygon'),rectangle:t('toolRectangle'),circle:t('toolCircle'),measure:t('toolMeasure'),showAll:t('toolShowAll'),eraser:t('toolEraser'),clear:t('toolClear'),settings:t('toolSettings')};
+      html+='<div class="tool-color-grid">';
+      Object.keys(toolLabels).forEach(function(key){var c=/^#[0-9a-f]{6}$/i.test(toolAccentColors[key]||'')?toolAccentColors[key]:'#3b82f6';html+='<label class="tool-color-item"><span>'+escapeHtml(toolLabels[key])+'</span><input type="color" data-tool-color="'+key+'" value="'+c+'"></label>';});
+      html+='</div><button type="button" class="reset-ui-btn" id="resetToolColors">Reset tool colors</button>';
+      html+='<h4>About OSINT Map</h4><div class="about-project"><strong>OSINT Map</strong><p>An interactive map combining publicly available reports and geospatial datasets. Map markers are navigation aids, not independent verification of an event.</p><p>Sources include Telegram, DeepStateMap, Project Owl and NASA FIRMS. Coverage, update frequency and accuracy depend on each source.</p><p>AI-assisted geolocation is an estimate based on source context. Uncertain locations may be incomplete or incorrect; cross-source matches do not guarantee truth.</p><p><a href="https://github.com/freeosintmaper/osint-map" target="_blank" rel="noopener noreferrer">GitHub</a> · <a href="./methodology.html">Methodology</a> · <a href="./corrections.html">Corrections</a></p></div>';
+      html += '<h4>' + t('opacityLabel') + '</h4>';
+      html += '<div class="opacity-row"><input type="range" id="opacitySlider" min="0" max="50" step="1" value="' + Math.round(fillOpacity * 100) + '"><span class="opacity-value" id="opacityValue">' + Math.round(fillOpacity * 100) + '%</span></div>';
+      html += '<div class="mode-toggle"><button data-layer-mode="fill" class="' + (layerMode === 'fill' ? 'active' : '') + '">' + t('modeFill') + '</button><button data-layer-mode="outline" class="' + (layerMode === 'outline' ? 'active' : '') + '">' + t('modeOutline') + '</button></div>';
+
+      settingsBody.innerHTML = html;
+      attachSettingsHandlers();
+    }
+
+    function attachSettingsHandlers() {
+      settingsBody.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          currentLang = this.getAttribute('data-lang'); uiPrefs.language=currentLang; writeUIPrefs();
+          renderSettings(); updateLegend(); renderToolbar(); loadTelegramEvents();
+        });
+      });
+      var chkZone = settingsBody.querySelector('#chkZone');
+      if (chkZone) chkZone.addEventListener('change', function() {
+        if (this.checked) deepStateLayer.addTo(map); else map.removeLayer(deepStateLayer);
+      });
+      var chkOwl = settingsBody.querySelector('#chkOwl');
+      if (chkOwl) chkOwl.addEventListener('change', function() {
+        if (this.checked) owlControlLayer.addTo(map); else map.removeLayer(owlControlLayer);
+      });
+      var chkOwlCategoryPoints = settingsBody.querySelector('#chkOwlCategoryPoints');
+      if (chkOwlCategoryPoints) chkOwlCategoryPoints.addEventListener('change', function() {
+        if (this.checked) owlCategoryPointsLayer.addTo(map); else map.removeLayer(owlCategoryPointsLayer);
+      });
+      var chkOwlPositions = settingsBody.querySelector('#chkOwlPositions');
+      if (chkOwlPositions) chkOwlPositions.addEventListener('change', function() {
+        if (this.checked) owlPositionsLayer.addTo(map); else map.removeLayer(owlPositionsLayer);
+      });
+      var chkOwlFrontline = settingsBody.querySelector('#chkOwlFrontline');
+      if (chkOwlFrontline) chkOwlFrontline.addEventListener('change', function() {
+        if (this.checked) owlFrontlineLayer.addTo(map); else map.removeLayer(owlFrontlineLayer);
+      });
+      var chkUser = settingsBody.querySelector('#chkUserZones');
+      if (chkUser) chkUser.addEventListener('change', function() {
+        if (this.checked) userZonesLayer.addTo(map); else map.removeLayer(userZonesLayer);
+      });
+      var chkFirms = settingsBody.querySelector('#chkFirms');
+      if (chkFirms) chkFirms.addEventListener('change', function() {
+        if (this.checked) map.addLayer(firmsLayer); else map.removeLayer(firmsLayer);
+      });
+      var chkTg = settingsBody.querySelector('#chkTg');
+      if (chkTg) chkTg.addEventListener('change', function() {
+        if (this.checked) map.addLayer(tgLayer); else map.removeLayer(tgLayer);
+      });
+      settingsBody.querySelectorAll('.wt-filter').forEach(function(chk) {
+        chk.addEventListener('change', function() {
+          activeEventTypes[this.getAttribute('data-type')] = this.checked;
+          loadTelegramEvents();
+        });
+      });
+      var ct=settingsBody.querySelector('#compactToolbarToggle');
+      if(ct)ct.addEventListener('change',function(){compactToolbar=this.checked;uiPrefs.compactToolbar=compactToolbar;writeUIPrefs();renderToolbar();});
+      var mt=settingsBody.querySelector('#motionToggle');
+      if(mt)mt.addEventListener('change',function(){motionEnabled=this.checked;uiPrefs.motionEnabled=motionEnabled;writeUIPrefs();document.body.classList.toggle('reduce-motion',!motionEnabled);});
+      var presets={midnight:{marker:'#3b82f6',line:'#06b6d4',arrow:'#8b5cf6',polygon:'#10b981',rectangle:'#f59e0b',circle:'#ec4899',measure:'#64748b',showAll:'#0ea5e9',eraser:'#ef4444',clear:'#dc2626',settings:'#64748b'},ocean:{marker:'#0284c7',line:'#06b6d4',arrow:'#2563eb',polygon:'#0d9488',rectangle:'#0891b2',circle:'#38bdf8',measure:'#475569',showAll:'#0369a1',eraser:'#f97316',clear:'#dc2626',settings:'#0e7490'},violet:{marker:'#7c3aed',line:'#a855f7',arrow:'#6366f1',polygon:'#c026d3',rectangle:'#8b5cf6',circle:'#d946ef',measure:'#64748b',showAll:'#6d28d9',eraser:'#e11d48',clear:'#be123c',settings:'#7e22ce'},forest:{marker:'#16a34a',line:'#0d9488',arrow:'#65a30d',polygon:'#059669',rectangle:'#ca8a04',circle:'#14b8a6',measure:'#64748b',showAll:'#15803d',eraser:'#ea580c',clear:'#dc2626',settings:'#166534'}};
+      settingsBody.querySelectorAll('[data-preset]').forEach(function(b){b.addEventListener('click',function(){uiPreset=this.getAttribute('data-preset');toolAccentColors=presets[uiPreset];uiPrefs.preset=uiPreset;uiPrefs.toolColors=toolAccentColors;writeUIPrefs();renderSettings();renderToolbar();});});
+      settingsBody.querySelectorAll('[data-tool-color]').forEach(function(i){i.addEventListener('input',function(){toolAccentColors[this.getAttribute('data-tool-color')]=this.value;uiPrefs.toolColors=toolAccentColors;uiPrefs.preset='custom';uiPreset='custom';writeUIPrefs();renderToolbar();});});
+      var reset=settingsBody.querySelector('#resetToolColors');
+      if(reset)reset.addEventListener('click',function(){toolAccentColors={};uiPrefs.toolColors={};uiPrefs.preset='midnight';uiPreset='midnight';writeUIPrefs();renderSettings();renderToolbar();});
+      settingsBody.querySelectorAll('[data-theme]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          applyTheme(this.getAttribute('data-theme'));
+          renderSettings();
+        });
+      });
+      var slider = settingsBody.querySelector('#opacitySlider');
+      var sliderValue = settingsBody.querySelector('#opacityValue');
+      if (slider) slider.addEventListener('input', function() {
+        fillOpacity = parseInt(this.value, 10) / 100;
+        sliderValue.textContent = this.value + '%';
+        refreshAllStyles(); saveSettings();
+      });
+      settingsBody.querySelectorAll('[data-layer-mode]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          layerMode = this.getAttribute('data-layer-mode');
+          settingsBody.querySelectorAll('[data-layer-mode]').forEach(function(b) { b.classList.remove('active'); });
+          this.classList.add('active');
+          refreshAllStyles(); saveSettings();
+        });
+      });
+    }
+    renderSettings();
+
+    var legend = L.control({ position: 'bottomright' });
+    legend.onAdd = function() {
+      var div = L.DomUtil.create('div', 'info legend');
+      updateLegendInDiv(div);
+      return div;
+    };
+    legend.addTo(map);
+
+    function updateLegend() { var div = document.querySelector('.info.legend'); if (div) updateLegendInDiv(div); }
+    function updateLegendInDiv(div) {
+      var deepStateDate = /^\d{4}-\d{2}-\d{2}$/.test(String(DEEPSTATE_DATA_DATE || ''))
+        ? String(DEEPSTATE_DATA_DATE)
+        : t('legendDateUnavailable');
+      var owlDateValue = OWL_DATASET_META && OWL_DATASET_META.archive_date
+        ? String(OWL_DATASET_META.archive_date).slice(0, 10)
+        : '';
+      var owlDate = /^\d{4}-\d{2}-\d{2}$/.test(owlDateValue)
+        ? owlDateValue
+        : t('legendDateUnavailable');
+
+      var legendBody = '<div class="legend-body">';
+      legendBody += '<h4>' + t('controlZones') + '</h4>';
+      legendBody += '<div><i style="background:#cc0000;"></i> ' + t('territoryRF') + '</div>';
+      legendBody += '<div><i style="background:' + OWL_COLORS.russian + ';opacity:0.6;"></i> ' + t('owlRussian') + '</div>';
+      legendBody += '<div><i style="background:' + OWL_COLORS.ukrainian + ';opacity:0.6;"></i> ' + t('owlUkrainian') + '</div>';
+      legendBody += '<div><i style="background:' + OWL_COLORS.holding + ';opacity:0.6;"></i> ' + t('owlHolding') + '</div>';
+      legendBody += '<div><i style="background:' + OWL_COLORS.grey + ';opacity:0.6;"></i> ' + t('owlGrey') + '</div>';
+      legendBody += '<div><i style="background:' + OWL_COLORS.unknown + ';opacity:0.6;"></i> ' + t('owlUnknown') + '</div>';
+      legendBody += '<div><span class="legend-line-swatch"></span> ' + t('owlFrontline') + '</div>';
+      legendBody += '<div><span class="legend-position-swatches"><span class="legend-position-swatch legend-position-swatch--russian"></span><span class="legend-position-swatch legend-position-swatch--ukrainian"></span></span> ' + t('owlPositions') + '</div>';
+      legendBody += '<div><span class="legend-site-swatches"><span class="legend-site-swatch legend-site-swatch--russian"><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6M8 10h.01M16 10h.01"/></svg></span><span class="legend-site-swatch legend-site-swatch--ukrainian"><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6M8 10h.01M16 10h.01"/></svg></span></span> ' + t('owlGeolocations') + '</div>';
+      legendBody += '<div class="legend-freshness">' + t('deepStateDataDate') + ': <strong>' + deepStateDate + '</strong></div>';
+      legendBody += '<div class="legend-freshness">' + t('owlArchiveDate') + ': <strong>' + owlDate + '</strong></div>';
+      legendBody += '<div class="legend-caveat">' + t('legendCaveat') + '</div>';
+      legendBody += '<hr><h4>' + t('telegramEvents') + '</h4>';
+      ['Air Raid Alert','Military Strike','Military Operation','Military Offensive','Security Incident','Political Development'].forEach(function(type) {
+        legendBody += '<div><span class="legend-svg" style="color:' + wtColor(type) + ';">' + wtSvg(type) + '</span> ' + t(WT_LABELS[type]) + '</div>';
+      });
+      legendBody += '<hr><div style="font-size:11px;color:var(--text-muted);">Telegram · DeepStateMap · Project Owl · NASA FIRMS</div>';
+      legendBody += '</div>';
+      div.innerHTML = '<button class="legend-toggle" title="?">?</button>' + legendBody;
+      var collapsed = localStorage.getItem('osint_legend_collapsed') === '1';
+      if (collapsed) div.classList.add('collapsed');
+      var toggle = div.querySelector('.legend-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          div.classList.toggle('collapsed');
+          localStorage.setItem('osint_legend_collapsed', div.classList.contains('collapsed') ? '1' : '0');
+        });
+      }
+      L.DomEvent.disableClickPropagation(div);
+      L.DomEvent.disableScrollPropagation(div);
+    }
+
+    loadTelegramEvents();
+
+    // Enable the existing offline cache on GitHub Pages (and other HTTPS hosting).
+    if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+      navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then(function(registration) {
+        console.log('Service Worker registered:', registration.scope);
+      }).catch(function(error) {
+        console.warn('Service Worker registration failed:', error.message);
+      });
+    }
+  
