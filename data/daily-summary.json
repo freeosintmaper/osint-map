@@ -4,12 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 21,
-      "delta": 15,
+      "current_period": 23,
+      "delta": 19,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 6,
+      "previous_period": 4,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
@@ -17,189 +17,166 @@
   "attention_candidates": [
     {
       "country": "RU",
-      "date": "2026-11-26T14:55:47+00:00",
-      "description": "Генштаб ВСУ подтвердил, что в ночь на 26 ноября Украина нанесла удары по аэродрому «Мариновка» в Волгоградской области и линейной производственно-диспетчерской станции «Субханкулово» в Башкортостане\n\n",
+      "date": "2026-11-26T23:55:47+00:00",
+      "description": "Єфремовський завод синтетичного каучуку (Тульська область) наразі під атакою ударників СОУ\n\n\n  \n⚠️ Уражено Єфремовський завод синтетичного каучуку (ЄЗСК), залучений до виробництва твердого ракетного п",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Волгоград",
+      "location": "Тула",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 2,
       "sources": [
         "astrapress",
-        "operativnoZSU",
-        "ukrpravda_news"
+        "exilenova_plus"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-26T22:51:03+00:00",
+      "description": "В Ефремове Тульской области, вероятно, атакован завод синтетического каучука на фоне опасности БПЛА\n\nО взрывах в городе сообщил читатель ASTRA. По его словам, в Ефремове по заводу «прилетел дрон», слы",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Тула",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "exilenova_plus"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-26T13:25:23+00:00",
-      "description": "‼️🇷🇺🇺🇦 В Харькове под удар попали объект энергетики и авиационный институт \n\n▪️ Мэр Харькова Игорь Терехов сообщил о попаданиях по энергетической инфраструктуре города и территории Харьковского авиаци",
-      "event_type": "Military Strike",
+      "date": "2026-11-26T21:17:27+00:00",
+      "description": "российские ублюдки продолжают охоту на мирных жителей Херсонской области. На этот раз атаковали мужчину на мопеде \n\nВ аду точно должен быть отдельный котел для всех этих мразей. \n\nУНИАН в 🕸Google | 👥 ",
+      "event_type": "Military Operation",
       "fact_checked": false,
-      "location": "Харьков",
+      "location": "Херсон",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "RVvoenkor",
-        "dva_majors"
+        "astrapress",
+        "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-26T12:55:43+00:00",
-      "description": "Последствия сегодняшнего прилета по🇺🇦 Харьковскому авиационному институту\n\nХАИ был основан в 1930 году на базе авиационного факультета Харьковского технологического института. С провозглашением в 1991",
-      "event_type": "Military Strike",
+      "date": "2026-11-26T20:45:49+00:00",
+      "description": "Z-канал «От Мариуполя до Карпат» опубликовал видео целенаправленной атаки российского дрона на гражданского в Херсонской области\n\nНа видео российский беспилотник под жизнерадостную музыку ведет наблюд",
+      "event_type": "Military Operation",
       "fact_checked": false,
-      "location": "Харьков",
+      "location": "Херсон",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "RVvoenkor",
-        "dva_majors"
+        "astrapress",
+        "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-26T12:25:23+00:00",
-      "description": "‼️🇩🇪🇷🇺 Германия призвала Европу не отказываться от приглашения Путина на переговоры в Москве — Le Monde\n\n▪️ Министр обороны Германии Борис Писториус заявил, что европейским странам не следует отвергат",
+      "date": "2026-11-26T17:34:14+00:00",
+      "description": "Трамп заявив, що під час зустрічей з Путіним у Китаї просив його зупинити всю військову агресію в Європі.\n\n«Під час моїх зустрічей у Китаї з Путіним я багато часу присвятив тому, щоб висловити своє ба",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Москва",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
+      "source_count": 4,
       "sources": [
         "RVvoenkor",
-        "readovkanews"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-26T12:11:03+00:00",
-      "description": "Сили оборони України в ніч на 26 листопада уразили аеродром «Мариновка» у Волгоградській області та нафтову станцію «Субханкулово» в Башкортостані, за понад 1000 км від України.\nНа аеродромі базуються",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Волгоград",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "operativnoZSU",
+        "bazabazon",
+        "readovkanews",
         "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-26T11:50:01+00:00",
-      "description": "Сили оборони України в ніч на 26 листопада ракетами комплексу «Нептун» уразили російський військовий аеродром «Мариновка» у Волгоградській області — Генштаб. \n\n«Там базуються винищувачі-бомбардувальни",
-      "event_type": "Military Strike",
+      "date": "2026-11-26T16:45:31+00:00",
+      "description": "‼️🇺🇸🇷🇺 Трамп призвал Путина прекратить боевые действия на Украине и выразил надежду на скорое мирное соглашение\n\n▪️ Президент США Дональд Трамп сообщил, что во время личных переговоров с Владимиром Пу",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Волгоград",
+      "location": "Москва",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 5,
       "sources": [
-        "astrapress",
-        "operativnoZSU",
+        "RVvoenkor",
+        "bazabazon",
+        "epoddubny",
+        "readovkanews",
         "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-26T10:17:32+00:00",
-      "description": "Спецслужбы России и Украины работают над списками для обмена пленными, работа может быть скоро завершена, заявил сегодня пресс-секретарь президента Дмитрий Песков.\n\nНакануне масштабный обмен пленными ",
+      "date": "2026-11-26T15:47:41+00:00",
+      "description": "Россия будет стремиться массово внедрять ИИ во всех сферах экономики и жизни людей, заявил Путин на конференции «Сбера» AI Journey 2026. \n\nГлавные тезисы из выступления президента:\n\n— Само по себе обл",
       "event_type": "Political Development",
       "fact_checked": false,
       "location": "Москва",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "epoddubny",
-        "readovkanews"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-26T06:13:45+00:00",
-      "description": "❗️Программа «Итоги года с Владимиром Путиным» пройдёт 10 декабря\n\nОб этом сообщили в пресс-службе Кремля. Президент России в прямом эфире подведёт итоги уходящего 2026 года — прямой эфир запланирован ",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "epoddubny",
-        "readovkanews"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-26T05:16:04+00:00",
-      "description": "Сотрудничество России и США может изменить ход истории — Кушнер\n\nВладимир Путин — гроссмейстер политики, заявил спецпосланник президента США Джаред Кушнер. По его словам, президент России заинтересова",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 5,
       "sources": [
         "RVvoenkor",
+        "bazabazon",
         "epoddubny",
-        "readovkanews"
+        "readovkanews",
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     }
   ],
   "corroborated_event_count": 9,
   "country_counts": {
-    "RU": 11,
-    "UA": 14
+    "RU": 13,
+    "UA": 20,
+    "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 25,
+  "event_count": 34,
   "event_type_counts": {
-    "Military Strike": 21,
-    "Political Development": 4
+    "Air Raid Alert": 1,
+    "Military Operation": 3,
+    "Military Strike": 23,
+    "Political Development": 7
   },
   "evidence_breakdown": {
     "cross_source_consistent_count": 9,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 16,
+    "not_independently_corroborated_count": 25,
     "rss_reports_not_independently_corroborated_count": 4
   },
-  "generated_at": "2026-11-26T15:25:21Z",
+  "generated_at": "2026-11-26T23:58:51Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 21,
-  "not_verified_event_count": 16,
+  "new_since_previous_snapshot": 24,
+  "not_verified_event_count": 25,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 21,
-      "delta": 15,
+      "current_period": 23,
+      "delta": 19,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 6,
+      "previous_period": 4,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
     "rss": 4,
-    "telegram": 21
+    "telegram": 30
   },
   "top_locations": [
     {
-      "country": "UA",
+      "country": "RU",
       "events": 6,
-      "location": "Киев"
+      "location": "Москва"
     },
     {
       "country": "UA",
@@ -207,50 +184,50 @@
       "location": "Харьков"
     },
     {
-      "country": "RU",
-      "events": 4,
-      "location": "Москва"
-    },
-    {
-      "country": "RU",
+      "country": "UA",
       "events": 3,
-      "location": "Волгоград"
+      "location": "Кривой Рог"
     },
     {
       "country": "UA",
-      "events": 2,
+      "events": 3,
       "location": "Запорожье"
     },
     {
       "country": "UA",
-      "events": 1,
-      "location": "Черноморск"
+      "events": 3,
+      "location": "Херсон"
+    },
+    {
+      "country": "UA",
+      "events": 3,
+      "location": "Киев"
     },
     {
       "country": "RU",
-      "events": 1,
-      "location": "Бєлгород"
+      "events": 2,
+      "location": "Тула"
     },
     {
       "country": "RU",
-      "events": 1,
-      "location": "Volgograd"
+      "events": 2,
+      "location": "Белгород"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 2,
-    "astrapress": 2,
-    "dva_majors": 1,
-    "exilenova_plus": 1,
-    "kyivindependent_official": 4,
-    "odesa_typical": 1,
+    "RVvoenkor": 3,
+    "astrapress": 6,
+    "boris_rozhin": 3,
+    "exilenova_plus": 5,
+    "kyivindependent_official": 3,
+    "lost_armour": 3,
     "operativnoZSU": 2,
     "readovkanews": 2,
-    "ukrpravda_news": 1,
+    "ukrpravda_news": 2,
     "uniannet": 2,
-    "УНІАН": 1,
-    "Українська правда": 3
+    "Суспільне Новини": 1,
+    "Українська правда": 2
   },
-  "window_end": "2026-11-26T15:25:21Z",
-  "window_start": "2026-11-25T15:25:21Z"
+  "window_end": "2026-11-26T23:58:51Z",
+  "window_start": "2026-11-25T23:58:51Z"
 }
