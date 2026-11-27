@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 43,
-      "delta": 41,
+      "current_period": 46,
+      "delta": 44,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -16,151 +16,191 @@
   ],
   "attention_candidates": [
     {
-      "country": "RU",
-      "date": "2026-11-26T23:55:47+00:00",
-      "description": "Єфремовський завод синтетичного каучуку (Тульська область) наразі під атакою ударників СОУ\n\n\n  \n⚠️ Уражено Єфремовський завод синтетичного каучуку (ЄЗСК), залучений до виробництва твердого ракетного п",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Тула",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "exilenova_plus"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-26T22:51:03+00:00",
-      "description": "В Ефремове Тульской области, вероятно, атакован завод синтетического каучука на фоне опасности БПЛА\n\nО взрывах в городе сообщил читатель ASTRA. По его словам, в Ефремове по заводу «прилетел дрон», слы",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Тула",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "exilenova_plus"
-      ],
-      "status": "requires_human_review"
-    },
-    {
       "country": "UA",
-      "date": "2026-11-26T21:17:27+00:00",
-      "description": "российские ублюдки продолжают охоту на мирных жителей Херсонской области. На этот раз атаковали мужчину на мопеде \n\nВ аду точно должен быть отдельный котел для всех этих мразей. \n\nУНИАН в 🕸Google | 👥 ",
-      "event_type": "Military Operation",
+      "date": "2026-11-27T07:00:00+00:00",
+      "description": "​​💔️️ Олександрові Гриньку було 63 роки. Він народився 22 серпня 1962-го в селищі Білий Колодязь Чугуївського району Харківської області. Після школи здобув середню спеціальну освіту за фахом токаря. ",
+      "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Херсон",
+      "location": "Харков",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
+        "operativnoZSU",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-27T06:35:03+00:00",
+      "description": "В течение прошедшей ночи дежурными силами ПВО перехвачены и уничтожены 318 украинских беспилотных летательных аппаратов самолетного типа над территориями Брянской, Белгородской, Калужской, Курской, Ле",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Санкт-Петербург",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "boris_rozhin",
+        "operativnoZSU"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-27T06:32:01+00:00",
+      "description": "💥 Вночі в місті Єфремов у Тульській області Росії безпілотники уразили Єфремівський завод синтетичного каучуку, продукція якого використовується у виробництві твердого ракетного палива для тактичних і",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Тула",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
         "astrapress",
+        "ukrpravda_news",
         "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-26T20:45:49+00:00",
-      "description": "Z-канал «От Мариуполя до Карпат» опубликовал видео целенаправленной атаки российского дрона на гражданского в Херсонской области\n\nНа видео российский беспилотник под жизнерадостную музыку ведет наблюд",
-      "event_type": "Military Operation",
+      "date": "2026-11-27T06:12:01+00:00",
+      "description": "Люди могут уезжать, но Киев мы будем защищать любыми способами. Без столицы не будет страны, — Зеленский о российских ударах\n\nВ интервью BBC президент признал, что Украину ждет чрезвычайно сложная зим",
+      "event_type": "Political Development",
       "fact_checked": false,
-      "location": "Херсон",
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-27T05:52:24+00:00",
+      "description": "❗️Ворог завдав удару по АЗС у Шевченківському районі Харкова, — Терехов\n\nUpd: ще один удар по Київському району.\nUpd2: внаслідок удару по АЗС постраждали три людини.\n\n🫡https://t.me/operativnoZSU/",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Харков",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "operativnoZSU",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-27T05:18:32+00:00",
+      "description": "Три человека пострадали в Новороссийске Краснодарского края в результате атаки БПЛА, — оперштаб\n\n«В Новороссийске из-за атаки БПЛА пострадали три человека. Им оказали всю необходимую медицинскую помощ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Новороссийск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
         "astrapress",
+        "dva_majors"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-27T05:04:43+00:00",
+      "description": "💥Також протягом ночі дронами було атаковано Санкт-Петербург - відомо про влучання в неназвані обʼєкти \n\nГубернатор Ленінградщини заявляє про нібито збиття 45 БПЛА над областю.\n\nUpd: вже 96 БПЛА нібито",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Санкт-Петербург",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "boris_rozhin",
+        "operativnoZSU"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-27T04:44:19+00:00",
+      "description": "В Новороссийске из-за атаки БПЛА пострадали три человека,  - оперштаб\n\nИм оказали всю необходимую медицинскую помощь без госпитализации.\n\nИз-за падения обломков БПЛА в многоквартирном доме выбиты окна",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Новороссийск",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "dva_majors"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-27T01:34:06+00:00",
+      "description": "Зафиксирован взрыв на Ефремовском заводе синтетического каучука, критически важном поставщике ВПК РФ, — OSINT-анализ ASTRA  Город Ефремов Тульской области атакуют дроны. Читатели ASTRA сообщают, что б",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Тула",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "ukrpravda_news",
         "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "RU",
-      "date": "2026-11-26T17:34:14+00:00",
-      "description": "Трамп заявив, що під час зустрічей з Путіним у Китаї просив його зупинити всю військову агресію в Європі.\n\n«Під час моїх зустрічей у Китаї з Путіним я багато часу присвятив тому, щоб висловити своє ба",
-      "event_type": "Political Development",
+      "date": "2026-11-27T00:01:01+00:00",
+      "description": "🔥 Дроны атаковали завод, связанный с производством топлива для «Искандеров» в Тульской области, – osint-каналы\n\nПо данным Генштаба ВСУ, Ефремовский завод синтетического каучука производит материалы, и",
+      "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Москва",
+      "location": "Тула",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 4,
+      "source_count": 3,
       "sources": [
-        "RVvoenkor",
-        "bazabazon",
-        "readovkanews",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-26T16:45:31+00:00",
-      "description": "‼️🇺🇸🇷🇺 Трамп призвал Путина прекратить боевые действия на Украине и выразил надежду на скорое мирное соглашение\n\n▪️ Президент США Дональд Трамп сообщил, что во время личных переговоров с Владимиром Пу",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 5,
-      "sources": [
-        "RVvoenkor",
-        "bazabazon",
-        "epoddubny",
-        "readovkanews",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-26T15:47:41+00:00",
-      "description": "Россия будет стремиться массово внедрять ИИ во всех сферах экономики и жизни людей, заявил Путин на конференции «Сбера» AI Journey 2026. \n\nГлавные тезисы из выступления президента:\n\n— Само по себе обл",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Москва",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 5,
-      "sources": [
-        "RVvoenkor",
-        "bazabazon",
-        "epoddubny",
-        "readovkanews",
-        "ukrpravda_news"
+        "astrapress",
+        "ukrpravda_news",
+        "uniannet"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 9,
+  "corroborated_event_count": 13,
   "country_counts": {
-    "RU": 14,
-    "UA": 40,
+    "RU": 18,
+    "UA": 37,
     "US": 1
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 55,
+  "event_count": 56,
   "event_type_counts": {
-    "Air Raid Alert": 1,
+    "Air Raid Alert": 2,
     "Military Offensive": 1,
-    "Military Operation": 3,
-    "Military Strike": 43,
-    "Political Development": 7
+    "Military Operation": 2,
+    "Military Strike": 46,
+    "Political Development": 5
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 9,
+    "cross_source_consistent_count": 13,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 46,
-    "rss_reports_not_independently_corroborated_count": 24
+    "not_independently_corroborated_count": 43,
+    "rss_reports_not_independently_corroborated_count": 23
   },
-  "generated_at": "2026-11-26T23:58:51Z",
+  "generated_at": "2026-11-27T07:05:30Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 24,
-  "not_verified_event_count": 46,
+  "new_since_previous_snapshot": 21,
+  "not_verified_event_count": 43,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 43,
-      "delta": 41,
+      "current_period": 46,
+      "delta": 44,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -170,29 +210,19 @@
     }
   ],
   "source_type_counts": {
-    "rss": 24,
-    "telegram": 31
+    "rss": 23,
+    "telegram": 33
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 12,
+      "events": 11,
       "location": "Киев"
     },
     {
       "country": "RU",
       "events": 6,
-      "location": "Москва"
-    },
-    {
-      "country": "UA",
-      "events": 5,
-      "location": "Харьков"
-    },
-    {
-      "country": "UA",
-      "events": 5,
-      "location": "Запорожье"
+      "location": "Санкт-Петербург"
     },
     {
       "country": "UA",
@@ -201,34 +231,44 @@
     },
     {
       "country": "UA",
+      "events": 4,
+      "location": "Харьков"
+    },
+    {
+      "country": "RU",
       "events": 3,
-      "location": "Кривой Рог"
+      "location": "Тула"
     },
     {
       "country": "UA",
       "events": 3,
-      "location": "Херсон"
+      "location": "Днепр"
+    },
+    {
+      "country": "UA",
+      "events": 3,
+      "location": "Кривой Рог"
     },
     {
       "country": "RU",
-      "events": 2,
-      "location": "Тула"
+      "events": 3,
+      "location": "Москва"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 3,
-    "astrapress": 6,
-    "boris_rozhin": 3,
-    "exilenova_plus": 5,
-    "kyivindependent_official": 3,
+    "RVvoenkor": 5,
+    "astrapress": 7,
+    "boris_rozhin": 4,
+    "dva_majors": 1,
     "lost_armour": 3,
-    "operativnoZSU": 2,
-    "ukrpravda_news": 2,
-    "uniannet": 2,
+    "operativnoZSU": 3,
+    "supernova_plus": 4,
+    "ukrpravda_news": 3,
+    "uniannet": 3,
     "Суспільне Новини": 12,
     "УНІАН": 5,
-    "Українська правда": 5
+    "Українська правда": 4
   },
-  "window_end": "2026-11-26T23:58:51Z",
-  "window_start": "2026-11-19T23:58:51Z"
+  "window_end": "2026-11-27T07:05:30Z",
+  "window_start": "2026-11-20T07:05:30Z"
 }
