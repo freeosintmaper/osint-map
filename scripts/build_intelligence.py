@@ -447,6 +447,9 @@ def main() -> int:
 
     try:
         current_payload = parse_events_js(EVENTS_JS)
+        unlocated_summary = current_payload.get("unlocated_summary")
+        if not isinstance(unlocated_summary, dict):
+            unlocated_summary = {"total": 0, "by_day": []}
         current_telegram_events = [
             event for event in current_payload["events"]
             if isinstance(event, dict) and str(event.get("source_type") or "telegram") != "rss"
@@ -535,6 +538,7 @@ def main() -> int:
             },
             "daily_summary_url": "./data/daily-summary.json",
             "weekly_summary_url": "./data/weekly-summary.json",
+            "unlocated_summary": unlocated_summary,
             "events": combined
         }
         output = "window.TG_DATA = " + json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + ";\n"

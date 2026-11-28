@@ -2077,6 +2077,7 @@ def main():
     duplicates = 0
     stats = {}
     no_match = 0
+    unlocated_by_day = Counter()
     skipped_summary = 0
     skipped_ad = 0
     skipped_historical = 0
@@ -2211,12 +2212,15 @@ def main():
                     region_center = _region_center_from_text(primary_context, channel_country)
                     if region_center:
                         locations = [(*region_center, "settlement_center")]
-                if not locations:
-                    no_match += 1
-                    continue
-
             if not locations:
                 no_match += 1
+                if event_type:
+                    published_day = str(post.get("date") or "")[:10]
+                    try:
+                        datetime.strptime(published_day, "%Y-%m-%d")
+                    except ValueError:
+                        published_day = "undated"
+                    unlocated_by_day[published_day] += 1
                 continue
 
             matched += 1
@@ -2277,6 +2281,18 @@ def main():
         "generated_at": generated_at,
         "pipeline": "telegram",
         "source_types": {"telegram": len(raw_events)},
+        "unlocated_summary": {
+            "total": sum(unlocated_by_day.values()),
+            "by_day": [
+                {"date": day, "count": count}
+                for day, count in sorted(
+                    unlocated_by_day.items(),
+                    key=lambda item: item[0] if item[0] != "undated" else "",
+                    reverse=True
+                )
+            ],
+            "note": "Aggregate counts only; no post text, source links, media, or coordinates are retained."
+        },
         "events": raw_events
     }
     output = "window.TG_DATA = " + json.dumps(payload, ensure_ascii=False) + ";"
@@ -2330,6 +2346,7 @@ def main():
     print(f"   Постов с несколькими локациями: {multi_location_posts}")
     print(f"   Отброшено дубликатов: {duplicates}")
     print(f"   Постов без совпадений по н.п.: {no_match}")
+    print(f"   Потенциальных сообщений без безопасной привязки (только сводка): {sum(unlocated_by_day.values())}")
     llm_stats = clf.stats()
     print(f"   🤖 LLM: кэш={llm_stats['cache_size']}, "
           f"новых={llm_stats['new_calls']}, ошибок={llm_stats['errors']}")
