@@ -2196,6 +2196,15 @@ def main():
                         GEOCODE_AUDIT["regex_fallback_after_unresolved_llm_location"] += 1
                 if not event_type and not locations:
                     no_match += 1
+                    # The LLM explicitly marked this as an event, but returned
+                    # neither a usable category nor a safe location. Keep only
+                    # an aggregate date counter; never retain the post or map it.
+                    published_day = str(post.get("date") or "")[:10]
+                    try:
+                        datetime.strptime(published_day, "%Y-%m-%d")
+                    except ValueError:
+                        published_day = "undated"
+                    unlocated_by_day[published_day] += 1
                     continue
                 if not event_type:
                     event_type = classify_event(text) or "Military Operation"
