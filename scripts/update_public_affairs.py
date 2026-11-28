@@ -11,6 +11,7 @@ import email.utils
 import hashlib
 import html
 import json
+import os
 import re
 import sys
 import tempfile
@@ -355,7 +356,7 @@ def write_payload(payload: dict[str, Any], output_path: Path = OUTPUT_PATH) -> N
         prefix=f".{output_path.name}.", suffix=".tmp", dir=str(output_path.parent)
     )
     try:
-        with open(fd, "w", encoding="utf-8", closefd=True) as output:
+        with os.fdopen(fd, "w", encoding="utf-8") as output:
             json.dump(payload, output, ensure_ascii=False, indent=2, sort_keys=True)
             output.write("\n")
             output.flush()
