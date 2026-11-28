@@ -745,3 +745,82 @@ body.dark {
 #mobileToggle button {
   border: 0 !important;
 }
+
+
+/* Soft glass edges: keep surfaces visually separated without a hard frame. */
+:root {
+  --ui-line: color-mix(in srgb, var(--text-main) 7%, transparent);
+}
+body.dark {
+  --ui-line: rgba(235, 243, 255, .075);
+}
+
+/* Outer glass surfaces get a quiet 1px hairline rather than a fully absent edge. */
+#mapBrand,
+#userBtn,
+#eventsPanel,
+#toolbar,
+.info.legend,
+#settingsPanel,
+#zoneEditorPanel,
+#loginModal,
+#zoneAIModal,
+#zoneEditBar,
+#owlLoader,
+#mobileToggle button,
+.leaflet-control-zoom,
+.leaflet-control-layers,
+.leaflet-control-attribution,
+.leaflet-tooltip,
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  border: 1px solid var(--ui-line) !important;
+  outline: 0;
+}
+
+/* Subtle card edges help distinguish separate event rows without drawing boxes. */
+#eventsPanel .event-item,
+#eventsPanel .event-item:hover,
+#eventsPanel .event-item.cross-side {
+  border: 1px solid color-mix(in srgb, var(--text-main) 5%, transparent) !important;
+}
+body.dark #eventsPanel .event-item,
+body.dark #eventsPanel .event-item:hover,
+body.dark #eventsPanel .event-item.cross-side {
+  border-color: rgba(235, 243, 255, .045) !important;
+}
+#eventsPanel .event-item:hover {
+  border-color: color-mix(in srgb, var(--text-main) 10%, transparent) !important;
+}
+body.dark #eventsPanel .event-item:hover {
+  border-color: rgba(235, 243, 255, .085) !important;
+}
+
+/* Quiet inner surfaces and separators: definition without strong contrast. */
+#eventsPanel .unlocated-summary,
+#eventsPanel .summary-box,
+.leaflet-popup.telegram-event-popup .source-meta,
+.leaflet-popup.telegram-event-popup .cross-side-signal {
+  border: 1px solid color-mix(in srgb, var(--text-main) 5%, transparent) !important;
+}
+body.dark #eventsPanel .unlocated-summary,
+body.dark #eventsPanel .summary-box,
+body.dark .leaflet-popup.telegram-event-popup .source-meta,
+body.dark .leaflet-popup.telegram-event-popup .cross-side-signal {
+  border-color: rgba(235, 243, 255, .045) !important;
+}
+
+#eventsPanel .panel-header,
+#eventsPanel .event-tools,
+#eventsPanel .summary-box,
+#zoneEditorPanel h4,
+#settingsPanel .settings-header {
+  border-color: color-mix(in srgb, var(--text-main) 5%, transparent) !important;
+}
+body.dark #eventsPanel .panel-header,
+body.dark #eventsPanel .event-tools,
+body.dark #eventsPanel .summary-box,
+body.dark #zoneEditorPanel h4,
+body.dark #settingsPanel .settings-header {
+  border-color: rgba(235, 243, 255, .045) !important;
+}
