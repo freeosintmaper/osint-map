@@ -1551,12 +1551,12 @@ def _country_hint_from_text(text):
         return None
 
     mentions_ua = bool(re.search(
-        r"\\b(?:в|на)\\s+украин[а-я]*\\b|\\bна территории украины\\b|\\bтерритории украины\\b",
+        r"\b(?:в|на)\s+украин[а-я]*\b|\bна территории украины\b|\bтерритории украины\b",
         primary,
         flags=re.UNICODE,
     ))
     mentions_ru = bool(re.search(
-        r"\\b(?:в|на)\\s+росси[а-я]*\\b|\\bна территории рф\\b|\\bв рф\\b|\\bтерритории россии\\b",
+        r"\b(?:в|на)\s+росси[а-я]*\b|\bна территории рф\b|\bв рф\b|\bтерритории россии\b",
         primary,
         flags=re.UNICODE,
     ))
