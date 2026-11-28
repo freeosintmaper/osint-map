@@ -826,8 +826,10 @@ STOP_SETTLEMENTS = {
 
 SETTLEMENTS_BY_NAME = {}
 MAX_LOCATIONS_PER_POST = 3
-MIN_POP_UA = 10000
-MIN_POP_RU = 50000
+# These are retained only to report how many small-place records the old
+# thresholds would have removed. Population is no longer a matching gate:
+# build_settlements.py already filters non-place features and obvious short names.
+FORMER_MIN_POP_THRESHOLDS = {"UA": 10000, "RU": 50000}
 
 
 def is_foreign_conflict(text):
@@ -893,13 +895,15 @@ def load_settlements():
     if not os.path.exists(path):
         print("  ⚠️ data/settlements.js не найден", file=sys.stderr)
         return
-    print("Загружаю базу населённых пунктов (фильтр по населению)...")
+    print("Загружаю базу населённых пунктов (без жёсткого фильтра по населению)...")
     with open(path, 'r', encoding='utf-8') as f:
         content = f.read()
     json_str = content.replace('window.SETTLEMENTS = ', '').rstrip(';').rstrip()
     data = json.loads(json_str)
     skipped_name = 0
-    skipped_pop = 0
+    low_population_records = Counter()
+    records_by_country = Counter()
+    SETTLEMENTS_BY_NAME = {}
     for s in data:
         name_low = s['name'].lower()
         if name_low in STOP_SETTLEMENTS or name_low in ABBREVIATIONS:
@@ -910,20 +914,21 @@ def load_settlements():
             continue
         population = s.get('population', 0)
         country = s.get('country', '')
-        if country == 'UA' and population < MIN_POP_UA:
-            skipped_pop += 1
-            continue
-        if country == 'RU' and population < MIN_POP_RU:
-            skipped_pop += 1
-            continue
-        if country not in ('UA', 'RU') and population < 50000:
-            skipped_pop += 1
-            continue
+        records_by_country[country or 'unknown'] += 1
+        former_threshold = FORMER_MIN_POP_THRESHOLDS.get(country)
+        if former_threshold is not None and population < former_threshold:
+            low_population_records[country] += 1
         SETTLEMENTS_BY_NAME.setdefault(name_low, []).append(
-            (s['lat'], s['lng'], s['country'], s['name'], population)
+            (s['lat'], s['lng'], country, s['name'], population)
         )
     print(f"  Загружено {len(data)} записей, пропущено по имени: {skipped_name}, "
-          f"по населению: {skipped_pop}, осталось: {len(SETTLEMENTS_BY_NAME)}")
+          f"по населению: 0 (фильтр отключён), уникальных названий: {len(SETTLEMENTS_BY_NAME)}")
+    if low_population_records:
+        print("  📍 Включено записей НП ниже прежних порогов: " +
+              ", ".join(f"{country}: {count}" for country, count in sorted(low_population_records.items())))
+    if records_by_country:
+        print("  🌍 Индекс записей по странам: " +
+              ", ".join(f"{country}: {count}" for country, count in sorted(records_by_country.items())))
 
 
 def fetch_channel(channel):
@@ -1107,6 +1112,8 @@ def _find_city_matches(text, channel_country):
     words = re.findall(r'[а-яёa-zа-їієґ0-9\-]+', tl)
     if not words:
         return []
+    text_country = _country_hint_from_text(text)
+    preferred_country = text_country or (channel_country if channel_country in ("UA", "RU") else None)
     candidates = []
     N = len(words)
     for size in (3, 2, 1):
@@ -1123,13 +1130,27 @@ def _find_city_matches(text, channel_country):
             if is_military_term_context(text, phrase):
                 continue
             coords_list = SETTLEMENTS_BY_NAME[phrase]
-            own = [c for c in coords_list if c[2] == channel_country]
+            candidate_countries = {candidate[2] for candidate in coords_list if candidate[2] in ("UA", "RU")}
+
+            # An explicitly named region in the post outranks the channel's
+            # presumed side. If that conflicts with the candidate country, do
+            # not put the event in a different country.
+            if text_country and text_country not in candidate_countries:
+                continue
+
+            own = [candidate for candidate in coords_list if preferred_country and candidate[2] == preferred_country]
             if own:
-                best = max(own, key=lambda x: x[4])
+                coords_list = own
                 is_own_country = True
             else:
-                best = max(coords_list, key=lambda x: x[4])
+                # OSINT channels have no fixed country. For them, a duplicate
+                # town name is unsafe unless the post itself identifies the
+                # country or region.
+                if len(candidate_countries) > 1:
+                    continue
                 is_own_country = False
+
+            best = max(coords_list, key=lambda x: x[4])
             lat, lng, country, orig, population = best
             if is_own_country:
                 if has_source_verb_near(text, phrase, window=60):
@@ -1166,8 +1187,10 @@ def _find_city_matches(text, channel_country):
 
 def find_all_locations(text, channel_country):
     alias_matches, had_alias = _find_alias_matches(text, channel_country)
+    # A rejected transliteration alias must not stop the independent full
+    # settlement-database search: another valid town may be present in the post.
     if had_alias and not alias_matches:
-        return []
+        GEOCODE_AUDIT["alias_rejected_city_search_continued"] += 1
     locations = list(alias_matches)
     seen_names = set(m[2] for m in locations)
     city_matches = _find_city_matches(text, channel_country)
@@ -1514,6 +1537,35 @@ def _region_center_from_text(text, country_hint=None):
                 return center
     return None
 
+def _country_hint_from_text(text):
+    """Infer a country only from explicit event-region/country wording."""
+    primary = _normalize_context_text(_primary_event_context(text))
+    region_countries = {
+        country
+        for pattern, _center_name, country in _REGION_CENTER_HINTS
+        if re.search(pattern, primary, flags=re.UNICODE)
+    }
+    if len(region_countries) == 1:
+        return next(iter(region_countries))
+    if len(region_countries) > 1:
+        return None
+
+    mentions_ua = bool(re.search(
+        r"\\b(?:в|на)\\s+украин[а-я]*\\b|\\bна территории украины\\b|\\bтерритории украины\\b",
+        primary,
+        flags=re.UNICODE,
+    ))
+    mentions_ru = bool(re.search(
+        r"\\b(?:в|на)\\s+росси[а-я]*\\b|\\bна территории рф\\b|\\bв рф\\b|\\bтерритории россии\\b",
+        primary,
+        flags=re.UNICODE,
+    ))
+    if mentions_ua != mentions_ru:
+        return "UA" if mentions_ua else "RU"
+    return None
+
+
+
 def _event_datetime(value):
     try:
         normalized = str(value or "").replace("Z", "+00:00")
@@ -1802,22 +1854,7 @@ def _apply_verification_status(events):
 def _geocode_llm_locations(llm_locations, channel_country, text=""):
     result = []
     seen = set()
-    tl = text.lower()
-    text_country = None
-    if any(m in tl for m in ("днепропетровск", "дніпропетровськ", "харьковской", "харківськ",
-                              "украин", "україн", "всу", "зсу", "киевской", "київськ",
-                              "одесской", "одеськ", "николаевской", "миколаївськ",
-                              "донецкой", "донецьк", "луганской", "луганськ",
-                              "запорожской", "запорізьк", "херсонской", "херсонськ",
-                              "черниговской", "чернігівськ", "сумской", "сумськ",
-                              "полтавской", "полтавськ", "житомирской", "житомирськ",
-                              "винницкой", "вінницьк", "вольнской", "волинськ")):
-        text_country = "UA"
-    elif any(m in tl for m in ("тульской", "тульськ", "брянской", "брянськ",
-                                "белгородской", "белгородськ", "курской", "курськ",
-                                "воронежской", "воронезьк", "ростовской", "ростовськ",
-                                "россии", "росії", "вс рф", "московской", "московськ")):
-        text_country = "RU"
+    text_country = _country_hint_from_text(text)
 
     for loc in llm_locations:
         name = (loc.get("name") or "").strip()
