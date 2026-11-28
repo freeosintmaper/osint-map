@@ -1,0 +1,524 @@
+{
+  "current_event_count": 36,
+  "date_utc": "2026-11-28",
+  "events_added": [
+    {
+      "event": {
+        "channel": "astrapress,uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-28T00:01:01+00:00",
+        "description": "🔥 Дроны снова атаковали Новошахтинский НПЗ в Ростовской области, – osint-каналы\n\nСудя по видео очевидцев, в районе предприятия уже вспыхнул пожар. При этом завод последний раз атаковали еще в этот пон",
+        "event_type": "Military Strike",
+        "id": 8,
+        "lat": 47.76037,
+        "lng": 39.93335,
+        "location": "Новошахтинск",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-28T00:01:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/208310"
+          },
+          {
+            "channel": "astrapress",
+            "date": "2026-11-28T00:22:31+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132414"
+          }
+        ],
+        "url": "https://t.me/uniannet/208310",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "astrapress",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "27930687124c6bd9934a4375e6706bb144eb5e2eceed7dec0cb7bed46f5edd5c"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-27T23:35:27+00:00",
+        "description": "Москва под атакой БПЛА, в аэропортах введены ограничения, — власти\n\nС 23:10 мэр российской столицы Сергей Собянин сообщил об уничтожении уже 48 БПЛА. Ограничения введены в аэропортах Внуково и Домодед",
+        "event_type": "Military Strike",
+        "id": 15,
+        "lat": 55.7558,
+        "lng": 37.6173,
+        "location": "Москва",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-27T23:35:27+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132412"
+          }
+        ],
+        "url": "https://t.me/astrapress/132412",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "c77c1ffde203508f41ec3c1febc8f4381ef3ecf2787efc42acb73864af7e362b"
+    },
+    {
+      "event": {
+        "channel": "kyivindependent_official",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-27T23:33:59+00:00",
+        "description": "⚡️Russian drone attack on Kremenchuk injures 4, including 3 children. \n\nIn Kremenchuk, a Russian drone attack damaged two educational institutions in the city center, Poltava Oblast Governor Vitalii D",
+        "event_type": "Military Strike",
+        "id": 12,
+        "lat": 49.06253,
+        "lng": 33.40484,
+        "location": "Kremenchuk",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "kyivindependent_official",
+            "date": "2026-11-27T23:33:59+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/KyivIndependent_official/57249"
+          }
+        ],
+        "url": "https://t.me/KyivIndependent_official/57249",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "ebdbc40520ac791d12761a7e6c6bb7d5c8e1b67711010a03077c28802bb42e1e"
+    },
+    {
+      "event": {
+        "channel": "rss_kyivindependent",
+        "confidence": "LOW",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-27T22:13:00Z",
+        "description": "Russian drone attack on Kremenchuk injures 4, including 3 children",
+        "event_type": "Military Strike",
+        "id": "rss-bdceff4a01eed19017-f0f4bb",
+        "lat": 49.06253,
+        "lng": 33.40484,
+        "location": "Kremenchuk",
+        "source_count": 1,
+        "source_type": "rss",
+        "sources": [
+          {
+            "channel": "rss_kyivindependent",
+            "date": "2026-11-27T22:13:00Z",
+            "publisher": "The Kyiv Independent",
+            "source_type": "rss",
+            "url": "https://kyivindependent.com/russian-drone-attack-on-kremenchuk-injures-4-including-3-children/"
+          }
+        ],
+        "url": "https://kyivindependent.com/russian-drone-attack-on-kremenchuk-injures-4-including-3-children/",
+        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "e26570482f877988227975f7baa3ef5336ba5dfae7261458d8637b941e082679"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-27T22:03:39+00:00",
+        "description": "За 27 ноября в Харькове и Харьковской области от российских атак пострадали 13 человек, — прокуратура\n\nХарьковская областная прокуратура сообщила, что начала досудебные расследования по шести фактам с",
+        "event_type": "Military Strike",
+        "id": 14,
+        "lat": 49.9935,
+        "lng": 36.2304,
+        "location": "Харьков",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-27T22:03:39+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132408"
+          }
+        ],
+        "url": "https://t.me/astrapress/132408",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "b03589be38b0559458a255c9ccd6c790ad08c39966e159bc29092e82da73d841"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-27T21:51:34+00:00",
+        "description": "ВС РФ атаковали БПЛА центр Кременчуга Полтавской области, ранены трое детей, — ОВА\n\nГлава Полтавской военной областной администрации Виталий Дякивнич сообщил, что в результате атаки беспилотника в Кре",
+        "event_type": "Military Strike",
+        "id": 13,
+        "lat": 49.0637,
+        "lng": 33.4206,
+        "location": "Кременчуг",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-27T21:51:34+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132407"
+          }
+        ],
+        "url": "https://t.me/astrapress/132407",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "astrapress",
+          "operativnoZSU",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "5e62189f9d2e56e1d5e8aaa63cdf7961afa92e3f0fa5a812d6fd824be7367686"
+    },
+    {
+      "event": {
+        "channel": "ukrpravda_news",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-27T21:17:32+00:00",
+        "description": "Росіяни атакували транспортну інфраструктуру в Дніпрі — двоє людей поранені\n\n📰 підписатися",
+        "event_type": "Military Strike",
+        "id": 6,
+        "lat": 48.4647,
+        "lng": 35.0462,
+        "location": "Днепр",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-27T21:17:32+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/87256"
+          }
+        ],
+        "url": "https://t.me/ukrpravda_news/87256",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "a72df1ab7236000b27f143a890c656bbf89bbf156be427323128c3e220fbcd0c"
+    },
+    {
+      "event": {
+        "channel": "ukrpravda_news",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-27T20:50:18+00:00",
+        "description": "Російські війська атакували Кременчук на Полтавщині: пошкодили два заклади освіти, 4 людей постраждали, серед них — троє дітей\n\n📰 підписатися",
+        "event_type": "Military Strike",
+        "id": 5,
+        "lat": 48.24056,
+        "lng": 28.28141,
+        "location": "Кременчук",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-27T20:50:18+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/87255"
+          }
+        ],
+        "url": "https://t.me/ukrpravda_news/87255",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "0cb39c693f463bc55198d2f1524a6dc3e21d1b39ff3795c9491064380748a348"
+    },
+    {
+      "event": {
+        "channel": "operativnoZSU,uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-27T20:33:02+00:00",
+        "description": "Русня ударила по центру Кременчуга, повреждены два учебных заведения, - Полтавская ОВА\n\nНа данный момент известно о четырёх пострадавших, трое из которых - дети.\n\nНа месте работают экстренные службы.\n",
+        "event_type": "Military Strike",
+        "id": 7,
+        "lat": 49.0637,
+        "lng": 33.4206,
+        "location": "Кременчуг",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "operativnoZSU",
+            "date": "2026-11-27T20:56:34+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/operativnoZSU/227178"
+          },
+          {
+            "channel": "uniannet",
+            "date": "2026-11-27T20:33:02+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/208302"
+          }
+        ],
+        "url": "https://t.me/uniannet/208302",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "astrapress",
+          "operativnoZSU",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "b42cc42beb85ff630abf88cd8f0e6043a410ee203e05358f879badab7f091b3c"
+    },
+    {
+      "event": {
+        "channel": "ukrpravda_news",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-27T18:46:32+00:00",
+        "description": "🇮🇹🇺🇦 Зеленський провів телефонну розмову з прем’єр-міністеркою Італії Мелоні, в ході якої йшлося про атаку на російські кораблі Лівії.\n\nПрезидент зазначив, що операція в Лівії проходила без координаці",
+        "event_type": "Political Development",
+        "id": 4,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-27T18:46:32+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/87251"
+          }
+        ],
+        "url": "https://t.me/ukrpravda_news/87251",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "17b131550abb93e5976884c1dbf6e88f3528dcb02a4b8b56f5d785de615e80e6"
+    }
+  ],
+  "events_removed": [
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-27T15:53:38+00:00",
+        "description": "Зеленский косвенно подтвердил поражение Ефремовского завода синтетического каучука в Тульской области, который производит компоненты для ракетного топлива  «Украина абсолютно справедливо отвечает на к",
+        "event_type": "Military Strike",
+        "id": 8,
+        "lat": 54.1961,
+        "lng": 37.6182,
+        "location": "Тула",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-27T15:53:38+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132392"
+          }
+        ],
+        "url": "https://t.me/astrapress/132392",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "astrapress",
+          "operativnoZSU",
+          "ukrpravda_news"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "8135765bddbd7a60c36270dedea35dc19ddc460e75d3d7cde63979d415cefd2f"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-27T15:52:01+00:00",
+        "description": "‼️🇮🇹🇺🇦 «Зеленский лжёт»: глава МИД Италии опроверг заявления Киева о согласовании атаки на российский корабль\n\n▪️ Министр иностранных дел Италии Антонио Таяни опроверг слова Зеленского о том, что Укра",
+        "event_type": "Political Development",
+        "id": 11,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-27T15:52:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/128100"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/128100",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "8c80f9882a0ea069f274c583a055177259df36c3384a722f15ad0371344c2d2c"
+    },
+    {
+      "event": {
+        "channel": "uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-27T13:53:16+00:00",
+        "description": "❗️В Киеве разработали алгоритмы работы транспорта на случай ухудшения ситуации из-за российских ударов, — Зеленский после Ставки\n\nВ случае остановки других видов транспорта для жителей планируют орган",
+        "event_type": "Political Development",
+        "id": 3,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-27T13:53:16+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/208278"
+          }
+        ],
+        "url": "https://t.me/uniannet/208278",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "e2cb520f0ce6c4540476629a9ef0ead2e6c51f1944685ae663ae4843f0e5587f"
+    },
+    {
+      "event": {
+        "channel": "dva_majors",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-27T13:13:24+00:00",
+        "description": "В результате атаки БПЛА в Новороссийске в 70 квартирах повреждено остекление, - оперштаб края\n\nМногоквартирный дом в Приморском районе города-героя пострадал 27 ноября.\n\nВ течение дня на месте работаю",
+        "event_type": "Military Strike",
+        "id": 12,
+        "lat": 44.7239,
+        "lng": 37.7686,
+        "location": "Новороссийск",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "dva_majors",
+            "date": "2026-11-27T13:13:24+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/dva_majors/102623"
+          }
+        ],
+        "url": "https://t.me/dva_majors/102623",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "2ab3a05f950a0b406f0de880a0069a50c38b42e0e7374035a4ff7dcd1e47d6dc"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-27T11:55:28+00:00",
+        "description": "‼️🇷🇺🇺🇦 В Днепропетровской и Запорожской областях введены аварийные отключения электроэнергии\n\n▪️ После ударов по энергетической инфраструктуре в Днепропетровской и Запорожской областях Украины действу",
+        "event_type": "Military Strike",
+        "id": 10,
+        "lat": 47.8388,
+        "lng": 35.1396,
+        "location": "Запорожье",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-27T11:55:28+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/128090"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/128090",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "23330693e451d72699e5aba64fe1527f82080183b6404db3ef7f07614241ec56"
+    },
+    {
+      "event": {
+        "channel": "DeepStateUA",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "GB",
+        "date": "2026-11-19T16:00:43+00:00",
+        "description": "🇬🇧🇳🇴 Британія та Норвегія профінансують будівництво двох ударних катерів для ВМС України\n\n🖥 На будівництво спрямують понад £100 млн. Про це уряди двох країн оголосили 19 листопада на зустрічі «Коаліці",
+        "event_type": "Political Development",
+        "id": 4,
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "location": "Лондон",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "DeepStateUA",
+            "date": "2026-11-19T16:00:43+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/DeepStateUA/24014"
+          }
+        ],
+        "url": "https://t.me/DeepStateUA/24014",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "2c898974264615640bf95c547199021126280984ffc74225d35a2218eaad9e52"
+    }
+  ],
+  "generated_at": "2026-11-28T00:41:25Z",
+  "method_note": "Изменения показывают разницу между автоматическими выгрузками, а не доказанное изменение обстановки."
+}

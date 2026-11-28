@@ -1,66 +1,63 @@
 {
   "analytical_hypotheses": [],
   "analytical_hypotheses_note": "Автоматические предположения о причинах событий, контроле территории или намерениях сторон не формируются из одной статистики публикаций. Для них нужны отдельная доказательная база и человеческая проверка.",
-  "analytical_signals": [],
+  "analytical_signals": [
+    {
+      "classification": "analytical_signal",
+      "current_period": 12,
+      "delta": 8,
+      "event_type": "Military Strike",
+      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
+      "label": "Повышенная публикационная активность",
+      "previous_period": 4,
+      "requires_human_review": true,
+      "signal_type": "publication_volume_change"
+    }
+  ],
   "attention_candidates": [
     {
       "country": "RU",
-      "date": "2026-11-27T15:53:38+00:00",
-      "description": "Зеленский косвенно подтвердил поражение Ефремовского завода синтетического каучука в Тульской области, который производит компоненты для ракетного топлива  «Украина абсолютно справедливо отвечает на к",
+      "date": "2026-11-28T00:01:01+00:00",
+      "description": "🔥 Дроны снова атаковали Новошахтинский НПЗ в Ростовской области, – osint-каналы\n\nСудя по видео очевидцев, в районе предприятия уже вспыхнул пожар. При этом завод последний раз атаковали еще в этот пон",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Тула",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
-      "sources": [
-        "astrapress",
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-27T15:52:01+00:00",
-      "description": "‼️🇮🇹🇺🇦 «Зеленский лжёт»: глава МИД Италии опроверг заявления Киева о согласовании атаки на российский корабль\n\n▪️ Министр иностранных дел Италии Антонио Таяни опроверг слова Зеленского о том, что Укра",
-      "event_type": "Political Development",
-      "fact_checked": false,
-      "location": "Киев",
+      "location": "Новошахтинск",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
-        "RVvoenkor",
+        "astrapress",
         "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
-      "country": "RU",
-      "date": "2026-11-27T14:52:20+00:00",
-      "description": "💥В ніч на 27 листопада в Тульській області Сили оборони України, у взаємодії з повстанським рухом на території рф «Черная Искра», уразили «Єфремовський завод синтетичного каучуку», — Генштаб\n\nЦе підпр",
+      "country": "UA",
+      "date": "2026-11-27T21:51:34+00:00",
+      "description": "ВС РФ атаковали БПЛА центр Кременчуга Полтавской области, ранены трое детей, — ОВА\n\nГлава Полтавской военной областной администрации Виталий Дякивнич сообщил, что в результате атаки беспилотника в Кре",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Тула",
+      "location": "Кременчуг",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 3,
       "sources": [
         "astrapress",
         "operativnoZSU",
-        "ukrpravda_news"
+        "uniannet"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-27T13:53:16+00:00",
-      "description": "❗️В Киеве разработали алгоритмы работы транспорта на случай ухудшения ситуации из-за российских ударов, — Зеленский после Ставки\n\nВ случае остановки других видов транспорта для жителей планируют орган",
-      "event_type": "Political Development",
+      "date": "2026-11-27T20:33:02+00:00",
+      "description": "Русня ударила по центру Кременчуга, повреждены два учебных заведения, - Полтавская ОВА\n\nНа данный момент известно о четырёх пострадавших, трое из которых - дети.\n\nНа месте работают экстренные службы.\n",
+      "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Киев",
+      "location": "Кременчуг",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
+      "source_count": 3,
       "sources": [
-        "RVvoenkor",
+        "astrapress",
+        "operativnoZSU",
         "uniannet"
       ],
       "status": "requires_human_review"
@@ -69,80 +66,97 @@
   "corroborated_event_count": 4,
   "country_counts": {
     "RU": 3,
-    "UA": 7
+    "UA": 11
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 10,
+  "event_count": 14,
   "event_type_counts": {
     "Military Operation": 1,
-    "Military Strike": 7,
-    "Political Development": 2
+    "Military Strike": 12,
+    "Political Development": 1
   },
   "evidence_breakdown": {
     "cross_source_consistent_count": 4,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 6,
+    "not_independently_corroborated_count": 10,
     "rss_reports_not_independently_corroborated_count": 3
   },
-  "generated_at": "2026-11-27T17:28:31Z",
+  "generated_at": "2026-11-28T00:41:25Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 9,
-  "not_verified_event_count": 6,
+  "new_since_previous_snapshot": 10,
+  "not_verified_event_count": 10,
   "period": "last_24_hours",
-  "publication_activity_signals": [],
+  "publication_activity_signals": [
+    {
+      "classification": "analytical_signal",
+      "current_period": 12,
+      "delta": 8,
+      "event_type": "Military Strike",
+      "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
+      "label": "Повышенная публикационная активность",
+      "previous_period": 4,
+      "requires_human_review": true,
+      "signal_type": "publication_volume_change"
+    }
+  ],
   "source_type_counts": {
     "rss": 3,
-    "telegram": 7
+    "telegram": 11
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 3,
+      "events": 2,
+      "location": "Kremenchuk"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Харьков"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Кременчуг"
+    },
+    {
+      "country": "UA",
+      "events": 2,
       "location": "Киев"
     },
     {
       "country": "RU",
-      "events": 2,
-      "location": "Тула"
-    },
-    {
-      "country": "UA",
       "events": 1,
-      "location": "Купянск"
-    },
-    {
-      "country": "UA",
-      "events": 1,
-      "location": "Харьков"
+      "location": "Новошахтинск"
     },
     {
       "country": "RU",
       "events": 1,
-      "location": "Новороссийск"
+      "location": "Москва"
     },
     {
       "country": "UA",
       "events": 1,
-      "location": "Запорожье"
+      "location": "Днепр"
     },
     {
       "country": "UA",
       "events": 1,
-      "location": "Полтава"
+      "location": "Кременчук"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 2,
-    "astrapress": 1,
-    "dva_majors": 1,
+    "The Kyiv Independent": 1,
+    "astrapress": 4,
+    "kyivindependent_official": 1,
     "lost_armour": 1,
-    "operativnoZSU": 1,
-    "ukrpravda_news": 1,
-    "uniannet": 1,
-    "Суспільне Новини": 2,
+    "operativnoZSU": 2,
+    "ukrpravda_news": 4,
+    "uniannet": 2,
+    "Суспільне Новини": 1,
     "Українська правда": 1
   },
-  "window_end": "2026-11-27T17:28:31Z",
-  "window_start": "2026-11-26T17:28:31Z"
+  "window_end": "2026-11-28T00:41:25Z",
+  "window_start": "2026-11-27T00:41:25Z"
 }
