@@ -1686,7 +1686,7 @@
         var count = Math.floor(Number(row.count) || 0);
         if (count <= 0) return '';
         var label = t('unlocatedNoDate');
-        if (/^\\d{4}-\\d{2}-\\d{2}$/.test(day)) {
+        if (/^\d{4}-\d{2}-\d{2}$/.test(day)) {
           var date = new Date(day + 'T00:00:00Z');
           if (isFinite(date.getTime())) label = date.toLocaleDateString(locale, { day: '2-digit', month: 'short', timeZone: 'UTC' });
         }
