@@ -4,21 +4,36 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 12,
-      "delta": 8,
+      "current_period": 23,
+      "delta": 21,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 4,
+      "previous_period": 2,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "attention_candidates": [
     {
+      "country": "UA",
+      "date": "2026-11-28T08:01:38+00:00",
+      "description": "‼️🇷🇺🇺🇦 Мощный пожар после прилёта в Белой Церкви под Киевом\n\n▪️ В городе Белая Церковь Киевской области после удара вспыхнул сильный пожар.\n▪️ Местные власти сообщили о возгорании на территории гаражн",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Киев",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "astrapress"
+      ],
+      "status": "requires_human_review"
+    },
+    {
       "country": "RU",
-      "date": "2026-11-28T00:01:01+00:00",
-      "description": "🔥 Дроны снова атаковали Новошахтинский НПЗ в Ростовской области, – osint-каналы\n\nСудя по видео очевидцев, в районе предприятия уже вспыхнул пожар. При этом завод последний раз атаковали еще в этот пон",
+      "date": "2026-11-28T07:10:11+00:00",
+      "description": "За даними соцмереж, у російському Новошахтинську вдруге за тиждень зазнав атаки НПЗ, після чого виникла масштабна пожежа. Також пабліки повідомляють про ураження російської лінійної виробничо-диспетче",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Новошахтинск",
@@ -26,137 +41,198 @@
       "source_count": 2,
       "sources": [
         "astrapress",
-        "uniannet"
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-27T21:51:34+00:00",
-      "description": "ВС РФ атаковали БПЛА центр Кременчуга Полтавской области, ранены трое детей, — ОВА\n\nГлава Полтавской военной областной администрации Виталий Дякивнич сообщил, что в результате атаки беспилотника в Кре",
+      "date": "2026-11-28T06:47:01+00:00",
+      "description": "Один человек пострадал в результате российской атаки в Киевской области, в Минобороны РФ заявили о поражении электроподстанции в Белой Церкви\n\n«В результате атаки вражеских беспилотных летательных апп",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Кременчуг",
+      "location": "Киев",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 2,
+      "sources": [
+        "RVvoenkor",
+        "astrapress"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-28T06:37:45+00:00",
+      "description": "Девять человек пострадали при атаке БПЛА на служебный автобус «Мираторга» в Брянской области.\n\nПод удар в районе посёлка Климово попали шесть сотрудников компании и трое местных жителей — всех госпита",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Брянск",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "bazabazon",
+        "dva_majors"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-28T06:07:01+00:00",
+      "description": "Восемь человек пострадали при сегодняшних атаках ВСУ на Белгородскую область, — оперштаб  В результате ударов беспилотников ранения получили шесть мужчин и две женщины. Четверо мужчин находятся в тяже",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Белгород",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
       "sources": [
         "astrapress",
-        "operativnoZSU",
-        "uniannet"
+        "boris_rozhin"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-28T05:33:14+00:00",
+      "description": "На Новошахтинском НПЗ, вероятно, горят резервуары с топливом, — OSINT-анализ ASTRA  Новошахтинск Ростовской области, как ранее сообщали местные СМИ, под атакой тяжелых дронов. В районе местного НПЗ фи",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Новошахтинск",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "ukrpravda_news"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "RU",
+      "date": "2026-11-28T00:22:31+00:00",
+      "description": "В Новошахтинске горит НПЗ. Объект атакован второй раз за неделю, — СМИ\n\nМестные жители фиксируют зарево в районе Новошахтинского НПЗ, До этого в городе Новошахтинске Ростовской области прозвучала сери",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Новошахтинск",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 2,
+      "sources": [
+        "astrapress",
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     },
     {
       "country": "UA",
-      "date": "2026-11-27T20:33:02+00:00",
-      "description": "Русня ударила по центру Кременчуга, повреждены два учебных заведения, - Полтавская ОВА\n\nНа данный момент известно о четырёх пострадавших, трое из которых - дети.\n\nНа месте работают экстренные службы.\n",
+      "date": "2026-11-27T20:56:34+00:00",
+      "description": "❗️Внаслідок удару по обʼєкту транспортної інфраструктури в Дніпрі постраждали дві людини, — ОВА \n\n🫡https://t.me/operativnoZSU/",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Кременчуг",
+      "location": "Днепр",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 3,
+      "source_count": 2,
       "sources": [
-        "astrapress",
         "operativnoZSU",
-        "uniannet"
+        "ukrpravda_news"
       ],
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 4,
+  "corroborated_event_count": 9,
   "country_counts": {
-    "RU": 3,
-    "UA": 11
+    "RU": 9,
+    "UA": 22
   },
   "editorially_fact_checked_count": 0,
-  "event_count": 14,
+  "event_count": 31,
   "event_type_counts": {
-    "Military Operation": 1,
-    "Military Strike": 12,
-    "Political Development": 1
+    "Military Operation": 5,
+    "Military Strike": 23,
+    "Political Development": 3
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 4,
+    "cross_source_consistent_count": 9,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 10,
-    "rss_reports_not_independently_corroborated_count": 3
+    "not_independently_corroborated_count": 22,
+    "rss_reports_not_independently_corroborated_count": 4
   },
-  "generated_at": "2026-11-28T00:41:25Z",
+  "generated_at": "2026-11-28T08:31:32Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 10,
-  "not_verified_event_count": 10,
+  "new_since_previous_snapshot": 23,
+  "not_verified_event_count": 22,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 12,
-      "delta": 8,
+      "current_period": 23,
+      "delta": 21,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 4,
+      "previous_period": 2,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 3,
-    "telegram": 11
+    "rss": 4,
+    "telegram": 27
   },
   "top_locations": [
+    {
+      "country": "UA",
+      "events": 6,
+      "location": "Киев"
+    },
+    {
+      "country": "RU",
+      "events": 3,
+      "location": "Новошахтинск"
+    },
+    {
+      "country": "UA",
+      "events": 3,
+      "location": "Днепр"
+    },
+    {
+      "country": "UA",
+      "events": 2,
+      "location": "Киевом"
+    },
+    {
+      "country": "RU",
+      "events": 2,
+      "location": "Москва"
+    },
     {
       "country": "UA",
       "events": 2,
       "location": "Kremenchuk"
     },
     {
-      "country": "UA",
-      "events": 2,
-      "location": "Харьков"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Кременчуг"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Киев"
-    },
-    {
       "country": "RU",
       "events": 1,
-      "location": "Новошахтинск"
-    },
-    {
-      "country": "RU",
-      "events": 1,
-      "location": "Москва"
+      "location": "Ростов-на-Дону"
     },
     {
       "country": "UA",
       "events": 1,
-      "location": "Днепр"
-    },
-    {
-      "country": "UA",
-      "events": 1,
-      "location": "Кременчук"
+      "location": "Ніжин"
     }
   ],
   "top_sources": {
+    "RVvoenkor": 3,
     "The Kyiv Independent": 1,
-    "astrapress": 4,
+    "astrapress": 11,
+    "bazabazon": 1,
+    "boris_rozhin": 5,
+    "dva_majors": 1,
     "kyivindependent_official": 1,
     "lost_armour": 1,
     "operativnoZSU": 2,
     "ukrpravda_news": 4,
-    "uniannet": 2,
-    "Суспільне Новини": 1,
-    "Українська правда": 1
+    "uniannet": 1,
+    "УНІАН": 1
   },
-  "window_end": "2026-11-28T00:41:25Z",
-  "window_start": "2026-11-27T00:41:25Z"
+  "window_end": "2026-11-28T08:31:32Z",
+  "window_start": "2026-11-27T08:31:32Z"
 }

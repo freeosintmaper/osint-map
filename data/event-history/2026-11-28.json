@@ -1,76 +1,7 @@
 {
-  "current_event_count": 36,
+  "current_event_count": 50,
   "date_utc": "2026-11-28",
   "events_added": [
-    {
-      "event": {
-        "channel": "astrapress,uniannet",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "RU",
-        "date": "2026-11-28T00:01:01+00:00",
-        "description": "🔥 Дроны снова атаковали Новошахтинский НПЗ в Ростовской области, – osint-каналы\n\nСудя по видео очевидцев, в районе предприятия уже вспыхнул пожар. При этом завод последний раз атаковали еще в этот пон",
-        "event_type": "Military Strike",
-        "id": 8,
-        "lat": 47.76037,
-        "lng": 39.93335,
-        "location": "Новошахтинск",
-        "source_count": 2,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "uniannet",
-            "date": "2026-11-28T00:01:01+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/uniannet/208310"
-          },
-          {
-            "channel": "astrapress",
-            "date": "2026-11-28T00:22:31+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/132414"
-          }
-        ],
-        "url": "https://t.me/uniannet/208310",
-        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
-        "verification_sources": [
-          "astrapress",
-          "uniannet"
-        ],
-        "verification_status": "corroborated"
-      },
-      "fingerprint": "27930687124c6bd9934a4375e6706bb144eb5e2eceed7dec0cb7bed46f5edd5c"
-    },
-    {
-      "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "RU",
-        "date": "2026-11-27T23:35:27+00:00",
-        "description": "Москва под атакой БПЛА, в аэропортах введены ограничения, — власти\n\nС 23:10 мэр российской столицы Сергей Собянин сообщил об уничтожении уже 48 БПЛА. Ограничения введены в аэропортах Внуково и Домодед",
-        "event_type": "Military Strike",
-        "id": 15,
-        "lat": 55.7558,
-        "lng": 37.6173,
-        "location": "Москва",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-27T23:35:27+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/132412"
-          }
-        ],
-        "url": "https://t.me/astrapress/132412",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "c77c1ffde203508f41ec3c1febc8f4381ef3ecf2787efc42acb73864af7e362b"
-    },
     {
       "event": {
         "channel": "kyivindependent_official",
@@ -134,70 +65,6 @@
     },
     {
       "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-27T22:03:39+00:00",
-        "description": "За 27 ноября в Харькове и Харьковской области от российских атак пострадали 13 человек, — прокуратура\n\nХарьковская областная прокуратура сообщила, что начала досудебные расследования по шести фактам с",
-        "event_type": "Military Strike",
-        "id": 14,
-        "lat": 49.9935,
-        "lng": 36.2304,
-        "location": "Харьков",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-27T22:03:39+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/132408"
-          }
-        ],
-        "url": "https://t.me/astrapress/132408",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "b03589be38b0559458a255c9ccd6c790ad08c39966e159bc29092e82da73d841"
-    },
-    {
-      "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-27T21:51:34+00:00",
-        "description": "ВС РФ атаковали БПЛА центр Кременчуга Полтавской области, ранены трое детей, — ОВА\n\nГлава Полтавской военной областной администрации Виталий Дякивнич сообщил, что в результате атаки беспилотника в Кре",
-        "event_type": "Military Strike",
-        "id": 13,
-        "lat": 49.0637,
-        "lng": 33.4206,
-        "location": "Кременчуг",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-27T21:51:34+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/132407"
-          }
-        ],
-        "url": "https://t.me/astrapress/132407",
-        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
-        "verification_sources": [
-          "astrapress",
-          "operativnoZSU",
-          "uniannet"
-        ],
-        "verification_status": "corroborated"
-      },
-      "fingerprint": "5e62189f9d2e56e1d5e8aaa63cdf7961afa92e3f0fa5a812d6fd824be7367686"
-    },
-    {
-      "event": {
         "channel": "ukrpravda_news",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
@@ -258,46 +125,6 @@
     },
     {
       "event": {
-        "channel": "operativnoZSU,uniannet",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-27T20:33:02+00:00",
-        "description": "Русня ударила по центру Кременчуга, повреждены два учебных заведения, - Полтавская ОВА\n\nНа данный момент известно о четырёх пострадавших, трое из которых - дети.\n\nНа месте работают экстренные службы.\n",
-        "event_type": "Military Strike",
-        "id": 7,
-        "lat": 49.0637,
-        "lng": 33.4206,
-        "location": "Кременчуг",
-        "source_count": 2,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "operativnoZSU",
-            "date": "2026-11-27T20:56:34+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/operativnoZSU/227178"
-          },
-          {
-            "channel": "uniannet",
-            "date": "2026-11-27T20:33:02+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/uniannet/208302"
-          }
-        ],
-        "url": "https://t.me/uniannet/208302",
-        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
-        "verification_sources": [
-          "astrapress",
-          "operativnoZSU",
-          "uniannet"
-        ],
-        "verification_status": "corroborated"
-      },
-      "fingerprint": "b42cc42beb85ff630abf88cd8f0e6043a410ee203e05358f879badab7f091b3c"
-    },
-    {
-      "event": {
         "channel": "ukrpravda_news",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
@@ -325,6 +152,739 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "17b131550abb93e5976884c1dbf6e88f3528dcb02a4b8b56f5d785de615e80e6"
+    },
+    {
+      "event": {
+        "channel": "rss_unian",
+        "confidence": "LOW",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-28T08:23:00Z",
+        "description": "Після атаки дронів горить НПЗ у Ростовській області та нафтовий хаб поблизу Самари",
+        "event_type": "Military Strike",
+        "id": "rss-4592e575d40334a7e3-0a13dd",
+        "lat": 47.2225,
+        "lng": 39.7188,
+        "location": "Ростов-на-Дону",
+        "source_count": 1,
+        "source_type": "rss",
+        "sources": [
+          {
+            "channel": "rss_unian",
+            "date": "2026-11-28T08:23:00Z",
+            "publisher": "УНІАН",
+            "source_type": "rss",
+            "url": "https://www.unian.ua/war/ataka-na-rosiyu-gorit-npz-u-rostovskiy-oblasti-ta-naftoviy-hab-poblizu-samari-13573911.html"
+          }
+        ],
+        "url": "https://www.unian.ua/war/ataka-na-rosiyu-gorit-npz-u-rostovskiy-oblasti-ta-naftoviy-hab-poblizu-samari-13573911.html",
+        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "fdf736eab619d403d9f40286f6ce14516b6eed7e5f5096ee15347133064cf9fd"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T08:01:38+00:00",
+        "description": "‼️🇷🇺🇺🇦 Мощный пожар после прилёта в Белой Церкви под Киевом\n\n▪️ В городе Белая Церковь Киевской области после удара вспыхнул сильный пожар.\n▪️ Местные власти сообщили о возгорании на территории гаражн",
+        "event_type": "Military Strike",
+        "id": 31,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-28T08:01:38+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/128138"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/128138",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "astrapress"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "17c11bcd10875d069d2b5bc5bbc8b2ae3c8fbc0bd94167150791611cf01f2d1e"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T08:01:38+00:00",
+        "description": "‼️🇷🇺🇺🇦 Мощный пожар после прилёта в Белой Церкви под Киевом\n\n▪️ В городе Белая Церковь Киевской области после удара вспыхнул сильный пожар.\n▪️ Местные власти сообщили о возгорании на территории гаражн",
+        "event_type": "Military Strike",
+        "id": 32,
+        "lat": 50.45466,
+        "lng": 30.5238,
+        "location": "Киевом",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-28T08:01:38+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/128138"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/128138",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "a1f668a4ed141016ff82a8809cf8c874b935abb41864a445b7415d09eac9eb9e"
+    },
+    {
+      "event": {
+        "channel": "operativnoZSU",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T07:46:35+00:00",
+        "description": "🕯Чернігівщина: унаслідок російської атаки на підприємство в Ніжині загинули 7 людей, ще 7 травмовані\n\nУ Ніжині завершено аварійно-рятувальні роботи на місці вчорашнього удару. Одну людину надзвичайник",
+        "event_type": "Military Strike",
+        "id": 2,
+        "lat": 51.04772,
+        "lng": 31.88844,
+        "location": "Ніжин",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "operativnoZSU",
+            "date": "2026-11-28T07:46:35+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/operativnoZSU/227188"
+          }
+        ],
+        "url": "https://t.me/operativnoZSU/227188",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "148c7a8054627e7eb82e11ec6a96c914ce8ab3bafe8906a4d4cf62b48be254f7"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T07:34:20+00:00",
+        "description": "В Белой Церкви под Киевом сильный пожар после прилёта\n\nВласти сообщают о возгорании в гаражном кооперативе. Местные ТГ-каналы призывают жителей закрывать окна.",
+        "event_type": "Military Operation",
+        "id": 28,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-28T07:34:20+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/234980"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/234980",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "4a09f36ca4088e95c4c0224476f58fe40854f0f365d3cbb72fcc08e0c81df664"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T07:34:20+00:00",
+        "description": "В Белой Церкви под Киевом сильный пожар после прилёта\n\nВласти сообщают о возгорании в гаражном кооперативе. Местные ТГ-каналы призывают жителей закрывать окна.",
+        "event_type": "Military Operation",
+        "id": 29,
+        "lat": 50.45466,
+        "lng": 30.5238,
+        "location": "Киевом",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-28T07:34:20+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/234980"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/234980",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "55a036d31d006721f80d6cd9f29e284f4c92f31ed7d5519e6814989f676f4ddb"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T07:23:01+00:00",
+        "description": "Вечером 27 ноября в н.п Люботин (Харьковская область) реактивная герань поразила электропоезд.",
+        "event_type": "Military Strike",
+        "id": 27,
+        "lat": 49.94691,
+        "lng": 35.92907,
+        "location": "Люботин",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-28T07:23:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/234977"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/234977",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "ac8bf13c1d677a6f55e39daa251319f739eb269a82f115f00f76ef6413eda4dc"
+    },
+    {
+      "event": {
+        "channel": "ukrpravda_news",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-28T07:10:11+00:00",
+        "description": "За даними соцмереж, у російському Новошахтинську вдруге за тиждень зазнав атаки НПЗ, після чого виникла масштабна пожежа. Також пабліки повідомляють про ураження російської лінійної виробничо-диспетче",
+        "event_type": "Military Strike",
+        "id": 6,
+        "lat": 47.76037,
+        "lng": 39.93335,
+        "location": "Новошахтинск",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-28T07:10:11+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/87258"
+          }
+        ],
+        "url": "https://t.me/ukrpravda_news/87258",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "astrapress",
+          "ukrpravda_news"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "f7794287929186142c41b71a8042d05e85e0baa6b1af1e0cea83cd9950b68f7d"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T06:47:01+00:00",
+        "description": "Один человек пострадал в результате российской атаки в Киевской области, в Минобороны РФ заявили о поражении электроподстанции в Белой Церкви\n\n«В результате атаки вражеских беспилотных летательных апп",
+        "event_type": "Military Strike",
+        "id": 22,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-28T06:47:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132431"
+          }
+        ],
+        "url": "https://t.me/astrapress/132431",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "RVvoenkor",
+          "astrapress"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "0ff6cb9d890c54d06a7e01b4fa19fb52099fdd5d07baef74e5abbe770b1aee7d"
+    },
+    {
+      "event": {
+        "channel": "bazabazon,dva_majors",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-28T06:37:45+00:00",
+        "description": "Девять человек пострадали при атаке БПЛА на служебный автобус «Мираторга» в Брянской области.\n\nПод удар в районе посёлка Климово попали шесть сотрудников компании и трое местных жителей — всех госпита",
+        "event_type": "Military Strike",
+        "id": 23,
+        "lat": 53.2435,
+        "lng": 34.3639,
+        "location": "Брянск",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "bazabazon",
+            "date": "2026-11-28T06:37:45+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/bazabazon/51183"
+          },
+          {
+            "channel": "dva_majors",
+            "date": "2026-11-28T06:27:46+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/dva_majors/102652"
+          }
+        ],
+        "url": "https://t.me/bazabazon/51183",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "bazabazon",
+          "dva_majors"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "e516e0cd0b02d21d9efe3eae656caae73330099b2664dccb89f0f916ec9c5bc5"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-28T06:28:38+00:00",
+        "description": "Два человека погибли, еще два пострадали за сутки в результате украинских атак в Курской области, — власти\n\n«В результате атак, к глубокой скорби, погибли два человека. В селе Илек Беловского района 4",
+        "event_type": "Military Strike",
+        "id": 21,
+        "lat": 51.7304,
+        "lng": 36.1926,
+        "location": "Курск",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-28T06:28:38+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132429"
+          }
+        ],
+        "url": "https://t.me/astrapress/132429",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "a83b01c44f380475fb2c325d4a4a463d464cd1c96a02bf2b04e4d1fad98096dd"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T06:25:03+00:00",
+        "description": "Ночные прилеты Гераней в Кременчуге",
+        "event_type": "Military Strike",
+        "id": 25,
+        "lat": 49.0637,
+        "lng": 33.4206,
+        "location": "Кременчуг",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-28T06:25:03+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/234972"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/234972",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "c39278a4b23f8a17502c98d5e1c5b8965aa04de47f03e83191be9a8910311f41"
+    },
+    {
+      "event": {
+        "channel": "astrapress,boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-28T06:07:01+00:00",
+        "description": "Восемь человек пострадали при сегодняшних атаках ВСУ на Белгородскую область, — оперштаб  В результате ударов беспилотников ранения получили шесть мужчин и две женщины. Четверо мужчин находятся в тяже",
+        "event_type": "Military Strike",
+        "id": 20,
+        "lat": 50.5952,
+        "lng": 36.5873,
+        "location": "Белгород",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-28T06:07:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132426"
+          },
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-28T06:45:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/234975"
+          }
+        ],
+        "url": "https://t.me/astrapress/132426",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "astrapress",
+          "boris_rozhin"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "36e061d43624f259161cdbf03245322f417c5030815f389e2766681068c2d4a6"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T06:00:17+00:00",
+        "description": "Более 23 тыс. человек остаются без света в оккупированном Донецке, — «власти»\n\n«По информации «Донецкэнерго» филиал АО «Юго-Западная ЭСК», частично в Кировском, Куйбышевском и Ленинском районах обесто",
+        "event_type": "Military Operation",
+        "id": 19,
+        "lat": 48.0159,
+        "lng": 37.8029,
+        "location": "Донецк",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-28T06:00:17+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132425"
+          }
+        ],
+        "url": "https://t.me/astrapress/132425",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "3d9d2fbb9758b329d926740d35c77526c2b3cd91e1d5bf980de04eeebe0866c7"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T05:50:01+00:00",
+        "description": "Пять человек пострадали, включая ребенка, в результате российских атак в Днепропетровской области, — ОВА\n\n«Более 20 раз враг атаковал четыре района беспилотниками. В Днепре повреждена транспортная инф",
+        "event_type": "Military Strike",
+        "id": 18,
+        "lat": 48.4647,
+        "lng": 35.0462,
+        "location": "Днепр",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-28T05:50:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132424"
+          }
+        ],
+        "url": "https://t.me/astrapress/132424",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "38f049bc40f1a608baef1488c7251cdc46c4a6a5fa08916c63e375efe61a55d7"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-28T05:40:39+00:00",
+        "description": "123 беспилотника сбиты на подлете к Москве, на окраине Калуги при падении обломков БПЛА поврежден частный дом, — власти\n\n«В период с 23:00 27 ноября по 7:00 28 ноября в сторону Московского региона лет",
+        "event_type": "Military Strike",
+        "id": 17,
+        "lat": 55.7558,
+        "lng": 37.6173,
+        "location": "Москва",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-28T05:40:39+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132423"
+          }
+        ],
+        "url": "https://t.me/astrapress/132423",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "da117e5628d69a7cf7f638b8308baba034f31278c789c4802f0b85ad1399fe51"
+    },
+    {
+      "event": {
+        "channel": "uniannet",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T05:36:41+00:00",
+        "description": "🇺🇦 \"Я не слышал от президента США четкого предложения относительно того, хотят ли они видеть Украину в НАТО\", - Зеленский в интервью BBC.\n\nПо словам украинского президента, администрация Трампа очень ",
+        "event_type": "Political Development",
+        "id": 7,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "uniannet",
+            "date": "2026-11-28T05:36:41+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/uniannet/208318"
+          }
+        ],
+        "url": "https://t.me/uniannet/208318",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "b8c5ccd9ed80f977ff8b2e59065d9e149ce103c4e6e30085876a712fb6b16529"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-28T05:33:14+00:00",
+        "description": "На Новошахтинском НПЗ, вероятно, горят резервуары с топливом, — OSINT-анализ ASTRA  Новошахтинск Ростовской области, как ранее сообщали местные СМИ, под атакой тяжелых дронов. В районе местного НПЗ фи",
+        "event_type": "Military Strike",
+        "id": 16,
+        "lat": 47.76037,
+        "lng": 39.93335,
+        "location": "Новошахтинск",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-28T05:33:14+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132422"
+          }
+        ],
+        "url": "https://t.me/astrapress/132422",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "astrapress",
+          "ukrpravda_news"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "61fce382903a4718cf0719effba2260997b20637af8705f0a28c3929ce0a95c6"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T05:14:56+00:00",
+        "description": "Один человек погиб, еще пятеро пострадали за сутки в результате российских атак на Запорожье и Запорожский район, — власти\n\n  \n  \n    36.7K views05:14",
+        "event_type": "Military Strike",
+        "id": 15,
+        "lat": 47.8388,
+        "lng": 35.1396,
+        "location": "Запорожье",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-28T05:14:56+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132421"
+          }
+        ],
+        "url": "https://t.me/astrapress/132421",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "3d68aa55b2cf9d91cf751ef61e8a2e9a6d03fe9e354c9f3fd08ab5c2d3bf956a"
+    },
+    {
+      "event": {
+        "channel": "RVvoenkor",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T05:12:01+00:00",
+        "description": "‼️🇷🇺💥 Кадры боёв: бойцы «Центра» уничтожают пехоту и технику врага в боях за Красноармейском и на Днепропетровщине\n\n▪️Подразделения группировки войск «Центр» продолжают атаки за ранее освобожденным г.",
+        "event_type": "Military Operation",
+        "id": 30,
+        "lat": 48.28014,
+        "lng": 37.17706,
+        "location": "Красноармейск",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "RVvoenkor",
+            "date": "2026-11-28T05:12:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/RVvoenkor/128126"
+          }
+        ],
+        "url": "https://t.me/RVvoenkor/128126",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "a5c41dda868839244b512ca509a4fb729c4caceb40b2d01f8035abe195694875"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-28T02:59:10+00:00",
+        "description": "Минобороны РФ приступило к формированию стройбатов, которые будут комплектовать срочниками и контрактниками\n\nЗаместитель министра обороны генерал-лейтенант РФ Павел Фрадков заявил, что новые военно-ст",
+        "event_type": "Political Development",
+        "id": 14,
+        "lat": 55.7558,
+        "lng": 37.6173,
+        "location": "Москва",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-28T02:59:10+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132419"
+          }
+        ],
+        "url": "https://t.me/astrapress/132419",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "b76ea07de3d0f11259675383bfed11713e74ff8fb7629b407389e669794368f5"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-28T00:22:31+00:00",
+        "description": "В Новошахтинске горит НПЗ. Объект атакован второй раз за неделю, — СМИ\n\nМестные жители фиксируют зарево в районе Новошахтинского НПЗ, До этого в городе Новошахтинске Ростовской области прозвучала сери",
+        "event_type": "Military Strike",
+        "id": 12,
+        "lat": 47.76037,
+        "lng": 39.93335,
+        "location": "Новошахтинск",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-28T00:22:31+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132414"
+          },
+          {
+            "channel": "astrapress",
+            "date": "2026-11-28T00:54:40+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132415"
+          }
+        ],
+        "url": "https://t.me/astrapress/132414",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "astrapress",
+          "ukrpravda_news"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "28ac5ad01488bd42767bb99fea2703321cf89fd7d299a1d88bf0c339836da05c"
+    },
+    {
+      "event": {
+        "channel": "operativnoZSU",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-27T20:56:34+00:00",
+        "description": "❗️Внаслідок удару по обʼєкту транспортної інфраструктури в Дніпрі постраждали дві людини, — ОВА \n\n🫡https://t.me/operativnoZSU/",
+        "event_type": "Military Strike",
+        "id": 1,
+        "lat": 48.4647,
+        "lng": 35.0462,
+        "location": "Днепр",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "operativnoZSU",
+            "date": "2026-11-27T20:56:34+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/operativnoZSU/227178"
+          }
+        ],
+        "url": "https://t.me/operativnoZSU/227178",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "operativnoZSU",
+          "ukrpravda_news"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "687fcf4465857ec2ea3474810bc9e22972cab6c0b413e418b9db1d42cc5c54a1"
     }
   ],
   "events_removed": [
@@ -517,8 +1077,140 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "2c898974264615640bf95c547199021126280984ffc74225d35a2218eaad9e52"
+    },
+    {
+      "event": {
+        "channel": "operativnoZSU,ukrpravda_news",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "RU",
+        "date": "2026-11-27T14:52:20+00:00",
+        "description": "💥В ніч на 27 листопада в Тульській області Сили оборони України, у взаємодії з повстанським рухом на території рф «Черная Искра», уразили «Єфремовський завод синтетичного каучуку», — Генштаб\n\nЦе підпр",
+        "event_type": "Military Strike",
+        "id": 1,
+        "lat": 54.1961,
+        "lng": 37.6182,
+        "location": "Тула",
+        "source_count": 2,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "operativnoZSU",
+            "date": "2026-11-27T14:52:20+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/operativnoZSU/227161"
+          },
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-27T14:58:51+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/87244"
+          }
+        ],
+        "url": "https://t.me/operativnoZSU/227161",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "operativnoZSU",
+          "ukrpravda_news"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "09dd12ea253a10c0c5df1e15f2c4fd0f040fdc4e44df3a594304bdd0f666ddc1"
+    },
+    {
+      "event": {
+        "channel": "rss_suspilne",
+        "confidence": "LOW",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-21T08:22:53Z",
+        "description": "Постраждали дві людини: вночі та зранку РФ атакувала Київ дронами та балістикою",
+        "event_type": "Military Strike",
+        "id": "rss-364688e958660a2066-524c8a",
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "rss",
+        "sources": [
+          {
+            "channel": "rss_suspilne",
+            "date": "2026-11-21T08:22:53Z",
+            "publisher": "Суспільне Новини",
+            "source_type": "rss",
+            "url": "https://suspilne.media/kyiv/1455702-postrazdali-dvi-ludini-vnoci-ta-zranku-rf-atakuvala-kiiv-dronami-ta-balistikou/"
+          }
+        ],
+        "url": "https://suspilne.media/kyiv/1455702-postrazdali-dvi-ludini-vnoci-ta-zranku-rf-atakuvala-kiiv-dronami-ta-balistikou/",
+        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "3d1e279613c37ab3a29ed68655f763eed40937f821a9c1c5cb8166ce4c18d49c"
+    },
+    {
+      "event": {
+        "channel": "rss_suspilne",
+        "confidence": "LOW",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-21T05:55:55Z",
+        "description": "Майже 10 разів війська РФ обстріляли Дніпро та область: двоє загиблих, ще понад 60 — поранені",
+        "event_type": "Military Strike",
+        "id": "rss-165b478f700977afb4-9ad345",
+        "lat": 48.4647,
+        "lng": 35.0462,
+        "location": "Днепр",
+        "source_count": 1,
+        "source_type": "rss",
+        "sources": [
+          {
+            "channel": "rss_suspilne",
+            "date": "2026-11-21T05:55:55Z",
+            "publisher": "Суспільне Новини",
+            "source_type": "rss",
+            "url": "https://suspilne.media/dnipro/1455715-majze-10-raziv-vijska-rf-obstrilali-dnipro-ta-oblast-dvoe-zagiblih-se-55-poraneni/"
+          }
+        ],
+        "url": "https://suspilne.media/dnipro/1455715-majze-10-raziv-vijska-rf-obstrilali-dnipro-ta-oblast-dvoe-zagiblih-se-55-poraneni/",
+        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "19a6fa4ede48abc80574f63e857deec9a9751ee9c18c597d4082b26723cdabb6"
+    },
+    {
+      "event": {
+        "channel": "rss_suspilne",
+        "confidence": "LOW",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-21T05:55:55Z",
+        "description": "Майже 10 разів війська РФ обстріляли Дніпро та область: двоє загиблих, ще понад 60 — поранені",
+        "event_type": "Military Strike",
+        "id": "rss-165b478f700977afb4-cfdef2",
+        "lat": 48.46664,
+        "lng": 35.04066,
+        "location": "Дніпро",
+        "source_count": 1,
+        "source_type": "rss",
+        "sources": [
+          {
+            "channel": "rss_suspilne",
+            "date": "2026-11-21T05:55:55Z",
+            "publisher": "Суспільне Новини",
+            "source_type": "rss",
+            "url": "https://suspilne.media/dnipro/1455715-majze-10-raziv-vijska-rf-obstrilali-dnipro-ta-oblast-dvoe-zagiblih-se-55-poraneni/"
+          }
+        ],
+        "url": "https://suspilne.media/dnipro/1455715-majze-10-raziv-vijska-rf-obstrilali-dnipro-ta-oblast-dvoe-zagiblih-se-55-poraneni/",
+        "verification_note": "RSS-заголовок классифицирован правилами и привязан к центру населённого пункта. Это не редакционная проверка и не независимое подтверждение.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "5437b78e07b6c4ae750e5965734c9fe1a73a8f7a626697e88c19679fc1dcd650"
     }
   ],
-  "generated_at": "2026-11-28T00:41:25Z",
+  "generated_at": "2026-11-28T08:31:32Z",
   "method_note": "Изменения показывают разницу между автоматическими выгрузками, а не доказанное изменение обстановки."
 }
