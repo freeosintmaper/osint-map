@@ -4,12 +4,12 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 38,
-      "delta": 34,
+      "current_period": 39,
+      "delta": 38,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 4,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
@@ -17,116 +17,11 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-28T08:01:38+00:00",
-      "description": "‼️🇷🇺🇺🇦 Мощный пожар после прилёта в Белой Церкви под Киевом\n\n▪️ В городе Белая Церковь Киевской области после удара вспыхнул сильный пожар.\n▪️ Местные власти сообщили о возгорании на территории гаражн",
+      "date": "2026-11-28T10:17:54+00:00",
+      "description": "У Ніжині Чернігівської області завершили аварійно-рятувальні роботи на місці російського удару по підприємству 27 листопада. Кількість загиблих зросла до семи людей, ще семеро постраждали\n\n📰 підписати",
       "event_type": "Military Strike",
       "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "astrapress"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-28T07:10:11+00:00",
-      "description": "За даними соцмереж, у російському Новошахтинську вдруге за тиждень зазнав атаки НПЗ, після чого виникла масштабна пожежа. Також пабліки повідомляють про ураження російської лінійної виробничо-диспетче",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Новошахтинск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-28T06:47:01+00:00",
-      "description": "Один человек пострадал в результате российской атаки в Киевской области, в Минобороны РФ заявили о поражении электроподстанции в Белой Церкви\n\n«В результате атаки вражеских беспилотных летательных апп",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Киев",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "RVvoenkor",
-        "astrapress"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-28T06:37:45+00:00",
-      "description": "Девять человек пострадали при атаке БПЛА на служебный автобус «Мираторга» в Брянской области.\n\nПод удар в районе посёлка Климово попали шесть сотрудников компании и трое местных жителей — всех госпита",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Брянск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "bazabazon",
-        "dva_majors"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-28T06:07:01+00:00",
-      "description": "Восемь человек пострадали при сегодняшних атаках ВСУ на Белгородскую область, — оперштаб  В результате ударов беспилотников ранения получили шесть мужчин и две женщины. Четверо мужчин находятся в тяже",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Белгород",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "boris_rozhin"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-28T05:33:14+00:00",
-      "description": "На Новошахтинском НПЗ, вероятно, горят резервуары с топливом, — OSINT-анализ ASTRA  Новошахтинск Ростовской области, как ранее сообщали местные СМИ, под атакой тяжелых дронов. В районе местного НПЗ фи",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Новошахтинск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "RU",
-      "date": "2026-11-28T00:22:31+00:00",
-      "description": "В Новошахтинске горит НПЗ. Объект атакован второй раз за неделю, — СМИ\n\nМестные жители фиксируют зарево в районе Новошахтинского НПЗ, До этого в городе Новошахтинске Ростовской области прозвучала сери",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Новошахтинск",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "astrapress",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-27T20:56:34+00:00",
-      "description": "❗️Внаслідок удару по обʼєкту транспортної інфраструктури в Дніпрі постраждали дві людини, — ОВА \n\n🫡https://t.me/operativnoZSU/",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Днепр",
+      "location": "Ніжин",
       "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
       "source_count": 2,
       "sources": [
@@ -134,55 +29,92 @@
         "ukrpravda_news"
       ],
       "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-28T09:20:01+00:00",
+      "description": "ВСУ ударили по служебному авто Васильевской больницы, погибли медицинская сестра и водитель, еще два человека ранены, сообщает Минздрав Запорожской области.\n🤬439😢84🙏42👍7😱4\n  \n  \n    18.3K views09:20",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Нежин",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "boris_rozhin",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
+    },
+    {
+      "country": "UA",
+      "date": "2026-11-28T08:52:55+00:00",
+      "description": "Семь человек погибли в результате российского удара по предприятию в Нежине Черниговской области\n\nСегодня ГСЧС завершила аварийно-спасательные работы на месте вчерашней атаки. Одного человека удалось ",
+      "event_type": "Military Strike",
+      "fact_checked": false,
+      "location": "Нежин",
+      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
+      "source_count": 3,
+      "sources": [
+        "astrapress",
+        "boris_rozhin",
+        "uniannet"
+      ],
+      "status": "requires_human_review"
     }
   ],
   "corroborated_event_count": 9,
   "country_counts": {
-    "RU": 9,
-    "UA": 38
+    "RU": 6,
+    "UA": 41
   },
   "editorially_fact_checked_count": 0,
   "event_count": 47,
   "event_type_counts": {
     "Military Offensive": 1,
     "Military Operation": 5,
-    "Military Strike": 38,
-    "Political Development": 3
+    "Military Strike": 39,
+    "Political Development": 2
   },
   "evidence_breakdown": {
     "cross_source_consistent_count": 9,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
     "not_independently_corroborated_count": 38,
-    "rss_reports_not_independently_corroborated_count": 20
+    "rss_reports_not_independently_corroborated_count": 22
   },
-  "generated_at": "2026-11-28T08:31:32Z",
+  "generated_at": "2026-11-28T10:38:17Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 23,
+  "new_since_previous_snapshot": 14,
   "not_verified_event_count": 38,
   "period": "last_7_days",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 38,
-      "delta": 34,
+      "current_period": 39,
+      "delta": 38,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
-      "previous_period": 4,
+      "previous_period": 1,
       "requires_human_review": true,
       "signal_type": "publication_volume_change"
     }
   ],
   "source_type_counts": {
-    "rss": 20,
-    "telegram": 27
+    "rss": 22,
+    "telegram": 25
   },
   "top_locations": [
     {
       "country": "UA",
-      "events": 12,
+      "events": 13,
       "location": "Киев"
+    },
+    {
+      "country": "UA",
+      "events": 4,
+      "location": "Запорожье"
     },
     {
       "country": "UA",
@@ -195,45 +127,40 @@
       "location": "Полтава"
     },
     {
+      "country": "UA",
+      "events": 2,
+      "location": "Ніжин"
+    },
+    {
       "country": "RU",
-      "events": 3,
-      "location": "Новошахтинск"
+      "events": 2,
+      "location": "Ростов-на-Дону"
     },
     {
       "country": "UA",
-      "events": 3,
-      "location": "Днепр"
-    },
-    {
-      "country": "UA",
-      "events": 3,
-      "location": "Запорожье"
+      "events": 2,
+      "location": "Нежин"
     },
     {
       "country": "UA",
       "events": 2,
       "location": "Киевом"
-    },
-    {
-      "country": "RU",
-      "events": 2,
-      "location": "Москва"
     }
   ],
   "top_sources": {
-    "RVvoenkor": 3,
-    "The Kyiv Independent": 2,
-    "astrapress": 11,
+    "RVvoenkor": 4,
+    "The Kyiv Independent": 4,
+    "astrapress": 5,
     "bazabazon": 1,
-    "boris_rozhin": 5,
-    "dva_majors": 1,
+    "boris_rozhin": 4,
+    "kyivindependent_official": 2,
     "operativnoZSU": 2,
     "ukrpravda_news": 4,
-    "uniannet": 1,
+    "uniannet": 3,
     "Суспільне Новини": 9,
     "УНІАН": 3,
     "Українська правда": 5
   },
-  "window_end": "2026-11-28T08:31:32Z",
-  "window_start": "2026-11-21T08:31:32Z"
+  "window_end": "2026-11-28T10:38:17Z",
+  "window_start": "2026-11-21T10:38:17Z"
 }
