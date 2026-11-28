@@ -58,37 +58,8 @@ jobs:
       - name: Test territorial source history
         run: python scripts/test_territory_history.py
 
-      - name: Check territorial history page JavaScript
+      - name: Check extracted JavaScript syntax
         run: |
-          node <<'NODE'
-          const fs = require('fs');
-          const html = fs.readFileSync('territory-history.html', 'utf8');
-          const blocks = Array.from(html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi));
-          if (!blocks.length) throw new Error('No inline script found in territory-history.html');
-          blocks.forEach((match, index) => {
-            try {
-              new Function(match[1]);
-            } catch (error) {
-              console.error('Territorial history script #' + (index + 1) + ' failed syntax validation:', error.message);
-              process.exitCode = 1;
-            }
-          });
-          if (!process.exitCode) console.log('Checked ' + blocks.length + ' territorial history script block(s).');
-          NODE
-
-      - name: Check inline JavaScript syntax
-        run: |
-          node <<'NODE'
-          const fs = require('fs');
-          const html = fs.readFileSync('index.html', 'utf8');
-          const blocks = Array.from(html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi));
-          blocks.forEach((match, index) => {
-            try {
-              new Function(match[1]);
-            } catch (error) {
-              console.error('Inline script #' + (index + 1) + ' failed syntax validation:', error.message);
-              process.exitCode = 1;
-            }
-          });
-          if (!process.exitCode) console.log('Checked ' + blocks.length + ' inline script blocks.');
-          NODE
+          for file in js/*.js; do
+            node --check "$file"
+          done

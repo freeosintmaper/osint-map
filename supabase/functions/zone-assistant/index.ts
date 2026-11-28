@@ -1,10 +1,22 @@
 const ALLOWED_ORIGINS = new Set([
   "https://freeosintmaper.github.io",
-  "http://localhost:5500",
-  "http://127.0.0.1:5500",
-  "http://localhost:8080",
-  "http://127.0.0.1:8080",
 ]);
+
+// Additional exact origins are opt-in and kept in Supabase server-side settings.
+// Only HTTPS origins are accepted, except localhost for deliberate local development.
+for (const configuredOrigin of (Deno.env.get("ZONE_AI_ALLOWED_ORIGINS") || "").split(",")) {
+  const candidate = configuredOrigin.trim();
+  if (!candidate) continue;
+  try {
+    const parsed = new URL(candidate);
+    const localDevelopment = parsed.hostname === "localhost" || parsed.hostname === "127.0.0.1";
+    if (parsed.origin === candidate && (parsed.protocol === "https:" || (parsed.protocol === "http:" && localDevelopment))) {
+      ALLOWED_ORIGINS.add(candidate);
+    }
+  } catch (_) {
+    console.warn("Ignoring invalid ZONE_AI_ALLOWED_ORIGINS entry");
+  }
+}
 const CATEGORIES = new Set(["russia", "ukraine", "grey"]);
 
 function corsHeaders(origin: string | null): Record<string, string> {

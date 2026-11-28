@@ -1,0 +1,54 @@
+name: Dependency and script security checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'requirements.txt'
+      - 'scripts/**'
+      - 'js/**'
+      - '.github/workflows/security-audit.yml'
+  pull_request:
+    paths:
+      - 'requirements.txt'
+      - 'scripts/**'
+      - 'js/**'
+      - '.github/workflows/security-audit.yml'
+  schedule:
+    - cron: '23 5 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Check JavaScript syntax
+        shell: bash
+        run: |
+          for file in js/*.js; do
+            node --check "$file"
+          done
+
+      - name: Compile Python source
+        run: python -m compileall -q scripts
+
+      - name: Install dependencies and pip-audit
+        run: |
+          python -m pip install --upgrade pip pip-audit
+          python -m pip install -r requirements.txt
+
+      - name: Audit Python dependencies
+        run: pip-audit -r requirements.txt

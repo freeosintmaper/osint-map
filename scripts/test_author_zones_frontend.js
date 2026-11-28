@@ -7,9 +7,9 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const vm = require("node:vm");
 
-const html = fs.readFileSync("index.html", "utf8");
-const start = html.indexOf("    var USER_ZONES_CACHE_KEY = 'user_control_zones_cache_v1';");
-const end = html.indexOf("    loadUserZones(0);", start);
+const appJs = fs.readFileSync("js/osint-app.js", "utf8");
+const start = appJs.indexOf("    var USER_ZONES_CACHE_KEY = 'user_control_zones_cache_v1';");
+const end = appJs.indexOf("    loadUserZones(0);", start);
 assert.notEqual(start, -1, "author-zone helper block exists");
 assert.notEqual(end, -1, "author-zone auto-load call exists");
 
@@ -46,7 +46,7 @@ const sandbox = {
   sb: null
 };
 vm.createContext(sandbox);
-vm.runInContext(html.slice(start, end), sandbox, { filename: "index.html author-zone helpers" });
+vm.runInContext(appJs.slice(start, end), sandbox, { filename: "js/osint-app.js author-zone helpers" });
 
 const validZone = {
   id: 7,
