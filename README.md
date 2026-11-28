@@ -6,7 +6,7 @@
 
 **Live map:** <https://freeosintmaper.github.io/osint-map/>  
 **Repository:** <https://github.com/freeosintmaper/osint-map>  
-**Methodology:** [methodology.html](https://freeosintmaper.github.io/osint-map/methodology.html) · **Territorial layer history:** [territory-history.html](https://freeosintmaper.github.io/osint-map/territory-history.html) · **Corrections:** [corrections.html](https://freeosintmaper.github.io/osint-map/corrections.html) · **Changelog:** [CHANGELOG.md](CHANGELOG.md)
+**Public affairs:** [public-affairs.html](https://freeosintmaper.github.io/osint-map/public-affairs.html) · **Methodology:** [methodology.html](https://freeosintmaper.github.io/osint-map/methodology.html) · **Territorial layer history:** [territory-history.html](https://freeosintmaper.github.io/osint-map/territory-history.html) · **Corrections:** [corrections.html](https://freeosintmaper.github.io/osint-map/corrections.html) · **Changelog:** [CHANGELOG.md](CHANGELOG.md)
 
 [🇷🇺 Русский](#-русский) · [🇺🇦 Українська](#-українська) · [🇬🇧 English](#-english)
 
@@ -31,6 +31,8 @@
 | **Project Owl** | Полигоны из публичного архива Project Owl: категории действий сторон, зоны сосредоточения и серая зона. Исторические и служебные папки фильтруются. |
 | **Карта автора** | Пользовательские зоны, хранящиеся в Supabase. Чтение доступно публично в рамках настроек проекта; изменение — через авторизацию и политики RLS. |
 | **NASA FIRMS** | Спутниковые тепловые аномалии. Тепловая точка может быть пожаром или другим источником тепла и сама по себе не подтверждает удар. |
+
+Отдельная страница [«Мировая повестка»](https://freeosintmaper.github.io/osint-map/public-affairs.html) показывает невоенные заголовки по дипломатии, экономике, здравоохранению и гуманитарным вопросам. Она не входит в счётчик событий карты, не содержит координат и не создаёт маркеры.
 
 Также доступны поиск по городу, каналу и тексту; фильтры времени (6 ч, 24 ч, 3 дня, 7 дней и все события); фильтр типов событий; светлая и тёмная темы; режим заливки/контуров и настройка прозрачности полигонов; RU/UA/EN; инструменты рисования, измерения расстояния и удаления фигур; экспорт метаданных событий в GeoJSON.
 
