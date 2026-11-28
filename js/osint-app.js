@@ -51,6 +51,9 @@
         raidAlert: 'Воздушная тревога', strike: 'Удар', operation: 'Операция',
         offensive: 'Наступление', incident: 'Инцидент', politics: 'Политика',
         summaryTitle: 'Сводка', eventsCount: 'событий',
+        unlocatedTitle: 'Без геопривязки',
+        unlocatedDescription: 'Потенциальные события, которые не получили безопасную привязку и поэтому не отображаются на карте. Показаны только агрегированные счётчики — без публикаций, ссылок и координат.',
+        unlocatedNoDate: 'Дата не указана',
         noEvents: 'Нет событий', source: 'Источник',
         toolMarker: 'Метка', toolLine: 'Линия', toolArrow: 'Стрелка',
         toolPolygon: 'Зона', toolRectangle: 'Прямоугольник', toolCircle: 'Круг',
@@ -92,7 +95,11 @@
         telegramEvents: 'Події з Telegram',
         raidAlert: 'Повітряна тривога', strike: 'Удар', operation: 'Операція',
         offensive: 'Наступ', incident: 'Інцидент', politics: 'Політика',
-        summaryTitle: 'Зведення', eventsCount: 'подій', noEvents: 'Немає',
+        summaryTitle: 'Зведення', eventsCount: 'подій',
+        unlocatedTitle: 'Без геоприв’язки',
+        unlocatedDescription: 'Потенційні події, які не отримали безпечної прив’язки й тому не відображаються на мапі. Показано лише агреговані лічильники — без публікацій, посилань і координат.',
+        unlocatedNoDate: 'Дату не вказано',
+        noEvents: 'Немає',
         source: 'Джерело', toolMarker: 'Мітка', toolLine: 'Лінія', toolArrow: 'Стрілка',
         toolPolygon: 'Зона', toolRectangle: 'Прямокутник', toolCircle: 'Коло',
         toolMeasure: 'Виміряти', toolClear: 'Очистити все',
@@ -134,7 +141,11 @@
         telegramEvents: 'Telegram Events',
         raidAlert: 'Air Raid Alert', strike: 'Strike', operation: 'Operation',
         offensive: 'Offensive', incident: 'Incident', politics: 'Politics',
-        summaryTitle: 'Summary', eventsCount: 'events', noEvents: 'No events',
+        summaryTitle: 'Summary', eventsCount: 'events',
+        unlocatedTitle: 'Without map location',
+        unlocatedDescription: 'Potential events that did not receive a safe location and therefore are not shown on the map. Only aggregate counts are displayed — no post text, links, or coordinates.',
+        unlocatedNoDate: 'Date unavailable',
+        noEvents: 'No events',
         source: 'Source', toolMarker: 'Marker', toolLine: 'Line', toolArrow: 'Arrow',
         toolPolygon: 'Polygon', toolRectangle: 'Rectangle', toolCircle: 'Circle',
         toolMeasure: 'Measure', toolClear: 'Clear all',
@@ -1591,7 +1602,7 @@
 
     function appendEventProvenancePopup(popup, event) {
       var box = document.createElement('div');
-      box.style.cssText = 'margin-top:10px;padding:9px;border:1px solid var(--border-mid);border-radius:8px;background:var(--bg-input);font-size:11px;line-height:1.45;';
+      box.style.cssText = 'margin-top:10px;padding:9px;border:0;border-radius:8px;background:var(--bg-input);font-size:11px;line-height:1.45;';
       var heading = document.createElement('b');
       heading.textContent = 'Происхождение и проверка';
       box.appendChild(heading);
@@ -1602,7 +1613,7 @@
       }
       records.slice(0, 8).forEach(function(record, index) {
         var item = document.createElement('div');
-        item.style.cssText = 'margin-top:6px;padding-top:5px;border-top:1px solid var(--border-light);';
+        item.style.cssText = 'margin-top:6px;padding-top:5px;border-top:0;';
         var channel = record.channel || record.publisher || ('Источник ' + (index + 1));
         var title = document.createElement('b');
         var sourceType = record.source_type || event.source_type || 'telegram';
@@ -1659,6 +1670,34 @@
       methodLink.style.cssText = 'display:inline-block;margin-top:6px;';
       box.appendChild(methodLink);
       popup.appendChild(box);
+    }
+
+    function renderUnlocatedSummaryHtml() {
+      var summary = window.TG_DATA && window.TG_DATA.unlocated_summary;
+      if (!summary || typeof summary !== 'object') return '';
+      var total = Math.floor(Number(summary.total) || 0);
+      if (total <= 0) return '';
+
+      var locale = currentLang === 'ru' ? 'ru-RU' : (currentLang === 'uk' ? 'uk-UA' : 'en-GB');
+      var rows = Array.isArray(summary.by_day) ? summary.by_day : [];
+      var dayRows = rows.slice(0, 7).map(function(row) {
+        if (!row || typeof row !== 'object') return '';
+        var day = String(row.date || '');
+        var count = Math.floor(Number(row.count) || 0);
+        if (count <= 0) return '';
+        var label = t('unlocatedNoDate');
+        if (/^\\d{4}-\\d{2}-\\d{2}$/.test(day)) {
+          var date = new Date(day + 'T00:00:00Z');
+          if (isFinite(date.getTime())) label = date.toLocaleDateString(locale, { day: '2-digit', month: 'short', timeZone: 'UTC' });
+        }
+        return '<span class="unlocated-summary__day">' + escapeHtml(label) + ': <strong>' + count + '</strong></span>';
+      }).filter(Boolean).join('');
+
+      return '<section class="unlocated-summary" aria-label="' + escapeHtml(t('unlocatedTitle')) + '">' +
+        '<div class="unlocated-summary__head"><strong>' + escapeHtml(t('unlocatedTitle')) + '</strong><span class="unlocated-summary__count">' + total + '</span></div>' +
+        '<p>' + escapeHtml(t('unlocatedDescription')) + '</p>' +
+        (dayRows ? '<div class="unlocated-summary__days">' + dayRows + '</div>' : '') +
+        '</section>';
     }
 
     function renderIntelligenceSummaryHtml() {
@@ -2042,7 +2081,7 @@
           sourceLink.textContent = t('source') + ' →';
           popup.appendChild(sourceLink);
         }
-        marker.bindPopup(popup, { minWidth: 240, maxWidth: 360, autoPanPadding: [24, 24] });
+        marker.bindPopup(popup, { minWidth: 240, maxWidth: 360, autoPanPadding: [24, 24], className: 'telegram-event-popup' });
         tgLayer.addLayer(marker);
         added++;
         panelEvents.push(ev);
@@ -2054,6 +2093,7 @@
     function renderEventsPanel(events) {
       var body = document.getElementById('eventsListBody');
       var intelligenceSummaryHtml = renderIntelligenceSummaryHtml();
+      var unlocatedSummaryHtml = renderUnlocatedSummaryHtml();
       document.getElementById('eventsPanelTitle').textContent = t('eventsPanelTitle') + ' · ' + (events ? events.length : 0);
 
       var filterHtml = '<div class="events-filters">' +
@@ -2067,14 +2107,14 @@
         '</div>';
 
       if (!events || events.length === 0) {
-        body.innerHTML = filterHtml + intelligenceSummaryHtml + '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' + t('noEvents') + '</div>';
+        body.innerHTML = filterHtml + intelligenceSummaryHtml + unlocatedSummaryHtml + '<div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">' + t('noEvents') + '</div>';
         attachEventFilters();
         return;
       }
       events.sort(function(a, b) { return (b.date ? new Date(b.date).getTime() : 0) - (a.date ? new Date(a.date).getTime() : 0); });
       var counts = {};
       events.forEach(function(ev) { counts[ev.event_type] = (counts[ev.event_type] || 0) + 1; });
-      var html = filterHtml + intelligenceSummaryHtml + '<div class="summary-box">';
+      var html = filterHtml + intelligenceSummaryHtml + unlocatedSummaryHtml + '<div class="summary-box">';
       var lastUpdate = getLastUpdateText();
       if (lastUpdate) {
         html += '<div class="last-update">' + t('updatedLabel') + ': ' + lastUpdate + '</div>';
