@@ -339,39 +339,6 @@
     },
     {
       "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-28T06:47:01+00:00",
-        "description": "Один человек пострадал в результате российской атаки в Киевской области, в Минобороны РФ заявили о поражении электроподстанции в Белой Церкви\n\n«В результате атаки вражеских беспилотных летательных апп",
-        "event_type": "Military Strike",
-        "id": 22,
-        "lat": 50.4501,
-        "lng": 30.5234,
-        "location": "Киев",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-28T06:47:01+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/132431"
-          }
-        ],
-        "url": "https://t.me/astrapress/132431",
-        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
-        "verification_sources": [
-          "RVvoenkor",
-          "astrapress"
-        ],
-        "verification_status": "corroborated"
-      },
-      "fingerprint": "0ff6cb9d890c54d06a7e01b4fa19fb52099fdd5d07baef74e5abbe770b1aee7d"
-    },
-    {
-      "event": {
         "channel": "bazabazon,dva_majors",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
@@ -569,36 +536,6 @@
     },
     {
       "event": {
-        "channel": "astrapress",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-28T10:03:53+00:00",
-        "description": "Два человека погибли, еще два пострадали в результате украинской атаки на автомобиль скорой помощи в оккупированной части Запорожской области, — «власти»\n\n«Противник атаковал автомобиль Васильевской ц",
-        "event_type": "Military Operation",
-        "id": 19,
-        "lat": 47.8388,
-        "lng": 35.1396,
-        "location": "Запорожье",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "astrapress",
-            "date": "2026-11-28T10:03:53+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/astrapress/132446"
-          }
-        ],
-        "url": "https://t.me/astrapress/132446",
-        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
-        "verification_sources": [],
-        "verification_status": "not_verified"
-      },
-      "fingerprint": "6712544e688bb47fae4972e1000b200f8c6afa19f45ee5296066dc9caae68e83"
-    },
-    {
-      "event": {
         "channel": "RVvoenkor",
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
@@ -686,40 +623,6 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "63305c3b1e16e58a117770f927131ce5828b61308326162ddd6690af8666f192"
-    },
-    {
-      "event": {
-        "channel": "boris_rozhin",
-        "confidence": "MEDIUM",
-        "coordinate_precision": "settlement_center",
-        "country": "UA",
-        "date": "2026-11-28T09:20:01+00:00",
-        "description": "ВСУ ударили по служебному авто Васильевской больницы, погибли медицинская сестра и водитель, еще два человека ранены, сообщает Минздрав Запорожской области.\n🤬439😢84🙏42👍7😱4\n  \n  \n    18.3K views09:20",
-        "event_type": "Military Strike",
-        "id": 25,
-        "lat": 51.04772,
-        "lng": 31.88844,
-        "location": "Нежин",
-        "source_count": 1,
-        "source_type": "telegram",
-        "sources": [
-          {
-            "channel": "boris_rozhin",
-            "date": "2026-11-28T09:20:01+00:00",
-            "source_type": "telegram",
-            "url": "https://t.me/boris_rozhin/234990"
-          }
-        ],
-        "url": "https://t.me/boris_rozhin/234990",
-        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
-        "verification_sources": [
-          "astrapress",
-          "boris_rozhin",
-          "uniannet"
-        ],
-        "verification_status": "corroborated"
-      },
-      "fingerprint": "68a3bb471e756c8de9fec2904071d25f18d2a7db39a901c61637c92eb0d47b0e"
     },
     {
       "event": {
@@ -880,6 +783,104 @@
         "verification_status": "not_verified"
       },
       "fingerprint": "2384927a99ef24ac0411432899ec7221d605de844c797277da789234e8b48ea9"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T10:47:01+00:00",
+        "description": "19 ноября 2026 года в Киеве в результате удара баллистической ракеты ликвидирован полковник Момот Дмитрий Сергеевич.\n\nПроходил службу в генеральном штабе ВСУ.\n\n@ukrainian_guide",
+        "event_type": "Military Strike",
+        "id": 25,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-28T10:47:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/234997"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/234997",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "1dbe5bb0be53cd393b1635dbb89fb65094ced43aa728add37f0c9780fc89e59a"
+    },
+    {
+      "event": {
+        "channel": "astrapress",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T10:03:53+00:00",
+        "description": "Два человека погибли, еще два пострадали в результате украинской атаки на автомобиль скорой помощи в оккупированной части Запорожской области, — «власти»\n\n«Противник атаковал автомобиль Васильевской ц",
+        "event_type": "Military Strike",
+        "id": 18,
+        "lat": 51.04772,
+        "lng": 31.88844,
+        "location": "Нежин",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "astrapress",
+            "date": "2026-11-28T10:03:53+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/astrapress/132446"
+          }
+        ],
+        "url": "https://t.me/astrapress/132446",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "astrapress",
+          "boris_rozhin",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "117d9a870f2c9acb9cd86792de2053e0a0b1328fed9b66b23d1f4e84fa862eb2"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T09:20:01+00:00",
+        "description": "ВСУ ударили по служебному авто Васильевской больницы, погибли медицинская сестра и водитель, еще два человека ранены, сообщает Минздрав Запорожской области.\n🤬479😢91🙏46👍7😱4\n  \n  \n    20.5K views09:20",
+        "event_type": "Military Strike",
+        "id": 24,
+        "lat": 51.04772,
+        "lng": 31.88844,
+        "location": "Нежин",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-28T09:20:01+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/234990"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/234990",
+        "verification_note": "Сообщения разных Telegram-каналов автоматически сверены по месту, времени и содержанию. Независимость первоисточников и истинность каждой детали отдельно не установлены.",
+        "verification_sources": [
+          "astrapress",
+          "boris_rozhin",
+          "uniannet"
+        ],
+        "verification_status": "corroborated"
+      },
+      "fingerprint": "8677d0e5e48b6dcb8798c5dba9178b82ddf4d60a3dfb460b07aae0c6912d1fbc"
     }
   ],
   "events_removed": [
@@ -1206,6 +1207,6 @@
       "fingerprint": "5437b78e07b6c4ae750e5965734c9fe1a73a8f7a626697e88c19679fc1dcd650"
     }
   ],
-  "generated_at": "2026-11-28T10:38:17Z",
+  "generated_at": "2026-11-28T10:50:09Z",
   "method_note": "Изменения показывают разницу между автоматическими выгрузками, а не доказанное изменение обстановки."
 }

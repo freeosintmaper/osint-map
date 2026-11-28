@@ -4,8 +4,8 @@
   "analytical_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 23,
-      "delta": 21,
+      "current_period": 24,
+      "delta": 22,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -17,23 +17,8 @@
   "attention_candidates": [
     {
       "country": "UA",
-      "date": "2026-11-28T10:17:54+00:00",
-      "description": "У Ніжині Чернігівської області завершили аварійно-рятувальні роботи на місці російського удару по підприємству 27 листопада. Кількість загиблих зросла до семи людей, ще семеро постраждали\n\n📰 підписати",
-      "event_type": "Military Strike",
-      "fact_checked": false,
-      "location": "Ніжин",
-      "reason": "Новое сообщение автоматически сопоставлено с отличающимися формулировками как минимум двух Telegram-каналов; первоисточники и детали требуют проверки.",
-      "source_count": 2,
-      "sources": [
-        "operativnoZSU",
-        "ukrpravda_news"
-      ],
-      "status": "requires_human_review"
-    },
-    {
-      "country": "UA",
-      "date": "2026-11-28T09:20:01+00:00",
-      "description": "ВСУ ударили по служебному авто Васильевской больницы, погибли медицинская сестра и водитель, еще два человека ранены, сообщает Минздрав Запорожской области.\n🤬439😢84🙏42👍7😱4\n  \n  \n    18.3K views09:20",
+      "date": "2026-11-28T10:03:53+00:00",
+      "description": "Два человека погибли, еще два пострадали в результате украинской атаки на автомобиль скорой помощи в оккупированной части Запорожской области, — «власти»\n\n«Противник атаковал автомобиль Васильевской ц",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Нежин",
@@ -48,8 +33,8 @@
     },
     {
       "country": "UA",
-      "date": "2026-11-28T08:52:55+00:00",
-      "description": "Семь человек погибли в результате российского удара по предприятию в Нежине Черниговской области\n\nСегодня ГСЧС завершила аварийно-спасательные работы на месте вчерашней атаки. Одного человека удалось ",
+      "date": "2026-11-28T09:20:01+00:00",
+      "description": "ВСУ ударили по служебному авто Васильевской больницы, погибли медицинская сестра и водитель, еще два человека ранены, сообщает Минздрав Запорожской области.\n🤬479😢91🙏46👍7😱4\n  \n  \n    20.5K views09:20",
       "event_type": "Military Strike",
       "fact_checked": false,
       "location": "Нежин",
@@ -63,7 +48,7 @@
       "status": "requires_human_review"
     }
   ],
-  "corroborated_event_count": 9,
+  "corroborated_event_count": 8,
   "country_counts": {
     "RU": 6,
     "UA": 24
@@ -71,27 +56,27 @@
   "editorially_fact_checked_count": 0,
   "event_count": 30,
   "event_type_counts": {
-    "Military Operation": 5,
-    "Military Strike": 23,
+    "Military Operation": 4,
+    "Military Strike": 24,
     "Political Development": 2
   },
   "evidence_breakdown": {
-    "cross_source_consistent_count": 9,
+    "cross_source_consistent_count": 8,
     "editorially_fact_checked_count": 0,
     "method_note": "Cross-source consistency means distinct wording and matching event context across at least two Telegram channel labels. It does not establish source independence, truth, or verification of every detail. RSS items remain unverified. Only an explicit editorial fact-check field can count as an editorial check.",
-    "not_independently_corroborated_count": 21,
+    "not_independently_corroborated_count": 22,
     "rss_reports_not_independently_corroborated_count": 5
   },
-  "generated_at": "2026-11-28T10:38:17Z",
+  "generated_at": "2026-11-28T10:50:09Z",
   "method_note": "Это автоматическая статистика публикаций из открытых источников, а не оценка интенсивности боевых действий, подтверждение фактов или вывод о контроле территории. Несколько публикаций могут ссылаться на один первоисточник.",
-  "new_since_previous_snapshot": 14,
-  "not_verified_event_count": 21,
+  "new_since_previous_snapshot": 3,
+  "not_verified_event_count": 22,
   "period": "last_24_hours",
   "publication_activity_signals": [
     {
       "classification": "analytical_signal",
-      "current_period": 23,
-      "delta": 21,
+      "current_period": 24,
+      "delta": 22,
       "event_type": "Military Strike",
       "interpretation_limit": "Изменение числа отобранных публикаций; не измеряет интенсивность боевых действий и может зависеть от работы источников и парсера.",
       "label": "Повышенная публикационная активность",
@@ -112,23 +97,18 @@
     },
     {
       "country": "UA",
-      "events": 2,
-      "location": "Ніжин"
+      "events": 3,
+      "location": "Нежин"
     },
     {
       "country": "UA",
       "events": 2,
-      "location": "Запорожье"
+      "location": "Ніжин"
     },
     {
       "country": "RU",
       "events": 2,
       "location": "Ростов-на-Дону"
-    },
-    {
-      "country": "UA",
-      "events": 2,
-      "location": "Нежин"
     },
     {
       "country": "UA",
@@ -144,14 +124,19 @@
       "country": "UA",
       "events": 2,
       "location": "Днепр"
+    },
+    {
+      "country": "RU",
+      "events": 1,
+      "location": "Москва"
     }
   ],
   "top_sources": {
     "RVvoenkor": 4,
     "The Kyiv Independent": 3,
-    "astrapress": 5,
+    "astrapress": 4,
     "bazabazon": 1,
-    "boris_rozhin": 4,
+    "boris_rozhin": 5,
     "dva_majors": 1,
     "kyivindependent_official": 2,
     "lost_armour": 1,
@@ -160,6 +145,6 @@
     "uniannet": 3,
     "УНІАН": 1
   },
-  "window_end": "2026-11-28T10:38:17Z",
-  "window_start": "2026-11-27T10:38:17Z"
+  "window_end": "2026-11-28T10:50:09Z",
+  "window_start": "2026-11-27T10:50:09Z"
 }
