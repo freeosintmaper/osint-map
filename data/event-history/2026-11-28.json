@@ -1,5 +1,5 @@
 {
-  "current_event_count": 50,
+  "current_event_count": 52,
   "date_utc": "2026-11-28",
   "events_added": [
     {
@@ -854,10 +854,40 @@
         "confidence": "MEDIUM",
         "coordinate_precision": "settlement_center",
         "country": "UA",
+        "date": "2026-11-28T09:35:05+00:00",
+        "description": "Экстренные отключения света затронули часть Бучанского, Фастовского и Обуховского районов Киевской области, сообщает ДТЭК\n\nВ Киеве также ввели экстренные отключения света, сообщили в холдинге \"ДТЭК\".\n",
+        "event_type": "Political Development",
+        "id": 26,
+        "lat": 50.4501,
+        "lng": 30.5234,
+        "location": "Киев",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "boris_rozhin",
+            "date": "2026-11-28T09:35:05+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/boris_rozhin/234992"
+          }
+        ],
+        "url": "https://t.me/boris_rozhin/234992",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "c65bfbee96b9d3cef93eafefb74a92fc4c64ad20eb1a2f9e8d1116c511f10472"
+    },
+    {
+      "event": {
+        "channel": "boris_rozhin",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
         "date": "2026-11-28T09:20:01+00:00",
-        "description": "ВСУ ударили по служебному авто Васильевской больницы, погибли медицинская сестра и водитель, еще два человека ранены, сообщает Минздрав Запорожской области.\n🤬479😢91🙏46👍7😱4\n  \n  \n    20.5K views09:20",
+        "description": "ВСУ ударили по служебному авто Васильевской больницы, погибли медицинская сестра и водитель, еще два человека ранены, сообщает Минздрав Запорожской области.\n🤬506😢92🙏49👍8😱4\n  \n  \n    21.1K views09:20",
         "event_type": "Military Strike",
-        "id": 24,
+        "id": 25,
         "lat": 51.04772,
         "lng": 31.88844,
         "location": "Нежин",
@@ -880,7 +910,37 @@
         ],
         "verification_status": "corroborated"
       },
-      "fingerprint": "8677d0e5e48b6dcb8798c5dba9178b82ddf4d60a3dfb460b07aae0c6912d1fbc"
+      "fingerprint": "f828fd5b19dc620b0e8c7664b77e975c6beb5f7bd5f6812bf96e9640744bc64e"
+    },
+    {
+      "event": {
+        "channel": "ukrpravda_news",
+        "confidence": "MEDIUM",
+        "coordinate_precision": "settlement_center",
+        "country": "UA",
+        "date": "2026-11-28T07:00:00+00:00",
+        "description": "​​💔️️ Віталію Коновалову було 53 роки. Він народився 27 листопада 1972-го і майже все життя прожив у селі Покаляне біля Вовчанська на Харківщині. Працював у фермерському господарстві трактористом та о",
+        "event_type": "Military Operation",
+        "id": 5,
+        "lat": 50.29078,
+        "lng": 36.94108,
+        "location": "Вовчанськ",
+        "source_count": 1,
+        "source_type": "telegram",
+        "sources": [
+          {
+            "channel": "ukrpravda_news",
+            "date": "2026-11-28T07:00:00+00:00",
+            "source_type": "telegram",
+            "url": "https://t.me/ukrpravda_news/87257"
+          }
+        ],
+        "url": "https://t.me/ukrpravda_news/87257",
+        "verification_note": "Недостаточно отличающихся сообщений для автоматической сверки.",
+        "verification_sources": [],
+        "verification_status": "not_verified"
+      },
+      "fingerprint": "4db95528aaea94c3210bf5b04dd6075ce79d755bbcab1e2fae46b204cb7479aa"
     }
   ],
   "events_removed": [
@@ -1207,6 +1267,6 @@
       "fingerprint": "5437b78e07b6c4ae750e5965734c9fe1a73a8f7a626697e88c19679fc1dcd650"
     }
   ],
-  "generated_at": "2026-11-28T10:50:09Z",
+  "generated_at": "2026-11-28T10:56:23Z",
   "method_note": "Изменения показывают разницу между автоматическими выгрузками, а не доказанное изменение обстановки."
 }
