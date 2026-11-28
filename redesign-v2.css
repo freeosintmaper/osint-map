@@ -631,9 +631,28 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .leaflet-popup.telegram-event-popup .leaflet-popup-tip {
   border: 0 !important;
 }
-#eventsPanel .event-item:hover {
-  border-color: transparent !important;
+/* Keep liquid-glass event cards free of inner outline strokes. */
+#eventsPanel .event-item,
+#eventsPanel .event-item:hover,
+#eventsPanel .event-item.cross-side {
+  border: 0 !important;
+  outline: 0 !important;
 }
+#eventsPanel .event-item.cross-side {
+  padding-left: 13px !important;
+}
+.leaflet-popup.telegram-event-popup .leaflet-popup-content-wrapper,
+.leaflet-popup.telegram-event-popup .leaflet-popup-tip {
+  border: 0 !important;
+  outline: 0 !important;
+}
+.leaflet-popup.telegram-event-popup .source-meta,
+.leaflet-popup.telegram-event-popup .source-meta *,
+.leaflet-popup.telegram-event-popup .cross-side-signal {
+  border: 0 !important;
+  outline: 0 !important;
+}
+
 #eventsPanel .unlocated-summary {
   margin: 9px 10px 10px;
   padding: 11px 12px;
