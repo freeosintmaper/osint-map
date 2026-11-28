@@ -702,3 +702,46 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   color: var(--text-main);
   font-variant-numeric: tabular-nums;
 }
+
+
+/* Glass surfaces: remove the visible frame, including the dark-mode inset highlight. */
+body.dark {
+  --ui-glow: 0 24px 65px rgba(0,0,0,.42), 0 1px 3px rgba(0,0,0,.22);
+}
+
+#mapBrand,
+#userBtn,
+#eventsPanel,
+#toolbar,
+.info.legend,
+#settingsPanel,
+#zoneEditorPanel,
+#loginModal,
+#zoneAIModal,
+#zoneEditBar,
+#owlLoader,
+#mobileToggle button,
+.leaflet-control-zoom,
+.leaflet-control-layers,
+.leaflet-control-attribution,
+.leaflet-tooltip,
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  border: 0 !important;
+  outline: 0;
+}
+
+/* Remove structural divider strokes that can read as a second frame. */
+#eventsPanel .panel-header,
+#eventsPanel .event-tools,
+#eventsPanel .summary-box,
+#zoneEditorPanel h4,
+#settingsPanel .settings-header {
+  border-color: transparent !important;
+}
+
+.leaflet-control-zoom a,
+.leaflet-control-layers-toggle,
+#mobileToggle button {
+  border: 0 !important;
+}
