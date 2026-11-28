@@ -43,6 +43,9 @@ jobs:
       - name: Test event location and verification logic
         run: python scripts/test_event_context_verification.py
 
+      - name: Test expanded settlement matching and country disambiguation
+        run: python scripts/test_settlement_matching.py
+
       - name: Test author zones backup safety
         run: python scripts/test_backup_author_zones.py
 
