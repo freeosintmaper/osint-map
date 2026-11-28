@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <meta name="description" content="Невоенные международные новости: дипломатия, общественная политика, экономика, здоровье и гуманитарные вопросы.">
+  <title>Мировая повестка — OSINT Map</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1220;
+      --panel: rgba(25, 36, 57, .72);
+      --panel-soft: rgba(255,255,255,.045);
+      --text: #edf2fb;
+      --muted: #9aa8bd;
+      --accent: #8cb8ff;
+      --line: rgba(255,255,255,.09);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(900px 500px at 10% -10%, rgba(52,104,181,.24), transparent 60%),
+        radial-gradient(700px 420px at 100% 0%, rgba(54,128,119,.14), transparent 55%),
+        var(--bg);
+      font: 15px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    a { color: var(--accent); }
+    .shell { width: min(1040px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 56px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:22px; }
+    .back { display:inline-flex; align-items:center; gap:8px; color:var(--muted); text-decoration:none; font-size:13px; }
+    .back:hover { color:var(--text); }
+    .brand { color:var(--muted); font-size:11px; font-weight:700; letter-spacing:.16em; }
+    .hero {
+      padding: clamp(22px, 5vw, 42px);
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(33,49,76,.82), rgba(20,31,49,.68));
+      box-shadow: 0 24px 70px rgba(0,0,0,.24);
+    }
+    .eyebrow { color:#9cc0fa; font-size:10px; font-weight:800; letter-spacing:.18em; }
+    h1 { margin:8px 0 8px; font-size:clamp(28px,5vw,42px); line-height:1.1; letter-spacing:-.035em; }
+    .intro { max-width:760px; margin:0; color:#bac6d8; }
+    .stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:24px; }
+    .stat { min-height:84px; padding:15px 17px; border-radius:16px; background:rgba(255,255,255,.055); }
+    .stat span { display:block; color:var(--muted); font-size:11px; }
+    .stat strong { display:block; margin-top:2px; font-size:26px; font-variant-numeric:tabular-nums; }
+    .controls { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin:24px 0 14px; }
+    .tabs { display:flex; flex-wrap:wrap; gap:7px; }
+    button, input { font:inherit; }
+    .tab {
+      padding:8px 13px; border:0; border-radius:999px;
+      color:#b8c5d8; background:rgba(255,255,255,.055); cursor:pointer; font-size:12px;
+    }
+    .tab[aria-pressed="true"] { color:#091321; background:#b9d1f6; font-weight:800; }
+    .search {
+      width:min(280px,100%); padding:10px 13px; border:0; outline:0; border-radius:12px;
+      color:var(--text); background:rgba(255,255,255,.075);
+    }
+    .search::placeholder { color:#8796ac; }
+    .status { min-height:22px; margin:8px 2px 12px; color:var(--muted); font-size:12px; }
+    .feed { display:grid; gap:9px; }
+    .news-card {
+      display:block; padding:16px 18px; border-radius:16px; text-decoration:none; color:var(--text);
+      background:var(--panel); box-shadow:0 12px 30px rgba(0,0,0,.13);
+      transition:transform .16s ease, background .16s ease;
+    }
+    .news-card:hover { transform:translateY(-2px); background:rgba(37,52,77,.86); }
+    .meta { display:flex; flex-wrap:wrap; align-items:center; gap:8px; color:var(--muted); font-size:11px; }
+    .category { padding:3px 8px; border-radius:999px; background:rgba(140,184,255,.13); color:#b9d1f6; font-weight:700; }
+    .news-card h2 { margin:8px 0 0; font-size:16px; font-weight:650; line-height:1.42; }
+    .news-card .open { margin-top:8px; color:#9fbbeb; font-size:11px; }
+    .empty {
+      padding:28px 20px; border-radius:16px; background:var(--panel-soft);
+      color:var(--muted); text-align:center; font-size:13px;
+    }
+    .footnote { margin:22px 2px 0; max-width:850px; color:#8593a8; font-size:11px; line-height:1.65; }
+    .footnote a { color:#a9c5f3; }
+    @media (max-width:640px) {
+      .shell { width:min(100% - 20px, 1040px); padding-top:16px; }
+      .topbar { margin-bottom:14px; }
+      .brand { display:none; }
+      .hero { border-radius:19px; }
+      .stats { gap:7px; }
+      .stat { min-height:72px; padding:11px; }
+      .stat strong { font-size:22px; }
+      .controls { align-items:stretch; }
+      .search { width:100%; }
+      .news-card { padding:14px; }
+      .news-card h2 { font-size:15px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topbar">
+      <a class="back" href="./">← Вернуться к карте</a>
+      <div class="brand">OSINT MAP · PUBLIC AFFAIRS</div>
+    </div>
+
+    <section class="hero" aria-labelledby="pageTitle">
+      <div class="eyebrow">ОТДЕЛЬНЫЙ ИНФОРМАЦИОННЫЙ ПОТОК</div>
+      <h1 id="pageTitle">Мировая повестка</h1>
+      <p class="intro">Дипломатия и общественная политика, экономика, здоровье и гуманитарные вопросы. Здесь собраны заголовки официальных и международных источников, чтобы расширить контекст карты без добавления новых географических отметок.</p>
+      <div class="stats" aria-live="polite">
+        <div class="stat"><span>За 24 часа</span><strong id="count24">—</strong></div>
+        <div class="stat"><span>За 7 дней</span><strong id="count7d">—</strong></div>
+        <div class="stat"><span>Источники работают</span><strong id="sourceHealth">—</strong></div>
+      </div>
+    </section>
+
+    <section class="controls" aria-label="Фильтры публикаций">
+      <div class="tabs" role="group" aria-label="Категория">
+        <button class="tab" type="button" data-category="all" aria-pressed="true">Все</button>
+        <button class="tab" type="button" data-category="diplomacy" aria-pressed="false">Дипломатия и политика</button>
+        <button class="tab" type="button" data-category="economy" aria-pressed="false">Экономика</button>
+        <button class="tab" type="button" data-category="humanitarian" aria-pressed="false">Гуманитарное и общество</button>
+      </div>
+      <input id="searchNews" class="search" type="search" placeholder="Поиск по заголовкам и источникам" aria-label="Поиск по заголовкам и источникам">
+    </section>
+
+    <div id="feedStatus" class="status" role="status" aria-live="polite">Загрузка публикаций…</div>
+    <section id="newsFeed" class="feed" aria-label="Публикации">
+      <div class="empty">Загрузка…</div>
+    </section>
+
+    <p class="footnote">
+      Публикуются только заголовки, даты, названия издателей и ссылки на первоисточники. Заголовки не являются редакционной проверкой фактов. Военные и связанные с боевыми действиями темы отфильтровываются. Эта лента не входит в счётчик событий карты, не содержит координат и не создаёт маркеры. Материалы и права на них остаются у исходных издателей.
+      <br>Источники: <a href="https://ec.europa.eu/newsroom/comm/items" target="_blank" rel="noopener noreferrer">Еврокомиссия</a>,
+      <a href="https://www.europarl.europa.eu/news/en/press-room" target="_blank" rel="noopener noreferrer">Европарламент</a>,
+      <a href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener noreferrer">Eurostat</a>,
+      <a href="https://www.ecb.europa.eu/" target="_blank" rel="noopener noreferrer">ЕЦБ</a>,
+      <a href="https://www.who.int/news" target="_blank" rel="noopener noreferrer">ВОЗ</a>,
+      <a href="https://news.un.org/" target="_blank" rel="noopener noreferrer">Новости ООН</a>.
+    </p>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+      var items = [];
+      var activeCategory = 'all';
+      var searchTerm = '';
+      var categoryLabels = {
+        diplomacy: 'Дипломатия и политика',
+        economy: 'Экономика',
+        humanitarian: 'Гуманитарное и общество'
+      };
+      var allowedHosts = new Set([
+        'ec.europa.eu', 'www.europarl.europa.eu', 'europarl.europa.eu',
+        'www.ecb.europa.eu', 'ecb.europa.eu', 'www.who.int', 'who.int', 'news.un.org'
+      ]);
+      var feedEl = document.getElementById('newsFeed');
+      var statusEl = document.getElementById('feedStatus');
+
+      function safeUrl(value) {
+        try {
+          var url = new URL(String(value || ''));
+          if (url.protocol !== 'https:' || !allowedHosts.has(url.hostname.toLowerCase())) return '';
+          return url.href;
+        } catch (_error) {
+          return '';
+        }
+      }
+
+      function makeElement(tag, className, value) {
+        var node = document.createElement(tag);
+        if (className) node.className = className;
+        if (value != null) node.textContent = String(value);
+        return node;
+      }
+
+      function formattedDate(value) {
+        var date = new Date(value);
+        if (!isFinite(date.getTime())) return 'Дата не указана';
+        return date.toLocaleString('ru-RU', {
+          day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'
+        });
+      }
+
+      function updateCounters() {
+        var now = Date.now();
+        var day = now - 24 * 60 * 60 * 1000;
+        var week = now - 7 * 24 * 60 * 60 * 1000;
+        var count24 = 0;
+        var count7d = 0;
+        items.forEach(function (item) {
+          var time = new Date(item.date).getTime();
+          if (!isFinite(time)) return;
+          if (time >= day && time <= now + 12 * 60 * 60 * 1000) count24 += 1;
+          if (time >= week && time <= now + 12 * 60 * 60 * 1000) count7d += 1;
+        });
+        document.getElementById('count24').textContent = String(count24);
+        document.getElementById('count7d').textContent = String(count7d);
+      }
+
+      function render() {
+        var visible = items.filter(function (item) {
+          var categoryMatch = activeCategory === 'all' || item.category === activeCategory;
+          var haystack = (String(item.title || '') + ' ' + String(item.publisher || '')).toLocaleLowerCase();
+          return categoryMatch && (!searchTerm || haystack.indexOf(searchTerm) !== -1);
+        });
+        feedEl.replaceChildren();
+        if (!visible.length) {
+          feedEl.appendChild(makeElement('div', 'empty',
+            items.length ? 'По этому фильтру публикаций нет.' : 'Пока нет доступных публикаций. Лента обновляется автоматически.'));
+          return;
+        }
+
+        visible.forEach(function (item) {
+          var href = safeUrl(item.url);
+          if (!href) return;
+          var card = document.createElement('article');
+          card.className = 'news-card';
+          var meta = makeElement('div', 'meta');
+          meta.appendChild(makeElement('span', 'category', categoryLabels[item.category] || 'Общественная повестка'));
+          meta.appendChild(makeElement('span', '', item.publisher || 'Источник'));
+          meta.appendChild(makeElement('time', '', formattedDate(item.date)));
+          card.appendChild(meta);
+          var title = makeElement('h2', '', item.title || 'Без заголовка');
+          card.appendChild(title);
+          card.appendChild(makeElement('div', 'open', 'Открыть первоисточник ↗'));
+          card.setAttribute('role', 'link');
+          card.setAttribute('tabindex', '0');
+          card.addEventListener('click', function () { window.open(href, '_blank', 'noopener,noreferrer'); });
+          card.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              window.open(href, '_blank', 'noopener,noreferrer');
+            }
+          });
+          feedEl.appendChild(card);
+        });
+      }
+
+      document.querySelectorAll('[data-category]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          activeCategory = button.getAttribute('data-category') || 'all';
+          document.querySelectorAll('[data-category]').forEach(function (other) {
+            other.setAttribute('aria-pressed', other === button ? 'true' : 'false');
+          });
+          render();
+        });
+      });
+
+      document.getElementById('searchNews').addEventListener('input', function (event) {
+        searchTerm = String(event.target.value || '').trim().toLocaleLowerCase();
+        render();
+      });
+
+      fetch('./data/public-affairs-news.json', { cache: 'no-store' })
+        .then(function (response) {
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          return response.json();
+        })
+        .then(function (payload) {
+          if (!payload || !Array.isArray(payload.items)) throw new Error('Invalid feed data');
+          items = payload.items.filter(function (item) {
+            return item && safeUrl(item.url) && item.title && item.date && categoryLabels[item.category];
+          });
+          updateCounters();
+          var health = Array.isArray(payload.source_health) ? payload.source_health : [];
+          var healthy = health.filter(function (source) { return source.status === 'ok'; }).length;
+          document.getElementById('sourceHealth').textContent = health.length ? healthy + '/' + health.length : '—';
+          var generated = payload.generated_at ? formattedDate(payload.generated_at) : 'ещё не запускалась';
+          statusEl.textContent = items.length + ' заголовков за 7 дней · обновлено: ' + generated;
+          render();
+        })
+        .catch(function (error) {
+          statusEl.textContent = 'Не удалось загрузить ленту: ' + error.message;
+          feedEl.replaceChildren(makeElement('div', 'empty',
+            'Данные временно недоступны. Проверьте подключение или откройте страницу позже.'));
+          document.getElementById('count24').textContent = '—';
+          document.getElementById('count7d').textContent = '—';
+          document.getElementById('sourceHealth').textContent = '—';
+        });
+    }());
+  </script>
+</body>
+</html>
